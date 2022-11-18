@@ -1,0 +1,52 @@
+version: 2.1
+
+orbs:
+  browser-tools: circleci/browser-tools@1.2.3
+
+executors:
+  ci-executor:
+    docker:
+      - image: cimg/node:16.13.1-browsers
+
+jobs:
+  backend-ci:
+    executor: ci-executor
+    working_directory: ~/repo/backend
+    steps:
+      - checkout:
+          path: ~/repo
+      - run:
+          name: Install packages
+          command: npm ci
+      - run:
+          name: Run Lint
+          command: npm run lint
+      - run:
+          name: Run Tests
+          command: npm run test
+
+  frontend-ci:
+    executor: ci-executor
+    working_directory: ~/repo/frontend
+    steps:
+      - checkout:
+          path: ~/repo
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
+      - run:
+          name: Check install
+          command: |
+            google-chrome --version
+            chromedriver --version
+      - run:
+          name: Install packages
+          command: npm ci
+      - run:
+          name: Run Tests
+          command: npm run test
+
+workflows:
+  check-melluin:
+    jobs:
+      - backend-ci
+      - frontend-ci
