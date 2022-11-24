@@ -1,13 +1,26 @@
 import {Controller, Get} from '@nestjs/common';
-import {AppService} from './app.service';
+import {Public} from './auth/decorator/public.decorator';
+import {Roles} from './auth/decorator/roles.decorator';
+import {Role} from './auth/constant/role.enum';
 
 @Controller()
 export class AppController {
-    constructor(private readonly appService: AppService) {
+
+    @Public()
+    @Get('/hi')
+    getHello(): string {
+        return 'Hello Anonymous';
     }
 
-    @Get()
-    getHello(): string {
-        return this.appService.getHello();
+    @Get('/hiUser')
+    @Roles(Role.USER)
+    getHelloUser(): string {
+        return 'Hello User';
+    }
+
+    @Get('/hiAdmin')
+    @Roles(Role.SYSADMIN)
+    getHelloAdmin(): string {
+        return 'Hello Admin';
     }
 }
