@@ -1,10 +1,17 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {AppLanguage} from './language/app-language';
 
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    template: '<router-outlet></router-outlet>'
 })
-export class AppComponent {
-    title = 'melluin_fe';
+export class AppComponent implements OnInit{
+
+    constructor(private readonly translate: TranslateService) {
+    }
+
+    ngOnInit() {
+        this.translate.addLangs(Object.values(AppLanguage));
+    }
 }
