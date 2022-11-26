@@ -1,0 +1,33 @@
+{
+    "Titles": {
+        "Dashboard": "Dashboard",
+        "Login": "Login"
+    },
+    "OkButton": "Ok",
+    "SaveButton": "Save",
+    "CancelButton": "Cancel",
+    "Role": {
+        "SYSADMIN": "System administrator"
+    },
+    "Language": {
+        "en": "English",
+        "hu": "Hungarian"
+    },
+    "LoginPage": {
+        "PageTitle": "Log In",
+        "FieldsRequired": "Both username and password are required",
+        "BadCredentials": "Either username or password is wrong",
+        "Form": {
+            "UserName": "Username",
+            "UserNamePlaceholder": "Enter your username",
+            "Password": "Password",
+            "PasswordPlaceholder": "Enter your password",
+            "LoginButton": "Log In"
+        }
+    },
+    "PageNotFound": {
+        "PageNotFound404": "The page you were looking for doesn't exist.",
+        "WantToGo": "You might want to go to the",
+        "Page": "page"
+    }
+}

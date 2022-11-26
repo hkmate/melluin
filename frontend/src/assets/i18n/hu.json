@@ -1,0 +1,33 @@
+{
+    "Titles": {
+        "Dashboard": "Kezdőlap",
+        "Login": "Bejelentkezés"
+    },
+    "OkButton": "Ok",
+    "SaveButton": "Mentés",
+    "CancelButton": "Mégse",
+    "UserRole": {
+        "SYSADMIN": "Rendszer adminisztrátor"
+    },
+    "Language": {
+        "en": "Angol",
+        "hu": "Magyar"
+    },
+    "LoginPage": {
+        "PageTitle": "Bejelentkezés",
+        "FieldsRequired": "Felhasználónév és a jelszó megadása is kötelező",
+        "BadCredentials": "A felhasználónév vagy jelszó hibás",
+        "Form": {
+            "UserName": "Felhasználónév",
+            "UserNamePlaceholder": "Adja meg a felhasználónevét",
+            "Password": "Jelszó",
+            "PasswordPlaceholder": "Adja meg a jelszavát",
+            "LoginButton": "Bejelentkezés"
+        }
+    },
+    "PageNotFound": {
+        "PageNotFound404": "Az oldal amit keres nem létezik",
+        "WantToGo": "Esetleg a ",
+        "Page": "oldalra szeretne menni?"
+    }
+}

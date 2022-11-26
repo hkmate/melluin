@@ -1,0 +1,12 @@
+<section id="pageNotFoundPageContent">
+    <div class="container">
+        <div class="col-8 offset-2">
+            <h1>{{ 'PageNotFound.PageNotFound404' | translate }}</h1>
+            <p *ngIf="path">
+                {{ 'PageNotFound.WantToGo' | translate }}
+                <a [routerLink]="path">{{ path }}</a>
+                {{ 'PageNotFound.Page' | translate }}
+            </p>
+        </div>
+    </div>
+</section>
