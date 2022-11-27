@@ -99,6 +99,16 @@
                         ],
                         "scripts": []
                     }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "eslintConfig": ".eslintrc.json",
+                        "lintFilePatterns": [
+                            "**/*.spec.ts",
+                            "**/*.ts"
+                        ]
+                    }
                 }
             }
         }
