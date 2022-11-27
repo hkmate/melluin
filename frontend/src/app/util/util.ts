@@ -10,11 +10,11 @@ export function isEmpty<T>(array: Array<T> | string): boolean {
     return array.length === 0;
 }
 
-export function isNotEmpty<T>(array: Array<T> | string ): boolean {
+export function isNotEmpty<T>(array: Array<T> | string): boolean {
     return !isEmpty(array);
 }
 
-export function isNilOrEmpty<T>(array: Array<T> | string ): boolean {
+export function isNilOrEmpty<T>(array: Array<T> | string): boolean {
     return isNil(array) || array.length === 0;
 }
 
