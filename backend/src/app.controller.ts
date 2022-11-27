@@ -8,19 +8,20 @@ export class AppController {
 
     @Public()
     @Get('/hi')
-    getHello(): string {
+    public getHello(): string {
         return 'Hello Anonymous';
     }
 
     @Get('/hiUser')
     @Roles(Role.USER)
-    getHelloUser(): string {
+    public getHelloUser(): string {
         return 'Hello User';
     }
 
     @Get('/hiAdmin')
     @Roles(Role.SYSADMIN)
-    getHelloAdmin(): string {
+    public getHelloAdmin(): string {
         return 'Hello Admin';
     }
+
 }

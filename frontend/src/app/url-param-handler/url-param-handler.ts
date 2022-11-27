@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NOOP} from '../util/util';
 
-export interface QueryParams {
-    [paramName: string]: string;
-}
+export type QueryParams = Record<string, string>;
 
 @Injectable()
 export class UrlParamHandler {
@@ -12,7 +11,7 @@ export class UrlParamHandler {
     }
 
     public hasParam(paramName: string): boolean {
-        return this.route.snapshot.queryParams.hasOwnProperty(paramName);
+        return Object.hasOwn(this.route.snapshot.queryParams, paramName);
     }
 
     public getParam(paramName: string): string {
@@ -58,10 +57,11 @@ export class UrlParamHandler {
                 relativeTo: this.route,
                 queryParams,
                 queryParamsHandling: null
-            });
+            }).then(NOOP).catch(NOOP);
     }
 
-    private hadChangeInPropertyCount<T>(obj1: T, obj2: T): boolean {
+    private hadChangeInPropertyCount<T extends object>(obj1: T, obj2: T): boolean {
         return Object.keys(obj1).length !== Object.keys(obj2).length;
     }
+
 }

@@ -1,9 +1,7 @@
 import {LevenshteinCalculator} from './levenshtein-calculator';
 
 describe('LevenshteinCalculator', () => {
-
     describe('getLevenshteinDistance', () => {
-
         it('"book" vs "back" -> 2', () => {
             expect(LevenshteinCalculator.getLevenshteinDistance('book', 'back')).toBe(2);
         });

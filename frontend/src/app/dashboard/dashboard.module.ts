@@ -9,8 +9,7 @@ import {DashboardComponent} from './dashboard.component';
         BrowserModule,
         RouterModule,
     ],
-    declarations: [
-        DashboardComponent
-    ]
+    declarations: [DashboardComponent]
 })
-export class DashboardModule {}
+export class DashboardModule {
+}

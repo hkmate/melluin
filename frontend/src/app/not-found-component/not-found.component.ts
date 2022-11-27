@@ -8,16 +8,17 @@ import {first} from 'rxjs/operators';
 })
 export class NotFoundComponent implements OnInit {
 
-    protected path: string;
+    protected path: string | null = null;
 
     constructor(private route: ActivatedRoute) {
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.route.data
             .pipe(first())
             .subscribe((data: Data): void => {
-                this.path = data['path'];
+                this.path = data.path;
             });
     }
+
 }

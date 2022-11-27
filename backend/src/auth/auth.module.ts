@@ -21,9 +21,7 @@ import {AuthController} from './auth.controller';
             signOptions: {expiresIn: jwtConstants.expiration},
         }),
     ],
-    controllers: [
-        AuthController
-    ],
+    controllers: [AuthController],
     providers: [
         AuthService,
         LocalStrategy,

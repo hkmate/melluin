@@ -1,7 +1,6 @@
 import {EndpointMap, HttpMethod} from './endpoint';
 
 describe('EndpointMap', () => {
-
     let service: EndpointMap;
 
     beforeEach(() => {
@@ -9,7 +8,6 @@ describe('EndpointMap', () => {
     });
 
     describe('contains', () => {
-
         beforeEach(() => {
             service.add({method: HttpMethod.GET, url: 'firstGET'});
             service.add({method: HttpMethod.GET, url: 'secondGET'});

@@ -13,4 +13,5 @@ export class PasswordCryptService {
     public match(password: string, hashedPassword): boolean {
         return bcrypt.compareSync(password, hashedPassword);
     }
+
 }

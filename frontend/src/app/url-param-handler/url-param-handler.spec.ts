@@ -1,23 +1,24 @@
 import {QueryParams, UrlParamHandler} from './url-param-handler';
-import {ActivatedRoute, ActivatedRouteSnapshot, Params, Router} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot, NavigationExtras, Params, Router} from '@angular/router';
 import {randomString} from '../util/test-util.spec';
 import createSpyObj = jasmine.createSpyObj;
+import Spy = jasmine.Spy;
+import {of} from 'rxjs';
 
 describe('UrlParamHandler', () => {
-
     let mockRouter: Router;
     let mockActivatedRoute: ActivatedRoute;
     let handler: UrlParamHandler;
 
     beforeEach(() => {
-        mockRouter = createSpyObj(['navigate']) as any;
+        mockRouter = createSpyObj(['navigate']) as Router;
+        (mockRouter.navigate as Spy).and.returnValue(of({}).toPromise());
         mockActivatedRoute = {} as ActivatedRoute;
 
         handler = new UrlParamHandler(mockActivatedRoute, mockRouter);
     });
 
     describe('hasParam', () => {
-
         it('When the param is there Then returned true', () => {
             const paramName = randomString();
             mockActivatedRoute.snapshot = {
@@ -39,7 +40,6 @@ describe('UrlParamHandler', () => {
     });
 
     describe('getParam', () => {
-
         it('When the param is there Then returned the param', () => {
             const paramName = randomString();
             const paramValue = randomString();
@@ -78,7 +78,6 @@ describe('UrlParamHandler', () => {
     });
 
     describe('setParam', () => {
-
         it('When there is no query param Then navigate called with right parameters', () => {
             const paramName = randomString();
             const paramValue = randomString();
@@ -86,7 +85,8 @@ describe('UrlParamHandler', () => {
 
             handler.setParam(paramName, paramValue);
 
-            expect(mockRouter.navigate).toHaveBeenCalledWith([], createNavigateExpectedFromQueryParams({[paramName]: paramValue}));
+            expect(mockRouter.navigate)
+                .toHaveBeenCalledWith([], createNavigateExpectedFromQueryParams({[paramName]: paramValue}));
         });
 
         it('When there are query params but not what we want set Then navigate called with right parameters', () => {
@@ -133,7 +133,6 @@ describe('UrlParamHandler', () => {
         });
     });
     describe('setParams', () => {
-
         it('When there is no query param and want set one param Then navigate called with right parameters', () => {
             const paramName = randomString();
             const paramValue = randomString();
@@ -200,7 +199,6 @@ describe('UrlParamHandler', () => {
         });
     });
     describe('removeParam', () => {
-
         it('When there is no query param Then nothing happened', () => {
             const paramName = randomString();
             mockActivatedRoute.snapshot = {queryParams: {} as Params} as ActivatedRouteSnapshot;
@@ -242,7 +240,6 @@ describe('UrlParamHandler', () => {
         });
     });
     describe('removeParams', () => {
-
         it('When there is no query param Then nothing happened', () => {
             const paramName = randomString();
             const paramName1 = randomString();
@@ -306,7 +303,7 @@ describe('UrlParamHandler', () => {
         });
     });
 
-    function createNavigateExpectedFromQueryParams(qp: QueryParams): any {
+    function createNavigateExpectedFromQueryParams(qp: QueryParams): NavigationExtras {
         return {
             relativeTo: mockActivatedRoute,
             queryParams: qp,

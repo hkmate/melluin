@@ -8,17 +8,17 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 
 const routes: Routes = [
     {
-        path: PATHS['login'].main,
+        path: PATHS.login.main,
         loadChildren: () => import('./login/login-routing.module').then(m => m.LoginRoutingModule)
     },
     {
-        path: PATHS['dashboard'].main,
+        path: PATHS.dashboard.main,
         canActivate: [AuthGuard],
         component: DashboardComponent
     },
     {
         path: '',
-        redirectTo: PATHS['dashboard'].main,
+        redirectTo: PATHS.dashboard.main,
         pathMatch: 'full'
     },
     {path: '**', resolve: {path: PathResolveService}, component: NotFoundComponent}

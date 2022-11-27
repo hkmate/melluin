@@ -11,14 +11,13 @@ import {
 import {randomInt, randomNumber} from './test-util.spec';
 
 describe('Utils', () => {
-
     describe('isNullOrUndefined', () => {
-
         it('When value is null Then returned true', () => {
             expect(isNil(null)).toBeTrue();
         });
 
         it('When value is undefined Then returned true', () => {
+            // eslint-disable-next-line no-undefined
             expect(isNil(undefined)).toBeTrue();
         });
 
@@ -52,12 +51,12 @@ describe('Utils', () => {
     });
 
     describe('isNotNullOrUndefined', () => {
-
         it('When value is null Then returned false', () => {
             expect(isNotNil(null)).toBeFalse();
         });
 
         it('When value is undefined Then returned false', () => {
+            // eslint-disable-next-line no-undefined
             expect(isNotNil(undefined)).toBeFalse();
         });
 
@@ -91,13 +90,13 @@ describe('Utils', () => {
     });
 
     describe('isEmpty', () => {
-
         it('When value is null Then error thrown', () => {
-            expect(() => isEmpty(null)).toThrow();
+            expect(() => isEmpty(null as unknown as string)).toThrow();
         });
 
         it('When value is undefined Then error thrown', () => {
-            expect(() => isEmpty(undefined)).toThrow();
+            // eslint-disable-next-line no-undefined
+            expect(() => isEmpty(undefined as unknown as string)).toThrow();
         });
 
         it('When array is empty Then returned true', () => {
@@ -118,13 +117,13 @@ describe('Utils', () => {
     });
 
     describe('isNotEmpty', () => {
-
         it('When value is null Then error thrown', () => {
-            expect(() => isNotEmpty(null)).toThrow();
+            expect(() => isNotEmpty(null as unknown as string)).toThrow();
         });
 
         it('When value is undefined Then error thrown', () => {
-            expect(() => isNotEmpty(undefined)).toThrow();
+            // eslint-disable-next-line no-undefined
+            expect(() => isNotEmpty(undefined as unknown as string)).toThrow();
         });
 
         it('When array is empty Then returned false', () => {
@@ -145,13 +144,13 @@ describe('Utils', () => {
     });
 
     describe('isNullOrUndefinedOrEmpty', () => {
-
         it('When value is null Then returned true', () => {
             expect(isNilOrEmpty(null)).toBeTrue();
         });
 
         it('When value is undefined Then returned true', () => {
-            expect(isNilOrEmpty(undefined)).toBeTrue();
+            // eslint-disable-next-line no-undefined
+            expect(isNilOrEmpty(undefined as unknown as null)).toBeTrue();
         });
 
         it('When array is empty Then returned true', () => {
@@ -172,9 +171,9 @@ describe('Utils', () => {
     });
 
     describe('capitalizeFirstLetter', () => {
-
         it('When value is null Then returned null', () => {
-            expect(capitalizeFirstLetter(null)).toEqual(null);
+            expect(capitalizeFirstLetter(null as unknown as string))
+                .toEqual(null as unknown as string);
         });
 
         it('When string is empty Then returned empty string', () => {
@@ -191,7 +190,6 @@ describe('Utils', () => {
     });
 
     describe('optionalArrayToArray', () => {
-
         it('When array is empty Then returned empty array', () => {
             const element = [];
             const expected = [];
@@ -215,8 +213,8 @@ describe('Utils', () => {
         });
     });
 
+    /* eslint-disable array-bracket-newline */
     describe('flatten', () => {
-
         it('When array is empty Then returned empty array', () => {
             const array = [];
             const expected = [];
@@ -247,4 +245,5 @@ describe('Utils', () => {
             expect(flatten(array)).toEqual(expected);
         });
     });
+    /* eslint-enable */
 });
