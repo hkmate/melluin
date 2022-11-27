@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, map, Observable} from 'rxjs';
 import {AuthToken} from '../model/auth-token';
-import {isNotNil} from '../../util/util';
+import {isNilOrEmpty, isNotNil} from '../../util/util';
 import {User} from '../model/user';
 import {environment} from '../../../environment';
 import {JwtService} from './jwt.service';
@@ -14,27 +14,27 @@ export class AuthenticationService {
     private static readonly AUTH_TOKEN_KEY = 'authToken';
     private static readonly USER_KEY_IN_TOKEN = 'user';
 
-    private readonly _currentUser: Observable<User>;
-    private readonly currentUserSubject: BehaviorSubject<User>;
-    private authToken: string;
+    private readonly _currentUser: Observable<User | null>;
+    private readonly currentUserSubject: BehaviorSubject<User | null>;
+    private authToken: string | null;
 
     constructor(private readonly http: HttpClient,
                 private readonly jwtService: JwtService) {
-        this.currentUserSubject = new BehaviorSubject<User>(this.loadCurrentUserFromStorage());
+        this.currentUserSubject = new BehaviorSubject<User | null>(this.loadCurrentUserFromStorage());
         this._currentUser = this.currentUserSubject.asObservable();
 
-        this.authToken = localStorage.getItem(AuthenticationService.AUTH_TOKEN_KEY);
+        this.authToken = localStorage.getItem(AuthenticationService.AUTH_TOKEN_KEY) ?? null;
     }
 
-    public get token(): string {
+    public get token(): string | null {
         return this.authToken;
     }
 
-    public get currentUser(): Observable<User> {
+    public get currentUser(): Observable<User | null> {
         return this._currentUser;
     }
 
-    private get currentUserValue(): User {
+    private get currentUserValue(): User | null {
         return this.currentUserSubject.value;
     }
 
@@ -66,11 +66,16 @@ export class AuthenticationService {
         this.currentUserSubject.next(user);
     }
 
-    private loadCurrentUserFromStorage(): User {
-        return JSON.parse(localStorage.getItem(AuthenticationService.CURRENT_USER_KEY));
+    private loadCurrentUserFromStorage(): User | null {
+        const currentUserRaw: string | null = localStorage.getItem(AuthenticationService.CURRENT_USER_KEY);
+        if (isNilOrEmpty(currentUserRaw)) {
+            return null;
+        }
+        return JSON.parse(currentUserRaw!);
     }
 
     private getUserFromToken(token: AuthToken): User {
         return this.jwtService.decodeToken(token.access_token)[AuthenticationService.USER_KEY_IN_TOKEN];
     }
+
 }

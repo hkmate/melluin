@@ -6,21 +6,19 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {DashboardModule} from './dashboard/dashboard.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NotFoundPageModule} from './not-found-component/not-found.module';
 import {AuthModule} from './auth/auth.module';
 import {MelluinPathProvider, PathContainer, PATHS} from './app-paths';
 import {PathProvider} from './path-resolve/path-resolve.service';
 
-export function HttpLoaderFactory(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);
 }
 
 @NgModule({
     bootstrap: [AppComponent],
-    declarations: [
-        AppComponent,
-    ],
+    declarations: [AppComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,

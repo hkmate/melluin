@@ -3,7 +3,7 @@
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "noImplicitOverride": true,
-        "noPropertyAccessFromIndexSignature": true,
+        "noPropertyAccessFromIndexSignature": false,
         "noImplicitReturns": true,
         "sourceMap": true,
         "downlevelIteration": true,
@@ -16,7 +16,7 @@
         "allowSyntheticDefaultImports": true,
         "incremental": true,
         "skipLibCheck": true,
-        "strictNullChecks": false,
+        "strictNullChecks": true,
         "noImplicitAny": false,
         "strictBindCallApply": false,
         "noFallthroughCasesInSwitch": false

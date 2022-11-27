@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../auth/service/authentication.service';
-import {isNilOrEmpty} from '../util/util';
+import {isNilOrEmpty, NOOP} from '../util/util';
 import {User} from '../auth/model/user';
 
 @Component({
@@ -12,11 +12,11 @@ export class LoginComponent implements OnInit {
     private static readonly BAD_CREDENTIALS = 'LoginPage.BadCredentials';
     private static readonly FIELDS_REQUIRED = 'LoginPage.FieldsRequired';
 
-    private returnUrl: string;
-    protected loading: boolean = false;
-    protected errorMsg: string | null;
-    protected userName: string | null;
-    protected password: string | null;
+    private returnUrl: string | null = null;
+    protected loading = false;
+    protected errorMsg: string | null = null;
+    protected userName: string | null = null;
+    protected password: string | null = null;
 
     constructor(
         private route: ActivatedRoute,
@@ -27,9 +27,11 @@ export class LoginComponent implements OnInit {
 
     public ngOnInit(): void {
         if (this.authenticationService.hasAuthenticatedUser()) {
-            this.router.navigate(['/']);
+            this.router.navigate(['/'])
+                .then(NOOP)
+                .catch(NOOP);
         }
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.returnUrl = this.route.snapshot.queryParams.returnUrl ?? '/';
     }
 
     protected onSubmit(): void {
@@ -43,13 +45,13 @@ export class LoginComponent implements OnInit {
 
     private doLogin(): void {
         this.loading = true;
-        this.authenticationService.login(this.userName, this.password)
+        this.authenticationService.login(this.userName!, this.password!)
             .subscribe({
                 next: (user: User) => {
                     this.loading = false;
-                    this.router.navigate(['']);
+                    this.router.navigate(['']).then(NOOP).catch(NOOP);
                 },
-                error: (error) => {
+                error: error => {
                     this.loading = false;
                     this.errorMsg = LoginComponent.BAD_CREDENTIALS;
                 }

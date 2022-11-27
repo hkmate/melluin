@@ -4,7 +4,11 @@ import {LoginComponent} from './login.component';
 import {LoginModule} from './login.module';
 
 const routes: Routes = [
-    {path: '', component: LoginComponent, data: {titleKey: 'Titles.LoginAndRegistration.Login'}},
+    {
+        path: '',
+        component: LoginComponent,
+        data: {titleKey: 'Titles.LoginAndRegistration.Login'}
+    }
 ];
 
 @NgModule({

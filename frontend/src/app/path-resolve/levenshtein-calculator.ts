@@ -1,18 +1,21 @@
+import {isEmpty} from '../util/util';
+
 export class LevenshteinCalculator {
 
     public static getLevenshteinDistance(a: string, b: string): number {
-        if (a.length === 0) {
+        if (isEmpty(a)) {
             return b.length;
         }
-        if (b.length === 0) {
+        if (isEmpty(b)) {
             return a.length;
         }
 
         return this.createLevenshteinMatrix(a, b)[b.length][a.length];
     }
 
+    /* eslint-disable max-lines-per-function, @typescript-eslint/array-type, @typescript-eslint/no-magic-numbers */
     private static createLevenshteinMatrix(a: string, b: string): number[][] {
-        const matrix = [];
+        const matrix: number[][] = [];
         for (let i = 0; i <= b.length; i++) {
             matrix[i] = [i];
         }
@@ -36,4 +39,6 @@ export class LevenshteinCalculator {
         }
         return matrix;
     }
+    /* eslint-enable */
+
 }

@@ -1,6 +1,6 @@
-import {Role} from "./role.enum";
+import {Role} from './role.enum';
 
-export class User {
+export interface User {
     id: string;
     roles: Array<Role>;
     userName: string;

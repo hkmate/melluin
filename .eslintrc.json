@@ -60,6 +60,13 @@
                 "args": "none"
             }
         ],
+        "@typescript-eslint/no-magic-numbers": [
+            "error", {
+                "ignoreReadonlyClassProperties": true,
+                "ignoreArrayIndexes": true
+            }
+        ],
+        "@typescript-eslint/no-non-null-assertion": "off",
         "quotes": ["error", "single"],
         "no-constructor-return": ["error"],
         "no-duplicate-imports": ["error"],
@@ -79,7 +86,7 @@
         "curly": ["error"],
         "default-case": ["off"],
         "default-case-last": ["error"],
-        "default-param-last": ["error"],
+        "default-param-last": ["off"],
         "dot-notation": [
             "error", {
                 "allowKeywords": true
@@ -108,15 +115,7 @@
         "no-lone-blocks": ["error"],
         "no-lonely-if": ["error"],
         "no-loop-func": ["error"],
-        "no-magic-numbers": [
-            "warn", {
-                "ignoreArrayIndexes": true,
-                "ignoreDefaultValues": true,
-                "enforceConst": false,
-                "detectObjects": true,
-                "ignore": [1]
-            }
-        ],
+        "no-magic-numbers": ["off"],
         "no-multi-assign": ["error"],
         "no-return-assign": ["error"],
         "no-sequences": ["error"],
@@ -196,9 +195,11 @@
     },
     "overrides": [
         {
-            "files": ["*.spec.ts"],
+            "files": ["*spec.ts"],
             "rules": {
-                "max-lines-per-function": "off"
+                "max-lines-per-function": "off",
+                "@typescript-eslint/no-magic-numbers": "off",
+                "max-lines": "off"
             }
         }
     ],

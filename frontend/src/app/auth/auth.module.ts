@@ -14,7 +14,8 @@ import {JwtService} from './service/jwt.service';
     ],
 })
 export class AuthModule {
-    static forRoot(): ModuleWithProviders<AuthModule> {
+
+    public static forRoot(): ModuleWithProviders<AuthModule> {
         return {
             ngModule: AuthModule,
             providers: [
@@ -25,4 +26,5 @@ export class AuthModule {
             ]
         };
     }
+
 }

@@ -6,12 +6,13 @@ import {AppLanguage} from './language/app-language';
     selector: 'app-root',
     template: '<router-outlet></router-outlet>'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
     constructor(private readonly translate: TranslateService) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.translate.addLangs(Object.values(AppLanguage));
     }
+
 }

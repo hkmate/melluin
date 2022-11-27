@@ -1,17 +1,17 @@
-import {isNil} from '../../util/util';
+import {isEmpty, isNil} from '../../util/util';
 
 export enum HttpMethod {
     GET = 'GET', POST = 'POST', DELETE = 'DELETE', PUT = 'PUT', PATCH = 'PATCH'
 }
 
-export class Endpoint {
+export interface Endpoint {
     method: HttpMethod;
     url: string;
 }
 
 export class EndpointMap {
 
-    private instance: { [method in HttpMethod]?: string[] } = {};
+    private instance: { [method in HttpMethod]?: Array<string> } = {};
 
     public add(endpoint: Endpoint): EndpointMap {
         const urlsOfMethod = this.getUrlListByMethod(endpoint.method);
@@ -20,19 +20,18 @@ export class EndpointMap {
         return this;
     }
 
-    public contains(endpoint: Endpoint): boolean {
+    public contains(endpoint: Endpoint | null): boolean {
         if (isNil(endpoint)) {
             return false;
         }
-        // need to check with startsWith because of endpoints with path param
-        return this.getUrlListByMethod(endpoint.method).some(urlPattern => !!endpoint.url.match(urlPattern));
+        return this.getUrlListByMethod(endpoint!.method).some(urlPattern => endpoint!.url.match(urlPattern));
     }
 
-    private getUrlListByMethod(method: HttpMethod): string[] {
-        if (!this.instance[method] || !this.instance[method].length) {
+    private getUrlListByMethod(method: HttpMethod): Array<string> {
+        if (isNil(this.instance[method]) || isEmpty(this.instance[method]!)) {
             this.instance[method] = [];
         }
-        return this.instance[method];
+        return this.instance[method]!;
     }
 
 }

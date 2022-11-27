@@ -1,10 +1,18 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment} from '@angular/router';
+import {
+    ActivatedRouteSnapshot,
+    CanActivate,
+    CanLoad,
+    Route,
+    Router,
+    RouterStateSnapshot,
+    UrlSegment
+} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
 import {PATHS} from '../../app-paths';
 import {Role} from '../model/role.enum';
 import {User} from '../model/user';
-import {isNil} from '../../util/util';
+import {isNil, NOOP} from '../../util/util';
 
 interface RouteData {
     roles?: Array<Role>;
@@ -13,28 +21,32 @@ interface RouteData {
 @Injectable()
 export class AuthGuard implements CanActivate, CanLoad {
 
-    private currentUser: User;
+    private currentUser: User | null = null;
 
     constructor(
         private readonly router: Router,
         private readonly authenticationService: AuthenticationService
     ) {
-        this.authenticationService.currentUser.subscribe(cu => this.currentUser = cu);
+        this.authenticationService.currentUser.subscribe(cu => {
+            this.currentUser = cu
+        });
     }
 
-    canLoad(route: Route, segments: UrlSegment[] = []): boolean {
+    public canLoad(route: Route, segments: Array<UrlSegment> = []): boolean {
         return this.canOpen(route.data as RouteData, segments.map(s => s.path).join('/'));
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         return this.canOpen(route.data as RouteData, state.url);
     }
 
+    // eslint-disable-next-line max-lines-per-function
     private canOpen(data: RouteData = {}, returnUrl: string): boolean {
-        const roles: Array<Role> = data.roles;
+        const roles: Array<Role> = data.roles!;
 
         if (!this.authenticationService.hasAuthenticatedUser()) {
-            this.router.navigate([PATHS['login'].main], {queryParams: {returnUrl}});
+            this.router.navigate([PATHS.login.main], {queryParams: {returnUrl}})
+                .then(NOOP).catch(NOOP);
             return false;
         }
         if (isNil(roles)) {
@@ -47,6 +59,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     }
 
     private checkUserHasAtLeastOneOfNeededRoles(roles: Array<Role>): boolean {
-        return roles.some((neededRole: Role) => this.currentUser.roles.includes(neededRole));
+        return roles.some((neededRole: Role) => this.currentUser!.roles.includes(neededRole));
     }
+
 }

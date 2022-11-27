@@ -4,7 +4,7 @@ function pickRandom(): string {
     return possible[Math.floor(Math.random() * possible.length)];
 }
 
-export function randomString(length: number = 10): string {
+export function randomString(length = 10): string {
     return Array.from({length}, pickRandom).join('');
 }
 

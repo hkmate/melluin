@@ -12,13 +12,16 @@ export const PATHS: PathContainer = {
     },
 };
 
-export type PathDescriptor = {
+export interface PathDescriptor {
     main: string;
+
     [subKeys: string]: string;
-};
+}
 
 export class PathContainer {
+
     [moduleName: string]: PathDescriptor;
+
 }
 
 @Injectable()
@@ -33,7 +36,7 @@ export class MelluinPathProvider extends PathProvider {
     }
 
     public override allPaths(): Array<Array<string>> {
-        const result = [];
+        const result: Array<Array<string>> = [];
         for (const key of Object.keys(this.pathContainer)) {
             result.push(...this.convertPathDescriptorToArray(this.pathContainer[key]));
         }
@@ -49,4 +52,5 @@ export class MelluinPathProvider extends PathProvider {
                 .map(pathParts => [descriptor.main].concat(pathParts))
         );
     }
+
 }

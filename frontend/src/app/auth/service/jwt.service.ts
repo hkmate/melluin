@@ -7,4 +7,5 @@ export class JwtService {
     public decodeToken(token: string): string {
         return jwt_decode(token);
     }
+
 }

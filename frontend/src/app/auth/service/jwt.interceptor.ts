@@ -14,7 +14,8 @@ export class JwtInterceptor implements HttpInterceptor {
         this.initPublicEndpoints();
     }
 
-    public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // eslint-disable-next-line max-lines-per-function
+    public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         if (!this.isForOurBackend(request)) {
             return next.handle(request);
         }
@@ -37,11 +38,12 @@ export class JwtInterceptor implements HttpInterceptor {
             .add({method: HttpMethod.POST, url: `${environment.baseURL}/api/oauth/token`})
     }
 
-    private isOurPublicEndpoint(request: HttpRequest<any>): boolean  {
+    private isOurPublicEndpoint(request: HttpRequest<unknown>): boolean {
         return this.PUBLIC_ENDPOINTS.contains({method: HttpMethod[request.method], url: request.url});
     }
 
-    private isForOurBackend(request: HttpRequest<any>): boolean {
+    private isForOurBackend(request: HttpRequest<unknown>): boolean {
         return request.url.startsWith(environment.baseURL);
     }
+
 }

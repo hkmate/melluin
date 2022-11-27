@@ -1,9 +1,11 @@
 import {Injectable} from '@nestjs/common';
 import {User} from './user';
 import {Role} from '../auth/constant/role.enum';
+import {of} from 'rxjs';
 
 @Injectable()
 export class UserService {
+
     private readonly users: Array<User> = [
         {
             id: '2773a6c5-57c7-4142-a89c-eec8e51655fd',
@@ -19,7 +21,8 @@ export class UserService {
         },
     ];
 
-    public async findOne(username: string): Promise<User | undefined> {
-        return this.users.find((user: User) => user.userName === username);
+    public findOne(username: string): Promise<User | undefined> {
+        return of(this.users.find((user: User) => user.userName === username)).toPromise();
     }
+
 }
