@@ -1,0 +1,17 @@
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+$melluin-primary: mat.define-palette(mat.$blue-palette);
+$melluin-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
+$melluin-warn: mat.define-palette(mat.$red-palette);
+
+$melluin-theme: mat.define-light-theme((
+    color: (
+        primary: $melluin-primary,
+        accent: $melluin-accent,
+        warn: $melluin-warn,
+    ),
+));
+
+@include mat.all-component-themes($melluin-theme);
