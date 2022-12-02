@@ -8,84 +8,84 @@ import {
     isNilOrEmpty,
     optionalArrayToArray
 } from './util';
-import {randomInt, randomNumber} from './test-util.spec';
+import {randomInt, randomNumber} from './test-util';
 
 describe('Utils', () => {
     describe('isNullOrUndefined', () => {
         it('When value is null Then returned true', () => {
-            expect(isNil(null)).toBeTrue();
+            expect(isNil(null)).toBe(true);
         });
 
         it('When value is undefined Then returned true', () => {
             // eslint-disable-next-line no-undefined
-            expect(isNil(undefined)).toBeTrue();
+            expect(isNil(undefined)).toBe(true);
         });
 
         it('When value is empty object Then returned false', () => {
-            expect(isNil({})).toBeFalse();
+            expect(isNil({})).toBe(false);
         });
 
         it('When value is an object Then returned false', () => {
-            expect(isNil({asd: 2})).toBeFalse();
+            expect(isNil({asd: 2})).toBe(false);
         });
 
         it('When value is empty array Then returned false', () => {
-            expect(isNil([])).toBeFalse();
+            expect(isNil([])).toBe(false);
         });
 
         it('When value is an array Then returned false', () => {
-            expect(isNil([1, 2])).toBeFalse();
+            expect(isNil([1, 2])).toBe(false);
         });
 
         it('When value is false literal Then returned false', () => {
-            expect(isNil(false)).toBeFalse();
+            expect(isNil(false)).toBe(false);
         });
 
         it('When value is number 0 Then returned false', () => {
-            expect(isNil(0)).toBeFalse();
+            expect(isNil(0)).toBe(false);
         });
 
         it('When value is random number Then returned false', () => {
-            expect(isNil(randomInt(10))).toBeFalse();
+            expect(isNil(randomInt(10))).toBe(false);
         });
     });
 
     describe('isNotNullOrUndefined', () => {
         it('When value is null Then returned false', () => {
-            expect(isNotNil(null)).toBeFalse();
+            expect(isNotNil(null)).toBe(false);
         });
 
         it('When value is undefined Then returned false', () => {
             // eslint-disable-next-line no-undefined
-            expect(isNotNil(undefined)).toBeFalse();
+            expect(isNotNil(undefined)).toBe(false);
         });
 
         it('When value is empty object Then returned true', () => {
-            expect(isNotNil({})).toBeTrue();
+            expect(isNotNil({})).toBe(true);
         });
 
         it('When value is an object Then returned true', () => {
-            expect(isNotNil({asd: 2})).toBeTrue();
+            expect(isNotNil({asd: 2})).toBe(true);
         });
 
         it('When value is empty array Then returned true', () => {
-            expect(isNotNil([])).toBeTrue();
+            expect(isNotNil([])).toBe(true);
         });
 
         it('When value is an array Then returned true', () => {
-            expect(isNotNil([1, 2])).toBeTrue();
+            expect(isNotNil([1, 2])).toBe(true);
         });
 
         it('When value is false literal Then returned true', () => {
-            expect(isNotNil(false)).toBeTrue();
+            expect(isNotNil(false)).toBe(true);
         });
 
         it('When value is number 0 Then returned true', () => {
-            expect(isNotNil(0)).toBeTrue();
+            expect(isNotNil(0)).toBe(true);
         });
 
         it('When value is random number Then returned true', () => {
-            expect(isNotNil(randomInt(10))).toBeTrue();
+            expect(isNotNil(randomInt(10))).toBe(true);
         });
     });
 
@@ -100,19 +100,19 @@ describe('Utils', () => {
         });
 
         it('When array is empty Then returned true', () => {
-            expect(isEmpty([])).toBeTrue();
+            expect(isEmpty([])).toBe(true);
         });
 
         it('When array is not empty Then returned false', () => {
-            expect(isEmpty([1])).toBeFalse();
+            expect(isEmpty([1])).toBe(false);
         });
 
         it('When string is empty Then returned true', () => {
-            expect(isEmpty('')).toBeTrue();
+            expect(isEmpty('')).toBe(true);
         });
 
         it('When string is not empty Then returned false', () => {
-            expect(isEmpty('0')).toBeFalse();
+            expect(isEmpty('0')).toBe(false);
         });
     });
 
@@ -127,46 +127,46 @@ describe('Utils', () => {
         });
 
         it('When array is empty Then returned false', () => {
-            expect(isNotEmpty([])).toBeFalse();
+            expect(isNotEmpty([])).toBe(false);
         });
 
         it('When array is not empty Then returned true', () => {
-            expect(isNotEmpty([1])).toBeTrue();
+            expect(isNotEmpty([1])).toBe(true);
         });
 
         it('When string is empty Then returned true', () => {
-            expect(isNotEmpty('')).toBeFalse();
+            expect(isNotEmpty('')).toBe(false);
         });
 
         it('When string is not empty Then returned false', () => {
-            expect(isNotEmpty('0')).toBeTrue();
+            expect(isNotEmpty('0')).toBe(true);
         });
     });
 
     describe('isNullOrUndefinedOrEmpty', () => {
         it('When value is null Then returned true', () => {
-            expect(isNilOrEmpty(null)).toBeTrue();
+            expect(isNilOrEmpty(null)).toBe(true);
         });
 
         it('When value is undefined Then returned true', () => {
             // eslint-disable-next-line no-undefined
-            expect(isNilOrEmpty(undefined as unknown as null)).toBeTrue();
+            expect(isNilOrEmpty(undefined as unknown as null)).toBe(true);
         });
 
         it('When array is empty Then returned true', () => {
-            expect(isNilOrEmpty([])).toBeTrue();
+            expect(isNilOrEmpty([])).toBe(true);
         });
 
         it('When array is not empty Then returned false', () => {
-            expect(isNilOrEmpty([1])).toBeFalse();
+            expect(isNilOrEmpty([1])).toBe(false);
         });
 
         it('When string is empty Then returned true', () => {
-            expect(isNilOrEmpty('')).toBeTrue();
+            expect(isNilOrEmpty('')).toBe(true);
         });
 
         it('When string is not empty Then returned false', () => {
-            expect(isNilOrEmpty('0')).toBeFalse();
+            expect(isNilOrEmpty('0')).toBe(false);
         });
     });
 
