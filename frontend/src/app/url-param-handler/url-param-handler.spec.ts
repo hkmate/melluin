@@ -1,8 +1,6 @@
 import {QueryParams, UrlParamHandler} from './url-param-handler';
 import {ActivatedRoute, ActivatedRouteSnapshot, NavigationExtras, Params, Router} from '@angular/router';
-import {randomString} from '../util/test-util.spec';
-import createSpyObj = jasmine.createSpyObj;
-import Spy = jasmine.Spy;
+import {randomString} from '../util/test-util';
 import {of} from 'rxjs';
 
 describe('UrlParamHandler', () => {
@@ -11,8 +9,9 @@ describe('UrlParamHandler', () => {
     let handler: UrlParamHandler;
 
     beforeEach(() => {
-        mockRouter = createSpyObj(['navigate']) as Router;
-        (mockRouter.navigate as Spy).and.returnValue(of({}).toPromise());
+        mockRouter = {
+            navigate: jest.fn(() => of({}).toPromise())
+        } as unknown as Router;
         mockActivatedRoute = {} as ActivatedRoute;
 
         handler = new UrlParamHandler(mockActivatedRoute, mockRouter);
@@ -25,7 +24,7 @@ describe('UrlParamHandler', () => {
                 queryParams: {[paramName]: randomString()} as Params
             } as ActivatedRouteSnapshot;
 
-            expect(handler.hasParam(paramName)).toBeTrue();
+            expect(handler.hasParam(paramName)).toBe(true);
         });
 
         it('When the param is not there Then returned false', () => {
@@ -35,7 +34,7 @@ describe('UrlParamHandler', () => {
                 queryParams: {[otherParamName]: randomString()} as Params
             } as ActivatedRouteSnapshot;
 
-            expect(handler.hasParam(paramName)).toBeFalse();
+            expect(handler.hasParam(paramName)).toBe(false);
         });
     });
 

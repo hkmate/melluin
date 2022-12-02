@@ -19,37 +19,37 @@ describe('EndpointMap', () => {
         it('When endpoint is in map Then returns true', () => {
             const actual = service.contains({method: HttpMethod.GET, url: 'firstGET'});
 
-            expect(actual).toBeTrue();
+            expect(actual).toBe(true);
         });
 
         it('When endpoint regex is in map Then returns true', () => {
             const actual = service.contains({method: HttpMethod.PUT, url: 'URL_MIDFIX'});
 
-            expect(actual).toBeTrue();
+            expect(actual).toBe(true);
         });
 
         it('When endpoint with url is in map but with other method Then returns false', () => {
             const actual = service.contains({method: HttpMethod.DELETE, url: 'firstGET'});
 
-            expect(actual).toBeFalse();
+            expect(actual).toBe(false);
         });
 
         it('When endpoint with method is in map but with other url Then returns false', () => {
             const actual = service.contains({method: HttpMethod.PATCH, url: 'unknown'});
 
-            expect(actual).toBeFalse();
+            expect(actual).toBe(false);
         });
 
         it('When url and method is in map but not together Then returns false', () => {
             const actual = service.contains({method: HttpMethod.PATCH, url: 'firstGET'});
 
-            expect(actual).toBeFalse();
+            expect(actual).toBe(false);
         });
 
         it('When endpoint is null Then returns false', () => {
             const actual = service.contains(null);
 
-            expect(actual).toBeFalse();
+            expect(actual).toBe(false);
         });
     });
 });

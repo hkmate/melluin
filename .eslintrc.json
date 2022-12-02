@@ -63,7 +63,8 @@
         "@typescript-eslint/no-magic-numbers": [
             "error", {
                 "ignoreReadonlyClassProperties": true,
-                "ignoreArrayIndexes": true
+                "ignoreArrayIndexes": true,
+                "ignoreDefaultValues": true
             }
         ],
         "@typescript-eslint/no-non-null-assertion": "off",
