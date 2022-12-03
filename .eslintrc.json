@@ -52,7 +52,6 @@
                 }
             }
         ],
-        "@typescript-eslint/no-floating-promises": ["error"],
         "@typescript-eslint/no-for-in-array": "error",
         "@typescript-eslint/no-invalid-void-type": "error",
         "@typescript-eslint/no-unused-vars": [
@@ -132,12 +131,6 @@
         "prefer-spread": ["error"],
         "require-await": ["error"],
         "array-bracket-spacing": ["error", "never"],
-        "array-bracket-newline": [
-            "error", {
-                "multiline": true,
-                "minItems": 5
-            }
-        ],
         "arrow-parens": ["error", "as-needed"],
         "arrow-spacing": [
             "error", {

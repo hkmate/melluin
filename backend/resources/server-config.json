@@ -1,0 +1,22 @@
+{
+    "database": {
+        "host": "localhost",
+        "port": 5432,
+        "name": "melluin",
+        "username": "root",
+        "password": "root"
+    },
+    "server": {
+        "port": 3000,
+        "defaultSysAdmin": {
+            "username": "admin",
+            "password": "admin",
+            "firstName": "Sys",
+            "lastName": "Admin"
+        },
+        "security": {
+            "expiration": "3h",
+            "secretKey": "MelluinSecretKeyForDevelopment"
+        }
+    }
+}
