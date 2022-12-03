@@ -1,28 +1,33 @@
 import {Injectable} from '@nestjs/common';
-import {User} from './user';
-import {Role} from '../auth/constant/role.enum';
-import {of} from 'rxjs';
+import {Repository} from 'typeorm';
+import {InjectRepository} from '@nestjs/typeorm';
+import {UserEntity} from './model/user.entity';
+import {RoleEntity} from './model/role.entity';
 
 @Injectable()
 export class UserService {
 
-    private readonly users: Array<User> = [
-        {
-            id: '2773a6c5-57c7-4142-a89c-eec8e51655fd',
-            userName: 'admin',
-            roles: [Role.SYSADMIN, Role.USER],
-            password: '$2b$10$dwqKuuuUfVJItfVCe4ZMXu/uk1mZAhWT7ajYtwmZV1OO2Irk.Ylay', // password: admin
-        },
-        {
-            id: 'c59c7571-5751-4b37-9029-e9063373c56c',
-            userName: 'john',
-            roles: [Role.USER],
-            password: '$2b$10$dwqKuuuUfVJItfVCe4ZMXu/uk1mZAhWT7ajYtwmZV1OO2Irk.Ylay', // password: admin
-        },
-    ];
+    constructor(
+        @InjectRepository(UserEntity)
+        private readonly userRepository: Repository<UserEntity>,
+        @InjectRepository(RoleEntity)
+        private readonly roleRepository: Repository<RoleEntity>) {
+    }
 
-    public findOne(username: string): Promise<User | undefined> {
-        return of(this.users.find((user: User) => user.userName === username)).toPromise();
+    public save(user: UserEntity): Promise<UserEntity> {
+        return this.userRepository.save(user);
+    }
+
+    public findAllRole(): Promise<Array<RoleEntity>> {
+        return this.roleRepository.find();
+    }
+
+    public findAll(): Promise<Array<UserEntity>> {
+        return this.userRepository.find();
+    }
+
+    public findOne(username: string): Promise<UserEntity | null> {
+        return this.userRepository.findOneBy({username});
     }
 
 }

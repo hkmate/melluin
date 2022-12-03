@@ -5,6 +5,7 @@
         "declaration": true,
         "target": "es2017",
         "outDir": "./dist",
-        "baseUrl": "./"
+        "baseUrl": "./",
+        "resolveJsonModule": true
     }
 }

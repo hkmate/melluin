@@ -46,7 +46,8 @@ CREATE TABLE public.hospital_department (
     name text NOT NULL,
     valid_from timestamp without time zone NOT NULL,
     valid_to timestamp without time zone NOT NULL,
-    address text NOT NULL
+    address text NOT NULL,
+    note text
 );
 
 CREATE TABLE public.hospital_visit (
@@ -101,12 +102,18 @@ CREATE TABLE public.person (
 CREATE TABLE public."user" (
     id uuid NOT NULL,
     person_id uuid NOT NULL,
-    password text,
-    enable boolean
+    username text NOT NULL,
+    password text NOT NULL,
+    is_active boolean
 );
 
 CREATE TABLE public.user_role (
     user_id uuid NOT NULL,
+    role_id uuid NOT NULL
+);
+
+CREATE TABLE public.role (
+    id uuid NOT NULL,
     role text NOT NULL
 );
 
@@ -171,8 +178,8 @@ ALTER TABLE ONLY public.person
 ALTER TABLE ONLY public."user"
     ADD CONSTRAINT user__id__primary_key PRIMARY KEY (id);
 
-ALTER TABLE ONLY public.user_role
-    ADD CONSTRAINT user_role_pkey PRIMARY KEY (user_id, role);
+ALTER TABLE ONLY public.role
+    ADD CONSTRAINT role__id__pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY public.visit_personal_report
     ADD CONSTRAINT visit_personal_report__id__primary_key PRIMARY KEY (id);
@@ -228,6 +235,9 @@ ALTER TABLE ONLY public."user"
 ALTER TABLE ONLY public.user_role
     ADD CONSTRAINT user_role__user_id__to__user__id FOREIGN KEY (user_id) REFERENCES public."user"(id) NOT VALID;
 
+ALTER TABLE ONLY public.user_role
+    ADD CONSTRAINT user_role__role_id__to__role__id FOREIGN KEY (role_id) REFERENCES public.role(id) NOT VALID;
+
 ALTER TABLE ONLY public.visit_personal_report
     ADD CONSTRAINT visit_personal_report__coordinator_id__to__person__id FOREIGN KEY (coordinator_id) REFERENCES public.person(id);
 
@@ -245,3 +255,5 @@ ALTER TABLE ONLY public.volunteering_time
 
 ALTER TABLE ONLY public.volunteering_type
     ADD CONSTRAINT volunteering_type__person_id__to__person__id FOREIGN KEY (person_id) REFERENCES public.person(id);
+
+INSERT INTO public.role VALUES ('6a0ee1be-7352-11ed-a1eb-0242ac120002', 'SYSADMIN');
