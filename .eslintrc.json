@@ -199,7 +199,8 @@
             "rules": {
                 "max-lines-per-function": "off",
                 "@typescript-eslint/no-magic-numbers": "off",
-                "max-lines": "off"
+                "max-lines": "off",
+                "no-undefined": "off"
             }
         }
     ],
