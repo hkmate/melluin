@@ -11,7 +11,11 @@
         "lib": [
             "ES2022",
             "dom"
-        ]
+        ],
+        "paths": {
+            "@shared/*": ["../backend/src/shared/*"],
+            "@fe/*": ["src/*"]
+        }
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,

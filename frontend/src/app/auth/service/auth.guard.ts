@@ -10,9 +10,9 @@ import {
 } from '@angular/router';
 import {AuthenticationService} from './authentication.service';
 import {PATHS} from '../../app-paths';
-import {Role} from '../model/role.enum';
-import {User} from '../model/user';
-import {isNil, NOOP} from '../../util/util';
+import {Role} from '@shared/user/role.enum';
+import {User} from '@shared/user/user';
+import {isNil, NOOP} from '@shared/util/util';
 
 interface RouteData {
     roles?: Array<Role>;

@@ -2,13 +2,14 @@ import {Injectable} from '@nestjs/common';
 import {JwtService} from '@nestjs/jwt';
 import {UserService} from '../../user/user.service';
 import {PasswordCryptService} from './password-crypt.service';
-import {User} from '../../user/user';
-import * as CONFIG from '../../../resources/server-config.json';
+import * as CONFIG from '@resources/server-config.json';
 import {UserEntity} from 'src/user/model/user.entity';
 import * as crypto from 'crypto';
 import {RoleEntity} from '../../user/model/role.entity';
 import {PersonEntity} from '../../person/model/person.entity';
 import {PersonService} from '../../person/person.service';
+import {User} from '@shared/user/user';
+import {AuthToken} from '@shared/user/auth-token';
 
 @Injectable()
 export class AuthService {
@@ -35,7 +36,7 @@ export class AuthService {
         return null;
     }
 
-    public login(user: User): { access_token: string } {
+    public login(user: User): AuthToken {
         return {
             access_token: this.jwtService.sign({user}),
         };

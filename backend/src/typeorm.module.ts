@@ -1,5 +1,5 @@
 import {TypeOrmModule} from '@nestjs/typeorm';
-import * as CONFIG from '../resources/server-config.json';
+import * as CONFIG from '@resources/server-config.json';
 import {UserEntity} from './user/model/user.entity';
 import {RoleEntity} from './user/model/role.entity';
 import {PersonEntity} from './person/model/person.entity';

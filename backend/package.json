@@ -53,6 +53,8 @@
         "@typescript-eslint/parser": "5.44.0",
         "eslint": "^8.0.1",
         "eslint-config-prettier": "^8.3.0",
+        "eslint-import-resolver-typescript": "^3.5.2",
+        "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-prettier": "^4.0.0",
         "flywaydb-cli": "0.9.0",
         "jest": "28.1.3",
@@ -80,6 +82,10 @@
             "**/*.(t|j)s"
         ],
         "coverageDirectory": "../coverage",
-        "testEnvironment": "node"
+        "testEnvironment": "node",
+        "moduleNameMapper": {
+            "@shared/(.*)": "<rootDir>/src/shared/$1",
+            "@be/(.*)": "<rootDir>/src/$1"
+        }
     }
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NOOP} from '../util/util';
+import {NOOP} from '@shared/util/util';
 
 export type QueryParams = Record<string, string>;
 

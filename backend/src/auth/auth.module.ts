@@ -10,7 +10,7 @@ import {JwtAuthGuard} from './guard/jwt-auth.guard';
 import {RolesGuard} from './guard/roles.guard';
 import {LocalStrategy} from './strategy/local.strategy';
 import {AuthController} from './auth.controller';
-import * as CONFIG from '../../resources/server-config.json';
+import * as CONFIG from '@resources/server-config.json';
 import {PersonModule} from '../person/person.module';
 
 @Module({

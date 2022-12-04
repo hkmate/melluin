@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, map, Observable} from 'rxjs';
-import {AuthToken} from '../model/auth-token';
-import {isNilOrEmpty, isNotNil} from '../../util/util';
-import {User} from '../model/user';
 import {environment} from '../../../environment';
 import {JwtService} from './jwt.service';
+import {User} from '@shared/user/user';
+import {isNilOrEmpty, isNotNil} from '@shared/util/util';
+import {AuthToken} from '@shared/user/auth-token';
 
 @Injectable()
 export class AuthenticationService {

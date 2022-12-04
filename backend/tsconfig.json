@@ -6,6 +6,11 @@
         "target": "es2017",
         "outDir": "./dist",
         "baseUrl": "./",
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "paths": {
+            "@shared/*": ["src/shared/*"],
+            "@resources/*": ["resources/*"],
+            "@be/*": ["src/*"]
+        }
     }
 }

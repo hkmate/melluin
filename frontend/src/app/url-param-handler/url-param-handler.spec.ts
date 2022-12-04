@@ -1,7 +1,7 @@
 import {QueryParams, UrlParamHandler} from './url-param-handler';
 import {ActivatedRoute, ActivatedRouteSnapshot, NavigationExtras, Params, Router} from '@angular/router';
-import {randomString} from '../util/test-util';
 import {of} from 'rxjs';
+import {randomString} from '@shared/util/test-util';
 
 describe('UrlParamHandler', () => {
     let mockRouter: Router;

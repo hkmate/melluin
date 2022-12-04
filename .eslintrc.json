@@ -4,9 +4,15 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended"
     ],
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
+    },
     "parser": "@typescript-eslint/parser",
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "import"
     ],
     "rules": {
         "@typescript-eslint/strict-boolean-expressions": [
