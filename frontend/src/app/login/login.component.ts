@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../auth/service/authentication.service';
-import {isNilOrEmpty, NOOP} from '../util/util';
-import {User} from '../auth/model/user';
+import {isNilOrEmpty, NOOP} from '@shared/util/util';
+import {User} from '@shared/user/user';
 
 @Component({
     templateUrl: './login.component.html',
