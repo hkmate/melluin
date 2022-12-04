@@ -9,6 +9,7 @@
     "server": {
         "port": 3000,
         "defaultSysAdmin": {
+            "needToInit": true,
             "username": "admin",
             "password": "admin",
             "firstName": "Sys",

@@ -1,24 +1,30 @@
 import {Injectable} from '@nestjs/common';
 import {JwtService} from '@nestjs/jwt';
-import {UserService} from '../../user/user.service';
+import {UserService} from '@be/user/user.service';
 import {PasswordCryptService} from './password-crypt.service';
-import * as CONFIG from '@resources/server-config.json';
 import {UserEntity} from 'src/user/model/user.entity';
 import * as crypto from 'crypto';
-import {RoleEntity} from '../../user/model/role.entity';
-import {PersonEntity} from '../../person/model/person.entity';
-import {PersonService} from '../../person/person.service';
+import {RoleEntity} from '@be/user/model/role.entity';
+import {PersonEntity} from '@be/person/model/person.entity';
+import {PersonService} from '@be/person/person.service';
 import {User} from '@shared/user/user';
 import {AuthToken} from '@shared/user/auth-token';
+import {isNil} from '@shared/util/util';
+import {ConfigService} from '@nestjs/config';
+import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
 
 @Injectable()
 export class AuthService {
 
-    constructor(private readonly jwtService: JwtService,
+    constructor(private readonly config: ConfigService,
+                private readonly jwtService: JwtService,
                 private readonly userService: UserService,
                 private readonly personService: PersonService,
                 private readonly passwordCryptService: PasswordCryptService) {
-        this.initDefaultUser();
+        const needToInitDefaultUser = this.config.get<boolean>('server.defaultSysAdmin.needToInit', false);
+        if (needToInitDefaultUser) {
+            this.initDefaultUser();
+        }
     }
 
     public async validateUser(username: string, pass: string): Promise<unknown> {
@@ -36,26 +42,27 @@ export class AuthService {
         return null;
     }
 
-    public login(user: User): AuthToken {
+    public getTokenFor(user: User): AuthToken {
         return {
             access_token: this.jwtService.sign({user}),
         };
     }
 
     private async initDefaultUser(): Promise<void> {
-        const username: string = CONFIG.server.defaultSysAdmin.username;
+        const username: string = this.config.get('server.defaultSysAdmin.username')!;
 
         const sysadmin: UserEntity | null = await this.userService.findOne(username);
-        if (sysadmin === null) {
+        if (isNil(sysadmin)) {
             await this.insertDefaultUserToDb();
         }
     }
 
     private async insertDefaultUserToDb(): Promise<void> {
-        const username: string = CONFIG.server.defaultSysAdmin.username;
-        const firstName: string = CONFIG.server.defaultSysAdmin.firstName;
-        const lastName: string = CONFIG.server.defaultSysAdmin.lastName;
-        const rawPassword: string = CONFIG.server.defaultSysAdmin.password;
+        const defaultAdmin = this.config.get<DefaultSysAdmin>('server.defaultSysAdmin')!;
+        const username: string = defaultAdmin.username;
+        const firstName: string = defaultAdmin.firstName;
+        const lastName: string = defaultAdmin.lastName;
+        const rawPassword: string = defaultAdmin.password;
         const password: string = this.passwordCryptService.encrypt(rawPassword);
         const userId: string = crypto.randomUUID();
         const person: PersonEntity = await
