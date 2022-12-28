@@ -9,7 +9,7 @@ import {PersonEntity} from '@be/person/model/person.entity';
 import {PersonService} from '@be/person/person.service';
 import {User} from '@shared/user/user';
 import {AuthToken} from '@shared/user/auth-token';
-import {isNil} from '@shared/util/util';
+import {isNil, Nullable} from '@shared/util/util';
 import {ConfigService} from '@nestjs/config';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
 
@@ -27,17 +27,24 @@ export class AuthService {
         }
     }
 
-    public async validateUser(username: string, pass: string): Promise<unknown> {
-        const user = await this.userService.findOne(username);
+    public async validateUser(userName: string, pass: string): Promise<Nullable<User>> {
+        const user: Nullable<UserEntity> = await this.userService.findOne(userName);
 
-        if (!user) {
+        if (isNil(user)) {
+            return null;
+        }
+
+        if (!user.isActive) {
             return null;
         }
 
         if (this.passwordCryptService.match(pass, user.password)) {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const {password, ...result} = user;
-            return result;
+            return {
+                id: user.id,
+                userName: user.userName,
+                roles: user.roles.map((roleEntity: RoleEntity) => roleEntity.role),
+                isActive: user.isActive
+            };
         }
         return null;
     }
@@ -59,7 +66,7 @@ export class AuthService {
 
     private async insertDefaultUserToDb(): Promise<void> {
         const defaultAdmin = this.config.get<DefaultSysAdmin>('server.defaultSysAdmin')!;
-        const username: string = defaultAdmin.username;
+        const userName: string = defaultAdmin.username;
         const firstName: string = defaultAdmin.firstName;
         const lastName: string = defaultAdmin.lastName;
         const rawPassword: string = defaultAdmin.password;
@@ -71,7 +78,7 @@ export class AuthService {
         const roles: Array<RoleEntity> = await this.userService.findAllRole();
         await this.userService.save({
             id: userId,
-            username,
+            userName,
             password,
             person,
             isActive: true,

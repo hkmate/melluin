@@ -26,8 +26,8 @@ export class UserService {
         return this.userRepository.find();
     }
 
-    public findOne(username: string): Promise<UserEntity | null> {
-        return this.userRepository.findOneBy({username});
+    public findOne(userName: string): Promise<UserEntity | null> {
+        return this.userRepository.findOne({where: {userName}, relations: {person: true, roles: true}});
     }
 
 }

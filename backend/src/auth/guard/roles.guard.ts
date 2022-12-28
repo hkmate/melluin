@@ -2,6 +2,7 @@ import {CanActivate, ExecutionContext, Injectable} from '@nestjs/common';
 import {Reflector} from '@nestjs/core';
 import {ROLES_KEY} from '../decorator/roles.decorator';
 import {Role} from '@shared/user/role.enum';
+import {isNil} from '@shared/util/util';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -10,12 +11,11 @@ export class RolesGuard implements CanActivate {
     }
 
     public canActivate(context: ExecutionContext): boolean {
-        const requiredRoles: Array<Role> = this.reflector.getAllAndOverride<Array<Role>>(ROLES_KEY, [
+        const requiredRoles: Array<Role> | null = this.reflector.getAllAndOverride<Array<Role> | null>(ROLES_KEY, [
             context.getHandler(),
             context.getClass(),
         ]);
-        // eslint-disable-next-line no-undefined
-        if (requiredRoles === null || requiredRoles === undefined) {
+        if (isNil(requiredRoles)) {
             return true;
         }
         const {user} = context.switchToHttp().getRequest();

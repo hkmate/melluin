@@ -1,10 +1,14 @@
 export const NOOP = (): unknown => ({});
 
-export function isNotNil<T>(value: T): boolean {
+export type Nil = null | undefined;
+
+export type Nullable<T> = T | null;
+
+export function isNotNil<T>(value: T | Nil): value is T {
     return !isNil(value);
 }
 
-export function isNil<T>(value: T): boolean {
+export function isNil<T>(value: T| Nil): value is Nil {
     // eslint-disable-next-line no-undefined
     return value === null || value === undefined;
 }
@@ -18,7 +22,7 @@ export function isNotEmpty<T>(array: Array<T> | string): boolean {
     return !isEmpty(array);
 }
 
-export function isNilOrEmpty<T>(array: Array<T> | string | null): boolean {
+export function isNilOrEmpty<T>(array: Array<T> | string | Nil): boolean {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     return isNil(array) || array!.length === 0;
 }
