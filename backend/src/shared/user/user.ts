@@ -5,6 +5,7 @@ export interface User {
     id: string;
     roles: Array<Role>;
     userName: string;
-    password: string;
+    password?: string;
+    isActive: boolean;
 
 }

@@ -8,8 +8,8 @@ export class UserEntity {
     @PrimaryColumn('uuid')
     id!: string;
 
-    @Column()
-    username!: string;
+    @Column({name: 'username'})
+    userName!: string;
 
     @Column()
     password!: string;
