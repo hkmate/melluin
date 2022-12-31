@@ -1,0 +1,19 @@
+
+.dashboard {
+    $dashboard-welcome-height: 25vh;
+
+    width: 100%;
+    height: $dashboard-welcome-height;
+    color: darkblue;
+    text-align: center;
+    align-content: center;
+    margin-top: calc(50vh - $dashboard-welcome-height / 2);
+
+    mat-icon {
+        color: cornflowerblue;
+        $icon-size: 15vh;
+        width: $icon-size;
+        height: $icon-size;
+        font-size: $icon-size;
+    }
+}

@@ -25,6 +25,9 @@
             "LoginButton": "Bejelentkezés"
         }
     },
+    "Dashboard": {
+        "WelcomeText": "Üdvözlünk a Nevetnikék App-ban. Válassz egy oldalt menüből."
+    },
     "PageNotFound": {
         "PageNotFound404": "Az oldal amit keres nem létezik",
         "WantToGo": "Esetleg a ",
