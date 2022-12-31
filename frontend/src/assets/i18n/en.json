@@ -25,6 +25,9 @@
             "LoginButton": "Log In"
         }
     },
+    "Dashboard": {
+        "WelcomeText": "Welcome to the Nevetnikék App. Chosse a page from the menu."
+    },
     "PageNotFound": {
         "PageNotFound404": "The page you were looking for doesn't exist.",
         "WantToGo": "You might want to go to the",
