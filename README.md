@@ -1,6 +1,6 @@
 # Melluin
 
-_For technical information take a look on `./README_technical.md`._
+_For technical information take a look on [./README_technical.md](./README_technical.mdu)._
 
 
 ## About Nevetnikék foundation

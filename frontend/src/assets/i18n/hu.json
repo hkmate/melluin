@@ -1,7 +1,9 @@
 {
     "Titles": {
+        "Base": "Nevetnikék",
         "Dashboard": "Kezdőlap",
-        "Login": "Bejelentkezés"
+        "Login": "Bejelentkezés",
+        "NotFound": "404"
     },
     "OkButton": "Ok",
     "SaveButton": "Mentés",
