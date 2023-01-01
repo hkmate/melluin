@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 import {DashboardModule} from './dashboard/dashboard.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NotFoundPageModule} from './not-found-component/not-found.module';
@@ -15,9 +15,14 @@ import {MenuComponent} from './menu/menu.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
+import {firstValueFrom} from 'rxjs';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);
+}
+
+export function appInitializeTranslateFactory(translate: TranslateService) {
+    return () => firstValueFrom(translate.use('hu'));
 }
 
 @NgModule({
@@ -28,7 +33,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         BrowserAnimationsModule,
         HttpClientModule,
         TranslateModule.forRoot({
-            defaultLanguage: 'hu',
             loader: {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
@@ -46,7 +50,13 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ],
     providers: [
         {provide: PathProvider, useClass: MelluinPathProvider},
-        {provide: PathContainer, useValue: PATHS}
+        {provide: PathContainer, useValue: PATHS},
+        {
+            provide: APP_INITIALIZER,
+            useFactory: appInitializeTranslateFactory,
+            deps: [TranslateService],
+            multi: true
+        }
     ],
 })
 export class AppModule {

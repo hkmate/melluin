@@ -1,7 +1,9 @@
 {
     "Titles": {
+        "Base": "Nevetnikék",
         "Dashboard": "Dashboard",
-        "Login": "Login"
+        "Login": "Login",
+        "NotFound": "404"
     },
     "OkButton": "Ok",
     "SaveButton": "Save",
