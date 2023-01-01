@@ -4,7 +4,7 @@ import {AppLanguage} from './language/app-language';
 
 @Component({
     selector: 'app-root',
-    template: '<router-outlet></router-outlet>'
+    template: '<app-menu><router-outlet></router-outlet></app-menu>'
 })
 export class AppComponent implements OnInit {
 

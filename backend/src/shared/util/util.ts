@@ -8,7 +8,7 @@ export function isNotNil<T>(value: T | Nil): value is T {
     return !isNil(value);
 }
 
-export function isNil<T>(value: T| Nil): value is Nil {
+export function isNil<T>(value: T | Nil): value is Nil {
     // eslint-disable-next-line no-undefined
     return value === null || value === undefined;
 }
@@ -25,6 +25,10 @@ export function isNotEmpty<T>(array: Array<T> | string): boolean {
 export function isNilOrEmpty<T>(array: Array<T> | string | Nil): boolean {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     return isNil(array) || array!.length === 0;
+}
+
+export function includeAny<T>(arr: Array<T>, ...values: Array<T>): boolean {
+    return values.some(value => arr.includes(value));
 }
 
 export function optionalArrayToArray<T>(element: T | Array<T>): Array<T> {

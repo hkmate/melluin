@@ -13,6 +13,13 @@
         "en": "Angol",
         "hu": "Magyar"
     },
+    "Menu": {
+        "People": "Emberek",
+        "Events": "Események",
+        "Reports": "Beszámolók",
+        "Notifications": "Értesítések",
+        "Departments": "Kórházi osztályok"
+    },
     "LoginPage": {
         "PageTitle": "Bejelentkezés",
         "FieldsRequired": "Felhasználónév és a jelszó megadása is kötelező",

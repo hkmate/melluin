@@ -13,6 +13,13 @@
         "en": "English",
         "hu": "Hungarian"
     },
+    "Menu": {
+        "People": "People",
+        "Events": "Events",
+        "Reports": "Reports",
+        "Notifications": "Notifications",
+        "Departments": "Departments"
+    },
     "LoginPage": {
         "PageTitle": "Log In",
         "FieldsRequired": "Both username and password are required",
