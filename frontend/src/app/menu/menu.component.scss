@@ -1,0 +1,70 @@
+//$menu-toggle-background: #dbf3fb;
+//$menu-toggle-background-on-hover: lightblue;
+$menu-toggle-background: #05abff;
+$menu-toggle-background-on-hover: #307fad;
+$toggle-button-opacity: 0.2;
+:host {
+    height: 100%;
+}
+
+mat-nav-list {
+    padding-top: 0;
+}
+
+mat-sidenav-container {
+    height: 100%;
+}
+
+mat-sidenav-content {
+    margin: 1rem;
+}
+
+.dashboard-menu-item {
+    text-align: center;
+}
+
+.menu-toggler {
+    position: absolute;
+    z-index: 100;
+    width: 3rem;
+    height: 3rem;
+    background: $menu-toggle-background;
+    border-end-end-radius: 3rem;
+
+    mat-icon {
+        margin-left: 0.5rem;
+        margin-top: 0.3rem;
+    }
+
+    opacity: $toggle-button-opacity;
+}
+
+.menu-closer {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+
+
+    opacity: $toggle-button-opacity;
+    & > div {
+        background: $menu-toggle-background;
+        height: 3rem;
+        width: 3rem;
+        border-radius: 0 0 0 3rem;
+
+        mat-icon {
+            transform: translate(-0.2rem, 0.4rem);
+        }
+    }
+}
+
+.menu-closer > div, .menu-toggler {
+
+    &:hover {
+        background-color: $menu-toggle-background-on-hover;
+    }
+
+    //mat-icon {
+    //    opacity: 0.4;
+    //}
+}

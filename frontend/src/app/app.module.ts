@@ -11,6 +11,10 @@ import {NotFoundPageModule} from './not-found-component/not-found.module';
 import {AuthModule} from './auth/auth.module';
 import {MelluinPathProvider, PathContainer, PATHS} from './app-paths';
 import {PathProvider} from './path-resolve/path-resolve.service';
+import {MenuComponent} from './menu/menu.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);
@@ -18,7 +22,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 
 @NgModule({
     bootstrap: [AppComponent],
-    declarations: [AppComponent],
+    declarations: [AppComponent, MenuComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -36,6 +40,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         DashboardModule,
         NotFoundPageModule,
         AppRoutingModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
     ],
     providers: [
         {provide: PathProvider, useClass: MelluinPathProvider},
