@@ -1,6 +1,7 @@
 import {Column, Entity, ManyToMany, PrimaryColumn, JoinTable, OneToOne, JoinColumn} from 'typeorm';
 import {RoleEntity} from './role.entity';
 import {PersonEntity} from '../../person/model/person.entity';
+import {UserCustomInfo} from '@shared/user/user';
 
 @Entity({name: 'user'})
 export class UserEntity {
@@ -16,6 +17,9 @@ export class UserEntity {
 
     @Column({name: 'is_active'})
     isActive!: boolean;
+
+    @Column({name: 'custom_info'})
+    customInfo?: UserCustomInfo;
 
     @OneToOne(type => PersonEntity, {cascade: ['insert', 'update', 'remove']})
     @JoinColumn({name: 'person_id'})
