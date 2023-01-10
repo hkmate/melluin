@@ -6,7 +6,7 @@ import {UserEntity} from 'src/user/model/user.entity';
 import * as crypto from 'crypto';
 import {RoleEntity} from '@be/user/model/role.entity';
 import {PersonEntity} from '@be/person/model/person.entity';
-import {PersonService} from '@be/person/person.service';
+import {PersonDao} from '@be/person/person.dao';
 import {User} from '@shared/user/user';
 import {AuthToken} from '@shared/user/auth-token';
 import {isNil, Nullable} from '@shared/util/util';
@@ -19,7 +19,7 @@ export class AuthService {
     constructor(private readonly config: ConfigService,
                 private readonly jwtService: JwtService,
                 private readonly userService: UserService,
-                private readonly personService: PersonService,
+                private readonly personService: PersonDao,
                 private readonly passwordCryptService: PasswordCryptService) {
         const needToInitDefaultUser = this.config.get<boolean>('server.defaultSysAdmin.needToInit', false);
         if (needToInitDefaultUser) {

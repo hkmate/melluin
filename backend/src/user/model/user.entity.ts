@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToMany, PrimaryColumn, JoinTable, OneToOne, JoinColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn} from 'typeorm';
 import {RoleEntity} from './role.entity';
 import {PersonEntity} from '../../person/model/person.entity';
 import {UserCustomInfo} from '@shared/user/user';
@@ -18,7 +18,7 @@ export class UserEntity {
     @Column({name: 'is_active'})
     isActive!: boolean;
 
-    @Column({name: 'custom_info'})
+    @Column({name: 'custom_info', type: 'jsonb'})
     customInfo?: UserCustomInfo;
 
     @OneToOne(type => PersonEntity, {cascade: ['insert', 'update', 'remove']})

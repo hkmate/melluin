@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryColumn} from 'typeorm';
+import {Column, Entity, OneToOne, PrimaryColumn} from 'typeorm';
+import {UserEntity} from '@be/user/model/user.entity';
 
 @Entity({name: 'person'})
 export class PersonEntity {
@@ -20,5 +21,8 @@ export class PersonEntity {
 
     @Column()
     phone?: string;
+
+    @OneToOne(type => UserEntity, (user: UserEntity) => user.person)
+    user?: UserEntity;
 
 }
