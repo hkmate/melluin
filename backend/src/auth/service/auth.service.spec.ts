@@ -3,7 +3,7 @@ import {AuthService} from '@be/auth/service/auth.service';
 import {ConfigService} from '@nestjs/config';
 import {JwtService} from '@nestjs/jwt';
 import {UserService} from '@be/user/user.service';
-import {PersonService} from '@be/person/person.service';
+import {PersonDao} from '@be/person/person.dao';
 import {PasswordCryptService} from '@be/auth/service/password-crypt.service';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
 import {cast, randomString} from '@shared/util/test-util';
@@ -21,7 +21,7 @@ import {Nullable} from '@shared/util/util';
 describe('AuthService', () => {
     describe('Construct when default user not needed', () => {
         let userService: UserService;
-        let personService: PersonService;
+        let personService: PersonDao;
 
         beforeEach(async () => {
             const configServiceGet = jest.fn().mockImplementation((paramName: string) => {
@@ -37,13 +37,13 @@ describe('AuthService', () => {
                     {provide: ConfigService, useValue: {get: configServiceGet}},
                     {provide: JwtService, useValue: {}},
                     {provide: UserService, useValue: {save: jest.fn(), findAllRole: jest.fn()}},
-                    {provide: PersonService, useValue: {save: jest.fn()}},
+                    {provide: PersonDao, useValue: {save: jest.fn()}},
                     {provide: PasswordCryptService, useValue: {}},
                 ],
             }).compile();
 
             userService = moduleRef.get<UserService>(UserService);
-            personService = moduleRef.get<PersonService>(PersonService);
+            personService = moduleRef.get<PersonDao>(PersonDao);
         });
 
         it('Then Person-, UserService not called', () => {
@@ -55,7 +55,7 @@ describe('AuthService', () => {
 
     describe('Construct when default user needed and not present', () => {
         let userService: UserService;
-        let personService: PersonService;
+        let personService: PersonDao;
         const defaultUser: DefaultSysAdmin = {
             firstName: randomString(),
             lastName: randomString(),
@@ -105,13 +105,13 @@ describe('AuthService', () => {
                             findAllRole: userServiceFindAllRole
                         }
                     },
-                    {provide: PersonService, useValue: {save: jest.fn(arg => arg),}},
+                    {provide: PersonDao, useValue: {save: jest.fn(arg => arg),}},
                     {provide: PasswordCryptService, useValue: {encrypt: passwordCryptServiceEncrypt}},
                 ],
             }).compile();
 
             userService = moduleRef.get<UserService>(UserService);
-            personService = moduleRef.get<PersonService>(PersonService);
+            personService = moduleRef.get<PersonDao>(PersonDao);
         });
 
         it('Then Person-, UserService called with filled objects', () => {
@@ -138,7 +138,7 @@ describe('AuthService', () => {
 
     describe('Construct when default user needed and present', () => {
         let userService: UserService;
-        let personService: PersonService;
+        let personService: PersonDao;
         const defaultUser: DefaultSysAdmin = {
             firstName: randomString(),
             lastName: randomString(),
@@ -170,13 +170,13 @@ describe('AuthService', () => {
                             findAllRole: jest.fn()
                         }
                     },
-                    {provide: PersonService, useValue: {save: jest.fn()}},
+                    {provide: PersonDao, useValue: {save: jest.fn()}},
                     {provide: PasswordCryptService, useValue: {encrypt: jest.fn()}},
                 ],
             }).compile();
 
             userService = moduleRef.get<UserService>(UserService);
-            personService = moduleRef.get<PersonService>(PersonService);
+            personService = moduleRef.get<PersonDao>(PersonDao);
         });
 
         it('Then Person-, UserService not called except UserService.findOne', () => {
@@ -199,7 +199,7 @@ describe('AuthService', () => {
                     {provide: ConfigService, useValue: {get: jest.fn(() => false)}},
                     {provide: JwtService, useValue: {sign: jest.fn()}},
                     {provide: UserService, useValue: {}},
-                    {provide: PersonService, useValue: {}},
+                    {provide: PersonDao, useValue: {}},
                     {provide: PasswordCryptService, useValue: {}},
                 ],
             }).compile();
@@ -242,7 +242,7 @@ describe('AuthService', () => {
                     {provide: ConfigService, useValue: {get: jest.fn(() => false)}},
                     {provide: JwtService, useValue: {sign: jest.fn()}},
                     {provide: UserService, useValue: {findOne: jest.fn()}},
-                    {provide: PersonService, useValue: {}},
+                    {provide: PersonDao, useValue: {}},
                     {provide: PasswordCryptService, useValue: {match: jest.fn()}},
                 ],
             }).compile();
