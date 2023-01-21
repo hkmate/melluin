@@ -3,7 +3,7 @@ import {AuthenticationService} from '@fe/app/auth/service/authentication.service
 import {Subscription} from 'rxjs';
 import {User} from '@shared/user/user';
 import {includeAny, isNil, isNotNil, Nullable} from '@shared/util/util';
-import {Role} from '@shared/user/role.enum';
+import {foundationEmployeeRoles, Role} from '@shared/user/role.enum';
 
 @Component({
     selector: 'app-menu',
@@ -51,11 +51,11 @@ export class MenuComponent implements OnInit, OnDestroy {
 
         const roles: Array<Role> = this.currentUser.roles;
         this.canUserSee = {
-            'people': includeAny(roles, Role.SYSADMIN),
-            'events': includeAny(roles, Role.SYSADMIN, Role.USER),
-            'reports': includeAny(roles, Role.SYSADMIN),
-            'notifications': includeAny(roles, Role.SYSADMIN, Role.USER),
-            'departments': includeAny(roles, Role.SYSADMIN),
+            'people': includeAny(roles, ...foundationEmployeeRoles),
+            'events': includeAny(roles, ...foundationEmployeeRoles),
+            'reports': includeAny(roles, ...foundationEmployeeRoles),
+            'notifications': includeAny(roles, ...foundationEmployeeRoles),
+            'departments': includeAny(roles, Role.SYSADMIN, Role.ADMINISTRATOR, Role.HOSPITAL_VISIT_COORDINATOR),
         }
     }
 

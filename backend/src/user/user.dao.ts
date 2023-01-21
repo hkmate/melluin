@@ -5,7 +5,7 @@ import {UserEntity} from './model/user.entity';
 import {RoleEntity} from './model/role.entity';
 
 @Injectable()
-export class UserService {
+export class UserDao {
 
     constructor(
         @InjectRepository(UserEntity)
@@ -20,10 +20,6 @@ export class UserService {
 
     public findAllRole(): Promise<Array<RoleEntity>> {
         return this.roleRepository.find();
-    }
-
-    public findAll(): Promise<Array<UserEntity>> {
-        return this.userRepository.find();
     }
 
     public findOne(userName: string): Promise<UserEntity | null> {

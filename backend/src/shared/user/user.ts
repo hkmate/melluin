@@ -2,9 +2,9 @@ import {Role} from './role.enum';
 
 export interface User {
     id: string;
+    personId: string;
     roles: Array<Role>;
     userName: string;
-    password?: string;
     isActive: boolean;
     customInfo?: UserCustomInfo;
 }

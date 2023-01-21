@@ -1,5 +1,29 @@
+import {User} from '@shared/user/user';
 
 export enum Role {
+
+    INTERN_HOSPITAL_VISITOR = 'INTERN_HOSPITAL_VISITOR',
+    BEGINNER_HOSPITAL_VISITOR = 'BEGINNER_HOSPITAL_VISITOR',
+    HOSPITAL_VISITOR = 'HOSPITAL_VISITOR',
+    MENTOR_HOSPITAL_VISITOR = 'MENTOR_HOSPITAL_VISITOR',
+
+    HOSPITAL_VISIT_COORDINATOR = 'HOSPITAL_VISIT_COORDINATOR',
+    FAIRY_PAINTING_COORDINATOR = 'FAIRY_PAINTING_COORDINATOR',
+    TOY_MAKING_COORDINATOR = 'TOY_MAKING_COORDINATOR',
+
+    ADMINISTRATOR = 'ADMINISTRATOR',
+
     SYSADMIN = 'SYSADMIN',
-    USER = 'USER',
+}
+
+export const foundationEmployeeRoles: Array<Role> = [
+    Role.FAIRY_PAINTING_COORDINATOR,
+    Role.TOY_MAKING_COORDINATOR,
+    Role.HOSPITAL_VISIT_COORDINATOR,
+    Role.ADMINISTRATOR,
+    Role.SYSADMIN
+];
+
+export function isUserAnEmployee(user: User): boolean {
+    return user.roles.some(role => foundationEmployeeRoles.includes(role));
 }

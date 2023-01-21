@@ -29,8 +29,8 @@ export interface FilterOperation<T> {
  *      ]
  *     goes to:  (firstName == 'John' AND lastName == 'Smith') OR ( firstName == 'James' AND lastName == 'Boyd')
  */
-export type ConjunctionFilterOptions<T> = Partial<Record<keyof T, FilterOperation<unknown>>>;
-export type FilterOptions<T> = Array<ConjunctionFilterOptions<T>> | ConjunctionFilterOptions<T>;
+export type ConjunctionFilterOptions = Record<string, FilterOperation<unknown>>;
+export type FilterOptions = Array<ConjunctionFilterOptions> | ConjunctionFilterOptions;
 
 export class FilterOperationBuilder {
 

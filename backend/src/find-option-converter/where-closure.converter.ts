@@ -11,14 +11,14 @@ export class WhereClosureConverter {
     constructor(private readonly operationConverterFactory: WhereClosureOperationConvertFactory) {
     }
 
-    public convertFilterOptions<T>(filterOptions: FilterOptions<T>): Array<FindOptionsWhere<T>> | FindOptionsWhere<T> {
+    public convertFilterOptions<T>(filterOptions: FilterOptions): Array<FindOptionsWhere<T>> | FindOptionsWhere<T> {
         if (Array.isArray(filterOptions)) {
             return filterOptions.map(option => this.convertConjunctionFilterOptionsToWhereClosure(option));
         }
         return this.convertConjunctionFilterOptionsToWhereClosure(filterOptions);
     }
 
-    private convertConjunctionFilterOptionsToWhereClosure<T>(filterOptions: FilterOptions<T>): FindOptionsWhere<T> {
+    private convertConjunctionFilterOptionsToWhereClosure<T>(filterOptions: FilterOptions): FindOptionsWhere<T> {
         return Object.entries(filterOptions)
             .map(([key, value]) => ({key, value: this.convertOperationToTypeOrmFormat(value)}))
             .reduce((previousValue, currentValue) => {
