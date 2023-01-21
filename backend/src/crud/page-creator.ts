@@ -5,20 +5,6 @@ import {WhereClosureConverter} from '@be/find-option-converter/where-closure.con
 import {cast} from '@shared/util/test-util';
 import {isNotNil} from '@shared/util/util';
 
-// TODO place it to the right place
-export interface EntityToDOConverter<Entity, DO> {
-    convert(entity: Entity): DO;
-}
-
-// TODO place it to the right place
-export interface PageRequestConverter<DO, Entity> {
-    convert(entity: PageRequest<DO>): PageRequest<Entity>;
-}
-
-// TODO place it to the right place
-export interface EntityFilterValidator<T> {
-    validate(request: PageRequest<T>): void | never;
-}
 
 export abstract class PageCreator<T extends ObjectLiteral> {
 
@@ -26,12 +12,14 @@ export abstract class PageCreator<T extends ObjectLiteral> {
                           protected readonly whereClosureConverter: WhereClosureConverter) {
     }
 
-    protected createOptions(pageRequest: PageRequest<T>): Partial<FindManyOptions<T>> {
+    protected createOptions(pageRequest: PageRequest): Partial<FindManyOptions<T>> {
         const result: Partial<FindManyOptions<T>> = {
             skip: pageRequest.page * pageRequest.size,
             take: pageRequest.size,
-            order: cast<FindOptionsOrder<T>>(pageRequest.sort),
         };
+        if (isNotNil(pageRequest.sort)) {
+            result.order = cast<FindOptionsOrder<T>>(pageRequest.sort);
+        }
         if (isNotNil(pageRequest.where)) {
             result.where = this.whereClosureConverter.convertFilterOptions(pageRequest.where)
         }
@@ -40,7 +28,7 @@ export abstract class PageCreator<T extends ObjectLiteral> {
 
     protected createPage(content: Array<T>,
                          countOfAll: number,
-                         originalRequest: PageRequest<T>): Pageable<T> {
+                         originalRequest: PageRequest): Pageable<T> {
         return {
             content,
             countOfAll,
@@ -50,7 +38,7 @@ export abstract class PageCreator<T extends ObjectLiteral> {
         };
     }
 
-    protected async getPage(request: PageRequest<T>,
+    protected async getPage(request: PageRequest,
                             otherOptions: Partial<FindManyOptions<T>>): Promise<Pageable<T>> {
         const [content, count] = await this.repository.findAndCount({
             ...this.createOptions(request),

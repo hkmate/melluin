@@ -2,7 +2,7 @@ import {Test} from '@nestjs/testing';
 import {AuthService} from '@be/auth/service/auth.service';
 import {ConfigService} from '@nestjs/config';
 import {JwtService} from '@nestjs/jwt';
-import {UserService} from '@be/user/user.service';
+import {UserDao} from '@be/user/user.dao';
 import {PersonDao} from '@be/person/person.dao';
 import {PasswordCryptService} from '@be/auth/service/password-crypt.service';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
@@ -20,7 +20,7 @@ import {Nullable} from '@shared/util/util';
 
 describe('AuthService', () => {
     describe('Construct when default user not needed', () => {
-        let userService: UserService;
+        let userService: UserDao;
         let personService: PersonDao;
 
         beforeEach(async () => {
@@ -36,13 +36,13 @@ describe('AuthService', () => {
                     AuthService,
                     {provide: ConfigService, useValue: {get: configServiceGet}},
                     {provide: JwtService, useValue: {}},
-                    {provide: UserService, useValue: {save: jest.fn(), findAllRole: jest.fn()}},
+                    {provide: UserDao, useValue: {save: jest.fn(), findAllRole: jest.fn()}},
                     {provide: PersonDao, useValue: {save: jest.fn()}},
                     {provide: PasswordCryptService, useValue: {}},
                 ],
             }).compile();
 
-            userService = moduleRef.get<UserService>(UserService);
+            userService = moduleRef.get<UserDao>(UserDao);
             personService = moduleRef.get<PersonDao>(PersonDao);
         });
 
@@ -54,7 +54,7 @@ describe('AuthService', () => {
     });
 
     describe('Construct when default user needed and not present', () => {
-        let userService: UserService;
+        let userService: UserDao;
         let personService: PersonDao;
         const defaultUser: DefaultSysAdmin = {
             firstName: randomString(),
@@ -82,8 +82,8 @@ describe('AuthService', () => {
                 return null;
             });
             jest.spyOn(crypto, 'randomUUID')
-                .mockReturnValueOnce(mockedUserId)
-                .mockReturnValueOnce(mockedPersonId);
+                .mockReturnValueOnce(mockedPersonId)
+                .mockReturnValueOnce(mockedUserId);
 
             const passwordCryptServiceEncrypt = jest.fn(pass => {
                 if (pass === defaultUser.password) {
@@ -99,7 +99,7 @@ describe('AuthService', () => {
                     {provide: ConfigService, useValue: {get: configServiceGet}},
                     {provide: JwtService, useValue: {}},
                     {
-                        provide: UserService, useValue: {
+                        provide: UserDao, useValue: {
                             findOne: jest.fn().mockReturnValueOnce(null),
                             save: jest.fn(arg => arg),
                             findAllRole: userServiceFindAllRole
@@ -110,7 +110,7 @@ describe('AuthService', () => {
                 ],
             }).compile();
 
-            userService = moduleRef.get<UserService>(UserService);
+            userService = moduleRef.get<UserDao>(UserDao);
             personService = moduleRef.get<PersonDao>(PersonDao);
         });
 
@@ -137,7 +137,7 @@ describe('AuthService', () => {
     });
 
     describe('Construct when default user needed and present', () => {
-        let userService: UserService;
+        let userService: UserDao;
         let personService: PersonDao;
         const defaultUser: DefaultSysAdmin = {
             firstName: randomString(),
@@ -164,7 +164,7 @@ describe('AuthService', () => {
                     {provide: ConfigService, useValue: {get: configServiceGet}},
                     {provide: JwtService, useValue: {}},
                     {
-                        provide: UserService, useValue: {
+                        provide: UserDao, useValue: {
                             findOne: jest.fn().mockReturnValueOnce({username: defaultUser.username}),
                             save: jest.fn(),
                             findAllRole: jest.fn()
@@ -175,7 +175,7 @@ describe('AuthService', () => {
                 ],
             }).compile();
 
-            userService = moduleRef.get<UserService>(UserService);
+            userService = moduleRef.get<UserDao>(UserDao);
             personService = moduleRef.get<PersonDao>(PersonDao);
         });
 
@@ -198,7 +198,7 @@ describe('AuthService', () => {
                     AuthService,
                     {provide: ConfigService, useValue: {get: jest.fn(() => false)}},
                     {provide: JwtService, useValue: {sign: jest.fn()}},
-                    {provide: UserService, useValue: {}},
+                    {provide: UserDao, useValue: {}},
                     {provide: PersonDao, useValue: {}},
                     {provide: PasswordCryptService, useValue: {}},
                 ],
@@ -212,7 +212,7 @@ describe('AuthService', () => {
         it('When user is valid Then token returned with wrapped user', () => {
             const user: User = {
                 id: randomString(),
-                password: randomString(),
+                personId: randomUUID(),
                 userName: randomString(),
                 roles: [Role.SYSADMIN],
                 isActive: true
@@ -232,7 +232,7 @@ describe('AuthService', () => {
 
     describe('validateUser', () => {
         let authService: AuthService;
-        let userService: UserService;
+        let userService: UserDao;
         let passwordCryptService: PasswordCryptService;
 
         beforeEach(async () => {
@@ -241,30 +241,32 @@ describe('AuthService', () => {
                     AuthService,
                     {provide: ConfigService, useValue: {get: jest.fn(() => false)}},
                     {provide: JwtService, useValue: {sign: jest.fn()}},
-                    {provide: UserService, useValue: {findOne: jest.fn()}},
+                    {provide: UserDao, useValue: {findOne: jest.fn()}},
                     {provide: PersonDao, useValue: {}},
                     {provide: PasswordCryptService, useValue: {match: jest.fn()}},
                 ],
             }).compile();
 
             authService = moduleRef.get<AuthService>(AuthService);
-            userService = moduleRef.get<UserService>(UserService);
+            userService = moduleRef.get<UserDao>(UserDao);
             passwordCryptService = moduleRef.get<PasswordCryptService>(PasswordCryptService);
         });
 
         it('When user is in db and active and password is correct Then user object returned without password', async () => {
             const userId: string = randomUUID();
+            const personId: string = randomUUID();
             const userName: string = randomString();
             const password: string = randomString();
             const userEntity: UserEntity = {
                 userName, password,
                 id: userId,
-                person: cast<PersonEntity>({}),
+                person: cast<PersonEntity>({id: personId}),
                 isActive: true,
                 roles: [{id: randomUUID(), role: Role.SYSADMIN}]
             };
             const expectedUser: User = {
                 id: userId,
+                personId,
                 userName,
                 roles: [Role.SYSADMIN],
                 isActive: true
@@ -280,12 +282,13 @@ describe('AuthService', () => {
 
         it('When user is in db and active and password is not correct Then null returned', async () => {
             const userId: string = randomUUID();
+            const personId: string = randomUUID();
             const userName: string = randomString();
             const password: string = randomString();
             const userEntity: UserEntity = {
                 userName, password,
                 id: userId,
-                person: cast<PersonEntity>({}),
+                person: cast<PersonEntity>({id: personId}),
                 isActive: true,
                 roles: [{id: randomUUID(), role: Role.SYSADMIN}]
             };

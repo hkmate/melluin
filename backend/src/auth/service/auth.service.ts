@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {JwtService} from '@nestjs/jwt';
-import {UserService} from '@be/user/user.service';
+import {UserDao} from '@be/user/user.dao';
 import {PasswordCryptService} from './password-crypt.service';
 import {UserEntity} from 'src/user/model/user.entity';
 import * as crypto from 'crypto';
@@ -18,7 +18,7 @@ export class AuthService {
 
     constructor(private readonly config: ConfigService,
                 private readonly jwtService: JwtService,
-                private readonly userService: UserService,
+                private readonly userService: UserDao,
                 private readonly personService: PersonDao,
                 private readonly passwordCryptService: PasswordCryptService) {
         const needToInitDefaultUser = this.config.get<boolean>('server.defaultSysAdmin.needToInit', false);
@@ -41,6 +41,7 @@ export class AuthService {
         if (this.passwordCryptService.match(pass, user.password)) {
             return {
                 id: user.id,
+                personId: user.person.id,
                 userName: user.userName,
                 roles: user.roles.map((roleEntity: RoleEntity) => roleEntity.role),
                 isActive: user.isActive
@@ -66,20 +67,17 @@ export class AuthService {
 
     private async insertDefaultUserToDb(): Promise<void> {
         const defaultAdmin = this.config.get<DefaultSysAdmin>('server.defaultSysAdmin')!;
-        const userName: string = defaultAdmin.username;
-        const firstName: string = defaultAdmin.firstName;
-        const lastName: string = defaultAdmin.lastName;
-        const rawPassword: string = defaultAdmin.password;
-        const password: string = this.passwordCryptService.encrypt(rawPassword);
-        const userId: string = crypto.randomUUID();
-        const person: PersonEntity = await
-            this.personService.save({id: crypto.randomUUID(), firstName, lastName});
+        const person: PersonEntity = await this.personService.save({
+                id: crypto.randomUUID(),
+                firstName: defaultAdmin.firstName,
+                lastName: defaultAdmin.lastName
+            });
 
         const roles: Array<RoleEntity> = await this.userService.findAllRole();
         await this.userService.save({
-            id: userId,
-            userName,
-            password,
+            id: crypto.randomUUID(),
+            userName: defaultAdmin.username,
+            password: this.passwordCryptService.encrypt(defaultAdmin.password),
             person,
             isActive: true,
             roles

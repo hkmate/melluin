@@ -21,7 +21,7 @@ export class UserEntity {
     @Column({name: 'custom_info', type: 'jsonb'})
     customInfo?: UserCustomInfo;
 
-    @OneToOne(type => PersonEntity, {cascade: ['insert', 'update', 'remove']})
+    @OneToOne(type => PersonEntity, {eager: true, cascade: ['insert', 'update', 'remove']})
     @JoinColumn({name: 'person_id'})
     person!: PersonEntity;
 

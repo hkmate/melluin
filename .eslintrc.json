@@ -12,7 +12,8 @@
     "parser": "@typescript-eslint/parser",
     "plugins": [
         "@typescript-eslint",
-        "import"
+        "import",
+        "max-params-no-constructor"
     ],
     "rules": {
         "@typescript-eslint/strict-boolean-expressions": [
@@ -101,7 +102,8 @@
         "eqeqeq": ["error", "always"],
         "max-lines": ["warn", 300],
         "max-lines-per-function": ["warn", 15],
-        "max-params": ["warn", 3],
+        "max-params": "off",
+        "max-params-no-constructor/max-params-no-constructor": ["warn", 3],
         "no-bitwise": ["error"],
         "no-caller": ["error"],
         "no-confusing-arrow": [
@@ -125,7 +127,6 @@
         "no-multi-assign": ["error"],
         "no-return-assign": ["error"],
         "no-sequences": ["error"],
-        "no-undefined": ["error"],
         "no-useless-concat": ["error"],
         "no-useless-constructor": "off",
         "no-var": ["error"],
