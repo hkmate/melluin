@@ -1,9 +1,9 @@
 import {PersonEntity} from '@be/person/model/person.entity';
 import {Person} from '@shared/person/person';
 import {Injectable} from '@nestjs/common';
-import {UserEntityToDtoConverter} from '@be/user/model/user-entity-to-dto.converter';
 import {isNil} from '@shared/util/util';
 import {Converter} from '@shared/converter';
+import {UserEntityToDtoConverter} from '@be/user/converter/user-entity-to-dto.converter';
 
 @Injectable()
 export class PersonEntityToDtoConverter implements Converter<PersonEntity, Person> {

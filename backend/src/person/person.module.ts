@@ -6,9 +6,9 @@ import {PersonCrudService} from '@be/person/person.crud.service';
 import {FindOptionConverterModule} from '@be/find-option-converter/find-option-converter.module';
 import {PersonDao} from '@be/person/person.dao';
 import {PersonEntityToDtoConverter} from '@be/person/converer/person-entity-to-dto.converter';
-import {UserModule} from '@be/user/user.module';
 import {PersonFieldsPageRequestValidator} from '@be/person/validator/person-fields-page-request.validator';
 import {PersonCreationToEntityConverter} from '@be/person/converer/person-creation-to-entity.converter';
+import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 
 @Module({
     imports: [
@@ -16,7 +16,7 @@ import {PersonCreationToEntityConverter} from '@be/person/converer/person-creati
             PersonEntity
         ]),
 
-        UserModule,
+        UserEntityToDtoModule,
         FindOptionConverterModule,
     ],
     controllers: [PersonController],

@@ -20,8 +20,18 @@ export class PersonDao extends PageCreator<PersonEntity> {
     }
 
     public findOne(id: string): Promise<PersonEntity | undefined> {
-        return this.repository.findOne({where: {id}, relations: {user: true}})
-            .then(entity => entity ?? undefined);
+        return this.repository.findOne({
+            where: {id},
+            relations: {user: true}
+        }).then(entity => entity ?? undefined);
+    }
+
+    public findOneWithCache(id: string): Promise<PersonEntity | undefined> {
+        return this.repository.findOne({
+            where: {id},
+            relations: {user: true},
+            cache: 10000
+        }).then(entity => entity ?? undefined);
     }
 
     public getOne(id: string): Promise<PersonEntity> {

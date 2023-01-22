@@ -1,5 +1,3 @@
-import {User} from '@shared/user/user';
-
 export enum Role {
 
     INTERN_HOSPITAL_VISITOR = 'INTERN_HOSPITAL_VISITOR',
@@ -16,14 +14,22 @@ export enum Role {
     SYSADMIN = 'SYSADMIN',
 }
 
-export const foundationEmployeeRoles: Array<Role> = [
+export const coordinatorRoles: Array<Role> = [
     Role.FAIRY_PAINTING_COORDINATOR,
     Role.TOY_MAKING_COORDINATOR,
-    Role.HOSPITAL_VISIT_COORDINATOR,
+    Role.HOSPITAL_VISIT_COORDINATOR
+];
+
+export const foundationEmployeeRoles: Array<Role> = [
+    ...coordinatorRoles,
     Role.ADMINISTRATOR,
     Role.SYSADMIN
 ];
 
-export function isUserAnEmployee(user: User): boolean {
+export interface RoleHolder {
+    roles: Array<Role>;
+}
+
+export function isUserAnEmployee(user: RoleHolder): boolean {
     return user.roles.some(role => foundationEmployeeRoles.includes(role));
 }
