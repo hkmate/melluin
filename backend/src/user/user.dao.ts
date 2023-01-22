@@ -1,8 +1,9 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import {Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import {UserEntity} from './model/user.entity';
 import {RoleEntity} from './model/role.entity';
+import {isNil} from '@shared/util/util';
 
 @Injectable()
 export class UserDao {
@@ -22,8 +23,18 @@ export class UserDao {
         return this.roleRepository.find();
     }
 
-    public findOne(userName: string): Promise<UserEntity | null> {
-        return this.userRepository.findOne({where: {userName}, relations: {person: true, roles: true}});
+    public findOneByName(userName: string): Promise<UserEntity | null> {
+        return this.userRepository.findOne({where: {userName}, relations: {roles: true}});
+    }
+
+    public getOne(id: string): Promise<UserEntity> {
+        return this.userRepository.findOne({where: {id}, relations: {roles: true}})
+            .then(entity => {
+                if (isNil(entity)) {
+                    throw new NotFoundException(`User not found with id: ${id}`);
+                }
+                return entity;
+            });
     }
 
 }

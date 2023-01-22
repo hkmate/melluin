@@ -1,6 +1,6 @@
 import {isEmpty, isNotNil} from '@shared/util/util';
 import {randomString} from '@shared/util/test-util';
-import {PasswordCryptService} from '@be/auth/service/password-crypt.service';
+import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 
 describe('PasswordCryptService', () => {
     const service = new PasswordCryptService();

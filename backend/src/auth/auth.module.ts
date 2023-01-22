@@ -5,7 +5,6 @@ import {APP_GUARD} from '@nestjs/core';
 import {UserModule} from '../user/user.module';
 import {AuthService} from './service/auth.service';
 import {JwtStrategy} from './strategy/jwt.strategy';
-import {PasswordCryptService} from './service/password-crypt.service';
 import {JwtAuthGuard} from './guard/jwt-auth.guard';
 import {RolesGuard} from './guard/roles.guard';
 import {LocalStrategy} from './strategy/local.strategy';
@@ -40,7 +39,6 @@ import {Security} from '@be/config/model/security';
         AuthService,
         LocalStrategy,
         JwtStrategy,
-        PasswordCryptService,
         {
             provide: APP_GUARD,
             useClass: JwtAuthGuard,

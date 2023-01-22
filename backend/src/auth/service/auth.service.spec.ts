@@ -4,7 +4,6 @@ import {ConfigService} from '@nestjs/config';
 import {JwtService} from '@nestjs/jwt';
 import {UserDao} from '@be/user/user.dao';
 import {PersonDao} from '@be/person/person.dao';
-import {PasswordCryptService} from '@be/auth/service/password-crypt.service';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
 import {cast, randomString} from '@shared/util/test-util';
 import {Role} from '@shared/user/role.enum';
@@ -17,6 +16,7 @@ import {AuthToken} from '@shared/user/auth-token';
 import Mock = jest.Mock;
 import {when} from 'jest-when';
 import {Nullable} from '@shared/util/util';
+import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 
 describe('AuthService', () => {
     describe('Construct when default user not needed', () => {
@@ -100,7 +100,7 @@ describe('AuthService', () => {
                     {provide: JwtService, useValue: {}},
                     {
                         provide: UserDao, useValue: {
-                            findOne: jest.fn().mockReturnValueOnce(null),
+                            findOneByName: jest.fn().mockReturnValueOnce(null),
                             save: jest.fn(arg => arg),
                             findAllRole: userServiceFindAllRole
                         }
@@ -129,7 +129,7 @@ describe('AuthService', () => {
                 isActive: true
             };
 
-            expect(userService.findOne).toBeCalledWith(defaultUser.username);
+            expect(userService.findOneByName).toBeCalledWith(defaultUser.username);
             expect(userService.findAllRole).toBeCalled();
             expect(personService.save).toBeCalledWith(expectedPerson);
             expect(userService.save).toBeCalledWith(expectedUser);
@@ -165,7 +165,7 @@ describe('AuthService', () => {
                     {provide: JwtService, useValue: {}},
                     {
                         provide: UserDao, useValue: {
-                            findOne: jest.fn().mockReturnValueOnce({username: defaultUser.username}),
+                            findOneByName: jest.fn().mockReturnValueOnce({username: defaultUser.username}),
                             save: jest.fn(),
                             findAllRole: jest.fn()
                         }
@@ -180,7 +180,7 @@ describe('AuthService', () => {
         });
 
         it('Then Person-, UserService not called except UserService.findOne', () => {
-            expect(userService.findOne).toBeCalledWith(defaultUser.username);
+            expect(userService.findOneByName).toBeCalledWith(defaultUser.username);
             expect(userService.findAllRole).not.toBeCalled();
             expect(personService.save).not.toBeCalled();
             expect(userService.save).not.toBeCalled();
@@ -241,7 +241,7 @@ describe('AuthService', () => {
                     AuthService,
                     {provide: ConfigService, useValue: {get: jest.fn(() => false)}},
                     {provide: JwtService, useValue: {sign: jest.fn()}},
-                    {provide: UserDao, useValue: {findOne: jest.fn()}},
+                    {provide: UserDao, useValue: {findOneByName: jest.fn()}},
                     {provide: PersonDao, useValue: {}},
                     {provide: PasswordCryptService, useValue: {match: jest.fn()}},
                 ],
@@ -272,7 +272,7 @@ describe('AuthService', () => {
                 isActive: true
             }
             const rawPassword: string = randomString();
-            when(userService.findOne).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
+            when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
             when(passwordCryptService.match).calledWith(rawPassword, password).mockReturnValue(true);
 
             const result: Nullable<User> = await authService.validateUser(userName, rawPassword);
@@ -293,7 +293,7 @@ describe('AuthService', () => {
                 roles: [{id: randomUUID(), role: Role.SYSADMIN}]
             };
             const rawPassword: string = randomString();
-            when(userService.findOne).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
+            when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
             when(passwordCryptService.match).calledWith(rawPassword, password).mockReturnValue(false);
 
             const result: Nullable<User> = await authService.validateUser(userName, rawPassword);
@@ -313,7 +313,7 @@ describe('AuthService', () => {
                 roles: [{id: randomUUID(), role: Role.SYSADMIN}]
             };
             const rawPassword: string = randomString();
-            when(userService.findOne).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
+            when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
 
             const result: Nullable<User> = await authService.validateUser(userName, rawPassword);
 
@@ -323,7 +323,7 @@ describe('AuthService', () => {
         it('When user is not in dbThen null returned', async () => {
             const userName: string = randomString();
             const rawPassword: string = randomString();
-            when(userService.findOne).calledWith(userName).mockReturnValue(Promise.resolve(null));
+            when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(null));
 
             const result: Nullable<User> = await authService.validateUser(userName, rawPassword);
 

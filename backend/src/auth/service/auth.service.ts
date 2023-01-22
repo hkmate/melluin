@@ -1,7 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {JwtService} from '@nestjs/jwt';
 import {UserDao} from '@be/user/user.dao';
-import {PasswordCryptService} from './password-crypt.service';
 import {UserEntity} from 'src/user/model/user.entity';
 import * as crypto from 'crypto';
 import {RoleEntity} from '@be/user/model/role.entity';
@@ -12,6 +11,7 @@ import {AuthToken} from '@shared/user/auth-token';
 import {isNil, Nullable} from '@shared/util/util';
 import {ConfigService} from '@nestjs/config';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
+import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 
 @Injectable()
 export class AuthService {
@@ -28,7 +28,7 @@ export class AuthService {
     }
 
     public async validateUser(userName: string, pass: string): Promise<Nullable<User>> {
-        const user: Nullable<UserEntity> = await this.userService.findOne(userName);
+        const user: Nullable<UserEntity> = await this.userService.findOneByName(userName);
 
         if (isNil(user)) {
             return null;
@@ -59,7 +59,7 @@ export class AuthService {
     private async initDefaultUser(): Promise<void> {
         const username: string = this.config.get('server.defaultSysAdmin.username')!;
 
-        const sysadmin: UserEntity | null = await this.userService.findOne(username);
+        const sysadmin: UserEntity | null = await this.userService.findOneByName(username);
         if (isNil(sysadmin)) {
             await this.insertDefaultUserToDb();
         }

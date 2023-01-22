@@ -1,8 +1,8 @@
-import {Validator} from '@shared/validator/validator';
+import {AsyncValidator, Validator} from '@shared/validator/validator';
 
 export class ValidatorChain<T> implements Validator<T> {
 
-    private constructor(private validators: Array<Validator<T>> = []) {
+    private constructor(private readonly validators: Array<Validator<T>> = []) {
     }
 
     public static of<T>(...validators: Array<Validator<T>>): ValidatorChain<T> {
@@ -14,3 +14,20 @@ export class ValidatorChain<T> implements Validator<T> {
     }
 
 }
+
+export class AsyncValidatorChain<T> implements AsyncValidator<T> {
+
+    private constructor(private readonly validators: Array<AsyncValidator<T>> = []) {
+    }
+
+    public static of<T>(...validators: Array<AsyncValidator<T>>): AsyncValidatorChain<T> {
+        return new AsyncValidatorChain(validators);
+    }
+
+    public validate(value: T): Promise<void> {
+        return Promise.all(this.validators.map(validator => validator.validate(value))).then()
+    }
+
+}
+
+
