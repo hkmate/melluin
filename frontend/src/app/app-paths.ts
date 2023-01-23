@@ -10,6 +10,10 @@ export const PATHS: PathContainer = {
     login: {
         main: 'login',
     },
+
+    people: {
+        main: 'people',
+    }
 };
 
 export interface PathDescriptor {

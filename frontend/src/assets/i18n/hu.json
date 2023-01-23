@@ -3,11 +3,14 @@
         "Base": "Nevetnikék",
         "Dashboard": "Kezdőlap",
         "Login": "Bejelentkezés",
+        "PeopleList": "Személyek",
         "NotFound": "404"
     },
     "OkButton": "Ok",
     "SaveButton": "Mentés",
     "CancelButton": "Mégse",
+    "NoData": "Nincs adat",
+    "Search": "Keresés",
     "UserRole": {
         "SYSADMIN": "Rendszer adminisztrátor"
     },
@@ -22,8 +25,15 @@
         "Notifications": "Értesítések",
         "Departments": "Kórházi osztályok"
     },
+    "Paginator": {
+        "FirstPageLabel": "Első oldal",
+        "ItemsPerPageLabel": "Sorok oldalanként:",
+        "LastPageLabel": "Utolsó oldal",
+        "NextPageLabel": "Következő",
+        "PreviousPageLabel": "Előző",
+        "PageOfLabel": "{{page}} / {{count}} oldal"
+    },
     "LoginPage": {
-        "PageTitle": "Bejelentkezés",
         "FieldsRequired": "Felhasználónév és a jelszó megadása is kötelező",
         "BadCredentials": "A felhasználónév vagy jelszó hibás",
         "Form": {
@@ -32,6 +42,16 @@
             "Password": "Jelszó",
             "PasswordPlaceholder": "Adja meg a jelszavát",
             "LoginButton": "Bejelentkezés"
+        }
+    },
+    "PersonPipe": {
+        "NoPerson": "Nem létező személy"
+    },
+    "PeopleListPage": {
+        "ListHeader": {
+            "Name": "Név",
+            "Email": "Email",
+            "Phone": "Tel.szám"
         }
     },
     "Dashboard": {

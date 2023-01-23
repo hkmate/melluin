@@ -1,0 +1,33 @@
+import {Pipe, PipeTransform} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {Person} from '@shared/person/person';
+import {isNil, isNotNil} from '@shared/util/util';
+import {AppLanguage} from '@fe/app/language/app-language';
+
+@Pipe({
+    name: 'personName',
+    standalone: true
+})
+export class PersonNamePipe implements PipeTransform {
+
+    constructor(private readonly i18n: TranslateService) {
+    }
+
+    public transform(person: Person): string {
+        if (isNil(person)) {
+            return this.i18n.instant('PersonPipe.NoPerson');
+        }
+        if (isNotNil(person.nickName)) {
+            return person.nickName;
+        }
+        return this.getName(person);
+    }
+
+    private getName({firstName, lastName}: Person): string {
+        if (this.i18n.currentLang === AppLanguage.HU) {
+            return `${lastName} ${firstName}`;
+        }
+        return `${firstName} ${lastName}`;
+    }
+
+}

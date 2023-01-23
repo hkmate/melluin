@@ -16,13 +16,16 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {firstValueFrom} from 'rxjs';
+import {MatPaginatorIntl} from '@angular/material/paginator';
+import {I18nPaginatorIntl} from '@fe/app/util/i18n-paginator-intl';
+import {AppLanguage} from '@fe/app/language/app-language';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);
 }
 
 export function appInitializeTranslateFactory(translate: TranslateService) {
-    return () => firstValueFrom(translate.use('hu'));
+    return () => firstValueFrom(translate.use(AppLanguage.HU));
 }
 
 @NgModule({
@@ -32,6 +35,10 @@ export function appInitializeTranslateFactory(translate: TranslateService) {
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
+
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -44,13 +51,11 @@ export function appInitializeTranslateFactory(translate: TranslateService) {
         DashboardModule,
         NotFoundPageModule,
         AppRoutingModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
     ],
     providers: [
         {provide: PathProvider, useClass: MelluinPathProvider},
         {provide: PathContainer, useValue: PATHS},
+        {provide: MatPaginatorIntl, useClass: I18nPaginatorIntl},
         {
             provide: APP_INITIALIZER,
             useFactory: appInitializeTranslateFactory,

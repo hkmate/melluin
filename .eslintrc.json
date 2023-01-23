@@ -59,6 +59,10 @@
                 }
             }
         ],
+        "@typescript-eslint/no-empty-function": [ "error", {
+                "allow": ["overrideMethods"]
+            }
+        ],
         "@typescript-eslint/no-for-in-array": "error",
         "@typescript-eslint/no-invalid-void-type": "error",
         "@typescript-eslint/no-unused-vars": [
@@ -69,6 +73,7 @@
         "@typescript-eslint/no-magic-numbers": [
             "error", {
                 "ignoreReadonlyClassProperties": true,
+                "ignoreClassFieldInitialValues": true,
                 "ignoreArrayIndexes": true,
                 "ignoreDefaultValues": true
             }

@@ -3,11 +3,14 @@
         "Base": "Nevetnikék",
         "Dashboard": "Dashboard",
         "Login": "Login",
+        "PeopleList": "People",
         "NotFound": "404"
     },
     "OkButton": "Ok",
     "SaveButton": "Save",
     "CancelButton": "Cancel",
+    "NoData": "No data",
+    "Search": "Search",
     "Role": {
         "SYSADMIN": "System administrator"
     },
@@ -22,8 +25,15 @@
         "Notifications": "Notifications",
         "Departments": "Departments"
     },
+    "Paginator": {
+        "FirstPageLabel": "First",
+        "ItemsPerPageLabel": "Items per page:",
+        "LastPageLabel": "Last",
+        "NextPageLabel": "Next",
+        "PreviousPageLabel": "Previous",
+        "PageOfLabel": "Page {{page}} or {{count}}"
+    },
     "LoginPage": {
-        "PageTitle": "Log In",
         "FieldsRequired": "Both username and password are required",
         "BadCredentials": "Either username or password is wrong",
         "Form": {
@@ -34,8 +44,18 @@
             "LoginButton": "Log In"
         }
     },
+    "PersonPipe": {
+        "NoPerson": "Not existed person"
+    },
+    "PeopleListPage": {
+        "ListHeader": {
+            "Name": "Name",
+            "Email": "Email",
+            "Phone": "Phone"
+        }
+    },
     "Dashboard": {
-        "WelcomeText": "Welcome to the Nevetnikék App. Chosse a page from the menu."
+        "WelcomeText": "Welcome to the Nevetnikék App. Choose a page from the menu."
     },
     "PageNotFound": {
         "PageNotFound404": "The page you were looking for doesn't exist.",
