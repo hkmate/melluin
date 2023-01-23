@@ -1,0 +1,7 @@
+<mat-form-field>
+    <mat-label>{{ label }}</mat-label>
+    <input matInput type="text" [ngModel]="inputText" (ngModelChange)="handleInputChange($event)">
+    <button *ngIf="inputText && needClearButton" matSuffix mat-icon-button (click)="clear()">
+        <mat-icon>close</mat-icon>
+    </button>
+</mat-form-field>

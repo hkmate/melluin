@@ -14,7 +14,7 @@ export interface FilterOperation<T> {
  * If they are in array the operation objects will be processed with OR.
  *
  * Example 1:
- *      { firstName: {operator: 'eq', operand: 'Timber'}, lastName: "{operator: 'eq', operand: 'Smith'} }
+ *      { firstName: {operator: 'eq', operand: 'Timber'}, lastName: {operator: 'eq', operand: 'Smith'} }
  *     goes to: firstName == 'Timber' AND lastName == 'Smith'
  * Example 2:
  *      [
@@ -24,8 +24,8 @@ export interface FilterOperation<T> {
  *     goes to: firstName == 'Timber' OR lastName == 'Smith'
  * Example 3:
  *      [
- *          { firstName: {operator: 'eq', operand: 'John'}, lastName: "{operator: 'eq', operand: 'Smith'} }
- *          { firstName: {operator: 'eq', operand: 'James'}, lastName: "{operator: 'eq', operand: 'Boyd'} }
+ *          { firstName: {operator: 'eq', operand: 'John'}, lastName: {operator: 'eq', operand: 'Smith'} }
+ *          { firstName: {operator: 'eq', operand: 'James'}, lastName: {operator: 'eq', operand: 'Boyd'} }
  *      ]
  *     goes to:  (firstName == 'John' AND lastName == 'Smith') OR ( firstName == 'James' AND lastName == 'Boyd')
  */

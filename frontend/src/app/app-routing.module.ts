@@ -17,6 +17,11 @@ const routes: Routes = [
         component: DashboardComponent
     },
     {
+        path: PATHS.people.main,
+        canLoad: [AuthGuard],
+        loadChildren: () => import('./people/people-routing.module').then(m => m.PeopleRoutingModule)
+    },
+    {
         path: '',
         redirectTo: PATHS.dashboard.main,
         pathMatch: 'full'
