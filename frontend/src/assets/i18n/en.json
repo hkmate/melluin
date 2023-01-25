@@ -11,6 +11,7 @@
     "CancelButton": "Cancel",
     "NoData": "No data",
     "Search": "Search",
+    "Edit": "Edit",
     "Role": {
         "SYSADMIN": "System administrator"
     },
@@ -23,7 +24,8 @@
         "Events": "Events",
         "Reports": "Reports",
         "Notifications": "Notifications",
-        "Departments": "Departments"
+        "Departments": "Departments",
+        "Logout": "Log out"
     },
     "Paginator": {
         "FirstPageLabel": "First",
@@ -48,10 +50,35 @@
         "NoPerson": "Not existed person"
     },
     "PeopleListPage": {
+        "AddPerson": "Add new person",
         "ListHeader": {
             "Name": "Name",
             "Email": "Email",
             "Phone": "Phone"
+        }
+    },
+    "PersonPage": {
+        "Data": "Properties",
+        "EditData": "Edit properties",
+        "AddPerson": "Add person",
+        "Present": {
+            "FirstName": "Firstname",
+            "LastName": "Lastname",
+            "NickName": "Nick name",
+            "Email": "Email",
+            "Phone": "Phone number"
+        },
+        "Form": {
+            "FirstName": "First name",
+            "FirstNamePlaceholder": "Julia",
+            "LastName": "Last name",
+            "LastNamePlaceholder": "Nevettető",
+            "NickName": "Nick name",
+            "NickNamePlaceholder": "Julcsi",
+            "Email": "Email",
+            "EmailPlaceholder": "julcsi@nevetnikek.hu",
+            "Phone": "Phone number",
+            "PhonePlaceholder": "+36 30 123 4567"
         }
     },
     "Dashboard": {

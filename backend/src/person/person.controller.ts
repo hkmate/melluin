@@ -16,8 +16,8 @@ import {User} from '@shared/user/user';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {Roles} from '@be/auth/decorator/roles.decorator';
 import {foundationEmployeeRoles} from '@shared/user/role.enum';
-import {PersonCreation} from '@be/person/model/person-creation';
-import {PersonUpdate} from '@be/person/model/person-update';
+import {PersonCreation} from '@shared/person/person-creation';
+import {PersonUpdate} from '@shared/person/person-update';
 import {PageRequestParserPipe} from '@be/crud/page-request-parser.pipe';
 
 

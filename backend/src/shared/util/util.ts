@@ -13,6 +13,10 @@ export function isNil<T>(value: T | Nil): value is Nil {
     return value === null || value === undefined;
 }
 
+export function allNil<T>(...values: Array<T | Nil>): boolean {
+    return values.every(item => isNil(item));
+}
+
 export function isEmpty<T>(array: Array<T> | string): boolean {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     return array.length === 0;

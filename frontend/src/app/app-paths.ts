@@ -1,6 +1,9 @@
 import {PathProvider} from './path-resolve/path-resolve.service';
 import {Injectable} from '@angular/core';
 
+export type CreateMarkerType = 'new';
+export const CREATE_MARKER: CreateMarkerType = 'new';
+
 export const PATHS: PathContainer = {
 
     dashboard: {
@@ -13,7 +16,10 @@ export const PATHS: PathContainer = {
 
     people: {
         main: 'people',
+        detail: ':id',
+        new: CREATE_MARKER
     }
+
 };
 
 export interface PathDescriptor {

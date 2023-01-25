@@ -2,7 +2,7 @@ import {Validator} from '@shared/validator/validator';
 import {User} from '@shared/user/user';
 import {isUserAnEmployee} from '@shared/user/role.enum';
 import {ForbiddenException} from '@nestjs/common';
-import {PersonUpdate} from '@be/person/model/person-update';
+import {PersonUpdate} from '@shared/person/person-update';
 
 
 interface ChangeSetWithId {

@@ -11,6 +11,7 @@
     "CancelButton": "Mégse",
     "NoData": "Nincs adat",
     "Search": "Keresés",
+    "Edit": "Szerkesztés",
     "UserRole": {
         "SYSADMIN": "Rendszer adminisztrátor"
     },
@@ -23,7 +24,8 @@
         "Events": "Események",
         "Reports": "Beszámolók",
         "Notifications": "Értesítések",
-        "Departments": "Kórházi osztályok"
+        "Departments": "Kórházi osztályok",
+        "Logout": "Kijelentkezés"
     },
     "Paginator": {
         "FirstPageLabel": "Első oldal",
@@ -48,10 +50,35 @@
         "NoPerson": "Nem létező személy"
     },
     "PeopleListPage": {
+        "AddPerson": "Új felvétele",
         "ListHeader": {
             "Name": "Név",
             "Email": "Email",
             "Phone": "Tel.szám"
+        }
+    },
+    "PersonPage": {
+        "Data": "Adatok",
+        "EditData": "Adatok szerkesztése",
+        "AddPerson": "Személy hozzáadás",
+        "Present": {
+            "FirstName": "Keresztnév",
+            "LastName": "Vezetéknév",
+            "NickName": "Becenév",
+            "Email": "Email",
+            "Phone": "Telefonszám"
+        },
+        "Form": {
+            "FirstName": "Keresztnév",
+            "FirstNamePlaceholder": "Júlia",
+            "LastName": "Vezetéknév",
+            "LastNamePlaceholder": "Nevettető",
+            "NickName": "Becenév",
+            "NickNamePlaceholder": "Julcsi",
+            "Email": "Email",
+            "EmailPlaceholder": "julcsi@nevetnikek.hu",
+            "Phone": "Telefonszám",
+            "PhonePlaceholder": "+36 30 123 4567"
         }
     },
     "Dashboard": {
