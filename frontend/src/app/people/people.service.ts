@@ -4,6 +4,8 @@ import {Pageable, PageRequest} from '@shared/api-util/pageable';
 import {Observable} from 'rxjs';
 import {Person} from '@shared/person/person';
 import {environment} from '@fe/environment';
+import {PersonCreation} from '@shared/person/person-creation';
+import {PersonUpdate} from '@shared/person/person-update';
 
 
 @Injectable({providedIn: 'root'})
@@ -14,6 +16,18 @@ export class PeopleService {
 
     private get peopleUrl(): string {
         return `${environment.baseURL}/people`;
+    }
+
+    public addPerson(data: PersonCreation): Observable<Person> {
+        return this.http.post<Person>(this.peopleUrl, data);
+    }
+
+    public getPerson(personId: string): Observable<Person> {
+        return this.http.get<Person>(`${this.peopleUrl}/${personId}`);
+    }
+
+    public updatePerson(personId: string, data: PersonUpdate): Observable<Person> {
+        return this.http.put<Person>(`${this.peopleUrl}/${personId}`, data);
     }
 
     public findPeople(filters: PageRequest): Observable<Pageable<Person>> {

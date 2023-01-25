@@ -43,6 +43,10 @@ export class MenuComponent implements OnInit, OnDestroy {
         this.menuOpened = !this.menuOpened;
     }
 
+    protected logout(): void {
+        this.authService.logout();
+    }
+
     private initializeVisibilityOfMenuItems(): void {
         if (isNil(this.currentUser) || isNil(this.currentUser.roles)) {
             this.canUserSee = {};

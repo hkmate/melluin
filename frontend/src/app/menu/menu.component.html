@@ -22,6 +22,7 @@
 <!--                <a *ngIf="canUserSee?.['notifications']" mat-list-item routerLink="/notifications">{{ 'Menu.Notifications' | translate }}</a>-->
 <!--                <a *ngIf="canUserSee?.['departments']"  mat-list-item routerLink="/departments">{{ 'Menu.Departments' | translate }}</a>-->
 <!--                <a mat-list-item routerLink="/my-profile">{{ currentUser.userName }}</a>-->
+                <a mat-list-item routerLink="." (click)="logout()">{{ 'Menu.Logout' | translate }}</a>
             </mat-nav-list>
         </mat-sidenav>
 

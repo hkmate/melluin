@@ -1,14 +1,12 @@
-import {IsDefined, IsEmail, IsOptional, IsPhoneNumber, MinLength} from 'class-validator';
+import {IsEmail, IsOptional, IsPhoneNumber, MinLength} from 'class-validator';
 import {nameMinLength} from '@shared/constants';
 
 export class PersonCreation {
 
     @MinLength(nameMinLength)
-    @IsDefined()
     firstName: string;
 
     @MinLength(nameMinLength)
-    @IsDefined()
     lastName: string;
 
     @MinLength(nameMinLength)

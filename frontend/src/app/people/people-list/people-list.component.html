@@ -1,42 +1,59 @@
 <section>
-    <h1>{{ 'Titles.PeopleList' | translate }}</h1>
+    <div class="page-content">
+        <h1>{{ 'Titles.PeopleList' | translate }}</h1>
 
-    <app-lazy-input [label]="'Search' | translate" (changed)="filterChanged($event)"></app-lazy-input>
+        <div class="option-row">
+            <app-lazy-input [label]="'Search' | translate" (changed)="filterChanged($event)"></app-lazy-input>
 
-    <table mat-table recycleRows [dataSource]="tableDataSource">
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Name' | translate }}</th>
-            <td mat-cell *matCellDef="let person">{{ person | personName }}</td>
-        </ng-container>
+            <button mat-stroked-button
+                    color="primary"
+                    [routerLink]="['new']">
+                {{ 'PeopleListPage.AddPerson' | translate}}
+            </button>
+        </div>
 
-        <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Email' | translate }}</th>
-            <td mat-cell *matCellDef="let person">
-                <span [ngClass]="{'no-data': !person.email}">{{ person.email | optional }}</span>
-            </td>
-        </ng-container>
+        <table mat-table recycleRows [dataSource]="tableDataSource">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Name' | translate }}</th>
+                <td mat-cell *matCellDef="let person">
+                    <a class="link" [routerLink]="[person.id]">{{ person | personName }}</a>
 
-        <ng-container matColumnDef="phone">
-            <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Phone' | translate }}</th>
-            <td mat-cell *matCellDef="let person">
-                <span [ngClass]="{'no-data': !person.phone}">{{ person.phone | optional }}</span>
-            </td>
-        </ng-container>
+                    <mat-icon *ngIf="person.user" class="material-icons-outlined is-user-icon">badge</mat-icon>
+                </td>
+            </ng-container>
 
-        <ng-container matColumnDef="options">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let person"></td>
-        </ng-container>
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Email' | translate }}</th>
+                <td mat-cell *matCellDef="let person">
+                    <span [ngClass]="{'no-data': !person.email}">{{ person.email | optional }}</span>
+                </td>
+            </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="columns"></tr>
-        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
-    </table>
+            <ng-container matColumnDef="phone">
+                <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Phone' | translate }}</th>
+                <td mat-cell *matCellDef="let person">
+                    <span [ngClass]="{'no-data': !person.phone}">{{ person.phone | optional }}</span>
+                </td>
+            </ng-container>
 
-    <mat-paginator [length]="countOfAll"
-                   [pageIndex]="page"
-                   [pageSize]="size"
-                   [pageSizeOptions]="sizeOptions"
-                   (page)="paginateHappened($event)">
-    </mat-paginator>
+            <ng-container matColumnDef="options">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let person">
+                    <a mat-icon-button [routerLink]="[person.id]" [queryParams]="{edit: true}">
+                        <mat-icon class="material-icons-outlined settings-icon">settings</mat-icon>
+                    </a>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columns"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+        </table>
+
+        <mat-paginator [length]="countOfAll"
+                       [pageIndex]="page"
+                       [pageSize]="size"
+                       [pageSizeOptions]="sizeOptions"
+                       (page)="paginateHappened($event)">
+        </mat-paginator>
+    </div>
 </section>
-

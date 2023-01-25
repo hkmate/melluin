@@ -1,0 +1,39 @@
+<h1>{{'PersonPage.Data' | translate}}</h1>
+
+<div class="person-data-presenter">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'PersonPage.Present.LastName' | translate }}</mat-card-subtitle>
+            <mat-card-title>{{ person?.lastName }}</mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'PersonPage.Present.FirstName' | translate }}</mat-card-subtitle>
+            <mat-card-title>{{ person?.firstName }}</mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'PersonPage.Present.NickName' | translate }}</mat-card-subtitle>
+            <mat-card-title>{{ person?.nickName | optional: '-' }}</mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'PersonPage.Present.Email' | translate }}</mat-card-subtitle>
+            <mat-card-title>{{ person?.email | optional: '-' }}</mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'PersonPage.Present.Phone' | translate }}</mat-card-subtitle>
+            <mat-card-title>{{ person?.phone | optional: '-' }}</mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+</div>

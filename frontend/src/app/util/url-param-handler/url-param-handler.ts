@@ -7,7 +7,7 @@ export type QueryParams = Record<string, string>;
 @Injectable()
 export class UrlParamHandler {
 
-    constructor(private route: ActivatedRoute, private router: Router) {
+    constructor(protected route: ActivatedRoute, protected router: Router) {
     }
 
     public hasParam(paramName: string): boolean {

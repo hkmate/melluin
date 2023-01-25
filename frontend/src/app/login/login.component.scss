@@ -4,8 +4,25 @@
     text-align: center;
 }
 
-h1 {
-    color: darkblue;
-    font-size: xxx-large;
-    margin: 2rem 0 3rem 0;
+section {
+
+    max-width: unset;
+    width: 30vw;
+
+    @media screen and (max-width: 1000px) {
+        width: 50vw;
+    }
+    @media screen and (max-width: 600px) {
+        width: 90%;
+    }
+
+
+    img {
+        width: 100%;
+        margin: 2rem 0 1rem 0;
+    }
+
+    p, mat-form-field {
+        width: 100%;
+    }
 }

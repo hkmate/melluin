@@ -2,7 +2,7 @@ import {PersonEntity} from '@be/person/model/person.entity';
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
 import {Converter} from '@shared/converter';
-import {PersonCreation} from '@be/person/model/person-creation';
+import {PersonCreation} from '@shared/person/person-creation';
 import {randomUUID} from 'crypto';
 
 @Injectable()
@@ -21,11 +21,11 @@ export class PersonCreationToEntityConverter implements Converter<PersonCreation
     private convertNotNilEntity(dto: PersonCreation): PersonEntity {
         return {
             id: randomUUID(),
-            email: dto.email,
             firstName: dto.firstName,
             lastName: dto.lastName,
+            nickName: dto.nickName,
+            email: dto.email,
             phone: dto.phone,
-            nickName: dto.nickName
         } satisfies PersonEntity;
     }
 

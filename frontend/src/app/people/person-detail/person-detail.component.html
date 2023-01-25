@@ -1,0 +1,24 @@
+<section>
+    <div class="page-content">
+
+        <div class="person-part">
+            <app-person-data-form *ngIf="isEditMode()"
+                                  [person]="person"
+                                  (submitted)="savePerson($event)"
+                                  (canceled)="cancelEditing()">
+            </app-person-data-form>
+
+            <ng-container *ngIf="!isEditMode()">
+                <app-person-data-presenter [person]="person"></app-person-data-presenter>
+                <div class="button-row">
+                    <button mat-stroked-button
+                            color="primary"
+                            (click)="switchToEdit()">
+                        {{ 'Edit' | translate }}
+                    </button>
+                </div>
+            </ng-container>
+        </div>
+
+    </div>
+</section>

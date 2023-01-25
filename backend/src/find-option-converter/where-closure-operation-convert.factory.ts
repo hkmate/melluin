@@ -16,6 +16,7 @@ import {Injectable} from '@nestjs/common';
 import {FindOperator} from 'typeorm/find-options/FindOperator';
 
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type WhereClosureOperationConvert = (_:any) => FindOperator<any>;
 
 @Injectable()

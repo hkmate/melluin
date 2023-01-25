@@ -16,17 +16,17 @@ export class AuthenticationService {
 
     private readonly _currentUser: Observable<User | null>;
     private readonly currentUserSubject: BehaviorSubject<User | null>;
-    private authToken: string | null;
+    private authToken: string | undefined;
 
     constructor(private readonly http: HttpClient,
                 private readonly jwtService: JwtService) {
         this.currentUserSubject = new BehaviorSubject<User | null>(this.loadCurrentUserFromStorage());
         this._currentUser = this.currentUserSubject.asObservable();
 
-        this.authToken = localStorage.getItem(AuthenticationService.AUTH_TOKEN_KEY) ?? null;
+        this.authToken = localStorage.getItem(AuthenticationService.AUTH_TOKEN_KEY) ?? undefined;
     }
 
-    public get token(): string | null {
+    public get token(): string | undefined {
         return this.authToken;
     }
 
@@ -56,6 +56,12 @@ export class AuthenticationService {
             ));
     }
 
+    public logout(): void {
+        this.clearStorage();
+        this.authToken = undefined;
+        this.currentUserSubject.next(null);
+    }
+
     private storeToken(token: AuthToken): void {
         this.authToken = token.access_token;
         localStorage.setItem(AuthenticationService.AUTH_TOKEN_KEY, token.access_token);
@@ -76,6 +82,10 @@ export class AuthenticationService {
 
     private getUserFromToken(token: AuthToken): User {
         return this.jwtService.decodeToken(token.access_token)[AuthenticationService.USER_KEY_IN_TOKEN];
+    }
+
+    private clearStorage(): void {
+        localStorage.clear();
     }
 
 }

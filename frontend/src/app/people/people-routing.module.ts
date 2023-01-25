@@ -4,6 +4,9 @@ import {PeopleModule} from '@fe/app/people/people.module';
 import {AuthGuard} from '@fe/app/auth/service/auth.guard';
 import {foundationEmployeeRoles} from '@shared/user/role.enum';
 import {PeopleListComponent} from '@fe/app/people/people-list/people-list.component';
+import {PersonDetailComponent} from '@fe/app/people/person-detail/person-detail.component';
+import {PersonResolver} from '@fe/app/people/person.resolver';
+import {PATHS} from '@fe/app/app-paths';
 
 const routes: Routes = [
     {
@@ -11,6 +14,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {roles: foundationEmployeeRoles},
         component: PeopleListComponent,
+    }, {
+        path: PATHS.people.detail,
+        canActivate: [AuthGuard],
+        data: {roles: foundationEmployeeRoles},
+        component: PersonDetailComponent,
+        resolve: {person: PersonResolver}
     }
 ];
 

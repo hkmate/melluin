@@ -11,8 +11,16 @@ export class OptionalPipe implements PipeTransform {
     constructor(private readonly i18n: TranslateService) {
     }
 
-    public transform(value: unknown): string {
-        return isNotNil(value) ? value : this.i18n.instant('NoData');
+    public transform<T>(value?: T, message?: string): string | T {
+        return isNotNil(value) ? value : this.getMessage(message);
+    }
+
+    private getMessage(message?: string): string {
+        return isNotNil(message) ? message : this.getDefaultMsg();
+    }
+
+    private getDefaultMsg(): string {
+        return this.i18n.instant('NoData');
     }
 
 }

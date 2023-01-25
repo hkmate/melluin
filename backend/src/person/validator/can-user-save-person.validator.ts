@@ -1,5 +1,5 @@
 import {Validator} from '@shared/validator/validator';
-import {PersonCreation} from '@be/person/model/person-creation';
+import {PersonCreation} from '@shared/person/person-creation';
 import {User} from '@shared/user/user';
 import {isUserAnEmployee} from '@shared/user/role.enum';
 import {ForbiddenException} from '@nestjs/common';
