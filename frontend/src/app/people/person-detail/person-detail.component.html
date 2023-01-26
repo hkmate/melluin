@@ -2,12 +2,6 @@
     <div class="page-content">
 
         <div class="person-part">
-            <app-person-data-form *ngIf="isEditMode()"
-                                  [person]="person"
-                                  (submitted)="savePerson($event)"
-                                  (canceled)="cancelEditing()">
-            </app-person-data-form>
-
             <ng-container *ngIf="!isEditMode()">
                 <app-person-data-presenter [person]="person"></app-person-data-presenter>
                 <div class="button-row">
@@ -18,7 +12,20 @@
                     </button>
                 </div>
             </ng-container>
+
+            <app-person-data-form *ngIf="isEditMode()"
+                                  [person]="person"
+                                  (submitted)="savePerson($event)"
+                                  (canceled)="cancelEditing()">
+            </app-person-data-form>
         </div>
+
+        <ng-container *ngIf="person">
+            <div class="divider"></div>
+            <div class="user-part">
+                <app-user-detail [personId]="person.id" [user]="person.user"></app-user-detail>
+            </div>
+        </ng-container>
 
     </div>
 </section>

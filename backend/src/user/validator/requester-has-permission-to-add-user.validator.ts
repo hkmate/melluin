@@ -2,7 +2,7 @@ import {Validator} from '@shared/validator/validator';
 import {User} from '@shared/user/user';
 import {isUserAnEmployee, Role} from '@shared/user/role.enum';
 import {ForbiddenException} from '@nestjs/common';
-import {UserCreation} from '@be/user/model/user-creation';
+import {UserCreation} from '@shared/user/user-creation';
 
 export class RequesterHasPermissionToAddUserValidator implements Validator<UserCreation> {
 

@@ -1,0 +1,47 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'PersonPage.User.Form.UserName' | translate }}</mat-label>
+            <input matInput
+                   [placeholder]="'PersonPage.User.Form.UserNamePlaceholder' | translate"
+                   formControlName="userName">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'PersonPage.User.Form.Password' | translate }}</mat-label>
+            <input matInput
+                   type="password"
+                   [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
+                   formControlName="password">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'PersonPage.User.Form.Roles' | translate }}</mat-label>
+            <mat-select formControlName="roles" multiple>
+                <mat-option *ngFor="let role of ROLES" [value]="role">
+                    {{ 'Role.' + role | translate }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="button-row">
+        <button mat-flat-button
+                color="accent"
+                type="submit">
+            {{ 'SaveButton' | translate}}
+        </button>
+        <button mat-stroked-button
+                color="primary"
+                type="button"
+                (click)="cancelEditing()">
+            {{ 'CancelButton' | translate}}
+        </button>
+    </div>
+
+</form>
