@@ -1,4 +1,4 @@
-<ng-template [ngIf]="currentUser"  [ngIfElse]="justNgContentTemplate">
+<ng-template [ngIf]="currentUser" [ngIfElse]="justNgContentTemplate">
     <div class="menu-toggler"
          [ngClass]="{'display-none': menuOpened}"
          (click)="toggleMenu()">
@@ -17,12 +17,22 @@
                     <mat-icon class="material-icons-outlined">dashboard</mat-icon>
                 </a>
                 <a *ngIf="canUserSee?.['people']" mat-list-item routerLink="/people">{{ 'Menu.People' | translate }}</a>
-<!--                <a *ngIf="canUserSee?.['events']" mat-list-item routerLink="/events">{{ 'Menu.Events' | translate }}</a>-->
-<!--                <a *ngIf="canUserSee?.['reports']" mat-list-item routerLink="/reports">{{ 'Menu.Reports' | translate }}</a>-->
-<!--                <a *ngIf="canUserSee?.['notifications']" mat-list-item routerLink="/notifications">{{ 'Menu.Notifications' | translate }}</a>-->
-<!--                <a *ngIf="canUserSee?.['departments']"  mat-list-item routerLink="/departments">{{ 'Menu.Departments' | translate }}</a>-->
-<!--                <a mat-list-item routerLink="/my-profile">{{ currentUser.userName }}</a>-->
-                <a mat-list-item routerLink="." (click)="logout()">{{ 'Menu.Logout' | translate }}</a>
+                <!--                <a *ngIf="canUserSee?.['events']" mat-list-item routerLink="/events">{{ 'Menu.Events' | translate }}</a>-->
+                <!--                <a *ngIf="canUserSee?.['reports']" mat-list-item routerLink="/reports">{{ 'Menu.Reports' | translate }}</a>-->
+                <!--                <a *ngIf="canUserSee?.['notifications']" mat-list-item routerLink="/notifications">{{ 'Menu.Notifications' | translate }}</a>-->
+                <!--                <a *ngIf="canUserSee?.['departments']"  mat-list-item routerLink="/departments">{{ 'Menu.Departments' | translate }}</a>-->
+                <mat-divider></mat-divider>
+                <a class="grey"
+                   mat-list-item
+                   [routerLink]="['people', currentUser.personId]">
+                    {{ currentUser.userName }}
+                </a>
+                <a class="grey"
+                   mat-list-item
+                   routerLink="."
+                   (click)="logout()">
+                    {{ 'Menu.Logout' | translate }}
+                </a>
             </mat-nav-list>
         </mat-sidenav>
 

@@ -9,6 +9,10 @@ $toggle-button-opacity: 0.2;
 
 mat-nav-list {
     padding-top: 0;
+
+    .grey {
+        opacity: .6;
+    }
 }
 
 mat-sidenav-container {
@@ -64,7 +68,4 @@ mat-sidenav-content {
         background-color: $menu-toggle-background-on-hover;
     }
 
-    //mat-icon {
-    //    opacity: 0.4;
-    //}
 }
