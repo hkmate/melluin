@@ -1,0 +1,19 @@
+form {
+    mat-form-field {
+        width: 100%;
+    }
+
+    .button-row {
+        margin-top: .5rem;
+        display: flex;
+        justify-content: end;
+
+        button {
+            margin-right: .5rem;
+
+            &:last-of-type {
+                margin-right: 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+<h1>{{ 'PersonPage.User.Data' | translate }}</h1>
+
+<div class="user-data-presenter">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'PersonPage.User.Present.UserName' | translate }}</mat-card-subtitle>
+            <mat-card-title>{{ user?.userName }}</mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'PersonPage.User.Present.Roles' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                <ng-container *ngFor="let role of user?.roles">
+                    <span class="role">{{ 'Role.' + role | translate }}</span>
+                </ng-container>
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'PersonPage.User.Present.Status' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                {{  (user?.isActive ? 'PersonPage.User.Active' : 'PersonPage.User.Inactive') | translate }}
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+</div>

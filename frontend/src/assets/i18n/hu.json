@@ -19,6 +19,17 @@
         "en": "Angol",
         "hu": "Magyar"
     },
+    "Role": {
+        "INTERN_HOSPITAL_VISITOR": "Hospitáló",
+        "BEGINNER_HOSPITAL_VISITOR": "Kórházlátogató (kezdő)",
+        "HOSPITAL_VISITOR": "Kórházlátogató",
+        "MENTOR_HOSPITAL_VISITOR": "Mentor",
+        "HOSPITAL_VISIT_COORDINATOR": "Kórházi koordinátor",
+        "FAIRY_PAINTING_COORDINATOR": "Mesefalfestő koordinátor",
+        "TOY_MAKING_COORDINATOR": "Játékkészítő koordinátor",
+        "ADMINISTRATOR": "Adminisztrátor",
+        "SYSADMIN": "Rendszer admin"
+    },
     "Menu": {
         "People": "Emberek",
         "Events": "Események",
@@ -79,6 +90,26 @@
             "EmailPlaceholder": "julcsi@nevetnikek.hu",
             "Phone": "Telefonszám",
             "PhonePlaceholder": "+36 30 123 4567"
+        },
+        "User": {
+            "NewUser": "Felhasználó létrehozása",
+            "Data": "Felhasználó adatok",
+            "EditData": "Felhasználó szerkesztése",
+            "Active": "Aktív",
+            "Inactive": "Inaktív",
+            "Present": {
+                "UserName": "Felhasználónév",
+                "Roles": "Szerepkörök",
+                "Status": "Státusz"
+            },
+            "Form": {
+                "UserName": "Felhasználónév",
+                "UserNamePlaceholder": "kisMano",
+                "Password": "Jelszó",
+                "PasswordPlaceholder": "askjRSsdfkFSDf234lsdf3241",
+                "Roles": "Szerepkörök",
+                "Status": "Státusz"
+            }
         }
     },
     "Dashboard": {

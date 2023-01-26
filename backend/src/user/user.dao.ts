@@ -24,11 +24,11 @@ export class UserDao {
     }
 
     public findOneByName(userName: string): Promise<UserEntity | null> {
-        return this.userRepository.findOne({where: {userName}, relations: {roles: true}});
+        return this.userRepository.findOne({where: {userName}});
     }
 
     public getOne(id: string): Promise<UserEntity> {
-        return this.userRepository.findOne({where: {id}, relations: {roles: true}})
+        return this.userRepository.findOne({where: {id}})
             .then(entity => {
                 if (isNil(entity)) {
                     throw new NotFoundException(`User not found with id: ${id}`);

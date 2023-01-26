@@ -1,0 +1,31 @@
+<div class="user-detail">
+
+    <ng-container *ngIf="needDataPresenter()">
+        <app-user-data-presenter [user]="userToShow"></app-user-data-presenter>
+        <div class="button-row">
+            <button mat-stroked-button
+                    color="primary"
+                    (click)="switchToEdit()">
+                {{ 'Edit' | translate }}
+            </button>
+        </div>
+    </ng-container>
+    <div *ngIf="!userToShow && !createModeOn" class="button-row">
+        <button mat-stroked-button
+                color="primary"
+                (click)="switchToCreate()">
+            {{ 'PersonPage.User.NewUser' | translate }}
+        </button>
+    </div>
+    <app-user-creation-form *ngIf="createModeOn"
+                            [personId]="personId"
+                            (submitted)="createUser($event)"
+                            (canceled)="cancelEditing()">
+    </app-user-creation-form>
+    <app-user-edit-form *ngIf="editModeOn"
+                        [user]="userToShow"
+                        (submitted)="updateUser($event)"
+                        (canceled)="cancelEditing()">
+    </app-user-edit-form>
+
+</div>

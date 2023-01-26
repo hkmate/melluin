@@ -3,7 +3,7 @@ import {User} from '@shared/user/user';
 import {isUserAnEmployee, Role} from '@shared/user/role.enum';
 import {ForbiddenException} from '@nestjs/common';
 import {UserEntity} from '@be/user/model/user.entity';
-import {UserUpdate} from '@be/user/model/user-update';
+import {UserUpdate} from '@shared/user/user-update';
 import {includeAny, isNil} from '@shared/util/util';
 
 interface ChangeSetWithEntity {

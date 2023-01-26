@@ -1,0 +1,40 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'PersonPage.User.Form.Password' | translate }}</mat-label>
+            <input matInput
+                   type="password"
+                   [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
+                   formControlName="password">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.User.Form.Status' | translate }}</mat-card-subtitle>
+                <mat-card-content>
+                    <mat-slide-toggle formControlName="isActive">
+                        {{  (isUserSetToActive() ? 'PersonPage.User.Active' : 'PersonPage.User.Inactive') | translate }}
+                    </mat-slide-toggle>
+                </mat-card-content>
+            </mat-card-header>
+        </mat-card>
+    </div>
+
+    <div class="button-row">
+        <button mat-flat-button
+                color="accent"
+                type="submit">
+            {{ 'SaveButton' | translate}}
+        </button>
+        <button mat-stroked-button
+                color="primary"
+                type="button"
+                (click)="cancelEditing()">
+            {{ 'CancelButton' | translate}}
+        </button>
+    </div>
+
+</form>

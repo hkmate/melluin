@@ -19,6 +19,17 @@
         "en": "English",
         "hu": "Hungarian"
     },
+    "Role": {
+        "INTERN_HOSPITAL_VISITOR": "Intern hospital visitor",
+        "BEGINNER_HOSPITAL_VISITOR": "Beginner hospital visitor ",
+        "HOSPITAL_VISITOR": "Hospital visitor",
+        "MENTOR_HOSPITAL_VISITOR": "Mentor",
+        "HOSPITAL_VISIT_COORDINATOR": "Hospital visit coordinator",
+        "FAIRY_PAINTING_COORDINATOR": "Fairy painting coordinator",
+        "TOY_MAKING_COORDINATOR": "Toy making coordinator",
+        "ADMINISTRATOR": "Administrator",
+        "SYSADMIN": "System admin"
+    },
     "Menu": {
         "People": "People",
         "Events": "Events",
@@ -79,6 +90,26 @@
             "EmailPlaceholder": "julcsi@nevetnikek.hu",
             "Phone": "Phone number",
             "PhonePlaceholder": "+36 30 123 4567"
+        },
+        "User": {
+            "NewUser": "New user",
+            "Data": "User data",
+            "EditData": "Edit user",
+            "Active": "Activ",
+            "Inactive": "Inactiv",
+            "Present": {
+                "UserName": "Username",
+                "Roles": "Roles",
+                "Status": "Status"
+            },
+            "Form": {
+                "UserName": "Username",
+                "UserNamePlaceholder": "lolola",
+                "Password": "Password",
+                "PasswordPlaceholder": "askjRSsdfkFSDf234lsdf3241",
+                "Roles": "Roles",
+                "Status": "Status"
+            }
         }
     },
     "Dashboard": {

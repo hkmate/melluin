@@ -3,8 +3,8 @@ import {User} from '@shared/user/user';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {Roles} from '@be/auth/decorator/roles.decorator';
 import {foundationEmployeeRoles} from '@shared/user/role.enum';
-import {UserCreation} from '@be/user/model/user-creation';
-import {UserUpdate} from '@be/user/model/user-update';
+import {UserCreation} from '@shared//user/user-creation';
+import {UserUpdate} from '@shared/user/user-update';
 import {UserService} from '@be/user/service/user.service';
 
 

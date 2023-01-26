@@ -27,7 +27,7 @@ export class UserEntity {
 
     @ManyToMany(
         type => RoleEntity,
-        {cascade: ['insert', 'update', 'remove']}
+        { eager: true, cascade: ['insert', 'update', 'remove']}
     )
     @JoinTable({
         name: 'user_role',

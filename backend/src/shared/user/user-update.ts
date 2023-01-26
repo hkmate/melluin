@@ -5,6 +5,7 @@ export class UserUpdate {
 
     @MinLength(passwordMinLength)
     @Matches(passwordPattern)
+    @IsOptional()
     password: string;
 
     @IsBoolean()

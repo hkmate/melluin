@@ -17,6 +17,12 @@ import {RouterModule} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import { PersonDataPresenterComponent } from './person-detail/person-data-persenter/person-data-presenter.component';
 import {MatCardModule} from '@angular/material/card';
+import { UserDetailComponent } from './person-detail/user-detail/user-detail.component';
+import { UserDataPresenterComponent } from './person-detail/user-data-presenter/user-data-presenter.component';
+import { UserCreationFormComponent } from './person-detail/user-creation-form/user-creation-form.component';
+import {MatSelectModule} from '@angular/material/select';
+import { UserEditFormComponent } from './person-detail/user-edit-form/user-edit-form.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
     imports: [
@@ -31,6 +37,8 @@ import {MatCardModule} from '@angular/material/card';
         MatCardModule,
         MatTableModule,
         MatPaginatorModule,
+        MatSelectModule,
+        MatSlideToggleModule,
         TranslateModule,
 
         PersonNamePipe,
@@ -41,10 +49,11 @@ import {MatCardModule} from '@angular/material/card';
         PeopleListComponent,
         PersonDetailComponent,
         PersonDataFormComponent,
-        PersonDataPresenterComponent
-    ],
-    exports: [
-        PeopleListComponent
+        PersonDataPresenterComponent,
+        UserDetailComponent,
+        UserDataPresenterComponent,
+        UserCreationFormComponent,
+        UserEditFormComponent
     ]
 })
 export class PeopleModule {
