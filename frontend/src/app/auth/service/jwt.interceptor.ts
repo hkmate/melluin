@@ -1,6 +1,13 @@
 import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {
+    HttpErrorResponse,
+    HttpEvent,
+    HttpHandler,
+    HttpInterceptor,
+    HttpRequest,
+    HttpStatusCode
+} from '@angular/common/http';
+import {catchError, Observable, of, OperatorFunction, throwError} from 'rxjs';
 import {AuthenticationService} from './authentication.service';
 import {EndpointMap, HttpMethod} from '../model/endpoint';
 import {environment} from '../../../environment';
@@ -14,13 +21,18 @@ export class JwtInterceptor implements HttpInterceptor {
         this.initPublicEndpoints();
     }
 
+    public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown> | never> {
+        return next.handle(this.prepareRequest(request))
+            .pipe(this.createCatchUnauthorizedErrorOperator());
+    }
+
     // eslint-disable-next-line max-lines-per-function
-    public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    private prepareRequest(request: HttpRequest<unknown>): HttpRequest<unknown> {
         if (!this.isForOurBackend(request)) {
-            return next.handle(request);
+            return request;
         }
         if (this.isOurPublicEndpoint(request)) {
-            return next.handle(request);
+            return request;
         }
         if (this.authService.hasAuthenticatedUser()) {
             request = request.clone({
@@ -29,8 +41,17 @@ export class JwtInterceptor implements HttpInterceptor {
                 }
             });
         }
+        return request;
+    }
 
-        return next.handle(request);
+    private createCatchUnauthorizedErrorOperator(): OperatorFunction<HttpEvent<unknown>, HttpEvent<unknown> | never> {
+        return catchError((err: HttpErrorResponse) => {
+            if (err.status !== HttpStatusCode.Unauthorized) {
+                return throwError(() => err);
+            }
+            this.authService.logout();
+            return of();
+        });
     }
 
     private initPublicEndpoints(): void {

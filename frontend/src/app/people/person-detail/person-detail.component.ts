@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {Person} from '@shared/person/person';
 import {PersonUpdate} from '@shared/person/person-update';
 import {PersonCreation} from '@shared/person/person-creation';
 import {PeopleService} from '@fe/app/people/people.service';
-import {CreateMarkerType, CREATE_MARKER, PATHS} from '@fe/app/app-paths';
+import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {Router} from '@angular/router';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
-import {Observable, tap, throwError} from 'rxjs';
+import {Observable, Subscription, tap, throwError} from 'rxjs';
 
 @Component({
     selector: 'app-person-detail',
@@ -15,11 +15,12 @@ import {Observable, tap, throwError} from 'rxjs';
     styleUrls: ['./person-detail.component.scss'],
     providers: [RouteDataHandler]
 })
-export class PersonDetailComponent implements OnInit {
+export class PersonDetailComponent implements OnInit, OnDestroy {
 
     protected isCreation = false;
     protected isEdit = false;
     protected person?: Person;
+    private resolverSubscription: Subscription;
 
     constructor(private readonly router: Router,
                 private readonly location: Location,
@@ -27,9 +28,16 @@ export class PersonDetailComponent implements OnInit {
                 private readonly peopleService: PeopleService) {
     }
 
-    public async ngOnInit(): Promise<void> {
-        this.isEdit = this.route.getParam('edit') === 'true';
-        await this.setUpInformation();
+    public ngOnInit(): void {
+        this.resolverSubscription = this.route.getData<Person | CreateMarkerType>('person').subscribe(
+            personInfo => {
+                this.setUp(personInfo);
+            }
+        );
+    }
+
+    public ngOnDestroy(): void {
+        this.resolverSubscription?.unsubscribe();
     }
 
     protected isEditMode(): boolean {
@@ -61,12 +69,12 @@ export class PersonDetailComponent implements OnInit {
         this.route.removeParam('edit');
     }
 
-    private async setUpInformation(): Promise<void> {
-        const resolvedInfo = await this.route.getData<Person | CreateMarkerType>('person');
-        if (resolvedInfo === CREATE_MARKER) {
+    private setUp(personInfo: Person | CreateMarkerType): void {
+        this.isEdit = this.route.getParam('edit') === 'true';
+        if (personInfo === CREATE_MARKER) {
             this.isCreation = true;
         } else {
-            this.person = resolvedInfo;
+            this.person = personInfo;
         }
     }
 
