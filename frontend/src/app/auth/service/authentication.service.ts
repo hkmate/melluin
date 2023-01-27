@@ -6,6 +6,8 @@ import {JwtService} from './jwt.service';
 import {User} from '@shared/user/user';
 import {isNilOrEmpty, isNotNil} from '@shared/util/util';
 import {AuthToken} from '@shared/user/auth-token';
+import {Router} from '@angular/router';
+import {PATHS} from '@fe/app/app-paths';
 
 @Injectable()
 export class AuthenticationService {
@@ -19,6 +21,7 @@ export class AuthenticationService {
     private authToken: string | undefined;
 
     constructor(private readonly http: HttpClient,
+                private readonly router: Router,
                 private readonly jwtService: JwtService) {
         this.currentUserSubject = new BehaviorSubject<User | null>(this.loadCurrentUserFromStorage());
         this._currentUser = this.currentUserSubject.asObservable();
@@ -60,6 +63,7 @@ export class AuthenticationService {
         this.clearStorage();
         this.authToken = undefined;
         this.currentUserSubject.next(null);
+        this.router.navigate([PATHS.login.main]);
     }
 
     private storeToken(token: AuthToken): void {
