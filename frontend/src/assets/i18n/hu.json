@@ -12,9 +12,6 @@
     "NoData": "Nincs adat",
     "Search": "Keresés",
     "Edit": "Szerkesztés",
-    "UserRole": {
-        "SYSADMIN": "Rendszer adminisztrátor"
-    },
     "Language": {
         "en": "Angol",
         "hu": "Magyar"

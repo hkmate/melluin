@@ -12,9 +12,6 @@
     "NoData": "No data",
     "Search": "Search",
     "Edit": "Edit",
-    "Role": {
-        "SYSADMIN": "System administrator"
-    },
     "Language": {
         "en": "English",
         "hu": "Hungarian"
