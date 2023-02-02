@@ -1,8 +1,7 @@
-//$menu-toggle-background: #dbf3fb;
-//$menu-toggle-background-on-hover: lightblue;
 $menu-toggle-background: #05abff;
 $menu-toggle-background-on-hover: #307fad;
 $toggle-button-opacity: 0.2;
+
 :host {
     height: 100%;
 }
@@ -48,8 +47,8 @@ mat-sidenav-content {
     display: flex;
     justify-content: flex-end;
 
-
     opacity: $toggle-button-opacity;
+
     & > div {
         background: $menu-toggle-background;
         height: 3rem;
@@ -60,12 +59,15 @@ mat-sidenav-content {
             transform: translate(-0.2rem, 0.4rem);
         }
     }
+
+    & > div, .menu-toggler {
+
+        &:hover {
+            background-color: $menu-toggle-background-on-hover;
+        }
+    }
 }
 
-.menu-closer > div, .menu-toggler {
-
-    &:hover {
-        background-color: $menu-toggle-background-on-hover;
-    }
-
+.logo-nav {
+    max-width: 8rem;
 }
