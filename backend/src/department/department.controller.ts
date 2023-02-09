@@ -10,12 +10,16 @@ import {DepartmentCrudService} from '@be/department/department.crud.service';
 import {DepartmentCreation} from '@shared/department/department-creation';
 import {Department} from '@shared/department/department';
 import {DepartmentUpdateChangeSet} from '@shared/department/department-update-change-set';
+import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
+import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
+import {DepartmentBoxStatusCrudService} from '@be/department-box/department-box-status.crud.service';
 
 
 @Controller('departments')
 export class DepartmentController {
 
-    constructor(private readonly departmentCrudService: DepartmentCrudService) {
+    constructor(private readonly departmentCrudService: DepartmentCrudService,
+                private readonly boxStatusCrudService: DepartmentBoxStatusCrudService) {
     }
 
     @Post()
@@ -24,6 +28,13 @@ export class DepartmentController {
     public save(@Body() department: DepartmentCreation,
                 @CurrentUser() requester: User): Promise<Department> {
         return this.departmentCrudService.save(department, requester);
+    }
+
+    @Post('/:id/box-status')
+    public saveDepartmentBoxStatus(@Param('id', ParseUUIDPipe) departmentId: string,
+                                   @Body() boxStatusReport: DepartmentBoxStatusReport,
+                                   @CurrentUser() currentUser: User): Promise<DepartmentBoxStatus> {
+        return this.boxStatusCrudService.save(departmentId, boxStatusReport, currentUser);
     }
 
     @Get('/:id')
@@ -36,6 +47,13 @@ export class DepartmentController {
     public find(@PageReq() pageRequest: PageRequest,
                 @CurrentUser() requester: User): Promise<Pageable<Department>> {
         return this.departmentCrudService.find(pageRequest, requester);
+    }
+
+    @Get('/:id/box-status')
+    public findBoxStatuses(@Param('id', ParseUUIDPipe) departmentId: string,
+                           @PageReq() pageRequest: PageRequest,
+                           @CurrentUser() requester: User): Promise<Pageable<DepartmentBoxStatus>> {
+        return this.boxStatusCrudService.find(departmentId, pageRequest, requester);
     }
 
     @Patch('/:id')

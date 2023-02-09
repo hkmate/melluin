@@ -4,6 +4,7 @@ import {RoleEntity} from './user/model/role.entity';
 import {PersonEntity} from './person/model/person.entity';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {DepartmentEntity} from '@be/department/model/department.entity';
+import {DepartmentBoxStatusEntity} from '@be/department-box/model/department-box-status.entity';
 
 export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
@@ -24,6 +25,7 @@ export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
             RoleEntity,
             PersonEntity,
             DepartmentEntity,
+            DepartmentBoxStatusEntity,
         ],
     }),
     inject: [ConfigService],
