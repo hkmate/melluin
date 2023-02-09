@@ -11,15 +11,15 @@ import {PersonCreationToEntityConverter} from '@be/person/converer/person-creati
 import {PersonEntityToDtoConverter} from '@be/person/converer/person-entity-to-dto.converter';
 import {CanUserSavePersonValidator} from '@be/person/validator/can-user-save-person.validator';
 import {CanUserUpdatePersonValidator} from '@be/person/validator/can-user-update-person.validator';
-import {PersonFieldsPageRequestValidator} from '@be/person/validator/person-fields-page-request.validator';
 import {PageRequest} from '@be/crud/page-request';
+import {PageRequestFieldsValidator} from '@be/crud/validator/page-request-fields.validator';
+import {personFilterableFields, personSortableFields} from '@shared/person/person-filterable-fields';
 
 @Injectable()
 export class PersonCrudService {
 
     constructor(private readonly personDao: PersonDao,
                 private readonly personConverter: PersonEntityToDtoConverter,
-                private readonly personPageRequestValidator: PersonFieldsPageRequestValidator,
                 private readonly personCreationConverter: PersonCreationToEntityConverter) {
     }
 
@@ -38,7 +38,9 @@ export class PersonCrudService {
     }
 
     public async find(pageRequest: PageRequest, requester: User): Promise<Pageable<Person>> {
-        this.personPageRequestValidator.validate(pageRequest);
+        PageRequestFieldsValidator
+            .of(personSortableFields, personFilterableFields)
+            .validate(pageRequest);
 
         // TODO: later when there are types of volunteering it will be needed to add restriction to the
         //  filters because user should not access those people who are not in his/her responsibility.
