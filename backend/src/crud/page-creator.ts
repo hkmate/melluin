@@ -1,9 +1,11 @@
-import {Pageable, PageRequest} from '@shared/api-util/pageable';
+import {Pageable} from '@shared/api-util/pageable';
 import {FindManyOptions} from 'typeorm/find-options/FindManyOptions';
 import {FindOptionsOrder, ObjectLiteral, Repository} from 'typeorm';
 import {WhereClosureConverter} from '@be/find-option-converter/where-closure.converter';
 import {cast} from '@shared/util/test-util';
 import {isNotNil} from '@shared/util/util';
+import {PageRequest} from '@be/crud/page-request';
+import {paginate} from 'nestjs-typeorm-paginate';
 
 
 export abstract class PageCreator<T extends ObjectLiteral> {
@@ -13,10 +15,7 @@ export abstract class PageCreator<T extends ObjectLiteral> {
     }
 
     protected createOptions(pageRequest: PageRequest): Partial<FindManyOptions<T>> {
-        const result: Partial<FindManyOptions<T>> = {
-            skip: pageRequest.page * pageRequest.size,
-            take: pageRequest.size,
-        };
+        const result: Partial<FindManyOptions<T>> = {};
         if (isNotNil(pageRequest.sort)) {
             result.order = cast<FindOptionsOrder<T>>(pageRequest.sort);
         }
@@ -26,26 +25,12 @@ export abstract class PageCreator<T extends ObjectLiteral> {
         return result;
     }
 
-    protected createPage(content: Array<T>,
-                         countOfAll: number,
-                         originalRequest: PageRequest): Pageable<T> {
-        return {
-            content,
-            countOfAll,
-            page: originalRequest.page,
-            size: originalRequest.size,
-            sort: originalRequest.sort
-        };
-    }
-
-    protected async getPage(request: PageRequest,
-                            otherOptions: Partial<FindManyOptions<T>>): Promise<Pageable<T>> {
-        const [content, count] = await this.repository.findAndCount({
+    protected getPage(request: PageRequest,
+                      otherOptions: Partial<FindManyOptions<T>>): Promise<Pageable<T>> {
+        return paginate(this.repository, request.pagination, {
             ...this.createOptions(request),
             ...otherOptions
         });
-        return this.createPage(content, count, request);
     }
 
 }
-

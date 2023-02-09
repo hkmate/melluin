@@ -1,8 +1,8 @@
 import {BadRequestException} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
 import {Validator} from '@shared/validator/validator';
-import {PageRequest} from '@shared/api-util/pageable';
 import {ConjunctionFilterOptions, FilterOptions} from '@shared/api-util/filter-options';
+import {PageRequest} from '@be/crud/page-request';
 
 export class FilterOptionsValidator implements Validator<PageRequest> {
 

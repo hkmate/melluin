@@ -20,8 +20,8 @@ export class PageConverter<T, R> implements Converter<Pageable<T>, Pageable<R>> 
         }
         return {
             ...pageable,
-            content: pageable.content?.map(item => this.itemConverter.convert(item))
-        }
+            items: pageable.items?.map(item => this.itemConverter.convert(item))
+        };
     }
 
 }

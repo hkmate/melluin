@@ -50,7 +50,7 @@
         </table>
 
         <mat-paginator [length]="countOfAll"
-                       [pageIndex]="page"
+                       [pageIndex]="page - 1"
                        [pageSize]="size"
                        [pageSizeOptions]="sizeOptions"
                        (page)="paginateHappened($event)">

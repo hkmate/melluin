@@ -6,11 +6,10 @@ import {
     Param,
     ParseUUIDPipe,
     Post,
-    Put,
-    Query
+    Put
 } from '@nestjs/common';
 import {PersonCrudService} from '@be/person/person.crud.service';
-import {Pageable, PageRequest} from '@shared/api-util/pageable';
+import {Pageable} from '@shared/api-util/pageable';
 import {Person} from '@shared/person/person';
 import {User} from '@shared/user/user';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
@@ -18,7 +17,8 @@ import {Roles} from '@be/auth/decorator/roles.decorator';
 import {foundationEmployeeRoles} from '@shared/user/role.enum';
 import {PersonCreation} from '@shared/person/person-creation';
 import {PersonUpdate} from '@shared/person/person-update';
-import {PageRequestParserPipe} from '@be/crud/page-request-parser.pipe';
+import {PageReq} from '@be/crud/page-req';
+import {PageRequest} from '@be/crud/page-request';
 
 
 @Controller('people')
@@ -42,7 +42,7 @@ export class PersonController {
 
     @Get()
     @Roles(...foundationEmployeeRoles)
-    public find(@Query('query', PageRequestParserPipe) pageRequest: PageRequest,
+    public find(@PageReq() pageRequest: PageRequest,
                 @CurrentUser() requester: User): Promise<Pageable<Person>> {
         return this.personCrudService.find(pageRequest, requester);
     }
