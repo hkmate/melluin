@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Pageable, PageRequest} from '@shared/api-util/pageable';
+import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, Pageable, PageQuery, QUERY_QUERY_KEY} from '@shared/api-util/pageable';
 import {Observable} from 'rxjs';
 import {Person} from '@shared/person/person';
 import {environment} from '@fe/environment';
@@ -30,15 +30,19 @@ export class PeopleService {
         return this.http.put<Person>(`${this.peopleUrl}/${personId}`, data);
     }
 
-    public findPeople(filters: PageRequest): Observable<Pageable<Person>> {
+    public findPeople(filters: PageQuery): Observable<Pageable<Person>> {
         // TODO: remove debug when we'll use query expressions instead of base64 encoded json.
         console.debug('PageRequest to send: ', filters);
         return this.http.get<Pageable<Person>>(this.peopleUrl, {
-            params: {query: this.preparePageRequest(filters)}
+            params: {
+                [PAGE_QUERY_KEY]: filters.page,
+                [PAGE_SIZE_QUERY_KEY]: filters.size,
+                [QUERY_QUERY_KEY]: this.preparePageRequest({sort: filters.sort, where: filters.where})
+            }
         });
     }
 
-    private preparePageRequest(pageRequest: PageRequest): string {
+    private preparePageRequest(pageRequest: Partial<PageQuery>): string {
         return btoa(JSON.stringify(pageRequest));
     }
 

@@ -2,7 +2,7 @@ import {BadRequestException} from '@nestjs/common';
 import {SortOptions} from '@shared/api-util/sort-options';
 import {isNil} from '@shared/util/util';
 import {Validator} from '@shared/validator/validator';
-import {PageRequest} from '@shared/api-util/pageable';
+import {PageRequest} from '@be/crud/page-request';
 
 export class SortOptionsValidator implements Validator<PageRequest> {
 

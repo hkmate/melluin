@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {PersonDao} from '@be/person/person.dao';
-import {Pageable, PageRequest} from '@shared/api-util/pageable';
+import {Pageable} from '@shared/api-util/pageable';
 import {Person} from '@shared/person/person';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {PageConverter} from '@be/crud/convert/page.converter';
@@ -12,6 +12,7 @@ import {PersonEntityToDtoConverter} from '@be/person/converer/person-entity-to-d
 import {CanUserSavePersonValidator} from '@be/person/validator/can-user-save-person.validator';
 import {CanUserUpdatePersonValidator} from '@be/person/validator/can-user-update-person.validator';
 import {PersonFieldsPageRequestValidator} from '@be/person/validator/person-fields-page-request.validator';
+import {PageRequest} from '@be/crud/page-request';
 
 @Injectable()
 export class PersonCrudService {

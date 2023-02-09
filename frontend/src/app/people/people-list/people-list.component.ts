@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Pageable, PageRequest} from '@shared/api-util/pageable';
+import {Pageable, PageQuery} from '@shared/api-util/pageable';
 import {Person} from '@shared/person/person';
 import {PeopleService} from '@fe/app/people/people.service';
 import {AppTitle} from '@fe/app/app-title.service';
@@ -35,7 +35,7 @@ class PersonDataSource extends DataSource<Person> {
 })
 export class PeopleListComponent implements OnInit {
 
-    private static readonly FIRST_PAGE = 0;
+    private static readonly FIRST_PAGE = 1;
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [10, 20, 50];
@@ -60,7 +60,7 @@ export class PeopleListComponent implements OnInit {
     }
 
     protected paginateHappened(event: PageEvent): void {
-        this.page = event.pageIndex;
+        this.page = event.pageIndex + 1;
         this.size = event.pageSize;
         this.loadData();
     }
@@ -73,15 +73,15 @@ export class PeopleListComponent implements OnInit {
     private loadData(page?: number, size?: number): void {
         this.peopleService.findPeople(this.createPageRequest(page, size)).subscribe(
             (page: Pageable<Person>) => {
-                this.tableDataSource.emit(page.content);
-                this.page = page.page;
-                this.countOfAll = page.countOfAll
-                this.size = page.size;
+                this.tableDataSource.emit(page.items);
+                this.page = page.meta.currentPage;
+                this.countOfAll = page.meta.totalItems!;
+                this.size = page.meta.itemsPerPage;
             }
         );
     }
 
-    private createPageRequest(pageIndex?: number, pageSize?: number): PageRequest {
+    private createPageRequest(pageIndex?: number, pageSize?: number): PageQuery {
         return {
             page: pageIndex ?? this.page,
             size: pageSize ?? this.size,

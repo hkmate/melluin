@@ -3,17 +3,24 @@ import {SortOptions} from '@shared/api-util/sort-options';
 
 export const PAGE_REQUEST_DEFAULT_SIZE = 20;
 
-export interface PageRequest {
+export const PAGE_QUERY_KEY = 'page';
+export const PAGE_SIZE_QUERY_KEY = 'size';
+export const QUERY_QUERY_KEY = 'query';
+
+export interface PageQuery {
     page: number;
     size: number;
     sort?: SortOptions;
-    where?: FilterOptions
+    where?: FilterOptions;
 }
 
 export interface Pageable<T> {
-    readonly page: number;
-    readonly size: number;
-    readonly content: Array<T>;
-    readonly sort?: SortOptions;
-    readonly countOfAll: number;
+    items: Array<T>;
+    meta: {
+        itemCount: number;
+        totalItems?: number;
+        itemsPerPage: number;
+        totalPages?: number;
+        currentPage: number;
+    };
 }
