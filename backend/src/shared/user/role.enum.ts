@@ -28,5 +28,9 @@ export interface RoleHolder {
 }
 
 export function isUserAnEmployee(user: RoleHolder): boolean {
-    return user.roles.some(role => foundationEmployeeRoles.includes(role));
+    return isUserHasAnyRoleOf(user, foundationEmployeeRoles);
+}
+
+export function isUserHasAnyRoleOf(user: RoleHolder, requiredRoles: Array<Role>): boolean {
+    return user.roles.some(role => requiredRoles.includes(role));
 }

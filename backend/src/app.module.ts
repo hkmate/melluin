@@ -3,6 +3,8 @@ import {AuthModule} from './auth/auth.module';
 import {UserModule} from './user/user.module';
 import {TypeOrmModuleDefinition} from './typeorm.module';
 import {ConfigModuleDefinition} from '@be/config/config.module';
+import {PersonModule} from '@be/person/person.module';
+import {DepartmentModule} from '@be/department/department.module';
 
 @Module({
     imports: [
@@ -10,7 +12,9 @@ import {ConfigModuleDefinition} from '@be/config/config.module';
         TypeOrmModuleDefinition,
 
         AuthModule,
-        UserModule
+        UserModule,
+        PersonModule,
+        DepartmentModule,
     ]
 })
 export class AppModule {

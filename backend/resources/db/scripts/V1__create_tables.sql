@@ -47,6 +47,7 @@ CREATE TABLE public.hospital_department (
     valid_from timestamp without time zone NOT NULL,
     valid_to timestamp without time zone NOT NULL,
     address text NOT NULL,
+    diseases_info text,
     note text
 );
 

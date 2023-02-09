@@ -6,7 +6,6 @@ import {PersonCrudService} from '@be/person/person.crud.service';
 import {FindOptionConverterModule} from '@be/find-option-converter/find-option-converter.module';
 import {PersonDao} from '@be/person/person.dao';
 import {PersonEntityToDtoConverter} from '@be/person/converer/person-entity-to-dto.converter';
-import {PersonFieldsPageRequestValidator} from '@be/person/validator/person-fields-page-request.validator';
 import {PersonCreationToEntityConverter} from '@be/person/converer/person-creation-to-entity.converter';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 
@@ -24,8 +23,7 @@ import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
         PersonDao,
         PersonCrudService,
         PersonEntityToDtoConverter,
-        PersonCreationToEntityConverter,
-        PersonFieldsPageRequestValidator
+        PersonCreationToEntityConverter
     ],
     exports: [
         PersonDao,

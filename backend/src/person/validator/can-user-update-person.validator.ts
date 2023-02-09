@@ -21,7 +21,7 @@ export class CanUserUpdatePersonValidator implements Validator<ChangeSetWithId> 
 
     public validate({personId, changeSet}: ChangeSetWithId): void {
         if (!isUserAnEmployee(this.currentUser) && !this.isUserGotId(personId)) {
-            throw new ForbiddenException('User has no permission to create new user');
+            throw new ForbiddenException('User has no permission to update a person');
         }
     }
 
