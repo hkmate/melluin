@@ -1,4 +1,4 @@
 export interface HttpRequestInfo {
-    route: { path: string };
+    url: string;
     query: Record<string, string>;
 }

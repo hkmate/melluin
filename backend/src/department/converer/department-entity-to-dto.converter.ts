@@ -25,8 +25,8 @@ export class DepartmentEntityToDtoConverter implements Converter<DepartmentEntit
             validFrom: entity.validFrom.toISOString(),
             validTo: (entity.validTo < DEFAULT_TO_DATE ? entity.validTo.toISOString() : undefined),
             address: entity.address,
-            note: entity.note,
-            diseasesInfo: entity.diseasesInfo,
+            note: entity.note ?? undefined,
+            diseasesInfo: entity.diseasesInfo ?? undefined,
         } satisfies Department;
     }
 

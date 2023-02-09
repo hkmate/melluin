@@ -12,7 +12,7 @@ export class PageRequestParser {
             return this.getDefault();
         }
 
-        const request = this.getDefault(httpReq.route.path,
+        const request = this.getDefault(httpReq.url,
             httpReq.query[PAGE_QUERY_KEY], httpReq.query[PAGE_SIZE_QUERY_KEY]);
         return {
             ...request,
