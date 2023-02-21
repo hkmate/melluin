@@ -1,0 +1,796 @@
+{
+	"info": {
+		"_postman_id": "4c37eeff-d10d-4012-bfc4-841d7e19b3e7",
+		"name": "Melluin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1358046"
+	},
+	"item": [
+		{
+			"name": "people",
+			"item": [
+				{
+					"name": "List people",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/people",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"people"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "ewogICAicGFnZSI6MiwKICAgInNpemUiOjMsCiAgICJzb3J0Ijp7CiAgICAgICJmaXJzdE5hbWUiOiJERVNDIgogICB9LAogICAid2hlcmUiOnsKICAgICAgImZpcnN0TmFtZSI6ewogICAgICAgICAib3BlcmF0b3IiOiJpbGlrZSIsCiAgICAgICAgICJvcGVyYW5kIjoiJWElIgogICAgICB9CiAgIH0KfQ==",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/people/ef6a8d4b-a2f5-48d6-b146-4baa04515219",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"people",
+								"ef6a8d4b-a2f5-48d6-b146-4baa04515219"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phone\": \"+36 30 824 6056\",\n    \"lastName\": \"Varga\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/people/ef6a8d4b-a2f5-48d6-b146-4baa04515219",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"people",
+								"ef6a8d4b-a2f5-48d6-b146-4baa04515219"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save person",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Kiss\",\n    \"lastName\": \"Béla\",\n    \"nickName\":\"Béci\",\n    \"email\": \"sad@asd.hu\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/people",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"people"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\": \"kbela2\",\n    \"password\": \"ezalegjobbjelszo\",\n    \"personId\":\"cab30c10-1b80-4f24-b262-b44f957b64d1\",\n    \"roles\": [\"ADMINISTRATOR\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/user",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"ezamasodiklegjobbjelszó\",\n    \"isActive\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/users/1324dc62-8251-4057-90b4-3f0d521f1e93",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1324dc62-8251-4057-90b4-3f0d521f1e93"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "department",
+			"item": [
+				{
+					"name": "box-status",
+					"item": [
+						{
+							"name": "Save department box status",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"reason\": \"CORRECTED\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/api/departments/fbaf7be5-d69d-423a-8460-0b3197134c75/box-status",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"api",
+										"departments",
+										"fbaf7be5-d69d-423a-8460-0b3197134c75",
+										"box-status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find box statuses",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/api/departments/fbaf7be5-d69d-423a-8460-0b3197134c75/box-status",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"api",
+										"departments",
+										"fbaf7be5-d69d-423a-8460-0b3197134c75",
+										"box-status"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "List departments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/departments",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"departments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/departments/fbaf7be5-d69d-423a-8460-0b3197134c75",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"departments",
+								"fbaf7be5-d69d-423a-8460-0b3197134c75"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "ewogICAicGFnZSI6MiwKICAgInNpemUiOjMsCiAgICJzb3J0Ijp7CiAgICAgICJmaXJzdE5hbWUiOiJERVNDIgogICB9LAogICAid2hlcmUiOnsKICAgICAgImZpcnN0TmFtZSI6ewogICAgICAgICAib3BlcmF0b3IiOiJpbGlrZSIsCiAgICAgICAgICJvcGVyYW5kIjoiJWElIgogICAgICB9CiAgIH0KfQ==",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save department",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Légúti oszt\",\n    \"validFrom\": \"2023-02-09T20:26:21.500Z\",\n    \"validTo\": \"2032-03-09T20:26:21.500Z\",\n    \"address\": \"József attilla ut\",\n    \"diseasesInfo\": \"léguti betegek\", \n    \"note\": \"this is a very fasza note\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/departments",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"departments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update department",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Légúti ---oszt222\",\n    \"validTo\": \"2025-03-09T20:26:21.500Z\",\n    \"address\": \"József attilla ut333333\",\n    \"diseasesInfo\": \"itt vannak a léguti betegek33333\", \n    \"note\": \"this is a very fasza no231321te\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/departments/fbaf7be5-d69d-423a-8460-0b3197134c75",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"departments",
+								"fbaf7be5-d69d-423a-8460-0b3197134c75"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "events",
+			"item": [
+				{
+					"name": "List events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/events",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"events"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "hospital-visits",
+			"item": [
+				{
+					"name": "List hospital visits",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save hospital visit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"DRAFT\",\n    \"departmentId\": \"36d96963-8c15-4784-a6e2-13ae87368d54\",\n    \"dateTimeFrom\": \"2023-02-21T19:58:34\",\n    \"dateTimeTo\": \"2023-02-21T21:58:34\",\n    \"countedHours\": 2,\n    \"visibility\": \"PUBLIC\",\n    \"organizerId\": \"b1238194-8f6c-446c-bc96-ca74f1d4cb20\",\n    \"participantIds\": [\"64289de9-b935-4ff9-ae81-ffb5f457e5c9\", \"f5682bc3-b339-40f8-8979-defe9446f5fd\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update hospital visit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"1dd04612-1031-4fda-837a-7845c84f2997\",\n    \"status\": \"SCHEDULED\",\n    \"departmentId\": \"36d96963-8c15-4784-a6e2-13ae87368d54\",\n    \"dateTimeFrom\": \"2023-02-21T19:58:34\",\n    \"dateTimeTo\": \"2023-02-21T21:58:34\",\n    \"countedHours\": 2,\n    \"visibility\": \"PUBLIC\",\n    \"participantIds\": [\"64289de9-b935-4ff9-ae81-ffb5f457e5c9\", \"f5682bc3-b339-40f8-8979-defe9446f5fd\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/1dd04612-1031-4fda-837a-7845c84f2997",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"1dd04612-1031-4fda-837a-7845c84f2997"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get hospital visit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/1dd04612-1031-4fda-837a-7845c84f2997",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"1dd04612-1031-4fda-837a-7845c84f2997"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"var accessToken = responseJson.access_token;",
+							"pm.environment.set(\"accessToken\", accessToken)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{serverUrl}}/api/auth/login",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

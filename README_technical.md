@@ -67,3 +67,11 @@ only when both successful.
 ## VCS
 
 In the commit messages please use the format of [Conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
+
+## Development
+
+### Backend
+
+To test the endpoints manually you can use Postman. There is a predefined collection and an environment 
+in directory dev-env/postman. You can import them.
+When you add a new (or modify an existent) rest endpoint please update the collection!
