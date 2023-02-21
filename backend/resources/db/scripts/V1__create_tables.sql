@@ -18,7 +18,9 @@ CREATE TABLE public.event (
     organizer_id uuid NOT NULL,
     datetime_from timestamp without time zone NOT NULL,
     datetime_to timestamp without time zone NOT NULL,
-    counted_hours integer
+    counted_hours integer,
+    visibility text NOT NULL,
+    event_type text NOT NULL
 );
 
 CREATE TABLE public.general_event (
@@ -77,9 +79,9 @@ CREATE TABLE public.hospital_visit_action (
     date_time timestamp without time zone NOT NULL
 );
 
-CREATE TABLE public.hospital_visitor (
+CREATE TABLE public.event_participant (
     person_id uuid NOT NULL,
-    hospital_visit_id uuid NOT NULL
+    event_id uuid NOT NULL
 );
 
 CREATE TABLE public.notification (
@@ -176,8 +178,8 @@ ALTER TABLE ONLY public.hospital_visit_activity
 ALTER TABLE ONLY public.hospital_visit_action
     ADD CONSTRAINT hospital_visit_action__id__primary_key PRIMARY KEY (id);
 
-ALTER TABLE ONLY public.hospital_visitor
-    ADD CONSTRAINT hospital_visitor_pkey PRIMARY KEY (person_id, hospital_visit_id);
+ALTER TABLE ONLY public.event_participant
+    ADD CONSTRAINT event_participant_pkey PRIMARY KEY (person_id, event_id);
 
 ALTER TABLE ONLY public.notification
     ADD CONSTRAINT notification__id__primary_key PRIMARY KEY (id);
@@ -233,11 +235,11 @@ ALTER TABLE ONLY public.hospital_visit_activity
 ALTER TABLE ONLY public.hospital_visit_action
     ADD CONSTRAINT visit_action__visit_id__to__hospital_visit_id FOREIGN KEY (hospital_visit_id) REFERENCES public.hospital_visit(id);
 
-ALTER TABLE ONLY public.hospital_visitor
-    ADD CONSTRAINT hospital_visitor__person_id__to_person_id FOREIGN KEY (person_id) REFERENCES public.person(id);
+ALTER TABLE ONLY public.event_participant
+    ADD CONSTRAINT event_participant__person_id__to_person_id FOREIGN KEY (person_id) REFERENCES public.person(id);
 
-ALTER TABLE ONLY public.hospital_visitor
-    ADD CONSTRAINT hospital_visitor__visit_id__to_hospital_visit_id FOREIGN KEY (hospital_visit_id) REFERENCES public.hospital_visit(id);
+ALTER TABLE ONLY public.event_participant
+    ADD CONSTRAINT event_participant__visit_id__to_event_id FOREIGN KEY (event_id) REFERENCES public.event(id);
 
 ALTER TABLE ONLY public.notification
     ADD CONSTRAINT notification__person_id__to__person__id FOREIGN KEY (person_id) REFERENCES public.person(id);

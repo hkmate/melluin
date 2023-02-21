@@ -8,6 +8,7 @@ import {PersonDao} from '@be/person/person.dao';
 import {PersonEntityToDtoConverter} from '@be/person/converer/person-entity-to-dto.converter';
 import {PersonCreationToEntityConverter} from '@be/person/converer/person-creation-to-entity.converter';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
+import {PersonEntityToIdentifierDtoConverter} from '@be/person/converer/person-entity-to-identifier-dto.converter';
 
 @Module({
     imports: [
@@ -23,11 +24,14 @@ import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
         PersonDao,
         PersonCrudService,
         PersonEntityToDtoConverter,
-        PersonCreationToEntityConverter
+        PersonCreationToEntityConverter,
+        PersonEntityToIdentifierDtoConverter
     ],
     exports: [
         PersonDao,
-        PersonCrudService
+        PersonCrudService,
+        PersonEntityToDtoConverter,
+        PersonEntityToIdentifierDtoConverter
     ]
 })
 export class PersonModule {
