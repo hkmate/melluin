@@ -19,7 +19,10 @@ import {DepartmentBoxModule} from '@be/department-box/department-box.module';
         DepartmentEntityToDtoConverter,
         DepartmentCreationToEntityConverter
     ],
-    exports: []
+    exports: [
+        DepartmentCrudService,
+        DepartmentEntityToDtoConverter
+    ]
 })
 export class DepartmentModule {
 }

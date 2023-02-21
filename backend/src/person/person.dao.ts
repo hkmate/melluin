@@ -1,10 +1,10 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository} from 'typeorm';
+import {In, Repository} from 'typeorm';
 import {PersonEntity} from './model/person.entity';
 import {Pageable} from '@shared/api-util/pageable';
 import {WhereClosureConverter} from '@be/find-option-converter/where-closure.converter';
-import {isNil} from '@shared/util/util';
+import {isNil, isNotEmpty} from '@shared/util/util';
 import {PageCreator} from '@be/crud/page-creator';
 import {PageRequest} from '@be/crud/page-request';
 
@@ -45,8 +45,28 @@ export class PersonDao extends PageCreator<PersonEntity> {
             });
     }
 
+    public async findByIds(ids: Array<string>): Promise<Array<PersonEntity>> {
+        const people = await this.repository.find({
+            where: {
+                id: In(ids)
+            }
+        });
+        this.verifyAllIdHadPerson(ids, people);
+
+        return people;
+    }
+
     public findAll(pageRequest: PageRequest): Promise<Pageable<PersonEntity>> {
         return this.getPage(pageRequest, {relations: {user: true}});
+    }
+
+    private verifyAllIdHadPerson(ids: Array<string>, people: Array<PersonEntity>): void {
+        const idsOfPeople = people.map(e => e.id);
+        const diff = ids.filter(id => !idsOfPeople.includes(id));
+
+        if (isNotEmpty(diff)) {
+            throw new NotFoundException(`Person not found with ids: ${diff}`);
+        }
     }
 
 }
