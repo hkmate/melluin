@@ -1,0 +1,82 @@
+<h1>
+    <ng-container *ngIf="!department">{{ 'DepartmentPage.Add' | translate }}</ng-container>
+    <ng-container *ngIf="!!department">{{ 'DepartmentPage.EditData' | translate }}</ng-container>
+</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'DepartmentPage.Form.Name' | translate }}</mat-label>
+            <input matInput
+                   [placeholder]="'PersonPage.Form.NamePlaceholder' | translate"
+                   formControlName="name">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'DepartmentPage.Form.Address' | translate }}</mat-label>
+            <input matInput
+                   [placeholder]="'PersonPage.Form.AddressPlaceholder' | translate"
+                   formControlName="address">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'DepartmentPage.Form.ValidFrom' | translate }}</mat-label>
+            <input matInput
+                   [matDatepicker]="validFromPicker"
+                   formControlName="validFrom">
+            <mat-datepicker-toggle matIconSuffix [for]="validFromPicker"></mat-datepicker-toggle>
+            <mat-datepicker #validFromPicker></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'DepartmentPage.Form.ValidTo' | translate }}</mat-label>
+            <input matInput
+                   [matDatepicker]="validToPicker"
+                   formControlName="validTo">
+            <mat-datepicker-toggle matIconSuffix [for]="validToPicker"></mat-datepicker-toggle>
+            <mat-datepicker #validToPicker></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'DepartmentPage.Form.DiseasesInfo' | translate }}</mat-label>
+            <textarea matInput
+                      [placeholder]="'PersonPage.Form.DiseasesInfoPlaceholder' | translate"
+                      formControlName="diseasesInfo">
+            </textarea>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'DepartmentPage.Form.Note' | translate }}</mat-label>
+            <textarea matInput
+                      [placeholder]="'PersonPage.Form.NotePlaceholder' | translate"
+                      formControlName="note">
+            </textarea>
+        </mat-form-field>
+    </div>
+
+
+    <div class="button-row">
+        <button mat-flat-button
+                color="accent"
+                type="submit">
+            {{ 'SaveButton' | translate}}
+        </button>
+        <button mat-stroked-button
+                color="primary"
+                type="button"
+                (click)="cancelEditing()">
+            {{ 'CancelButton' | translate}}
+        </button>
+    </div>
+</form>

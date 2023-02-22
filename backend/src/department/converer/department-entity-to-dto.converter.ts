@@ -27,7 +27,7 @@ export class DepartmentEntityToDtoConverter implements Converter<DepartmentEntit
             address: entity.address,
             note: entity.note ?? undefined,
             diseasesInfo: entity.diseasesInfo ?? undefined,
-        } satisfies Department;
+        };
     }
 
 }

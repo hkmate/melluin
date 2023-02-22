@@ -19,6 +19,7 @@ import {firstValueFrom} from 'rxjs';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {I18nPaginatorIntl} from '@fe/app/util/i18n-paginator-intl';
 import {AppLanguage} from '@fe/app/language/app-language';
+import {MAT_DATE_LOCALE} from '@angular/material/core';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);
@@ -61,7 +62,8 @@ export function appInitializeTranslateFactory(translate: TranslateService) {
             useFactory: appInitializeTranslateFactory,
             deps: [TranslateService],
             multi: true
-        }
+        },
+        {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
     ],
 })
 export class AppModule {

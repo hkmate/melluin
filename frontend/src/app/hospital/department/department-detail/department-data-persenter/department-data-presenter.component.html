@@ -1,0 +1,51 @@
+<h1>{{ 'DepartmentPage.Data' | translate }}</h1>
+
+<div class="department-data-presenter">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'DepartmentPage.Present.Name' | translate }}</mat-card-subtitle>
+            <mat-card-title>{{ department?.name }}</mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'DepartmentPage.Present.ValidFrom' | translate }}</mat-card-subtitle>
+            <mat-card-title>{{ department?.validFrom | date : ('DateFormat' | translate) }}</mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'DepartmentPage.Present.ValidTo' | translate }}</mat-card-subtitle>
+            <mat-card-title *ngIf="department?.validTo">
+                {{ department?.validTo | date : ('DateFormat' | translate) }}
+            </mat-card-title>
+            <mat-card-title *ngIf="!department?.validTo">
+                {{ 'NoData' | translate }}
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'DepartmentPage.Present.Address' | translate }}</mat-card-subtitle>
+            <mat-card-title>{{ department?.address }}</mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'DepartmentPage.Present.DiseasesInfo' | translate }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>{{ department?.diseasesInfo }}</mat-card-content>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'DepartmentPage.Present.Note' | translate }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>{{ department?.note }}</mat-card-content>
+    </mat-card>
+
+</div>
