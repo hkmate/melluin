@@ -6,6 +6,7 @@ import {Person} from '@shared/person/person';
 import {environment} from '@fe/environment';
 import {PersonCreation} from '@shared/person/person-creation';
 import {PersonUpdate} from '@shared/person/person-update';
+import {utf8ToBase64} from '@fe/app/util/util';
 
 
 @Injectable({providedIn: 'root'})
@@ -43,7 +44,7 @@ export class PeopleService {
     }
 
     private preparePageRequest(pageRequest: Partial<PageQuery>): string {
-        return btoa(JSON.stringify(pageRequest));
+        return utf8ToBase64(JSON.stringify(pageRequest));
     }
 
 }

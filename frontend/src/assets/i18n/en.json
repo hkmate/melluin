@@ -4,6 +4,7 @@
         "Dashboard": "Dashboard",
         "Login": "Login",
         "PeopleList": "People",
+        "DepartmentList": "Departments",
         "NotFound": "404"
     },
     "OkButton": "Ok",
@@ -110,6 +111,16 @@
                 "Status": "Status"
             }
         }
+    },
+    "DepartmentListPage": {
+        "Add": "Add department",
+        "ListHeader": {
+            "Name": "Name",
+            "Address": "Addresss",
+            "ValidFrom": "Valid from",
+            "ValidTo": "Valid to"
+        },
+        "OnlyValid": "Only valids"
     },
     "DepartmentPage": {
         "Data": "Data",

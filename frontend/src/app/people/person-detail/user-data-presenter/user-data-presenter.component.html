@@ -13,7 +13,7 @@
             <mat-card-subtitle>{{ 'PersonPage.User.Present.Roles' | translate }}</mat-card-subtitle>
             <mat-card-title>
                 <ng-container *ngFor="let role of user?.roles">
-                    <span class="role">{{ 'Role.' + role | translate }}</span>
+                    <div class="role">{{ 'Role.' + role | translate }}</div>
                 </ng-container>
             </mat-card-title>
         </mat-card-header>

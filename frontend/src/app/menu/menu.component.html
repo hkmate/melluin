@@ -20,7 +20,11 @@
                 <!--                <a *ngIf="canUserSee?.['events']" mat-list-item routerLink="/events">{{ 'Menu.Events' | translate }}</a>-->
                 <!--                <a *ngIf="canUserSee?.['reports']" mat-list-item routerLink="/reports">{{ 'Menu.Reports' | translate }}</a>-->
                 <!--                <a *ngIf="canUserSee?.['notifications']" mat-list-item routerLink="/notifications">{{ 'Menu.Notifications' | translate }}</a>-->
-                <!--                <a *ngIf="canUserSee?.['departments']"  mat-list-item routerLink="/departments">{{ 'Menu.Departments' | translate }}</a>-->
+                <a *ngIf="canUserSee?.['departments']"
+                   mat-list-item
+                   routerLink="/hospital-departments">
+                    {{ 'Menu.Departments' | translate }}
+                </a>
                 <mat-divider></mat-divider>
                 <a class="grey"
                    mat-list-item

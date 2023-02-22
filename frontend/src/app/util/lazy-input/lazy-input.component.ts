@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {debounceTime, distinctUntilChanged, Subject, Subscription} from 'rxjs';
-import {isNotEmpty} from '@shared/util/util';
 
 @Component({
     selector: 'app-lazy-input',
@@ -38,7 +37,6 @@ export class LazyInputComponent implements OnInit, OnDestroy {
 
     protected clear(): void {
         this.inputText = '';
-        this.changed.emit(this.inputText);
         this.inputChanged.next(this.inputText);
     }
 
@@ -49,11 +47,7 @@ export class LazyInputComponent implements OnInit, OnDestroy {
                 distinctUntilChanged()
             )
             .subscribe(() => {
-                // Note: Clear is emitted immediately,
-                // lazy change just called to 'distinctUntilChanged' could track the change
-                if (isNotEmpty(this.inputText)) {
-                    this.changed.emit(this.inputText)
-                }
+                this.changed.emit(this.inputText)
             });
     }
 

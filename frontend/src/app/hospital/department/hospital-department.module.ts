@@ -3,7 +3,7 @@ import {DepartmentDetailComponent} from '@fe/app/hospital/department/department-
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {DepartmentDataPresenterComponent} from '@fe/app/hospital/department/department-detail/department-data-persenter/department-data-presenter.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
@@ -20,6 +20,7 @@ import {LazyInputModule} from '@fe/app/util/lazy-input/lazy-input.module';
 import {DepartmentDataFormComponent} from '@fe/app/hospital/department/department-detail/department-data-form/department-data-form.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import {DepartmentsListComponent} from '@fe/app/hospital/department/departments-list/departments-list.component';
 
 
 @NgModule({
@@ -44,8 +45,10 @@ import {MatNativeDateModule} from '@angular/material/core';
         PersonNamePipe,
         OptionalPipe,
         LazyInputModule,
+        FormsModule,
     ],
     declarations: [
+        DepartmentsListComponent,
         DepartmentDetailComponent,
         DepartmentDataPresenterComponent,
         DepartmentDataFormComponent
