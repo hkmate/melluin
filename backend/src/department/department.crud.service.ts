@@ -13,13 +13,15 @@ import {DepartmentCreationToEntityConverter} from '@be/department/converer/depar
 import {CanUserManageDepartmentValidator} from '@be/department/validator/can-user-manage-department.validator';
 import {PageRequestFieldsValidator} from '@be/crud/validator/page-request-fields.validator';
 import {departmentFilterableFields, departmentSortableFields} from '@shared/department/department-filterable-fields';
+import {DepartmentChangeApplierFactory} from '@be/department/applier/department-change-applier.factory';
 
 @Injectable()
 export class DepartmentCrudService {
 
     constructor(private readonly departmentDao: DepartmentDao,
                 private readonly departmentConverter: DepartmentEntityToDtoConverter,
-                private readonly departmentCreationConverter: DepartmentCreationToEntityConverter) {
+                private readonly departmentCreationConverter: DepartmentCreationToEntityConverter,
+                private readonly changeApplierFactory: DepartmentChangeApplierFactory) {
     }
 
     public async save(departmentCreation: DepartmentCreation, requester: User): Promise<Department> {
@@ -58,9 +60,9 @@ export class DepartmentCrudService {
     }
 
     private applyChangesToEntity(entity: DepartmentEntity, changeSet: DepartmentUpdateChangeSet): void {
-        Object.keys(changeSet).forEach(changeKey => {
-            entity[changeKey] = changeSet[changeKey];
-        });
+        this.changeApplierFactory
+            .createApplierFor(changeSet)
+            .applyOn(entity);
     }
 
 }

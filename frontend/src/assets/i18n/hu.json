@@ -16,6 +16,8 @@
         "en": "Angol",
         "hu": "Magyar"
     },
+    "DateTimeFormat": "yyyy.MM.dd. HH:mm",
+    "DateFormat": "yyyy.MM.dd.",
     "Role": {
         "INTERN_HOSPITAL_VISITOR": "Hospitáló",
         "BEGINNER_HOSPITAL_VISITOR": "Kórházlátogató (kezdő)",
@@ -107,6 +109,31 @@
                 "Roles": "Szerepkörök",
                 "Status": "Státusz"
             }
+        }
+    },
+    "DepartmentPage": {
+        "Data": "Adatok",
+        "EditData": "Adatok szerkesztése",
+        "Add": "Osztály hozzáadás",
+        "Present": {
+            "Name": "Név",
+            "ValidFrom": "Érvényesség kezdete",
+            "ValidTo": "Érvényesség vége",
+            "Address": "Cím",
+            "DiseasesInfo": "Információ az itt kezelt betegekről",
+            "Note": "Megjegyzés"
+        },
+        "Form": {
+            "Name": "Név",
+            "NamePlaceholder": "Belgyógyászat",
+            "Address": "Cím",
+            "AddressPlaceholder": "Kórház u. 1.",
+            "ValidFrom": "Érvényesség kezdete",
+            "ValidTo": "Érvényesség vége",
+            "DiseasesInfo": "Info a betegekről",
+            "DiseasesInfoPlaceholder": "Ezen az osztályon jellemzően előforduló betegségek: ....",
+            "Note": "Megyjegyzések",
+            "NotePlaceholder": "A keleti épületben van, a rózsaszín ajtón kell felmenni...."
         }
     },
     "Dashboard": {

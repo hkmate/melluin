@@ -1,0 +1,30 @@
+<section>
+    <div class="page-content">
+
+        <div class="department-part">
+            <ng-container *ngIf="!isEditMode()">
+                <app-department-data-presenter [department]="department"></app-department-data-presenter>
+                <div *ngIf="isEditEnabled()" class="button-row">
+                    <button mat-stroked-button
+                            color="primary"
+                            (click)="switchToEdit()">
+                        {{ 'Edit' | translate }}
+                    </button>
+                </div>
+            </ng-container>
+
+            <app-department-data-form *ngIf="isEditMode()"
+                                      [department]="department"
+                                      (submitted)="saveDepartment($event)"
+                                      (canceled)="cancelEditing()">
+            </app-department-data-form>
+        </div>
+
+<!--        <ng-container *ngIf="department">-->
+<!--            <div class="divider"></div>-->
+<!--            <div class="department-boxes-part">-->
+<!--            </div>-->
+<!--        </ng-container>-->
+
+    </div>
+</section>

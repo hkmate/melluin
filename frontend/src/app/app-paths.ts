@@ -18,6 +18,12 @@ export const PATHS: PathContainer = {
         main: 'people',
         detail: ':id',
         new: CREATE_MARKER
+    },
+
+    hospitalDepartments: {
+        main: 'hospital-departments',
+        detail: ':id',
+        new: CREATE_MARKER
     }
 
 };

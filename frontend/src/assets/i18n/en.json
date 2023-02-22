@@ -16,6 +16,8 @@
         "en": "English",
         "hu": "Hungarian"
     },
+    "DateTimeFormat": "dd.MM.yyyy. HH:mm",
+    "DateFormat": "dd.MM.yyyy.",
     "Role": {
         "INTERN_HOSPITAL_VISITOR": "Intern hospital visitor",
         "BEGINNER_HOSPITAL_VISITOR": "Beginner hospital visitor ",
@@ -107,6 +109,31 @@
                 "Roles": "Roles",
                 "Status": "Status"
             }
+        }
+    },
+    "DepartmentPage": {
+        "Data": "Data",
+        "EditData": "Edit date",
+        "Add": "Add department",
+        "Present": {
+            "Name": "Name",
+            "ValidFrom": "Valid from",
+            "ValidTo": "Valid to",
+            "Address": "Address",
+            "DiseasesInfo": "Information about diseases handled in this department",
+            "Note": "Note"
+        },
+        "Form": {
+            "Name": "Name",
+            "NamePlaceholder": "Belgyógyászat",
+            "Address": "Address",
+            "AddressPlaceholder": "Kórház u. 1.",
+            "ValidFrom": "Valid from",
+            "ValidTo": "Valid to",
+            "DiseasesInfo": "Info about diseases",
+            "DiseasesInfoPlaceholder": "Ezen az osztályon jellemzően előforduló betegségek: ....",
+            "Note": "Note",
+            "NotePlaceholder": "The entry is in the southern side of the building...."
         }
     },
     "Dashboard": {
