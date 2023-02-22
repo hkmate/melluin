@@ -4,6 +4,7 @@
         "Dashboard": "Kezdőlap",
         "Login": "Bejelentkezés",
         "PeopleList": "Személyek",
+        "DepartmentList": "Osztályok",
         "NotFound": "404"
     },
     "OkButton": "Ok",
@@ -110,6 +111,16 @@
                 "Status": "Státusz"
             }
         }
+    },
+    "DepartmentListPage": {
+        "Add": "Új felvétele",
+        "ListHeader": {
+            "Name": "Név",
+            "Address": "Cím",
+            "ValidFrom": "Érvényesség kezdete",
+            "ValidTo": "Érvényesség vége"
+        },
+        "OnlyValid": "Csak az aktuálisak."
     },
     "DepartmentPage": {
         "Data": "Adatok",

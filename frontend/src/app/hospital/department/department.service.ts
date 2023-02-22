@@ -6,6 +6,7 @@ import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, Pageable, PageQuery, QUERY_QUERY_KE
 import {Department} from '@shared/department/department';
 import {DepartmentCreation} from '@shared/department/department-creation';
 import {DepartmentUpdateChangeSet} from '@shared/department/department-update-change-set';
+import {utf8ToBase64} from '@fe/app/util/util';
 
 @Injectable({providedIn: 'root'})
 export class DepartmentService {
@@ -42,7 +43,7 @@ export class DepartmentService {
     }
 
     private preparePageRequest(pageRequest: Partial<PageQuery>): string {
-        return btoa(JSON.stringify(pageRequest));
+        return utf8ToBase64(JSON.stringify(pageRequest));
     }
 
 }

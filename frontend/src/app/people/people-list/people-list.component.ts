@@ -3,30 +3,12 @@ import {Pageable, PageQuery} from '@shared/api-util/pageable';
 import {Person} from '@shared/person/person';
 import {PeopleService} from '@fe/app/people/people.service';
 import {AppTitle} from '@fe/app/app-title.service';
-import {DataSource} from '@angular/cdk/collections';
-import {BehaviorSubject, Observable} from 'rxjs';
 import {PageEvent} from '@angular/material/paginator';
 import {SortOptions} from '@shared/api-util/sort-options';
 import {FilterOptions} from '@shared/api-util/filter-options';
 import {isNilOrEmpty} from '@shared/util/util';
+import {TableDataSource} from '@fe/app/util/table-data-source';
 
-
-class PersonDataSource extends DataSource<Person> {
-
-    private data = new BehaviorSubject<Array<Person>>([]);
-
-    public emit(dataToEmit: Array<Person>): void {
-        this.data.next(dataToEmit)
-    }
-
-    public override connect(): Observable<Array<Person>> {
-        return this.data;
-    }
-
-    public override disconnect(): void {
-    }
-
-}
 
 @Component({
     selector: 'app-people-list',
@@ -41,7 +23,7 @@ export class PeopleListComponent implements OnInit {
     protected readonly sizeOptions = [10, 20, 50];
     protected readonly columns = ['name', 'email', 'phone', 'options'];
 
-    protected tableDataSource = new PersonDataSource();
+    protected tableDataSource = new TableDataSource<Person>();
     protected page: number;
     protected size: number;
     protected countOfAll: number;

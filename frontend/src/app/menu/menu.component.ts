@@ -59,7 +59,7 @@ export class MenuComponent implements OnInit, OnDestroy {
             'events': includeAny(roles, ...foundationEmployeeRoles),
             'reports': includeAny(roles, ...foundationEmployeeRoles),
             'notifications': includeAny(roles, ...foundationEmployeeRoles),
-            'departments': includeAny(roles, Role.SYSADMIN, Role.ADMINISTRATOR, Role.HOSPITAL_VISIT_COORDINATOR),
+            'departments': true,
         }
     }
 
