@@ -31,6 +31,10 @@ export class DepartmentBoxInfoListComponent {
         this.loadData(DepartmentBoxInfoListComponent.FIRST_PAGE, this.sizeOptions[0]);
     }
 
+    public reload(): void {
+        this.loadData();
+    }
+
     protected paginateHappened(event: PageEvent): void {
         this.page = event.pageIndex + 1;
         this.size = event.pageSize;

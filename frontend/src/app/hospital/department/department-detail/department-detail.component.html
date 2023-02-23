@@ -22,10 +22,7 @@
 
         <ng-container *ngIf="department">
             <div class="divider"></div>
-            <div class="department-boxes-part">
-                <h1>{{ 'DepartmentPage.BoxStatuses' | translate }}</h1>
-                <app-department-box-info-list [departmentId]="department.id"></app-department-box-info-list>
-            </div>
+            <app-department-box-info-manager [departmentId]="department.id"></app-department-box-info-manager>
         </ng-container>
 
     </div>
