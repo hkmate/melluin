@@ -1,0 +1,54 @@
+<mat-card>
+    <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'BoxStatus.Reason' | translate }}</mat-label>
+                <mat-select formControlName="reason">
+                    <mat-option *ngFor="let reason of reasonOptions" [value]="reason">
+                        {{ 'BoxStatusChangeReason.' + reason | translate }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'BoxStatus.AffectedObject' | translate }}</mat-label>
+                <input type="text"
+                       matInput
+                       [placeholder]="'BoxStatus.AffectedObjectPlaceholder' | translate"
+                       formControlName="affectedObject"
+                       [matAutocomplete]="auto">
+                <mat-hint>{{ 'BoxStatus.AffectedObjectHint' | translate }}</mat-hint>
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of affectedObjectsOptions" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'BoxStatus.Comment' | translate }}</mat-label>
+                <input type="text"
+                       matInput
+                       [placeholder]="'BoxStatus.CommentPlaceholder' | translate"
+                       formControlName="comment">
+            </mat-form-field>
+
+            <div class="button-row">
+                <button mat-flat-button
+                        [disabled]="buttonsDisabled"
+                        color="accent"
+                        type="submit">
+                    {{ 'SaveButton' | translate}}
+                </button>
+                <button mat-stroked-button
+                        [disabled]="buttonsDisabled"
+                        color="primary"
+                        type="button"
+                        (click)="cancelEditing()">
+                    {{ 'CancelButton' | translate}}
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

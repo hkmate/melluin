@@ -1,0 +1,17 @@
+<div class="department-boxes-part">
+    <div class="box-part-header">
+        <h1>{{ 'DepartmentPage.BoxStatuses' | translate }}</h1>
+        <span>
+            <button mat-mini-fab color="accent" (click)="creatorToggled()">
+                <mat-icon *ngIf="creatingInProcess">close</mat-icon>
+                <mat-icon *ngIf="!creatingInProcess">add</mat-icon>
+            </button>
+        </span>
+    </div>
+    <app-department-box-info-create *ngIf="creatingInProcess"
+                                    [buttonsDisabled]="saveInProcess"
+                                    (submitted)="createFinished($event)"
+                                    (canceled)="createCanceled()">
+    </app-department-box-info-create>
+    <app-department-box-info-list [departmentId]="departmentId"></app-department-box-info-list>
+</div>
