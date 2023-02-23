@@ -38,14 +38,14 @@
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.DiseasesInfo' | translate }}</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>{{ department?.diseasesInfo }}</mat-card-content>
+        <mat-card-content>{{ department?.diseasesInfo | optional }}</mat-card-content>
     </mat-card>
 
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.Note' | translate }}</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>{{ department?.note }}</mat-card-content>
+        <mat-card-content>{{ department?.note | optional }}</mat-card-content>
     </mat-card>
 
 </div>

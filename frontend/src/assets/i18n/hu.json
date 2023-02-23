@@ -13,6 +13,7 @@
     "NoData": "Nincs adat",
     "Search": "Keresés",
     "Edit": "Szerkesztés",
+    "Comment": "Megjegyzés",
     "Language": {
         "en": "Angol",
         "hu": "Magyar"
@@ -29,6 +30,15 @@
         "TOY_MAKING_COORDINATOR": "Játékkészítő koordinátor",
         "ADMINISTRATOR": "Adminisztrátor",
         "SYSADMIN": "Rendszer admin"
+    },
+    "BoxStatusChangeReason": {
+        "MISSING": "Hiányzik",
+        "BROKEN": "Törött",
+        "NEED_REFILL": "Feltöltés szükséges",
+        "NEED_CLEANING": "Tisztítás szükséges",
+        "CEASED": "Megszűnt",
+        "CORRECTED": "Javítva",
+        "COMMENT": "Megjegyzés"
     },
     "Menu": {
         "People": "Emberek",
@@ -126,6 +136,7 @@
         "Data": "Adatok",
         "EditData": "Adatok szerkesztése",
         "Add": "Osztály hozzáadás",
+        "BoxStatuses": "Doboz státusz",
         "Present": {
             "Name": "Név",
             "ValidFrom": "Érvényesség kezdete",
@@ -146,6 +157,9 @@
             "Note": "Megyjegyzések",
             "NotePlaceholder": "A keleti épületben van, a rózsaszín ajtón kell felmenni...."
         }
+    },
+    "BoxStatus": {
+        "NoStatusYet": "Nincs még leadott doboz info"
     },
     "Dashboard": {
         "WelcomeText": "Üdvözlünk a Nevetnikék App-ban. Válassz egy oldalt menüből."

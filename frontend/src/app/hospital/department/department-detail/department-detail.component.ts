@@ -96,10 +96,10 @@ export class DepartmentDetailComponent implements OnInit, OnDestroy {
 
     private createSaveRequest(data: DepartmentCreation | DepartmentUpdateChangeSet): Observable<Department> {
         if (data instanceof DepartmentUpdateChangeSet) {
-            return this.departmentService.updatePerson(this.department!.id, data);
+            return this.departmentService.updateDepartment(this.department!.id, data);
         }
         if (data instanceof DepartmentCreation) {
-            return this.departmentService.addPerson(data).pipe(tap(department => this.setIdInUrl(department.id)));
+            return this.departmentService.addDepartment(data).pipe(tap(department => this.setIdInUrl(department.id)));
         }
         return throwError(() => new Error('Invalid data to save.'));
     }

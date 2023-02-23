@@ -13,6 +13,7 @@
     "NoData": "No data",
     "Search": "Search",
     "Edit": "Edit",
+    "Comment": "Comment",
     "Language": {
         "en": "English",
         "hu": "Hungarian"
@@ -29,6 +30,15 @@
         "TOY_MAKING_COORDINATOR": "Toy making coordinator",
         "ADMINISTRATOR": "Administrator",
         "SYSADMIN": "System admin"
+    },
+    "BoxStatusChangeReason": {
+        "MISSING": "Missing",
+        "BROKEN": "Broken",
+        "NEED_REFILL": "Need refill",
+        "NEED_CLEANING": "Need cleaning",
+        "CEASED": "Ceased",
+        "CORRECTED": "Corrected",
+        "COMMENT": "Comment"
     },
     "Menu": {
         "People": "People",
@@ -126,6 +136,7 @@
         "Data": "Data",
         "EditData": "Edit date",
         "Add": "Add department",
+        "BoxStatuses": "Box status",
         "Present": {
             "Name": "Name",
             "ValidFrom": "Valid from",
@@ -146,6 +157,9 @@
             "Note": "Note",
             "NotePlaceholder": "The entry is in the southern side of the building...."
         }
+    },
+    "BoxStatus": {
+        "NoStatusYet": "There is no box status info yet"
     },
     "Dashboard": {
         "WelcomeText": "Welcome to the Nevetnikék App. Choose a page from the menu."

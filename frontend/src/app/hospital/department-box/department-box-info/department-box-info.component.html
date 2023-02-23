@@ -1,0 +1,16 @@
+
+<mat-card [class]="'reason-' + boxStatus.reason">
+    <mat-card-header>
+        <mat-card-subtitle>{{ boxStatus.dateTime | date : ( 'DateTimeFormat' | translate ) }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <h1>{{ 'BoxStatusChangeReason.' + boxStatus.reason | translate }}</h1>
+        <div *ngIf="boxStatus.affectedObject" class="affected-object">
+            {{ boxStatus.affectedObject }}
+        </div>
+        <div *ngIf="boxStatus.comment" class="comment">
+            <span class="title">{{ 'Comment' | translate }}: </span>
+            <span class="content">{{ boxStatus.comment }}</span>
+        </div>
+    </mat-card-content>
+</mat-card>
