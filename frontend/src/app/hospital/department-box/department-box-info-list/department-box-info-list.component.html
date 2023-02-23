@@ -1,0 +1,18 @@
+<ng-container *ngIf="!isEmpty(); else noBoxInList">
+    <div class="box-info-list">
+        <div *ngFor="let boxInfo of boxInfoList" class="box-info">
+            <app-department-box-info [boxStatus]="boxInfo"></app-department-box-info>
+        </div>
+
+        <mat-paginator [length]="countOfAll"
+                       [pageIndex]="page - 1"
+                       [pageSize]="size"
+                       [pageSizeOptions]="sizeOptions"
+                       (page)="paginateHappened($event)">
+        </mat-paginator>
+    </div>
+</ng-container>
+
+<ng-template #noBoxInList>
+    {{ 'BoxStatus.NoStatusYet' | translate }}
+</ng-template>

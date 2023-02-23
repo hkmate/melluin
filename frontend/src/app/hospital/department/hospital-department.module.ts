@@ -21,6 +21,7 @@ import {DepartmentDataFormComponent} from '@fe/app/hospital/department/departmen
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {DepartmentsListComponent} from '@fe/app/hospital/department/departments-list/departments-list.component';
+import {DepartmentBoxModule} from '@fe/app/hospital/department-box/department-box.module';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {DepartmentsListComponent} from '@fe/app/hospital/department/departments-
         CommonModule,
         RouterModule,
         ReactiveFormsModule,
+        FormsModule,
 
         MatFormFieldModule,
         MatInputModule,
@@ -45,7 +47,7 @@ import {DepartmentsListComponent} from '@fe/app/hospital/department/departments-
         PersonNamePipe,
         OptionalPipe,
         LazyInputModule,
-        FormsModule,
+        DepartmentBoxModule
     ],
     declarations: [
         DepartmentsListComponent,

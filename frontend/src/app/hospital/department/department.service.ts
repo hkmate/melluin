@@ -18,7 +18,7 @@ export class DepartmentService {
         return `${environment.baseURL}/departments`;
     }
 
-    public addPerson(data: DepartmentCreation): Observable<Department> {
+    public addDepartment(data: DepartmentCreation): Observable<Department> {
         return this.http.post<Department>(this.departmentUrl, data);
     }
 
@@ -26,7 +26,7 @@ export class DepartmentService {
         return this.http.get<Department>(`${this.departmentUrl}/${departmentId}`);
     }
 
-    public updatePerson(departmentId: string, data: DepartmentUpdateChangeSet): Observable<Department> {
+    public updateDepartment(departmentId: string, data: DepartmentUpdateChangeSet): Observable<Department> {
         return this.http.patch<Department>(`${this.departmentUrl}/${departmentId}`, data);
     }
 
