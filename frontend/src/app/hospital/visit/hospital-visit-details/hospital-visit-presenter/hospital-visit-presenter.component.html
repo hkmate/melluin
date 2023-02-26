@@ -1,0 +1,67 @@
+<h1>{{ 'HospitalVisit.Title' | translate }}</h1>
+
+<div class="hospital-visit-data-presenter">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'HospitalVisit.Present.Date' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                {{ visit.dateTimeFrom | date : ('EventDateFormat' | translate) }}
+                {{ visit.dateTimeFrom | date : ('TimeFormat' | translate) }}
+                -
+                {{ visit.dateTimeTo | date : ('TimeFormat' | translate) }}
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'HospitalVisit.Present.Place' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                <a class="link"
+                   [routerLink]="['/hospital-departments', visit.department.id]">
+                    {{ visit.department.name }}
+                </a>
+                <span class="department-address">
+                    ({{ visit.department.address }})
+                </span>
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'HospitalVisit.Present.Participants' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                <mat-chip-listbox>
+                    <mat-chip-row *ngFor="let participant of visit.participants">
+                        {{ participant | personName }}
+                    </mat-chip-row>
+                </mat-chip-listbox>
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'HospitalVisit.Present.Status' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                <span [class]="'visit-status-' + visit.status">
+                    {{ 'HospitalVisitStatus.' + visit.status | translate }}
+                </span>
+                <span class="status-icon">
+                    <app-visit-status-icon [status]="visit.status"></app-visit-status-icon>
+                </span>
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'HospitalVisit.Present.Organizer' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                {{ visit.organizer | personName }}
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+</div>

@@ -44,6 +44,14 @@
         "CORRECTED": "Corrected",
         "COMMENT": "Comment"
     },
+    "HospitalVisitStatus": {
+        "DRAFT": "Draft",
+        "SCHEDULED": "Scheduled",
+        "CANCELED": "Canceled",
+        "JUST_REQUIRED_FIELDS_FILLED": "Required fields are filled",
+        "ALL_FIELDS_FILLED": "All fields are filled",
+        "ENDED_SUCCESSFULLY": "Successful"
+    },
     "Menu": {
         "People": "People",
         "Events": "Events",
@@ -173,6 +181,16 @@
     },
     "EventsList": {
         "NoEventsFound": "No event found with the set filters"
+    },
+    "HospitalVisit": {
+        "Title": "Hospital visit",
+        "Present": {
+            "Date": "Date",
+            "Place": "Place",
+            "Participants": "Participants",
+            "Status": "Status",
+            "Organizer": "Organizer"
+        }
     },
     "Dashboard": {
         "WelcomeText": "Welcome to the Nevetnikék App. Choose a page from the menu."

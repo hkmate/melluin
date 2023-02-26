@@ -1,0 +1,18 @@
+<section>
+    <div class="page-content">
+
+        <div class="visit-part">
+            <ng-container *ngIf="visit && !isEditMode()">
+                <app-hospital-visit-presenter [visit]="visit!"></app-hospital-visit-presenter>
+                <div class="button-row">
+                    <button mat-stroked-button
+                            color="primary"
+                            (click)="switchToEdit()">
+                        {{ 'Edit' | translate }}
+                    </button>
+                </div>
+            </ng-container>
+        </div>
+
+    </div>
+</section>

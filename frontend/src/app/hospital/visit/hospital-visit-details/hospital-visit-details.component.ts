@@ -1,0 +1,95 @@
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Observable, Subscription, tap, throwError} from 'rxjs';
+import {Router} from '@angular/router';
+import {Location} from '@angular/common';
+import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
+import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
+import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
+import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
+import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
+import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
+
+@Component({
+    selector: 'app-hospital-visit-details',
+    templateUrl: './hospital-visit-details.component.html',
+    styleUrls: ['./hospital-visit-details.component.scss'],
+    providers: [RouteDataHandler]
+})
+export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
+
+    protected isCreation = false;
+    protected isEdit = false;
+    protected visit?: HospitalVisit;
+    private resolverSubscription: Subscription;
+
+    constructor(private readonly router: Router,
+                private readonly location: Location,
+                private readonly route: RouteDataHandler,
+                private readonly visitService: HospitalVisitService) {
+    }
+
+    public ngOnInit(): void {
+        this.resolverSubscription = this.route.getData<HospitalVisit | CreateMarkerType>('visit').subscribe(
+            visitInfo => {
+                this.setUp(visitInfo);
+            }
+        );
+    }
+
+    public ngOnDestroy(): void {
+        this.resolverSubscription?.unsubscribe();
+    }
+
+    protected isEditMode(): boolean {
+        return this.isEdit || this.isCreation;
+    }
+
+    protected saveVisit(data: HospitalVisitRewrite | HospitalVisitCreate): void {
+        this.createSaveRequest(data).subscribe(visit => {
+            this.visit = visit;
+            this.setToPresent();
+        });
+    }
+
+    protected cancelEditing(): void {
+        if (this.isCreation) {
+            this.router.navigate([PATHS.events.main]);
+        }
+        this.setToPresent();
+    }
+
+    protected switchToEdit(): void {
+        this.isEdit = true;
+        this.route.setParam('edit', true);
+    }
+
+    private setToPresent(): void {
+        this.isEdit = false;
+        this.isCreation = false;
+        this.route.removeParam('edit');
+    }
+
+    private setUp(visitInfo: HospitalVisit | CreateMarkerType): void {
+        this.isEdit = this.route.getParam('edit') === 'true';
+        if (visitInfo === CREATE_MARKER) {
+            this.isCreation = true;
+        } else {
+            this.visit = visitInfo;
+        }
+    }
+
+    private createSaveRequest(data: HospitalVisitCreate | HospitalVisitRewrite): Observable<HospitalVisit> {
+        if (data instanceof HospitalVisitRewrite) {
+            return this.visitService.updateVisit(this.visit!.id, data);
+        }
+        if (data instanceof HospitalVisitCreate) {
+            return this.visitService.addVisit(data).pipe(tap(visit => this.setIdInUrl(visit.id)));
+        }
+        return throwError(() => new Error('Invalid data to save.'));
+    }
+
+    private setIdInUrl(id: string): void {
+        this.location.replaceState(`${PATHS.hospitalVisit.main}/${id}`);
+    }
+
+}

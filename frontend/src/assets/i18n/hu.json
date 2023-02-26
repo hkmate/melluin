@@ -44,6 +44,14 @@
         "CORRECTED": "Javítva",
         "COMMENT": "Megjegyzés"
     },
+    "HospitalVisitStatus": {
+        "DRAFT": "Piszkozat",
+        "SCHEDULED": "Betervezve",
+        "CANCELED": "Lemondott",
+        "JUST_REQUIRED_FIELDS_FILLED": "Kötelező mezők kitöltve",
+        "ALL_FIELDS_FILLED": "Minden kitöltve",
+        "ENDED_SUCCESSFULLY": "Sikeres"
+    },
     "Menu": {
         "People": "Emberek",
         "Events": "Események",
@@ -173,6 +181,16 @@
     },
     "EventsList": {
         "NoEventsFound": "Nem található esemény a keresési feltételekkel"
+    },
+    "HospitalVisit": {
+        "Title": "Kórházi látogatás",
+        "Present": {
+            "Date": "Időpont",
+            "Place": "Hely",
+            "Participants": "Résztvevők",
+            "Status": "Státusz",
+            "Organizer": "Szervező"
+        }
     },
     "Dashboard": {
         "WelcomeText": "Üdvözlünk a Nevetnikék App-ban. Válassz egy oldalt menüből."

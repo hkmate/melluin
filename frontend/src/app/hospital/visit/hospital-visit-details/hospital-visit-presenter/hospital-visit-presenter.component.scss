@@ -1,0 +1,19 @@
+
+
+:host ::ng-deep .hospital-visit-data-presenter {
+
+    .mat-mdc-card-header {
+        padding: 0;
+    }
+
+    .mat-mdc-card {
+        margin: .5rem 0 .5rem 0;
+        padding: .5rem;
+    }
+
+}
+
+.department-address {
+    font-weight: normal;
+    font-size: smaller;
+}

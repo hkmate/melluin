@@ -28,6 +28,10 @@ export const PATHS: PathContainer = {
 
     events: {
         main: 'events'
+    },
+
+    hospitalVisit: {
+        main: 'hospital-visits'
     }
 
 };

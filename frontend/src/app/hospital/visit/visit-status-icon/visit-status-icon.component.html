@@ -1,0 +1,10 @@
+<ng-container [ngSwitch]="status">
+    <span *ngSwitchCase="'DRAFT'" class="DRAFT"><mat-icon>draw</mat-icon></span>
+    <span *ngSwitchCase="'SCHEDULED'" class="SCHEDULED"><mat-icon>calendar_month</mat-icon></span>
+    <span *ngSwitchCase="'CANCELED'" class="CANCELED"><mat-icon>event_busy</mat-icon></span>
+    <span *ngSwitchCase="'JUST_REQUIRED_FIELDS_FILLED'" class="JUST_REQUIRED_FIELDS_FILLED"><mat-icon>sms</mat-icon></span>
+    <span *ngSwitchCase="'ALL_FIELDS_FILLED'" class="ALL_FIELDS_FILLED"><mat-icon>mark_chat_read</mat-icon></span>
+    <span *ngSwitchCase="'ENDED_SUCCESSFULLY'" class="ENDED_SUCCESSFULLY"><mat-icon>check_circle</mat-icon></span>
+
+    <span *ngSwitchDefault></span>
+</ng-container>

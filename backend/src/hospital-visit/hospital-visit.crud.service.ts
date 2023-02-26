@@ -4,7 +4,6 @@ import {PageConverter} from '@be/crud/convert/page.converter';
 import {User} from '@shared/user/user';
 import {PageRequest} from '@be/crud/page-request';
 import {PageRequestFieldsValidator} from '@be/crud/validator/page-request-fields.validator';
-import {departmentFilterableFields, departmentSortableFields} from '@shared/department/department-filterable-fields';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {HospitalVisitCreationToEntityConverter} from '@be/hospital-visit/converer/hospital-visit-creation-to-entity.converter';
 import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
@@ -13,6 +12,10 @@ import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entit
 import {HospitalVisitEntityToDtoConverter} from '@be/hospital-visit/converer/hospital-visit-entity-to-dto.converter';
 import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/converer/hospital-visit-rewrite-applier.factory';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
+import {
+    hospitalVisitFilterableFields,
+    hospitalVisitSortableFields
+} from '@shared/hospital-visit/hospital-visit-filterable-fields';
 
 @Injectable()
 export class HospitalVisitCrudService {
@@ -36,7 +39,7 @@ export class HospitalVisitCrudService {
 
     public async find(pageRequest: PageRequest, requester: User): Promise<Pageable<HospitalVisit>> {
         PageRequestFieldsValidator
-            .of(departmentSortableFields, departmentFilterableFields)
+            .of(hospitalVisitSortableFields, hospitalVisitFilterableFields)
             .validate(pageRequest);
 
         const pageOfEntities: Pageable<HospitalVisitEntity> = await this.hospitalVisitDao.findAll(pageRequest);
