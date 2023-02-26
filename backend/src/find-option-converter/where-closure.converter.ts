@@ -38,7 +38,7 @@ export class WhereClosureConverter {
     }
 
     private isFieldSimply(fieldName: string): boolean {
-        return fieldName.includes('.');
+        return !fieldName.includes('.');
     }
 
     private splitFieldName(fieldName: string): Array<string> {

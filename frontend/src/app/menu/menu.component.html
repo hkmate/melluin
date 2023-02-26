@@ -17,7 +17,7 @@
                     <img class="logo-nav" src="assets/logo.svg">
                 </a>
                 <a *ngIf="canUserSee?.['people']" mat-list-item routerLink="/people">{{ 'Menu.People' | translate }}</a>
-                <!--                <a *ngIf="canUserSee?.['events']" mat-list-item routerLink="/events">{{ 'Menu.Events' | translate }}</a>-->
+                <a *ngIf="canUserSee?.['events']" mat-list-item routerLink="/events">{{ 'Menu.Events' | translate }}</a>
                 <!--                <a *ngIf="canUserSee?.['reports']" mat-list-item routerLink="/reports">{{ 'Menu.Reports' | translate }}</a>-->
                 <!--                <a *ngIf="canUserSee?.['notifications']" mat-list-item routerLink="/notifications">{{ 'Menu.Notifications' | translate }}</a>-->
                 <a *ngIf="canUserSee?.['departments']"

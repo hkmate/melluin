@@ -5,6 +5,7 @@
         "Login": "Login",
         "PeopleList": "People",
         "DepartmentList": "Departments",
+        "EventsList": "Events",
         "NotFound": "404"
     },
     "OkButton": "Ok",
@@ -20,6 +21,9 @@
     },
     "DateTimeFormat": "dd.MM.yyyy. HH:mm",
     "DateFormat": "dd.MM.yyyy.",
+    "EventDateFormat": "dd.MM. EEEE",
+    "EventShortDateFormat": "dd.MM EE",
+    "TimeFormat": "HH:mm",
     "Role": {
         "INTERN_HOSPITAL_VISITOR": "Intern hospital visitor",
         "BEGINNER_HOSPITAL_VISITOR": "Beginner hospital visitor ",
@@ -166,6 +170,9 @@
         "AffectedObjectHint": "Please add just one object at one time. Soon it will be possible to add more.",
         "Comment": "Comment",
         "CommentPlaceholder": "Ráférne egy rendberakás"
+    },
+    "EventsList": {
+        "NoEventsFound": "No event found with the set filters"
     },
     "Dashboard": {
         "WelcomeText": "Welcome to the Nevetnikék App. Choose a page from the menu."

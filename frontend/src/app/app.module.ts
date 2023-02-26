@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {APP_INITIALIZER, LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -20,6 +20,10 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
 import {I18nPaginatorIntl} from '@fe/app/util/i18n-paginator-intl';
 import {AppLanguage} from '@fe/app/language/app-language';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
+import {registerLocaleData} from '@angular/common';
+import localeHu from '@angular/common/locales/hu';
+
+registerLocaleData(localeHu);
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);
@@ -64,6 +68,7 @@ export function appInitializeTranslateFactory(translate: TranslateService) {
             multi: true
         },
         {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
+        {provide: LOCALE_ID, useValue: 'hu'}
     ],
 })
 export class AppModule {

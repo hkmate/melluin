@@ -27,6 +27,11 @@ const routes: Routes = [
         loadChildren: () => import('./hospital/department/hospital-department-routing.module').then(m => m.HospitalDepartmentRoutingModule)
     },
     {
+        path: PATHS.events.main,
+        canLoad: [AuthGuard],
+        loadChildren: () => import('./events/events-routing.module').then(m => m.EventsRoutingModule)
+    },
+    {
         path: '',
         redirectTo: PATHS.dashboard.main,
         pathMatch: 'full'

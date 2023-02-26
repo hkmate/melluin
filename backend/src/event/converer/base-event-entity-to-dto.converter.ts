@@ -15,7 +15,8 @@ export class BaseEventEntityToDtoConverter {
             dateTimeTo: value.dateTimeTo.toISOString(),
             visibility: value.visibility,
             organizer: this.personConverter.convert(value.organizer),
-            participants: value.participants.map(participant => this.personConverter.convert(participant))
+            participants: value.participants.map(participant => this.personConverter.convert(participant)),
+            type: value.eventType
         };
     }
 

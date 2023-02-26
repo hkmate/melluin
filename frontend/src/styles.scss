@@ -10,7 +10,11 @@ body {
 }
 
 .display-none {
-    display: none;
+    display: none !important;
+}
+
+.hidden {
+    visibility: hidden !important;
 }
 
 section {

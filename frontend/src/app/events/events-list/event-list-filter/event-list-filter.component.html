@@ -1,0 +1,19 @@
+<div class="events-filter">
+    <div class="date-interval-filter">
+        <span class="interval">
+            {{ dateFrom | date : ('EventShortDateFormat' | translate) }}
+            -
+            {{ dateTo | date : ('EventShortDateFormat' | translate) }}
+        </span>
+        <mat-date-range-input class="hidden" [rangePicker]="picker">
+            <input matStartDate [(ngModel)]="dateFrom">
+            <input matEndDate [(ngModel)]="dateTo">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker (closed)="changed()"></mat-date-range-picker>
+    </div>
+    <!-- TODO uncomment back when participant filter is solved in backend -->
+    <!--    <div class="text-filter">-->
+    <!--        <app-lazy-input [needClearButton]="true" (changed)="filterTextChanged($event)"></app-lazy-input>-->
+    <!--    </div>-->
+</div>

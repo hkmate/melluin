@@ -5,6 +5,7 @@
         "Login": "Bejelentkezés",
         "PeopleList": "Személyek",
         "DepartmentList": "Osztályok",
+        "EventsList": "Események",
         "NotFound": "404"
     },
     "OkButton": "Ok",
@@ -20,6 +21,9 @@
     },
     "DateTimeFormat": "yyyy.MM.dd. HH:mm",
     "DateFormat": "yyyy.MM.dd.",
+    "EventDateFormat": "MM.dd. EEEE",
+    "EventShortDateFormat": "MM.dd. EE",
+    "TimeFormat": "HH:mm",
     "Role": {
         "INTERN_HOSPITAL_VISITOR": "Hospitáló",
         "BEGINNER_HOSPITAL_VISITOR": "Kórházlátogató (kezdő)",
@@ -166,6 +170,9 @@
         "AffectedObjectHint": "Egyelőre csak egy eszközt írj 1-1 reportba légyszíves. Később lesz lehetőség több felvételére egyben is.",
         "Comment": "Egyéb megjegyzés",
         "CommentPlaceholder": "Ráférne egy rendberakás"
+    },
+    "EventsList": {
+        "NoEventsFound": "Nem található esemény a keresési feltételekkel"
     },
     "Dashboard": {
         "WelcomeText": "Üdvözlünk a Nevetnikék App-ban. Válassz egy oldalt menüből."

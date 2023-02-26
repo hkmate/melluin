@@ -3,5 +3,7 @@ export const eventSortableFields = [
 ];
 
 export const eventFilterableFields = [
-    ...eventSortableFields, 'organizer.id', 'organizer.name', 'participant.id', 'participant.name'
+    ...eventSortableFields,
+    'organizer.id',
+    'organizer.name'
 ];

@@ -1,0 +1,26 @@
+<section>
+    <div class="page-content">
+        <h1>{{ 'Titles.EventsList' | translate }}</h1>
+
+        <div class="option-row">
+            <app-event-list-filter (filterChanged)="filterChanged($event)"></app-event-list-filter>
+        </div>
+
+        <div class="events-list">
+            <ng-container *ngFor="let event of eventsList">
+                <app-hospital-event-card [event]="event"></app-hospital-event-card>
+            </ng-container>
+            <ng-container *ngIf="!eventsList?.length">
+                {{ 'EventsList.NoEventsFound' | translate }}
+            </ng-container>
+        </div>
+
+        <mat-paginator *ngIf="eventsList?.length"
+                       [length]="countOfAll"
+                       [pageIndex]="page - 1"
+                       [pageSize]="size"
+                       [pageSizeOptions]="sizeOptions"
+                       (page)="paginateHappened($event)">
+        </mat-paginator>
+    </div>
+</section>

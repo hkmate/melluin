@@ -32,7 +32,7 @@ export class EventDao extends PageCreator<EventEntity> {
     }
 
     public findAll(pageRequest: PageRequest): Promise<Pageable<EventEntity>> {
-        return this.getPage(pageRequest, {relations: {hospitalVisit: true}});
+        return this.getPage(pageRequest, {relations: {participants: true, hospitalVisit: true}});
     }
 
 }

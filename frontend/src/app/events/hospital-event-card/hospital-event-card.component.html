@@ -1,0 +1,27 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-subtitle>
+            {{ visit.dateTimeFrom | date : ('EventDateFormat' | translate) }}
+            {{ visit.dateTimeFrom | date : ('TimeFormat' | translate) }}
+            -
+            {{ visit.dateTimeTo | date : ('TimeFormat' | translate) }}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <h1>
+            <a class="link"
+               [routerLink]="['/hospital-departments', visit.department.id]">
+                {{ visit.department.name }}
+            </a>
+        </h1>
+        <h3>
+            ({{ visit.department.address }})
+        </h3>
+
+        <mat-chip-listbox>
+            <mat-chip-row *ngFor="let participant of visit.participants">
+                {{ participant | personName }}
+            </mat-chip-row>
+        </mat-chip-listbox>
+    </mat-card-content>
+</mat-card>
