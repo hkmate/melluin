@@ -4,6 +4,14 @@
 
         <div class="option-row">
             <app-event-list-filter (filterChanged)="filterChanged($event)"></app-event-list-filter>
+
+            <span>
+                <a mat-mini-fab
+                   color="accent"
+                   [routerLink]="['/hospital-visits', 'new']">
+                    <mat-icon>add</mat-icon>
+                </a>
+            </span>
         </div>
 
         <div class="events-list">
