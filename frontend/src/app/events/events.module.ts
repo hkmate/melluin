@@ -15,6 +15,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormsModule} from '@angular/forms';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
     imports: [
@@ -33,7 +34,8 @@ import {MatNativeDateModule} from '@angular/material/core';
         TranslateModule,
 
         PersonNamePipe,
-        LazyInputModule
+        LazyInputModule,
+        MatButtonModule
     ],
     declarations: [
         EventsListComponent,

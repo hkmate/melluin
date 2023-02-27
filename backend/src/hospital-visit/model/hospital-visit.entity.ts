@@ -1,10 +1,11 @@
-import {Column, Entity, JoinColumn, OneToOne, PrimaryColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn} from 'typeorm';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import {EventEntity} from '@be/event/model/event.entity';
+import {PersonEntity} from '@be/person/model/person.entity';
 
 @Entity({name: 'hospital_visit'})
-export class HospitalVisitEntity {
+export class HospitalVisitEntity extends EventEntity {
 
     @PrimaryColumn('uuid')
     id: string;
@@ -16,8 +17,21 @@ export class HospitalVisitEntity {
     @JoinColumn({name: 'department_id'})
     department: DepartmentEntity;
 
-    @OneToOne(type => EventEntity, {cascade: ['insert', 'update', 'remove']})
-    @JoinColumn({name: 'event_id'})
-    event: EventEntity;
+    @ManyToMany(
+        type => PersonEntity,
+        {eager: true, cascade: ['insert', 'update', 'remove']}
+    )
+    @JoinTable({
+        name: 'hospital_visit_participant',
+        joinColumn: {
+            name: 'event_id',
+            referencedColumnName: 'id'
+        },
+        inverseJoinColumn: {
+            name: 'person_id',
+            referencedColumnName: 'id'
+        }
+    })
+    participants: Array<PersonEntity>;
 
 }

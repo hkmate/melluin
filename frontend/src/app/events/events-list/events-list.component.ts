@@ -5,9 +5,9 @@ import {PageEvent} from '@angular/material/paginator';
 import {isNotNil} from '@shared/util/util';
 import {Pageable, PageQuery} from '@shared/api-util/pageable';
 import {ConjunctionFilterOptions, FilterOptions} from '@shared/api-util/filter-options';
-import {EventsService} from '@fe/app/events/events.service';
-import {MelluinEvent} from '@shared/event/event';
 import {EventsFilter} from '@fe/app/events/events-list/event-list-filter/events-filter';
+import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
+import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 
 @Component({
     selector: 'app-events-list',
@@ -21,7 +21,7 @@ export class EventsListComponent {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [10, 20, 50];
 
-    protected eventsList: Array<MelluinEvent>;
+    protected eventsList: Array<HospitalVisit>;
     protected page: number;
     protected size: number;
     protected countOfAll: number;
@@ -31,7 +31,7 @@ export class EventsListComponent {
     };
 
     constructor(private readonly title: AppTitle,
-                private readonly eventsService: EventsService) {
+                private readonly eventsService: HospitalVisitService) {
     }
 
     public ngOnInit(): void {
@@ -52,8 +52,8 @@ export class EventsListComponent {
     }
 
     private loadData(page?: number, size?: number): void {
-        this.eventsService.findEvents(this.createPageRequest(page, size)).subscribe(
-            (page: Pageable<MelluinEvent>) => {
+        this.eventsService.findVisit(this.createPageRequest(page, size)).subscribe(
+            (page: Pageable<HospitalVisit>) => {
                 this.eventsList = page.items;
                 this.page = page.meta.currentPage;
                 this.countOfAll = page.meta.totalItems!;

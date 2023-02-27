@@ -6,7 +6,6 @@ import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create'
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {DepartmentDao} from '@be/department/department.dao';
 import {PersonDao} from '@be/person/person.dao';
-import {EventType} from '@shared/event/event-type';
 
 @Injectable()
 export class HospitalVisitCreationToEntityConverter
@@ -34,16 +33,12 @@ export class HospitalVisitCreationToEntityConverter
             id: randomUUID(),
             status: dto.status,
             department: department,
-            event: {
-                id: randomUUID(),
-                eventType: EventType.HOSPITAL_VISIT,
-                organizer: organizer,
-                visibility: dto.visibility,
-                dateTimeFrom: new Date(dto.dateTimeFrom),
-                dateTimeTo: new Date(dto.dateTimeTo),
-                countedMinutes: dto.countedMinutes,
-                participants,
-            }
+            organizer: organizer,
+            visibility: dto.visibility,
+            dateTimeFrom: new Date(dto.dateTimeFrom),
+            dateTimeTo: new Date(dto.dateTimeTo),
+            countedMinutes: dto.countedMinutes,
+            participants,
         };
     }
 

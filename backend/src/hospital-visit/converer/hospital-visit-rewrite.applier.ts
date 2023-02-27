@@ -31,10 +31,10 @@ export class HospitalVisitRewriteApplier {
 
     private rewirePrimitiveFields(): void {
         this.persisted.status = this.rewrite.status;
-        this.persisted.event.countedMinutes = this.rewrite.countedMinutes;
-        this.persisted.event.dateTimeFrom = new Date(this.rewrite.dateTimeFrom);
-        this.persisted.event.dateTimeTo = new Date(this.rewrite.dateTimeTo);
-        this.persisted.event.visibility = this.rewrite.visibility;
+        this.persisted.countedMinutes = this.rewrite.countedMinutes;
+        this.persisted.dateTimeFrom = new Date(this.rewrite.dateTimeFrom);
+        this.persisted.dateTimeTo = new Date(this.rewrite.dateTimeTo);
+        this.persisted.visibility = this.rewrite.visibility;
     }
 
     private async rewriteDepartment(): Promise<void> {
@@ -50,11 +50,11 @@ export class HospitalVisitRewriteApplier {
             return;
         }
         const newParticipants = await this.personDao.findByIds(this.rewrite.participantIds);
-        this.persisted.event.participants = newParticipants;
+        this.persisted.participants = newParticipants;
     }
 
     private areParticipantsChanged(): boolean {
-        const persistedPeopleIds = this.persisted.event.participants.map(p => p.id);
+        const persistedPeopleIds = this.persisted.participants.map(p => p.id);
         const rewriteIds = this.rewrite.participantIds;
 
         return !areArrayHasSameItems(rewriteIds, persistedPeopleIds);

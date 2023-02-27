@@ -20,7 +20,7 @@ import {EventVisibility} from '@shared/event/event-visibility';
 })
 export class HospitalVisitFormComponent {
 
-    private static readonly MS_ON_HOUR = 1000 * 60 * 60;
+    private static readonly MS_ON_HOUR = 3600000; // 1000 * 60 * 60
     private static readonly MIN_ON_HOUR = 60;
     private static readonly MAX_COUNTED_HOURS = 24;
     private static readonly defaultTimeFrom = '16:00';

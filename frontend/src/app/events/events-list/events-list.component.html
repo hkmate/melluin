@@ -16,7 +16,7 @@
 
         <div class="events-list">
             <ng-container *ngFor="let event of eventsList">
-                <app-hospital-event-card [event]="event"></app-hospital-event-card>
+                <app-hospital-event-card [visit]="event"></app-hospital-event-card>
             </ng-container>
             <ng-container *ngIf="!eventsList?.length">
                 {{ 'EventsList.NoEventsFound' | translate }}

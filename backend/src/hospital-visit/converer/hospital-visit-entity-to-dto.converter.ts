@@ -28,12 +28,13 @@ export class HospitalVisitEntityToDtoConverter extends BaseEventEntityToDtoConve
     }
 
     private convertNotNilEntity(entity: HospitalVisitEntity): HospitalVisit {
-        const base: MelluinEvent = this.convertEventBase(entity.event);
+        const base: MelluinEvent = this.convertEventBase(entity);
         return {
             ...base,
             id: entity.id,
             department: this.departmentConverter.convert(entity.department),
-            status: entity.status
+            status: entity.status,
+            participants: entity.participants.map(participant => this.personConverter.convert(participant))
         }
     }
 

@@ -13,19 +13,13 @@ CREATE TABLE public.child_patient (
     info text
 );
 
-CREATE TABLE public.event (
+CREATE TABLE public.general_event (
     id uuid NOT NULL,
     organizer_id uuid NOT NULL,
     datetime_from timestamp without time zone NOT NULL,
     datetime_to timestamp without time zone NOT NULL,
     counted_minutes integer,
     visibility text NOT NULL,
-    event_type text NOT NULL
-);
-
-CREATE TABLE public.general_event (
-    id uuid NOT NULL,
-    event_id uuid NOT NULL,
     name text NOT NULL,
     address text NOT NULL,
     brief text,
@@ -55,9 +49,13 @@ CREATE TABLE public.hospital_department (
 
 CREATE TABLE public.hospital_visit (
     id uuid NOT NULL,
+    organizer_id uuid NOT NULL,
+    datetime_from timestamp without time zone NOT NULL,
+    datetime_to timestamp without time zone NOT NULL,
+    counted_minutes integer,
+    visibility text NOT NULL,
     department_id uuid NOT NULL,
-    status text NOT NULL,
-    event_id uuid NOT NULL
+    status text NOT NULL
 );
 
 CREATE TABLE public.hospital_visit_activity (
@@ -77,6 +75,11 @@ CREATE TABLE public.hospital_visit_action (
     params json,
     added_by uuid NOT NULL,
     date_time timestamp without time zone NOT NULL
+);
+
+CREATE TABLE public.hospital_visit_participant (
+    person_id uuid NOT NULL,
+    event_id uuid NOT NULL
 );
 
 CREATE TABLE public.event_participant (
@@ -142,7 +145,8 @@ CREATE TABLE public.volunteering_time (
     id uuid NOT NULL,
     person_id uuid NOT NULL,
     minutes integer NOT NULL,
-    event_id uuid NOT NULL
+    event_id uuid,
+    visit_id uuid
 );
 
 CREATE TABLE public.volunteering_type (
@@ -156,9 +160,6 @@ ALTER TABLE ONLY public.certificate
 
 ALTER TABLE ONLY public.child_patient
     ADD CONSTRAINT child_patient__id__primary_key PRIMARY KEY (id);
-
-ALTER TABLE ONLY public.event
-    ADD CONSTRAINT event__id__primary_key PRIMARY KEY (id);
 
 ALTER TABLE ONLY public.general_event
     ADD CONSTRAINT general_event__id__primary_key PRIMARY KEY (id);
@@ -180,6 +181,9 @@ ALTER TABLE ONLY public.hospital_visit_action
 
 ALTER TABLE ONLY public.event_participant
     ADD CONSTRAINT event_participant_pkey PRIMARY KEY (person_id, event_id);
+
+ALTER TABLE ONLY public.hospital_visit_participant
+    ADD CONSTRAINT hospital_visit_participant_pkey PRIMARY KEY (person_id, event_id);
 
 ALTER TABLE ONLY public.notification
     ADD CONSTRAINT notification__id__primary_key PRIMARY KEY (id);
@@ -211,20 +215,17 @@ ALTER TABLE ONLY public.certificate
 ALTER TABLE ONLY public.certificate
     ADD CONSTRAINT certificate__owner_id__to__person__id FOREIGN KEY (owner_id) REFERENCES public.person(id);
 
-ALTER TABLE ONLY public.event
+ALTER TABLE ONLY public.hospital_visit
     ADD CONSTRAINT event__organizer_id__to__person_id FOREIGN KEY (organizer_id) REFERENCES public.person(id);
 
 ALTER TABLE ONLY public.general_event
-    ADD CONSTRAINT general_event__event_id__to__event__id FOREIGN KEY (event_id) REFERENCES public.event(id);
+    ADD CONSTRAINT event__organizer_id__to__person_id FOREIGN KEY (organizer_id) REFERENCES public.person(id);
 
 ALTER TABLE ONLY public.hospital_box_status_report
     ADD CONSTRAINT hospital_box_status_report__hospital_department_id__to__hospita FOREIGN KEY (hospital_department_id) REFERENCES public.hospital_department(id);
 
 ALTER TABLE ONLY public.hospital_visit
     ADD CONSTRAINT hospital_visit__department_id__to__hospital_department__id FOREIGN KEY (department_id) REFERENCES public.hospital_department(id);
-
-ALTER TABLE ONLY public.hospital_visit
-    ADD CONSTRAINT hospital_visit__event_id__to__event__id FOREIGN KEY (event_id) REFERENCES public.event(id) NOT VALID;
 
 ALTER TABLE ONLY public.hospital_visit_activity
     ADD CONSTRAINT visit_activity__child_patient_id__to__child_patient__id FOREIGN KEY (child_patient_id) REFERENCES public.child_patient(id);
@@ -235,11 +236,17 @@ ALTER TABLE ONLY public.hospital_visit_activity
 ALTER TABLE ONLY public.hospital_visit_action
     ADD CONSTRAINT visit_action__visit_id__to__hospital_visit_id FOREIGN KEY (hospital_visit_id) REFERENCES public.hospital_visit(id);
 
+ALTER TABLE ONLY public.hospital_visit_participant
+    ADD CONSTRAINT visit_participant__person_id__to_person_id FOREIGN KEY (person_id) REFERENCES public.person(id);
+
+ALTER TABLE ONLY public.hospital_visit_participant
+    ADD CONSTRAINT visit_participant__visit_id__to_event_id FOREIGN KEY (event_id) REFERENCES public.hospital_visit(id);
+
 ALTER TABLE ONLY public.event_participant
     ADD CONSTRAINT event_participant__person_id__to_person_id FOREIGN KEY (person_id) REFERENCES public.person(id);
 
 ALTER TABLE ONLY public.event_participant
-    ADD CONSTRAINT event_participant__visit_id__to_event_id FOREIGN KEY (event_id) REFERENCES public.event(id);
+    ADD CONSTRAINT event_participant__visit_id__to_event_id FOREIGN KEY (event_id) REFERENCES public.general_event(id);
 
 ALTER TABLE ONLY public.notification
     ADD CONSTRAINT notification__person_id__to__person__id FOREIGN KEY (person_id) REFERENCES public.person(id);
@@ -266,7 +273,10 @@ ALTER TABLE ONLY public.visit_personal_report
     ADD CONSTRAINT visit_personal_report__visit_id__to__hospital_visit__id FOREIGN KEY (hospital_visit_id) REFERENCES public.hospital_visit(id);
 
 ALTER TABLE ONLY public.volunteering_time
-    ADD CONSTRAINT volunteering_time__event_id__to__event__id FOREIGN KEY (event_id) REFERENCES public.event(id);
+    ADD CONSTRAINT volunteering_time__visit_id__to__event__id FOREIGN KEY (event_id) REFERENCES public.hospital_visit(id);
+
+ALTER TABLE ONLY public.volunteering_time
+    ADD CONSTRAINT volunteering_time__event_id__to__event__id FOREIGN KEY (event_id) REFERENCES public.general_event(id);
 
 ALTER TABLE ONLY public.volunteering_time
     ADD CONSTRAINT volunteering_time__person_id__to__person__id FOREIGN KEY (person_id) REFERENCES public.person(id);

@@ -6,7 +6,6 @@ import {ConfigModuleDefinition} from '@be/config/config.module';
 import {PersonModule} from '@be/person/person.module';
 import {DepartmentModule} from '@be/department/department.module';
 import {HospitalVisitModule} from '@be/hospital-visit/hospital-visit.module';
-import {EventModule} from '@be/event/event.module';
 
 @Module({
     imports: [
@@ -17,7 +16,6 @@ import {EventModule} from '@be/event/event.module';
         UserModule,
         PersonModule,
         DepartmentModule,
-        EventModule,
         HospitalVisitModule
     ]
 })

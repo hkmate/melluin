@@ -22,7 +22,7 @@ export class HospitalVisitDao extends PageCreator<HospitalVisitEntity> {
 
     public findOne(id: string): Promise<HospitalVisitEntity | undefined> {
         return this.repository.findOne({
-            where: {id}, relations: {event: true}
+            where: {id},
         }).then(entity => entity ?? undefined);
     }
 
@@ -36,7 +36,7 @@ export class HospitalVisitDao extends PageCreator<HospitalVisitEntity> {
     }
 
     public findAll(pageRequest: PageRequest): Promise<Pageable<HospitalVisitEntity>> {
-        return this.getPage(pageRequest, {relations: {event: true}});
+        return this.getPage(pageRequest, {});
     }
 
 }

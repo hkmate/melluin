@@ -9,14 +9,11 @@ export class BaseEventEntityToDtoConverter {
 
     public convertEventBase(value: EventEntity): MelluinEvent {
         return {
-            event_id: value.id,
             countedMinutes: value.countedMinutes,
             dateTimeFrom: value.dateTimeFrom.toISOString(),
             dateTimeTo: value.dateTimeTo.toISOString(),
             visibility: value.visibility,
-            organizer: this.personConverter.convert(value.organizer),
-            participants: value.participants.map(participant => this.personConverter.convert(participant)),
-            type: value.eventType
+            organizer: this.personConverter.convert(value.organizer)
         };
     }
 
