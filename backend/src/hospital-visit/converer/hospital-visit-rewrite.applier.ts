@@ -31,7 +31,7 @@ export class HospitalVisitRewriteApplier {
 
     private rewirePrimitiveFields(): void {
         this.persisted.status = this.rewrite.status;
-        this.persisted.event.countedHours = this.rewrite.countedHours;
+        this.persisted.event.countedMinutes = this.rewrite.countedMinutes;
         this.persisted.event.dateTimeFrom = new Date(this.rewrite.dateTimeFrom);
         this.persisted.event.dateTimeTo = new Date(this.rewrite.dateTimeTo);
         this.persisted.event.visibility = this.rewrite.visibility;

@@ -16,8 +16,8 @@ export class EventEntity {
     @Column({name: 'datetime_to', type: 'timestamp'})
     dateTimeTo: Date;
 
-    @Column({name: 'counted_hours'})
-    countedHours?: number;
+    @Column({name: 'counted_minutes'})
+    countedMinutes?: number;
 
     @Column()
     visibility: EventVisibility;

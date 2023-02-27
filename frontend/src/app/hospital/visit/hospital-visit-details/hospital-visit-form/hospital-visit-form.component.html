@@ -1,0 +1,103 @@
+<h1>
+    <ng-container *ngIf="!visit">{{ 'HospitalVisit.Form.Add' | translate }}</ng-container>
+    <ng-container *ngIf="!!visit">{{ 'HospitalVisit.Form.Edit' | translate }}</ng-container>
+</h1>
+
+<form [formGroup]="form">
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'HospitalVisit.Form.Department' | translate }}</mat-label>
+            <mat-select formControlName="departmentId">
+                <mat-option *ngFor="let option of departmentOptions" [value]="option.id">
+                    {{ option.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="participant-selector">
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'HospitalVisit.Form.Participants' | translate }}</mat-label>
+            <mat-chip-listbox>
+                <mat-chip-row *ngFor="let person of form.controls.participants.value"
+                              (removed)="removePerson(person)">
+                    {{ person | personName }}
+                    <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip-row>
+            </mat-chip-listbox>
+            <mat-select formControlName="participants" multiple>
+                <mat-option *ngFor="let option of personOptions" [value]="option">
+                    {{ option | personName }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'HospitalVisit.Form.Date' | translate }}</mat-label>
+            <input matInput
+                   [matDatepicker]="validFromPicker"
+                   formControlName="date">
+            <mat-datepicker-toggle matIconSuffix [for]="validFromPicker"></mat-datepicker-toggle>
+            <mat-datepicker #validFromPicker></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+    <div class="time-field">
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'HospitalVisit.Form.TimeFrom' | translate }}</mat-label>
+            <input matInput
+                   type="time"
+                   formControlName="timeFrom"
+                   (ngModelChange)="setCountedHours()">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'HospitalVisit.Form.TimeTo' | translate }}</mat-label>
+            <input matInput
+                   type="time"
+                   formControlName="timeTo"
+                   (ngModelChange)="setCountedHours()">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'HospitalVisit.Form.CountedHours' | translate }}</mat-label>
+            <input matInput
+                   type="number"
+                   [placeholder]="'appearance.Form.CountedHoursPlaceholder' | translate"
+                   formControlName="countedHours">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'HospitalVisit.Form.Status' | translate }}</mat-label>
+            <mat-select formControlName="status">
+                <mat-option *ngFor="let option of statusOptions" [value]="option">
+                    {{ 'HospitalVisitStatus.' + option | translate }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="button-row">
+        <button mat-flat-button
+                color="accent"
+                type="button"
+                (click)="onSubmit()">
+            {{ 'SaveButton' | translate}}
+        </button>
+        <button mat-stroked-button
+                color="primary"
+                type="button"
+                (click)="cancelEditing()">
+            {{ 'CancelButton' | translate}}
+        </button>
+    </div>
+
+</form>

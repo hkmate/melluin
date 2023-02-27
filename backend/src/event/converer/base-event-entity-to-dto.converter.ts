@@ -10,7 +10,7 @@ export class BaseEventEntityToDtoConverter {
     public convertEventBase(value: EventEntity): MelluinEvent {
         return {
             event_id: value.id,
-            countedHours: value.countedHours,
+            countedMinutes: value.countedMinutes,
             dateTimeFrom: value.dateTimeFrom.toISOString(),
             dateTimeTo: value.dateTimeTo.toISOString(),
             visibility: value.visibility,

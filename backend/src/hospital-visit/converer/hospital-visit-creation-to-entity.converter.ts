@@ -41,7 +41,7 @@ export class HospitalVisitCreationToEntityConverter
                 visibility: dto.visibility,
                 dateTimeFrom: new Date(dto.dateTimeFrom),
                 dateTimeTo: new Date(dto.dateTimeTo),
-                countedHours: dto.countedHours,
+                countedMinutes: dto.countedMinutes,
                 participants,
             }
         };

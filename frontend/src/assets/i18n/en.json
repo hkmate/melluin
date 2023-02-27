@@ -189,7 +189,20 @@
             "Place": "Place",
             "Participants": "Participants",
             "Status": "Status",
-            "Organizer": "Organizer"
+            "Organizer": "Organizer",
+            "CountedHours": "Countable hours"
+        },
+        "Form": {
+            "Add": "Add new visit",
+            "Edit": "Edit visit",
+            "Department": "Department",
+            "Participants": "Participants",
+            "Date": "Date",
+            "TimeFrom": "Start",
+            "TimeTo": "End",
+            "CountedHours": "Countable hours",
+            "CountedHoursPlaceholder": "2",
+            "Status": "Status"
         }
     },
     "Dashboard": {

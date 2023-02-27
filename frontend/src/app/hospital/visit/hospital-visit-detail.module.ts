@@ -9,23 +9,41 @@ import {MatChipsModule} from '@angular/material/chips';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
 import {MatButtonModule} from '@angular/material/button';
 import {VisitStatusIconComponent} from './visit-status-icon/visit-status-icon.component';
+import {HospitalVisitFormComponent} from './hospital-visit-details/hospital-visit-form/hospital-visit-form.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatIconModule} from '@angular/material/icon';
+import {MinToHourPipe} from '@fe/app/util/min-to-hour.pipe';
+import {OptionalPipe} from '@fe/app/util/optional.pipe';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
+        ReactiveFormsModule,
 
         MatCardModule,
         MatChipsModule,
         MatButtonModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatIconModule,
         TranslateModule,
 
         PersonNamePipe,
-        VisitStatusIconComponent
+        VisitStatusIconComponent,
+        MinToHourPipe,
+        OptionalPipe,
     ],
     declarations: [
         HospitalVisitDetailsComponent,
-        HospitalVisitPresenterComponent
+        HospitalVisitPresenterComponent,
+        HospitalVisitFormComponent
     ]
 })
 export class HospitalVisitDetailModule {

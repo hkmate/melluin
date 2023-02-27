@@ -7,7 +7,7 @@ export interface MelluinEvent {
     event_id: string;
     dateTimeFrom: string;
     dateTimeTo: string;
-    countedHours?: number;
+    countedMinutes?: number;
     visibility: EventVisibility;
     organizer: PersonIdentifier;
     participants: Array<PersonIdentifier>;

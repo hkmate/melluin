@@ -1,0 +1,37 @@
+form {
+    mat-form-field {
+        width: 100%;
+    }
+
+    .time-field > mat-form-field {
+        width: 50%;
+    }
+
+    .participant-selector {
+
+        .select-opener {
+            position: absolute;
+            right: 0;
+            top: calc(50% - 20px);
+        }
+
+        mat-select {
+
+            visibility: hidden;
+            width: 0;
+        }
+    }
+
+    .button-row {
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+            margin-right: .5rem;
+
+            &:last-of-type {
+                margin-right: 0;
+            }
+        }
+    }
+}

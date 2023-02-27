@@ -64,4 +64,13 @@
         </mat-card-header>
     </mat-card>
 
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'HospitalVisit.Present.CountedHours' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                {{ visit.countedMinutes | minToHour | optional }}
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
 </div>

@@ -12,6 +12,12 @@
                     </button>
                 </div>
             </ng-container>
+
+            <app-hospital-visit-form *ngIf="isEditMode()"
+                                  [visit]="visit"
+                                  (submitted)="saveVisit($event)"
+                                  (canceled)="cancelEditing()">
+            </app-hospital-visit-form>
         </div>
 
     </div>

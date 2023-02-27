@@ -9,10 +9,10 @@ export class EventRewrite {
     @IsDateString()
     dateTimeTo: string;
 
-    @IsNumber()
+    @IsNumber({maxDecimalPlaces: 2})
     @Min(0)
     @IsOptional()
-    countedHours?: number;
+    countedMinutes?: number;
 
     @IsEnum(EventVisibility)
     visibility: EventVisibility;

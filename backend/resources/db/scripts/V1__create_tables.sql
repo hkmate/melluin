@@ -18,7 +18,7 @@ CREATE TABLE public.event (
     organizer_id uuid NOT NULL,
     datetime_from timestamp without time zone NOT NULL,
     datetime_to timestamp without time zone NOT NULL,
-    counted_hours integer,
+    counted_minutes integer,
     visibility text NOT NULL,
     event_type text NOT NULL
 );

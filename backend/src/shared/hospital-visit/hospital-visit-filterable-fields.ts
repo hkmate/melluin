@@ -1,5 +1,5 @@
 export const hospitalVisitSortableFields = [
-    'dateTimeFrom', 'dateTimeTo', 'countedHours'
+    'dateTimeFrom', 'dateTimeTo', 'countedMinutes'
 ];
 
 export const hospitalVisitFilterableFields = [

@@ -39,6 +39,17 @@ export function optionalArrayToArray<T>(element: T | Array<T>): Array<T> {
     return (element instanceof Array) ? element : [element];
 }
 
+export function parseTime(time: string): Date {
+    return parseTimeWithDate(time, new Date());
+}
+
+export function parseTimeWithDate(time: string, date: Date): Date {
+    const [hour, min] = time.split(':');
+    const dateTime = new Date(date);
+    dateTime.setHours(+hour, +min, 0, 0);
+    return dateTime;
+}
+
 export function capitalizeFirstLetter(text: string): string {
     if (isNilOrEmpty(text)) {
         return text;
