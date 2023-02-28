@@ -25,6 +25,7 @@ export class HospitalVisitCreationToEntityConverter
         return this.convertNotNilEntity(entity);
     }
 
+    // eslint-disable-next-line max-lines-per-function
     private async convertNotNilEntity(dto: HospitalVisitCreate): Promise<HospitalVisitEntity> {
         const department = await this.departmentDao.getOne(dto.departmentId);
         const organizer = await this.personDao.getOne(dto.organizerId);

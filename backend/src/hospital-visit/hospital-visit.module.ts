@@ -21,7 +21,12 @@ import {DepartmentPersistenceModule} from '@be/department/department.persistence
         HospitalVisitEntityToDtoConverter,
         HospitalVisitRewriteApplierFactory,
         HospitalVisitCrudService,
-        HospitalVisitController,
+    ],
+    exports: [
+        HospitalVisitCreationToEntityConverter,
+        HospitalVisitEntityToDtoConverter,
+        HospitalVisitRewriteApplierFactory,
+        HospitalVisitCrudService
     ],
     controllers: [
         HospitalVisitController

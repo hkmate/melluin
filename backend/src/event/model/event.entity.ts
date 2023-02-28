@@ -2,7 +2,7 @@ import {Column, JoinColumn, OneToOne} from 'typeorm';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {EventVisibility} from '@shared/event/event-visibility';
 
-export class EventEntity {
+export abstract class EventEntity {
 
     @Column({name: 'datetime_from', type: 'timestamp'})
     dateTimeFrom: Date;

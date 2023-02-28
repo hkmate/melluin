@@ -6,6 +6,8 @@ import {ConfigModule, ConfigService} from '@nestjs/config';
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import {DepartmentBoxStatusEntity} from '@be/department-box/model/department-box-status.entity';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
+import {ChildEntity} from '@be/child/model/child.entity';
+import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
 
 export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
@@ -27,8 +29,12 @@ export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
             PersonEntity,
             DepartmentEntity,
             DepartmentBoxStatusEntity,
-            HospitalVisitEntity
+            HospitalVisitEntity,
+            HospitalVisitActivityEntity,
+            ChildEntity
         ],
+
+        // logging: true
     }),
     inject: [ConfigService],
 });

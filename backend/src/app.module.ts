@@ -6,6 +6,8 @@ import {ConfigModuleDefinition} from '@be/config/config.module';
 import {PersonModule} from '@be/person/person.module';
 import {DepartmentModule} from '@be/department/department.module';
 import {HospitalVisitModule} from '@be/hospital-visit/hospital-visit.module';
+import {ChildModule} from '@be/child/child.module';
+import {HospitalVisitActivityModule} from '@be/hospital-visit-activity/hospital-visit-activity.module';
 
 @Module({
     imports: [
@@ -16,7 +18,9 @@ import {HospitalVisitModule} from '@be/hospital-visit/hospital-visit.module';
         UserModule,
         PersonModule,
         DepartmentModule,
-        HospitalVisitModule
+        HospitalVisitModule,
+        HospitalVisitActivityModule,
+        ChildModule
     ]
 })
 export class AppModule {

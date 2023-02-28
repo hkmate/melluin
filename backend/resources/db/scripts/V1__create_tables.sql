@@ -64,7 +64,7 @@ CREATE TABLE public.hospital_visit_activity (
     child_patient_id uuid NOT NULL,
     activity_type text NOT NULL,
     comment text,
-    children_group_key smallserial,
+    group_id uuid  NOT NULL,
     is_parent_there boolean
 );
 
