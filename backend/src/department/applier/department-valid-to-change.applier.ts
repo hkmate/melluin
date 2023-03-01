@@ -1,10 +1,10 @@
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import {DepartmentUpdateChangeSet} from '@shared/department/department-update-change-set';
 import {isNil, isNotNil} from '@shared/util/util';
-import {DateUtil} from '@be/util/date-util';
 import {BadRequestException} from '@nestjs/common';
 import {Applier} from '@shared/applier';
 import {DEFAULT_TO_DATE} from '@shared/api-util/default-to-date';
+import {DateUtil} from '@shared/util/date-util';
 
 
 export class DepartmentValidToChangeApplier implements Applier<DepartmentEntity> {

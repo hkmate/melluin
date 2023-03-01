@@ -1,0 +1,11 @@
+<ng-container *ngIf="!isEmpty(); else noActivityInList">
+    <div class="activities-list">
+        <div *ngFor="let activity of activities" class="activity-card">
+            <app-visit-activity-card [activity]="activity" [childrenById]="childrenById"></app-visit-activity-card>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #noActivityInList>
+    {{ 'HospitalVisit.Activities.NoActivityYet' | translate }}
+</ng-template>

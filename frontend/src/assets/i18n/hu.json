@@ -52,6 +52,21 @@
         "ALL_FIELDS_FILLED": "Minden kitöltve",
         "ENDED_SUCCESSFULLY": "Sikeres"
     },
+    "VisitActivityType": {
+        "UNO": "Uno",
+        "BUG_POKER": "Csótány-póker",
+        "OTHER_CARD_GAME": "Egyéb kártyajáték",
+        "MUSIC": "Zenélés",
+        "PAPER_SNAKE_MAKING": "Papírkígyó hajtogatás",
+        "OTHER_HANDCRAFT": "Egyéb kézimunka",
+        "SMALLTALK": "Beszélgetés",
+        "CHERISH": "Babusgatás",
+        "BABY_MASSAGE": "Baba masszázs",
+        "PUPPETRY": "Bábozás",
+        "TALE_TELLING": "Mesélés",
+        "DRAWING": "Rajzolás",
+        "OTHER": "Egyéb"
+    },
     "Menu": {
         "People": "Emberek",
         "Events": "Események",
@@ -203,7 +218,30 @@
             "CountedHours": "Elszámolandó órák",
             "CountedHoursPlaceholder": "2",
             "Status": "Státusz"
+        },
+        "Activities": {
+            "Children": "Gyerekek",
+            "Activities": "Tevékenységek",
+            "Comment": "Megjegyzés",
+            "CommentPlaceholder": "nagyon jó buli volt",
+            "NoActivityYet": "Nincs még felvéve tevékenység",
+            "BoxInfo": "Doboz info"
         }
+    },
+    "ChildCard": {
+        "Age": "{{year}} év, {{months}} hó",
+        "AgeWithoutMonth": "{{year}} év"
+    },
+    "ChildrenList": {
+        "ChildrenList": "Gyerekek",
+        "NoChildYet": "Nincs még gyerek hozzáadva",
+        "Name": "Név",
+        "NamePlaceholder": "Péter",
+        "Age": "Kor",
+        "AgePlaceholder": "1,5",
+        "Info": "Egyéb info",
+        "InfoPlaceholder": "Szereti a bábokat...",
+        "IsParentThere": "Szülő vele van"
     },
     "Dashboard": {
         "WelcomeText": "Üdvözlünk a Nevetnikék App-ban. Válassz egy oldalt menüből."

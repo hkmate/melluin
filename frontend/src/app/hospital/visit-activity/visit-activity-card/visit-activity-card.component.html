@@ -1,0 +1,19 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-subtitle>
+            <span *ngFor="let activityType of activity.activities" class="activity-type">
+                {{ 'VisitActivityType.' + activityType  | translate }}
+            </span>
+            <div class="children">
+                <mat-chip-listbox>
+                    <mat-chip-row *ngFor="let child of activity.children">
+                        {{ childrenById[child.childId].child.name }}
+                    </mat-chip-row>
+                </mat-chip-listbox>
+            </div>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        {{ activity.comment }}
+    </mat-card-content>
+</mat-card>

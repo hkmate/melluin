@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {BadRequestException, Injectable} from '@nestjs/common';
 import {User} from '@shared/user/user';
 import {HospitalVisitActivityDao} from '@be/hospital-visit-activity/hospital-visit-activity.dao';
 import {HospitalVisitActivityInput} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
@@ -9,19 +9,26 @@ import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrap
 import {ActivityEntityToWrappedDtoConverter} from '@be/hospital-visit-activity/converter/activity-entity-to-wrapped-dto.converter';
 import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
 import * as _ from 'lodash';
+import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
+import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
+import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 
 @Injectable()
 export class HospitalVisitActivityCrudService {
 
     constructor(private readonly hospitalVisitActivityDao: HospitalVisitActivityDao,
+                private readonly hospitalVisitDao: HospitalVisitDao,
                 private readonly activityInputToEntityConverter: ActivityInputToEntityConverter,
                 private readonly basicDtoConverter: ActivityEntityToBasicDtoConverter,
                 private readonly wrappedDtoConverter: ActivityEntityToWrappedDtoConverter) {
     }
 
     public async save(activityInput: HospitalVisitActivityInput, requester: User): Promise<HospitalVisitActivity> {
+        const visit = await this.hospitalVisitDao.getOne(activityInput.visitId!);
+        this.verifyVisitIsScheduled(visit);
         const creationEntity = await this.activityInputToEntityConverter.convert(activityInput);
         const entities = await this.hospitalVisitActivityDao.saveAll(creationEntity);
+        await this.refreshVisitStatusToPartlyFilled(visit);
         return this.basicDtoConverter.convert(entities);
     }
 
@@ -39,6 +46,17 @@ export class HospitalVisitActivityCrudService {
 
     private separateByVisits(entities: Array<HospitalVisitActivityEntity>): Array<Array<HospitalVisitActivityEntity>> {
         return Object.values(_.groupBy(entities, entity => entity.hospitalVisit.id));
+    }
+
+    private verifyVisitIsScheduled(visit: HospitalVisitEntity): void {
+        if (visit.status !== HospitalVisitStatus.SCHEDULED) {
+            throw new BadRequestException('Save activity is only acceptable when the visit is in status: Scheduled');
+        }
+    }
+
+    private async refreshVisitStatusToPartlyFilled(visit: HospitalVisitEntity): Promise<void> {
+        visit.status = HospitalVisitStatus.JUST_REQUIRED_FIELDS_FILLED;
+        await this.hospitalVisitDao.save(visit);
     }
 
 }

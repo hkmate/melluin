@@ -13,17 +13,18 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { DepartmentBoxInfoManagerComponent } from './department-box-info-manager/department-box-info-manager.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import { OptionalBoxInfoCreatorComponent } from './optional-box-info-creator/optional-box-info-creator.component';
 
 
 @NgModule({
     imports: [
         CommonModule,
+        ReactiveFormsModule,
 
         MatCardModule,
         MatPaginatorModule,
         MatInputModule,
         MatSelectModule,
-        ReactiveFormsModule,
         MatAutocompleteModule,
         MatIconModule,
         MatButtonModule,
@@ -31,13 +32,16 @@ import {MatButtonModule} from '@angular/material/button';
     ],
     exports: [
         DepartmentBoxInfoListComponent,
-        DepartmentBoxInfoManagerComponent
+        DepartmentBoxInfoManagerComponent,
+        DepartmentBoxInfoComponent,
+        OptionalBoxInfoCreatorComponent
     ],
     declarations: [
         DepartmentBoxInfoComponent,
         DepartmentBoxInfoListComponent,
         DepartmentBoxInfoCreateComponent,
-        DepartmentBoxInfoManagerComponent
+        DepartmentBoxInfoManagerComponent,
+        OptionalBoxInfoCreatorComponent
     ]
 })
 export class DepartmentBoxModule {

@@ -16,7 +16,7 @@ export class ChildRewriteApplier {
 
     private rewirePrimitiveFields(): void {
         this.persisted.name = this.rewrite.name;
-        this.persisted.birthYear = this.rewrite.birthYear;
+        this.persisted.guessedBirth = this.rewrite.guessedBirth;
         this.persisted.info = this.rewrite.info;
     }
 

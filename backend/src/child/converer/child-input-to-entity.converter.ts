@@ -22,7 +22,7 @@ export class ChildInputToEntityConverter implements Converter<ChildInput, ChildE
         return {
             id: randomUUID(),
             name: dto.name,
-            birthYear: dto.birthYear,
+            guessedBirth: dto.guessedBirth,
             info: dto.info
         };
     }

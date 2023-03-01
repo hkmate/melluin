@@ -1,0 +1,67 @@
+<mat-card>
+    <mat-card-content>
+        <form [formGroup]="form">
+
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'HospitalVisit.Activities.Children' | translate }}</mat-label>
+                <mat-chip-listbox>
+                    <mat-chip-row *ngFor="let patientInfo of form.controls.children.value"
+                                  (removed)="removeChild(patientInfo)">
+                        {{ patientInfo.child.name }}
+                        <button matChipRemove>
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip-row>
+                </mat-chip-listbox>
+                <mat-select formControlName="children" multiple>
+                    <mat-option *ngFor="let option of children" [value]="option">
+                        {{ option.child.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'HospitalVisit.Activities.Activities' | translate }}</mat-label>
+                <mat-chip-listbox>
+                    <mat-chip-row *ngFor="let activityType of form.controls.activities.value"
+                                  (removed)="removeActivity(activityType)">
+                        {{ 'VisitActivityType.' + activityType | translate }}
+                        <button matChipRemove>
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip-row>
+                </mat-chip-listbox>
+                <mat-select formControlName="activities" multiple>
+                    <mat-option *ngFor="let option of activityTypeOptions" [value]="option">
+                        {{ 'VisitActivityType.' + option | translate }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'HospitalVisit.Activities.Comment' | translate }}</mat-label>
+                <textarea type="text"
+                          matInput
+                          [placeholder]="'HospitalVisit.Activities.CommentPlaceholder' | translate"
+                          formControlName="comment"></textarea>
+            </mat-form-field>
+
+            <div class="button-row">
+                <button mat-flat-button
+                        [disabled]="buttonsDisabled"
+                        color="accent"
+                        (click)="onFormSubmit()"
+                        type="button">
+                    {{ 'SaveButton' | translate}}
+                </button>
+                <button mat-stroked-button
+                        [disabled]="buttonsDisabled"
+                        color="primary"
+                        type="button"
+                        (click)="cancelEditing()">
+                    {{ 'CancelButton' | translate}}
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

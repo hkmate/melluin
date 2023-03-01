@@ -9,8 +9,8 @@ export class ChildEntity {
     @Column()
     name: string;
 
-    @Column({name: 'birth_year'})
-    birthYear: number;
+    @Column({name: 'guessed_birth'})
+    guessedBirth: string;
 
     @Column()
     info: string;

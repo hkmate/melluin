@@ -27,6 +27,6 @@ export class HospitalVisitActivityInput {
     comment: string;
 
     @IsOptional()
-    visitId: string;
+    visitId?: string;
 
 }

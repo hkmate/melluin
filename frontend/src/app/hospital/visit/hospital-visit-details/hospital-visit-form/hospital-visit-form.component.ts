@@ -73,7 +73,9 @@ export class HospitalVisitFormComponent {
         const from = parseTime(this.form.controls.timeFrom.value);
         const to = parseTime(this.form.controls.timeTo.value);
         const diff = to.getTime() - from.getTime();
-        this.form.controls.countedHours.setValue(diff / HospitalVisitFormComponent.MS_ON_HOUR);
+        const hourValue = diff / HospitalVisitFormComponent.MS_ON_HOUR;
+        const hourlyValueWithMax2Decimals = Math.round(hourValue * 100) / 100;
+        this.form.controls.countedHours.setValue(hourlyValueWithMax2Decimals);
     }
 
     private initForm(): void {

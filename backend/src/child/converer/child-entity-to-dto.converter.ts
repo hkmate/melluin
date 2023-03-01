@@ -21,7 +21,7 @@ export class ChildEntityToDtoConverter implements Converter<ChildEntity, Child> 
         return {
             id: entity.id,
             name: entity.name,
-            birthYear: entity.birthYear,
+            guessedBirth: entity.guessedBirth,
             info: entity.info
         }
     }

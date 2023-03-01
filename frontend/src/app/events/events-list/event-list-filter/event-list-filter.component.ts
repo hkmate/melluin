@@ -16,7 +16,7 @@ export class EventListFilterComponent implements OnInit {
     protected filterText: string;
 
     public ngOnInit(): void {
-        this.dateFrom = this.getTodayBeginning();
+        this.dateFrom = this.getStartOfMonth();
         this.dateTo = this.getEndOfTheMonth();
         this.changed();
     }
@@ -34,8 +34,9 @@ export class EventListFilterComponent implements OnInit {
         this.changed();
     }
 
-    private getTodayBeginning(): Date {
+    private getStartOfMonth(): Date {
         const date = new Date();
+        date.setDate(1);
         date.setHours(0, 0, 0, 0);
         return date;
     }

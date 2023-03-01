@@ -8,6 +8,7 @@ import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
 import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
+import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 
 @Component({
     selector: 'app-hospital-visit-details',
@@ -42,6 +43,10 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
 
     protected isEditMode(): boolean {
         return this.isEdit || this.isCreation;
+    }
+
+    protected statusChanged(newStatus: HospitalVisitStatus): void {
+        this.visit!.status = newStatus;
     }
 
     protected saveVisit(data: HospitalVisitRewrite | HospitalVisitCreate): void {

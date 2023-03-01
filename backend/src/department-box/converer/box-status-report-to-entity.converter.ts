@@ -5,7 +5,7 @@ import {randomUUID} from 'crypto';
 import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
 import {DepartmentBoxStatusEntity} from '@be/department-box/model/department-box-status.entity';
 import {DepartmentDao} from '@be/department/department.dao';
-import {DateUtil} from '@be/util/date-util';
+import {DateUtil} from '@shared/util/date-util';
 
 interface BoxStatusReportWithDepartmentId {
     departmentId: string;

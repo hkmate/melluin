@@ -52,6 +52,21 @@
         "ALL_FIELDS_FILLED": "All fields are filled",
         "ENDED_SUCCESSFULLY": "Successful"
     },
+    "VisitActivityType": {
+        "UNO": "Uno",
+        "BUG_POKER": "Bug-poker",
+        "OTHER_CARD_GAME": "Other card game",
+        "MUSIC": "Music",
+        "PAPER_SNAKE_MAKING": "Paper snake making",
+        "OTHER_HANDCRAFT": "Other handcraft",
+        "SMALLTALK": "Smalltalk",
+        "CHERISH": "Cherish",
+        "BABY_MASSAGE": "Baby massaga",
+        "PUPPETRY": "Puppetry",
+        "TALE_TELLING": "Tale telling",
+        "DRAWING": "Drawing",
+        "OTHER": "Other"
+    },
     "Menu": {
         "People": "People",
         "Events": "Events",
@@ -203,7 +218,30 @@
             "CountedHours": "Countable hours",
             "CountedHoursPlaceholder": "2",
             "Status": "Status"
+        },
+        "Activities": {
+            "Children": "Children",
+            "Activities": "Activities",
+            "Comment": "Comment",
+            "CommentPlaceholder": "nagyon jó buli volt",
+            "NoActivityYet": "There is no activity reported yet",
+            "BoxInfo": "Box info"
         }
+    },
+    "ChildCard": {
+        "Age": "{{year}} years, {{months}} months",
+        "AgeWithoutMonth": "{{year}} years"
+    },
+    "ChildrenList": {
+        "ChildrenList": "Children",
+        "NoChildYet": "No child added yet",
+        "Name": "Name",
+        "NamePlaceholder": "Péter",
+        "Age": "Age",
+        "AgePlaceholder": "1,5",
+        "Info": "Other info",
+        "InfoPlaceholder": "Szereti a bábokat...",
+        "IsParentThere": "Parent with her/him"
     },
     "Dashboard": {
         "WelcomeText": "Welcome to the Nevetnikék App. Choose a page from the menu."

@@ -18,6 +18,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MinToHourPipe} from '@fe/app/util/min-to-hour.pipe';
 import {OptionalPipe} from '@fe/app/util/optional.pipe';
+import {VisitActivityModule} from '@fe/app/hospital/visit-activity/visit-activity.module';
 
 @NgModule({
     imports: [
@@ -39,6 +40,7 @@ import {OptionalPipe} from '@fe/app/util/optional.pipe';
         VisitStatusIconComponent,
         MinToHourPipe,
         OptionalPipe,
+        VisitActivityModule,
     ],
     declarations: [
         HospitalVisitDetailsComponent,

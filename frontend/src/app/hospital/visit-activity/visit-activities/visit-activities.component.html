@@ -1,0 +1,50 @@
+<div class="activities-info">
+
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ 'HospitalVisit.Activities.Children' | translate }}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="children-info">
+                <app-children-list-manager
+                        [editEnabled]="editEnabled"
+                        [needParentInfo]="true"
+                        [visitDate]="visitDate"
+                        [(children)]="children"></app-children-list-manager>
+            </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ 'HospitalVisit.Activities.Activities' | translate }}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-visit-activity-manager [visitId]="visit.id"
+                                        [activities]="activities"
+                                        [children]="children"
+                                        [editEnabled]="editEnabled"></app-visit-activity-manager>
+        </mat-expansion-panel>
+
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ 'HospitalVisit.Activities.BoxInfo' | translate }}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-optional-box-info-creator *ngIf="editEnabled"
+                                           [departmentId]="visit.department.id"
+                                           (itemAdded)="boxStatusAdded($event)">
+            </app-optional-box-info-creator>
+            <div *ngFor="let boxInfo of boxInfoList" class="box-info">
+                <app-department-box-info [boxStatus]="boxInfo"></app-department-box-info>
+            </div>
+        </mat-expansion-panel>
+
+
+    </mat-accordion>
+
+</div>

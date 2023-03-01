@@ -20,5 +20,9 @@
             </app-hospital-visit-form>
         </div>
 
+        <div class="activities-part" *ngIf="visit">
+            <app-visit-activities [visit]="visit" (visitStatusChanged)="statusChanged($event)"></app-visit-activities>
+        </div>
+
     </div>
 </section>

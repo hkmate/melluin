@@ -1,5 +1,6 @@
-import {IsNumber, IsOptional, IsString, Min, MinLength} from 'class-validator';
+import {IsOptional, IsString, Matches, MinLength} from 'class-validator';
 import {childMinBirthYear, nameMinLength} from '@shared/constants';
+import {IsYearAndMonth} from '@shared/validator-decorators/is-year-and-month';
 
 export class ChildInput {
 
@@ -7,9 +8,10 @@ export class ChildInput {
     @MinLength(nameMinLength)
     name: string;
 
-    @IsNumber()
-    @Min(childMinBirthYear)
-    birthYear: number;
+    @IsString()
+    @Matches(/\d\d\d\d\.\d\d/)
+    @IsYearAndMonth(childMinBirthYear)
+    guessedBirth: string;
 
     @IsString()
     @IsOptional()

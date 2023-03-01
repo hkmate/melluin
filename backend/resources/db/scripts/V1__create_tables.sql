@@ -9,7 +9,7 @@ CREATE TABLE public.certificate (
 CREATE TABLE public.child_patient (
     id uuid NOT NULL,
     name text NOT NULL,
-    birth_year integer NOT NULL,
+    guessed_birth text NOT NULL,
     info text
 );
 
