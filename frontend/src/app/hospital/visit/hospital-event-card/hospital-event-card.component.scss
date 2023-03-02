@@ -1,0 +1,20 @@
+
+h1 {
+    margin-right: 1rem;
+}
+
+h1, h3 {
+    display: inline-block;
+}
+
+.fill-btn {
+    margin-left: 1rem;
+
+    a {
+        color: #1c87cb;
+
+        &:hover {
+            color: #1c87cb;
+        }
+    }
+}

@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-content>
-        <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+        <form [formGroup]="form">
 
             <mat-form-field appearance="fill">
                 <mat-label>{{ 'BoxStatus.Reason' | translate }}</mat-label>
@@ -38,7 +38,8 @@
                 <button mat-flat-button
                         [disabled]="buttonsDisabled"
                         color="accent"
-                        type="submit">
+                        (click)="onFormSubmit()"
+                        type="button">
                     {{ 'SaveButton' | translate}}
                 </button>
                 <button mat-stroked-button

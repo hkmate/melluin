@@ -18,6 +18,11 @@
             ({{ visit.department.address }})
         </h3>
 
+        <span *ngIf="isFillButtonNeeded()" class="fill-btn">
+            <a [routerLink]="['/hospital-visits', visit.id, 'fill-activities']">
+                <mat-icon>rocket_launch</mat-icon>
+            </a>
+        </span>
         <mat-chip-listbox>
             <mat-chip-row *ngFor="let participant of visit.participants">
                 {{ participant | personName }}

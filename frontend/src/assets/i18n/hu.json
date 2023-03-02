@@ -226,7 +226,11 @@
             "CommentPlaceholder": "nagyon jó buli volt",
             "NoActivityYet": "Nincs még felvéve tevékenység",
             "BoxInfo": "Doboz info"
-        }
+        },
+        "RelatedActivities": "Korábbi foglalkozások",
+        "NoRelatedActivities": "Nem elérhető korábbi foglalkozásról információ",
+        "Start": "Kezdés",
+        "Finalized": "Véglegesítés"
     },
     "ChildCard": {
         "Age": "{{year}} év, {{months}} hó",

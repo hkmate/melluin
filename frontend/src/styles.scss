@@ -38,3 +38,16 @@ section {
         text-decoration: underline;
     }
 }
+
+form .button-row {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+        margin-right: .5rem;
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+    }
+}

@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {VisitActivityService} from '@fe/app/hospital/visit-activity/visit-activity.service';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
 import {PatientChild} from '@shared/child/patient-child';
 import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
-import {isNil} from '@shared/util/util';
+import {isNil, isNotNil} from '@shared/util/util';
+import {firstValueFrom} from 'rxjs';
 
 @Component({
     selector: 'app-visit-activities',
@@ -18,36 +18,47 @@ export class VisitActivitiesComponent implements OnInit {
     @Input()
     public visit: HospitalVisit;
 
-    @Output()
-    public visitStatusChanged = new EventEmitter<HospitalVisitStatus>();
+    @Input()
+    public wrappedActivities?: WrappedHospitalVisitActivity;
+
+    @Input()
+    public editEnabled = false;
 
     protected children: Array<PatientChild> = [];
     protected activities: Array<HospitalVisitActivity> = [];
     protected visitDate: Date;
     protected boxInfoList: Array<DepartmentBoxStatus> = [];
-    protected editEnabled = false;
 
     constructor(private readonly activityService: VisitActivityService) {
     }
 
     public ngOnInit(): void {
         this.visitDate = new Date(this.visit.dateTimeFrom);
-        this.setEditEnable();
-        this.activityService.getActivities(this.visit.id).subscribe(wrapped => {
-            if (isNil(wrapped)) {
-                return;
-            }
-            this.children = this.createPatientInfo(wrapped);
-            this.activities = wrapped.activities;
-        });
+        this.setupActivities().then();
     }
 
     protected boxStatusAdded(newBoxStatus: DepartmentBoxStatus): void {
         this.boxInfoList.push(newBoxStatus);
     }
 
-    private setEditEnable(): void {
-        this.editEnabled = (HospitalVisitStatus.SCHEDULED === this.visit.status);
+    protected childrenListChanged(children: Array<PatientChild>): void {
+        this.children = [...children];
+    }
+
+    private async setupActivities(): Promise<void> {
+        const wrapped = await this.getWrappedActivities();
+        if (isNil(wrapped)) {
+            return;
+        }
+        this.children = this.createPatientInfo(wrapped);
+        this.activities = wrapped.activities;
+    }
+
+    private getWrappedActivities(): Promise<WrappedHospitalVisitActivity> {
+        if (isNotNil(this.wrappedActivities)) {
+            return Promise.resolve(this.wrappedActivities);
+        }
+        return firstValueFrom(this.activityService.getActivities(this.visit.id));
     }
 
     private createPatientInfo(activityInfo: WrappedHospitalVisitActivity): Array<PatientChild> {

@@ -16,6 +16,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {VisitActivityManagerComponent} from './visit-activity-manager/visit-activity-manager.component';
 import {MatButtonModule} from '@angular/material/button';
+import { VisitRelatedActivitiesComponent } from './visit-related-activities/visit-related-activities.component';
 
 @NgModule({
     imports: [
@@ -39,10 +40,12 @@ import {MatButtonModule} from '@angular/material/button';
         VisitActivityCardComponent,
         VisitActivitiesListComponent,
         VisitActivityCreateComponent,
-        VisitActivityManagerComponent
+        VisitActivityManagerComponent,
+        VisitRelatedActivitiesComponent
     ],
     exports: [
-        VisitActivitiesComponent
+        VisitActivitiesComponent,
+        VisitRelatedActivitiesComponent
     ]
 })
 export class VisitActivityModule {

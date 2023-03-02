@@ -226,7 +226,11 @@
             "CommentPlaceholder": "nagyon jó buli volt",
             "NoActivityYet": "There is no activity reported yet",
             "BoxInfo": "Box info"
-        }
+        },
+        "RelatedActivities": "Last activities",
+        "NoRelatedActivities": "There is no information about previous activities",
+        "Start": "Start",
+        "Finalized": "Finalize"
     },
     "ChildCard": {
         "Age": "{{year}} years, {{months}} months",

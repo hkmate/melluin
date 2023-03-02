@@ -14,14 +14,14 @@
             </ng-container>
 
             <app-hospital-visit-form *ngIf="isEditMode()"
-                                  [visit]="visit"
-                                  (submitted)="saveVisit($event)"
-                                  (canceled)="cancelEditing()">
+                                     [visit]="visit"
+                                     (submitted)="saveVisit($event)"
+                                     (canceled)="cancelEditing()">
             </app-hospital-visit-form>
         </div>
 
         <div class="activities-part" *ngIf="visit">
-            <app-visit-activities [visit]="visit" (visitStatusChanged)="statusChanged($event)"></app-visit-activities>
+            <app-visit-activities [visit]="visit" [editEnabled]="false"></app-visit-activities>
         </div>
 
     </div>

@@ -1,0 +1,17 @@
+:host ::ng-deep .activities-info {
+    .activity-header, .box-part-header, .children-manager-header {
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        margin-bottom: .5rem;
+
+        h1 {
+            display: none !important;
+        }
+
+    }
+
+    mat-card {
+        margin-bottom: 1rem;
+    }
+}

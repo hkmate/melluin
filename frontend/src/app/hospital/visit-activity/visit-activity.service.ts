@@ -15,12 +15,20 @@ export class VisitActivityService {
         return `${environment.baseURL}/hospital-visits/${visitId}/activities`;
     }
 
+    private getRelatedActivitiesUrl(visitId: string): string {
+        return `${environment.baseURL}/hospital-visits/${visitId}/related/activities`;
+    }
+
     public add(visitId: string, activity: HospitalVisitActivity): Observable<HospitalVisitActivity> {
         return this.http.post<HospitalVisitActivity>(`${this.getActivitiesUrl(visitId)}`, activity);
     }
 
     public getActivities(visitId: string): Observable<WrappedHospitalVisitActivity> {
         return this.http.get<WrappedHospitalVisitActivity>(`${this.getActivitiesUrl(visitId)}`);
+    }
+
+    public getRelatedActivities(visitId: string): Observable<Array<WrappedHospitalVisitActivity>> {
+        return this.http.get<Array<WrappedHospitalVisitActivity>>(`${this.getRelatedActivitiesUrl(visitId)}`);
     }
 
 }

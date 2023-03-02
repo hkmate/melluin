@@ -22,6 +22,7 @@ export class EventListFilterComponent implements OnInit {
     }
 
     protected changed(): void {
+        this.normalizeDates();
         this.filterChanged.emit({
             dateFrom: this.dateFrom.toISOString(),
             dateTo: this.dateTo.toISOString(),
@@ -32,6 +33,11 @@ export class EventListFilterComponent implements OnInit {
     protected filterTextChanged(newFilter: string): void {
         this.filterText = newFilter;
         this.changed();
+    }
+
+    private normalizeDates(): void {
+        this.dateFrom.setHours(0, 0, 0, 0);
+        this.dateTo.setHours(23, 59, 59, 999);
     }
 
     private getStartOfMonth(): Date {

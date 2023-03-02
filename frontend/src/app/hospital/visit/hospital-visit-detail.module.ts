@@ -19,6 +19,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MinToHourPipe} from '@fe/app/util/min-to-hour.pipe';
 import {OptionalPipe} from '@fe/app/util/optional.pipe';
 import {VisitActivityModule} from '@fe/app/hospital/visit-activity/visit-activity.module';
+import { HospitalVisitActivityFillerComponent } from './hospital-visit-activity-filler/hospital-visit-activity-filler.component';
+import {HospitalEventCardModule} from '@fe/app/hospital/visit/hospital-event-card/hospital-event-card.module';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
     imports: [
@@ -32,6 +35,7 @@ import {VisitActivityModule} from '@fe/app/hospital/visit-activity/visit-activit
         MatInputModule,
         MatSelectModule,
         MatDatepickerModule,
+        MatExpansionModule,
         MatNativeDateModule,
         MatIconModule,
         TranslateModule,
@@ -41,11 +45,13 @@ import {VisitActivityModule} from '@fe/app/hospital/visit-activity/visit-activit
         MinToHourPipe,
         OptionalPipe,
         VisitActivityModule,
+        HospitalEventCardModule,
     ],
     declarations: [
         HospitalVisitDetailsComponent,
         HospitalVisitPresenterComponent,
-        HospitalVisitFormComponent
+        HospitalVisitFormComponent,
+        HospitalVisitActivityFillerComponent
     ]
 })
 export class HospitalVisitDetailModule {

@@ -1,6 +1,6 @@
 <div class="activities-info">
 
-    <mat-accordion>
+    <mat-accordion [multi]="true">
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -12,7 +12,8 @@
                         [editEnabled]="editEnabled"
                         [needParentInfo]="true"
                         [visitDate]="visitDate"
-                        [(children)]="children"></app-children-list-manager>
+                        [children]="children"
+                        (childrenChange)="childrenListChanged($event)"></app-children-list-manager>
             </div>
         </mat-expansion-panel>
 
@@ -28,23 +29,19 @@
                                         [editEnabled]="editEnabled"></app-visit-activity-manager>
         </mat-expansion-panel>
 
-
-        <mat-expansion-panel>
+        <mat-expansion-panel *ngIf="editEnabled">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{ 'HospitalVisit.Activities.BoxInfo' | translate }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <app-optional-box-info-creator *ngIf="editEnabled"
-                                           [departmentId]="visit.department.id"
+            <app-optional-box-info-creator [departmentId]="visit.department.id"
                                            (itemAdded)="boxStatusAdded($event)">
             </app-optional-box-info-creator>
             <div *ngFor="let boxInfo of boxInfoList" class="box-info">
                 <app-department-box-info [boxStatus]="boxInfo"></app-department-box-info>
             </div>
         </mat-expansion-panel>
-
-
     </mat-accordion>
 
 </div>

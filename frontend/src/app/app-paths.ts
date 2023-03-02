@@ -31,7 +31,9 @@ export const PATHS: PathContainer = {
     },
 
     hospitalVisit: {
-        main: 'hospital-visits'
+        main: 'hospital-visits',
+        detail: ':id',
+        fillActivities: ':id/fill-activities'
     }
 
 };

@@ -5,7 +5,7 @@
             <span *ngIf="ageMonths !== 0">({{ 'ChildCard.Age' | translate : {year: ageYear, months: ageMonths} }})</span>
             <span *ngIf="ageMonths === 0">({{ 'ChildCard.AgeWithoutMonth' | translate : {year: ageYear} }})</span>
 
-            <span *ngIf="needParentInfo()">
+            <span *ngIf="needParentInfo()" class="parent-info">
                 <mat-icon *ngIf="patientInfo.isParentThere" class="parent-is-there">family_restroom</mat-icon>
                 <mat-icon *ngIf="!patientInfo.isParentThere"
                           class="parent-is-not-there">person_off</mat-icon>

@@ -3,7 +3,7 @@
     <ng-container *ngIf="!!person">{{ 'PersonPage.EditData' | translate }}</ng-container>
 </h1>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form">
 
     <div>
         <mat-form-field appearance="fill">
@@ -53,7 +53,8 @@
     <div class="button-row">
         <button mat-flat-button
                 color="accent"
-                type="submit">
+                (click)="onSubmit()"
+                type="button">
             {{ 'SaveButton' | translate}}
         </button>
         <button mat-stroked-button

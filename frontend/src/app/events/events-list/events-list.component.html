@@ -15,9 +15,9 @@
         </div>
 
         <div class="events-list">
-            <ng-container *ngFor="let event of eventsList">
-                <app-hospital-event-card [visit]="event"></app-hospital-event-card>
-            </ng-container>
+            <div *ngFor="let event of eventsList" class="event-card">
+                <app-hospital-event-card [visit]="event" [needFillButton]="true"></app-hospital-event-card>
+            </div>
             <ng-container *ngIf="!eventsList?.length">
                 {{ 'EventsList.NoEventsFound' | translate }}
             </ng-container>

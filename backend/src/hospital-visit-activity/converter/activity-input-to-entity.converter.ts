@@ -33,7 +33,7 @@ export class ActivityInputToEntityConverter
     private async convertNotNil(dto: HospitalVisitActivityInput): Promise<Array<HospitalVisitActivityEntity>> {
         const activitiesFromType = this.prepareActivitiesByType(dto);
         const activitiesWithChildren = await this.prepareActivitiesWithChildren(activitiesFromType, dto.children);
-        await this.fillActivitiesWithVisit(activitiesWithChildren, dto.visitId);
+        await this.fillActivitiesWithVisit(activitiesWithChildren, dto.visitId!);
         return activitiesWithChildren as Array<HospitalVisitActivityEntity>;
     }
 

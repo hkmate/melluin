@@ -33,5 +33,7 @@ export function getGuessedBirthFromYears(years: number, nowDate = DateUtil.now()
     const months = years * 12;
     const dateForCalculation = new Date(nowDate);
     dateForCalculation.setMonth(nowDate.getMonth() - months);
-    return `${dateForCalculation.getFullYear()}.${dateForCalculation.getMonth()}`
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const paddedMonths = `${dateForCalculation.getMonth() + 1}`.padStart(2, '0');
+    return `${dateForCalculation.getFullYear()}.${paddedMonths}`
 }

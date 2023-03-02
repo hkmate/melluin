@@ -25,10 +25,9 @@ export class HospitalVisitActivityCrudService {
 
     public async save(activityInput: HospitalVisitActivityInput, requester: User): Promise<HospitalVisitActivity> {
         const visit = await this.hospitalVisitDao.getOne(activityInput.visitId!);
-        this.verifyVisitIsScheduled(visit);
+        this.verifyVisitIsStarted(visit);
         const creationEntity = await this.activityInputToEntityConverter.convert(activityInput);
         const entities = await this.hospitalVisitActivityDao.saveAll(creationEntity);
-        await this.refreshVisitStatusToPartlyFilled(visit);
         return this.basicDtoConverter.convert(entities);
     }
 
@@ -48,15 +47,10 @@ export class HospitalVisitActivityCrudService {
         return Object.values(_.groupBy(entities, entity => entity.hospitalVisit.id));
     }
 
-    private verifyVisitIsScheduled(visit: HospitalVisitEntity): void {
-        if (visit.status !== HospitalVisitStatus.SCHEDULED) {
-            throw new BadRequestException('Save activity is only acceptable when the visit is in status: Scheduled');
+    private verifyVisitIsStarted(visit: HospitalVisitEntity): void {
+        if (visit.status !== HospitalVisitStatus.STARTED) {
+            throw new BadRequestException('Save activity is only acceptable when the visit is in status: STARTED');
         }
-    }
-
-    private async refreshVisitStatusToPartlyFilled(visit: HospitalVisitEntity): Promise<void> {
-        visit.status = HospitalVisitStatus.JUST_REQUIRED_FIELDS_FILLED;
-        await this.hospitalVisitDao.save(visit);
     }
 
 }

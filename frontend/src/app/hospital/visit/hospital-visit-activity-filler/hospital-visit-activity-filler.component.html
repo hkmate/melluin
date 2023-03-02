@@ -1,0 +1,45 @@
+<section>
+    <div class="page-content" *ngIf="visit">
+
+        <div class="visit-part">
+            <app-hospital-event-card [visit]="visit"></app-hospital-event-card>
+        </div>
+
+        <div class="related-activities">
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{ 'HospitalVisit.RelatedActivities' | translate }}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <app-visit-related-activities [visit]="visit"></app-visit-related-activities>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+
+        <div class="start-btn" *ngIf="isVisitEventScheduled()">
+            <button mat-flat-button
+                    color="accent"
+                    type="button"
+                    [disabled]="!buttonsEnabled"
+                    (click)="startFilling()">
+                {{ 'HospitalVisit.Start' | translate}}
+            </button>
+        </div>
+
+        <div class="activities-part" *ngIf="isVisitEventStarted()">
+            <app-visit-activities [visit]="visit" [editEnabled]="isFillingEnabled()"></app-visit-activities>
+        </div>
+
+        <div class="finalized-btn" *ngIf="isVisitEventStarted()">
+            <button mat-flat-button
+                    color="accent"
+                    type="button"
+                    [disabled]="!buttonsEnabled"
+                    (click)="finalizeFilling()">
+                {{ 'HospitalVisit.Finalized' | translate}}
+            </button>
+        </div>
+    </div>
+</section>
