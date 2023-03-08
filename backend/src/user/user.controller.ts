@@ -1,11 +1,11 @@
-import {Body, Controller, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put} from '@nestjs/common';
 import {User} from '@shared/user/user';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
-import {Roles} from '@be/auth/decorator/roles.decorator';
-import {foundationEmployeeRoles} from '@shared/user/role.enum';
 import {UserCreation} from '@shared//user/user-creation';
 import {UserUpdate} from '@shared/user/user-update';
 import {UserService} from '@be/user/service/user.service';
+import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
+import {Permission} from '@shared/user/permission.enum';
 
 
 @Controller('users')
@@ -16,17 +16,26 @@ export class UserController {
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    @Roles(...foundationEmployeeRoles)
+    @PermissionGuard(Permission.canCreateUser)
     public save(@Body() userCreation: UserCreation,
                 @CurrentUser() requester: User): Promise<User> {
         return this.userService.save(userCreation, requester);
     }
 
+    @Get('/:id')
+    @PermissionGuard(Permission.canReadPerson)
+    public get(@Param('id', ParseUUIDPipe) userId: string,
+               @CurrentUser() requester: User): Promise<User> {
+        return this.userService.get(userId, requester);
+    }
+
     @Put('/:id')
-    public update(@Param('id', ParseUUIDPipe) personId: string,
+    @PermissionGuard(Permission.canWriteVisitor, Permission.canWriteCoordinator,
+        Permission.canWriteAdmin, Permission.canWriteSysAdmin)
+    public update(@Param('id', ParseUUIDPipe) userId: string,
                   @Body() updateChangeSet: UserUpdate,
                   @CurrentUser() requester: User): Promise<User> {
-        return this.userService.update(personId, updateChangeSet, requester);
+        return this.userService.update(userId, updateChangeSet, requester);
     }
 
 }

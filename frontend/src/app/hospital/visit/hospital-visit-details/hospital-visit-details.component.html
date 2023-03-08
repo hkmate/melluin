@@ -5,7 +5,8 @@
             <ng-container *ngIf="visit && !isEditMode()">
                 <app-hospital-visit-presenter [visit]="visit!"></app-hospital-visit-presenter>
                 <div class="button-row">
-                    <button mat-stroked-button
+                    <button *ngIf="permissions.has(Permission.canModifyVisit)"
+                            mat-stroked-button
                             color="primary"
                             (click)="switchToEdit()">
                         {{ 'Edit' | translate }}
@@ -20,7 +21,7 @@
             </app-hospital-visit-form>
         </div>
 
-        <div class="activities-part" *ngIf="visit">
+        <div class="activities-part" *ngIf="visit && permissions.has(Permission.canReadActivity)">
             <app-visit-activities [visit]="visit" [editEnabled]="false"></app-visit-activities>
         </div>
 

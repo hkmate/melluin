@@ -1,7 +1,7 @@
 <div class="activities-info">
 
     <mat-accordion [multi]="true">
-        <mat-expansion-panel>
+        <mat-expansion-panel *ngIf="permissions.has(Permission.canReadChild)">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{ 'HospitalVisit.Activities.Children' | translate }}
@@ -17,7 +17,7 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel>
+        <mat-expansion-panel *ngIf="permissions.has(Permission.canReadActivity)">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{ 'HospitalVisit.Activities.Activities' | translate }}
@@ -26,16 +26,18 @@
             <app-visit-activity-manager [visitId]="visit.id"
                                         [activities]="activities"
                                         [children]="children"
-                                        [editEnabled]="editEnabled"></app-visit-activity-manager>
+                                        [editEnabled]="editEnabled && permissions.has(Permission.canCreateActivity)">
+            </app-visit-activity-manager>
         </mat-expansion-panel>
 
-        <mat-expansion-panel *ngIf="editEnabled">
+        <mat-expansion-panel *ngIf="editEnabled && permissions.has(Permission.canReadDepBox)">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{ 'HospitalVisit.Activities.BoxInfo' | translate }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <app-optional-box-info-creator [departmentId]="visit.department.id"
+            <app-optional-box-info-creator *ngIf="permissions.has(Permission.canWriteDepBox)"
+                                           [departmentId]="visit.department.id"
                                            (itemAdded)="boxStatusAdded($event)">
             </app-optional-box-info-creator>
             <div *ngFor="let boxInfo of boxInfoList" class="box-info">

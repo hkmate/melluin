@@ -8,6 +8,10 @@ import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {Router} from '@angular/router';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {Observable, Subscription, tap, throwError} from 'rxjs';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {isNil} from '@shared/util/util';
+import {getPermissionsNeededToChangeRole} from '@shared/user/role.enum';
+import {Permission} from '@shared/user/permission.enum';
 
 @Component({
     selector: 'app-person-detail',
@@ -19,12 +23,14 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
 
     protected isCreation = false;
     protected isEdit = false;
+    protected isEditEnabled = false;
     protected person?: Person;
     private resolverSubscription: Subscription;
 
     constructor(private readonly router: Router,
                 private readonly location: Location,
                 private readonly route: RouteDataHandler,
+                private readonly permission: PermissionService,
                 private readonly peopleService: PeopleService) {
     }
 
@@ -76,6 +82,7 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
         } else {
             this.person = personInfo;
         }
+        this.setEditEnableValue();
     }
 
     private createSaveRequest(data: PersonCreation | PersonUpdate): Observable<Person> {
@@ -90,6 +97,25 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
 
     private setIdInUrl(personId: string): void {
         this.location.replaceState(`${PATHS.people.main}/${personId}`);
+    }
+
+    private setEditEnableValue(): void {
+        if (isNil(this.person)) {
+            this.isEditEnabled = true;
+            return;
+        }
+        if (this.isActualPersonSelf()) {
+            this.isEditEnabled = this.permission.has(Permission.canWriteSelf);
+            return;
+        }
+        this.isEditEnabled = this.person.user?.roles.every(role => {
+            const neededPermission = getPermissionsNeededToChangeRole(role);
+            return this.permission.has(neededPermission);
+        }) ?? false;
+    }
+
+    private isActualPersonSelf(): boolean {
+        return this.permission.personId === this.person?.id;
     }
 
 }

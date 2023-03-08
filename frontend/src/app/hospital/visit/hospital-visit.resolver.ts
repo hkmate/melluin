@@ -7,14 +7,17 @@ import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {cast} from '@shared/util/test-util';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {Permission} from '@shared/user/permission.enum';
 
 @Injectable({
     providedIn: 'root'
 })
 export class HospitalVisitResolver implements Resolve<HospitalVisit | CreateMarkerType | undefined> {
 
-    constructor(private readonly visitService: HospitalVisitService,
-                private readonly router: Router) {
+    constructor(private readonly router: Router,
+                private readonly visitService: HospitalVisitService,
+                private readonly permissions: PermissionService) {
     }
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
@@ -54,6 +57,12 @@ export class HospitalVisitResolver implements Resolve<HospitalVisit | CreateMark
         }
         if (!isUUID(id) && id !== CREATE_MARKER) {
             throw new Error('ID must be UUID or "new".')
+        }
+        if (isUUID(id) && !this.permissions.has(Permission.canReadVisit)) {
+            throw new Error(`You have no permission to read visit with id: ${id}.`)
+        }
+        if (id === CREATE_MARKER && !this.permissions.has(Permission.canCreateVisit)) {
+            throw new Error('You have no permission to create visit.')
         }
     }
 

@@ -8,6 +8,8 @@ import {isEmpty, isNil, isNilOrEmpty} from '@shared/util/util';
 import {TableDataSource} from '@fe/app/util/table-data-source';
 import {Department} from '@shared/department/department';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
+import {Permission} from '@shared/user/permission.enum';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 @Component({
     selector: 'app-department-list',
@@ -16,6 +18,7 @@ import {DepartmentService} from '@fe/app/hospital/department/department.service'
 })
 export class DepartmentsListComponent implements OnInit {
 
+    Permission = Permission;
     private static readonly FIRST_PAGE = 1;
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -34,6 +37,7 @@ export class DepartmentsListComponent implements OnInit {
     };
 
     constructor(private readonly title: AppTitle,
+                protected readonly permissions: PermissionService,
                 private readonly departmentService: DepartmentService) {
     }
 

@@ -8,6 +8,8 @@ import {ConjunctionFilterOptions, FilterOptions} from '@shared/api-util/filter-o
 import {EventsFilter} from '@fe/app/events/events-list/event-list-filter/events-filter';
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {Permission} from '@shared/user/permission.enum';
 
 @Component({
     selector: 'app-events-list',
@@ -16,6 +18,7 @@ import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 })
 export class EventsListComponent {
 
+    Permission = Permission;
     private static readonly FIRST_PAGE = 1;
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -31,6 +34,7 @@ export class EventsListComponent {
     };
 
     constructor(private readonly title: AppTitle,
+                protected readonly permissions: PermissionService,
                 private readonly eventsService: HospitalVisitService) {
     }
 

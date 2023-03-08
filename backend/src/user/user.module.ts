@@ -11,12 +11,14 @@ import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserService} from '@be/user/service/user.service';
 import {PersonModule} from '@be/person/person.module';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
+import {PermissionEntity} from '@be/user/model/permission.entity';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([
             UserEntity,
-            RoleEntity
+            RoleEntity,
+            PermissionEntity
         ]),
 
         PersonModule,

@@ -4,7 +4,6 @@ import {User} from '@shared/user/user';
 import {UserCreation} from '@shared/user/user-creation';
 import {UserCreationToEntityConverter} from '@be/user/converter/user-creation-to-entity.converter';
 import {UserEntityToDtoConverter} from '@be/user/converter/user-entity-to-dto.converter';
-import {RequesterHasPermissionToAddUserValidator} from '@be/user/validator/requester-has-permission-to-add-user.validator';
 import {UserUpdate} from '@shared/user/user-update';
 import {PersonHasNoUserYetValidator} from '@be/user/validator/person-has-no-user-yet.validator';
 import {UsernameIsNotUsedValidator} from '@be/user/validator/username-is-not-used.validator';
@@ -28,8 +27,13 @@ export class UserService {
     public async save(userCreation: UserCreation, requester: User): Promise<User> {
         await this.validateSaving(userCreation, requester);
         const creationEntity = await this.userCreationConverter.convert(userCreation);
-        const personEntity = await this.userDao.save(creationEntity);
-        return this.userConverter.convert(personEntity);
+        const userEntity = await this.userDao.save(creationEntity);
+        return this.userConverter.convert(userEntity);
+    }
+
+    public async get(userId: string, requester: User): Promise<User> {
+        const entity = await this.userDao.getOne(userId);
+        return this.userConverter.convert(entity);
     }
 
     public async update(userId: string, changeSet: UserUpdate, requester: User): Promise<User> {
@@ -53,9 +57,6 @@ export class UserService {
     }
 
     private async validateSaving(userCreation: UserCreation, requester: User): Promise<void> {
-        RequesterHasPermissionToAddUserValidator
-            .of(requester)
-            .validate(userCreation);
         await AsyncValidatorChain.of(
             this.personHasNoUserYetValidator,
             this.usernameIsNotUsedValidator

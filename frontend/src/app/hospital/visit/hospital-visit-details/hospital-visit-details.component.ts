@@ -8,6 +8,8 @@ import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
 import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {Permission} from '@shared/user/permission.enum';
 
 @Component({
     selector: 'app-hospital-visit-details',
@@ -17,12 +19,14 @@ import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrit
 })
 export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
 
+    Permission = Permission;
     protected isCreation = false;
     protected isEdit = false;
     protected visit?: HospitalVisit;
     private resolverSubscription: Subscription;
 
     constructor(private readonly router: Router,
+                protected readonly permissions: PermissionService,
                 private readonly location: Location,
                 private readonly route: RouteDataHandler,
                 private readonly visitService: HospitalVisitService) {

@@ -5,7 +5,8 @@
         <div class="option-row">
             <app-lazy-input [label]="'Search' | translate" (changed)="filterChanged($event)"></app-lazy-input>
 
-            <button mat-stroked-button
+            <button *ngIf="permissions.has(Permission.canWriteDepartment)"
+                    mat-stroked-button
                     color="primary"
                     [routerLink]="['new']">
                 {{ 'DepartmentListPage.Add' | translate}}

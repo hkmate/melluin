@@ -10,12 +10,12 @@ import {
 } from '@angular/router';
 import {AuthenticationService} from './authentication.service';
 import {PATHS} from '../../app-paths';
-import {Role} from '@shared/user/role.enum';
 import {User} from '@shared/user/user';
-import {isNil, NOOP} from '@shared/util/util';
+import {isNilOrEmpty, NOOP} from '@shared/util/util';
+import {Permission} from '@shared/user/permission.enum';
 
 interface RouteData {
-    roles?: Array<Role>;
+    permissions?: Array<Permission>;
 }
 
 @Injectable()
@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate, CanLoad {
         private readonly authenticationService: AuthenticationService
     ) {
         this.authenticationService.currentUser.subscribe(cu => {
-            this.currentUser = cu
+            this.currentUser = cu;
         });
     }
 
@@ -42,24 +42,24 @@ export class AuthGuard implements CanActivate, CanLoad {
 
     // eslint-disable-next-line max-lines-per-function
     private canOpen(data: RouteData = {}, returnUrl: string): boolean {
-        const roles: Array<Role> = data.roles!;
+        const permissions: Array<Permission> = data.permissions!;
 
         if (!this.authenticationService.hasAuthenticatedUser()) {
             this.router.navigate([PATHS.login.main], {queryParams: {returnUrl}})
                 .then(NOOP).catch(NOOP);
             return false;
         }
-        if (isNil(roles)) {
+        if (isNilOrEmpty(permissions)) {
             return true;
         }
-        if (this.checkUserHasAtLeastOneOfNeededRoles(roles)) {
+        if (this.checkUserHasAtLeastOneOfNeededPermissions(permissions)) {
             return true;
         }
         return false;
     }
 
-    private checkUserHasAtLeastOneOfNeededRoles(roles: Array<Role>): boolean {
-        return roles.some((neededRole: Role) => this.currentUser!.roles.includes(neededRole));
+    private checkUserHasAtLeastOneOfNeededPermissions(roles: Array<Permission>): boolean {
+        return roles.some((neededPerm: Permission) => this.currentUser!.permissions.includes(neededPerm));
     }
 
 }

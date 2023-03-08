@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, UnauthorizedException} from '@nestjs/common';
 import {JwtService} from '@nestjs/jwt';
 import {UserDao} from '@be/user/user.dao';
 import {UserEntity} from 'src/user/model/user.entity';
@@ -12,6 +12,7 @@ import {isNil, Nullable} from '@shared/util/util';
 import {ConfigService} from '@nestjs/config';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
+import {UserEntityToDtoConverter} from '@be/user/converter/user-entity-to-dto.converter';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +21,7 @@ export class AuthService {
                 private readonly jwtService: JwtService,
                 private readonly userService: UserDao,
                 private readonly personService: PersonDao,
+                private readonly userConverter: UserEntityToDtoConverter,
                 private readonly passwordCryptService: PasswordCryptService) {
         const needToInitDefaultUser = this.config.get<boolean>('server.defaultSysAdmin.needToInit', false);
         if (needToInitDefaultUser) {
@@ -27,27 +29,18 @@ export class AuthService {
         }
     }
 
-    public async validateUser(userName: string, pass: string): Promise<Nullable<User>> {
+    public async validateUser(userName: string, pass: string): Promise<User> {
         const user: Nullable<UserEntity> = await this.userService.findOneByName(userName);
 
-        if (isNil(user)) {
-            return null;
+        if (isNil(user) || !user.isActive) {
+            throw new UnauthorizedException('Wrong username or password');
         }
 
-        if (!user.isActive) {
-            return null;
+        if (!this.passwordCryptService.match(pass, user.password)) {
+            throw new UnauthorizedException('Wrong username or password');
         }
 
-        if (this.passwordCryptService.match(pass, user.password)) {
-            return {
-                id: user.id,
-                personId: user.person.id,
-                userName: user.userName,
-                roles: user.roles.map((roleEntity: RoleEntity) => roleEntity.role),
-                isActive: user.isActive
-            };
-        }
-        return null;
+        return this.userConverter.convert(user);
     }
 
     public getTokenFor(user: User): AuthToken {
@@ -68,10 +61,10 @@ export class AuthService {
     private async insertDefaultUserToDb(): Promise<void> {
         const defaultAdmin = this.config.get<DefaultSysAdmin>('server.defaultSysAdmin')!;
         const person: PersonEntity = await this.personService.save({
-                id: crypto.randomUUID(),
-                firstName: defaultAdmin.firstName,
-                lastName: defaultAdmin.lastName
-            });
+            id: crypto.randomUUID(),
+            firstName: defaultAdmin.firstName,
+            lastName: defaultAdmin.lastName
+        });
 
         const roles: Array<RoleEntity> = await this.userService.findAllRole();
         await this.userService.save({

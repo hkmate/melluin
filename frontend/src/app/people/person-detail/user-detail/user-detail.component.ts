@@ -1,9 +1,11 @@
 import {Component, Input} from '@angular/core';
 import {User} from '@shared/user/user';
-import {isNotNil} from '@shared/util/util';
+import {isNil, isNotNil} from '@shared/util/util';
 import {UserCreation} from '@shared/user/user-creation';
 import {UserService} from '@fe/app/people/user.service';
 import {UserUpdate} from '@shared/user/user-update';
+import {Permission} from '@shared/user/permission.enum';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 @Component({
     selector: 'app-user-detail',
@@ -12,27 +14,35 @@ import {UserUpdate} from '@shared/user/user-update';
 })
 export class UserDetailComponent {
 
+    Permission = Permission;
+
     @Input()
     public personId: string;
 
+    @Input()
+    public editEnabled: boolean;
+
     protected editModeOn = false;
     protected createModeOn = false;
-    protected userToShow?: User;
+    protected user?: User;
 
-    constructor(private readonly userService: UserService) {
+    constructor(protected readonly permissions: PermissionService,
+                private readonly userService: UserService) {
     }
 
     @Input()
-    public set user(user: User | undefined) {
-        this.userToShow = user;
+    public set userId(userId: string | undefined) {
+        if (isNil(userId)) {
+            return;
+        }
+        this.userService.get(userId).subscribe(user => {
+            this.user = user;
+        });
     }
 
-    public get user(): User | undefined {
-        return this.userToShow;
-    }
 
     protected needDataPresenter(): boolean {
-        return isNotNil(this.userToShow) && !this.editModeOn && !this.createModeOn;
+        return isNotNil(this.user) && !this.editModeOn && !this.createModeOn;
     }
 
     protected switchToEdit(): void {
@@ -51,7 +61,7 @@ export class UserDetailComponent {
     }
 
     protected updateUser(userUpdate: UserUpdate): void {
-        this.userService.updateUser(this.userToShow!.id, userUpdate).subscribe(user => {
+        this.userService.updateUser(this.user!.id, userUpdate).subscribe(user => {
             this.user = user;
             this.cancelEditing();
         })

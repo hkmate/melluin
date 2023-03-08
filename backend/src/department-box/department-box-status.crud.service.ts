@@ -3,7 +3,6 @@ import {Pageable} from '@shared/api-util/pageable';
 import {PageConverter} from '@be/crud/convert/page.converter';
 import {User} from '@shared/user/user';
 import {PageRequest} from '@be/crud/page-request';
-import {CanUserManageDepartmentValidator} from '@be/department/validator/can-user-manage-department.validator';
 import {PageRequestFieldsValidator} from '@be/crud/validator/page-request-fields.validator';
 import {DepartmentBoxStatusDao} from '@be/department-box/department-box-status.dao';
 import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
@@ -27,9 +26,6 @@ export class DepartmentBoxStatusCrudService {
     public async save(departmentId: string,
                       boxStatusReport: DepartmentBoxStatusReport,
                       requester: User): Promise<DepartmentBoxStatus> {
-        CanUserManageDepartmentValidator
-            .of(requester)
-            .validate();
         const creationEntity = await this.boxStatusReportConverter.convert({
             departmentId: departmentId, report: boxStatusReport
         });
