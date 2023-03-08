@@ -10,7 +10,6 @@ import {DepartmentCreation} from '@shared/department/department-creation';
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import {DepartmentEntityToDtoConverter} from '@be/department/converer/department-entity-to-dto.converter';
 import {DepartmentCreationToEntityConverter} from '@be/department/converer/department-creation-to-entity.converter';
-import {CanUserManageDepartmentValidator} from '@be/department/validator/can-user-manage-department.validator';
 import {PageRequestFieldsValidator} from '@be/crud/validator/page-request-fields.validator';
 import {departmentFilterableFields, departmentSortableFields} from '@shared/department/department-filterable-fields';
 import {DepartmentChangeApplierFactory} from '@be/department/applier/department-change-applier.factory';
@@ -25,9 +24,6 @@ export class DepartmentCrudService {
     }
 
     public async save(departmentCreation: DepartmentCreation, requester: User): Promise<Department> {
-        CanUserManageDepartmentValidator
-            .of(requester)
-            .validate();
         const creationEntity = this.departmentCreationConverter.convert(departmentCreation);
         const departmentEntity = await this.departmentDao.save(creationEntity);
         return this.departmentConverter.convert(departmentEntity);
@@ -50,10 +46,6 @@ export class DepartmentCrudService {
 
     public async update(departmentId: string, changeSet: DepartmentUpdateChangeSet, requester: User): Promise<Department> {
         const person = await this.departmentDao.getOne(departmentId);
-        CanUserManageDepartmentValidator
-            .of(requester)
-            .validate();
-
         this.applyChangesToEntity(person, changeSet);
         const savedDepartment = await this.departmentDao.save(person);
         return this.departmentConverter.convert(savedDepartment);

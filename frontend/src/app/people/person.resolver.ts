@@ -5,16 +5,19 @@ import {Person} from '@shared/person/person';
 import {PeopleService} from '@fe/app/people/people.service';
 import {isNilOrEmpty} from '@shared/util/util';
 import {isUUID} from 'class-validator';
-import {CreateMarkerType, CREATE_MARKER, PATHS} from '@fe/app/app-paths';
+import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {cast} from '@shared/util/test-util';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {Permission} from '@shared/user/permission.enum';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PersonResolver implements Resolve<Person | CreateMarkerType | undefined> {
 
-    constructor(private readonly peopleService: PeopleService,
-                private readonly router: Router) {
+    constructor(private readonly router: Router,
+                private readonly permissions: PermissionService,
+                private readonly peopleService: PeopleService) {
     }
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
@@ -54,6 +57,11 @@ export class PersonResolver implements Resolve<Person | CreateMarkerType | undef
         }
         if (!isUUID(id) && id !== CREATE_MARKER) {
             throw new Error('Person ID must be UUID or "new".')
+        }
+        if (isUUID(id)
+            && id === this.permissions.personId
+            && !this.permissions.has(Permission.canWriteSelf)) {
+            throw new Error('You cannot change your own person object.')
         }
     }
 

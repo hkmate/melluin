@@ -1,7 +1,7 @@
 <div class="children-list-manager">
     <div class="children-manager-header">
         <h1>{{ 'ChildrenList.ChildrenList' | translate }}</h1>
-        <span *ngIf="editEnabled">
+        <span *ngIf="editEnabled && permissions.has(Permission.canWriteChild)">
             <button mat-mini-fab color="accent" (click)="creatorToggled()">
                 <mat-icon *ngIf="creatingInProcess">close</mat-icon>
                 <mat-icon *ngIf="!creatingInProcess">add</mat-icon>

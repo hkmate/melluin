@@ -6,17 +6,24 @@ import {HospitalVisitDetailModule} from '@fe/app/hospital/visit/hospital-visit-d
 import {HospitalVisitResolver} from '@fe/app/hospital/visit/hospital-visit.resolver';
 import {PATHS} from '@fe/app/app-paths';
 import {HospitalVisitActivityFillerComponent} from '@fe/app/hospital/visit/hospital-visit-activity-filler/hospital-visit-activity-filler.component';
+import {Permission} from '@shared/user/permission.enum';
 
 const routes: Routes = [
     {
         path: PATHS.hospitalVisit.detail,
         canActivate: [AuthGuard],
+        data: {
+            permissions: [Permission.canReadVisit]
+        },
         resolve: {visit: HospitalVisitResolver},
         component: HospitalVisitDetailsComponent,
     },
     {
         path: PATHS.hospitalVisit.fillActivities,
         canActivate: [AuthGuard],
+        data: {
+            permissions: [Permission.canCreateActivity]
+        },
         resolve: {visit: HospitalVisitResolver},
         component: HospitalVisitActivityFillerComponent
     }

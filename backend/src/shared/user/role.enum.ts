@@ -1,3 +1,6 @@
+import {Permission} from '@shared/user/permission.enum';
+import {cast} from '@shared/util/test-util';
+
 export enum Role {
 
     INTERN_HOSPITAL_VISITOR = 'INTERN_HOSPITAL_VISITOR',
@@ -11,26 +14,21 @@ export enum Role {
     SYSADMIN = 'SYSADMIN',
 }
 
-export const coordinatorRoles: Array<Role> = [
-    Role.FAIRY_PAINTING_COORDINATOR,
-    Role.TOY_MAKING_COORDINATOR,
-    Role.HOSPITAL_VISIT_COORDINATOR
-];
-
-export const foundationEmployeeRoles: Array<Role> = [
-    ...coordinatorRoles,
-    Role.ADMINISTRATOR,
-    Role.SYSADMIN
-];
-
-export interface RoleHolder {
-    roles: Array<Role>;
-}
-
-export function isUserAnEmployee(user: RoleHolder): boolean {
-    return isUserHasAnyRoleOf(user, foundationEmployeeRoles);
-}
-
-export function isUserHasAnyRoleOf(user: RoleHolder, requiredRoles: Array<Role>): boolean {
-    return user.roles.some(role => requiredRoles.includes(role));
+export function getPermissionsNeededToChangeRole(role: Role): Permission {
+    switch (role) {
+        case Role.INTERN_HOSPITAL_VISITOR:
+        case Role.BEGINNER_HOSPITAL_VISITOR:
+        case Role.HOSPITAL_VISITOR:
+        case Role.MENTOR_HOSPITAL_VISITOR:
+            return Permission.canWriteVisitor;
+        case Role.HOSPITAL_VISIT_COORDINATOR:
+        case Role.FAIRY_PAINTING_COORDINATOR:
+        case Role.TOY_MAKING_COORDINATOR:
+            return Permission.canWriteCoordinator;
+        case Role.ADMINISTRATOR:
+            return Permission.canWriteAdmin;
+        case Role.SYSADMIN:
+            return Permission.canWriteSysAdmin;
+    }
+    return cast<Permission>(undefined);
 }

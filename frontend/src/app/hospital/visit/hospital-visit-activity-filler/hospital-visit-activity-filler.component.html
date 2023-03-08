@@ -18,7 +18,7 @@
             </mat-accordion>
         </div>
 
-        <div class="start-btn" *ngIf="isVisitEventScheduled()">
+        <div class="start-btn" *ngIf="canVisitBeStarted()">
             <button mat-flat-button
                     color="accent"
                     type="button"
@@ -28,11 +28,11 @@
             </button>
         </div>
 
-        <div class="activities-part" *ngIf="isVisitEventStarted()">
+        <div class="activities-part" *ngIf="canActivitiesBeShowed()">
             <app-visit-activities [visit]="visit" [editEnabled]="isFillingEnabled()"></app-visit-activities>
         </div>
 
-        <div class="finalized-btn" *ngIf="isVisitEventStarted()">
+        <div class="finalized-btn" *ngIf="canActivitiesBeFinalized()">
             <button mat-flat-button
                     color="accent"
                     type="button"

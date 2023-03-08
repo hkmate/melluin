@@ -8,6 +8,8 @@ import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.servic
 import {CREATE_MARKER, CreateMarkerType} from '@fe/app/app-paths';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {Permission} from '@shared/user/permission.enum';
 
 @Component({
     selector: 'app-hospital-visit-activity-filler',
@@ -17,6 +19,7 @@ import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrit
 })
 export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
 
+    Permission: Permission;
     protected visit: HospitalVisit;
     protected buttonsEnabled = true;
     private resolverSubscription: Subscription;
@@ -24,6 +27,7 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
     constructor(private readonly router: Router,
                 private readonly location: Location,
                 private readonly route: RouteDataHandler,
+                protected readonly permissions: PermissionService,
                 private readonly visitService: HospitalVisitService) {
     }
 
@@ -39,16 +43,24 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
         this.resolverSubscription?.unsubscribe();
     }
 
-    protected isVisitEventStarted(): boolean {
-        return this.visit?.status === HospitalVisitStatus.STARTED;
+    protected canActivitiesBeShowed(): boolean {
+        return this.visit?.status === HospitalVisitStatus.STARTED
+            && this.permissions.has(Permission.canReadActivity)
     }
 
-    protected isVisitEventScheduled(): boolean {
-        return this.visit?.status === HospitalVisitStatus.SCHEDULED;
+    protected canActivitiesBeFinalized(): boolean {
+        return this.permissions.has(Permission.canCreateActivity)
+            && this.canActivitiesBeShowed();
+    }
+
+    protected canVisitBeStarted(): boolean {
+        return this.visit?.status === HospitalVisitStatus.SCHEDULED
+            && this.permissions.has(Permission.canCreateActivity);
     }
 
     protected isFillingEnabled(): boolean {
-        return this.isVisitEventStarted()
+        return this.canActivitiesBeShowed()
+            && this.permissions.has(Permission.canCreateActivity)
             && this.buttonsEnabled;
     }
 

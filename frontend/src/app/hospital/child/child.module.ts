@@ -23,7 +23,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         MatButtonModule,
         MatInputModule,
         MatCheckboxModule,
-
         TranslateModule,
     ],
     declarations: [

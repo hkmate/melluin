@@ -6,16 +6,23 @@ import {DepartmentResolver} from '@fe/app/hospital/department/department-detail/
 import {DepartmentDetailComponent} from '@fe/app/hospital/department/department-detail/department-detail.component';
 import {HospitalDepartmentModule} from '@fe/app/hospital/department/hospital-department.module';
 import {DepartmentsListComponent} from '@fe/app/hospital/department/departments-list/departments-list.component';
+import {Permission} from '@shared/user/permission.enum';
 
 const routes: Routes = [
     {
         path: '',
         canActivate: [AuthGuard],
+        data: {
+            permissions: [Permission.canSearchDepartment]
+        },
         component: DepartmentsListComponent,
     }, {
         path: PATHS.hospitalDepartments.detail,
         canActivate: [AuthGuard],
         component: DepartmentDetailComponent,
+        data: {
+            permissions: [Permission.canReadDepartment]
+        },
         resolve: {department: DepartmentResolver}
     }
 ];

@@ -5,7 +5,8 @@
             <ng-container *ngIf="!isEditMode()">
                 <app-person-data-presenter [person]="person"></app-person-data-presenter>
                 <div class="button-row">
-                    <button mat-stroked-button
+                    <button *ngIf="isEditEnabled"
+                            mat-stroked-button
                             color="primary"
                             (click)="switchToEdit()">
                         {{ 'Edit' | translate }}
@@ -23,7 +24,9 @@
         <ng-container *ngIf="person">
             <div class="divider"></div>
             <div class="user-part">
-                <app-user-detail [personId]="person.id" [user]="person.user"></app-user-detail>
+                <app-user-detail [personId]="person.id"
+                                 [userId]="person.user?.id"
+                                 [editEnabled]="isEditEnabled"></app-user-detail>
             </div>
         </ng-container>
 

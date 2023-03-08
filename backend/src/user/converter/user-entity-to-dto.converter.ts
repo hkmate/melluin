@@ -1,8 +1,9 @@
 import {UserEntity} from '@be/user/model/user.entity';
 import {User} from '@shared/user/user';
 import {Injectable} from '@nestjs/common';
-import {isNil} from '@shared/util/util';
+import {flatten, isNil} from '@shared/util/util';
 import {Converter} from '@shared/converter';
+import * as _ from 'lodash';
 
 @Injectable()
 export class UserEntityToDtoConverter implements Converter<UserEntity, User> {
@@ -24,7 +25,10 @@ export class UserEntityToDtoConverter implements Converter<UserEntity, User> {
             userName: entity.userName,
             isActive: entity.isActive,
             customInfo: entity.customInfo,
-            roles: entity.roles?.map(roleEntity => roleEntity.role)
+            roles: entity.roles?.map(roleEntity => roleEntity.role),
+            permissions: _.union(flatten(
+                entity.roles.map(role => role.permissions))
+                .map(permission => permission.permission))
         };
     }
 

@@ -73,4 +73,3 @@ export function flatten<T>(arr: Array<T | Array<T>>): Array<T> {
     }
     return res.reverse();
 }
-

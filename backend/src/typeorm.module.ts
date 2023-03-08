@@ -8,6 +8,7 @@ import {DepartmentBoxStatusEntity} from '@be/department-box/model/department-box
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {ChildEntity} from '@be/child/model/child.entity';
 import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
+import {PermissionEntity} from '@be/user/model/permission.entity';
 
 export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
@@ -26,6 +27,7 @@ export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
         entities: [
             UserEntity,
             RoleEntity,
+            PermissionEntity,
             PersonEntity,
             DepartmentEntity,
             DepartmentBoxStatusEntity,

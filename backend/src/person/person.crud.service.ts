@@ -9,7 +9,6 @@ import {PersonCreation} from '@shared/person/person-creation';
 import {PersonUpdate} from '@shared/person/person-update';
 import {PersonCreationToEntityConverter} from '@be/person/converer/person-creation-to-entity.converter';
 import {PersonEntityToDtoConverter} from '@be/person/converer/person-entity-to-dto.converter';
-import {CanUserSavePersonValidator} from '@be/person/validator/can-user-save-person.validator';
 import {CanUserUpdatePersonValidator} from '@be/person/validator/can-user-update-person.validator';
 import {PageRequest} from '@be/crud/page-request';
 import {PageRequestFieldsValidator} from '@be/crud/validator/page-request-fields.validator';
@@ -24,9 +23,6 @@ export class PersonCrudService {
     }
 
     public async save(personCreation: PersonCreation, requester: User): Promise<Person> {
-        CanUserSavePersonValidator
-            .of(requester)
-            .validate(personCreation);
         const creationEntity = this.personCreationConverter.convert(personCreation);
         const personEntity = await this.personDao.save(creationEntity);
         return this.personConverter.convert(personEntity);
@@ -54,7 +50,7 @@ export class PersonCrudService {
         const person = await this.personDao.getOne(personId);
         CanUserUpdatePersonValidator
             .of(requester)
-            .validate({personId, changeSet});
+            .validate({person, changeSet});
 
         this.applyChangesToEntity(person, changeSet);
         const savedPerson = await this.personDao.save(person);

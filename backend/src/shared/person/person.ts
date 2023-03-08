@@ -1,4 +1,4 @@
-import {User} from '@shared/user/user';
+import {BriefUser} from '@shared/user/user';
 
 
 export interface PersonIdentifier {
@@ -11,5 +11,5 @@ export interface PersonIdentifier {
 export interface Person extends PersonIdentifier {
     email?: string;
     phone?: string;
-    user?: User;
+    user?: BriefUser;
 }

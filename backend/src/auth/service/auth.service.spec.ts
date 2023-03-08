@@ -13,10 +13,12 @@ import * as crypto from 'crypto';
 import {randomUUID} from 'crypto';
 import {User} from '@shared/user/user';
 import {AuthToken} from '@shared/user/auth-token';
-import Mock = jest.Mock;
 import {when} from 'jest-when';
 import {Nullable} from '@shared/util/util';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
+import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
+import Mock = jest.Mock;
+import {UnauthorizedException} from '@nestjs/common';
 
 describe('AuthService', () => {
     describe('Construct when default user not needed', () => {
@@ -32,6 +34,9 @@ describe('AuthService', () => {
             });
 
             const moduleRef = await Test.createTestingModule({
+                imports: [
+                    UserEntityToDtoModule
+                ],
                 providers: [
                     AuthService,
                     {provide: ConfigService, useValue: {get: configServiceGet}},
@@ -65,7 +70,7 @@ describe('AuthService', () => {
         };
         const mockedPersonId = 'c3121569-ccb8-4600-b07b-3f59b4a477fa';
         const mockedUserId = 'c0b74770-5be3-4d44-84c8-596f244488c9';
-        const expectedRoles = [{id: randomString(), role: Role.SYSADMIN}];
+        const expectedRoles = [{id: randomString(), role: Role.SYSADMIN, permissions: []}];
         const expectedPassword = randomString();
 
         beforeEach(async () => {
@@ -94,6 +99,9 @@ describe('AuthService', () => {
             const userServiceFindAllRole = jest.fn(() => expectedRoles);
 
             const moduleRef = await Test.createTestingModule({
+                imports: [
+                    UserEntityToDtoModule
+                ],
                 providers: [
                     AuthService,
                     {provide: ConfigService, useValue: {get: configServiceGet}},
@@ -159,6 +167,9 @@ describe('AuthService', () => {
             });
 
             const moduleRef = await Test.createTestingModule({
+                imports: [
+                    UserEntityToDtoModule
+                ],
                 providers: [
                     AuthService,
                     {provide: ConfigService, useValue: {get: configServiceGet}},
@@ -194,6 +205,9 @@ describe('AuthService', () => {
 
         beforeEach(async () => {
             const moduleRef = await Test.createTestingModule({
+                imports: [
+                    UserEntityToDtoModule
+                ],
                 providers: [
                     AuthService,
                     {provide: ConfigService, useValue: {get: jest.fn(() => false)}},
@@ -215,6 +229,7 @@ describe('AuthService', () => {
                 personId: randomUUID(),
                 userName: randomString(),
                 roles: [Role.SYSADMIN],
+                permissions: [],
                 isActive: true
             }
             const expectedTokenStr = `&@${JSON.stringify(user)}@&`;
@@ -237,13 +252,16 @@ describe('AuthService', () => {
 
         beforeEach(async () => {
             const moduleRef = await Test.createTestingModule({
+                imports: [
+                    UserEntityToDtoModule
+                ],
                 providers: [
-                    AuthService,
                     {provide: ConfigService, useValue: {get: jest.fn(() => false)}},
                     {provide: JwtService, useValue: {sign: jest.fn()}},
                     {provide: UserDao, useValue: {findOneByName: jest.fn()}},
                     {provide: PersonDao, useValue: {}},
                     {provide: PasswordCryptService, useValue: {match: jest.fn()}},
+                    AuthService,
                 ],
             }).compile();
 
@@ -262,12 +280,13 @@ describe('AuthService', () => {
                 id: userId,
                 person: cast<PersonEntity>({id: personId}),
                 isActive: true,
-                roles: [{id: randomUUID(), role: Role.SYSADMIN}]
+                roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}]
             };
             const expectedUser: User = {
                 id: userId,
                 personId,
                 userName,
+                permissions: [],
                 roles: [Role.SYSADMIN],
                 isActive: true
             }
@@ -290,15 +309,15 @@ describe('AuthService', () => {
                 id: userId,
                 person: cast<PersonEntity>({id: personId}),
                 isActive: true,
-                roles: [{id: randomUUID(), role: Role.SYSADMIN}]
+                roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}]
             };
             const rawPassword: string = randomString();
             when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
             when(passwordCryptService.match).calledWith(rawPassword, password).mockReturnValue(false);
 
-            const result: Nullable<User> = await authService.validateUser(userName, rawPassword);
+            const testValidate = (): Promise<User> => authService.validateUser(userName, rawPassword);
 
-            expect(result).toBeNull();
+            await expect(testValidate).rejects.toThrow(UnauthorizedException);
         });
 
         it('When user is in db and is not active Then null returned', async () => {
@@ -310,24 +329,24 @@ describe('AuthService', () => {
                 id: userId,
                 person: cast<PersonEntity>({}),
                 isActive: false,
-                roles: [{id: randomUUID(), role: Role.SYSADMIN}]
+                roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}]
             };
             const rawPassword: string = randomString();
             when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
 
-            const result: Nullable<User> = await authService.validateUser(userName, rawPassword);
+            const testValidate = (): Promise<User> => authService.validateUser(userName, rawPassword);
 
-            expect(result).toBeNull();
+            await expect(testValidate).rejects.toThrow(UnauthorizedException);
         });
 
-        it('When user is not in dbThen null returned', async () => {
+        it('When user is not in db Then null returned', async () => {
             const userName: string = randomString();
             const rawPassword: string = randomString();
             when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(null));
 
-            const result: Nullable<User> = await authService.validateUser(userName, rawPassword);
+            const testValidate = (): Promise<User> => authService.validateUser(userName, rawPassword);
 
-            expect(result).toBeNull();
+            await expect(testValidate).rejects.toThrow(UnauthorizedException);
         });
     });
 });

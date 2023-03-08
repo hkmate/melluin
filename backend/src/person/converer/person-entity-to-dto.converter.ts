@@ -3,12 +3,12 @@ import {Person} from '@shared/person/person';
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
 import {Converter} from '@shared/converter';
-import {UserEntityToDtoConverter} from '@be/user/converter/user-entity-to-dto.converter';
+import {UserEntityToBriefDtoConverter} from '@be/user/converter/user-entity-to-brief-dto.converter';
 
 @Injectable()
 export class PersonEntityToDtoConverter implements Converter<PersonEntity, Person> {
 
-    constructor(private readonly userConverter: UserEntityToDtoConverter) {
+    constructor(private readonly userConverter: UserEntityToBriefDtoConverter) {
     }
 
     public convert(value: PersonEntity): Person;

@@ -1,10 +1,10 @@
 import {Validator} from '@shared/validator/validator';
 import {User} from '@shared/user/user';
-import {isUserAnEmployee, Role} from '@shared/user/role.enum';
+import {getPermissionsNeededToChangeRole} from '@shared/user/role.enum';
 import {ForbiddenException} from '@nestjs/common';
 import {UserEntity} from '@be/user/model/user.entity';
 import {UserUpdate} from '@shared/user/user-update';
-import {includeAny, isNil} from '@shared/util/util';
+import {Permission} from '@shared/user/permission.enum';
 
 interface ChangeSetWithEntity {
     entity: UserEntity,
@@ -21,29 +21,29 @@ export class RequesterHasPermissionToChangeUserValidator implements Validator<Ch
         return new RequesterHasPermissionToChangeUserValidator(user);
     }
 
-    public validate(value: ChangeSetWithEntity): void {
-        if (!isUserAnEmployee(this.currentUser)) {
-            throw new ForbiddenException('User has no permission to create new user');
+    public validate({entity, changeSet}: ChangeSetWithEntity): void {
+        if (this.isUserGotId(entity.id) && this.userHas(Permission.canWriteSelf)) {
+            return;
         }
-        if (!this.arePredicatesValid(value)) {
-            throw new ForbiddenException('You have no permission to create new user with these roles');
+        if (this.hasUserPermissionToChange(entity)) {
+            return;
         }
+        throw new ForbiddenException('You have no permission to update this user');
     }
 
-    private arePredicatesValid(changeSetWithEntity: ChangeSetWithEntity): boolean {
-        return [
-            this.isCurrentUserSysadminOrAdmin(),
-            this.isCurrentUserChangesSelfOnAllowedFields(changeSetWithEntity)
-        ].includes(true);
+    private hasUserPermissionToChange(user: UserEntity): boolean {
+        return user.roles.every(role => {
+            const neededPermission = getPermissionsNeededToChangeRole(role.role);
+            return this.userHas(neededPermission);
+        }) ?? false;
     }
 
-    private isCurrentUserSysadminOrAdmin(): boolean {
-        return includeAny(this.currentUser.roles, Role.SYSADMIN, Role.ADMINISTRATOR);
+    private isUserGotId(userId: string): boolean {
+        return this.currentUser.id === userId;
     }
 
-    private isCurrentUserChangesSelfOnAllowedFields({entity, changeSet}: ChangeSetWithEntity): boolean {
-        return this.currentUser.id === entity.id
-            && isNil(changeSet.isActive);
+    private userHas(permission: Permission): boolean {
+        return this.currentUser.permissions.includes(permission);
     }
 
 }

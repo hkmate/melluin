@@ -6,6 +6,8 @@ import {HospitalVisitActivityCrudService} from '@be/hospital-visit-activity/hosp
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
 import {HospitalVisitRelationDao} from '@be/hospital-visit/hospital-visit-relation.dao';
+import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
+import {Permission} from '@shared/user/permission.enum';
 
 
 @Controller('hospital-visits')
@@ -17,6 +19,7 @@ export class HospitalVisitActivityController {
 
     @Post('/:id/activities')
     @HttpCode(HttpStatus.CREATED)
+    @PermissionGuard(Permission.canCreateActivity)
     public save(@Param('id', ParseUUIDPipe) hospitalVisitId: string,
                 @Body() activityInput: HospitalVisitActivityInput,
                 @CurrentUser() requester: User): Promise<HospitalVisitActivity> {
@@ -25,12 +28,14 @@ export class HospitalVisitActivityController {
     }
 
     @Get('/:id/activities')
+    @PermissionGuard(Permission.canReadActivity)
     public find(@Param('id', ParseUUIDPipe) hospitalVisitId: string,
                 @CurrentUser() requester: User): Promise<WrappedHospitalVisitActivity> {
         return this.activityCrudService.findByVisitId(hospitalVisitId, requester);
     }
 
     @Get('/:id/related/activities')
+    @PermissionGuard(Permission.canReadActivity, Permission.canReadVisit, Permission.canReadChild)
     public async findRelated(@Param('id', ParseUUIDPipe) hospitalVisitId: string,
                              @CurrentUser() requester: User): Promise<Array<WrappedHospitalVisitActivity>> {
         const relatedVisitIds = await this.visitRelationDao.findRelationIds(hospitalVisitId, requester);

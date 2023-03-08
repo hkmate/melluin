@@ -7,6 +7,8 @@ import {PatientChild} from '@shared/child/patient-child';
 import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
 import {isNil, isNotNil} from '@shared/util/util';
 import {firstValueFrom} from 'rxjs';
+import {Permission} from '@shared/user/permission.enum';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 @Component({
     selector: 'app-visit-activities',
@@ -14,6 +16,8 @@ import {firstValueFrom} from 'rxjs';
     styleUrls: ['./visit-activities.component.scss']
 })
 export class VisitActivitiesComponent implements OnInit {
+
+    Permission = Permission;
 
     @Input()
     public visit: HospitalVisit;
@@ -29,7 +33,8 @@ export class VisitActivitiesComponent implements OnInit {
     protected visitDate: Date;
     protected boxInfoList: Array<DepartmentBoxStatus> = [];
 
-    constructor(private readonly activityService: VisitActivityService) {
+    constructor(protected readonly permissions: PermissionService,
+                private readonly activityService: VisitActivityService) {
     }
 
     public ngOnInit(): void {

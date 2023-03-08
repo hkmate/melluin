@@ -12,6 +12,7 @@ import {AuthController} from './auth.controller';
 import {PersonModule} from '../person/person.module';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {Security} from '@be/config/model/security';
+import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 
 @Module({
     imports: [
@@ -33,6 +34,7 @@ import {Security} from '@be/config/model/security';
 
         PersonModule,
         UserModule,
+        UserEntityToDtoModule,
     ],
     controllers: [AuthController],
     providers: [

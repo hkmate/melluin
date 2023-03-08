@@ -1,16 +1,17 @@
 <div class="user-detail">
 
     <ng-container *ngIf="needDataPresenter()">
-        <app-user-data-presenter [user]="userToShow"></app-user-data-presenter>
+        <app-user-data-presenter [user]="user"></app-user-data-presenter>
         <div class="button-row">
-            <button mat-stroked-button
+            <button *ngIf="editEnabled"
+                    mat-stroked-button
                     color="primary"
                     (click)="switchToEdit()">
                 {{ 'Edit' | translate }}
             </button>
         </div>
     </ng-container>
-    <div *ngIf="!userToShow && !createModeOn" class="button-row">
+    <div *ngIf="!user && !createModeOn && permissions.has(Permission.canCreateUser)" class="button-row">
         <button mat-stroked-button
                 color="primary"
                 (click)="switchToCreate()">
@@ -23,7 +24,7 @@
                             (canceled)="cancelEditing()">
     </app-user-creation-form>
     <app-user-edit-form *ngIf="editModeOn"
-                        [user]="userToShow"
+                        [user]="user"
                         (submitted)="updateUser($event)"
                         (canceled)="cancelEditing()">
     </app-user-edit-form>

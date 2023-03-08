@@ -9,6 +9,9 @@ import {DepartmentCreation} from '@shared/department/department-creation';
 import {DepartmentUpdateChangeSet} from '@shared/department/department-update-change-set';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {isNil} from '@shared/util/util';
+import {Permission} from '@shared/user/permission.enum';
+import {DateUtil} from '@shared/util/date-util';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 @Component({
     selector: 'app-department-detail',
@@ -22,11 +25,12 @@ export class DepartmentDetailComponent implements OnInit, OnDestroy {
     protected isEdit = false;
     protected department?: Department;
     private resolverSubscription: Subscription;
-    private now = new Date().toISOString();
+    private now = DateUtil.now().toISOString();
 
     constructor(private readonly router: Router,
                 private readonly location: Location,
                 private readonly route: RouteDataHandler,
+                private readonly permissions: PermissionService,
                 private readonly departmentService: DepartmentService) {
     }
 
@@ -69,8 +73,9 @@ export class DepartmentDetailComponent implements OnInit, OnDestroy {
     }
 
     protected isEditEnabled(): boolean {
-        return isNil(this.department?.validTo)
-            || this.now < this.department!.validTo;
+        return this.permissions.has(Permission.canWriteDepartment)
+            && (isNil(this.department?.validTo)
+                || this.now < this.department!.validTo);
     }
 
     private setToPresent(): void {

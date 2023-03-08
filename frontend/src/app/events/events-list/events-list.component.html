@@ -5,7 +5,7 @@
         <div class="option-row">
             <app-event-list-filter (filterChanged)="filterChanged($event)"></app-event-list-filter>
 
-            <span>
+            <span *ngIf="permissions.has(Permission.canCreateVisit)">
                 <a mat-mini-fab
                    color="accent"
                    [routerLink]="['/hospital-visits', 'new']">
