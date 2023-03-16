@@ -61,11 +61,9 @@ CREATE TABLE public.hospital_visit (
 CREATE TABLE public.hospital_visit_activity (
     id uuid NOT NULL,
     hospital_visit_id uuid NOT NULL,
-    child_patient_id uuid NOT NULL,
-    activity_type text NOT NULL,
-    comment text,
-    group_id uuid  NOT NULL,
-    is_parent_there boolean
+    children jsonb NOT NULL,
+    activities jsonb NOT NULL,
+    comment text
 );
 
 CREATE TABLE public.hospital_visit_action (
@@ -226,9 +224,6 @@ ALTER TABLE ONLY public.hospital_box_status_report
 
 ALTER TABLE ONLY public.hospital_visit
     ADD CONSTRAINT hospital_visit__department_id__to__hospital_department__id FOREIGN KEY (department_id) REFERENCES public.hospital_department(id);
-
-ALTER TABLE ONLY public.hospital_visit_activity
-    ADD CONSTRAINT visit_activity__child_patient_id__to__child_patient__id FOREIGN KEY (child_patient_id) REFERENCES public.child_patient(id);
 
 ALTER TABLE ONLY public.hospital_visit_activity
     ADD CONSTRAINT visit_activity__hospital_visit_id__to__hospital_visit__id FOREIGN KEY (hospital_visit_id) REFERENCES public.hospital_visit(id);
