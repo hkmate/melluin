@@ -8,58 +8,61 @@ import {HospitalVisitEntityToDtoConverter} from '@be/hospital-visit/converer/hos
 import {ChildEntityToDtoConverter} from '@be/child/converer/child-entity-to-dto.converter';
 import {ChildEntity} from '@be/child/model/child.entity';
 import * as _ from 'lodash';
+import {ChildDao} from '@be/child/child.dao';
+import {Child} from '@shared/child/child';
 
 @Injectable()
-export class ActivityEntityToWrappedDtoConverter implements Converter<Array<HospitalVisitActivityEntity>, WrappedHospitalVisitActivity> {
+export class ActivityEntityToWrappedDtoConverter implements Converter<Array<HospitalVisitActivityEntity>, Promise<WrappedHospitalVisitActivity>> {
 
-    constructor(private readonly basicDtoConverter: ActivityEntityToBasicDtoConverter,
+    constructor(private readonly childDao: ChildDao,
+                private readonly basicDtoConverter: ActivityEntityToBasicDtoConverter,
                 private readonly childConverter: ChildEntityToDtoConverter,
                 private readonly visitEntityToDtoConverter: HospitalVisitEntityToDtoConverter) {
     }
 
-    public convert(value: Array<HospitalVisitActivityEntity>): WrappedHospitalVisitActivity;
+    public convert(value: Array<HospitalVisitActivityEntity>): Promise<WrappedHospitalVisitActivity>;
     public convert(value: undefined): undefined;
-    public convert(value?: Array<HospitalVisitActivityEntity>): WrappedHospitalVisitActivity | undefined;
-    public convert(value?: Array<HospitalVisitActivityEntity>): WrappedHospitalVisitActivity | undefined {
+    public convert(value?: Array<HospitalVisitActivityEntity>): Promise<WrappedHospitalVisitActivity> | undefined;
+    public convert(value?: Array<HospitalVisitActivityEntity>): Promise<WrappedHospitalVisitActivity> | undefined {
         if (isNilOrEmpty(value)) {
             return undefined;
         }
         return this.convertNotNil(value!);
     }
 
-    private convertNotNil(entities: Array<HospitalVisitActivityEntity>): WrappedHospitalVisitActivity {
-        this.verifyEntitiesAreFromTheVisit(entities);
-        const groups = this.separateGroups(entities);
+    private async convertNotNil(entities: Array<HospitalVisitActivityEntity>): Promise<WrappedHospitalVisitActivity> {
+        this.verifyEntitiesAreFromTheSameVisit(entities);
+
+        const children = await this.getChildren(entities);
         return {
             hospitalVisit: this.visitEntityToDtoConverter.convert(entities[0].hospitalVisit),
-            children: this.getDistinctChildren(entities).map(child => this.childConverter.convert(child)),
-            activities: groups.map(group => this.basicDtoConverter.convert(group))
+            children,
+            activities: entities.map(group => this.basicDtoConverter.convert(group))
         }
     }
 
-    private verifyEntitiesAreFromTheVisit(entities: Array<HospitalVisitActivityEntity>): void {
+    private verifyEntitiesAreFromTheSameVisit(entities: Array<HospitalVisitActivityEntity>): void {
         if (isNilOrEmpty(entities)) {
             return;
         }
         const visitId = entities[0].hospitalVisit.id;
         const areVisitIdsSame = entities.every(entity => entity.hospitalVisit.id === visitId);
         if (!areVisitIdsSame) {
-            throw new InternalServerErrorException('Activity objects has different visits');
+            throw new InternalServerErrorException('Activity objects are from different visits');
         }
     }
 
-    private getDistinctChildren(entities: Array<HospitalVisitActivityEntity>): Array<ChildEntity> {
-        return entities.reduce<Array<ChildEntity>>((result, entitiy) => {
-            const resultContainsThisChild = result.some(value => value.id === entitiy.childId);
-            if (!resultContainsThisChild) {
-                result.push(entitiy.child);
-            }
-            return result;
-        }, []);
+    private async getChildren(entities: Array<HospitalVisitActivityEntity>): Promise<Array<Child>> {
+        const childEntities = await this.getChildEntities(entities);
+        return childEntities.map(e => this.childConverter.convert(e));
     }
 
-    private separateGroups(entities: Array<HospitalVisitActivityEntity>): Array<Array<HospitalVisitActivityEntity>> {
-        return Object.values(_.groupBy(entities, 'groupId'));
+    private async getChildEntities(entities: Array<HospitalVisitActivityEntity>): Promise<Array<ChildEntity>> {
+        return await this.childDao.findByIds(this.getDistinctChildrenIds(entities));
+    }
+
+    private getDistinctChildrenIds(entities: Array<HospitalVisitActivityEntity>): Array<string> {
+        return _.union(entities.flatMap(entity => entity.children.map(child => child.childId)));
     }
 
 }

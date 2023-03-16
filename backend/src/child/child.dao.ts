@@ -33,4 +33,9 @@ export class ChildDao {
         return this.repository.find({where: {id: In(ids)}});
     }
 
+    public async findIdByIds(ids: Array<string>): Promise<Array<string>> {
+        const entityParts = await this.repository.find({where: {id: In(ids)}, select: {id: true}});
+        return entityParts.map(e => e.id);
+    }
+
 }

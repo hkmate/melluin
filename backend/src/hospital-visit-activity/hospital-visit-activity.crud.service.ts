@@ -27,20 +27,19 @@ export class HospitalVisitActivityCrudService {
         const visit = await this.hospitalVisitDao.getOne(activityInput.visitId!);
         this.verifyVisitIsStarted(visit);
         const creationEntity = await this.activityInputToEntityConverter.convert(activityInput);
-        const entities = await this.hospitalVisitActivityDao.saveAll(creationEntity);
-        return this.basicDtoConverter.convert(entities);
+        const entity = await this.hospitalVisitActivityDao.save(creationEntity);
+        return this.basicDtoConverter.convert(entity);
     }
 
     public async findByVisitId(visitId: string, requester: User): Promise<WrappedHospitalVisitActivity> {
         const rawEntities = await this.hospitalVisitActivityDao.findByVisitIds([visitId]);
-        return this.wrappedDtoConverter.convert(rawEntities);
+        return await this.wrappedDtoConverter.convert(rawEntities);
     }
 
     public async findByVisitIds(visitIds: Array<string>, requester: User): Promise<Array<WrappedHospitalVisitActivity>> {
         const rawEntities = await this.hospitalVisitActivityDao.findByVisitIds(visitIds);
         const rawEntitiesGroupedByVisit = this.separateByVisits(rawEntities);
-        return rawEntitiesGroupedByVisit.map(activities =>
-            this.wrappedDtoConverter.convert(rawEntities));
+        return this.convertToWrappedDto(rawEntitiesGroupedByVisit);
     }
 
     private separateByVisits(entities: Array<HospitalVisitActivityEntity>): Array<Array<HospitalVisitActivityEntity>> {
@@ -51,6 +50,13 @@ export class HospitalVisitActivityCrudService {
         if (visit.status !== HospitalVisitStatus.STARTED) {
             throw new BadRequestException('Save activity is only acceptable when the visit is in status: STARTED');
         }
+    }
+
+    private convertToWrappedDto(groupedByVisit: Array<Array<HospitalVisitActivityEntity>>): Promise<Array<WrappedHospitalVisitActivity>> {
+        return Promise.all(
+            groupedByVisit.map(activities =>
+                this.wrappedDtoConverter.convert(activities))
+        );
     }
 
 }

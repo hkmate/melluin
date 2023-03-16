@@ -37,8 +37,7 @@ export class HospitalVisitActivityDao {
     public findByVisitIds(ids: Array<string>): Promise<Array<HospitalVisitActivityEntity>> {
         return this.repository.find({
             relations: {
-                hospitalVisit: true,
-                child: true
+                hospitalVisit: true
             },
             where: {
                 hospitalVisit: {
