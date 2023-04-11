@@ -33,6 +33,11 @@ export class DepartmentBoxStatusCrudService {
         return this.boxStatusConverter.convert(boxStatusEntity);
     }
 
+    public async findByVisit(visitId: string): Promise<Array<DepartmentBoxStatus>> {
+        const entities: Array<DepartmentBoxStatusEntity> = await this.departmentBoxDao.findByVisit(visitId);
+        return entities.map(e => this.boxStatusConverter.convert(e));
+    }
+
     public async find(departmentId: string, pageRequest: PageRequest, requester: User): Promise<Pageable<DepartmentBoxStatus>> {
         PageRequestFieldsValidator
             .of(departmentBoxStatusSortableFields, departmentBoxStatusFilterableFields)

@@ -13,8 +13,12 @@ export class DepartmentBoxService {
     constructor(private readonly http: HttpClient) {
     }
 
-    private getDepartmentBoxUrl(departmentId): string {
+    private getDepartmentBoxUrl(departmentId: string): string {
         return `${environment.baseURL}/departments/${departmentId}/box-status`;
+    }
+
+    private getDepartmentBoxByVisitUrl(visitId: string): string {
+        return `${environment.baseURL}/hospital-visits/${visitId}/box-status`;
     }
 
     public addBoxStatus(departmentId: string, data: DepartmentBoxStatusReport): Observable<DepartmentBoxStatus> {
@@ -31,6 +35,10 @@ export class DepartmentBoxService {
                 [QUERY_QUERY_KEY]: this.preparePageRequest({sort: filters.sort, where: filters.where})
             }
         });
+    }
+
+    public findBoxStatusesByVisit(visitId: string): Observable<Array<DepartmentBoxStatus>> {
+        return this.http.get<Array<DepartmentBoxStatus>>(this.getDepartmentBoxByVisitUrl(visitId));
     }
 
     private preparePageRequest(pageRequest: Partial<PageQuery>): string {

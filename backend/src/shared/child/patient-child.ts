@@ -8,6 +8,13 @@ export interface PatientChild {
 
 }
 
+export interface PatientChildId {
+
+    childId: string;
+    isParentThere?: boolean;
+
+}
+
 export interface PatientChildInput {
 
     child: ChildInput;

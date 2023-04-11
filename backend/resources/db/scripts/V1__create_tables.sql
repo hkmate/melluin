@@ -30,6 +30,7 @@ CREATE TABLE public.general_event (
 
 CREATE TABLE public.hospital_box_status_report (
     id uuid NOT NULL,
+    visit_id uuid,
     hospital_department_id uuid NOT NULL,
     date_time timestamp without time zone NOT NULL,
     reason text NOT NULL,
@@ -56,6 +57,13 @@ CREATE TABLE public.hospital_visit (
     visibility text NOT NULL,
     department_id uuid NOT NULL,
     status text NOT NULL
+);
+
+CREATE TABLE public.hospital_visit_tmp (
+    id uuid NOT NULL,
+    visit_id uuid NOT NULL,
+    "key" text NOT NULL,
+    value jsonb
 );
 
 CREATE TABLE public.hospital_visit_activity (
@@ -207,6 +215,9 @@ ALTER TABLE ONLY public.volunteering_time
 ALTER TABLE ONLY public.volunteering_type
     ADD CONSTRAINT volunteering_type_pkey PRIMARY KEY (person_id, type);
 
+ALTER TABLE ONLY public.hospital_visit_tmp
+    ADD CONSTRAINT hospital_visit_tmp_pkey PRIMARY KEY (id, visit_id, "key");
+
 ALTER TABLE ONLY public.certificate
     ADD CONSTRAINT certificate__added_by_id__to__person__id FOREIGN KEY (added_by_id) REFERENCES public.person(id);
 
@@ -219,8 +230,14 @@ ALTER TABLE ONLY public.hospital_visit
 ALTER TABLE ONLY public.general_event
     ADD CONSTRAINT event__organizer_id__to__person_id FOREIGN KEY (organizer_id) REFERENCES public.person(id);
 
+ALTER TABLE ONLY public.hospital_visit_tmp
+    ADD CONSTRAINT hospital_visit_tmp__visit_id__to__visit__id FOREIGN KEY (visit_id) REFERENCES public.hospital_visit(id);
+
 ALTER TABLE ONLY public.hospital_box_status_report
     ADD CONSTRAINT hospital_box_status_report__hospital_department_id__to__hospita FOREIGN KEY (hospital_department_id) REFERENCES public.hospital_department(id);
+
+ALTER TABLE ONLY public.hospital_box_status_report
+    ADD CONSTRAINT hospital_box_status_report__visit_id__to__hospita FOREIGN KEY (visit_id) REFERENCES public.hospital_visit(id);
 
 ALTER TABLE ONLY public.hospital_visit
     ADD CONSTRAINT hospital_visit__department_id__to__hospital_department__id FOREIGN KEY (department_id) REFERENCES public.hospital_department(id);

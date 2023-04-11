@@ -13,6 +13,9 @@ export class OptionalBoxInfoCreatorComponent {
     @Input()
     public departmentId: string;
 
+    @Input()
+    public visitId: string;
+
     @Output()
     public itemAdded = new EventEmitter<DepartmentBoxStatus>();
 
@@ -31,6 +34,7 @@ export class OptionalBoxInfoCreatorComponent {
     }
 
     protected createFinished(objectToSave: DepartmentBoxStatusReport): void {
+        objectToSave.visitId = this.visitId;
         this.saveInProcess = true;
         this.boxStatusService.addBoxStatus(this.departmentId, objectToSave).subscribe(newStatus => {
             this.creatingInProcess = false;

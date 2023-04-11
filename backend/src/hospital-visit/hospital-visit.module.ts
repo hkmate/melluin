@@ -8,19 +8,24 @@ import {HospitalVisitPersistenceModule} from '@be/hospital-visit/hospital-visit.
 import {PersonModule} from '@be/person/person.module';
 import {DepartmentModule} from '@be/department/department.module';
 import {DepartmentPersistenceModule} from '@be/department/department.persistence.module';
+import {DepartmentBoxModule} from '@be/department-box/department-box.module';
+import {HospitalVisitTmpController} from '@be/hospital-visit/hospital-visit-tmp.controller';
+import {HospitalVisitTempDataService} from '@be/hospital-visit/hospital-visit-temp-data.service';
 
 @Module({
     imports: [
         HospitalVisitPersistenceModule,
         PersonModule,
         DepartmentModule,
-        DepartmentPersistenceModule
+        DepartmentPersistenceModule,
+        DepartmentBoxModule,
     ],
     providers: [
         HospitalVisitCreationToEntityConverter,
         HospitalVisitEntityToDtoConverter,
         HospitalVisitRewriteApplierFactory,
         HospitalVisitCrudService,
+        HospitalVisitTempDataService,
     ],
     exports: [
         HospitalVisitCreationToEntityConverter,
@@ -29,7 +34,8 @@ import {DepartmentPersistenceModule} from '@be/department/department.persistence
         HospitalVisitCrudService
     ],
     controllers: [
-        HospitalVisitController
+        HospitalVisitController,
+        HospitalVisitTmpController
     ]
 })
 export class HospitalVisitModule {

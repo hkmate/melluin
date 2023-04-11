@@ -20,6 +20,7 @@ export class BoxStatusEntityToDtoConverter implements Converter<DepartmentBoxSta
     private convertNotNilEntity(entity: DepartmentBoxStatusEntity): DepartmentBoxStatus {
         return {
             id: entity.id,
+            visitId: entity.visitId,
             dateTime: entity.dateTime?.toISOString(),
             reason: entity.reason,
             affectedObject: entity.affectedObject ?? undefined,

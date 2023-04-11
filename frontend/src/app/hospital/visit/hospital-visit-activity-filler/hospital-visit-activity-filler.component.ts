@@ -10,6 +10,7 @@ import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status'
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
+import {VisitTempDataService} from '@fe/app/hospital/visit-activity/visit-temp-data.service';
 
 @Component({
     selector: 'app-hospital-visit-activity-filler',
@@ -28,6 +29,7 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
                 private readonly location: Location,
                 private readonly route: RouteDataHandler,
                 protected readonly permissions: PermissionService,
+                private readonly tempDataService: VisitTempDataService,
                 private readonly visitService: HospitalVisitService) {
     }
 
@@ -70,6 +72,7 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
 
     protected finalizeFilling(): void {
         this.saveVisit(HospitalVisitStatus.JUST_REQUIRED_FIELDS_FILLED);
+        this.tempDataService.removeAll(this.visit.id).subscribe();
     }
 
     private setUp(visitInfo: HospitalVisit | CreateMarkerType): void {

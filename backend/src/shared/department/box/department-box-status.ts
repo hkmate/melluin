@@ -3,6 +3,7 @@ import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-re
 export interface DepartmentBoxStatus {
 
     id: string;
+    visitId?: string;
     dateTime: string;
     reason: BoxStatusChangeReason;
     affectedObject?: string;

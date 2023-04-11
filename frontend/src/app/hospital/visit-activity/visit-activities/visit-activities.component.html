@@ -38,6 +38,7 @@
             </mat-expansion-panel-header>
             <app-optional-box-info-creator *ngIf="permissions.has(Permission.canWriteDepBox)"
                                            [departmentId]="visit.department.id"
+                                           [visitId]="visit.id"
                                            (itemAdded)="boxStatusAdded($event)">
             </app-optional-box-info-creator>
             <div *ngFor="let boxInfo of boxInfoList" class="box-info">

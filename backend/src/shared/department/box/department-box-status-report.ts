@@ -1,7 +1,11 @@
 import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
-import {IsEnum, IsOptional, IsString} from 'class-validator';
+import {IsEnum, IsOptional, IsString, IsUUID} from 'class-validator';
 
 export class DepartmentBoxStatusReport {
+
+    @IsOptional()
+    @IsUUID()
+    visitId?: string;
 
     @IsEnum(BoxStatusChangeReason)
     reason: BoxStatusChangeReason;

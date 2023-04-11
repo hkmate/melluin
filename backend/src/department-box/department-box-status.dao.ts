@@ -19,6 +19,10 @@ export class DepartmentBoxStatusDao extends PageCreator<DepartmentBoxStatusEntit
         return this.repository.save(department);
     }
 
+    public findByVisit(visitId: string): Promise<Array<DepartmentBoxStatusEntity>> {
+        return this.repository.find({where: {visitId}, order: {dateTime: 'DESC'}});
+    }
+
     public findAll(departmentId: string, pageRequest: PageRequest): Promise<Pageable<DepartmentBoxStatusEntity>> {
         return this.getPage(pageRequest, {where: {department: {id: departmentId}}});
     }

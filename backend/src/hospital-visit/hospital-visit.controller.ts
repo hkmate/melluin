@@ -10,12 +10,15 @@ import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {Permission} from '@shared/user/permission.enum';
+import {DepartmentBoxStatusCrudService} from '@be/department-box/department-box-status.crud.service';
+import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
 
 
 @Controller('hospital-visits')
 export class HospitalVisitController {
 
-    constructor(private readonly visitCrudService: HospitalVisitCrudService) {
+    constructor(private readonly visitCrudService: HospitalVisitCrudService,
+                private readonly boxStatusCrudService: DepartmentBoxStatusCrudService) {
     }
 
     @Post()
@@ -30,6 +33,12 @@ export class HospitalVisitController {
     @PermissionGuard(Permission.canReadVisit)
     public getOne(@Param('id', ParseUUIDPipe) hospitalVisitId: string): Promise<HospitalVisit> {
         return this.visitCrudService.getOne(hospitalVisitId);
+    }
+
+    @Get('/:id/box-status')
+    @PermissionGuard(Permission.canReadDepBox)
+    public getBoxStatusesOfVisit(@Param('id', ParseUUIDPipe) hospitalVisitId: string): Promise<Array<DepartmentBoxStatus>> {
+        return this.boxStatusCrudService.findByVisit(hospitalVisitId);
     }
 
     @Get()

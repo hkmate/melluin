@@ -33,6 +33,7 @@ export class BoxStatusReportToEntityConverter
         const department = await this.departmentDao.getOne(dto.departmentId);
         return {
             id: randomUUID(),
+            visitId: dto.report.visitId,
             department,
             dateTime: DateUtil.now(),
             reason: dto.report.reason,

@@ -19,4 +19,8 @@ export class ChildService {
         return this.http.post<Child>(this.childrenUrl, data);
     }
 
+    public get(childId: string): Observable<Child> {
+        return this.http.get<Child>(`${this.childrenUrl}/${childId}`);
+    }
+
 }

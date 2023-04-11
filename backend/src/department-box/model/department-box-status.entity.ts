@@ -8,6 +8,9 @@ export class DepartmentBoxStatusEntity {
     @PrimaryColumn('uuid')
     id: string;
 
+    @Column({name: 'visit_id', type: 'uuid'})
+    visitId?: string;
+
     @Column({name: 'date_time', type: 'timestamp'})
     dateTime: Date;
 
