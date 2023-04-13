@@ -6,31 +6,39 @@ import {PersonEntity} from '@be/person/model/person.entity';
 import {PageConverter} from '@be/crud/convert/page.converter';
 import {User} from '@shared/user/user';
 import {PersonCreation} from '@shared/person/person-creation';
-import {PersonUpdate} from '@shared/person/person-update';
+import {PersonRewrite} from '@shared/person/person-rewrite';
 import {PersonCreationToEntityConverter} from '@be/person/converer/person-creation-to-entity.converter';
-import {PersonEntityToDtoConverter} from '@be/person/converer/person-entity-to-dto.converter';
-import {CanUserUpdatePersonValidator} from '@be/person/validator/can-user-update-person.validator';
+import {CanUserUpdatePersonPrimitiveFieldsValidator} from '@be/person/validator/can-user-update-person-primitive-fields.validator';
 import {PageRequest} from '@be/crud/page-request';
 import {PageRequestFieldsValidator} from '@be/crud/validator/page-request-fields.validator';
 import {personFilterableFields, personSortableFields} from '@shared/person/person-filterable-fields';
+import {PersonRewriteApplierFactory} from '@be/person/applier/person-rewrite-applier.factory';
+import {PersonRewriteValidator} from '@be/person/validator/person-rewrite.validator';
+import {ValidatorChain} from '@shared/validator/validator-chain';
+import {CanUserUpdatePersonPreferencesValidator} from '@be/person/validator/can-user-update-person-preferences.validator';
+import {PersonEntityToDtoConverterFactory} from '@be/person/converer/person-entity-to-dto-converter.factory';
 
 @Injectable()
 export class PersonCrudService {
 
     constructor(private readonly personDao: PersonDao,
-                private readonly personConverter: PersonEntityToDtoConverter,
-                private readonly personCreationConverter: PersonCreationToEntityConverter) {
+                private readonly personConverterFactory: PersonEntityToDtoConverterFactory,
+                private readonly personCreationConverter: PersonCreationToEntityConverter,
+                private readonly rewriteApplierFactory: PersonRewriteApplierFactory
+    ) {
     }
 
     public async save(personCreation: PersonCreation, requester: User): Promise<Person> {
         const creationEntity = this.personCreationConverter.convert(personCreation);
         const personEntity = await this.personDao.save(creationEntity);
-        return this.personConverter.convert(personEntity);
+        return this.personConverterFactory.createFor(requester)
+            .convert(personEntity);
     }
 
-    public getOne(id: string): Promise<Person> {
+    public getOne(id: string, requester: User): Promise<Person> {
         return this.personDao.getOne(id)
-            .then(entity => this.personConverter.convert(entity))
+            .then(entity => this.personConverterFactory.createFor(requester)
+                .convert(entity))
     }
 
     public async find(pageRequest: PageRequest, requester: User): Promise<Pageable<Person>> {
@@ -38,29 +46,27 @@ export class PersonCrudService {
             .of(personSortableFields, personFilterableFields)
             .validate(pageRequest);
 
-        // TODO: later when there are types of volunteering it will be needed to add restriction to the
-        //  filters because user should not access those people who are not in his/her responsibility.
-
         const pageOfEntities: Pageable<PersonEntity> = await this.personDao.findAll(pageRequest);
-        const pageConverter = PageConverter.of(this.personConverter);
+        const pageConverter = PageConverter.of(this.personConverterFactory.createFor(requester));
         return pageConverter.convert(pageOfEntities);
     }
 
-    public async update(personId: string, changeSet: PersonUpdate, requester: User): Promise<Person> {
+    public async update(personId: string, personRewrite: PersonRewrite, requester: User): Promise<Person> {
         const person = await this.personDao.getOne(personId);
-        CanUserUpdatePersonValidator
-            .of(requester)
-            .validate({person, changeSet});
+        this.createValidatorsForUpdate(requester)
+            .validate({person, rewrite: personRewrite});
 
-        this.applyChangesToEntity(person, changeSet);
-        const savedPerson = await this.personDao.save(person);
-        return this.personConverter.convert(savedPerson);
+        const changeApplier = this.rewriteApplierFactory.createFor(personRewrite, person);
+        const savedPerson = await this.personDao.save(changeApplier.applyChanges());
+        return this.personConverterFactory.createFor(requester)
+            .convert(savedPerson);
     }
 
-    private applyChangesToEntity(entity: PersonEntity, changeSet: PersonUpdate): void {
-        Object.keys(changeSet).forEach(changeKey => {
-            entity[changeKey] = changeSet[changeKey];
-        });
+    private createValidatorsForUpdate(requester: User): PersonRewriteValidator {
+        return ValidatorChain.of(
+            CanUserUpdatePersonPrimitiveFieldsValidator.of(requester),
+            CanUserUpdatePersonPreferencesValidator.of(requester)
+        );
     }
 
 }

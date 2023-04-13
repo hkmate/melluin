@@ -1,27 +1,21 @@
-import {Validator} from '@shared/validator/validator';
 import {User} from '@shared/user/user';
 import {ForbiddenException} from '@nestjs/common';
-import {PersonUpdate} from '@shared/person/person-update';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {Permission} from '@shared/user/permission.enum';
 import {getPermissionsNeededToChangeRole} from '@shared/user/role.enum';
+import {PersonRewriteValidator, PersonRewriteWithEntity} from '@be/person/validator/person-rewrite.validator';
 
 
-interface ChangeSetWithEntity {
-    person: PersonEntity,
-    changeSet: PersonUpdate
-}
-
-export class CanUserUpdatePersonValidator implements Validator<ChangeSetWithEntity> {
+export class CanUserUpdatePersonPrimitiveFieldsValidator implements PersonRewriteValidator {
 
     constructor(private readonly currentUser: User) {
     }
 
-    public static of(user: User): CanUserUpdatePersonValidator {
-        return new CanUserUpdatePersonValidator(user);
+    public static of(user: User): CanUserUpdatePersonPrimitiveFieldsValidator {
+        return new CanUserUpdatePersonPrimitiveFieldsValidator(user);
     }
 
-    public validate({person, changeSet}: ChangeSetWithEntity): void {
+    public validate({person, rewrite}: PersonRewriteWithEntity): void {
         if (this.isUserGotId(person.id) && this.userHas(Permission.canWriteSelf)) {
             return;
         }

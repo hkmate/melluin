@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {environment} from '@fe/environment';
 import {UserCreation} from '@shared/user/user-creation';
 import {User} from '@shared/user/user';
-import {UserUpdate} from '@shared/user/user-update';
+import {UserRewrite} from '@shared/user/user-rewrite';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -24,7 +24,7 @@ export class UserService {
         return this.http.get<User>(`${this.userUrl}/${userId}`);
     }
 
-    public updateUser(userId: string, data: UserUpdate): Observable<User> {
+    public updateUser(userId: string, data: UserRewrite): Observable<User> {
         return this.http.put<User>(`${this.userUrl}/${userId}`, data);
     }
 

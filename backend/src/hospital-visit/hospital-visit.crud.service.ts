@@ -10,12 +10,12 @@ import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create'
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {HospitalVisitEntityToDtoConverter} from '@be/hospital-visit/converer/hospital-visit-entity-to-dto.converter';
-import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/converer/hospital-visit-rewrite-applier.factory';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import {
     hospitalVisitFilterableFields,
     hospitalVisitSortableFields
 } from '@shared/hospital-visit/hospital-visit-filterable-fields';
+import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/applier/hospital-visit-rewrite-applier.factory';
 
 @Injectable()
 export class HospitalVisitCrudService {

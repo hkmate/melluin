@@ -5,7 +5,7 @@ import {Person} from '@shared/person/person';
 import {User} from '@shared/user/user';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PersonCreation} from '@shared/person/person-creation';
-import {PersonUpdate} from '@shared/person/person-update';
+import {PersonRewrite} from '@shared/person/person-rewrite';
 import {PageReq} from '@be/crud/page-req';
 import {PageRequest} from '@be/crud/page-request';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
@@ -28,8 +28,9 @@ export class PersonController {
 
     @Get('/:id')
     @PermissionGuard(Permission.canReadPerson)
-    public getOne(@Param('id', ParseUUIDPipe) personId: string): Promise<Person> {
-        return this.personCrudService.getOne(personId);
+    public getOne(@Param('id', ParseUUIDPipe) personId: string,
+                  @CurrentUser() requester: User): Promise<Person> {
+        return this.personCrudService.getOne(personId, requester);
     }
 
     @Get()
@@ -43,9 +44,9 @@ export class PersonController {
     @PermissionGuard(Permission.canWriteSelf, Permission.canWriteVisitor, Permission.canWriteCoordinator,
         Permission.canWriteAdmin, Permission.canWriteSysAdmin)
     public update(@Param('id', ParseUUIDPipe) personId: string,
-                  @Body() updateChangeSet: PersonUpdate,
+                  @Body() personRewrite: PersonRewrite,
                   @CurrentUser() requester: User): Promise<Person> {
-        return this.personCrudService.update(personId, updateChangeSet, requester);
+        return this.personCrudService.update(personId, personRewrite, requester);
     }
 
 }

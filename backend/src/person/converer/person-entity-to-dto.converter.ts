@@ -30,6 +30,7 @@ export class PersonEntityToDtoConverter implements Converter<PersonEntity, Perso
             nickName: entity.nickName,
             email: entity.email,
             phone: entity.phone,
+            preferences: entity.preferences
         } satisfies Person;
     }
 

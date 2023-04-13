@@ -12,6 +12,7 @@ import {UserService} from '@be/user/service/user.service';
 import {PersonModule} from '@be/person/person.module';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 import {PermissionEntity} from '@be/user/model/permission.entity';
+import {UserRewriteApplierFactory} from '@be/user/applier/user-rewrite-applier.factory';
 
 @Module({
     imports: [
@@ -32,6 +33,7 @@ import {PermissionEntity} from '@be/user/model/permission.entity';
         PersonHasNoUserYetValidator,
         UsernameIsNotUsedValidator,
         PasswordCryptService,
+        UserRewriteApplierFactory
     ],
     exports: [
         UserDao,

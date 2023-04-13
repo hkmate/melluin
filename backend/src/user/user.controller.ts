@@ -2,7 +2,7 @@ import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post,
 import {User} from '@shared/user/user';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {UserCreation} from '@shared//user/user-creation';
-import {UserUpdate} from '@shared/user/user-update';
+import {UserRewrite} from '@shared/user/user-rewrite';
 import {UserService} from '@be/user/service/user.service';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {Permission} from '@shared/user/permission.enum';
@@ -33,9 +33,9 @@ export class UserController {
     @PermissionGuard(Permission.canWriteVisitor, Permission.canWriteCoordinator,
         Permission.canWriteAdmin, Permission.canWriteSysAdmin)
     public update(@Param('id', ParseUUIDPipe) userId: string,
-                  @Body() updateChangeSet: UserUpdate,
+                  @Body() userRewrite: UserRewrite,
                   @CurrentUser() requester: User): Promise<User> {
-        return this.userService.update(userId, updateChangeSet, requester);
+        return this.userService.update(userId, userRewrite, requester);
     }
 
 }

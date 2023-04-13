@@ -14,6 +14,14 @@ export enum Role {
     SYSADMIN = 'SYSADMIN',
 }
 
+export const foundationWorkerRoles = [
+    Role.HOSPITAL_VISIT_COORDINATOR,
+    Role.FAIRY_PAINTING_COORDINATOR,
+    Role.TOY_MAKING_COORDINATOR,
+    Role.ADMINISTRATOR,
+    Role.SYSADMIN
+];
+
 export function getPermissionsNeededToChangeRole(role: Role): Permission {
     switch (role) {
         case Role.INTERN_HOSPITAL_VISITOR:
@@ -32,3 +40,4 @@ export function getPermissionsNeededToChangeRole(role: Role): Permission {
     }
     return cast<Permission>(undefined);
 }
+

@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Person} from '@shared/person/person';
-import {PersonUpdate} from '@shared/person/person-update';
+import {PersonRewrite} from '@shared/person/person-rewrite';
 import {PersonCreation} from '@shared/person/person-creation';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {allNil, isNil} from '@shared/util/util';
+import {isNil} from '@shared/util/util';
 
 @Component({
     selector: 'app-person-data-form',
@@ -13,7 +13,7 @@ import {allNil, isNil} from '@shared/util/util';
 export class PersonDataFormComponent {
 
     @Output()
-    public submitted = new EventEmitter<PersonUpdate | PersonCreation>;
+    public submitted = new EventEmitter<PersonRewrite | PersonCreation>;
 
     @Output()
     public canceled = new EventEmitter<void>;
@@ -53,43 +53,23 @@ export class PersonDataFormComponent {
         });
     }
 
-    private createDataForSubmit(): PersonUpdate | PersonCreation {
-        if (isNil(this.personToEdit)) {
-            return this.createPersonCreation();
-        }
-        return this.createPersonUpdate();
-    }
+    private createDataForSubmit(): PersonRewrite | PersonCreation {
+        const data = this.createEmptySubmitObject();
 
-    private createPersonCreation(): PersonCreation {
-        const data = new PersonCreation();
         data.firstName = this.form.controls.firstName.value;
         data.lastName = this.form.controls.lastName.value;
         data.nickName = this.form.controls.nickName.value;
         data.email = this.form.controls.email.value;
         data.phone = this.form.controls.phone.value;
+        // TODO preferences...
         return data;
     }
 
-    private createPersonUpdate(): PersonUpdate {
-        const data = new PersonUpdate();
-        this.addFieldIfDifferentThenStored(data, 'firstName');
-        this.addFieldIfDifferentThenStored(data, 'lastName');
-        this.addFieldIfDifferentThenStored(data, 'nickName');
-        this.addFieldIfDifferentThenStored(data, 'email');
-        this.addFieldIfDifferentThenStored(data, 'phone');
-        return data;
-    }
-
-    private addFieldIfDifferentThenStored(data: PersonUpdate, field: keyof PersonUpdate): void {
-        const newField = this.form.controls[field].value;
-        const storedField = this.personToEdit?.[field];
-        if (allNil(newField, storedField)) {
-            return;
+    private createEmptySubmitObject(): PersonRewrite | PersonCreation {
+        if (isNil(this.personToEdit)) {
+            return new PersonRewrite();
         }
-        if (newField === storedField) {
-            return;
-        }
-        data[field] = newField;
+        return new PersonCreation();
     }
 
 }

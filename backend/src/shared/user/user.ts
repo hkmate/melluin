@@ -14,7 +14,5 @@ export interface User extends BriefUser {
     customInfo?: UserCustomInfo;
 }
 
-// TODO remove eslint-disable when there is something in the custom info
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface UserCustomInfo {
+export class UserCustomInfo {
 }

@@ -1,5 +1,6 @@
 import {Column, Entity, OneToOne, PrimaryColumn} from 'typeorm';
 import {UserEntity} from '@be/user/model/user.entity';
+import {PersonPreferences} from '@shared/person/person';
 
 @Entity({name: 'person'})
 export class PersonEntity {
@@ -15,6 +16,9 @@ export class PersonEntity {
 
     @Column({name: 'nick_name'})
     nickName?: string;
+
+    @Column({type: 'jsonb'})
+    preferences?: PersonPreferences;
 
     @Column()
     email?: string;

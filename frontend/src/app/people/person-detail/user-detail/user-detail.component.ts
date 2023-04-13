@@ -3,7 +3,7 @@ import {User} from '@shared/user/user';
 import {isNil, isNotNil} from '@shared/util/util';
 import {UserCreation} from '@shared/user/user-creation';
 import {UserService} from '@fe/app/people/user.service';
-import {UserUpdate} from '@shared/user/user-update';
+import {UserRewrite} from '@shared/user/user-rewrite';
 import {Permission} from '@shared/user/permission.enum';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 
@@ -40,7 +40,6 @@ export class UserDetailComponent {
         });
     }
 
-
     protected needDataPresenter(): boolean {
         return isNotNil(this.user) && !this.editModeOn && !this.createModeOn;
     }
@@ -60,7 +59,7 @@ export class UserDetailComponent {
         })
     }
 
-    protected updateUser(userUpdate: UserUpdate): void {
+    protected updateUser(userUpdate: UserRewrite): void {
         this.userService.updateUser(this.user!.id, userUpdate).subscribe(user => {
             this.user = user;
             this.cancelEditing();

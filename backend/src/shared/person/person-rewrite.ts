@@ -2,7 +2,7 @@ import {IsEmail, IsInstance, IsOptional, IsPhoneNumber, MinLength} from 'class-v
 import {nameMinLength} from '@shared/constants';
 import {PersonPreferences} from '@shared/person/person';
 
-export class PersonCreation {
+export class PersonRewrite {
 
     @MinLength(nameMinLength)
     firstName: string;
@@ -27,3 +27,4 @@ export class PersonCreation {
     phone?: string;
 
 }
+

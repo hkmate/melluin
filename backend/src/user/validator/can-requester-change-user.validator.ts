@@ -1,32 +1,27 @@
-import {Validator} from '@shared/validator/validator';
 import {User} from '@shared/user/user';
 import {getPermissionsNeededToChangeRole} from '@shared/user/role.enum';
 import {ForbiddenException} from '@nestjs/common';
 import {UserEntity} from '@be/user/model/user.entity';
-import {UserUpdate} from '@shared/user/user-update';
 import {Permission} from '@shared/user/permission.enum';
+import {UserRewriteValidator, UserRewriteWithEntity} from '@be/user/validator/user-rewrite.validator';
 
-interface ChangeSetWithEntity {
-    entity: UserEntity,
-    changeSet: UserUpdate
-}
 
-export class RequesterHasPermissionToChangeUserValidator implements Validator<ChangeSetWithEntity> {
+export class CanRequesterChangeUserValidator implements UserRewriteValidator {
 
 
     constructor(private readonly currentUser: User) {
     }
 
-    public static of(user: User): RequesterHasPermissionToChangeUserValidator {
-        return new RequesterHasPermissionToChangeUserValidator(user);
+    public static of(user: User): CanRequesterChangeUserValidator {
+        return new CanRequesterChangeUserValidator(user);
     }
 
-    public validate({entity, changeSet}: ChangeSetWithEntity): void {
+    public validate({entity, rewrite}: UserRewriteWithEntity): Promise<void> {
         if (this.isUserGotId(entity.id) && this.userHas(Permission.canWriteSelf)) {
-            return;
+            return Promise.resolve();
         }
         if (this.hasUserPermissionToChange(entity)) {
-            return;
+            return Promise.resolve();
         }
         throw new ForbiddenException('You have no permission to update this user');
     }

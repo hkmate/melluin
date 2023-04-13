@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {Person} from '@shared/person/person';
-import {PersonUpdate} from '@shared/person/person-update';
+import {PersonRewrite} from '@shared/person/person-rewrite';
 import {PersonCreation} from '@shared/person/person-creation';
 import {PeopleService} from '@fe/app/people/people.service';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
@@ -50,7 +50,7 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
         return this.isEdit || this.isCreation;
     }
 
-    protected savePerson(data: PersonUpdate | PersonCreation): void {
+    protected savePerson(data: PersonRewrite | PersonCreation): void {
         this.createSaveRequest(data).subscribe(person => {
             this.person = person;
             this.setToPresent();
@@ -85,8 +85,8 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
         this.setEditEnableValue();
     }
 
-    private createSaveRequest(data: PersonCreation | PersonUpdate): Observable<Person> {
-        if (data instanceof PersonUpdate) {
+    private createSaveRequest(data: PersonCreation | PersonRewrite): Observable<Person> {
+        if (data instanceof PersonRewrite) {
             return this.peopleService.updatePerson(this.person!.id, data);
         }
         if (data instanceof PersonCreation) {

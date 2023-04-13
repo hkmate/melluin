@@ -3,7 +3,7 @@ import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entit
 import {DepartmentDao} from '@be/department/department.dao';
 import {PersonDao} from '@be/person/person.dao';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
-import {HospitalVisitRewriteApplier} from '@be/hospital-visit/converer/hospital-visit-rewrite.applier';
+import {HospitalVisitRewriteApplier} from '@be/hospital-visit/applier/hospital-visit-rewrite.applier';
 
 @Injectable()
 export class HospitalVisitRewriteApplierFactory {

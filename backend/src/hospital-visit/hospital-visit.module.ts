@@ -1,7 +1,6 @@
 import {Module} from '@nestjs/common';
 import {HospitalVisitController} from '@be/hospital-visit/hospital-visit.controller';
 import {HospitalVisitCrudService} from '@be/hospital-visit/hospital-visit.crud.service';
-import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/converer/hospital-visit-rewrite-applier.factory';
 import {HospitalVisitCreationToEntityConverter} from '@be/hospital-visit/converer/hospital-visit-creation-to-entity.converter';
 import {HospitalVisitEntityToDtoConverter} from '@be/hospital-visit/converer/hospital-visit-entity-to-dto.converter';
 import {HospitalVisitPersistenceModule} from '@be/hospital-visit/hospital-visit.persistence.module';
@@ -11,6 +10,7 @@ import {DepartmentPersistenceModule} from '@be/department/department.persistence
 import {DepartmentBoxModule} from '@be/department-box/department-box.module';
 import {HospitalVisitTmpController} from '@be/hospital-visit/hospital-visit-tmp.controller';
 import {HospitalVisitTempDataService} from '@be/hospital-visit/hospital-visit-temp-data.service';
+import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/applier/hospital-visit-rewrite-applier.factory';
 
 @Module({
     imports: [

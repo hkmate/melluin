@@ -107,6 +107,7 @@ CREATE TABLE public.person (
     first_name text NOT NULL,
     last_name text NOT NULL,
     nick_name text,
+    preferences jsonb,
     phone text,
     email text
 );

@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {Person} from '@shared/person/person';
 import {environment} from '@fe/environment';
 import {PersonCreation} from '@shared/person/person-creation';
-import {PersonUpdate} from '@shared/person/person-update';
+import {PersonRewrite} from '@shared/person/person-rewrite';
 import {utf8ToBase64} from '@fe/app/util/util';
 
 
@@ -27,7 +27,7 @@ export class PeopleService {
         return this.http.get<Person>(`${this.peopleUrl}/${personId}`);
     }
 
-    public updatePerson(personId: string, data: PersonUpdate): Observable<Person> {
+    public updatePerson(personId: string, data: PersonRewrite): Observable<Person> {
         return this.http.put<Person>(`${this.peopleUrl}/${personId}`, data);
     }
 

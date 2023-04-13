@@ -19,7 +19,8 @@
         "@typescript-eslint/strict-boolean-expressions": [
             "error", {
                 "allowString": false,
-                "allowNumber": false
+                "allowNumber": false,
+                "allowNullableBoolean": true
             }
         ],
         "@typescript-eslint/adjacent-overload-signatures": "error",
