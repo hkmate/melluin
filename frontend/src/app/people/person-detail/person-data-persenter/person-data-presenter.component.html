@@ -1,39 +1,54 @@
 <h1>{{ 'PersonPage.Data' | translate }}</h1>
 
-<div class="person-data-presenter">
+<div *ngIf="person" class="person-data-presenter">
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'PersonPage.Present.LastName' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ person?.lastName }}</mat-card-title>
+            <mat-card-title>{{ person.lastName }}</mat-card-title>
         </mat-card-header>
     </mat-card>
 
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'PersonPage.Present.FirstName' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ person?.firstName }}</mat-card-title>
+            <mat-card-title>{{ person.firstName }}</mat-card-title>
         </mat-card-header>
     </mat-card>
 
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'PersonPage.Present.NickName' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ person?.nickName | optional: '-' }}</mat-card-title>
+            <mat-card-title>{{ person.nickName | optional: '-' }}</mat-card-title>
         </mat-card-header>
     </mat-card>
 
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'PersonPage.Present.Email' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ person?.email | optional: '-' }}</mat-card-title>
+            <mat-card-title>{{ person.email | optional: '-' }}</mat-card-title>
         </mat-card-header>
     </mat-card>
 
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'PersonPage.Present.Phone' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ person?.phone | optional: '-' }}</mat-card-title>
+            <mat-card-title>{{ person.phone | optional: '-' }}</mat-card-title>
         </mat-card-header>
     </mat-card>
 
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'PersonPage.Present.Preferences' | translate }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <div>
+                <mat-checkbox [ngModel]="person.preferences?.canVolunteerSeeMyEmail" [disabled]="true"></mat-checkbox>
+                {{ 'PersonPage.Present.CanVolunteerSeeMyEmail' | translate }}
+            </div>
+            <div>
+                <mat-checkbox [ngModel]="person.preferences?.canVolunteerSeeMyPhone" [disabled]="true"></mat-checkbox>
+                {{ 'PersonPage.Present.CanVolunteerSeeMyPhone' | translate }}
+            </div>
+        </mat-card-content>
+    </mat-card>
 </div>

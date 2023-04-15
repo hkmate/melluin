@@ -9,7 +9,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {LazyInputModule} from '@fe/app/util/lazy-input/lazy-input.module';
 import {PersonDetailComponent} from './person-detail/person-detail.component';
 import {PersonDataFormComponent} from './person-detail/person-data-form/person-data-form.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
@@ -23,11 +23,13 @@ import { UserCreationFormComponent } from './person-detail/user-creation-form/us
 import {MatSelectModule} from '@angular/material/select';
 import { UserEditFormComponent } from './person-detail/user-edit-form/user-edit-form.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
+        FormsModule,
         ReactiveFormsModule,
 
         MatFormFieldModule,
@@ -39,6 +41,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
         MatPaginatorModule,
         MatSelectModule,
         MatSlideToggleModule,
+        MatCheckboxModule,
         TranslateModule,
 
         PersonNamePipe,

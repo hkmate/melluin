@@ -114,7 +114,10 @@
             "LastName": "Lastname",
             "NickName": "Nick name",
             "Email": "Email",
-            "Phone": "Phone number"
+            "Phone": "Phone number",
+            "Preferences": "Other",
+            "CanVolunteerSeeMyEmail": "Email address is visible for other volunteers",
+            "CanVolunteerSeeMyPhone": "Phone number is visible for other volunteers"
         },
         "Form": {
             "FirstName": "First name",
@@ -126,7 +129,11 @@
             "Email": "Email",
             "EmailPlaceholder": "julcsi@nevetnikek.hu",
             "Phone": "Phone number",
-            "PhonePlaceholder": "+36 30 123 4567"
+            "PhonePlaceholder": "+36 30 123 4567",
+            "CanVolunteerSeeMyEmail": "Email address is visible for other volunteers",
+            "CanVolunteerSeeMyEmailDescription": "If you accept this, your email address will be visible for not just coordinators but volunteers too.",
+            "CanVolunteerSeeMyPhone": "Phone number is visible for other volunteers",
+            "CanVolunteerSeeMyPhoneDescription": "If you accept this, your phone number will be visible for not just coordinators but volunteers too."
         },
         "User": {
             "NewUser": "New user",
@@ -144,6 +151,7 @@
                 "UserNamePlaceholder": "lolola",
                 "Password": "Password",
                 "PasswordPlaceholder": "askjRSsdfkFSDf234lsdf3241",
+                "PasswordHint": "If you leave this empty the user's password won't change",
                 "Roles": "Roles",
                 "Status": "Status"
             }

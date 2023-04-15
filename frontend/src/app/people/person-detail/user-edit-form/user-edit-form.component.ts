@@ -3,6 +3,7 @@ import {User} from '@shared/user/user';
 import {isNotNil} from '@shared/util/util';
 import {UserRewrite} from '@shared/user/user-rewrite';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Role} from '@shared/user/role.enum';
 
 @Component({
     selector: 'app-user-edit-form',
@@ -17,6 +18,7 @@ export class UserEditFormComponent {
     @Output()
     public canceled = new EventEmitter<void>;
 
+    protected roleOptions = Object.values(Role);
     protected userToEdit?: User;
     protected form: FormGroup;
 
@@ -50,7 +52,8 @@ export class UserEditFormComponent {
             // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             password: [null, [Validators.minLength(8)]],
             isActive: [this.userToEdit?.isActive],
-            // TODO: roles, userName
+            roles: [this.userToEdit?.roles],
+            userName: [this.userToEdit?.userName]
         });
     }
 

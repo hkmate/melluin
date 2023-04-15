@@ -42,6 +42,18 @@
     </div>
 
     <div>
+        <mat-card>
+            <mat-card-content>
+                <mat-checkbox formControlName="canVolunteerSeeMyEmail"></mat-checkbox>
+                <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyEmail' | translate }}</span>
+                <span *ngIf="selfEdit" class="preference-description">
+                    {{ 'PersonPage.Form.CanVolunteerSeeMyEmailDescription' | translate }}
+                </span>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div>
         <mat-form-field appearance="fill">
             <mat-label>{{ 'PersonPage.Form.Phone' | translate }}</mat-label>
             <input matInput
@@ -49,6 +61,19 @@
                    formControlName="phone">
         </mat-form-field>
     </div>
+
+    <div>
+        <mat-card>
+            <mat-card-content>
+                <mat-checkbox formControlName="canVolunteerSeeMyPhone"></mat-checkbox>
+                <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyPhone' | translate }}</span>
+                <span *ngIf="selfEdit" class="preference-description">
+                    {{ 'PersonPage.Form.CanVolunteerSeeMyPhoneDescription' | translate }}
+                </span>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
 
     <div class="button-row">
         <button mat-flat-button

@@ -114,7 +114,10 @@
             "LastName": "Vezetéknév",
             "NickName": "Becenév",
             "Email": "Email",
-            "Phone": "Telefonszám"
+            "Phone": "Telefonszám",
+            "Preferences": "Egyéb",
+            "CanVolunteerSeeMyEmail": "Látható az email cím más önkétesek számára",
+            "CanVolunteerSeeMyPhone": "Látható az telefonszám más önkétesek számára"
         },
         "Form": {
             "FirstName": "Keresztnév",
@@ -126,7 +129,11 @@
             "Email": "Email",
             "EmailPlaceholder": "julcsi@nevetnikek.hu",
             "Phone": "Telefonszám",
-            "PhonePlaceholder": "+36 30 123 4567"
+            "PhonePlaceholder": "+36 30 123 4567",
+            "CanVolunteerSeeMyEmail": "Látható az email cím más önkétesek számára",
+            "CanVolunteerSeeMyEmailDescription": "Ha ezt elfogadod akkor nem csak a koorddinátor, hanem a többi önkéntes is láthatja az email címedet.",
+            "CanVolunteerSeeMyPhone": "Látható az telefonszám más önkétesek számára",
+            "CanVolunteerSeeMyPhoneDescription": "Ha ezt elfogadod akkor nem csak a koorddinátor, hanem a többi önkéntes is láthatja a telefonszámod."
         },
         "User": {
             "NewUser": "Felhasználó létrehozása",
@@ -144,6 +151,7 @@
                 "UserNamePlaceholder": "kisMano",
                 "Password": "Jelszó",
                 "PasswordPlaceholder": "askjRSsdfkFSDf234lsdf3241",
+                "PasswordHint": "Ha üresen hagyod akkor nem változik a felhasználó jelszava.",
                 "Roles": "Szerepkörök",
                 "Status": "Státusz"
             }

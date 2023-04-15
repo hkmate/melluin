@@ -1,7 +1,8 @@
-import {IsBoolean, IsEnum, IsInstance, IsOptional, Matches, MinLength} from 'class-validator';
+import {IsBoolean, IsEnum, IsOptional, Matches, MinLength, ValidateNested} from 'class-validator';
 import {nameMinLength, passwordMinLength, passwordPattern} from '@shared/constants';
 import {Role} from '@shared/user/role.enum';
 import {UserCustomInfo} from '@shared/user/user';
+import {Type} from 'class-transformer';
 
 export class UserRewrite {
 
@@ -19,7 +20,8 @@ export class UserRewrite {
     @IsEnum(Role, {each: true})
     roles: Array<Role>;
 
-    @IsInstance(UserCustomInfo)
+    @ValidateNested()
+    @Type(() => UserCustomInfo)
     @IsOptional()
     customInfo?: UserCustomInfo;
 

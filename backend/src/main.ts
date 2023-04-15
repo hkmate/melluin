@@ -6,12 +6,15 @@ import {ValidationPipe} from '@nestjs/common';
 process.env.TZ = 'UTC';
 
 async function bootstrap(): Promise<void> {
-    const app = await NestFactory.create(AppModule, {cors: true});
+    const app = await NestFactory.create(AppModule, {
+        cors: true,
+        logger: ['log', 'error', 'warn', 'debug', 'verbose'],
+    });
     const port = app.get(ConfigService).get<number>('server.port')!;
     app.useGlobalPipes(
         new ValidationPipe({
             whitelist: true,
-            forbidNonWhitelisted: true
+            forbidNonWhitelisted: true,
         }),
     );
     app.setGlobalPrefix('api');

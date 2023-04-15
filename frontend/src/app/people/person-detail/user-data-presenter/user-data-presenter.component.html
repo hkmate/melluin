@@ -11,12 +11,14 @@
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'PersonPage.User.Present.Roles' | translate }}</mat-card-subtitle>
-            <mat-card-title>
-                <ng-container *ngFor="let role of user?.roles">
-                    <div class="role">{{ 'Role.' + role | translate }}</div>
-                </ng-container>
-            </mat-card-title>
         </mat-card-header>
+        <mat-card-content>
+            <ul>
+                <ng-container *ngFor="let role of user?.roles">
+                    <li class="role">{{ 'Role.' + role | translate }}</li>
+                </ng-container>
+            </ul>
+        </mat-card-content>
     </mat-card>
 
     <mat-card>

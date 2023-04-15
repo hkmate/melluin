@@ -4,11 +4,32 @@
 
     <div>
         <mat-form-field appearance="fill">
+            <mat-label>{{ 'PersonPage.User.Form.UserName' | translate }}</mat-label>
+            <input matInput
+                   type="text"
+                   formControlName="userName">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
             <mat-label>{{ 'PersonPage.User.Form.Password' | translate }}</mat-label>
             <input matInput
                    type="password"
                    [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
                    formControlName="password">
+            <mat-hint>{{ 'PersonPage.User.Form.PasswordHint' | translate }}</mat-hint>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'PersonPage.User.Form.Roles' | translate }}</mat-label>
+            <mat-select formControlName="roles" multiple>
+                <mat-option *ngFor="let role of roleOptions" [value]="role">
+                    {{ 'Role.' + role | translate }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
     </div>
 

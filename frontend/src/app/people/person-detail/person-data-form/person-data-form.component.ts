@@ -3,7 +3,8 @@ import {Person} from '@shared/person/person';
 import {PersonRewrite} from '@shared/person/person-rewrite';
 import {PersonCreation} from '@shared/person/person-creation';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {isNil} from '@shared/util/util';
+import {isNotNil} from '@shared/util/util';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 @Component({
     selector: 'app-person-data-form',
@@ -18,16 +19,19 @@ export class PersonDataFormComponent {
     @Output()
     public canceled = new EventEmitter<void>;
 
+    protected selfEdit: boolean;
     protected form: FormGroup;
 
     private personToEdit?: Person;
 
-    constructor(private fb: FormBuilder) {
+    constructor(private readonly fb: FormBuilder,
+                private readonly permissionService: PermissionService) {
     }
 
     @Input()
     public set person(person: Person | undefined) {
         this.personToEdit = person;
+        this.selfEdit = (person?.id === this.permissionService.personId);
         this.initForm();
     }
 
@@ -50,7 +54,13 @@ export class PersonDataFormComponent {
             nickName: [this.personToEdit?.nickName],
             email: [this.personToEdit?.email],
             phone: [this.personToEdit?.phone],
+            canVolunteerSeeMyEmail: [this.personToEdit?.preferences?.canVolunteerSeeMyEmail ?? false],
+            canVolunteerSeeMyPhone: [this.personToEdit?.preferences?.canVolunteerSeeMyPhone ?? false],
         });
+        if (!this.selfEdit) {
+            this.form.controls.canVolunteerSeeMyEmail.disable();
+            this.form.controls.canVolunteerSeeMyPhone.disable();
+        }
     }
 
     private createDataForSubmit(): PersonRewrite | PersonCreation {
@@ -61,12 +71,16 @@ export class PersonDataFormComponent {
         data.nickName = this.form.controls.nickName.value;
         data.email = this.form.controls.email.value;
         data.phone = this.form.controls.phone.value;
-        // TODO preferences...
+        data.preferences = {
+            ...this.personToEdit?.preferences,
+            canVolunteerSeeMyEmail: this.form.controls.canVolunteerSeeMyEmail.value,
+            canVolunteerSeeMyPhone: this.form.controls.canVolunteerSeeMyPhone.value,
+        }
         return data;
     }
 
     private createEmptySubmitObject(): PersonRewrite | PersonCreation {
-        if (isNil(this.personToEdit)) {
+        if (isNotNil(this.personToEdit)) {
             return new PersonRewrite();
         }
         return new PersonCreation();

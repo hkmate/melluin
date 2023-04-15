@@ -4,6 +4,12 @@ form {
         width: 100%;
     }
 
+    .preference-description {
+        display: block;
+        font-weight: bolder;
+        color: lightcoral;
+    }
+
     .button-row {
         display: flex;
         justify-content: flex-end;

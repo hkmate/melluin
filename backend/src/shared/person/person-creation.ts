@@ -1,6 +1,7 @@
-import {IsEmail, IsInstance, IsOptional, IsPhoneNumber, MinLength} from 'class-validator';
+import {IsEmail, IsOptional, IsPhoneNumber, MinLength, ValidateNested} from 'class-validator';
 import {nameMinLength} from '@shared/constants';
 import {PersonPreferences} from '@shared/person/person';
+import {Type} from 'class-transformer';
 
 export class PersonCreation {
 
@@ -14,7 +15,8 @@ export class PersonCreation {
     @IsOptional()
     nickName?: string;
 
-    @IsInstance(PersonPreferences)
+    @ValidateNested()
+    @Type(() => PersonPreferences)
     @IsOptional()
     preferences?: PersonPreferences;
 

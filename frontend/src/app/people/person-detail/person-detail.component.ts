@@ -69,6 +69,10 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
         this.route.setParam('edit', true);
     }
 
+    protected isActualPersonSelf(): boolean {
+        return this.permission.personId === this.person?.id;
+    }
+
     private setToPresent(): void {
         this.isEdit = false;
         this.isCreation = false;
@@ -112,10 +116,6 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
             const neededPermission = getPermissionsNeededToChangeRole(role);
             return this.permission.has(neededPermission);
         }) ?? false;
-    }
-
-    private isActualPersonSelf(): boolean {
-        return this.permission.personId === this.person?.id;
     }
 
 }
