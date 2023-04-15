@@ -22,6 +22,7 @@ import {AppLanguage} from '@fe/app/language/app-language';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {registerLocaleData} from '@angular/common';
 import localeHu from '@angular/common/locales/hu';
+import {ToastrModule} from 'ngx-toastr';
 
 registerLocaleData(localeHu);
 
@@ -51,6 +52,7 @@ export function appInitializeTranslateFactory(translate: TranslateService) {
                 deps: [HttpClient]
             }
         }),
+        ToastrModule.forRoot(),
 
         AuthModule.forRoot(),
         DashboardModule,

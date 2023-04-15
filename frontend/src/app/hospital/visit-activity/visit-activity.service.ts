@@ -4,11 +4,14 @@ import {environment} from '@fe/environment';
 import {Observable} from 'rxjs';
 import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
+import {getErrorHandler} from '@fe/app/util/util';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Injectable({providedIn: 'root'})
 export class VisitActivityService {
 
-    constructor(private readonly http: HttpClient) {
+    constructor(private readonly http: HttpClient,
+                private readonly msg: MessageService) {
     }
 
     private getActivitiesUrl(visitId: string): string {
@@ -20,15 +23,18 @@ export class VisitActivityService {
     }
 
     public add(visitId: string, activity: HospitalVisitActivity): Observable<HospitalVisitActivity> {
-        return this.http.post<HospitalVisitActivity>(`${this.getActivitiesUrl(visitId)}`, activity);
+        return this.http.post<HospitalVisitActivity>(`${this.getActivitiesUrl(visitId)}`, activity)
+            .pipe(getErrorHandler<HospitalVisitActivity>(this.msg));
     }
 
     public getActivities(visitId: string): Observable<WrappedHospitalVisitActivity> {
-        return this.http.get<WrappedHospitalVisitActivity>(`${this.getActivitiesUrl(visitId)}`);
+        return this.http.get<WrappedHospitalVisitActivity>(`${this.getActivitiesUrl(visitId)}`)
+            .pipe(getErrorHandler<WrappedHospitalVisitActivity>(this.msg));
     }
 
     public getRelatedActivities(visitId: string): Observable<Array<WrappedHospitalVisitActivity>> {
-        return this.http.get<Array<WrappedHospitalVisitActivity>>(`${this.getRelatedActivitiesUrl(visitId)}`);
+        return this.http.get<Array<WrappedHospitalVisitActivity>>(`${this.getRelatedActivitiesUrl(visitId)}`)
+            .pipe(getErrorHandler<Array<WrappedHospitalVisitActivity>>(this.msg));
     }
 
 }

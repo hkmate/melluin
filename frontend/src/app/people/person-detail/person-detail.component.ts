@@ -12,6 +12,7 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {isNil} from '@shared/util/util';
 import {getPermissionsNeededToChangeRole} from '@shared/user/role.enum';
 import {Permission} from '@shared/user/permission.enum';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Component({
     selector: 'app-person-detail',
@@ -29,6 +30,7 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
 
     constructor(private readonly router: Router,
                 private readonly location: Location,
+                private readonly msg: MessageService,
                 private readonly route: RouteDataHandler,
                 private readonly permission: PermissionService,
                 private readonly peopleService: PeopleService) {
@@ -53,6 +55,7 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
     protected savePerson(data: PersonRewrite | PersonCreation): void {
         this.createSaveRequest(data).subscribe(person => {
             this.person = person;
+            this.msg.success('SaveSuccessful');
             this.setToPresent();
         });
     }

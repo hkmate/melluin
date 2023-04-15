@@ -10,6 +10,7 @@ import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create'
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Component({
     selector: 'app-hospital-visit-details',
@@ -26,8 +27,9 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
     private resolverSubscription: Subscription;
 
     constructor(private readonly router: Router,
-                protected readonly permissions: PermissionService,
                 private readonly location: Location,
+                protected readonly permissions: PermissionService,
+                private readonly msg: MessageService,
                 private readonly route: RouteDataHandler,
                 private readonly visitService: HospitalVisitService) {
     }
@@ -51,6 +53,7 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
     protected saveVisit(data: HospitalVisitRewrite | HospitalVisitCreate): void {
         this.createSaveRequest(data).subscribe(visit => {
             this.visit = visit;
+            this.msg.success('SaveSuccessful');
             this.setToPresent();
         });
     }

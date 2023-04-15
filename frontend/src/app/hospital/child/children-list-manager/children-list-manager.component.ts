@@ -3,6 +3,7 @@ import {ChildService} from '@fe/app/hospital/child/child.service';
 import {PatientChild, PatientChildInput} from '@shared/child/patient-child';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Component({
     selector: 'app-children-list-manager',
@@ -32,6 +33,7 @@ export class ChildrenListManagerComponent {
     protected saveInProcess = false;
 
     constructor(protected readonly permissions: PermissionService,
+                private readonly msg: MessageService,
                 private readonly childService: ChildService) {
     }
 
@@ -46,6 +48,7 @@ export class ChildrenListManagerComponent {
     protected createFinished(objectToSave: PatientChildInput): void {
         this.saveInProcess = true;
         this.childService.add(objectToSave.child).subscribe(saved => {
+            this.msg.success('SaveSuccessful');
             this.children.push({child: saved, isParentThere: objectToSave.isParentThere});
             this.childrenChange.emit(this.children);
             this.creatingInProcess = false;

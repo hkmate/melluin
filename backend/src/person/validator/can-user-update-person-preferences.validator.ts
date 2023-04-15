@@ -17,7 +17,7 @@ export class CanUserUpdatePersonPreferencesValidator implements PersonRewriteVal
     }
 
     public validate({person, rewrite}: PersonRewriteWithEntity): void {
-        if (!this.hasPreferenceChange(rewrite, person)) {
+        if (this.hasNoPreferenceChange(rewrite, person)) {
             return;
         }
 
@@ -27,7 +27,7 @@ export class CanUserUpdatePersonPreferencesValidator implements PersonRewriteVal
         throw new ForbiddenException('You have no permission to update this person\'s preferences');
     }
 
-    private hasPreferenceChange(rewrite: PersonRewrite, person: PersonEntity): boolean {
+    private hasNoPreferenceChange(rewrite: PersonRewrite, person: PersonEntity): boolean {
         return isNil(rewrite.preferences) && isNil(person.preferences)
             || _.isEqual(rewrite.preferences, person.preferences);
     }

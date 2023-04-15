@@ -6,12 +6,14 @@ import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, Pageable, PageQuery, QUERY_QUERY_KE
 import {Department} from '@shared/department/department';
 import {DepartmentCreation} from '@shared/department/department-creation';
 import {DepartmentUpdateChangeSet} from '@shared/department/department-update-change-set';
-import {utf8ToBase64} from '@fe/app/util/util';
+import {getErrorHandler, utf8ToBase64} from '@fe/app/util/util';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Injectable({providedIn: 'root'})
 export class DepartmentService {
 
-    constructor(private readonly http: HttpClient) {
+    constructor(private readonly http: HttpClient,
+                private readonly msg: MessageService) {
     }
 
     private get departmentUrl(): string {
@@ -19,15 +21,18 @@ export class DepartmentService {
     }
 
     public addDepartment(data: DepartmentCreation): Observable<Department> {
-        return this.http.post<Department>(this.departmentUrl, data);
+        return this.http.post<Department>(this.departmentUrl, data)
+            .pipe(getErrorHandler<Department>(this.msg));
     }
 
     public getDepartment(departmentId: string): Observable<Department> {
-        return this.http.get<Department>(`${this.departmentUrl}/${departmentId}`);
+        return this.http.get<Department>(`${this.departmentUrl}/${departmentId}`)
+            .pipe(getErrorHandler<Department>(this.msg));
     }
 
     public updateDepartment(departmentId: string, data: DepartmentUpdateChangeSet): Observable<Department> {
-        return this.http.patch<Department>(`${this.departmentUrl}/${departmentId}`, data);
+        return this.http.patch<Department>(`${this.departmentUrl}/${departmentId}`, data)
+            .pipe(getErrorHandler<Department>(this.msg));
     }
 
     public findDepartments(filters: PageQuery): Observable<Pageable<Department>> {
@@ -39,7 +44,8 @@ export class DepartmentService {
                 [PAGE_SIZE_QUERY_KEY]: filters.size,
                 [QUERY_QUERY_KEY]: this.preparePageRequest({sort: filters.sort, where: filters.where})
             }
-        });
+        })
+            .pipe(getErrorHandler<Pageable<Department>>(this.msg));
     }
 
     private preparePageRequest(pageRequest: Partial<PageQuery>): string {

@@ -11,6 +11,7 @@ import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrit
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
 import {VisitTempDataService} from '@fe/app/hospital/visit-activity/visit-temp-data.service';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Component({
     selector: 'app-hospital-visit-activity-filler',
@@ -28,6 +29,7 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
     constructor(private readonly router: Router,
                 private readonly location: Location,
                 private readonly route: RouteDataHandler,
+                private readonly msg: MessageService,
                 protected readonly permissions: PermissionService,
                 private readonly tempDataService: VisitTempDataService,
                 private readonly visitService: HospitalVisitService) {
@@ -87,6 +89,7 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
         this.buttonsEnabled = false;
         this.visitService.updateVisit(this.visit!.id, this.createSaveRequest(newStatus)).subscribe(visit => {
             this.visit = visit;
+            this.msg.success('SaveSuccessful');
             this.buttonsEnabled = true;
         });
     }

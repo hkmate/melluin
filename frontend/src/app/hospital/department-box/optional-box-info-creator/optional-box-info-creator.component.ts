@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
 import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
 import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Component({
     selector: 'app-optional-box-info-creator',
@@ -22,7 +23,8 @@ export class OptionalBoxInfoCreatorComponent {
     protected creatingInProcess = false;
     protected saveInProcess = false;
 
-    constructor(private readonly boxStatusService: DepartmentBoxService) {
+    constructor(private readonly msg: MessageService,
+                private readonly boxStatusService: DepartmentBoxService) {
     }
 
     protected creatorToggled(): void {
@@ -39,6 +41,7 @@ export class OptionalBoxInfoCreatorComponent {
         this.boxStatusService.addBoxStatus(this.departmentId, objectToSave).subscribe(newStatus => {
             this.creatingInProcess = false;
             this.saveInProcess = false;
+            this.msg.success('SaveSuccessful');
             this.itemAdded.emit(newStatus);
         });
     }

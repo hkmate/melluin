@@ -3,15 +3,17 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '@fe/environment';
 import {Observable} from 'rxjs';
 import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, Pageable, PageQuery, QUERY_QUERY_KEY} from '@shared/api-util/pageable';
-import {utf8ToBase64} from '@fe/app/util/util';
+import {getErrorHandler, utf8ToBase64} from '@fe/app/util/util';
 import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Injectable({providedIn: 'root'})
 export class HospitalVisitService {
 
-    constructor(private readonly http: HttpClient) {
+    constructor(private readonly http: HttpClient,
+                private readonly msg: MessageService) {
     }
 
     private get hospitalVisitUrl(): string {
@@ -19,7 +21,8 @@ export class HospitalVisitService {
     }
 
     public addVisit(data: HospitalVisitCreate): Observable<HospitalVisit> {
-        return this.http.post<HospitalVisit>(this.hospitalVisitUrl, data);
+        return this.http.post<HospitalVisit>(this.hospitalVisitUrl, data)
+            .pipe(getErrorHandler<HospitalVisit>(this.msg));
     }
 
     public getVisit(visitId: string): Observable<HospitalVisit> {
@@ -27,7 +30,8 @@ export class HospitalVisitService {
     }
 
     public updateVisit(visitId: string, data: HospitalVisitRewrite): Observable<HospitalVisit> {
-        return this.http.put<HospitalVisit>(`${this.hospitalVisitUrl}/${visitId}`, data);
+        return this.http.put<HospitalVisit>(`${this.hospitalVisitUrl}/${visitId}`, data)
+            .pipe(getErrorHandler<HospitalVisit>(this.msg));
     }
 
     public findVisit(filters: PageQuery): Observable<Pageable<HospitalVisit>> {
@@ -39,7 +43,7 @@ export class HospitalVisitService {
                 [PAGE_SIZE_QUERY_KEY]: filters.size,
                 [QUERY_QUERY_KEY]: this.preparePageRequest({sort: filters.sort, where: filters.where})
             }
-        });
+        }).pipe(getErrorHandler<Pageable<HospitalVisit>>(this.msg));
     }
 
     private preparePageRequest(pageRequest: Partial<PageQuery>): string {

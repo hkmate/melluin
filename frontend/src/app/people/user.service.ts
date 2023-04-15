@@ -5,11 +5,14 @@ import {environment} from '@fe/environment';
 import {UserCreation} from '@shared/user/user-creation';
 import {User} from '@shared/user/user';
 import {UserRewrite} from '@shared/user/user-rewrite';
+import {getErrorHandler} from '@fe/app/util/util';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
 
-    constructor(private readonly http: HttpClient) {
+    constructor(private readonly http: HttpClient,
+                private readonly msg: MessageService) {
     }
 
     private get userUrl(): string {
@@ -17,15 +20,18 @@ export class UserService {
     }
 
     public addUser(data: UserCreation): Observable<User> {
-        return this.http.post<User>(this.userUrl, data);
+        return this.http.post<User>(this.userUrl, data)
+            .pipe(getErrorHandler<User>(this.msg));
     }
 
     public get(userId: string): Observable<User> {
-        return this.http.get<User>(`${this.userUrl}/${userId}`);
+        return this.http.get<User>(`${this.userUrl}/${userId}`)
+            .pipe(getErrorHandler<User>(this.msg));
     }
 
     public updateUser(userId: string, data: UserRewrite): Observable<User> {
-        return this.http.put<User>(`${this.userUrl}/${userId}`, data);
+        return this.http.put<User>(`${this.userUrl}/${userId}`, data)
+            .pipe(getErrorHandler<User>(this.msg));
     }
 
 }

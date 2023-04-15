@@ -12,6 +12,7 @@ import {isNil} from '@shared/util/util';
 import {Permission} from '@shared/user/permission.enum';
 import {DateUtil} from '@shared/util/date-util';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Component({
     selector: 'app-department-detail',
@@ -29,6 +30,7 @@ export class DepartmentDetailComponent implements OnInit, OnDestroy {
 
     constructor(private readonly router: Router,
                 private readonly location: Location,
+                private readonly msg: MessageService,
                 private readonly route: RouteDataHandler,
                 private readonly permissions: PermissionService,
                 private readonly departmentService: DepartmentService) {
@@ -53,6 +55,7 @@ export class DepartmentDetailComponent implements OnInit, OnDestroy {
     protected saveDepartment(data: DepartmentUpdateChangeSet | DepartmentCreation): void {
         this.createSaveRequest(data).subscribe(department => {
             this.department = department;
+            this.msg.success('SaveSuccessful');
             this.setToPresent();
         });
     }

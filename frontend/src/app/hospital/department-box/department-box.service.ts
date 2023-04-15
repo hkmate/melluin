@@ -3,14 +3,16 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '@fe/environment';
 import {Observable} from 'rxjs';
 import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, Pageable, PageQuery, QUERY_QUERY_KEY} from '@shared/api-util/pageable';
-import {utf8ToBase64} from '@fe/app/util/util';
+import {getErrorHandler, utf8ToBase64} from '@fe/app/util/util';
 import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
 import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Injectable({providedIn: 'root'})
 export class DepartmentBoxService {
 
-    constructor(private readonly http: HttpClient) {
+    constructor(private readonly http: HttpClient,
+                private readonly msg: MessageService) {
     }
 
     private getDepartmentBoxUrl(departmentId: string): string {
@@ -22,7 +24,8 @@ export class DepartmentBoxService {
     }
 
     public addBoxStatus(departmentId: string, data: DepartmentBoxStatusReport): Observable<DepartmentBoxStatus> {
-        return this.http.post<DepartmentBoxStatus>(this.getDepartmentBoxUrl(departmentId), data);
+        return this.http.post<DepartmentBoxStatus>(this.getDepartmentBoxUrl(departmentId), data)
+            .pipe(getErrorHandler<DepartmentBoxStatus>(this.msg));
     }
 
     public findBoxStatuses(departmentId: string, filters: PageQuery): Observable<Pageable<DepartmentBoxStatus>> {
@@ -34,11 +37,13 @@ export class DepartmentBoxService {
                 [PAGE_SIZE_QUERY_KEY]: filters.size,
                 [QUERY_QUERY_KEY]: this.preparePageRequest({sort: filters.sort, where: filters.where})
             }
-        });
+        })
+            .pipe(getErrorHandler<Pageable<DepartmentBoxStatus>>(this.msg));
     }
 
     public findBoxStatusesByVisit(visitId: string): Observable<Array<DepartmentBoxStatus>> {
-        return this.http.get<Array<DepartmentBoxStatus>>(this.getDepartmentBoxByVisitUrl(visitId));
+        return this.http.get<Array<DepartmentBoxStatus>>(this.getDepartmentBoxByVisitUrl(visitId))
+            .pipe(getErrorHandler<Array<DepartmentBoxStatus>>(this.msg));
     }
 
     private preparePageRequest(pageRequest: Partial<PageQuery>): string {

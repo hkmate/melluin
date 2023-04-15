@@ -3,6 +3,7 @@ import {PatientChild} from '@shared/child/patient-child';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 import {VisitActivityService} from '@fe/app/hospital/visit-activity/visit-activity.service';
 import {HospitalVisitActivityInput} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Component({
     selector: 'app-visit-activity-manager',
@@ -28,7 +29,8 @@ export class VisitActivityManagerComponent {
     protected creatingInProcess = false;
     protected saveInProcess = false;
 
-    constructor(private readonly activityService: VisitActivityService) {
+    constructor(private readonly msg: MessageService,
+                private readonly activityService: VisitActivityService) {
     }
 
     @Input()
@@ -48,6 +50,7 @@ export class VisitActivityManagerComponent {
     protected createFinished(objectToSave: HospitalVisitActivityInput): void {
         this.saveInProcess = true;
         this.activityService.add(this.visitId, objectToSave).subscribe(saved => {
+            this.msg.success('SaveSuccessful');
             this.activities.push(saved);
             this.activitiesChange.emit(this.activities);
             this.creatingInProcess = false;
