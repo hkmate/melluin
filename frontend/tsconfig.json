@@ -14,7 +14,10 @@
         ],
         "paths": {
             "@shared/*": ["../backend/src/shared/*"],
-            "@fe/*": ["src/*"]
+            "@fe/*": ["src/*"],
+            "class-validator": ["node_modules/class-validator"],
+            "class-transformer": ["node_modules/class-transformer"],
+            "tslib": ["node_modules/tslib"]
         }
     },
     "angularCompilerOptions": {
