@@ -6,6 +6,7 @@ import {Permission} from '@shared/user/permission.enum';
 import {isNil} from '@shared/util/util';
 import * as _ from 'lodash';
 import {PersonRewriteValidator, PersonRewriteWithEntity} from '@be/person/validator/person-rewrite.validator';
+import {PersonPreferences} from '@shared/person/person';
 
 export class CanUserUpdatePersonPreferencesValidator implements PersonRewriteValidator {
 
@@ -28,8 +29,9 @@ export class CanUserUpdatePersonPreferencesValidator implements PersonRewriteVal
     }
 
     private hasNoPreferenceChange(rewrite: PersonRewrite, person: PersonEntity): boolean {
-        return isNil(rewrite.preferences) && isNil(person.preferences)
-            || _.isEqual(rewrite.preferences, person.preferences);
+        return (isNil(rewrite.preferences) && isNil(person.preferences))
+            || _.isEqual(rewrite.preferences, person.preferences)
+            || (isNil(person.preferences) && this.isDefault(rewrite.preferences));
     }
 
     private isUserGotId(personId: string): boolean {
@@ -38,6 +40,11 @@ export class CanUserUpdatePersonPreferencesValidator implements PersonRewriteVal
 
     private userHas(permission: Permission): boolean {
         return this.currentUser.permissions.includes(permission);
+    }
+
+    private isDefault(preferences?: PersonPreferences): boolean {
+        const def = PersonPreferences.createDefault();
+        return _.isEqual(preferences, def);
     }
 
 }

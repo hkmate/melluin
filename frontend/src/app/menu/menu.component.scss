@@ -22,6 +22,13 @@ mat-sidenav-content {
     margin: 1rem;
 }
 
+@media screen and (max-width: 400px) {
+    mat-sidenav-content {
+        margin-left: .5rem;
+        margin-right: .5rem;
+    }
+}
+
 .dashboard-menu-item {
     text-align: center;
 }

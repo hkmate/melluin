@@ -1,23 +1,21 @@
 <div class="activities-info">
 
     <mat-accordion [multi]="true">
-        <mat-expansion-panel *ngIf="permissions.has(Permission.canReadChild)">
+        <mat-expansion-panel *ngIf="permissions.has(Permission.canReadChild)" class="children-info">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{ 'HospitalVisit.Activities.Children' | translate }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="children-info">
-                <app-children-list-manager
-                        [editEnabled]="editEnabled"
-                        [needParentInfo]="true"
-                        [visitDate]="visitDate"
-                        [children]="children"
-                        (childrenChange)="childrenListChanged($event)"></app-children-list-manager>
-            </div>
+            <app-children-list-manager
+                    [editEnabled]="editEnabled"
+                    [needParentInfo]="true"
+                    [visitDate]="visitDate"
+                    [children]="children"
+                    (childrenChange)="childrenListChanged($event)"></app-children-list-manager>
         </mat-expansion-panel>
 
-        <mat-expansion-panel *ngIf="permissions.has(Permission.canReadActivity)">
+        <mat-expansion-panel *ngIf="permissions.has(Permission.canReadActivity)" class="activity-info">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{ 'HospitalVisit.Activities.Activities' | translate }}

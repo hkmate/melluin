@@ -1,6 +1,6 @@
 <div class="box-part-header">
     <h1>{{ 'DepartmentPage.BoxStatuses' | translate }}</h1>
-    <span>
+    <span class="add-btn">
         <button mat-mini-fab color="accent" (click)="creatorToggled()">
             <mat-icon *ngIf="creatingInProcess">close</mat-icon>
             <mat-icon *ngIf="!creatingInProcess">add</mat-icon>

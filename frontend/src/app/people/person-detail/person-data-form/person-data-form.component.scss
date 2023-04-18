@@ -10,16 +10,14 @@ form {
         color: lightcoral;
     }
 
-    .button-row {
-        display: flex;
-        justify-content: flex-end;
-
-        button {
-            margin-right: .5rem;
-
-            &:last-of-type {
-                margin-right: 0;
-            }
-        }
+    .email-preference-card, .phone-preference-card {
+        margin-top: -20px;
+        margin-bottom: 20px;
     }
+
+    .preferences-card-content {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
 }

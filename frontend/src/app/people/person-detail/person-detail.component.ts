@@ -107,7 +107,7 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
     }
 
     private setEditEnableValue(): void {
-        if (isNil(this.person)) {
+        if (isNil(this.person) || isNil(this.person.user)) {
             this.isEditEnabled = true;
             return;
         }

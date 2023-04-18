@@ -11,7 +11,12 @@
 
     }
 
-    mat-card {
-        margin-bottom: 1rem;
+    app-optional-box-info-creator .box-part-header .add-btn {
+        margin-top: initial;
+        width: 100%;
+    }
+
+    .empty-list {
+        font-style: italic;
     }
 }

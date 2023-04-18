@@ -26,4 +26,11 @@ export class PersonPreferences {
     @IsOptional()
     canVolunteerSeeMyEmail?: boolean;
 
+    public static createDefault(): PersonPreferences {
+        const value =  new PersonPreferences();
+        value.canVolunteerSeeMyEmail = false;
+        value.canVolunteerSeeMyPhone = false;
+        return value;
+    }
+
 }

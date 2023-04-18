@@ -1,6 +1,6 @@
 <div class="activity-list-manager">
     <div class="activity-header">
-        <span *ngIf="editEnabled">
+        <span *ngIf="editEnabled" class="add-btn">
             <button mat-mini-fab color="accent" (click)="creatorToggled()">
                 <mat-icon *ngIf="creatingInProcess">close</mat-icon>
                 <mat-icon *ngIf="!creatingInProcess">add</mat-icon>

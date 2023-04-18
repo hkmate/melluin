@@ -1,6 +1,6 @@
 <ng-container *ngIf="activities">
     <ng-container *ngFor="let activity of activities">
-        <mat-card>
+        <mat-card class="activity-card">
             <mat-card-header>
                 <mat-card-subtitle>
                     {{ activity.hospitalVisit.dateTimeFrom | date : ('EventDateFormat' | translate) }}

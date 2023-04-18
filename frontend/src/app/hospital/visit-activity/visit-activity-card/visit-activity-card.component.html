@@ -1,8 +1,8 @@
 <mat-card>
     <mat-card-header>
         <mat-card-subtitle>
-            <span *ngFor="let activityType of activity.activities" class="activity-type">
-                {{ 'VisitActivityType.' + activityType  | translate }}
+            <span *ngFor="let activityType of activity.activities; last as isLast" class="activity-type">
+                {{ 'VisitActivityType.' + activityType  | translate }}<span *ngIf="!isLast">,</span>
             </span>
             <div class="children">
                 <mat-chip-listbox>

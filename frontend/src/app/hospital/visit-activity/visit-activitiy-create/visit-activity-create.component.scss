@@ -5,12 +5,6 @@ form {
 
     .chip-selector {
 
-        .select-opener {
-            position: absolute;
-            right: 0;
-            top: calc(50% - 20px);
-        }
-
         mat-select {
             visibility: hidden;
             width: 0;

@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs';
 import {User} from '@shared/user/user';
 import {includeAny, isNil, isNilOrEmpty, isNotNil, Nullable} from '@shared/util/util';
 import {Permission} from '@shared/user/permission.enum';
+import {Platform} from '@angular/cdk/platform';
 
 @Component({
     selector: 'app-menu',
@@ -14,15 +15,18 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     protected canUserSee?: Record<string, boolean>;
 
+    protected menuMode: 'side' | 'over' = 'side';
     protected menuOpened = false;
     protected currentUser?: Nullable<User>;
 
     private currentUserSubscription!: Subscription;
 
-    constructor(private readonly authService: AuthenticationService) {
+    constructor(private readonly platform: Platform,
+                private readonly authService: AuthenticationService) {
     }
 
     public ngOnInit(): void {
+        this.menuMode = (this.platform.IOS || this.platform.ANDROID) ? 'over' : 'side';
         this.currentUserSubscription = this.authService.currentUser.subscribe(
             (currentUser: Nullable<User>) => {
                 this.currentUser = currentUser;

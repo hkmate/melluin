@@ -4,6 +4,7 @@ import {PersonEntity} from '@be/person/model/person.entity';
 import {Permission} from '@shared/user/permission.enum';
 import {getPermissionsNeededToChangeRole} from '@shared/user/role.enum';
 import {PersonRewriteValidator, PersonRewriteWithEntity} from '@be/person/validator/person-rewrite.validator';
+import {isNil} from '@shared/util/util';
 
 
 export class CanUserUpdatePersonPrimitiveFieldsValidator implements PersonRewriteValidator {
@@ -26,6 +27,9 @@ export class CanUserUpdatePersonPrimitiveFieldsValidator implements PersonRewrit
     }
 
     private hasUserPermissionToChangePerson(person: PersonEntity): boolean {
+        if (isNil(person.user)) {
+            return true;
+        }
         return person.user?.roles.every(role => {
             const neededPermission = getPermissionsNeededToChangeRole(role.role);
             return this.userHas(neededPermission);

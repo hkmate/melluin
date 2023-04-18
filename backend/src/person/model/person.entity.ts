@@ -1,6 +1,7 @@
 import {Column, Entity, OneToOne, PrimaryColumn} from 'typeorm';
 import {UserEntity} from '@be/user/model/user.entity';
 import {PersonPreferences} from '@shared/person/person';
+import {plainToInstance} from 'class-transformer';
 
 @Entity({name: 'person'})
 export class PersonEntity {
@@ -17,7 +18,10 @@ export class PersonEntity {
     @Column({name: 'nick_name'})
     nickName?: string;
 
-    @Column({type: 'jsonb'})
+    @Column({type: 'jsonb', transformer: {
+            to: value => value,
+            from: value => plainToInstance(PersonPreferences, value)
+        }})
     preferences?: PersonPreferences;
 
     @Column()

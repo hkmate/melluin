@@ -75,7 +75,7 @@ export class PersonDataFormComponent {
             ...this.personToEdit?.preferences,
             canVolunteerSeeMyEmail: this.form.controls.canVolunteerSeeMyEmail.value,
             canVolunteerSeeMyPhone: this.form.controls.canVolunteerSeeMyPhone.value,
-        }
+        };
         return data;
     }
 

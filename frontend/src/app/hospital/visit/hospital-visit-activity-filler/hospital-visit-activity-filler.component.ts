@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
-import {Subscription} from 'rxjs';
+import {firstValueFrom, Subscription} from 'rxjs';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
@@ -69,12 +69,15 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
     }
 
     protected startFilling(): void {
-        this.saveVisit(HospitalVisitStatus.STARTED);
+        this.saveVisit(HospitalVisitStatus.STARTED).then();
     }
 
     protected finalizeFilling(): void {
-        this.saveVisit(HospitalVisitStatus.JUST_REQUIRED_FIELDS_FILLED);
-        this.tempDataService.removeAll(this.visit.id).subscribe();
+        this.saveVisit(HospitalVisitStatus.JUST_REQUIRED_FIELDS_FILLED)
+            .then(() => {
+                this.tempDataService.removeAll(this.visit.id).subscribe();
+                this.router.navigate(['/hospital-visits', this.visit.id]);
+            });
     }
 
     private setUp(visitInfo: HospitalVisit | CreateMarkerType): void {
@@ -85,13 +88,13 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
         this.verifyVisitHasSupportedStatus();
     }
 
-    protected saveVisit(newStatus: HospitalVisitStatus): void {
+    protected saveVisit(newStatus: HospitalVisitStatus): Promise<void> {
         this.buttonsEnabled = false;
-        this.visitService.updateVisit(this.visit!.id, this.createSaveRequest(newStatus)).subscribe(visit => {
-            this.visit = visit;
-            this.msg.success('SaveSuccessful');
-            this.buttonsEnabled = true;
-        });
+        return firstValueFrom(this.visitService.updateVisit(this.visit!.id, this.createSaveRequest(newStatus)))
+            .then(visit => {
+                this.visit = visit;
+                this.buttonsEnabled = true;
+            });
     }
 
     private createSaveRequest(newStatus: HospitalVisitStatus): HospitalVisitRewrite {
