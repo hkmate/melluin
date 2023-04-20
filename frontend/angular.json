@@ -24,7 +24,8 @@
                             "zone.js"
                         ],
                         "allowedCommonJsDependencies": [
-                            "validator"
+                            "validator",
+                            "lodash"
                         ],
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
@@ -45,8 +46,8 @@
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "500kb",
-                                    "maximumError": "1mb"
+                                    "maximumWarning": "1500kb",
+                                    "maximumError": "2mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",

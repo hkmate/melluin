@@ -1,6 +1,6 @@
 {
     "name": "melluin",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "scripts": {
         "setup": "./dev-env/auto-setup.sh",
         "clear": "rm -rf backend/node_modules; rm -rf backend/dist; rm -rf frontend/node_modules",
