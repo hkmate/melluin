@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '@fe/environment';
 import {Observable} from 'rxjs';
 import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
+import {AppConfig} from '@fe/app/config/app-config';
 
 @Injectable({providedIn: 'root'})
 export class VisitActivityService {
@@ -15,11 +15,11 @@ export class VisitActivityService {
     }
 
     private getActivitiesUrl(visitId: string): string {
-        return `${environment.baseURL}/hospital-visits/${visitId}/activities`;
+        return `${AppConfig.get('baseURL')}/hospital-visits/${visitId}/activities`;
     }
 
     private getRelatedActivitiesUrl(visitId: string): string {
-        return `${environment.baseURL}/hospital-visits/${visitId}/related/activities`;
+        return `${AppConfig.get('baseURL')}/hospital-visits/${visitId}/related/activities`;
     }
 
     public add(visitId: string, activity: HospitalVisitActivity): Observable<HospitalVisitActivity> {

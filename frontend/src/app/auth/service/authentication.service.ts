@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, map, Observable} from 'rxjs';
-import {environment} from '../../../environment';
 import {JwtService} from './jwt.service';
 import {User} from '@shared/user/user';
 import {isNilOrEmpty, isNotNil} from '@shared/util/util';
 import {AuthToken} from '@shared/user/auth-token';
 import {Router} from '@angular/router';
 import {PATHS} from '@fe/app/app-paths';
+import {AppConfig} from '@fe/app/config/app-config';
 
 @Injectable()
 export class AuthenticationService {
@@ -48,7 +48,7 @@ export class AuthenticationService {
     public login(username: string, password: string): Observable<User> {
         const authBody = {username, password};
 
-        return this.http.post<AuthToken>(`${environment.baseURL}/auth/login`, authBody)
+        return this.http.post<AuthToken>(`${AppConfig.get('baseURL')}/auth/login`, authBody)
             .pipe(map(
                 (token: AuthToken): User => {
                     this.storeToken(token);

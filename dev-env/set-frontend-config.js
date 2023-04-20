@@ -1,5 +1,5 @@
 const fs = require('fs');
-const CONFIG_FILE = 'frontend/src/environment.json';
+const CONFIG_FILE = 'frontend/src/assets/app-config.json';
 
 let rawData = fs.readFileSync(CONFIG_FILE);
 let config = JSON.parse(rawData);

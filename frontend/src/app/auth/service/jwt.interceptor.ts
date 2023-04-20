@@ -10,7 +10,7 @@ import {
 import {catchError, Observable, of, OperatorFunction, throwError} from 'rxjs';
 import {AuthenticationService} from './authentication.service';
 import {EndpointMap, HttpMethod} from '../model/endpoint';
-import {environment} from '../../../environment';
+import {AppConfig} from '@fe/app/config/app-config';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -56,7 +56,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
     private initPublicEndpoints(): void {
         this.PUBLIC_ENDPOINTS
-            .add({method: HttpMethod.POST, url: `${environment.baseURL}/api/oauth/token`})
+            .add({method: HttpMethod.POST, url: `${AppConfig.get('baseURL')}/oauth/token`})
     }
 
     private isOurPublicEndpoint(request: HttpRequest<unknown>): boolean {
@@ -64,7 +64,7 @@ export class JwtInterceptor implements HttpInterceptor {
     }
 
     private isForOurBackend(request: HttpRequest<unknown>): boolean {
-        return request.url.startsWith(environment.baseURL);
+        return request.url.startsWith(AppConfig.get('baseURL'));
     }
 
 }

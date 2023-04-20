@@ -3,11 +3,11 @@ import {HttpClient} from '@angular/common/http';
 import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, Pageable, PageQuery, QUERY_QUERY_KEY} from '@shared/api-util/pageable';
 import {Observable} from 'rxjs';
 import {Person} from '@shared/person/person';
-import {environment} from '@fe/environment';
 import {PersonCreation} from '@shared/person/person-creation';
 import {PersonRewrite} from '@shared/person/person-rewrite';
 import {getErrorHandler, utf8ToBase64} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
+import {AppConfig} from '@fe/app/config/app-config';
 
 
 @Injectable({providedIn: 'root'})
@@ -18,7 +18,7 @@ export class PeopleService {
     }
 
     private get peopleUrl(): string {
-        return `${environment.baseURL}/people`;
+        return `${AppConfig.get('baseURL')}/people`;
     }
 
     public addPerson(data: PersonCreation): Observable<Person> {

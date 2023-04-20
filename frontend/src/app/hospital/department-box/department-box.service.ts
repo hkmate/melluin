@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '@fe/environment';
 import {Observable} from 'rxjs';
 import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, Pageable, PageQuery, QUERY_QUERY_KEY} from '@shared/api-util/pageable';
 import {getErrorHandler, utf8ToBase64} from '@fe/app/util/util';
 import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
 import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
 import {MessageService} from '@fe/app/util/message.service';
+import {AppConfig} from '@fe/app/config/app-config';
 
 @Injectable({providedIn: 'root'})
 export class DepartmentBoxService {
@@ -16,11 +16,11 @@ export class DepartmentBoxService {
     }
 
     private getDepartmentBoxUrl(departmentId: string): string {
-        return `${environment.baseURL}/departments/${departmentId}/box-status`;
+        return `${AppConfig.get('baseURL')}/departments/${departmentId}/box-status`;
     }
 
     private getDepartmentBoxByVisitUrl(visitId: string): string {
-        return `${environment.baseURL}/hospital-visits/${visitId}/box-status`;
+        return `${AppConfig.get('baseURL')}/hospital-visits/${visitId}/box-status`;
     }
 
     public addBoxStatus(departmentId: string, data: DepartmentBoxStatusReport): Observable<DepartmentBoxStatus> {

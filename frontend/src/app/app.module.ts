@@ -2,7 +2,7 @@ import {APP_INITIALIZER, LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HttpBackend, HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 import {DashboardModule} from './dashboard/dashboard.module';
@@ -23,11 +23,12 @@ import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {registerLocaleData} from '@angular/common';
 import localeHu from '@angular/common/locales/hu';
 import {ToastrModule} from 'ngx-toastr';
+import {AppConfig, appConfigInitializerFn} from '@fe/app/config/app-config';
 
 registerLocaleData(localeHu);
 
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-    return new TranslateHttpLoader(http);
+export function HttpLoaderFactory(http: HttpBackend): TranslateHttpLoader {
+    return new TranslateHttpLoader(new HttpClient(http));
 }
 
 export function appInitializeTranslateFactory(translate: TranslateService) {
@@ -49,7 +50,7 @@ export function appInitializeTranslateFactory(translate: TranslateService) {
             loader: {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
+                deps: [HttpBackend]
             }
         }),
         ToastrModule.forRoot(),
@@ -60,6 +61,13 @@ export function appInitializeTranslateFactory(translate: TranslateService) {
         AppRoutingModule,
     ],
     providers: [
+        AppConfig,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: appConfigInitializerFn,
+            multi: true,
+            deps: [AppConfig]
+        },
         {provide: PathProvider, useClass: MelluinPathProvider},
         {provide: PathContainer, useValue: PATHS},
         {provide: MatPaginatorIntl, useClass: I18nPaginatorIntl},
@@ -70,7 +78,7 @@ export function appInitializeTranslateFactory(translate: TranslateService) {
             multi: true
         },
         {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
-        {provide: LOCALE_ID, useValue: 'hu'}
+        {provide: LOCALE_ID, useValue: 'hu'},
     ],
 })
 export class AppModule {

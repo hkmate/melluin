@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '@fe/environment';
 import {Observable} from 'rxjs';
 import {ChildInput} from '@shared/child/child-input';
 import {Child} from '@shared/child/child';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
+import {AppConfig} from '@fe/app/config/app-config';
 
 @Injectable({providedIn: 'root'})
 export class ChildService {
@@ -15,7 +15,7 @@ export class ChildService {
     }
 
     private get childrenUrl(): string {
-        return `${environment.baseURL}/children`;
+        return `${AppConfig.get('baseURL')}/children`;
     }
 
     public add(data: ChildInput): Observable<Child> {
