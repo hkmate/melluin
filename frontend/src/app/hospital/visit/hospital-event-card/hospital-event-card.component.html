@@ -24,7 +24,8 @@
             </a>
         </span>
         <mat-chip-listbox>
-            <mat-chip-row *ngFor="let participant of visit.participants">
+            <mat-chip-row *ngFor="let participant of visit.participants"
+                            [routerLink]="['/people', participant.id]">
                 {{ participant | personName }}
             </mat-chip-row>
         </mat-chip-listbox>
