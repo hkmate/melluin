@@ -48,6 +48,7 @@
     "HospitalVisitStatus": {
         "DRAFT": "Draft",
         "SCHEDULED": "Scheduled",
+        "STARTED": "Started",
         "CANCELED": "Canceled",
         "JUST_REQUIRED_FIELDS_FILLED": "Required fields are filled",
         "ALL_FIELDS_FILLED": "All fields are filled",

@@ -48,6 +48,7 @@
     "HospitalVisitStatus": {
         "DRAFT": "Piszkozat",
         "SCHEDULED": "Betervezve",
+        "STARTED": "Megkezdett",
         "CANCELED": "Lemondott",
         "JUST_REQUIRED_FIELDS_FILLED": "Kötelező mezők kitöltve",
         "ALL_FIELDS_FILLED": "Minden kitöltve",
