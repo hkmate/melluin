@@ -8,12 +8,14 @@ import {DepartmentModule} from '@be/department/department.module';
 import {HospitalVisitModule} from '@be/hospital-visit/hospital-visit.module';
 import {ChildModule} from '@be/child/child.module';
 import {HospitalVisitActivityModule} from '@be/hospital-visit-activity/hospital-visit-activity.module';
+import {HealthCheckModule} from '@be/health-check/health-check.module';
 
 @Module({
     imports: [
         ConfigModuleDefinition,
         TypeOrmModuleDefinition,
 
+        HealthCheckModule,
         AuthModule,
         UserModule,
         PersonModule,

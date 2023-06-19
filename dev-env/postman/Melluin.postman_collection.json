@@ -636,7 +636,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"status\": \"DRAFT\",\n    \"departmentId\": \"36d96963-8c15-4784-a6e2-13ae87368d54\",\n    \"dateTimeFrom\": \"2023-02-21T19:58:34\",\n    \"dateTimeTo\": \"2023-02-21T21:58:34\",\n    \"countedHours\": 2,\n    \"visibility\": \"PUBLIC\",\n    \"organizerId\": \"b1238194-8f6c-446c-bc96-ca74f1d4cb20\",\n    \"participantIds\": [\"64289de9-b935-4ff9-ae81-ffb5f457e5c9\", \"f5682bc3-b339-40f8-8979-defe9446f5fd\"]\n}",
+							"raw": "{\n    \"status\": \"DRAFT\",\n    \"departmentId\": \"36d96963-8c15-4784-a6e2-13ae87368d54\",\n    \"dateTimeFrom\": \"2023-02-21T19:58:34\",\n    \"dateTimeTo\": \"2023-02-21T21:58:34\",\n    \"countedMinutes\": 60,\n    \"visibility\": \"PUBLIC\",\n    \"organizerId\": \"b1238194-8f6c-446c-bc96-ca74f1d4cb20\",\n    \"participantIds\": [\"64289de9-b935-4ff9-ae81-ffb5f457e5c9\", \"f5682bc3-b339-40f8-8979-defe9446f5fd\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -680,7 +680,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"1dd04612-1031-4fda-837a-7845c84f2997\",\n    \"status\": \"SCHEDULED\",\n    \"departmentId\": \"36d96963-8c15-4784-a6e2-13ae87368d54\",\n    \"dateTimeFrom\": \"2023-02-21T19:58:34\",\n    \"dateTimeTo\": \"2023-02-21T21:58:34\",\n    \"countedHours\": 2,\n    \"visibility\": \"PUBLIC\",\n    \"participantIds\": [\"64289de9-b935-4ff9-ae81-ffb5f457e5c9\", \"f5682bc3-b339-40f8-8979-defe9446f5fd\"]\n}",
+							"raw": "{\n    \"id\": \"1dd04612-1031-4fda-837a-7845c84f2997\",\n    \"status\": \"SCHEDULED\",\n    \"departmentId\": \"36d96963-8c15-4784-a6e2-13ae87368d54\",\n    \"dateTimeFrom\": \"2023-02-21T19:58:34\",\n    \"dateTimeTo\": \"2023-02-21T21:58:34\",\n    \"countedMinutes\": 120,\n    \"visibility\": \"PUBLIC\",\n    \"participantIds\": [\"64289de9-b935-4ff9-ae81-ffb5f457e5c9\", \"f5682bc3-b339-40f8-8979-defe9446f5fd\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -744,6 +744,339 @@
 								"api",
 								"hospital-visits",
 								"1dd04612-1031-4fda-837a-7845c84f2997"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "children",
+			"item": [
+				{
+					"name": "Save child",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Béluka\",\n    \"birthYear\": 2014\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/children",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"children"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update child",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Béluka\",\n    \"birthYear\": 2019,\n    \"info\": \"szereti a papírrepülőket\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/children/5d22e646-1d06-499e-a5e6-2967367df0aa",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"5d22e646-1d06-499e-a5e6-2967367df0aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get child",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/children/5d22e646-1d06-499e-a5e6-2967367df0aa",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"children",
+								"5d22e646-1d06-499e-a5e6-2967367df0aa"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "hospital-visit-activity",
+			"item": [
+				{
+					"name": "Save hospital visit activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"children\": [\n        {\"childId\": \"5d22e646-1d06-499e-a5e6-2967367df0aa\", \"isParentThere\": true },\n        {\"childId\": \"caef37f3-ad10-4036-9b1d-200a7679cd17\", \"isParentThere\": true },\n        {\"childId\": \"afb2c46f-6360-4695-914f-db46dbf1268b\", \"isParentThere\": false }\n    ],\n    \"activities\": [\n    \"PAPER_SNAKE_MAKING\",\n    \"OTHER_CARD_GAME\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/67ba50eb-939b-496c-9216-8fba5e8fda1d/activities",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"67ba50eb-939b-496c-9216-8fba5e8fda1d",
+								"activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List activities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"children\": [\n        {\"childId\": \"5d22e646-1d06-499e-a5e6-2967367df0aa\", \"isParentThere\": true },\n        {\"childId\": \"caef37f3-ad10-4036-9b1d-200a7679cd17\", \"isParentThere\": true },\n        {\"childId\": \"afb2c46f-6360-4695-914f-db46dbf1268b\", \"isParentThere\": false }\n    ],\n    \"activities\": [\n    \"PAPER_SNAKE_MAKING\",\n    \"OTHER_CARD_GAME\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/67ba50eb-939b-496c-9216-8fba5e8fda1d/activities",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"67ba50eb-939b-496c-9216-8fba5e8fda1d",
+								"activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List related activities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"children\": [\n        {\"childId\": \"5d22e646-1d06-499e-a5e6-2967367df0aa\", \"isParentThere\": true },\n        {\"childId\": \"caef37f3-ad10-4036-9b1d-200a7679cd17\", \"isParentThere\": true },\n        {\"childId\": \"afb2c46f-6360-4695-914f-db46dbf1268b\", \"isParentThere\": false }\n    ],\n    \"activities\": [\n    \"PAPER_SNAKE_MAKING\",\n    \"OTHER_CARD_GAME\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/67ba50eb-939b-496c-9216-8fba5e8fda1d/related/activities",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"67ba50eb-939b-496c-9216-8fba5e8fda1d",
+								"related",
+								"activities"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "health-check",
+			"item": [
+				{
+					"name": "Check health",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{serverUrl}}/api/health",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"health"
 							]
 						}
 					},
