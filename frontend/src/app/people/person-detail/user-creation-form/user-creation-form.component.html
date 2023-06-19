@@ -25,7 +25,7 @@
         <mat-form-field appearance="fill">
             <mat-label>{{ 'PersonPage.User.Form.Roles' | translate }}</mat-label>
             <mat-select formControlName="roles" multiple>
-                <mat-option *ngFor="let role of ROLES" [value]="role">
+                <mat-option *ngFor="let role of ROLES" [value]="role" [disabled]="!roleOptions.includes(role)">
                     {{ 'Role.' + role | translate }}
                 </mat-option>
             </mat-select>

@@ -31,6 +31,10 @@ export function isNilOrEmpty<T>(array: Array<T> | string | Nil): boolean {
     return isNil(array) || array!.length === 0;
 }
 
+export function emptyToUndef(value?: string): string | undefined {
+    return isNilOrEmpty(value) ? undefined : value;
+}
+
 export function includeAny<T>(arr: Array<T>, ...values: Array<T>): boolean {
     return values.some(value => arr.includes(value));
 }

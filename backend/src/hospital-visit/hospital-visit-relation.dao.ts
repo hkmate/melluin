@@ -8,6 +8,8 @@ import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 @Injectable()
 export class HospitalVisitRelationDao {
 
+    private static readonly RELATED_VISITS_SIZE = 10;
+
     constructor(@InjectRepository(HospitalVisitEntity)
                 private readonly repository: Repository<HospitalVisitEntity>,
                 private readonly crudDao: HospitalVisitDao) {
@@ -21,7 +23,7 @@ export class HospitalVisitRelationDao {
             .where(`department.id = '${currentVisit.department.id}'`)
             .andWhere(`visit.id <> '${currentVisit.id}'`)
             .orderBy('visit.dateTimeFrom', 'DESC')
-            .take(5)
+            .take(HospitalVisitRelationDao.RELATED_VISITS_SIZE)
             .select('visit.id')
             .addSelect('visit.dateTimeFrom')
             .getMany()).map(e => e.id);

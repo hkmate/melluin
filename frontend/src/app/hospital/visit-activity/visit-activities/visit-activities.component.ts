@@ -114,12 +114,12 @@ export class VisitActivitiesComponent implements OnInit {
             child,
             isParentThere: tmpPatientChildIds.find(c => c.childId === child.id)?.isParentThere
         }));
-        this.children.push(...missedPatientChildren);
+        this.children = this.children.concat(missedPatientChildren);
     }
 
     private getChildrenIdsFromTemp(): Promise<Array<PatientChildId>> {
         return firstValueFrom(this.tempDataService.getTempData(this.visit.id)).then(tmp => {
-            const childrenRawList = tmp[VisitActivitiesComponent.CHILDREN_TMP_DATA_KEY] ?? '[]';
+            const childrenRawList = tmp[VisitActivitiesComponent.CHILDREN_TMP_DATA_KEY] ?? [];
             return childrenRawList as Array<PatientChildId>;
         });
     }

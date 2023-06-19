@@ -4,6 +4,7 @@ import {isNotNil} from '@shared/util/util';
 import {UserRewrite} from '@shared/user/user-rewrite';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Role} from '@shared/user/role.enum';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 @Component({
     selector: 'app-user-edit-form',
@@ -12,17 +13,20 @@ import {Role} from '@shared/user/role.enum';
 })
 export class UserEditFormComponent {
 
+    protected readonly ROLES: Array<string> = Object.keys(Role);
+
     @Output()
     public submitted = new EventEmitter<UserRewrite>;
 
     @Output()
     public canceled = new EventEmitter<void>;
 
-    protected roleOptions = Object.values(Role);
+    protected roleOptions: Array<string>;
     protected userToEdit?: User;
     protected form: FormGroup;
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder,
+                private permission: PermissionService) {
     }
 
     @Input()
@@ -48,6 +52,7 @@ export class UserEditFormComponent {
     }
 
     private initForm(): void {
+        this.roleOptions = this.permission.getRolesCanBeManaged();
         this.form = this.fb.group({
             // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             password: [null, [Validators.minLength(8)]],

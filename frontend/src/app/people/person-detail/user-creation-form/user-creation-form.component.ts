@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserCreation} from '@shared/user/user-creation';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Role} from '@shared/user/role.enum';
 
 @Component({
@@ -22,8 +23,10 @@ export class UserCreationFormComponent implements OnInit {
     public canceled = new EventEmitter<void>;
 
     protected form: FormGroup;
+    protected roleOptions: Array<string>;
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder,
+                private permission: PermissionService) {
     }
 
     public ngOnInit(): void {
@@ -39,6 +42,7 @@ export class UserCreationFormComponent implements OnInit {
     }
 
     private initForm(): void {
+        this.roleOptions = this.permission.getRolesCanBeManaged();
         this.form = this.fb.group({
             userName: [null, [Validators.required]],
             password: [null, [Validators.required]],

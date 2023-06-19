@@ -46,6 +46,11 @@ export class DepartmentsListComponent implements OnInit {
         this.loadData(DepartmentsListComponent.FIRST_PAGE, this.sizeOptions[0]);
     }
 
+    protected isEditEnabled(department: Department): boolean {
+        return this.permissions.has(Permission.canWriteDepartment)
+            && this.isValid(department);
+    }
+
     protected paginateHappened(event: PageEvent): void {
         this.page = event.pageIndex + 1;
         this.size = event.pageSize;

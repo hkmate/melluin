@@ -3,7 +3,7 @@ import {Person} from '@shared/person/person';
 import {PersonRewrite} from '@shared/person/person-rewrite';
 import {PersonCreation} from '@shared/person/person-creation';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {isNotNil} from '@shared/util/util';
+import {emptyToUndef, isNotNil} from '@shared/util/util';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 @Component({
@@ -68,9 +68,9 @@ export class PersonDataFormComponent {
 
         data.firstName = this.form.controls.firstName.value;
         data.lastName = this.form.controls.lastName.value;
-        data.nickName = this.form.controls.nickName.value;
-        data.email = this.form.controls.email.value;
-        data.phone = this.form.controls.phone.value;
+        data.nickName = emptyToUndef(this.form.controls.nickName.value);
+        data.email = emptyToUndef(this.form.controls.email.value);
+        data.phone = emptyToUndef(this.form.controls.phone.value);
         data.preferences = {
             ...this.personToEdit?.preferences,
             canVolunteerSeeMyEmail: this.form.controls.canVolunteerSeeMyEmail.value,
@@ -78,6 +78,7 @@ export class PersonDataFormComponent {
         };
         return data;
     }
+
 
     private createEmptySubmitObject(): PersonRewrite | PersonCreation {
         if (isNotNil(this.personToEdit)) {
