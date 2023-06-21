@@ -4,10 +4,6 @@
     "scripts": {
         "setup": "./dev-env/auto-setup.sh",
         "clear": "rm -rf backend/node_modules; rm -rf backend/dist; rm -rf frontend/node_modules",
-        "install-packages": "npm install --prefix backend; melluinbtest=$?; npm install --prefix frontend; exit $melluinbtest && exit $?",
-        "setup-backend": "npm install --prefix backend; node dev-env/set-backend-config.js; npm run --prefix backend build",
-        "start-backend": "npm run --prefix backend start:prod",
-        "setup-frontend": "npm install --prefix frontend; node dev-env/set-frontend-config.js; npm run --prefix frontend build",
         "test": "npm run --prefix backend test; melluinbtest=$?; npm run --prefix frontend test; exit $melluinbtest && exit $?",
         "lint": "npm run --prefix backend lint; melluinbtest=$?; npm run --prefix frontend lint; exit $melluinbtest && exit $?"
     },
