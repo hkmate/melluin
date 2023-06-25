@@ -4,6 +4,7 @@ import {ActivityChildInfo} from '@shared/hospital-visit-activity/hospital-visit-
 
 export interface HospitalVisitActivity {
 
+    id: string;
     children: Array<ActivityChildInfo>;
     activities: Array<VisitActivityType>;
     comment: string;

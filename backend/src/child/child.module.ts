@@ -5,6 +5,7 @@ import {ChildEntityToDtoConverter} from '@be/child/converer/child-entity-to-dto.
 import {ChildRewriteApplierFactory} from '@be/child/converer/child-rewrite-applier.factory';
 import {ChildCrudService} from '@be/child/child.crud.service';
 import {ChildController} from '@be/child/child.controller';
+import {ChildVerifierService} from '@be/child/child-verifier.service';
 
 
 @Module({
@@ -15,13 +16,15 @@ import {ChildController} from '@be/child/child.controller';
         ChildCrudService,
         ChildInputToEntityConverter,
         ChildEntityToDtoConverter,
-        ChildRewriteApplierFactory
+        ChildRewriteApplierFactory,
+        ChildVerifierService
     ],
     exports: [
         ChildCrudService,
         ChildInputToEntityConverter,
         ChildEntityToDtoConverter,
-        ChildRewriteApplierFactory
+        ChildRewriteApplierFactory,
+        ChildVerifierService
     ],
     controllers: [
         ChildController

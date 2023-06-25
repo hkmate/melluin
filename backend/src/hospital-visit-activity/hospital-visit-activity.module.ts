@@ -9,6 +9,7 @@ import {HospitalVisitPersistenceModule} from '@be/hospital-visit/hospital-visit.
 import {ChildModule} from '@be/child/child.module';
 import {HospitalVisitModule} from '@be/hospital-visit/hospital-visit.module';
 import {ChildPersistenceModule} from '@be/child/child-persistence.module';
+import {ActivityRewriteApplierFactory} from '@be/hospital-visit-activity/applier/activity-rewrite-applier.factory';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import {ChildPersistenceModule} from '@be/child/child-persistence.module';
         ActivityEntityToWrappedDtoConverter,
         ActivityInputToEntityConverter,
         HospitalVisitActivityCrudService,
+        ActivityRewriteApplierFactory,
     ],
     controllers: [
         HospitalVisitActivityController

@@ -27,6 +27,15 @@ export class HospitalVisitActivityController {
         return this.activityCrudService.save(activityInput, requester);
     }
 
+    @Post('/:visitId/activities/:id')
+    @HttpCode(HttpStatus.CREATED)
+    @PermissionGuard(Permission.canCreateActivity)
+    public update(@Param('id', ParseUUIDPipe) activityId: string,
+                  @Body() activityInput: HospitalVisitActivityInput,
+                  @CurrentUser() requester: User): Promise<HospitalVisitActivity> {
+        return this.activityCrudService.update(activityId, activityInput, requester);
+    }
+
     @Get('/:id/activities')
     @PermissionGuard(Permission.canReadActivity)
     public find(@Param('id', ParseUUIDPipe) hospitalVisitId: string,

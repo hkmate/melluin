@@ -1,22 +1,18 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
-import {isNil, isNotEmpty} from '@shared/util/util';
+import {Injectable} from '@nestjs/common';
+import {isNil} from '@shared/util/util';
 import {Converter} from '@shared/converter';
-import {
-    ActivityChildInfo,
-    HospitalVisitActivityInput
-} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
+import {HospitalVisitActivityInput} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
 import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
-import {ChildDao} from '@be/child/child.dao';
-import * as _ from 'lodash';
 import {randomUUID} from 'crypto';
+import {ChildVerifierService} from '@be/child/child-verifier.service';
 
 @Injectable()
 export class ActivityInputToEntityConverter
     implements Converter<HospitalVisitActivityInput, Promise<HospitalVisitActivityEntity>> {
 
     constructor(private readonly visitDao: HospitalVisitDao,
-                private readonly childDao: ChildDao) {
+                private readonly childVerifier: ChildVerifierService) {
     }
 
     public convert(value: HospitalVisitActivityInput): Promise<HospitalVisitActivityEntity>;
@@ -30,7 +26,7 @@ export class ActivityInputToEntityConverter
     }
 
     private async convertNotNil(dto: HospitalVisitActivityInput): Promise<HospitalVisitActivityEntity> {
-        await this.verifyEveryChildIdExists(dto.children);
+        await this.childVerifier.verifyEveryChildIdExists(dto.children.map(c => c.childId));
         const visit = await this.visitDao.getOne(dto.visitId!);
         return {
             id: randomUUID(),
@@ -39,19 +35,6 @@ export class ActivityInputToEntityConverter
             comment: dto.comment,
             hospitalVisit: visit
         };
-    }
-
-    private async verifyEveryChildIdExists(childInfos: Array<ActivityChildInfo>): Promise<void> {
-        const childIds = childInfos.map(c => c.childId);
-        const persistedChildIds: Array<string> = await this.childDao.findIdByIds(childIds);
-        this.verifyFoundChildForEveryId(persistedChildIds, childIds);
-    }
-
-    private verifyFoundChildForEveryId(entityIds: Array<string>, ids: Array<string>): void {
-        const diff = _.difference(ids, entityIds);
-        if (isNotEmpty(diff)) {
-            throw new BadRequestException(`No child found with these ids: ${diff.join(',')}`);
-        }
     }
 
 }

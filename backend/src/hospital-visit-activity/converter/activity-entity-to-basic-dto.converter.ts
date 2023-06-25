@@ -19,6 +19,7 @@ export class ActivityEntityToBasicDtoConverter implements Converter<HospitalVisi
 
     private convertNotNil(entity: HospitalVisitActivityEntity): HospitalVisitActivity {
         return {
+            id: entity.id,
             comment: entity.comment,
             activities: entity.activities,
             children: entity.children

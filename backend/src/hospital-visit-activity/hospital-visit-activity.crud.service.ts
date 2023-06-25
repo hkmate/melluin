@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
+import {ActivityRewriteApplierFactory} from '@be/hospital-visit-activity/applier/activity-rewrite-applier.factory';
 
 @Injectable()
 export class HospitalVisitActivityCrudService {
@@ -20,6 +21,7 @@ export class HospitalVisitActivityCrudService {
                 private readonly hospitalVisitDao: HospitalVisitDao,
                 private readonly activityInputToEntityConverter: ActivityInputToEntityConverter,
                 private readonly basicDtoConverter: ActivityEntityToBasicDtoConverter,
+                private readonly rewriteApplierFactory: ActivityRewriteApplierFactory,
                 private readonly wrappedDtoConverter: ActivityEntityToWrappedDtoConverter) {
     }
 
@@ -28,6 +30,14 @@ export class HospitalVisitActivityCrudService {
         this.verifyVisitIsStarted(visit);
         const creationEntity = await this.activityInputToEntityConverter.convert(activityInput);
         const entity = await this.hospitalVisitActivityDao.save(creationEntity);
+        return this.basicDtoConverter.convert(entity);
+    }
+
+    public async update(id: string, activityInput: HospitalVisitActivityInput, requester: User): Promise<HospitalVisitActivity> {
+        const persisted = await this.hospitalVisitActivityDao.getOne(id);
+        await this.rewriteApplierFactory.createFor(activityInput)
+            .applyOn(persisted);
+        const entity = await this.hospitalVisitActivityDao.save(persisted);
         return this.basicDtoConverter.convert(entity);
     }
 
