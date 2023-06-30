@@ -22,19 +22,25 @@ export class HidePersonSensitiveDataConverter implements Converter<Person, Perso
     }
 
     private convertNotNil(person: Person): Person {
-        if (this.isUserJustVolunteer()) {
-            return this.handlePhone(
-                this.handleEmail(person));
+        if (this.isUserHasSamePersonAsTheOneToConvert(person)) {
+            return person;
+        }
+        if (this.isUserAFoundationWorker()) {
+            return person;
         }
 
-        return person;
+        return this.hidePhone(this.hideEmail(person));
     }
 
-    private isUserJustVolunteer(): boolean {
-        return !this.currentUser.roles.some(role => foundationWorkerRoles.includes(role));
+    private isUserHasSamePersonAsTheOneToConvert(person: Person): boolean {
+        return this.currentUser.personId === person.id;
     }
 
-    private handlePhone(person: Person): Person {
+    private isUserAFoundationWorker(): boolean {
+        return this.currentUser.roles.some(role => foundationWorkerRoles.includes(role));
+    }
+
+    private hidePhone(person: Person): Person {
         if (person?.preferences?.canVolunteerSeeMyPhone) {
             return person;
         }
@@ -42,7 +48,7 @@ export class HidePersonSensitiveDataConverter implements Converter<Person, Perso
         return person;
     }
 
-    private handleEmail(person: Person): Person {
+    private hideEmail(person: Person): Person {
         if (person?.preferences?.canVolunteerSeeMyEmail) {
             return person;
         }
