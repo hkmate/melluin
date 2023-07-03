@@ -1,10 +1,17 @@
 {
     "root": true,
     "extends": [
+        "plugin:@ngrx/recommended-requiring-type-checking",
         "../.eslintrc.json"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "project": ["./tsconfig.json"]
+        "project": [
+            "./tsconfig.json"
+        ]
+    },
+    "rules": {
+        "@ngrx/no-store-subscription": "off",
+        "@ngrx/prefer-inline-action-props": "off"
     }
 }

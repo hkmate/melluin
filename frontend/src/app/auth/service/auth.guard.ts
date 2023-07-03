@@ -13,6 +13,10 @@ import {PATHS} from '../../app-paths';
 import {User} from '@shared/user/user';
 import {isNilOrEmpty, NOOP} from '@shared/util/util';
 import {Permission} from '@shared/user/permission.enum';
+import {Store} from '@ngrx/store';
+import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
+import {Actions, ofType} from '@ngrx/effects';
+import {AppActions} from '@fe/app/state/app-actions';
 
 interface RouteData {
     permissions?: Array<Permission>;
@@ -21,15 +25,18 @@ interface RouteData {
 @Injectable()
 export class AuthGuard implements CanActivate, CanLoad {
 
-    private currentUser: User | null = null;
+    private currentUser?: User = undefined;
 
-    constructor(
-        private readonly router: Router,
-        private readonly authenticationService: AuthenticationService
-    ) {
-        this.authenticationService.currentUser.subscribe(cu => {
+    constructor(private readonly router: Router,
+                private readonly store: Store,
+                private readonly actions$: Actions,
+                private readonly authenticationService: AuthenticationService) {
+        this.store.pipe(selectCurrentUser).subscribe(cu => {
             this.currentUser = cu;
         });
+        this.actions$.pipe(ofType(AppActions.userLogout)).subscribe(() => {
+            this.currentUser = undefined;
+        })
     }
 
     public canLoad(route: Route, segments: Array<UrlSegment> = []): boolean {
@@ -52,10 +59,7 @@ export class AuthGuard implements CanActivate, CanLoad {
         if (isNilOrEmpty(permissions)) {
             return true;
         }
-        if (this.checkUserHasAtLeastOneOfNeededPermissions(permissions)) {
-            return true;
-        }
-        return false;
+        return this.checkUserHasAtLeastOneOfNeededPermissions(permissions);
     }
 
     private checkUserHasAtLeastOneOfNeededPermissions(roles: Array<Permission>): boolean {

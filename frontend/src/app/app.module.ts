@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, LOCALE_ID, NgModule} from '@angular/core';
+import {APP_INITIALIZER, isDevMode, LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -24,6 +24,11 @@ import {registerLocaleData} from '@angular/common';
 import localeHu from '@angular/common/locales/hu';
 import {ToastrModule} from 'ngx-toastr';
 import {AppConfig, appConfigInitializerFn} from '@fe/app/config/app-config';
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {currentUserKey} from '@fe/app/state/app.state';
+import {currentUserReducer} from '@fe/app/auth/service/current-user.reducer';
 
 registerLocaleData(localeHu);
 
@@ -43,6 +48,11 @@ export function appInitializeTranslateFactory(translate: TranslateService) {
         BrowserAnimationsModule,
         HttpClientModule,
 
+        StoreModule.forRoot({
+            [currentUserKey]: currentUserReducer
+        }),
+        EffectsModule.forRoot([]),
+
         MatSidenavModule,
         MatIconModule,
         MatListModule,
@@ -59,6 +69,7 @@ export function appInitializeTranslateFactory(translate: TranslateService) {
         DashboardModule,
         NotFoundPageModule,
         AppRoutingModule,
+        StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
     ],
     providers: [
         AppConfig,
