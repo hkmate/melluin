@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {isNil, isNilOrEmpty, parseTime, parseTimeWithDate} from '@shared/util/util';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
@@ -10,15 +10,18 @@ import {Department} from '@shared/department/department';
 import {Person} from '@shared/person/person';
 import {PeopleService} from '@fe/app/people/people.service';
 import {Pageable} from '@shared/api-util/pageable';
-import {AuthenticationService} from '@fe/app/auth/service/authentication.service';
 import {EventVisibility} from '@shared/event/event-visibility';
+import {User} from '@shared/user/user';
+import {Store} from '@ngrx/store';
+import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
+import {AutoUnSubscriberComponent} from '@fe/app/util/auto-unsubscriber.component';
 
 @Component({
     selector: 'app-hospital-visit-form',
     templateUrl: './hospital-visit-form.component.html',
     styleUrls: ['./hospital-visit-form.component.scss']
 })
-export class HospitalVisitFormComponent {
+export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implements OnInit {
 
     private static readonly MS_ON_HOUR = 3600000; // 1000 * 60 * 60
     private static readonly MIN_ON_HOUR = 60;
@@ -37,12 +40,14 @@ export class HospitalVisitFormComponent {
     protected personOptions: Array<Person>;
     protected form: FormGroup;
 
+    private currentUser: User;
     private visitToEdit?: HospitalVisit;
 
     constructor(private readonly fb: FormBuilder,
-                private readonly authService: AuthenticationService,
+                private readonly store: Store,
                 private readonly departmentService: DepartmentService,
                 private readonly personService: PeopleService) {
+        super();
     }
 
     @Input()
@@ -53,6 +58,10 @@ export class HospitalVisitFormComponent {
 
     public get visit(): HospitalVisit | undefined {
         return this.visitToEdit;
+    }
+
+    public ngOnInit(): void {
+        this.initCurrentUser();
     }
 
     protected onSubmit(): void {
@@ -97,6 +106,13 @@ export class HospitalVisitFormComponent {
         this.initPersonOptions();
         this.initDepartmentOptions();
         this.initCountedHours();
+    }
+
+    private initCurrentUser(): void {
+        this.addSubscription(this.store.pipe(selectCurrentUser), cu => {
+                this.currentUser = cu;
+            }
+        );
     }
 
     private initStatusOptions(): void {
@@ -170,7 +186,7 @@ export class HospitalVisitFormComponent {
         data.departmentId = this.form.controls.departmentId.value;
         data.status = this.form.controls.status.value;
         data.countedMinutes = this.form.controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
-        data.organizerId = this.authService.currentUserValue!.personId;
+        data.organizerId = this.currentUser.personId;
         data.visibility = EventVisibility.PUBLIC;
         data.participantIds = this.form.controls.participants.value.map(person => person.id);
         data.dateTimeFrom = parseTimeWithDate(

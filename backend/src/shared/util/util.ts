@@ -18,7 +18,6 @@ export function allNil<T>(...values: Array<T | Nil>): boolean {
 }
 
 export function isEmpty<T>(array: Array<T> | string): boolean {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     return array.length === 0;
 }
 
@@ -27,8 +26,15 @@ export function isNotEmpty<T>(array: Array<T> | string): boolean {
 }
 
 export function isNilOrEmpty<T>(array: Array<T> | string | Nil): boolean {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     return isNil(array) || array!.length === 0;
+}
+
+export function isNilOrEmptyObj<T extends object>(value: T | Nil): boolean {
+    return isNil(value) || isEmpty(Object.keys(value));
+}
+
+export function isNotNilOrEmptyObj<T extends object>(value: T | Nil): boolean {
+    return !isNilOrEmptyObj(value);
 }
 
 export function emptyToUndef(value?: string): string | undefined {

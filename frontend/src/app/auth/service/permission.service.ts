@@ -1,18 +1,23 @@
 import {Injectable} from '@angular/core';
 import {User} from '@shared/user/user';
-import {isNotNil, Nullable} from '@shared/util/util';
-import {AuthenticationService} from '@fe/app/auth/service/authentication.service';
+import {isNotNil} from '@shared/util/util';
 import {Permission} from '@shared/user/permission.enum';
 import {cast} from '@shared/util/test-util';
 import {Role} from '@shared/user/role.enum';
+import {Store} from '@ngrx/store';
+import {Actions, ofType} from '@ngrx/effects';
+import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
+import {AppActions} from '@fe/app/state/app-actions';
 
 @Injectable()
 export class PermissionService {
 
+    private currentUser?: User;
     private permissionInfo: Record<Permission, boolean>;
 
-    constructor(private readonly auth: AuthenticationService) {
-        this.auth.currentUser.subscribe((user: Nullable<User>) => this.setup(user));
+    constructor(private readonly store: Store,
+                private readonly actions$: Actions) {
+        this.setup();
     }
 
     public has(permission: Permission): boolean {
@@ -20,11 +25,11 @@ export class PermissionService {
     }
 
     public get userId(): string | undefined {
-        return this.auth.currentUserValue?.id;
+        return this.currentUser?.id;
     }
 
     public get personId(): string | undefined {
-        return this.auth.currentUserValue?.personId;
+        return this.currentUser?.personId;
     }
 
     public getRolesCanBeManaged(): Array<Role> {
@@ -41,12 +46,15 @@ export class PermissionService {
             .flat();
     }
 
-    private setup(user: Nullable<User>): void {
-        let permissions: Array<Permission> = [];
-        if (isNotNil(user)) {
-            permissions = user.permissions;
-        }
-        this.setUpPermissionInfo(permissions);
+    private setup(): void {
+        this.store.pipe(selectCurrentUser).subscribe(cu => {
+            this.currentUser = cu;
+            this.setUpPermissionInfo(this.currentUser.permissions);
+        })
+        this.actions$.pipe(ofType(AppActions.userLogout)).subscribe(() => {
+            this.currentUser = undefined;
+            this.setUpPermissionInfo([]);
+        });
     }
 
     private setUpPermissionInfo(permissions: Array<Permission>): void {
