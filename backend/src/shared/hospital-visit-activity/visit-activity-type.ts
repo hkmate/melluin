@@ -12,6 +12,7 @@ export enum VisitActivityType {
     PUPPETRY = 'PUPPETRY',
     TALE_TELLING = 'TALE_TELLING',
     DRAWING = 'DRAWING',
+    BOARD_GAME = 'BOARD_GAME',
     OTHER = 'OTHER',
 
 }

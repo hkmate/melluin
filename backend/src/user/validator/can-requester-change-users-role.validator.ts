@@ -27,7 +27,7 @@ export class CanRequesterChangeUsersRoleValidator implements UserRewriteValidato
     }
 
     private areRolesChanged({entity, rewrite}: UserRewriteWithEntity): boolean {
-        return _.isEqual(
+        return !_.isEqual(
             entity.roles.map(value => value.role),
             rewrite.roles
         );

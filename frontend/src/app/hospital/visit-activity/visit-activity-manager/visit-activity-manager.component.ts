@@ -49,12 +49,18 @@ export class VisitActivityManagerComponent {
 
     protected createFinished(objectToSave: HospitalVisitActivityInput): void {
         this.saveInProcess = true;
-        this.activityService.add(this.visitId, objectToSave).subscribe(saved => {
-            this.msg.success('SaveSuccessful');
-            this.activities.push(saved);
-            this.activitiesChange.emit(this.activities);
-            this.creatingInProcess = false;
-            this.saveInProcess = false;
+        this.activityService.add(this.visitId, objectToSave).subscribe({
+            next: saved => {
+                this.msg.success('SaveSuccessful');
+                this.activities.push(saved);
+                this.activitiesChange.emit(this.activities);
+                this.creatingInProcess = false;
+                this.saveInProcess = false;
+            },
+            error: () => {
+                this.creatingInProcess = false;
+                this.saveInProcess = false;
+            }
         });
     }
 

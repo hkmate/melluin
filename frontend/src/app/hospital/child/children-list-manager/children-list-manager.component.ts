@@ -47,12 +47,18 @@ export class ChildrenListManagerComponent {
 
     protected createFinished(objectToSave: PatientChildInput): void {
         this.saveInProcess = true;
-        this.childService.add(objectToSave.child).subscribe(saved => {
-            this.msg.success('SaveSuccessful');
-            this.children.push({child: saved, isParentThere: objectToSave.isParentThere});
-            this.childrenChange.emit(this.children);
-            this.creatingInProcess = false;
-            this.saveInProcess = false;
+        this.childService.add(objectToSave.child).subscribe({
+            next: saved => {
+                this.msg.success('SaveSuccessful');
+                this.children.push({child: saved, isParentThere: objectToSave.isParentThere});
+                this.childrenChange.emit(this.children);
+                this.creatingInProcess = false;
+                this.saveInProcess = false;
+            },
+            error: () => {
+                this.creatingInProcess = false;
+                this.saveInProcess = false;
+            }
         });
     }
 

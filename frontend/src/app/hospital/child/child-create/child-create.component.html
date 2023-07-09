@@ -32,7 +32,7 @@
 
             <div class="button-row">
                 <button mat-flat-button
-                        [disabled]="buttonsDisabled"
+                        [disabled]="buttonsDisabled || form.invalid"
                         color="accent"
                         (click)="onFormSubmit()"
                         type="button">

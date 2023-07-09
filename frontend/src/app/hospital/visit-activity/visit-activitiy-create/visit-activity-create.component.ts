@@ -6,6 +6,7 @@ import {
     ActivityChildInfo,
     HospitalVisitActivityInput
 } from '@shared/hospital-visit-activity/hospital-visit-activity-input';
+import {isNotEmptyValidator} from '@fe/app/util/util';
 
 @Component({
     selector: 'app-visit-activity-create',
@@ -58,8 +59,8 @@ export class VisitActivityCreateComponent {
 
     private initForm(): void {
         this.form = this.formBuilder.group({
-            children: [[], [Validators.required]],
-            activities: [[], [Validators.required]],
+            children: [[], [Validators.required, isNotEmptyValidator]],
+            activities: [[], [Validators.required, isNotEmptyValidator]],
             comment: []
         })
     }

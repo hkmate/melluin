@@ -22,7 +22,7 @@ export class EventsListComponent {
     private static readonly FIRST_PAGE = 1;
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    protected readonly sizeOptions = [10, 20, 50];
+    protected readonly sizeOptions = [10, 20, 50, 100];
 
     protected eventsList: Array<HospitalVisit>;
     protected page: number;
@@ -41,7 +41,7 @@ export class EventsListComponent {
     public ngOnInit(): void {
         this.title.setTitleByI18n('Titles.EventsList')
         this.page = EventsListComponent.FIRST_PAGE;
-        this.size = this.sizeOptions[0];
+        this.size = this.sizeOptions[2];
     }
 
     protected paginateHappened(event: PageEvent): void {

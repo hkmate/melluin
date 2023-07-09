@@ -17,3 +17,7 @@ lerna-debug.log*
 # Tests
 /coverage
 /.nyc_output
+
+# Flyway
+report.html
+report.json

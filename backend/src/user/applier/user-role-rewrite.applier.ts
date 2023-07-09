@@ -21,7 +21,7 @@ export class UserRoleRewriteApplier implements Applier<UserEntity> {
     }
 
     private hasChanged(persisted: Array<RoleEntity>, needed: Array<Role>): boolean {
-        return _.isEqual(
+        return !_.isEqual(
             persisted.map(value => value.role),
             needed
         );

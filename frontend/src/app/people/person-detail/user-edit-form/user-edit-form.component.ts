@@ -67,9 +67,9 @@ export class UserEditFormComponent {
         if (isNotNil(this.form.controls.password.value)) {
             data.password = this.form.controls.password.value
         }
-        data.isActive = this.form.controls.isActive.value
-        data.userName = this.userToEdit!.userName;
-        data.roles = this.userToEdit!.roles;
+        data.isActive = this.form.controls.isActive.value;
+        data.userName = this.form.controls.userName.value;
+        data.roles = this.form.controls.roles.value;
         data.customInfo = this.userToEdit!.customInfo;
         return data;
     }

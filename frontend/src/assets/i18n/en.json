@@ -67,6 +67,7 @@
         "PUPPETRY": "Puppetry",
         "TALE_TELLING": "Tale telling",
         "DRAWING": "Drawing",
+        "BOARD_GAME": "Board game",
         "OTHER": "Other"
     },
     "Menu": {
