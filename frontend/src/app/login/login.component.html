@@ -21,10 +21,6 @@
             </mat-form-field>
         </p>
 
-        <div *ngIf="errorMsg">
-            {{ errorMsg | translate }}
-        </div>
-
         <div>
             <button mat-flat-button color="accent"
                     [disabled]="loading" (click)="onSubmit()">

@@ -23,6 +23,7 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
     Permission = Permission;
     protected isCreation = false;
     protected isEdit = false;
+    protected createNewAfterSave = false;
     protected visit?: HospitalVisit;
     private resolverSubscription: Subscription;
 
@@ -52,9 +53,12 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
 
     protected saveVisit(data: HospitalVisitRewrite | HospitalVisitCreate): void {
         this.createSaveRequest(data).subscribe(visit => {
-            this.visit = visit;
             this.msg.success('SaveSuccessful');
+            this.visit = visit;
             this.setToPresent();
+            if (this.createNewAfterSave) {
+                this.changeToAddOther();
+            }
         });
     }
 
@@ -97,6 +101,15 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
 
     private setIdInUrl(id: string): void {
         this.location.replaceState(`${PATHS.hospitalVisit.main}/${id}`);
+    }
+
+    private changeToAddOther(): void {
+        // Note: need this to recreate the form component. Later should be done better.
+        setTimeout(() => {
+            this.visit = undefined;
+            this.isCreation = true;
+            this.setIdInUrl(CREATE_MARKER);
+        });
     }
 
 }

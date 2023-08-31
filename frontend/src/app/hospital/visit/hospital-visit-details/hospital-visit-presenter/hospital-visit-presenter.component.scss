@@ -17,3 +17,11 @@
     font-weight: normal;
     font-size: smaller;
 }
+
+.copy-link {
+    opacity: .4;
+
+    &:hover {
+        opacity: .8;
+    }
+}

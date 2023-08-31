@@ -29,6 +29,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {currentUserKey} from '@fe/app/state/app.state';
 import {currentUserReducer} from '@fe/app/auth/service/current-user.reducer';
+import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
 
 registerLocaleData(localeHu);
 
@@ -38,6 +39,10 @@ export function HttpLoaderFactory(http: HttpBackend): TranslateHttpLoader {
 
 export function appInitializeTranslateFactory(translate: TranslateService) {
     return () => firstValueFrom(translate.use(AppLanguage.HU));
+}
+
+export function appInitializeCredentialsFactory(credentialStoreService: CredentialStoreService) {
+    return () => credentialStoreService.init();
 }
 
 @NgModule({
@@ -86,6 +91,12 @@ export function appInitializeTranslateFactory(translate: TranslateService) {
             provide: APP_INITIALIZER,
             useFactory: appInitializeTranslateFactory,
             deps: [TranslateService],
+            multi: true
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: appInitializeCredentialsFactory,
+            deps: [CredentialStoreService],
             multi: true
         },
         {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},

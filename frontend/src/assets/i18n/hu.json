@@ -25,6 +25,7 @@
     "EventDateFormat": "MM.dd. EEEE",
     "EventShortDateFormat": "MM.dd. EE",
     "TimeFormat": "HH:mm",
+    "LinkCopied": "Link a vágólapra másolva",
     "Role": {
         "INTERN_HOSPITAL_VISITOR": "Hospitáló",
         "BEGINNER_HOSPITAL_VISITOR": "Kórházlátogató (kezdő)",
@@ -88,7 +89,7 @@
     },
     "LoginPage": {
         "FieldsRequired": "Felhasználónév és a jelszó megadása is kötelező",
-        "BadCredentials": "A felhasználónév vagy jelszó hibás",
+        "BadCredentials": "Hibás felhasználónév vagy jelszó",
         "Form": {
             "UserName": "Felhasználónév",
             "UserNamePlaceholder": "Adja meg a felhasználónevét",
@@ -228,7 +229,8 @@
             "TimeTo": "Vége",
             "CountedHours": "Elszámolandó órák",
             "CountedHoursPlaceholder": "2",
-            "Status": "Státusz"
+            "Status": "Státusz",
+            "CreateOther": "Másik látogatás felvétle"
         },
         "Activities": {
             "Children": "Gyerekek",
@@ -242,6 +244,13 @@
         "NoRelatedActivities": "Nem elérhető korábbi foglalkozásról információ",
         "Start": "Kezdés",
         "Finalized": "Véglegesítés"
+    },
+    "VisitList": {
+        "ListHeader": {
+            "Date": "Időpont",
+            "Department": "Helyszín",
+            "Participants": "Résztvevők"
+        }
     },
     "ChildCard": {
         "Age": "{{year}} év, {{months}} hó",

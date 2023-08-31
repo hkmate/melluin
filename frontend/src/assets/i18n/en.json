@@ -25,6 +25,7 @@
     "EventDateFormat": "dd.MM. EEEE",
     "EventShortDateFormat": "dd.MM EE",
     "TimeFormat": "HH:mm",
+    "LinkCopied": "Link copied to clipboard",
     "Role": {
         "INTERN_HOSPITAL_VISITOR": "Intern hospital visitor",
         "BEGINNER_HOSPITAL_VISITOR": "Beginner hospital visitor ",
@@ -228,7 +229,8 @@
             "TimeTo": "End",
             "CountedHours": "Countable hours",
             "CountedHoursPlaceholder": "2",
-            "Status": "Status"
+            "Status": "Status",
+            "CreateOther": "Add other visit"
         },
         "Activities": {
             "Children": "Children",
@@ -242,6 +244,13 @@
         "NoRelatedActivities": "There is no information about previous activities",
         "Start": "Start",
         "Finalized": "Finalize"
+    },
+    "VisitList": {
+        "ListHeader": {
+            "Date": "Date",
+            "Department": "Place",
+            "Participants": "Participants"
+        }
     },
     "ChildCard": {
         "Age": "{{year}} years, {{months}} months",

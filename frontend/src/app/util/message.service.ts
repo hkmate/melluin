@@ -19,6 +19,10 @@ export class MessageService {
         this.warningRaw(this.i18n.instant(msgKey));
     }
 
+    public info(msgKey: string): void {
+        this.infoRaw(this.i18n.instant(msgKey));
+    }
+
     public error(msgKey: string): void {
         this.errorRaw(this.i18n.instant(msgKey));
     }
@@ -29,6 +33,10 @@ export class MessageService {
 
     public warningRaw(msg: string): void {
         this.toastr.warning(msg);
+    }
+
+    public infoRaw(msg: string): void {
+        this.toastr.info(msg);
     }
 
     public errorRaw(msg: string): void {
