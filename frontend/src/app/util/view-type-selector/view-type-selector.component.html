@@ -1,0 +1,7 @@
+<mat-button-toggle-group [ngModel]="viewType" (ngModelChange)="viewTypeChange.emit($event)">
+    <ng-container *ngFor="let option of options">
+        <mat-button-toggle [value]="option">
+            <mat-icon>{{ ViewTypeIconMapper[option] }}</mat-icon>
+        </mat-button-toggle>
+    </ng-container>
+</mat-button-toggle-group>

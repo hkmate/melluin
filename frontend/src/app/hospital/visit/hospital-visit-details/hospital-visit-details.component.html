@@ -16,6 +16,7 @@
 
             <app-hospital-visit-form *ngIf="isEditMode()"
                                      [visit]="visit"
+                                     [(createNewAfterSave)]="createNewAfterSave"
                                      (submitted)="saveVisit($event)"
                                      (canceled)="cancelEditing()">
             </app-hospital-visit-form>

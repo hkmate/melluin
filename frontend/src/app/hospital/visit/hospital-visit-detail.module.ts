@@ -10,7 +10,7 @@ import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
 import {MatButtonModule} from '@angular/material/button';
 import {VisitStatusIconComponent} from './visit-status-icon/visit-status-icon.component';
 import {HospitalVisitFormComponent} from './hospital-visit-details/hospital-visit-form/hospital-visit-form.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -19,14 +19,16 @@ import {MatIconModule} from '@angular/material/icon';
 import {MinToHourPipe} from '@fe/app/util/min-to-hour.pipe';
 import {OptionalPipe} from '@fe/app/util/optional.pipe';
 import {VisitActivityModule} from '@fe/app/hospital/visit-activity/visit-activity.module';
-import { HospitalVisitActivityFillerComponent } from './hospital-visit-activity-filler/hospital-visit-activity-filler.component';
+import {HospitalVisitActivityFillerComponent} from './hospital-visit-activity-filler/hospital-visit-activity-filler.component';
 import {HospitalEventCardModule} from '@fe/app/hospital/visit/hospital-event-card/hospital-event-card.module';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
+        FormsModule,
         ReactiveFormsModule,
 
         MatCardModule,
@@ -34,6 +36,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
         MatButtonModule,
         MatInputModule,
         MatSelectModule,
+        MatCheckboxModule,
         MatDatepickerModule,
         MatExpansionModule,
         MatNativeDateModule,

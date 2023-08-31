@@ -25,15 +25,15 @@ export function isNotEmpty<T>(array: Array<T> | string): boolean {
     return !isEmpty(array);
 }
 
-export function isNilOrEmpty<T>(array: Array<T> | string | Nil): boolean {
-    return isNil(array) || array!.length === 0;
+export function isNilOrEmpty<T>(value: Array<T> | string | Nil): boolean {
+    return isNil(value) || value!.length === 0;
 }
 
 export function isNilOrEmptyObj<T extends object>(value: T | Nil): boolean {
     return isNil(value) || isEmpty(Object.keys(value));
 }
 
-export function isNotNilOrEmptyObj<T extends object>(value: T | Nil): boolean {
+export function isNotNilOrEmptyObj<T extends object>(value: T | Nil): value is T {
     return !isNilOrEmptyObj(value);
 }
 

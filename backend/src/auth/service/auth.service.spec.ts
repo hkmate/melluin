@@ -18,7 +18,7 @@ import {Nullable} from '@shared/util/util';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 import Mock = jest.Mock;
-import {UnauthorizedException} from '@nestjs/common';
+import {BadRequestException} from '@nestjs/common';
 
 describe('AuthService', () => {
     describe('Construct when default user not needed', () => {
@@ -245,7 +245,7 @@ describe('AuthService', () => {
     });
 
 
-    describe('validateUser', () => {
+    describe('validate', () => {
         let authService: AuthService;
         let userService: UserDao;
         let passwordCryptService: PasswordCryptService;
@@ -294,7 +294,7 @@ describe('AuthService', () => {
             when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
             when(passwordCryptService.match).calledWith(rawPassword, password).mockReturnValue(true);
 
-            const result: Nullable<User> = await authService.validateUser(userName, rawPassword);
+            const result: Nullable<User> = await authService.validate({username: userName, password: rawPassword});
 
             expect(result).toEqual(expectedUser);
         });
@@ -315,9 +315,9 @@ describe('AuthService', () => {
             when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
             when(passwordCryptService.match).calledWith(rawPassword, password).mockReturnValue(false);
 
-            const testValidate = (): Promise<User> => authService.validateUser(userName, rawPassword);
+            const testValidate = (): Promise<User> => authService.validate({username: userName, password: rawPassword});
 
-            await expect(testValidate).rejects.toThrow(UnauthorizedException);
+            await expect(testValidate).rejects.toThrow(BadRequestException);
         });
 
         it('When user is in db and is not active Then null returned', async () => {
@@ -334,9 +334,9 @@ describe('AuthService', () => {
             const rawPassword: string = randomString();
             when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
 
-            const testValidate = (): Promise<User> => authService.validateUser(userName, rawPassword);
+            const testValidate = (): Promise<User> => authService.validate({username: userName, password: rawPassword});
 
-            await expect(testValidate).rejects.toThrow(UnauthorizedException);
+            await expect(testValidate).rejects.toThrow(BadRequestException);
         });
 
         it('When user is not in db Then null returned', async () => {
@@ -344,9 +344,9 @@ describe('AuthService', () => {
             const rawPassword: string = randomString();
             when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(null));
 
-            const testValidate = (): Promise<User> => authService.validateUser(userName, rawPassword);
+            const testValidate = (): Promise<User> => authService.validate({username: userName, password: rawPassword});
 
-            await expect(testValidate).rejects.toThrow(UnauthorizedException);
+            await expect(testValidate).rejects.toThrow(BadRequestException);
         });
     });
 });

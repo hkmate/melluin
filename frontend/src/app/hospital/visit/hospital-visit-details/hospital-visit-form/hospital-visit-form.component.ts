@@ -29,6 +29,12 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
     private static readonly defaultTimeFrom = '16:00';
     private static readonly defaultTimeTo = '18:00';
 
+    @Input()
+    public createNewAfterSave: boolean;
+
+    @Output()
+    public createNewAfterSaveChange = new EventEmitter<boolean>;
+
     @Output()
     public submitted = new EventEmitter<HospitalVisitCreate | HospitalVisitRewrite>;
 
@@ -39,9 +45,9 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
     protected departmentOptions: Array<Department>;
     protected personOptions: Array<Person>;
     protected form: FormGroup;
+    protected visitToEdit?: HospitalVisit;
 
     private currentUser: User;
-    private visitToEdit?: HospitalVisit;
 
     constructor(private readonly fb: FormBuilder,
                 private readonly store: Store,
@@ -85,6 +91,11 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
         const hourValue = diff / HospitalVisitFormComponent.MS_ON_HOUR;
         const hourlyValueWithMax2Decimals = Math.round(hourValue * 100) / 100;
         this.form.controls.countedHours.setValue(hourlyValueWithMax2Decimals);
+    }
+
+    protected setCreateOther(newValue: boolean): void {
+        this.createNewAfterSave = newValue;
+        this.createNewAfterSaveChange.emit(newValue);
     }
 
     private initForm(): void {

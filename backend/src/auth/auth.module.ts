@@ -7,7 +7,6 @@ import {AuthService} from './service/auth.service';
 import {JwtStrategy} from './strategy/jwt.strategy';
 import {JwtAuthGuard} from './guard/jwt-auth.guard';
 import {RolesGuard} from './guard/roles.guard';
-import {LocalStrategy} from './strategy/local.strategy';
 import {AuthController} from './auth.controller';
 import {PersonModule} from '../person/person.module';
 import {ConfigModule, ConfigService} from '@nestjs/config';
@@ -39,7 +38,6 @@ import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
     controllers: [AuthController],
     providers: [
         AuthService,
-        LocalStrategy,
         JwtStrategy,
         {
             provide: APP_GUARD,

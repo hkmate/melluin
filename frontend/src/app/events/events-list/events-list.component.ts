@@ -10,6 +10,7 @@ import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.servic
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
+import {ViewType} from '@fe/app/util/view-type-selector/view-type';
 
 @Component({
     selector: 'app-events-list',
@@ -18,6 +19,7 @@ import {Permission} from '@shared/user/permission.enum';
 })
 export class EventsListComponent {
 
+    ViewType = ViewType;
     Permission = Permission;
     private static readonly FIRST_PAGE = 1;
 
@@ -28,6 +30,7 @@ export class EventsListComponent {
     protected page: number;
     protected size: number;
     protected countOfAll: number;
+    protected viewType: ViewType = ViewType.TABLE;
     private filter: EventsFilter;
     private sort: SortOptions = {
         dateTimeFrom: 'ASC'

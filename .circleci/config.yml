@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  browser-tools: circleci/browser-tools@1.2.3
+  browser-tools: circleci/browser-tools@1.4.4
 
 executors:
   ci-executor:
@@ -31,7 +31,10 @@ jobs:
     steps:
       - checkout:
           path: ~/repo
-      - browser-tools/install-chrome
+      - run: sudo apt-get update
+      - browser-tools/install-chrome:
+          chrome-version: 116.0.5845.96 # TODO: remove until: https://github.com/CircleCI-Public/browser-tools-orb/issues/75
+          replace-existing: true # TODO: remove until: https://github.com/CircleCI-Public/browser-tools-orb/issues/75
       - browser-tools/install-chromedriver
       - run:
           name: Check install

@@ -1,0 +1,23 @@
+.fill-btn {
+    margin-left: 1rem;
+
+    a {
+        color: #1c87cb;
+
+        &:hover {
+            color: #1c87cb;
+        }
+    }
+}
+
+.participants {
+    a {
+        font-style: italic;
+        text-decoration: unset;
+        color: black;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

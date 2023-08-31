@@ -7,6 +7,7 @@ import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {JwtService} from './service/jwt.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
 
 @NgModule({
     imports: [
@@ -22,6 +23,7 @@ export class AuthModule {
             providers: [
                 JwtService,
                 AuthenticationService,
+                CredentialStoreService,
                 PermissionService,
                 AuthGuard,
                 {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

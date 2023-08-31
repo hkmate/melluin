@@ -16,6 +16,9 @@ import {FormsModule} from '@angular/forms';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
 import {HospitalEventCardModule} from '@fe/app/hospital/visit/hospital-event-card/hospital-event-card.module';
+import {HospitalEventsListModule} from '@fe/app/hospital/visit/hospital-events-list/hospital-events-list.module';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {ViewTypeSelectorComponent} from '@fe/app/util/view-type-selector/view-type-selector.component';
 
 @NgModule({
     imports: [
@@ -36,7 +39,10 @@ import {HospitalEventCardModule} from '@fe/app/hospital/visit/hospital-event-car
 
         PersonNamePipe,
         LazyInputModule,
-        HospitalEventCardModule
+        HospitalEventCardModule,
+        HospitalEventsListModule,
+        MatButtonToggleModule,
+        ViewTypeSelectorComponent
     ],
     declarations: [
         EventsListComponent,

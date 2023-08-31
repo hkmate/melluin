@@ -1,4 +1,4 @@
-import {Injectable, UnauthorizedException} from '@nestjs/common';
+import {BadRequestException, Injectable} from '@nestjs/common';
 import {JwtService} from '@nestjs/jwt';
 import {UserDao} from '@be/user/user.dao';
 import {UserEntity} from 'src/user/model/user.entity';
@@ -13,6 +13,7 @@ import {ConfigService} from '@nestjs/config';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoConverter} from '@be/user/converter/user-entity-to-dto.converter';
+import {AuthCredentials} from '@shared/user/auth-credentials';
 
 @Injectable()
 export class AuthService {
@@ -29,15 +30,15 @@ export class AuthService {
         }
     }
 
-    public async validateUser(userName: string, pass: string): Promise<User> {
-        const user: Nullable<UserEntity> = await this.userService.findOneByName(userName);
+    public async validate(credentials: AuthCredentials): Promise<User> {
+        const user: Nullable<UserEntity> = await this.userService.findOneByName(credentials.username);
 
         if (isNil(user) || !user.isActive) {
-            throw new UnauthorizedException('Wrong username or password');
+            throw new BadRequestException('Wrong username or password');
         }
 
-        if (!this.passwordCryptService.match(pass, user.password)) {
-            throw new UnauthorizedException('Wrong username or password');
+        if (!this.passwordCryptService.match(credentials.password, user.password)) {
+            throw new BadRequestException('Wrong username or password');
         }
 
         return this.userConverter.convert(user);

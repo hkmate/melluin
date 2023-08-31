@@ -1,4 +1,10 @@
-<h1>{{ 'HospitalVisit.Title' | translate }}</h1>
+<h1>
+    {{ 'HospitalVisit.Title' | translate }}
+
+    <a class="copy-link" (click)="copyLink()">
+        <mat-icon>link</mat-icon>
+    </a>
+</h1>
 
 <div class="hospital-visit-data-presenter">
     <mat-card>

@@ -5,19 +5,30 @@
         <div class="option-row">
             <app-event-list-filter (filterChanged)="filterChanged($event)"></app-event-list-filter>
 
-            <span *ngIf="permissions.has(Permission.canCreateVisit)">
-                <a mat-mini-fab
-                   color="accent"
-                   [routerLink]="['/hospital-visits', 'new']">
-                    <mat-icon>add</mat-icon>
-                </a>
+            <span>
+                <app-view-type-selector [(viewType)]="viewType"></app-view-type-selector>
+
+                <span *ngIf="permissions.has(Permission.canCreateVisit)">
+                    <a mat-mini-fab
+                       color="accent"
+                       [routerLink]="['/hospital-visits', 'new']">
+                        <mat-icon>add</mat-icon>
+                    </a>
+                </span>
             </span>
         </div>
 
         <div class="events-list">
-            <div *ngFor="let event of eventsList" class="event-card">
-                <app-hospital-event-card [visit]="event" [needFillButton]="true"></app-hospital-event-card>
-            </div>
+
+            <ng-container *ngIf="viewType === ViewType.LIST">
+                <div *ngFor="let event of eventsList" class="event-card">
+                    <app-hospital-event-card [visit]="event" [needFillButton]="true"></app-hospital-event-card>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="viewType === ViewType.TABLE">
+                <app-hospital-events-list [eventsList]="eventsList"></app-hospital-events-list>
+            </ng-container>
+
             <ng-container *ngIf="!eventsList?.length">
                 {{ 'EventsList.NoEventsFound' | translate }}
             </ng-container>
