@@ -74,7 +74,9 @@ export class CredentialStoreService {
 
     private isTokenExpired(accessToken: string): boolean {
         const expTimestamp = this.jwtService.decodeToken(accessToken)[CredentialStoreService.EXPIRATION_KEY_IN_TOKEN];
-        return DateUtil.now().getTime() < expTimestamp;
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        return (expTimestamp * 1000) < DateUtil.now().getTime();
+        // Note: *1000 needs because exp is epoch seconds and Date uses ms.
     }
 
 }
