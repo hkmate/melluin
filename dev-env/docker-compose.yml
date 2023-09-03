@@ -2,7 +2,7 @@ version: '3.8'
 services:
   pgdatabase:
     container_name: pgdb
-    image: postgres:13
+    image: postgres:10.23-alpine
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root

@@ -66,5 +66,7 @@ export const affectedObjectsList: Array<string> = [
     'Rumbatök',
     'Afrikai dob',
     'Ukulele',
-    'Coloring book'
+    'Coloring book',
+    'Mellény',
+    'Egyéb'
 ];
