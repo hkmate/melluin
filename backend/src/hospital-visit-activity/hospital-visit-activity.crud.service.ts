@@ -13,6 +13,7 @@ import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {ActivityRewriteApplierFactory} from '@be/hospital-visit-activity/applier/activity-rewrite-applier.factory';
+import {DateUtil} from '@shared/util/date-util';
 
 @Injectable()
 export class HospitalVisitActivityCrudService {
@@ -49,7 +50,9 @@ export class HospitalVisitActivityCrudService {
     public async findByVisitIds(visitIds: Array<string>, requester: User): Promise<Array<WrappedHospitalVisitActivity>> {
         const rawEntities = await this.hospitalVisitActivityDao.findByVisitIds(visitIds);
         const rawEntitiesGroupedByVisit = this.separateByVisits(rawEntities);
-        return this.convertToWrappedDto(rawEntitiesGroupedByVisit);
+        const wrappedVisits = await this.convertToWrappedDto(rawEntitiesGroupedByVisit);
+        wrappedVisits.sort(HospitalVisitActivityCrudService.compareWrappedByDateDesc);
+        return wrappedVisits;
     }
 
     private separateByVisits(entities: Array<HospitalVisitActivityEntity>): Array<Array<HospitalVisitActivityEntity>> {
@@ -67,6 +70,10 @@ export class HospitalVisitActivityCrudService {
             groupedByVisit.map(activities =>
                 this.wrappedDtoConverter.convert(activities))
         );
+    }
+
+    private static compareWrappedByDateDesc(v1: WrappedHospitalVisitActivity, v2: WrappedHospitalVisitActivity): number {
+        return DateUtil.cmp(v2.hospitalVisit.dateTimeFrom, v1.hospitalVisit.dateTimeFrom);
     }
 
 }

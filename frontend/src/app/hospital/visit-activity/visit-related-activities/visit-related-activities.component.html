@@ -3,10 +3,18 @@
         <mat-card class="activity-card">
             <mat-card-header>
                 <mat-card-subtitle>
-                    {{ activity.hospitalVisit.dateTimeFrom | date : ('EventDateFormat' | translate) }}
-                    {{ activity.hospitalVisit.dateTimeFrom | date : ('TimeFormat' | translate) }}
-                    -
-                    {{ activity.hospitalVisit.dateTimeTo | date : ('TimeFormat' | translate) }}
+                    <span class="date-time">
+                        {{ activity.hospitalVisit.dateTimeFrom | date : ('EventDateFormat' | translate) }}
+                        {{ activity.hospitalVisit.dateTimeFrom | date : ('TimeFormat' | translate) }}
+                        -
+                        {{ activity.hospitalVisit.dateTimeTo | date : ('TimeFormat' | translate) }}
+                    </span>
+
+                    <span *ngFor="let participant of activity.hospitalVisit.participants; let last = last"
+                          class="participants">
+                        {{ participant | personName }}
+                        <span *ngIf="!last">, </span>
+                    </span>
                 </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content class="activity-card-content">
