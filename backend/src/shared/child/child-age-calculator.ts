@@ -28,11 +28,11 @@ export function getMonthsSince(guessedBirth: string, nowDate = DateUtil.now()): 
  *
  *
  */
-export function getGuessedBirthFromYears(years: number, nowDate = DateUtil.now()): string {
+export function getGuessedBirthFromYears(years: number, months: number, nowDate = DateUtil.now()): string {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const months = years * 12;
+    const summedMonths = years * 12 + months;
     const dateForCalculation = new Date(nowDate);
-    dateForCalculation.setMonth(nowDate.getMonth() - months);
+    dateForCalculation.setMonth(nowDate.getMonth() - summedMonths);
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const paddedMonths = `${dateForCalculation.getMonth() + 1}`.padStart(2, '0');
     return `${dateForCalculation.getFullYear()}.${paddedMonths}`

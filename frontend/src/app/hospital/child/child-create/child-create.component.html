@@ -9,13 +9,22 @@
                        formControlName="name">
             </mat-form-field>
 
-            <mat-form-field appearance="fill">
-                <mat-label>{{ 'ChildrenList.Age' | translate }}</mat-label>
+            <mat-form-field appearance="fill" class="age-year">
+                <mat-label>{{ 'ChildrenList.AgeYear' | translate }}</mat-label>
                 <input type="number"
                        matInput
-                       [placeholder]="'ChildrenList.AgePlaceholder' | translate"
-                       step=".5"
-                       formControlName="age">
+                       [placeholder]="'ChildrenList.AgeYearPlaceholder' | translate"
+                       step="1"
+                       formControlName="ageYear">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="age-month">
+                <mat-label>{{ 'ChildrenList.AgeMonth' | translate }}</mat-label>
+                <input type="number"
+                       matInput
+                       [placeholder]="'ChildrenList.AgeMonthPlaceholder' | translate"
+                       step="1"
+                       formControlName="ageMonth">
             </mat-form-field>
 
             <mat-form-field appearance="fill">

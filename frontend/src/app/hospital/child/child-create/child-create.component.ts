@@ -11,6 +11,7 @@ import {PatientChildInput} from '@shared/child/patient-child';
 export class ChildCreateComponent {
 
     private static readonly CHILD_AGE_LIMIT = 18;
+    private static readonly MAX_MONTH_IN_YEAR = 11;
 
     @Input()
     public buttonsDisabled: boolean;
@@ -47,7 +48,10 @@ export class ChildCreateComponent {
     private initForm(): void {
         this.form = this.formBuilder.group({
             name: ['', [Validators.required]],
-            age: [0, [Validators.required, Validators.min(0), Validators.max(ChildCreateComponent.CHILD_AGE_LIMIT)]],
+            ageYear: [0, [Validators.required, Validators.pattern('[0-9]*'),
+                Validators.min(0), Validators.max(ChildCreateComponent.CHILD_AGE_LIMIT)]],
+            ageMonth: [0, [Validators.required, Validators.pattern('[0-9]*'),
+                Validators.min(0), Validators.max(ChildCreateComponent.MAX_MONTH_IN_YEAR)]],
             isParentThere: [false],
             info: []
         })
@@ -57,7 +61,9 @@ export class ChildCreateComponent {
         return {
             child: {
                 name: this.form.controls.name.value,
-                guessedBirth: getGuessedBirthFromYears(this.form.controls.age.value, this.visitDate),
+                guessedBirth: getGuessedBirthFromYears(this.form.controls.ageYear.value,
+                    this.form.controls.ageMonth.value,
+                    this.visitDate),
                 info: this.form.controls.info.value,
             },
             isParentThere: this.form.controls.isParentThere.value

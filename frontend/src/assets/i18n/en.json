@@ -261,8 +261,10 @@
         "NoChildYet": "No child added yet",
         "Name": "Name",
         "NamePlaceholder": "Péter",
-        "Age": "Age (yrs)",
-        "AgePlaceholder": "1,5",
+        "AgeYear": "Age (yrs)",
+        "AgeYearPlaceholder": "12",
+        "AgeMonth": "Age (months)",
+        "AgeMonthPlaceholder": "3",
         "Info": "Other info",
         "InfoPlaceholder": "Szereti a bábokat...",
         "IsParentThere": "Parent with her/him"
