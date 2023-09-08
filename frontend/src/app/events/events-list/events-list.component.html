@@ -3,7 +3,9 @@
         <h1>{{ 'Titles.EventsList' | translate }}</h1>
 
         <div class="option-row">
-            <app-event-list-filter (filterChanged)="filterChanged($event)"></app-event-list-filter>
+            <app-event-list-filter [dateFrom]="filter.dateFrom"
+                                   [dateTo]="filter.dateTo"
+                                   (filterChanged)="filterChanged($event)"></app-event-list-filter>
 
             <span>
                 <app-view-type-selector [(viewType)]="viewType"></app-view-type-selector>
