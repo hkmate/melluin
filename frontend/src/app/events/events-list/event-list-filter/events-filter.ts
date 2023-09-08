@@ -1,5 +1,5 @@
 export interface EventsFilter {
-    dateFrom: string;
-    dateTo: string;
+    dateFrom: Date;
+    dateTo: Date;
     text?: string;
 }

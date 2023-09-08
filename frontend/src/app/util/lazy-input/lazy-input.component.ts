@@ -13,6 +13,11 @@ export class LazyInputComponent implements OnInit, OnDestroy {
     public needClearButton = true;
 
     @Input()
+    public set value(newValue: string | undefined) {
+        this.inputText = newValue ?? '';
+    }
+
+    @Input()
     public label: string;
 
     @Output()

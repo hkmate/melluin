@@ -10,16 +10,22 @@ import {Department} from '@shared/department/department';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {Permission} from '@shared/user/permission.enum';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 
 @Component({
     selector: 'app-department-list',
     templateUrl: './departments-list.component.html',
-    styleUrls: ['./departments-list.component.scss']
+    styleUrls: ['./departments-list.component.scss'],
+    providers: [UrlParamHandler]
 })
 export class DepartmentsListComponent implements OnInit {
 
     Permission = Permission;
     private static readonly FIRST_PAGE = 1;
+    private static readonly PAGE_PARAM_KEY = 'page';
+    private static readonly SIZE_PARAM_KEY = 'size';
+    private static readonly FILTER_PARAM_KEY = 'filter';
+    private static readonly ONLY_VALID_PARAM_KEY = 'only-valid';
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [10, 20, 50];
@@ -29,7 +35,7 @@ export class DepartmentsListComponent implements OnInit {
     protected page: number;
     protected size: number;
     protected countOfAll: number;
-    protected filterWord: string;
+    protected filterWord?: string;
     protected onlyValid = true;
     private now = new Date().toISOString();
     private sort: SortOptions = {
@@ -38,12 +44,17 @@ export class DepartmentsListComponent implements OnInit {
 
     constructor(private readonly title: AppTitle,
                 protected readonly permissions: PermissionService,
-                private readonly departmentService: DepartmentService) {
+                private readonly departmentService: DepartmentService,
+                private readonly urlParam: UrlParamHandler) {
     }
 
     public ngOnInit(): void {
         this.title.setTitleByI18n('Titles.DepartmentList')
-        this.loadData(DepartmentsListComponent.FIRST_PAGE, this.sizeOptions[0]);
+        this.page = this.urlParam.getNumberParam(DepartmentsListComponent.PAGE_PARAM_KEY) ?? DepartmentsListComponent.FIRST_PAGE;
+        this.size = this.urlParam.getNumberParam(DepartmentsListComponent.SIZE_PARAM_KEY) ?? this.sizeOptions[2];
+        this.filterWord = this.urlParam.getParam(DepartmentsListComponent.FILTER_PARAM_KEY);
+        this.onlyValid = this.urlParam.getParam(DepartmentsListComponent.ONLY_VALID_PARAM_KEY) !== 'false';
+        this.loadData();
     }
 
     protected isEditEnabled(department: Department): boolean {
@@ -54,15 +65,21 @@ export class DepartmentsListComponent implements OnInit {
     protected paginateHappened(event: PageEvent): void {
         this.page = event.pageIndex + 1;
         this.size = event.pageSize;
+        this.urlParam.setParams({
+            [DepartmentsListComponent.PAGE_PARAM_KEY]: this.page + '',
+            [DepartmentsListComponent.SIZE_PARAM_KEY]: this.size + ''
+        });
         this.loadData();
     }
 
     protected filterChanged(newFilterWord: string): void {
         this.filterWord = newFilterWord;
+        this.urlParam.setParam(DepartmentsListComponent.FILTER_PARAM_KEY, this.filterWord);
         this.loadData();
     }
 
     protected optionChanged(): void {
+        this.urlParam.setParam(DepartmentsListComponent.ONLY_VALID_PARAM_KEY, this.onlyValid);
         this.loadData();
     }
 

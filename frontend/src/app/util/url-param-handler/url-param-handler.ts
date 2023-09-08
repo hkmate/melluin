@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NOOP} from '@shared/util/util';
+import {isNil, NOOP} from '@shared/util/util';
 
 export type QueryParams = Record<string, string>;
 
@@ -14,8 +14,16 @@ export class UrlParamHandler {
         return Object.hasOwn(this.route.snapshot.queryParams, paramName);
     }
 
-    public getParam(paramName: string): string {
+    public getParam(paramName: string): string | undefined {
         return this.route.snapshot.queryParams[paramName];
+    }
+
+    public getNumberParam(paramName: string): number | undefined {
+        const value = this.getParam(paramName);
+        if (isNil(value)) {
+            return undefined;
+        }
+        return +value;
     }
 
     public setParam<T>(paramName: string, paramValue: T): void {
