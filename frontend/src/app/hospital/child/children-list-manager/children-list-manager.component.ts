@@ -1,9 +1,11 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ChildService} from '@fe/app/hospital/child/child.service';
-import {PatientChild, PatientChildInput} from '@shared/child/patient-child';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
 import {MessageService} from '@fe/app/util/message.service';
+import {VisitedChild, VisitedChildInput} from '@shared/hospital-visit/visited-child';
+import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
+import {DateUtil} from '@shared/util/date-util';
+import {VisitedChildService} from '@fe/app/hospital/child/visited-child.service';
 
 @Component({
     selector: 'app-children-list-manager',
@@ -15,26 +17,31 @@ export class ChildrenListManagerComponent {
     Permission = Permission;
 
     @Input()
-    public visitDate: Date;
-
-    @Input()
     public editEnabled: boolean;
 
     @Input()
     public needParentInfo: boolean;
 
     @Input()
-    public children: Array<PatientChild>;
+    public children: Array<VisitedChild>;
 
     @Output()
-    public childrenChange = new EventEmitter<Array<PatientChild>>();
+    public childrenChange = new EventEmitter<Array<VisitedChild>>();
 
+    protected visitDate: Date;
     protected creatingInProcess = false;
     protected saveInProcess = false;
+    private hospitalVisit: HospitalVisit;
 
     constructor(protected readonly permissions: PermissionService,
                 private readonly msg: MessageService,
-                private readonly childService: ChildService) {
+                private readonly visitedChildService: VisitedChildService) {
+    }
+
+    @Input()
+    public set visit(visit: HospitalVisit) {
+        this.hospitalVisit = visit;
+        this.visitDate = DateUtil.parse(this.hospitalVisit.dateTimeFrom);
     }
 
     protected creatorToggled(): void {
@@ -45,12 +52,12 @@ export class ChildrenListManagerComponent {
         this.creatingInProcess = false;
     }
 
-    protected createFinished(objectToSave: PatientChildInput): void {
+    protected createFinished(objectToSave: VisitedChildInput): void {
         this.saveInProcess = true;
-        this.childService.add(objectToSave.child).subscribe({
+        this.visitedChildService.add(this.hospitalVisit.id, objectToSave).subscribe({
             next: saved => {
                 this.msg.success('SaveSuccessful');
-                this.children.push({child: saved, isParentThere: objectToSave.isParentThere});
+                this.children.push(saved);
                 this.childrenChange.emit(this.children);
                 this.creatingInProcess = false;
                 this.saveInProcess = false;

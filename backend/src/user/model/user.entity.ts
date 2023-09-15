@@ -21,14 +21,11 @@ export class UserEntity {
     @Column({name: 'custom_info', type: 'jsonb'})
     customInfo?: UserCustomInfo;
 
-    @OneToOne(type => PersonEntity, {eager: true, cascade: ['insert', 'update', 'remove']})
+    @OneToOne(type => PersonEntity, {eager: true, cascade: ['insert', 'update']})
     @JoinColumn({name: 'person_id'})
     person!: PersonEntity;
 
-    @ManyToMany(
-        type => RoleEntity,
-        {eager: true, cascade: ['insert', 'update', 'remove']}
-    )
+    @ManyToMany(type => RoleEntity, {eager: true})
     @JoinTable({
         name: 'user_role',
         joinColumn: {

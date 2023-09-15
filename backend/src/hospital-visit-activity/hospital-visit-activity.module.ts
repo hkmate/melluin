@@ -6,18 +6,18 @@ import {ActivityInputToEntityConverter} from '@be/hospital-visit-activity/conver
 import {HospitalVisitActivityCrudService} from '@be/hospital-visit-activity/hospital-visit-activity.crud.service';
 import {HospitalVisitActivityController} from '@be/hospital-visit-activity/hospital-visit-activity.controller';
 import {HospitalVisitPersistenceModule} from '@be/hospital-visit/hospital-visit.persistence.module';
-import {ChildModule} from '@be/child/child.module';
 import {HospitalVisitModule} from '@be/hospital-visit/hospital-visit.module';
-import {ChildPersistenceModule} from '@be/child/child-persistence.module';
 import {ActivityRewriteApplierFactory} from '@be/hospital-visit-activity/applier/activity-rewrite-applier.factory';
+import {VisitedChildrenPersistenceModule} from '@be/hospital-visit-children/persistence/visited-children.persistence.module';
+import {VisitedChildrenModule} from '@be/hospital-visit-children/visited-children.module';
 
 @Module({
     imports: [
         HospitalVisitActivityPersistenceModule,
         HospitalVisitPersistenceModule,
         HospitalVisitModule,
-        ChildPersistenceModule,
-        ChildModule
+        VisitedChildrenPersistenceModule,
+        VisitedChildrenModule
     ],
     providers: [
         ActivityEntityToBasicDtoConverter,

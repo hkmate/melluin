@@ -28,9 +28,8 @@
             <span class="participants"
                   *ngFor="let participant of visit.participants; let last = last">
                   <a [routerLink]="['/people', participant.id]">
-                      {{ participant | personName }}
-                  </a>
-                <span *ngIf="!last">, </span>
+<!--                      It is inline for purpose. The comma should right after the name of the person-->
+                      {{ participant | personName }}</a><span *ngIf="!last">, </span>
             </span>
         </td>
     </ng-container>

@@ -22,7 +22,7 @@ export class ActivityEntityToBasicDtoConverter implements Converter<HospitalVisi
             id: entity.id,
             comment: entity.comment,
             activities: entity.activities,
-            children: entity.children
+            children: entity.children.map(c => c.id)
         }
     }
 

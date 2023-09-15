@@ -1,6 +1,6 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {In, Repository} from 'typeorm';
+import {Repository} from 'typeorm';
 import {isNil} from '@shared/util/util';
 import {ChildEntity} from '@be/child/model/child.entity';
 
@@ -29,13 +29,8 @@ export class ChildDao {
         });
     }
 
-    public findByIds(ids: Array<string>): Promise<Array<ChildEntity>> {
-        return this.repository.find({where: {id: In(ids)}});
-    }
-
-    public async findIdByIds(ids: Array<string>): Promise<Array<string>> {
-        const entityParts = await this.repository.find({where: {id: In(ids)}, select: {id: true}});
-        return entityParts.map(e => e.id);
+    public async remove(entity: ChildEntity): Promise<void> {
+        await this.repository.remove(entity);
     }
 
 }

@@ -39,7 +39,7 @@ export class BoxStatusReportToEntityConverter
             reason: dto.report.reason,
             affectedObject: dto.report.affectedObject,
             comment: dto.report.comment,
-        } satisfies DepartmentBoxStatusEntity;
+        } as DepartmentBoxStatusEntity;
     }
 
 }

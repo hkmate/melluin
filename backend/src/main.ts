@@ -5,6 +5,7 @@ import {ValidationPipe} from '@nestjs/common';
 
 process.env.TZ = 'UTC';
 
+// eslint-disable-next-line max-lines-per-function
 async function bootstrap(): Promise<void> {
     const app = await NestFactory.create(AppModule, {
         cors: true,

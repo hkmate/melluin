@@ -25,7 +25,7 @@ export class BoxStatusEntityToDtoConverter implements Converter<DepartmentBoxSta
             reason: entity.reason,
             affectedObject: entity.affectedObject ?? undefined,
             comment: entity.comment ?? undefined
-        } satisfies DepartmentBoxStatus;
+        } as DepartmentBoxStatus;
     }
 
 }

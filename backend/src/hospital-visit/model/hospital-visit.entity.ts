@@ -17,10 +17,7 @@ export class HospitalVisitEntity extends EventEntity {
     @JoinColumn({name: 'department_id'})
     department: DepartmentEntity;
 
-    @ManyToMany(
-        type => PersonEntity,
-        {eager: true, cascade: ['insert', 'update', 'remove']}
-    )
+    @ManyToMany(type => PersonEntity, {eager: true})
     @JoinTable({
         name: 'hospital_visit_participant',
         joinColumn: {

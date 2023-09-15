@@ -9,7 +9,7 @@ import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entit
 import {ChildEntity} from '@be/child/model/child.entity';
 import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
 import {PermissionEntity} from '@be/user/model/permission.entity';
-import {HospitalVisitTempEntity} from '@be/hospital-visit/model/hospital-visit-temp.entity';
+import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
 
 export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
@@ -33,7 +33,7 @@ export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
             DepartmentEntity,
             DepartmentBoxStatusEntity,
             HospitalVisitEntity,
-            HospitalVisitTempEntity,
+            VisitedChildEntity,
             HospitalVisitActivityEntity,
             ChildEntity
         ],

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {getGuessedBirthFromYears} from '@shared/child/child-age-calculator';
-import {PatientChildInput} from '@shared/child/patient-child';
+import {VisitedChildInput} from '@shared/hospital-visit/visited-child';
 
 @Component({
     selector: 'app-child-create',
@@ -23,7 +23,7 @@ export class ChildCreateComponent {
     public visitDate: Date;
 
     @Output()
-    public submitted = new EventEmitter<PatientChildInput>();
+    public submitted = new EventEmitter<VisitedChildInput>();
 
     @Output()
     public canceled = new EventEmitter<void>();
@@ -57,7 +57,7 @@ export class ChildCreateComponent {
         })
     }
 
-    private createObjectFromForm(): PatientChildInput {
+    private createObjectFromForm(): VisitedChildInput {
         return {
             child: {
                 name: this.form.controls.name.value,

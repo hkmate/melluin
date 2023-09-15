@@ -7,19 +7,19 @@ import {ActivityInputToEntityConverter} from '@be/hospital-visit-activity/conver
 import {ActivityEntityToBasicDtoConverter} from '@be/hospital-visit-activity/converter/activity-entity-to-basic-dto.converter';
 import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
 import {ActivityEntityToWrappedDtoConverter} from '@be/hospital-visit-activity/converter/activity-entity-to-wrapped-dto.converter';
-import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
-import * as _ from 'lodash';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {ActivityRewriteApplierFactory} from '@be/hospital-visit-activity/applier/activity-rewrite-applier.factory';
 import {DateUtil} from '@shared/util/date-util';
+import {VisitedChildrenDao} from '@be/hospital-visit-children/persistence/visited-children.dao';
 
 @Injectable()
 export class HospitalVisitActivityCrudService {
 
     constructor(private readonly hospitalVisitActivityDao: HospitalVisitActivityDao,
                 private readonly hospitalVisitDao: HospitalVisitDao,
+                private readonly visitedChildrenDao: VisitedChildrenDao,
                 private readonly activityInputToEntityConverter: ActivityInputToEntityConverter,
                 private readonly basicDtoConverter: ActivityEntityToBasicDtoConverter,
                 private readonly rewriteApplierFactory: ActivityRewriteApplierFactory,
@@ -43,33 +43,24 @@ export class HospitalVisitActivityCrudService {
     }
 
     public async findByVisitId(visitId: string, requester: User): Promise<WrappedHospitalVisitActivity> {
-        const rawEntities = await this.hospitalVisitActivityDao.findByVisitIds([visitId]);
-        return await this.wrappedDtoConverter.convert(rawEntities);
+        const visit = await this.hospitalVisitDao.getOne(visitId);
+        const activities = await this.hospitalVisitActivityDao.findByVisitIds([visitId]);
+        const children = await this.visitedChildrenDao.findAllByVisitId(visitId);
+        return await this.wrappedDtoConverter.convert({visit, activities, children});
     }
 
     public async findByVisitIds(visitIds: Array<string>, requester: User): Promise<Array<WrappedHospitalVisitActivity>> {
-        const rawEntities = await this.hospitalVisitActivityDao.findByVisitIds(visitIds);
-        const rawEntitiesGroupedByVisit = this.separateByVisits(rawEntities);
-        const wrappedVisits = await this.convertToWrappedDto(rawEntitiesGroupedByVisit);
+        const wrappedVisits: Array<WrappedHospitalVisitActivity> = await Promise.all(
+            visitIds.map(visitId => this.findByVisitId(visitId, requester))
+        );
         wrappedVisits.sort(HospitalVisitActivityCrudService.compareWrappedByDateDesc);
         return wrappedVisits;
-    }
-
-    private separateByVisits(entities: Array<HospitalVisitActivityEntity>): Array<Array<HospitalVisitActivityEntity>> {
-        return Object.values(_.groupBy(entities, entity => entity.hospitalVisit.id));
     }
 
     private verifyVisitIsStarted(visit: HospitalVisitEntity): void {
         if (visit.status !== HospitalVisitStatus.STARTED) {
             throw new BadRequestException('Save activity is only acceptable when the visit is in status: STARTED');
         }
-    }
-
-    private convertToWrappedDto(groupedByVisit: Array<Array<HospitalVisitActivityEntity>>): Promise<Array<WrappedHospitalVisitActivity>> {
-        return Promise.all(
-            groupedByVisit.map(activities =>
-                this.wrappedDtoConverter.convert(activities))
-        );
     }
 
     private static compareWrappedByDateDesc(v1: WrappedHospitalVisitActivity, v2: WrappedHospitalVisitActivity): number {

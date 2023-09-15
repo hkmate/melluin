@@ -26,7 +26,7 @@ export class PersonCreationToEntityConverter implements Converter<PersonCreation
             nickName: dto.nickName,
             email: dto.email,
             phone: dto.phone,
-        } satisfies PersonEntity;
+        } as PersonEntity;
     }
 
 }
