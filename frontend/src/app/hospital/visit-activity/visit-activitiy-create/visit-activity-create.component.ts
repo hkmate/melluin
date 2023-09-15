@@ -1,12 +1,9 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {PatientChild} from '@shared/child/patient-child';
 import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
-import {
-    ActivityChildInfo,
-    HospitalVisitActivityInput
-} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
+import {HospitalVisitActivityInput} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
 import {isNotEmptyValidator} from '@fe/app/util/util';
+import {VisitedChild} from '@shared/hospital-visit/visited-child';
 
 @Component({
     selector: 'app-visit-activity-create',
@@ -19,7 +16,7 @@ export class VisitActivityCreateComponent {
     public buttonsDisabled: boolean;
 
     @Input()
-    public children: Array<PatientChild>;
+    public children: Array<VisitedChild>;
 
     @Output()
     public submitted = new EventEmitter<HospitalVisitActivityInput>();
@@ -45,15 +42,15 @@ export class VisitActivityCreateComponent {
         this.canceled.emit();
     }
 
-    protected removeChild(patientInfo: PatientChild): void {
+    protected removeChild(visitedChild: VisitedChild): void {
         this.form.controls.children.setValue(
-            this.form.controls.children.value.filter(childInfo => childInfo.child.id !== patientInfo.child.id)
+            this.form.controls.children.value.filter((childInfo: VisitedChild) => childInfo.id !== visitedChild.id)
         );
     }
 
     protected removeActivity(activityToRemove: VisitActivityType): void {
         this.form.controls.activities.setValue(
-            this.form.controls.activities.value.filter(activity => activity !== activityToRemove)
+            this.form.controls.activities.value.filter((activity: VisitActivityType) => activity !== activityToRemove)
         );
     }
 
@@ -73,9 +70,9 @@ export class VisitActivityCreateComponent {
         }
     }
 
-    private createActivityChildInfoList(): Array<ActivityChildInfo> {
-        return (this.form.controls.children.value as Array<PatientChild>)
-            .map(value => ({childId: value.child.id, isParentThere: Boolean(value.isParentThere)}));
+    private createActivityChildInfoList(): Array<string> {
+        return (this.form.controls.children.value as Array<VisitedChild>)
+            .map(value => value.id);
     }
 
 }

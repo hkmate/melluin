@@ -6,8 +6,8 @@
             </span>
             <div class="children">
                 <mat-chip-listbox>
-                    <mat-chip-row *ngFor="let child of activity.children">
-                        {{ childrenById[child.childId].child.name }}
+                    <mat-chip-row *ngFor="let visitedChildId of activity.children">
+                        {{ childrenById[visitedChildId].child.name }}
                     </mat-chip-row>
                 </mat-chip-listbox>
             </div>

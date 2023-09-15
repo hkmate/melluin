@@ -4,11 +4,17 @@ import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entit
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
+import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 
 @Injectable()
 export class HospitalVisitRelationDao {
 
     private static readonly RELATED_VISITS_SIZE = 10;
+    private static readonly FINALIZED_STATUSES = [
+        HospitalVisitStatus.JUST_REQUIRED_FIELDS_FILLED,
+        HospitalVisitStatus.ALL_FIELDS_FILLED,
+        HospitalVisitStatus.ENDED_SUCCESSFULLY
+    ];
 
     constructor(@InjectRepository(HospitalVisitEntity)
                 private readonly repository: Repository<HospitalVisitEntity>,
@@ -22,6 +28,7 @@ export class HospitalVisitRelationDao {
             .leftJoin('visit.department', 'department')
             .where(`department.id = '${currentVisit.department.id}'`)
             .andWhere(`visit.id <> '${currentVisit.id}'`)
+            .andWhere('visit.status in (:...statuses)', {statuses: HospitalVisitRelationDao.FINALIZED_STATUSES})
             .orderBy('visit.dateTimeFrom', 'DESC')
             .take(HospitalVisitRelationDao.RELATED_VISITS_SIZE)
             .select('visit.id')

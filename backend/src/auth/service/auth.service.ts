@@ -55,20 +55,27 @@ export class AuthService {
 
         const sysadmin: UserEntity | null = await this.userService.findOneByName(username);
         if (isNil(sysadmin)) {
-            await this.insertDefaultUserToDb();
+            await this.createDefaultUser();
         }
     }
 
-    private async insertDefaultUserToDb(): Promise<void> {
+    private async createDefaultUser(): Promise<void> {
         const defaultAdmin = this.config.get<DefaultSysAdmin>('server.defaultSysAdmin')!;
-        const person: PersonEntity = await this.personService.save({
+        const person: PersonEntity = await this.insertDefaultAdminPerson(defaultAdmin);
+        await this.insertDefaultAdminUser(defaultAdmin, person);
+    }
+
+    private insertDefaultAdminPerson(defaultAdmin: DefaultSysAdmin): Promise<PersonEntity> {
+        return this.personService.save({
             id: crypto.randomUUID(),
             firstName: defaultAdmin.firstName,
             lastName: defaultAdmin.lastName
         });
+    }
 
+    private async insertDefaultAdminUser(defaultAdmin: DefaultSysAdmin, person: PersonEntity): Promise<UserEntity> {
         const roles: Array<RoleEntity> = await this.userService.findAllRole();
-        await this.userService.save({
+        return this.userService.save({
             id: crypto.randomUUID(),
             userName: defaultAdmin.username,
             password: this.passwordCryptService.encrypt(defaultAdmin.password),

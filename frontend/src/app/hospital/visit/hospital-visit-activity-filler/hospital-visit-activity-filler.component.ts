@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {firstValueFrom, Subscription} from 'rxjs';
 import {Router} from '@angular/router';
-import {Location} from '@angular/common';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
 import {CREATE_MARKER, CreateMarkerType} from '@fe/app/app-paths';
@@ -10,8 +9,6 @@ import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status'
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
-import {VisitTempDataService} from '@fe/app/hospital/visit-activity/visit-temp-data.service';
-import {MessageService} from '@fe/app/util/message.service';
 
 @Component({
     selector: 'app-hospital-visit-activity-filler',
@@ -27,11 +24,8 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
     private resolverSubscription: Subscription;
 
     constructor(private readonly router: Router,
-                private readonly location: Location,
                 private readonly route: RouteDataHandler,
-                private readonly msg: MessageService,
                 protected readonly permissions: PermissionService,
-                private readonly tempDataService: VisitTempDataService,
                 private readonly visitService: HospitalVisitService) {
     }
 
@@ -75,7 +69,6 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
     protected finalizeFilling(): void {
         this.saveVisit(HospitalVisitStatus.JUST_REQUIRED_FIELDS_FILLED)
             .then(() => {
-                this.tempDataService.removeAll(this.visit.id).subscribe();
                 this.router.navigate(['/hospital-visits', this.visit.id]);
             });
     }

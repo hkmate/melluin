@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {isNilOrEmpty} from '@shared/util/util';
-import {PatientChild} from '@shared/child/patient-child';
+import {VisitedChild} from '@shared/hospital-visit/visited-child';
 
 @Component({
     selector: 'app-children-list',
@@ -13,7 +13,7 @@ export class ChildrenListComponent {
     public visitDate: Date;
 
     @Input()
-    public children: Array<PatientChild>;
+    public children: Array<VisitedChild>;
 
     protected isEmpty(): boolean {
         return isNilOrEmpty(this.children);

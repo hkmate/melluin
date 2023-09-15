@@ -38,7 +38,7 @@ export class UserCreationToEntityConverter implements Converter<UserCreation, Pr
             isActive: true,
             roles: roles.filter(entity => dto.roles.includes(entity.role))
 
-        } satisfies UserEntity;
+        } as UserEntity;
     }
 
 }

@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
-import {PatientChild} from '@shared/child/patient-child';
+import {VisitedChild} from '@shared/hospital-visit/visited-child';
 
 @Component({
     selector: 'app-visit-activity-card',
@@ -10,7 +10,7 @@ import {PatientChild} from '@shared/child/patient-child';
 export class VisitActivityCardComponent {
 
     @Input()
-    public childrenById: Record<string, PatientChild>;
+    public childrenById: Record<string, VisitedChild>;
 
     @Input()
     public activity: HospitalVisitActivity;

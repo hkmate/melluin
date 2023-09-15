@@ -5,14 +5,16 @@ import {HospitalVisitActivityInput} from '@shared/hospital-visit-activity/hospit
 import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {randomUUID} from 'crypto';
-import {ChildVerifierService} from '@be/child/child-verifier.service';
+import {VisitedChildVerifierService} from '@be/hospital-visit-children/service/visited-child-verifier.service';
+import {VisitedChildrenDao} from '@be/hospital-visit-children/persistence/visited-children.dao';
 
 @Injectable()
 export class ActivityInputToEntityConverter
     implements Converter<HospitalVisitActivityInput, Promise<HospitalVisitActivityEntity>> {
 
     constructor(private readonly visitDao: HospitalVisitDao,
-                private readonly childVerifier: ChildVerifierService) {
+                private readonly visitedChildDao: VisitedChildrenDao,
+                private readonly childVerifier: VisitedChildVerifierService) {
     }
 
     public convert(value: HospitalVisitActivityInput): Promise<HospitalVisitActivityEntity>;
@@ -26,12 +28,13 @@ export class ActivityInputToEntityConverter
     }
 
     private async convertNotNil(dto: HospitalVisitActivityInput): Promise<HospitalVisitActivityEntity> {
-        await this.childVerifier.verifyEveryChildIdExists(dto.children.map(c => c.childId));
+        await this.childVerifier.verifyEveryChildIdExists(dto.children);
         const visit = await this.visitDao.getOne(dto.visitId!);
+        const visitedChildren = await this.visitedChildDao.findAllByIds(dto.children);
         return {
             id: randomUUID(),
             activities: dto.activities,
-            children: dto.children,
+            children: visitedChildren,
             comment: dto.comment,
             hospitalVisit: visit
         };

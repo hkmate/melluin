@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {isNilOrEmpty} from '@shared/util/util';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
-import {PatientChild} from '@shared/child/patient-child';
+import {VisitedChild} from '@shared/hospital-visit/visited-child';
 
 @Component({
     selector: 'app-visit-activities-list',
@@ -11,7 +11,7 @@ import {PatientChild} from '@shared/child/patient-child';
 export class VisitActivitiesListComponent {
 
     @Input()
-    public childrenById: Record<string, PatientChild>;
+    public childrenById: Record<string, VisitedChild>;
 
     @Input()
     public activities: Array<HospitalVisitActivity>;

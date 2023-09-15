@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {getMonthsSince} from '@shared/child/child-age-calculator';
 import {isNil, isNotNil} from '@shared/util/util';
 import {DateUtil} from '@shared/util/date-util';
-import {PatientChild} from '@shared/child/patient-child';
+import {VisitedChild} from '@shared/hospital-visit/visited-child';
 
 @Component({
     selector: 'app-child-card',
@@ -13,7 +13,7 @@ export class ChildCardComponent {
 
     private static readonly MONTH_IN_YEAR = 12;
 
-    protected patientInfo?: PatientChild;
+    protected patientInfo?: VisitedChild;
     protected visitDate: Date = DateUtil.now();
     protected ageYear?: number;
     protected ageMonths?: number;
@@ -25,7 +25,7 @@ export class ChildCardComponent {
     }
 
     @Input()
-    public set child(child: PatientChild) {
+    public set child(child: VisitedChild) {
         this.patientInfo = child;
         this.setAge();
     }

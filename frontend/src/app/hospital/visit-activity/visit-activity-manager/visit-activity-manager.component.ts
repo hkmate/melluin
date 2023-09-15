@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {PatientChild} from '@shared/child/patient-child';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 import {VisitActivityService} from '@fe/app/hospital/visit-activity/visit-activity.service';
 import {HospitalVisitActivityInput} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
 import {MessageService} from '@fe/app/util/message.service';
+import {VisitedChild} from '@shared/hospital-visit/visited-child';
 
 @Component({
     selector: 'app-visit-activity-manager',
@@ -24,8 +24,8 @@ export class VisitActivityManagerComponent {
     @Output()
     public activitiesChange = new EventEmitter<Array<HospitalVisitActivity>>();
 
-    protected childrenById: Record<string, PatientChild>;
-    protected childrenList: Array<PatientChild>;
+    protected childrenById: Record<string, VisitedChild>;
+    protected childrenList: Array<VisitedChild>;
     protected creatingInProcess = false;
     protected saveInProcess = false;
 
@@ -34,7 +34,7 @@ export class VisitActivityManagerComponent {
     }
 
     @Input()
-    public set children(children: Array<PatientChild>) {
+    public set children(children: Array<VisitedChild>) {
         this.childrenList = children;
         this.setUpChildrenById();
     }
@@ -65,9 +65,9 @@ export class VisitActivityManagerComponent {
     }
 
     private setUpChildrenById(): void {
-        this.childrenById = this.childrenList.reduce<Record<string, PatientChild>>(
-            (result, patientInfo) => {
-                result[patientInfo.child.id] = patientInfo;
+        this.childrenById = this.childrenList.reduce<Record<string, VisitedChild>>(
+            (result, visitedChild) => {
+                result[visitedChild.id] = visitedChild;
                 return result;
             }, {});
     }

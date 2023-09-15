@@ -8,8 +8,6 @@ import {PersonModule} from '@be/person/person.module';
 import {DepartmentModule} from '@be/department/department.module';
 import {DepartmentPersistenceModule} from '@be/department/department.persistence.module';
 import {DepartmentBoxModule} from '@be/department-box/department-box.module';
-import {HospitalVisitTmpController} from '@be/hospital-visit/hospital-visit-tmp.controller';
-import {HospitalVisitTempDataService} from '@be/hospital-visit/hospital-visit-temp-data.service';
 import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/applier/hospital-visit-rewrite-applier.factory';
 
 @Module({
@@ -25,7 +23,6 @@ import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/applier/hos
         HospitalVisitEntityToDtoConverter,
         HospitalVisitRewriteApplierFactory,
         HospitalVisitCrudService,
-        HospitalVisitTempDataService,
     ],
     exports: [
         HospitalVisitCreationToEntityConverter,
@@ -35,7 +32,6 @@ import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/applier/hos
     ],
     controllers: [
         HospitalVisitController,
-        HospitalVisitTmpController
     ]
 })
 export class HospitalVisitModule {

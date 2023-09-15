@@ -22,6 +22,7 @@ export const foundationWorkerRoles = [
     Role.SYSADMIN
 ];
 
+// eslint-disable-next-line max-lines-per-function
 export function getPermissionsNeededToChangeRole(role: Role): Permission {
     switch (role) {
         case Role.INTERN_HOSPITAL_VISITOR:

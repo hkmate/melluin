@@ -37,4 +37,9 @@ export class ChildCrudService {
         return this.childConverter.convert(savedVisit);
     }
 
+    public async remove(childId: string): Promise<void> {
+        const entity = await this.getOne(childId);
+        return this.childDao.remove(entity);
+    }
+
 }

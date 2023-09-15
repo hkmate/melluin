@@ -1,11 +1,12 @@
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {IsEnum, IsString, IsUUID} from 'class-validator';
+import {IsEnum, IsIn, IsString, IsUUID} from 'class-validator';
 import {EventCreate} from '@shared/event/event-create';
 
 
 export class HospitalVisitCreate extends EventCreate {
 
     @IsEnum(HospitalVisitStatus)
+    @IsIn([HospitalVisitStatus.DRAFT, HospitalVisitStatus.SCHEDULED])
     status: HospitalVisitStatus;
 
     @IsUUID()
