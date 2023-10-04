@@ -17,23 +17,9 @@
     </div>
 
     <div class="participant-selector">
-        <mat-form-field appearance="fill">
-            <mat-label>{{ 'HospitalVisit.Form.Participants' | translate }}</mat-label>
-            <mat-chip-listbox>
-                <mat-chip-row *ngFor="let person of form.controls.participants.value"
-                              (removed)="removePerson(person)">
-                    {{ person | personName }}
-                    <button matChipRemove>
-                        <mat-icon>cancel</mat-icon>
-                    </button>
-                </mat-chip-row>
-            </mat-chip-listbox>
-            <mat-select formControlName="participants" multiple>
-                <mat-option *ngFor="let option of personOptions" [value]="option">
-                    {{ option | personName }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+        <app-person-select [label]="'HospitalVisit.Form.Participants' | translate"
+                           [options]="personOptions"
+                           formControlName="participants"></app-person-select>
     </div>
 
     <div>

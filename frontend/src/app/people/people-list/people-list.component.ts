@@ -25,7 +25,7 @@ export class PeopleListComponent implements OnInit {
     private static readonly FILTER_PARAM_KEY = 'filter';
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    protected readonly sizeOptions = [10, 20, 50];
+    protected readonly sizeOptions = [20, 50, 100];
     protected readonly columns = ['name', 'email', 'phone', 'options'];
 
     protected tableDataSource = new TableDataSource<Person>();
@@ -45,7 +45,7 @@ export class PeopleListComponent implements OnInit {
     public ngOnInit(): void {
         this.title.setTitleByI18n('Titles.PeopleList');
         const page = this.urlParam.getNumberParam(PeopleListComponent.PAGE_PARAM_KEY) ?? PeopleListComponent.FIRST_PAGE;
-        const size = this.urlParam.getNumberParam(PeopleListComponent.SIZE_PARAM_KEY) ?? this.sizeOptions[0];
+        const size = this.urlParam.getNumberParam(PeopleListComponent.SIZE_PARAM_KEY) ?? this.sizeOptions[1];
         this.filterWord = this.urlParam.getParam(PeopleListComponent.FILTER_PARAM_KEY);
         this.loadData(page, size);
     }
