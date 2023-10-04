@@ -27,7 +27,6 @@ export class PersonEntityToDtoConverter implements Converter<PersonEntity, Perso
             user: this.userConverter.convert(entity.user),
             firstName: entity.firstName,
             lastName: entity.lastName,
-            nickName: entity.nickName,
             email: entity.email,
             phone: entity.phone,
             preferences: entity.preferences

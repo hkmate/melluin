@@ -1,5 +1,5 @@
 export const personSortableFields = [
-    'firstName', 'lastName', 'nickName', 'phone', 'email'
+    'firstName', 'lastName', 'phone', 'email'
 ];
 
 export const personFilterableFields = [

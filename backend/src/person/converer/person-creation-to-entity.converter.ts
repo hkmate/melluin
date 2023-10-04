@@ -23,7 +23,6 @@ export class PersonCreationToEntityConverter implements Converter<PersonCreation
             id: randomUUID(),
             firstName: dto.firstName,
             lastName: dto.lastName,
-            nickName: dto.nickName,
             email: dto.email,
             phone: dto.phone,
         } as PersonEntity;

@@ -116,7 +116,6 @@
         "Present": {
             "FirstName": "Firstname",
             "LastName": "Lastname",
-            "NickName": "Nick name",
             "Email": "Email",
             "Phone": "Phone number",
             "Preferences": "Other",
@@ -128,8 +127,6 @@
             "FirstNamePlaceholder": "Julia",
             "LastName": "Last name",
             "LastNamePlaceholder": "Nevettető",
-            "NickName": "Nick name",
-            "NickNamePlaceholder": "Julcsi",
             "Email": "Email",
             "EmailPlaceholder": "julcsi@nevetnikek.hu",
             "Phone": "Phone number",

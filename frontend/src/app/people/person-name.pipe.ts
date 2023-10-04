@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {Person} from '@shared/person/person';
-import {isNil, isNotNil} from '@shared/util/util';
+import {isNil} from '@shared/util/util';
 import {AppLanguage} from '@fe/app/language/app-language';
 
 @Pipe({
@@ -16,9 +16,6 @@ export class PersonNamePipe implements PipeTransform {
     public transform(person: Person): string {
         if (isNil(person)) {
             return this.i18n.instant('PersonPipe.NoPerson');
-        }
-        if (isNotNil(person.nickName)) {
-            return person.nickName;
         }
         return this.getName(person);
     }

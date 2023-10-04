@@ -23,10 +23,9 @@ export class PersonRewriteConverter implements Converter<PersonCreation, PersonE
             id: randomUUID(),
             firstName: dto.firstName,
             lastName: dto.lastName,
-            nickName: dto.nickName,
             email: dto.email,
             phone: dto.phone,
-        } satisfies PersonEntity;
+        } as PersonEntity;
     }
 
 }

@@ -116,7 +116,6 @@
         "Present": {
             "FirstName": "Keresztnév",
             "LastName": "Vezetéknév",
-            "NickName": "Becenév",
             "Email": "Email",
             "Phone": "Telefonszám",
             "Preferences": "Egyéb",
@@ -128,8 +127,6 @@
             "FirstNamePlaceholder": "Júlia",
             "LastName": "Vezetéknév",
             "LastNamePlaceholder": "Nevettető",
-            "NickName": "Becenév",
-            "NickNamePlaceholder": "Julcsi",
             "Email": "Email",
             "EmailPlaceholder": "julcsi@nevetnikek.hu",
             "Phone": "Telefonszám",
