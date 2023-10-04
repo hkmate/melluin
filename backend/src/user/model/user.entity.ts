@@ -7,23 +7,23 @@ import {UserCustomInfo} from '@shared/user/user';
 export class UserEntity {
 
     @PrimaryColumn('uuid')
-    id!: string;
+    id: string;
 
     @Column({name: 'username'})
-    userName!: string;
+    userName: string;
 
     @Column()
-    password!: string;
+    password: string;
 
     @Column({name: 'is_active'})
-    isActive!: boolean;
+    isActive: boolean;
 
     @Column({name: 'custom_info', type: 'jsonb'})
     customInfo?: UserCustomInfo;
 
     @OneToOne(type => PersonEntity, {eager: true, cascade: ['insert', 'update']})
     @JoinColumn({name: 'person_id'})
-    person!: PersonEntity;
+    person: PersonEntity;
 
     @ManyToMany(type => RoleEntity, {eager: true})
     @JoinTable({
@@ -37,6 +37,6 @@ export class UserEntity {
             referencedColumnName: 'id'
         }
     })
-    roles!: Array<RoleEntity>;
+    roles: Array<RoleEntity>;
 
 }

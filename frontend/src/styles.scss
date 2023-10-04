@@ -58,3 +58,8 @@ form .button-row {
         }
     }
 }
+
+// Without this, the select search will not have background
+.mat-select-search-input {
+    background-color: field !important;
+}

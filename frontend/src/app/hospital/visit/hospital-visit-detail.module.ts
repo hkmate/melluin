@@ -23,6 +23,7 @@ import {HospitalVisitActivityFillerComponent} from './hospital-visit-activity-fi
 import {HospitalEventCardModule} from '@fe/app/hospital/visit/hospital-event-card/hospital-event-card.module';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {PersonSelectModule} from '@fe/app/util/person-select/person-select.module';
 
 @NgModule({
     imports: [
@@ -41,6 +42,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         MatExpansionModule,
         MatNativeDateModule,
         MatIconModule,
+
         TranslateModule,
 
         PersonNamePipe,
@@ -49,6 +51,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         OptionalPipe,
         VisitActivityModule,
         HospitalEventCardModule,
+        PersonSelectModule
     ],
     declarations: [
         HospitalVisitDetailsComponent,

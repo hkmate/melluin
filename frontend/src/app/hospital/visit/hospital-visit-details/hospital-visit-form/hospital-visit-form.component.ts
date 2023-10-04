@@ -78,12 +78,6 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
         this.canceled.emit();
     }
 
-    protected removePerson(removedPerson: Person): void {
-        this.form.controls.participants.setValue(
-            this.form.controls.participants.value.filter(person => person.id !== removedPerson.id)
-        );
-    }
-
     protected setCountedHours(): void {
         const from = parseTime(this.form.controls.timeFrom.value);
         const to = parseTime(this.form.controls.timeTo.value);
@@ -141,7 +135,12 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
     }
 
     private initPersonOptions(): void {
-        this.personService.findPeople({page: 1, size: 100}).subscribe(
+        this.personService.findPeople({
+            page: 1,
+            size: 100,
+            sort: {'lastName': 'ASC', 'firstName': 'ASC'},
+            where: {'user.isActive': {operator: 'eq', operand: true}}
+        }).subscribe(
             (personPageable: Pageable<Person>) => {
                 this.personOptions = personPageable.items;
                 this.initSelectedPeople();

@@ -1,19 +1,10 @@
 form {
-    mat-form-field {
+    mat-form-field, app-person-select {
         width: 100%;
     }
 
     .time-field > mat-form-field {
         width: 50%;
-    }
-
-    .participant-selector {
-
-        mat-select {
-
-            visibility: hidden;
-            width: 0;
-        }
     }
 
     .button-row {

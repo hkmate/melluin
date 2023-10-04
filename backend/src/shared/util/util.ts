@@ -1,3 +1,4 @@
+export type VoidFunc = () => void;
 export const NOOP = (): unknown => ({});
 
 export type Nil = null | undefined;
