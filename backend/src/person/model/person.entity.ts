@@ -15,9 +15,6 @@ export class PersonEntity {
     @Column({name: 'last_name'})
     lastName!: string;
 
-    @Column({name: 'nick_name'})
-    nickName?: string;
-
     @Column({type: 'jsonb', transformer: {
             to: value => value,
             from: value => plainToInstance(PersonPreferences, value)

@@ -11,10 +11,6 @@ export class PersonRewrite {
     @MinLength(nameMinLength)
     lastName: string;
 
-    @MinLength(nameMinLength)
-    @IsOptional()
-    nickName?: string;
-
     @ValidateNested()
     @Type(() => PersonPreferences)
     @IsOptional()

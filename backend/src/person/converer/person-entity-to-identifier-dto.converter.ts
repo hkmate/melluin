@@ -23,8 +23,7 @@ export class PersonEntityToIdentifierDtoConverter implements Converter<PersonEnt
             id: entity.id,
             firstName: entity.firstName,
             lastName: entity.lastName,
-            nickName: entity.nickName,
-        } satisfies PersonIdentifier;
+        } as PersonIdentifier;
     }
 
 }

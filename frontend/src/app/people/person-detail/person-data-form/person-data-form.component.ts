@@ -51,7 +51,6 @@ export class PersonDataFormComponent {
         this.form = this.fb.group({
             firstName: [this.personToEdit?.firstName, [Validators.required]],
             lastName: [this.personToEdit?.lastName, [Validators.required]],
-            nickName: [this.personToEdit?.nickName],
             email: [this.personToEdit?.email],
             phone: [this.personToEdit?.phone],
             canVolunteerSeeMyEmail: [this.personToEdit?.preferences?.canVolunteerSeeMyEmail ?? false],
@@ -68,7 +67,6 @@ export class PersonDataFormComponent {
 
         data.firstName = this.form.controls.firstName.value;
         data.lastName = this.form.controls.lastName.value;
-        data.nickName = emptyToUndef(this.form.controls.nickName.value);
         data.email = emptyToUndef(this.form.controls.email.value);
         data.phone = emptyToUndef(this.form.controls.phone.value);
         data.preferences = {
