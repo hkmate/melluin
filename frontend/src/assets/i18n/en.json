@@ -51,10 +51,12 @@
         "DRAFT": "Draft",
         "SCHEDULED": "Scheduled",
         "STARTED": "Started",
+        "ACTIVITIES_FILLED_OUT": "Activities filled out",
+        "ALL_FILLED_OUT": "Everything filled out",
         "CANCELED": "Canceled",
-        "JUST_REQUIRED_FIELDS_FILLED": "Required fields are filled",
-        "ALL_FIELDS_FILLED": "All fields are filled",
-        "ENDED_SUCCESSFULLY": "Successful"
+        "FAILED_BECAUSE_NO_CHILD": "Failed because no child was there",
+        "FAILED_FOR_OTHER_REASON": "Failed for reasons beyond our control",
+        "SUCCESSFUL": "Successful"
     },
     "VisitActivityType": {
         "UNO": "Uno",
