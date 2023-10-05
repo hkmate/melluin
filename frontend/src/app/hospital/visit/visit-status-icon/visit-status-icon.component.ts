@@ -2,6 +2,8 @@ import {Component, Input} from '@angular/core';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {TranslateModule} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-visit-status-icon',
@@ -11,7 +13,9 @@ import {MatIconModule} from '@angular/material/icon';
         NgSwitch,
         NgSwitchDefault,
         NgSwitchCase,
-        MatIconModule
+        MatIconModule,
+        MatTooltipModule,
+        TranslateModule
     ],
     standalone: true
 })
@@ -31,6 +35,9 @@ export class VisitStatusIconComponent {
         [HospitalVisitStatus.FAILED_FOR_OTHER_REASON]: 'do_not_touch',
         [HospitalVisitStatus.SUCCESSFUL]: 'check_circle',
     }
+
+    @Input()
+    public tooltipDisabled = true;
 
     protected icon: string;
     protected visitStatus: HospitalVisitStatus;

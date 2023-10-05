@@ -7,6 +7,7 @@ import {RouterModule} from '@angular/router';
 import {MatChipsModule} from '@angular/material/chips';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
 import {MatIconModule} from '@angular/material/icon';
+import {VisitStatusIconComponent} from '@fe/app/hospital/visit/visit-status-icon/visit-status-icon.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {MatIconModule} from '@angular/material/icon';
         MatIconModule,
         TranslateModule,
 
-        PersonNamePipe
+        PersonNamePipe,
+        VisitStatusIconComponent
     ],
     declarations: [
         HospitalEventCardComponent

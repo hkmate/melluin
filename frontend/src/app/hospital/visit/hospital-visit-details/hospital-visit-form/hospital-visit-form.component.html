@@ -83,6 +83,7 @@
         <button mat-flat-button
                 color="accent"
                 type="button"
+                [disabled]="form.invalid"
                 (click)="onSubmit()">
             {{ 'SaveButton' | translate}}
         </button>

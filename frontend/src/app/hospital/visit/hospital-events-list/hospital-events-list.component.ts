@@ -10,7 +10,7 @@ import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status'
 })
 export class HospitalEventsListComponent {
 
-    protected readonly columns = ['date', 'department', 'participants', 'options'];
+    protected readonly columns = ['status', 'date', 'department', 'participants', 'options'];
 
     @Input()
     public set eventsList(list: Array<HospitalVisit>) {

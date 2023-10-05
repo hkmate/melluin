@@ -18,3 +18,9 @@ h1, h3 {
         }
     }
 }
+
+:host ::ng-deep app-visit-status-icon mat-icon {
+    font-size: large;
+    height: initial;
+    margin-bottom: -0.1rem;
+}
