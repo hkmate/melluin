@@ -67,7 +67,7 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
     }
 
     protected finalizeFilling(): void {
-        this.saveVisit(HospitalVisitStatus.JUST_REQUIRED_FIELDS_FILLED)
+        this.saveVisit(HospitalVisitStatus.ACTIVITIES_FILLED_OUT)
             .then(() => {
                 this.router.navigate(['/hospital-visits', this.visit.id]);
             });

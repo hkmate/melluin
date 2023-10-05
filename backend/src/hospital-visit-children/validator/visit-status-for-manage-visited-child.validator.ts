@@ -7,8 +7,8 @@ export class VisitStatusForManageVisitedChildValidator implements Validator<Hosp
 
     private static readonly STATUSES_WHEN_MANAGING_CHILD_ID_ALLOWED = [
         HospitalVisitStatus.STARTED,
-        HospitalVisitStatus.JUST_REQUIRED_FIELDS_FILLED,
-        HospitalVisitStatus.ALL_FIELDS_FILLED
+        HospitalVisitStatus.ACTIVITIES_FILLED_OUT,
+        HospitalVisitStatus.ALL_FILLED_OUT
     ]
 
     public static of(): VisitStatusForManageVisitedChildValidator {

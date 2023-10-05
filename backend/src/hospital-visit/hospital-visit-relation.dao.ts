@@ -11,9 +11,9 @@ export class HospitalVisitRelationDao {
 
     private static readonly RELATED_VISITS_SIZE = 10;
     private static readonly FINALIZED_STATUSES = [
-        HospitalVisitStatus.JUST_REQUIRED_FIELDS_FILLED,
-        HospitalVisitStatus.ALL_FIELDS_FILLED,
-        HospitalVisitStatus.ENDED_SUCCESSFULLY
+        HospitalVisitStatus.ACTIVITIES_FILLED_OUT,
+        HospitalVisitStatus.ALL_FILLED_OUT,
+        HospitalVisitStatus.SUCCESSFUL
     ];
 
     constructor(@InjectRepository(HospitalVisitEntity)

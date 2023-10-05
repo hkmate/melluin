@@ -51,10 +51,12 @@
         "DRAFT": "Piszkozat",
         "SCHEDULED": "Betervezve",
         "STARTED": "Megkezdett",
-        "CANCELED": "Lemondott",
-        "JUST_REQUIRED_FIELDS_FILLED": "Kötelező mezők kitöltve",
-        "ALL_FIELDS_FILLED": "Minden kitöltve",
-        "ENDED_SUCCESSFULLY": "Sikeres"
+        "ACTIVITIES_FILLED_OUT": "Tevékenységek kitöltve",
+        "ALL_FILLED_OUT": "Minden leadva",
+        "CANCELED": "Le lett mondva",
+        "FAILED_BECAUSE_NO_CHILD": "Sikertelen gyerek hiányában",
+        "FAILED_FOR_OTHER_REASON": "Sikertelen rajtunk kívül álló okból",
+        "SUCCESSFUL": "Sikeres"
     },
     "VisitActivityType": {
         "UNO": "Uno",

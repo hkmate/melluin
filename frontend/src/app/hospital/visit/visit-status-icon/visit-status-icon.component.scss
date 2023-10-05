@@ -3,21 +3,36 @@
 }
 
 .SCHEDULED {
-    color: #1b84c6;
+    color: #0000ff;
 }
+
+
+.STARTED {
+    color: #b6ae18;
+}
+
+
+.ACTIVITIES_FILLED_OUT {
+    color: #77ce2f;
+}
+
+.ALL_FILLED_OUT {
+    color: #2fa207;
+}
+
 
 .CANCELED {
-    color: #ff6c7b;
+    color: #ff0000;
 }
 
-.JUST_REQUIRED_FIELDS_FILLED {
-    color: #b5b708;
+.FAILED_BECAUSE_NO_CHILD {
+    color: #ff0000;
 }
 
-.ALL_FIELDS_FILLED {
-    color: #5c9a4b;
+.FAILED_FOR_OTHER_REASON {
+    color: #ff0000;
 }
 
-.ENDED_SUCCESSFULLY {
-    color: #168f00;
+.SUCCESSFUL {
+    color: #00d900;
 }
