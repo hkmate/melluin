@@ -18,8 +18,6 @@ import {VisitedChild} from '@shared/hospital-visit/visited-child';
 })
 export class VisitActivitiesComponent implements OnInit {
 
-    private static readonly CHILDREN_TMP_DATA_KEY = 'children';
-
     Permission = Permission;
 
     @Input()

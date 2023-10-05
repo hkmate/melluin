@@ -11,6 +11,8 @@ import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrit
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
 import {MessageService} from '@fe/app/util/message.service';
+import {isNotNil} from '@shared/util/util';
+import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 
 @Component({
     selector: 'app-hospital-visit-details',
@@ -21,6 +23,12 @@ import {MessageService} from '@fe/app/util/message.service';
 export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
 
     Permission = Permission;
+    private static readonly BEGIN_STATUSES = [
+        HospitalVisitStatus.DRAFT,
+        HospitalVisitStatus.SCHEDULED,
+        HospitalVisitStatus.STARTED
+    ];
+
     protected isCreation = false;
     protected isEdit = false;
     protected createNewAfterSave = false;
@@ -72,6 +80,18 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
     protected switchToEdit(): void {
         this.isEdit = true;
         this.route.setParam('edit', true);
+    }
+
+    protected canUserStartTheVisit(): boolean {
+        return isNotNil(this.visit)
+            && this.visit.status === HospitalVisitStatus.SCHEDULED
+            && this.permissions.has(Permission.canCreateActivity)
+    }
+
+    protected shouldShowActivities(): boolean {
+        return isNotNil(this.visit)
+            && !HospitalVisitDetailsComponent.BEGIN_STATUSES.includes(this.visit.status)
+            && this.permissions.has(Permission.canReadActivity)
     }
 
     private setToPresent(): void {

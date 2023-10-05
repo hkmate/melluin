@@ -5,6 +5,13 @@
             <ng-container *ngIf="visit && !isEditMode()">
                 <app-hospital-visit-presenter [visit]="visit!"></app-hospital-visit-presenter>
                 <div class="button-row">
+                    <button *ngIf="canUserStartTheVisit()"
+                            mat-flat-button
+                            color="accent"
+                            routerLink="fill-activities">
+                        <mat-icon>rocket_launch</mat-icon>
+                        {{ 'HospitalVisit.Start' | translate }}
+                    </button>
                     <button *ngIf="permissions.has(Permission.canModifyVisit)"
                             mat-stroked-button
                             color="primary"
@@ -22,8 +29,8 @@
             </app-hospital-visit-form>
         </div>
 
-        <div class="activities-part" *ngIf="visit && permissions.has(Permission.canReadActivity)">
-            <app-visit-activities [visit]="visit" [editEnabled]="false"></app-visit-activities>
+        <div class="activities-part" *ngIf="shouldShowActivities()">
+            <app-visit-activities [visit]="visit!" [editEnabled]="false"></app-visit-activities>
         </div>
 
     </div>

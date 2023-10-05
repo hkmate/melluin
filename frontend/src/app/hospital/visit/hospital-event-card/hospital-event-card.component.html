@@ -5,6 +5,9 @@
             {{ visit.dateTimeFrom | date : ('TimeFormat' | translate) }}
             -
             {{ visit.dateTimeTo | date : ('TimeFormat' | translate) }}
+
+
+            <app-visit-status-icon [status]="visit.status" [tooltipDisabled]="false"></app-visit-status-icon>
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>

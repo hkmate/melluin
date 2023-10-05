@@ -71,7 +71,9 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
     }
 
     protected onSubmit(): void {
-        this.submitted.emit(this.createDataForSubmit());
+        if (this.form.valid) {
+            this.submitted.emit(this.createDataForSubmit());
+        }
     }
 
     protected cancelEditing(): void {
@@ -167,9 +169,9 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
         );
     }
 
-    private getDate(dateTime: string | undefined): Date {
+    private getDate(dateTime: string | undefined): Date | undefined {
         if (isNil(dateTime)) {
-            return new Date();
+            return undefined;
         }
         return new Date(dateTime);
     }

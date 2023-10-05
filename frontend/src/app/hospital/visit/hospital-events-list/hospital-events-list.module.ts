@@ -8,6 +8,7 @@ import {MatTableModule} from '@angular/material/table';
 import {OptionalPipe} from '@fe/app/util/optional.pipe';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
 import {TranslateModule} from '@ngx-translate/core';
+import {VisitStatusIconComponent} from '@fe/app/hospital/visit/visit-status-icon/visit-status-icon.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {TranslateModule} from '@ngx-translate/core';
 
         OptionalPipe,
         PersonNamePipe,
+        VisitStatusIconComponent,
     ],
     declarations: [
         HospitalEventsListComponent
