@@ -207,6 +207,7 @@
         "CommentPlaceholder": "Ráférne egy rendberakás"
     },
     "EventsList": {
+        "MarkRowByDate": "Mark rows by date",
         "NoEventsFound": "No event found with the set filters"
     },
     "HospitalVisit": {

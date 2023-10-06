@@ -207,6 +207,7 @@
         "CommentPlaceholder": "Ráférne egy rendberakás"
     },
     "EventsList": {
+        "MarkRowByDate": "Jelöld meg a sorokat",
         "NoEventsFound": "Nem található esemény a keresési feltételekkel"
     },
     "HospitalVisit": {

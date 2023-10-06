@@ -19,6 +19,7 @@ import {HospitalEventCardModule} from '@fe/app/hospital/visit/hospital-event-car
 import {HospitalEventsListModule} from '@fe/app/hospital/visit/hospital-events-list/hospital-events-list.module';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {ViewTypeSelectorComponent} from '@fe/app/util/view-type-selector/view-type-selector.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
     imports: [
@@ -34,6 +35,8 @@ import {ViewTypeSelectorComponent} from '@fe/app/util/view-type-selector/view-ty
         MatInputModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatCheckboxModule,
+        MatButtonToggleModule,
         MatButtonModule,
         TranslateModule,
 
@@ -41,7 +44,6 @@ import {ViewTypeSelectorComponent} from '@fe/app/util/view-type-selector/view-ty
         LazyInputModule,
         HospitalEventCardModule,
         HospitalEventsListModule,
-        MatButtonToggleModule,
         ViewTypeSelectorComponent
     ],
     declarations: [

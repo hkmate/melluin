@@ -22,7 +22,7 @@
     }
 }
 
-td,th {
+td, th {
     &.status-column {
         width: 1rem;
         padding: 0;
@@ -36,5 +36,31 @@ td,th {
 
     &.date-column {
         padding-left: .5rem;
+    }
+}
+
+$tr-border-radius: 1rem;
+
+.need-row-mark tr {
+    &.before-today td {
+        opacity: .5;
+    }
+
+    &.in-today td {
+        background-color: #e3ffdf;
+
+        &:first-of-type {
+            border-bottom-left-radius: $tr-border-radius;
+            border-top-left-radius: $tr-border-radius;
+        }
+
+        &:last-of-type {
+            border-bottom-right-radius: $tr-border-radius;
+            border-top-right-radius: $tr-border-radius;
+        }
+    }
+
+    &.is-after-today td {
+        // nothing yet
     }
 }

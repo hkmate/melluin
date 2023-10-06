@@ -38,6 +38,7 @@ export class EventsListComponent {
     protected size: number;
     protected countOfAll: number;
     protected viewType: ViewType = ViewType.TABLE;
+    protected markRowByDate = true;
     protected filter: EventsFilter;
     private sort: SortOptions = {
         dateTimeFrom: 'ASC'

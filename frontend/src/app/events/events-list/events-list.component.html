@@ -8,6 +8,10 @@
                                    (filterChanged)="filterChanged($event)"></app-event-list-filter>
 
             <span>
+                <mat-checkbox [(ngModel)]="markRowByDate">
+                    {{ 'EventsList.MarkRowByDate' | translate }}
+                </mat-checkbox>
+
                 <app-view-type-selector [(viewType)]="viewType"></app-view-type-selector>
 
                 <span *ngIf="permissions.has(Permission.canCreateVisit)">
@@ -28,7 +32,8 @@
                 </div>
             </ng-container>
             <ng-container *ngIf="viewType === ViewType.TABLE">
-                <app-hospital-events-list [eventsList]="eventsList"></app-hospital-events-list>
+                <app-hospital-events-list [eventsList]="eventsList"
+                                          [markRowByDate]="markRowByDate"></app-hospital-events-list>
             </ng-container>
 
             <ng-container *ngIf="!eventsList?.length">
