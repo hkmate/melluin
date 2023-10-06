@@ -1,4 +1,6 @@
-<table mat-table recycleRows [dataSource]="tableDataSource">
+<table mat-table recycleRows
+       [dataSource]="tableDataSource"
+       [ngClass]="{'need-row-mark': markRowByDate}">
 
     <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef class="status-column"></th>
@@ -53,5 +55,6 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
-    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;"
+    [ngClass]="{'before-today': isBeforeToday(row), 'in-today': isInToday(row), 'is-after-today': isAfterToday(row)}"></tr>
 </table>
