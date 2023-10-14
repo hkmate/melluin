@@ -93,6 +93,7 @@
     "LoginPage": {
         "FieldsRequired": "Felhasználónév és a jelszó megadása is kötelező",
         "BadCredentials": "Hibás felhasználónév vagy jelszó",
+        "ServerNotWork": "Valami probléma van a serverrel. Próbáld újra később",
         "Form": {
             "UserName": "Felhasználónév",
             "UserNamePlaceholder": "Adja meg a felhasználónevét",

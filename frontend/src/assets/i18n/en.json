@@ -93,6 +93,7 @@
     "LoginPage": {
         "FieldsRequired": "Both username and password are required",
         "BadCredentials": "Either username or password is wrong",
+        "ServerNotWork": "Something wrong with the server. Try again later.",
         "Form": {
             "UserName": "Username",
             "UserNamePlaceholder": "Enter your username",

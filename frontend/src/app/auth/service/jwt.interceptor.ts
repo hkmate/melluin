@@ -56,7 +56,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
     private initPublicEndpoints(): void {
         this.PUBLIC_ENDPOINTS
-            .add({method: HttpMethod.POST, url: `${AppConfig.get('baseURL')}/oauth/token`})
+            .add({method: HttpMethod.POST, url: `${AppConfig.get('baseURL')}/auth/token`})
     }
 
     private isOurPublicEndpoint(request: HttpRequest<unknown>): boolean {

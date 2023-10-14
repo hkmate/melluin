@@ -5,6 +5,8 @@ import {isNilOrEmpty, NOOP} from '@shared/util/util';
 import {User} from '@shared/user/user';
 import {AppTitle} from '@fe/app/app-title.service';
 import {MessageService} from '@fe/app/util/message.service';
+import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     templateUrl: './login.component.html',
@@ -13,6 +15,7 @@ import {MessageService} from '@fe/app/util/message.service';
 export class LoginComponent implements OnInit {
 
     private static readonly BAD_CREDENTIALS = 'LoginPage.BadCredentials';
+    private static readonly SERVER_NOT_WORK = 'LoginPage.ServerNotWork';
     private static readonly FIELDS_REQUIRED = 'LoginPage.FieldsRequired';
 
     private returnUrl?: string;
@@ -24,6 +27,7 @@ export class LoginComponent implements OnInit {
         private readonly title: AppTitle,
         private readonly route: ActivatedRoute,
         private readonly router: Router,
+        private readonly translate: TranslateService,
         private readonly msg: MessageService,
         private readonly authenticationService: AuthenticationService,
     ) {
@@ -55,11 +59,22 @@ export class LoginComponent implements OnInit {
                     this.loading = false;
                     this.router.navigate([this.returnUrl ?? '']).then(NOOP).catch(NOOP);
                 },
-                error: error => {
+                error: (error: HttpErrorResponse) => {
                     this.loading = false;
-                    this.msg.error(LoginComponent.BAD_CREDENTIALS);
+                    this.msg.errorRaw(this.resolveErrorMsg(error));
                 }
             });
+    }
+
+    private resolveErrorMsg(error: HttpErrorResponse): string {
+        switch (error.status) {
+            case 0:
+                return this.translate.instant(LoginComponent.SERVER_NOT_WORK);
+            case HttpStatusCode.BadRequest:
+                return this.translate.instant(LoginComponent.BAD_CREDENTIALS);
+            default:
+                return error.message;
+        }
     }
 
 }
