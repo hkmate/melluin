@@ -1,0 +1,28 @@
+<div class="activities-header">
+    <h1>{{ 'HospitalVisit.Activities.Activities' | translate }}</h1>
+    <span *ngIf="permissions.has(Permission.canCreateActivity)" class="add-btn">
+        <button mat-mini-fab color="accent" (click)="toggleCreator()">
+            <mat-icon *ngIf="creatingInProcess">close</mat-icon>
+            <mat-icon *ngIf="!creatingInProcess">add</mat-icon>
+        </button>
+    </span>
+</div>
+
+<div *ngIf="creatingInProcess" class="activity-create">
+    <app-filler-activity-create (creationEnded)="toggleCreator(false)"></app-filler-activity-create>
+</div>
+
+<div class="activity-list">
+    <ng-container *ngIf="activities$ | async as activities">
+        <div *ngFor="let activity of activities" class="activity-item">
+            <app-filler-activity-item [activity]="activity"
+                                      [childrenById]="childrenById">
+            </app-filler-activity-item>
+        </div>
+        <ng-template [ngIf]="!activities.length">
+            <div class="empty-list">
+                {{ 'HospitalVisit.Activities.NoActivityYet' | translate }}
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

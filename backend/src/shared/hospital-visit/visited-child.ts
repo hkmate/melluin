@@ -25,16 +25,36 @@ export class VisitedChildInput {
 
 export class VisitedChildWithChildInput {
 
+    @ValidateNested()
+    @Type(type => ChildInput)
     child: ChildInput;
 
+    @IsBoolean()
     isParentThere: boolean;
 
 }
 
 export class VisitedChildWithChildIdInput {
 
+    @IsUUID()
+    @IsString()
     childId: string;
 
+    @IsBoolean()
+    isParentThere: boolean;
+
+}
+
+export class VisitedChildEditInput {
+
+    @IsUUID()
+    id: string;
+
+    @ValidateNested()
+    @Type(type => ChildInput)
+    child: ChildInput;
+
+    @IsBoolean()
     isParentThere: boolean;
 
 }

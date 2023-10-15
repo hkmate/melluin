@@ -47,7 +47,7 @@ const routes: Routes = [
         data: {
             permissions: [Permission.canReadVisit]
         },
-        loadChildren: () => import('./hospital/visit/hospital-visit-routing.module').then(m => m.HospitalVisitRoutingModule)
+        loadChildren: () => import('./hospital/hospital-visit-routing.module').then(m => m.HospitalVisitRoutingModule)
     },
     {
         path: '',

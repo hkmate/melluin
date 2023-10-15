@@ -10,11 +10,11 @@
         </span>
     </div>
     <app-child-create *ngIf="creatingInProcess"
-                      [visitDate]="visitDate"
-                      [buttonsDisabled]="saveInProcess"
-                      [needParentInfo]="needParentInfo"
-                      (submitted)="createFinished($event)"
-                      (canceled)="createCanceled()">
+                             [visitDate]="visitDate"
+                             [buttonsDisabled]="saveInProcess"
+                             [needParentInfo]="needParentInfo"
+                             (submitted)="createFinished($event)"
+                             (canceled)="createCanceled()">
     </app-child-create>
     <app-children-list [children]="children" [visitDate]="visitDate"></app-children-list>
 </div>

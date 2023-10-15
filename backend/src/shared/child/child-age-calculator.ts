@@ -2,6 +2,8 @@ import {DateUtil} from '@shared/util/date-util';
 
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
+export const MONTHS_IN_YEAR = 12;
+
 /**
  * Calculation logic:
  *   (2023.01   2022.10)  => 3 months

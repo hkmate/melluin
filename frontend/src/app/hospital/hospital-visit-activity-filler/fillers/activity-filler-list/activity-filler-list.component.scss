@@ -1,0 +1,16 @@
+.activities-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.empty-list {
+    font-style: italic;
+}
+
+.activity-create {
+    margin-bottom: 1rem;
+}
+
+.activity-item:not(:last-of-type) {
+    margin-bottom: 1rem;
+}

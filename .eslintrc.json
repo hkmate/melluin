@@ -65,7 +65,7 @@
             }
         ],
         "@typescript-eslint/no-for-in-array": "error",
-        "@typescript-eslint/no-invalid-void-type": "error",
+        "@typescript-eslint/no-invalid-void-type": "off",
         "@typescript-eslint/no-unused-vars": [
             "error", {
                 "args": "none"

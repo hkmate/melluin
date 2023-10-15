@@ -1,0 +1,16 @@
+.children-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.empty-list {
+    font-style: italic;
+}
+
+.child-create {
+    margin-bottom: 1rem;
+}
+
+.child-item:not(:last-of-type) {
+    margin-bottom: 1rem;
+}

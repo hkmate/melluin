@@ -1,0 +1,33 @@
+.parent-info {
+    margin-left: .5rem;
+
+    mat-icon {
+        font-size: large;
+        height: initial;
+        margin-bottom: -0.1rem;
+    }
+}
+
+:host ::ng-deep .mat-mdc-card-header-text {
+    width: 100%;
+}
+
+mat-card-subtitle {
+    display: flex;
+    justify-content: space-between;
+}
+
+.operation-btns {
+
+    display: flex;
+    text-align: right;
+
+    .operation-btn {
+        display: inline-block;
+        text-align: right;
+
+        &:not(:first-of-type) {
+            margin-left: .5rem;
+        }
+    }
+}

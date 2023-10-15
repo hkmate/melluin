@@ -9,6 +9,7 @@ import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status'
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
+import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 
 @Component({
     selector: 'app-hospital-visit-activity-filler',
@@ -26,7 +27,8 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
     constructor(private readonly router: Router,
                 private readonly route: RouteDataHandler,
                 protected readonly permissions: PermissionService,
-                private readonly visitService: HospitalVisitService) {
+                private readonly visitService: HospitalVisitService,
+                private readonly filler: HospitalVisitActivityFillerService) {
     }
 
     public ngOnInit(): void {
@@ -56,19 +58,14 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
             && this.permissions.has(Permission.canCreateActivity);
     }
 
-    protected isFillingEnabled(): boolean {
-        return this.canActivitiesBeShowed()
-            && this.permissions.has(Permission.canCreateActivity)
-            && this.buttonsEnabled;
-    }
-
     protected startFilling(): void {
-        this.saveVisit(HospitalVisitStatus.STARTED).then();
+        this.saveVisit(HospitalVisitStatus.STARTED).then(() => this.filler.statusChanged(HospitalVisitStatus.STARTED));
     }
 
     protected finalizeFilling(): void {
         this.saveVisit(HospitalVisitStatus.ACTIVITIES_FILLED_OUT)
             .then(() => {
+                this.filler.statusChanged(HospitalVisitStatus.ACTIVITIES_FILLED_OUT);
                 this.router.navigate(['/hospital-visits', this.visit.id]);
             });
     }
@@ -79,6 +76,7 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
         }
         this.visit = visitInfo;
         this.verifyVisitHasSupportedStatus();
+        this.filler.startFilling(visitInfo);
     }
 
     protected saveVisit(newStatus: HospitalVisitStatus): Promise<void> {
