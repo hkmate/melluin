@@ -1,5 +1,5 @@
-<ng-container *ngIf="activities">
-    <ng-container *ngFor="let activity of activities">
+<ng-container *ngIf="visits">
+    <ng-container *ngFor="let activity of visits">
         <mat-card class="activity-card">
             <mat-card-header>
                 <mat-card-subtitle>
@@ -18,14 +18,12 @@
                 </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content class="activity-card-content">
-                <app-visit-activities [visit]="activity.hospitalVisit"
-                                      [wrappedActivities]="activity"
-                                      [editEnabled]="false"></app-visit-activities>
+                <app-related-visit [wrappedActivity]="activity"></app-related-visit>
             </mat-card-content>
         </mat-card>
     </ng-container>
 
-    <div *ngIf="!activities.length">
+    <div *ngIf="!visits.length">
         {{ 'HospitalVisit.NoRelatedActivities' | translate }}
     </div>
 </ng-container>

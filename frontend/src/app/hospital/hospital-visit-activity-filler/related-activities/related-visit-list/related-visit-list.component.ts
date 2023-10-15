@@ -4,23 +4,23 @@ import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrap
 import {VisitActivityService} from '@fe/app/hospital/visit-activity/visit-activity.service';
 
 @Component({
-    selector: 'app-visit-related-activities',
-    templateUrl: './visit-related-activities.component.html',
-    styleUrls: ['./visit-related-activities.component.scss']
+    selector: 'app-related-visit-list',
+    templateUrl: './related-visit-list.component.html',
+    styleUrls: ['./related-visit-list.component.scss']
 })
-export class VisitRelatedActivitiesComponent implements OnInit {
+export class RelatedVisitListComponent implements OnInit {
 
     @Input()
     public visit: HospitalVisit;
 
-    protected activities: Array<WrappedHospitalVisitActivity>;
+    protected visits: Array<WrappedHospitalVisitActivity>;
 
     constructor(private readonly activityService: VisitActivityService) {
     }
 
     public ngOnInit(): void {
         this.activityService.getRelatedActivities(this.visit.id).subscribe(wrappedActivities => {
-            this.activities = wrappedActivities;
+            this.visits = wrappedActivities;
         })
     }
 

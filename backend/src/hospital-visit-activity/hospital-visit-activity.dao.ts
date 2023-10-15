@@ -19,9 +19,16 @@ export class HospitalVisitActivityDao {
         return this.repository.save(entities);
     }
 
+    public async delete(entity: HospitalVisitActivityEntity): Promise<void> {
+        await this.repository.remove(entity);
+    }
+
     public findOne(id: string): Promise<HospitalVisitActivityEntity | undefined> {
         return this.repository.findOne({
             where: {id},
+            relations: {
+                hospitalVisit: true
+            },
         }).then(entity => entity ?? undefined);
     }
 

@@ -15,6 +15,7 @@ import {User} from '@shared/user/user';
 import {Store} from '@ngrx/store';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {AutoUnSubscriberComponent} from '@fe/app/util/auto-unsubscriber.component';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-hospital-visit-form',
@@ -26,6 +27,7 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
     private static readonly MS_ON_HOUR = 3600000; // 1000 * 60 * 60
     private static readonly MIN_ON_HOUR = 60;
     private static readonly MAX_COUNTED_HOURS = 24;
+    private static readonly DECIMALS_IN_COUNTED_HOURS = 2;
     private static readonly defaultTimeFrom = '16:00';
     private static readonly defaultTimeTo = '18:00';
 
@@ -85,8 +87,7 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
         const to = parseTime(this.form.controls.timeTo.value);
         const diff = to.getTime() - from.getTime();
         const hourValue = diff / HospitalVisitFormComponent.MS_ON_HOUR;
-        const hourlyValueWithMax2Decimals = Math.round(hourValue * 100) / 100;
-        this.form.controls.countedHours.setValue(hourlyValueWithMax2Decimals);
+        this.form.controls.countedHours.setValue(_.round(hourValue, HospitalVisitFormComponent.DECIMALS_IN_COUNTED_HOURS));
     }
 
     protected setCreateOther(newValue: boolean): void {
@@ -95,6 +96,14 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
     }
 
     private initForm(): void {
+        this.buildFormGroup();
+        this.initStatusOptions();
+        this.initPersonOptions();
+        this.initDepartmentOptions();
+        this.initCountedHours();
+    }
+
+    private buildFormGroup(): void {
         this.form = this.fb.group({
             status: [this.visitToEdit?.status ?? HospitalVisitStatus.SCHEDULED, [Validators.required]],
             date: [this.getDate(this.visitToEdit?.dateTimeFrom), [Validators.required]],
@@ -103,16 +112,9 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
             timeTo: [this.getTime(this.visitToEdit?.dateTimeTo, HospitalVisitFormComponent.defaultTimeTo),
                 [Validators.required]],
             departmentId: [this.visitToEdit?.department?.id, [Validators.required]],
-            countedHours: [0, [
-                Validators.max(HospitalVisitFormComponent.MAX_COUNTED_HOURS),
-                Validators.min(0)]
-            ],
+            countedHours: [0, [Validators.max(HospitalVisitFormComponent.MAX_COUNTED_HOURS), Validators.min(0)]],
             participants: [[], [Validators.required]],
         });
-        this.initStatusOptions();
-        this.initPersonOptions();
-        this.initDepartmentOptions();
-        this.initCountedHours();
     }
 
     private initCurrentUser(): void {
@@ -181,8 +183,8 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
             return defaultValue;
         }
         const dateTimeObj = new Date(dateTime);
-        const hours = `${dateTimeObj.getHours()}`.padStart(2, '0');
-        const minutes = `${dateTimeObj.getMinutes()}`.padStart(2, '0');
+        const hours = this.formatTimePart(dateTimeObj.getHours());
+        const minutes = this.formatTimePart(dateTimeObj.getMinutes());
         return `${hours}:${minutes}`;
     }
 
@@ -201,14 +203,8 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
         data.organizerId = this.currentUser.personId;
         data.visibility = EventVisibility.PUBLIC;
         data.participantIds = this.form.controls.participants.value.map(person => person.id);
-        data.dateTimeFrom = parseTimeWithDate(
-            this.form.controls.timeFrom.value,
-            this.form.controls.date.value
-        ).toISOString();
-        data.dateTimeTo = parseTimeWithDate(
-            this.form.controls.timeTo.value,
-            this.form.controls.date.value
-        ).toISOString();
+        data.dateTimeFrom = parseTimeWithDate(this.form.controls.timeFrom.value, this.form.controls.date.value).toISOString();
+        data.dateTimeTo = parseTimeWithDate(this.form.controls.timeTo.value, this.form.controls.date.value).toISOString();
 
         return data;
     }
@@ -221,16 +217,14 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
         data.countedMinutes = this.form.controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
         data.visibility = EventVisibility.PUBLIC;
         data.participantIds = this.form.controls.participants.value.map(person => person.id);
-        data.dateTimeFrom = parseTimeWithDate(
-            this.form.controls.timeFrom.value,
-            this.form.controls.date.value
-        ).toISOString();
-        data.dateTimeTo = parseTimeWithDate(
-            this.form.controls.timeTo.value,
-            this.form.controls.date.value
-        ).toISOString();
-
+        data.dateTimeFrom = parseTimeWithDate(this.form.controls.timeFrom.value, this.form.controls.date.value).toISOString();
+        data.dateTimeTo = parseTimeWithDate(this.form.controls.timeTo.value, this.form.controls.date.value).toISOString();
         return data;
+    }
+
+    private formatTimePart(value: number): string {
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        return `${value}`.padStart(2, '0');
     }
 
 }

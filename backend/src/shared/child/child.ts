@@ -6,3 +6,8 @@ export interface Child {
     info: string;
 
 }
+
+export interface ChildAge {
+    years: number;
+    months: number;
+}

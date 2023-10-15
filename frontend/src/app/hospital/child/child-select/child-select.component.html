@@ -1,0 +1,17 @@
+<mat-form-field appearance="fill" class="chip-selector">
+    <mat-label>{{ label }}</mat-label>
+    <mat-chip-listbox>
+        <mat-chip-row *ngFor="let patientInfo of children"
+                      (removed)="removeChild(patientInfo)">
+            {{ patientInfo.child.name }}
+            <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-chip-row>
+    </mat-chip-listbox>
+    <mat-select [ngModel]="children" (ngModelChange)="childrenChanged($event)" multiple>
+        <mat-option *ngFor="let option of options" [value]="option">
+            {{ option.child.name }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

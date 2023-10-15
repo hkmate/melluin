@@ -10,6 +10,14 @@
         ],
         "sourceType": "module"
     },
+    "overrides": [
+        {
+            "files": ["*.controller.ts"],
+            "rules": {
+                "max-params-no-constructor/max-params-no-constructor": ["warn", 6]
+            }
+        }
+    ],
     "env": {
         "node": true,
         "jest": true

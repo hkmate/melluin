@@ -47,6 +47,7 @@ export class VisitActivityManagerComponent {
         this.creatingInProcess = false;
     }
 
+    // eslint-disable-next-line max-lines-per-function
     protected createFinished(objectToSave: HospitalVisitActivityInput): void {
         this.saveInProcess = true;
         this.activityService.add(this.visitId, objectToSave).subscribe({

@@ -5,8 +5,9 @@ import {HospitalVisitDetailsComponent} from '@fe/app/hospital/visit/hospital-vis
 import {HospitalVisitDetailModule} from '@fe/app/hospital/visit/hospital-visit-detail.module';
 import {HospitalVisitResolver} from '@fe/app/hospital/visit/hospital-visit.resolver';
 import {PATHS} from '@fe/app/app-paths';
-import {HospitalVisitActivityFillerComponent} from '@fe/app/hospital/visit/hospital-visit-activity-filler/hospital-visit-activity-filler.component';
 import {Permission} from '@shared/user/permission.enum';
+import {HospitalVisitActivityFillerComponent} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.component';
+import {HospitalVisitActivityFillerModule} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.module';
 
 const routes: Routes = [
     {
@@ -33,7 +34,8 @@ const routes: Routes = [
     imports: [
         RouterModule.forChild(routes),
 
-        HospitalVisitDetailModule
+        HospitalVisitDetailModule,
+        HospitalVisitActivityFillerModule
     ],
     exports: [RouterModule]
 })

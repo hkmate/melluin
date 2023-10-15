@@ -1,7 +1,11 @@
-import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put} from '@nestjs/common';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {Permission} from '@shared/user/permission.enum';
-import {VisitedChild, VisitedChildInput} from '@shared/hospital-visit/visited-child';
+import {
+    VisitedChild,
+    VisitedChildEditInput,
+    VisitedChildInput
+} from '@shared/hospital-visit/visited-child';
 import {VisitedChildrenService} from '@be/hospital-visit-children/service/visited-children.service';
 import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
@@ -20,8 +24,8 @@ export class VisitedChildrenController {
     @HttpCode(HttpStatus.CREATED)
     @PermissionGuard(Permission.canModifyVisit, Permission.canWriteChild)
     public addVisitedChild(@Param('hospitalVisitId', ParseUUIDPipe) hospitalVisitId: string,
-                                 @Body() childInput: VisitedChildInput,
-                                 @CurrentUser() requester: User): Promise<VisitedChild> {
+                           @Body() childInput: VisitedChildInput,
+                           @CurrentUser() requester: User): Promise<VisitedChild> {
         return this.visitedChildSaverService.save(hospitalVisitId, childInput, requester);
     }
 
@@ -30,6 +34,15 @@ export class VisitedChildrenController {
     public getVisitedChildren(@Param('hospitalVisitId', ParseUUIDPipe) hospitalVisitId: string)
         : Promise<Array<VisitedChildEntity>> {
         return this.visitedChildrenService.findAll(hospitalVisitId);
+    }
+
+    @Put('/:hospitalVisitId/children/:visitedChildId')
+    @PermissionGuard(Permission.canModifyVisit, Permission.canWriteChild)
+    public update(@Param('hospitalVisitId', ParseUUIDPipe) hospitalVisitId: string,
+                  @Param('visitedChildId', ParseUUIDPipe) visitedChildId: string,
+                  @Body() childInput: VisitedChildEditInput,
+                  @CurrentUser() requester: User): Promise<VisitedChild> {
+        return this.visitedChildSaverService.update(hospitalVisitId, visitedChildId, childInput, requester);
     }
 
     @Delete('/:hospitalVisitId/children/:visitedChildId')

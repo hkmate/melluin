@@ -1,7 +1,10 @@
 import {BadRequestException, Injectable} from '@nestjs/common';
 import {User} from '@shared/user/user';
 import {HospitalVisitActivityDao} from '@be/hospital-visit-activity/hospital-visit-activity.dao';
-import {HospitalVisitActivityInput} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
+import {
+    HospitalVisitActivityEditInput,
+    HospitalVisitActivityInput
+} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 import {ActivityInputToEntityConverter} from '@be/hospital-visit-activity/converter/activity-input-to-entity.converter';
 import {ActivityEntityToBasicDtoConverter} from '@be/hospital-visit-activity/converter/activity-entity-to-basic-dto.converter';
@@ -13,6 +16,7 @@ import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entit
 import {ActivityRewriteApplierFactory} from '@be/hospital-visit-activity/applier/activity-rewrite-applier.factory';
 import {DateUtil} from '@shared/util/date-util';
 import {VisitedChildrenDao} from '@be/hospital-visit-children/persistence/visited-children.dao';
+import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
 
 @Injectable()
 export class HospitalVisitActivityCrudService {
@@ -34,12 +38,26 @@ export class HospitalVisitActivityCrudService {
         return this.basicDtoConverter.convert(entity);
     }
 
-    public async update(id: string, activityInput: HospitalVisitActivityInput, requester: User): Promise<HospitalVisitActivity> {
-        const persisted = await this.hospitalVisitActivityDao.getOne(id);
+    public async update(activityInput: HospitalVisitActivityEditInput, requester: User): Promise<HospitalVisitActivity> {
+        const visit = await this.hospitalVisitDao.getOne(activityInput.visitId!);
+        const persisted = await this.hospitalVisitActivityDao.getOne(activityInput.id);
+        this.verifyVisitIsStarted(visit);
+        this.verifyActivityIsInVisit(persisted, visit);
+
         await this.rewriteApplierFactory.createFor(activityInput)
             .applyOn(persisted);
         const entity = await this.hospitalVisitActivityDao.save(persisted);
         return this.basicDtoConverter.convert(entity);
+    }
+
+    public async delete(visitId: string, activityId: string, requester: User): Promise<void> {
+        const visit = await this.hospitalVisitDao.getOne(visitId);
+        const persisted = await this.hospitalVisitActivityDao.getOne(activityId);
+
+        this.verifyVisitIsStarted(visit);
+        this.verifyActivityIsInVisit(persisted, visit);
+
+        await this.hospitalVisitActivityDao.delete(persisted);
     }
 
     public async findByVisitId(visitId: string, requester: User): Promise<WrappedHospitalVisitActivity> {
@@ -59,7 +77,13 @@ export class HospitalVisitActivityCrudService {
 
     private verifyVisitIsStarted(visit: HospitalVisitEntity): void {
         if (visit.status !== HospitalVisitStatus.STARTED) {
-            throw new BadRequestException('Save activity is only acceptable when the visit is in status: STARTED');
+            throw new BadRequestException('Manage activity is only acceptable when the visit is in status: STARTED');
+        }
+    }
+
+    private verifyActivityIsInVisit(activity: HospitalVisitActivityEntity, visit: HospitalVisitEntity): void {
+        if (activity.hospitalVisit.id !== visit.id) {
+            throw new BadRequestException(`Activity is not in visit with id: ${visit.id}`);
         }
     }
 

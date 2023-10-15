@@ -57,6 +57,7 @@ export function appInitializeCredentialsFactory(credentialStoreService: Credenti
             [currentUserKey]: currentUserReducer
         }),
         EffectsModule.forRoot([]),
+        StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
 
         MatSidenavModule,
         MatIconModule,
@@ -74,7 +75,6 @@ export function appInitializeCredentialsFactory(credentialStoreService: Credenti
         DashboardModule,
         NotFoundPageModule,
         AppRoutingModule,
-        StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
     ],
     providers: [
         AppConfig,

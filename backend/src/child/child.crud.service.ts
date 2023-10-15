@@ -6,6 +6,7 @@ import {ChildDao} from '@be/child/child.dao';
 import {ChildInputToEntityConverter} from '@be/child/converer/child-input-to-entity.converter';
 import {ChildEntityToDtoConverter} from '@be/child/converer/child-entity-to-dto.converter';
 import {ChildRewriteApplierFactory} from '@be/child/converer/child-rewrite-applier.factory';
+import {ChildEntity} from '@be/child/model/child.entity';
 
 @Injectable()
 export class ChildCrudService {
@@ -32,9 +33,15 @@ export class ChildCrudService {
                          childInput: ChildInput,
                          requester: User): Promise<Child> {
         const childEntity = await this.childDao.getOne(childId);
-        const changedEntity = await this.rewriteApplierFactory.createFor(childInput, childEntity).applyChanges();
+        const changedEntity = this.rewriteApplierFactory.createFor(childInput, childEntity).applyChanges();
         const savedVisit = await this.childDao.save(changedEntity);
         return this.childConverter.convert(savedVisit);
+    }
+
+    public async rewriteEntity(childEntity: ChildEntity,
+                         childInput: ChildInput): Promise<ChildEntity> {
+        const changedEntity = this.rewriteApplierFactory.createFor(childInput, childEntity).applyChanges();
+        return await this.childDao.save(changedEntity);
     }
 
     public async remove(childId: string): Promise<void> {

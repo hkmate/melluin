@@ -16,7 +16,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {VisitActivityManagerComponent} from './visit-activity-manager/visit-activity-manager.component';
 import {MatButtonModule} from '@angular/material/button';
-import {VisitRelatedActivitiesComponent} from './visit-related-activities/visit-related-activities.component';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
 
 @NgModule({
@@ -43,11 +42,9 @@ import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
         VisitActivitiesListComponent,
         VisitActivityCreateComponent,
         VisitActivityManagerComponent,
-        VisitRelatedActivitiesComponent
     ],
     exports: [
-        VisitActivitiesComponent,
-        VisitRelatedActivitiesComponent
+        VisitActivitiesComponent
     ]
 })
 export class VisitActivityModule {

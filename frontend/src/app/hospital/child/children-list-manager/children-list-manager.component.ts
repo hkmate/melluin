@@ -52,6 +52,7 @@ export class ChildrenListManagerComponent {
         this.creatingInProcess = false;
     }
 
+    // eslint-disable-next-line max-lines-per-function
     protected createFinished(objectToSave: VisitedChildInput): void {
         this.saveInProcess = true;
         this.visitedChildService.add(this.hospitalVisit.id, objectToSave).subscribe({

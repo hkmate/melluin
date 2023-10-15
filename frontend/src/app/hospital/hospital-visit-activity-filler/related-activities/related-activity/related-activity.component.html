@@ -1,0 +1,19 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-subtitle>
+            <span *ngFor="let activityType of activity.activities; last as isLast" class="activity-type">
+                {{ 'VisitActivityType.' + activityType  | translate }}<span *ngIf="!isLast">,</span>
+            </span>
+            <div class="children">
+                <mat-chip-listbox>
+                    <mat-chip-row *ngFor="let visitedChildId of activity.children">
+                        {{ childrenById[visitedChildId].child.name }}
+                    </mat-chip-row>
+                </mat-chip-listbox>
+            </div>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        {{ activity.comment }}
+    </mat-card-content>
+</mat-card>

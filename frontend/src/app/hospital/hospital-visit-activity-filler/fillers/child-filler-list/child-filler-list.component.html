@@ -1,0 +1,26 @@
+<div class="children-header">
+    <h1>{{ 'ChildrenList.ChildrenList' | translate }}</h1>
+    <span *ngIf="permissions.has(Permission.canWriteChild)" class="add-btn">
+        <button mat-mini-fab color="accent" (click)="creatorToggled()">
+            <mat-icon *ngIf="creatingInProcess">close</mat-icon>
+            <mat-icon *ngIf="!creatingInProcess">add</mat-icon>
+        </button>
+    </span>
+</div>
+<div *ngIf="creatingInProcess" class="child-create">
+    <app-filler-child-create (creationEnded)="creatorToggled(false)"></app-filler-child-create>
+</div>
+
+
+<div class="children-list">
+    <ng-container *ngIf="children$ | async as children">
+        <div *ngFor="let child of children" class="child-item">
+            <app-filler-child-item [child]="child"></app-filler-child-item>
+        </div>
+        <ng-template [ngIf]="!children.length">
+            <div class="empty-list">
+                {{ 'ChildrenList.NoChildYet' | translate }}
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

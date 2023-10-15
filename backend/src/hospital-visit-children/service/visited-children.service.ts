@@ -25,6 +25,7 @@ export class VisitedChildrenService {
     public async remove(visitId: string, visitedChildId: string): Promise<void> {
         const visit = await this.visitDao.getOne(visitId);
         VisitStatusForManageVisitedChildValidator.of().validate(visit);
+        // TODO: validate that child is not on any activity of the visit!
 
         const entity = await this.visitedChildrenDao.getOne(visitedChildId);
         const child = entity.child;
