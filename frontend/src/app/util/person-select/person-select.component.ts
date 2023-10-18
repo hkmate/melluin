@@ -56,6 +56,7 @@ export class PersonSelectComponent implements ControlValueAccessor {
 
     protected removePerson(removedPerson: PersonIdentifier): void {
         this.people = this.people.filter(person => person.id !== removedPerson.id);
+        this.onChange(this.people);
     }
 
 }
