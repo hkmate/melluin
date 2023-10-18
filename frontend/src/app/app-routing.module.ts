@@ -51,7 +51,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: PATHS.dashboard.main,
+        redirectTo: PATHS.events.main,
         pathMatch: 'full'
     },
     {path: '**', resolve: {path: PathResolveService}, component: NotFoundComponent}

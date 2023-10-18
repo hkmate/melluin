@@ -6,7 +6,7 @@
     </div>
 
     <mat-sidenav-container>
-        <mat-sidenav [(opened)]="menuOpened" mode='side'>
+        <mat-sidenav [opened]="menuOpened" [mode]='menuMode'>
             <div class="menu-closer" (click)="toggleMenu()">
                 <div>
                     <mat-icon>arrow_back_ios</mat-icon>

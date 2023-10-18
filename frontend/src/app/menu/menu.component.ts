@@ -34,15 +34,13 @@ export class MenuComponent extends AutoUnSubscriberComponent implements OnInit {
         this.menuMode = (this.platform.IOS || this.platform.ANDROID) ? 'over' : 'side';
         this.addSubscription(this.store.pipe(selectCurrentUser), cu => {
             this.currentUser = cu;
+            this.menuOpened = !(this.platform.IOS || this.platform.ANDROID);
             this.initializeVisibilityOfMenuItems();
         });
         this.addSubscription(this.actions$.pipe(ofType(AppActions.userLogout)), () => {
             this.currentUser = undefined;
             this.initializeVisibilityOfMenuItems();
         });
-        setTimeout(() => {
-            this.menuOpened = true;
-        })
     }
 
     protected toggleMenu(): void {
