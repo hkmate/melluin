@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>{{ config.title }}</h1>
+<div mat-dialog-content>
+    {{ config.message }}
+</div>
+<div mat-dialog-actions [ngClass]="{'mobile': mobilScreen}">
+    <button mat-flat-button color="accent" type="button"
+            (click)="close(ConfirmationAnswer.OK)">
+        {{ config.okBtnText }}
+    </button>
+    <button mat-stroked-button color="primary" type="button"
+            (click)="close(ConfirmationAnswer.CANCEL)">
+        {{ config.cancelBtnText }}
+    </button>
+</div>

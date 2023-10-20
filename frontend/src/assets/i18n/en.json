@@ -28,6 +28,9 @@
     "EventShortDateFormat": "dd.MM EE",
     "TimeFormat": "HH:mm",
     "LinkCopied": "Link copied to clipboard",
+    "ConfirmDialog": {
+        "Title": "Confirmation needed"
+    },
     "Role": {
         "INTERN_HOSPITAL_VISITOR": "Intern hospital visitor",
         "BEGINNER_HOSPITAL_VISITOR": "Beginner hospital visitor ",
@@ -245,6 +248,8 @@
         },
         "RelatedActivities": "Last activities",
         "NoRelatedActivities": "There is no information about previous activities",
+        "ConfirmChildRemove": "Are you sure you want to remove {{name}}?",
+        "ConfirmActivityRemove": "Are you sure you want to remove activity?",
         "Start": "Start",
         "Finalized": "Finalize"
     },

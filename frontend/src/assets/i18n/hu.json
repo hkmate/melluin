@@ -28,6 +28,9 @@
     "EventShortDateFormat": "MM.dd. EE",
     "TimeFormat": "HH:mm",
     "LinkCopied": "Link a vágólapra másolva",
+    "ConfirmDialog": {
+        "Title": "Megerősítés szükséges"
+    },
     "Role": {
         "INTERN_HOSPITAL_VISITOR": "Hospitáló",
         "BEGINNER_HOSPITAL_VISITOR": "Kórházlátogató (kezdő)",
@@ -245,6 +248,8 @@
         },
         "RelatedActivities": "Korábbi foglalkozások",
         "NoRelatedActivities": "Nem elérhető korábbi foglalkozásról információ",
+        "ConfirmChildRemove": "Biztosan el szeretnéd távolítani {{name}}-t?",
+        "ConfirmActivityRemove": "Biztosan el szeretnéd távolítani a tevékenységet?",
         "Start": "Kezdés",
         "Finalized": "Véglegesítés"
     },
