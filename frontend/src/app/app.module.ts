@@ -30,6 +30,7 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {currentUserKey} from '@fe/app/state/app.state';
 import {currentUserReducer} from '@fe/app/auth/service/current-user.reducer';
 import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
+import {ConfirmationModule} from '@fe/app/confirmation/confirmation.module';
 
 registerLocaleData(localeHu);
 
@@ -72,6 +73,7 @@ export function appInitializeCredentialsFactory(credentialStoreService: Credenti
         ToastrModule.forRoot(),
 
         AuthModule.forRoot(),
+        ConfirmationModule.forRoot(),
         DashboardModule,
         NotFoundPageModule,
         AppRoutingModule,

@@ -1,0 +1,11 @@
+
+.mat-mdc-dialog-actions {
+
+    justify-content: flex-end;
+    margin: 0 0.5rem 0.5rem 0.5rem;
+
+    &.mobile {
+        justify-content: space-between;
+    }
+
+}
