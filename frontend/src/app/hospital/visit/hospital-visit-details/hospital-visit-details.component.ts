@@ -45,9 +45,7 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.resolverSubscription = this.route.getData<HospitalVisit | CreateMarkerType>('visit').subscribe(
-            visitInfo => {
-                this.setUp(visitInfo);
-            }
+            visitInfo => this.setUp(visitInfo)
         );
     }
 

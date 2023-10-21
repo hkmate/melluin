@@ -36,7 +36,8 @@
                 <app-activity-filler-list></app-activity-filler-list>
             </div>
             <div class="box-info">
-                <app-department-box-info-manager [departmentId]="visit.department.id"></app-department-box-info-manager>
+                <app-box-info-manager-by-visit [visitId]="visit.id" [departmentId]="visit.department.id">
+                </app-box-info-manager-by-visit>
             </div>
         </div>
 
