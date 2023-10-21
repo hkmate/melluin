@@ -8,10 +8,7 @@
                 </span>
                 <span *ngIf="ageMonths === 0">({{ 'ChildCard.AgeWithoutMonth' | translate : {year: ageYear} }})</span>
 
-                <span class="parent-info">
-                    <mat-icon *ngIf="visitedChild.isParentThere" class="parent-is-there">family_restroom</mat-icon>
-                    <mat-icon *ngIf="!visitedChild.isParentThere" class="parent-is-not-there">person_off</mat-icon>
-                </span>
+                <app-parent-info-icon [isParentThere]="visitedChild.isParentThere"></app-parent-info-icon>
             </span>
             <span class="operation-btns">
                 <button *ngIf="needCopyBtn$ | async"
