@@ -6,6 +6,7 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
 import {isNilOrEmpty} from '@shared/util/util';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
+import {convertToChildrenById} from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
 
 @Component({
     selector: 'app-related-visit',
@@ -44,7 +45,7 @@ export class RelatedVisitComponent {
     private setupActivities(): void {
         this.children = this.wrappedActivity.children;
         this.activities = this.wrappedActivity.activities;
-        this.childrenById = this.fillerService.convertToChildrenById(this.children);
+        this.childrenById = convertToChildrenById(this.children);
     }
 
 }

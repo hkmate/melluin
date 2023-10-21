@@ -7,12 +7,7 @@
                     {{ 'HospitalVisit.Activities.Children' | translate }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <app-children-list-manager
-                    [editEnabled]="editEnabled"
-                    [needParentInfo]="true"
-                    [visit]="visit"
-                    [children]="children"
-                    (childrenChange)="childrenListChanged($event)"></app-children-list-manager>
+            <app-children-list [children]="children" [visitDate]="visitDate"></app-children-list>
         </mat-expansion-panel>
 
         <mat-expansion-panel *ngIf="permissions.has(Permission.canReadActivity)" class="activity-info">
@@ -21,14 +16,11 @@
                     {{ 'HospitalVisit.Activities.Activities' | translate }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <app-visit-activity-manager [visitId]="visit.id"
-                                        [activities]="activities"
-                                        [children]="children"
-                                        [editEnabled]="editEnabled && permissions.has(Permission.canCreateActivity)">
-            </app-visit-activity-manager>
+            <app-visit-activities-list [childrenById]="childrenById"
+                                       [activities]="activities"></app-visit-activities-list>
         </mat-expansion-panel>
 
-        <mat-expansion-panel *ngIf="editEnabled && permissions.has(Permission.canReadDepBox)">
+        <mat-expansion-panel *ngIf="permissions.has(Permission.canReadDepBox)">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{ 'HospitalVisit.Activities.BoxInfo' | translate }}

@@ -4,7 +4,10 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 import {isNotNil} from '@shared/util/util';
 import {Permission} from '@shared/user/permission.enum';
-import {VisitedChildById} from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
+import {
+    convertToChildrenById,
+    VisitedChildById
+} from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
 import {AutoUnSubscriberComponent} from '@fe/app/util/auto-unsubscriber.component';
 import {Observable} from 'rxjs';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
@@ -30,7 +33,7 @@ export class ActivityFillerListComponent extends AutoUnSubscriberComponent {
     public ngOnInit(): void {
         this.activities$ = this.filler.getActivities();
         this.addSubscription(this.filler.getChildren(), (children: Array<VisitedChild>) => {
-            this.childrenById = this.filler.convertToChildrenById(children);
+            this.childrenById = convertToChildrenById(children);
         });
     }
 

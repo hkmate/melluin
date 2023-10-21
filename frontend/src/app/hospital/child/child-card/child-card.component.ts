@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {getMonthsSince} from '@shared/child/child-age-calculator';
+import {getChildAge} from '@shared/child/child-age-calculator';
 import {isNil, isNotNil} from '@shared/util/util';
 import {DateUtil} from '@shared/util/date-util';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
@@ -10,8 +10,6 @@ import {VisitedChild} from '@shared/hospital-visit/visited-child';
     styleUrls: ['./child-card.component.scss']
 })
 export class ChildCardComponent {
-
-    private static readonly MONTH_IN_YEAR = 12;
 
     protected patientInfo?: VisitedChild;
     protected visitDate: Date = DateUtil.now();
@@ -38,9 +36,9 @@ export class ChildCardComponent {
         if (isNil(this.patientInfo)) {
             return;
         }
-        const monthAge = getMonthsSince(this.patientInfo.child.guessedBirth);
-        this.ageYear = Math.floor(monthAge / ChildCardComponent.MONTH_IN_YEAR);
-        this.ageMonths = monthAge % ChildCardComponent.MONTH_IN_YEAR;
+        const childAge = getChildAge(this.patientInfo.child, this.visitDate);
+        this.ageYear = childAge.years;
+        this.ageMonths = childAge.months;
     }
 
 }

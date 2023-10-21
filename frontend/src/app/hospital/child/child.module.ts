@@ -4,13 +4,12 @@ import {ChildCardComponent} from './child-card/child-card.component';
 import {MatCardModule} from '@angular/material/card';
 import {TranslateModule} from '@ngx-translate/core';
 import {ChildrenListComponent} from './children-list/children-list.component';
-import {ChildrenListManagerComponent} from './children-list-manager/children-list-manager.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {ChildCreateComponent} from './child-create/child-create.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { ParentInfoIconComponent } from './parent-info-icon/parent-info-icon.component';
 
 
 @NgModule({
@@ -28,13 +27,11 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     declarations: [
         ChildCardComponent,
         ChildrenListComponent,
-        ChildrenListManagerComponent,
-        ChildCreateComponent
+        ParentInfoIconComponent
     ],
     exports: [
         ChildrenListComponent,
-        ChildrenListManagerComponent,
-        ChildCreateComponent
+        ParentInfoIconComponent
     ]
 })
 export class ChildModule {

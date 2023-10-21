@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {Child, ChildAge} from '@shared/child/child';
-import {getMonthsSince, MONTHS_IN_YEAR} from '@shared/child/child-age-calculator';
+import {getChildAge} from '@shared/child/child-age-calculator';
 import {VisitedChild, VisitedChildEditInput, VisitedChildInput} from '@shared/hospital-visit/visited-child';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 import {DateUtil} from '@shared/util/date-util';
@@ -10,7 +10,6 @@ import {MessageService} from '@fe/app/util/message.service';
 import {VisitedChildService} from '@fe/app/hospital/child/visited-child.service';
 import {VisitActivityService} from '@fe/app/hospital/visit-activity/visit-activity.service';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {VisitedChildById} from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
 import {
     HospitalVisitActivityEditInput,
     HospitalVisitActivityInput
@@ -64,11 +63,7 @@ export class HospitalVisitActivityFillerService {
     }
 
     public childAge(child: Child): ChildAge {
-        const monthAge = getMonthsSince(child.guessedBirth, this.visitDate);
-        return {
-            years: Math.floor(monthAge / MONTHS_IN_YEAR),
-            months: monthAge % MONTHS_IN_YEAR
-        }
+        return getChildAge(child, this.visitDate);
     }
 
     public lockVisitedChildId(...visitedChildIds: Array<string>): void {
@@ -165,14 +160,6 @@ export class HospitalVisitActivityFillerService {
                     this.activities$.next(this.activities$.getValue().filter(a => a.id !== activity.id));
                 }
             }));
-    }
-
-    public convertToChildrenById(children: Array<VisitedChild>): VisitedChildById {
-        return children.reduce<VisitedChildById>(
-            (result, visitedChild) => {
-                result[visitedChild.id] = visitedChild;
-                return result;
-            }, {});
     }
 
     private isStarted(status: HospitalVisitStatus): boolean {

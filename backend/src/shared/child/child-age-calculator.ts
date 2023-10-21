@@ -1,4 +1,5 @@
 import {DateUtil} from '@shared/util/date-util';
+import {Child, ChildAge} from '@shared/child/child';
 
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
@@ -37,6 +38,14 @@ export function getGuessedBirthFromYears(years: number, months: number, nowDate 
     dateForCalculation.setMonth(nowDate.getMonth() - summedMonths);
     const paddedMonths = `${dateForCalculation.getMonth() + 1}`.padStart(2, '0');
     return `${dateForCalculation.getFullYear()}.${paddedMonths}`
+}
+
+export function getChildAge(child: Child, nowDate = DateUtil.now()): ChildAge {
+    const monthAge = getMonthsSince(child.guessedBirth, nowDate);
+    return {
+        years: Math.floor(monthAge / MONTHS_IN_YEAR),
+        months: monthAge % MONTHS_IN_YEAR
+    }
 }
 
 /* eslint-enable @typescript-eslint/no-magic-numbers */

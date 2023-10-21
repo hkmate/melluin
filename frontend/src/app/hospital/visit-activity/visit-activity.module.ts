@@ -10,11 +10,9 @@ import {VisitActivityCardComponent} from './visit-activity-card/visit-activity-c
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {VisitActivitiesListComponent} from './visit-activities-list/visit-activities-list.component';
-import {VisitActivityCreateComponent} from './visit-activitiy-create/visit-activity-create.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import {VisitActivityManagerComponent} from './visit-activity-manager/visit-activity-manager.component';
 import {MatButtonModule} from '@angular/material/button';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
 
@@ -40,8 +38,6 @@ import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
         VisitActivitiesComponent,
         VisitActivityCardComponent,
         VisitActivitiesListComponent,
-        VisitActivityCreateComponent,
-        VisitActivityManagerComponent,
     ],
     exports: [
         VisitActivitiesComponent
