@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ChildModule} from '@fe/app/hospital/child/child.module';
 import {VisitActivitiesComponent} from './visit-activities/visit-activities.component';
-import {MatExpansionModule} from '@angular/material/expansion';
 import {TranslateModule} from '@ngx-translate/core';
 import {DepartmentBoxModule} from '@fe/app/hospital/department-box/department-box.module';
 import {MatIconModule} from '@angular/material/icon';
@@ -21,7 +20,6 @@ import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
         CommonModule,
         ReactiveFormsModule,
 
-        MatExpansionModule,
         MatIconModule,
         MatCardModule,
         MatChipsModule,

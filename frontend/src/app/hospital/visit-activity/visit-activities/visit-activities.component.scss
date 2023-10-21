@@ -1,22 +1,10 @@
-:host ::ng-deep .activities-info {
-    .activity-header, .box-part-header, .children-manager-header {
-        width: 100%;
-        display: flex;
-        justify-content: start;
-        margin-bottom: .5rem;
+@use '@angular/material' as mat;
 
-        h1 {
-            display: none !important;
-        }
-
-    }
-
-    app-optional-box-info-creator .box-part-header .add-btn {
-        margin-top: initial;
-        width: 100%;
-    }
-
-    .empty-list {
-        font-style: italic;
+.activities-info {
+    .children, .activities, .box-info {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 4px;
+        @include mat.elevation(2);
     }
 }

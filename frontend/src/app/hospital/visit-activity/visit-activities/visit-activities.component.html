@@ -1,40 +1,15 @@
 <div class="activities-info">
-
-    <mat-accordion [multi]="true">
-        <mat-expansion-panel *ngIf="permissions.has(Permission.canReadChild)" class="children-info">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{ 'HospitalVisit.Activities.Children' | translate }}
-                </mat-panel-title>
-            </mat-expansion-panel-header>
+        <div class="children">
+            <h1>{{ 'HospitalVisit.Activities.Children' | translate }}</h1>
             <app-children-list [children]="children" [visitDate]="visitDate"></app-children-list>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel *ngIf="permissions.has(Permission.canReadActivity)" class="activity-info">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{ 'HospitalVisit.Activities.Activities' | translate }}
-                </mat-panel-title>
-            </mat-expansion-panel-header>
+        </div>
+        <div class="activities">
+            <h1>{{ 'HospitalVisit.Activities.Activities' | translate }}</h1>
             <app-visit-activities-list [childrenById]="childrenById"
                                        [activities]="activities"></app-visit-activities-list>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel *ngIf="permissions.has(Permission.canReadDepBox)">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{ 'HospitalVisit.Activities.BoxInfo' | translate }}
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <app-optional-box-info-creator *ngIf="permissions.has(Permission.canWriteDepBox)"
-                                           [departmentId]="visit.department.id"
-                                           [visitId]="visit.id"
-                                           (itemAdded)="boxStatusAdded($event)">
-            </app-optional-box-info-creator>
-            <div *ngFor="let boxInfo of boxInfoList" class="box-info">
-                <app-department-box-info [boxStatus]="boxInfo"></app-department-box-info>
-            </div>
-        </mat-expansion-panel>
-    </mat-accordion>
-
+        </div>
+        <div class="box-info">
+            <h1>{{ 'HospitalVisit.Activities.BoxInfo' | translate }}</h1>
+            <app-box-info-list-by-visit [visitId]="visit.id"></app-box-info-list-by-visit>
+        </div>
 </div>

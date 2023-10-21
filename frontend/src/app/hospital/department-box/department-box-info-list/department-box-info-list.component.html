@@ -4,7 +4,8 @@
             <app-department-box-info [boxStatus]="boxInfo"></app-department-box-info>
         </div>
 
-        <mat-paginator [length]="countOfAll"
+        <mat-paginator *ngIf="paginatorNeeded"
+                       [length]="countOfAll"
                        [pageIndex]="page - 1"
                        [pageSize]="size"
                        [pageSizeOptions]="sizeOptions"
@@ -14,5 +15,7 @@
 </ng-container>
 
 <ng-template #noBoxInList>
-    {{ 'BoxStatus.NoStatusYet' | translate }}
+    <span class="empty-list">
+        {{ 'BoxStatus.NoStatusYet' | translate }}
+    </span>
 </ng-template>

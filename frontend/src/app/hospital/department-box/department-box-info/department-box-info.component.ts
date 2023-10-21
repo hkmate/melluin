@@ -8,7 +8,6 @@ import {DepartmentBoxStatus} from '@shared/department/box/department-box-status'
 })
 export class DepartmentBoxInfoComponent {
 
-
     @Input()
     public boxStatus: DepartmentBoxStatus;
 
