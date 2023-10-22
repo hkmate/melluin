@@ -30,16 +30,15 @@ export class FillerChildCreateComponent {
 
     protected onFormSubmit(): void {
         this.buttonsDisabled = true;
-        this.filler.saveNewChild(this.createObjectFromForm())
-            .subscribe({
-                next: () => {
-                    this.buttonsDisabled = false;
-                    this.creationEnded.emit();
-                },
-                error: () => {
-                    this.buttonsDisabled = false;
-                }
-            });
+        this.filler.saveNewChild(this.createObjectFromForm()).subscribe({
+            next: () => {
+                this.buttonsDisabled = false;
+                this.creationEnded.emit();
+            },
+            error: () => {
+                this.buttonsDisabled = false;
+            }
+        });
     }
 
     protected cancelEditing(): void {

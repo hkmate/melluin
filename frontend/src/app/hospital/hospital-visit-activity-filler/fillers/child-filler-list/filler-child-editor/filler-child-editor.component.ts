@@ -37,16 +37,15 @@ export class FillerChildEditorComponent {
 
     protected onFormSubmit(): void {
         this.buttonsDisabled = true;
-        this.filler.updateChild(this.createObjectFromForm())
-            .subscribe({
-                next: () => {
-                    this.buttonsDisabled = false;
-                    this.editDone.emit();
-                },
-                error: () => {
-                    this.buttonsDisabled = false;
-                }
-            });
+        this.filler.updateChild(this.createObjectFromForm()).subscribe({
+            next: () => {
+                this.buttonsDisabled = false;
+                this.editDone.emit();
+            },
+            error: () => {
+                this.buttonsDisabled = false;
+            }
+        });
     }
 
     private initForm(): void {
