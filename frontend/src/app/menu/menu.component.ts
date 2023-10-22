@@ -43,8 +43,12 @@ export class MenuComponent extends AutoUnSubscriberComponent implements OnInit {
         });
     }
 
-    protected toggleMenu(): void {
-        this.menuOpened = !this.menuOpened;
+    protected openMenu(): void {
+        this.menuOpened = true;
+    }
+
+    protected closeMenu(): void {
+        this.menuOpened = false;
     }
 
     protected logout(): void {
