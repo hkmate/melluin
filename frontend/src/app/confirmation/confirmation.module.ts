@@ -3,14 +3,15 @@ import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
-import {NgClass} from '@angular/common';
+import {CommonModule} from '@angular/common';
 
 
 @NgModule({
     imports: [
+        CommonModule,
+
         MatDialogModule,
         MatButtonModule,
-        NgClass
     ],
     declarations: [
         ConfirmationDialogComponent

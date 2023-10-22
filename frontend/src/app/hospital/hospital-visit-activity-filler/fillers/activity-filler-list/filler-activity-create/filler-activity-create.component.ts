@@ -14,7 +14,7 @@ import {Observable} from 'rxjs';
 })
 export class FillerActivityCreateComponent {
 
-     @Output()
+    @Output()
     public creationEnded = new EventEmitter<void>();
 
     protected children$: Observable<Array<VisitedChild>>;
@@ -34,17 +34,16 @@ export class FillerActivityCreateComponent {
     protected onFormSubmit(): void {
         this.buttonsDisabled = true;
         const creationObject = this.createObjectFromForm();
-        this.filler.saveNewActivity(creationObject)
-            .subscribe({
-                next: () => {
-                    this.buttonsDisabled = false;
-                    this.filler.unlockVisitedChildId(...creationObject.children);
-                    this.creationEnded.emit();
-                },
-                error: () => {
-                    this.buttonsDisabled = false;
-                }
-            });
+        this.filler.saveNewActivity(creationObject).subscribe({
+            next: () => {
+                this.buttonsDisabled = false;
+                this.filler.unlockVisitedChildId(...creationObject.children);
+                this.creationEnded.emit();
+            },
+            error: () => {
+                this.buttonsDisabled = false;
+            }
+        });
     }
 
     protected cancelEditing(): void {

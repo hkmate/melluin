@@ -44,17 +44,16 @@ export class FillerActivityEditorComponent extends AutoUnSubscriberComponent {
     protected onFormSubmit(): void {
         this.buttonsDisabled = true;
         const updateObj = this.createObjectFromForm();
-        this.filler.updateActivity(updateObj)
-            .subscribe({
-                next: () => {
-                    this.buttonsDisabled = false;
-                    this.filler.unlockVisitedChildId(...updateObj.children);
-                    this.editDone.emit();
-                },
-                error: () => {
-                    this.buttonsDisabled = false;
-                }
-            });
+        this.filler.updateActivity(updateObj).subscribe({
+            next: () => {
+                this.buttonsDisabled = false;
+                this.filler.unlockVisitedChildId(...updateObj.children);
+                this.editDone.emit();
+            },
+            error: () => {
+                this.buttonsDisabled = false;
+            }
+        });
     }
 
     protected cancelEditing(): void {

@@ -27,6 +27,7 @@
             <mat-label>{{ 'HospitalVisit.Form.Date' | translate }}</mat-label>
             <input matInput
                    [matDatepicker]="validFromPicker"
+                   (click)="validFromPicker.open()"
                    formControlName="date">
             <mat-datepicker-toggle matIconSuffix [for]="validFromPicker"></mat-datepicker-toggle>
             <mat-datepicker #validFromPicker></mat-datepicker>
