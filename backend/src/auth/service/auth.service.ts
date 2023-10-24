@@ -8,7 +8,7 @@ import {PersonEntity} from '@be/person/model/person.entity';
 import {PersonDao} from '@be/person/person.dao';
 import {User} from '@shared/user/user';
 import {AuthToken} from '@shared/user/auth-token';
-import {isNil, Nullable} from '@shared/util/util';
+import {isNil} from '@shared/util/util';
 import {ConfigService} from '@nestjs/config';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
@@ -31,7 +31,7 @@ export class AuthService {
     }
 
     public async validate(credentials: AuthCredentials): Promise<User> {
-        const user: Nullable<UserEntity> = await this.userService.findOneByName(credentials.username);
+        const user: UserEntity | undefined = await this.userService.findOneByName(credentials.username);
 
         if (isNil(user) || !user.isActive) {
             throw new BadRequestException('Wrong username or password');
@@ -53,7 +53,7 @@ export class AuthService {
     private async initDefaultUser(): Promise<void> {
         const username: string = this.config.get('server.defaultSysAdmin.username')!;
 
-        const sysadmin: UserEntity | null = await this.userService.findOneByName(username);
+        const sysadmin: UserEntity | undefined = await this.userService.findOneByName(username);
         if (isNil(sysadmin)) {
             await this.createDefaultUser();
         }

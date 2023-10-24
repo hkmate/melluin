@@ -47,7 +47,7 @@ describe('EndpointMap', () => {
         });
 
         it('When endpoint is null Then returns false', () => {
-            const actual = service.contains(null);
+            const actual = service.contains(undefined);
 
             expect(actual).toBe(false);
         });

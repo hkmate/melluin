@@ -1,12 +1,10 @@
-import {Nullable} from '@shared/util/util';
-
 
 export type FilterOperator = 'eq' | 'neq' | 'lt' | 'lte' | 'gt' | 'gte'
     | 'like' | 'ilike' | 'between' | 'in' | 'isNull' | 'notNull';
 
 export interface FilterOperation<T> {
     operator: FilterOperator,
-    operand: Nullable<T> | Array<T>,
+    operand?: T | Array<T>,
 }
 
 /**
@@ -44,7 +42,7 @@ export class FilterOperationBuilder {
     public static ilike = <T>(value: T): FilterOperation<T> => ({operator: 'ilike', operand: value});
     public static between = <T>(begin: T, end: T): FilterOperation<T> => ({operator: 'between', operand: [begin, end]});
     public static in = <T>(values: Array<T>): FilterOperation<T> => ({operator: 'in', operand: values});
-    public static isNull = (): FilterOperation<null> => ({operator: 'isNull', operand: null});
-    public static notNull = (): FilterOperation<null> => ({operator: 'notNull', operand: null});
+    public static isNull = (): FilterOperation<undefined> => ({operator: 'isNull', operand: undefined});
+    public static notNull = (): FilterOperation<undefined> => ({operator: 'notNull', operand: undefined});
 
 }

@@ -55,7 +55,7 @@ export class UserEditFormComponent {
         this.roleOptions = this.permission.getRolesCanBeManaged();
         this.form = this.fb.group({
             // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-            password: [null, [Validators.minLength(8)]],
+            password: [undefined, [Validators.minLength(8)]],
             isActive: [this.userToEdit?.isActive],
             roles: [this.userToEdit?.roles],
             userName: [this.userToEdit?.userName]

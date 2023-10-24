@@ -20,7 +20,7 @@ export class EndpointMap {
         return this;
     }
 
-    public contains(endpoint: Endpoint | null): boolean {
+    public contains(endpoint?: Endpoint): boolean {
         if (isNil(endpoint)) {
             return false;
         }

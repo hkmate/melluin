@@ -7,13 +7,13 @@ import {plainToInstance} from 'class-transformer';
 export class PersonEntity {
 
     @PrimaryColumn('uuid')
-    id!: string;
+    id: string;
 
     @Column({name: 'first_name'})
-    firstName!: string;
+    firstName: string;
 
     @Column({name: 'last_name'})
-    lastName!: string;
+    lastName: string;
 
     @Column({type: 'jsonb', transformer: {
             to: value => value,

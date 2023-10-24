@@ -11,8 +11,8 @@ export class PermissionsGuard implements CanActivate {
     }
 
     public canActivate(context: ExecutionContext): boolean {
-        const requiredPermissions: Array<Permission> | null
-            = this.reflector.getAllAndOverride<Array<Permission> | null>(PERMISSIONS_KEY, [
+        const requiredPermissions: Array<Permission>
+            = this.reflector.getAllAndOverride<Array<Permission>>(PERMISSIONS_KEY, [
             context.getHandler(),
             context.getClass(),
         ]);

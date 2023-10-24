@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Data} from '@angular/router';
 import {first} from 'rxjs/operators';
-import {Nullable} from '@shared/util/util';
 import {AppTitle} from '@fe/app/app-title.service';
 
 @Component({
@@ -10,7 +9,7 @@ import {AppTitle} from '@fe/app/app-title.service';
 })
 export class NotFoundComponent implements OnInit {
 
-    protected path: Nullable<string> = null;
+    protected path?: string;
 
     constructor(private readonly route: ActivatedRoute,
                 private readonly title: AppTitle) {

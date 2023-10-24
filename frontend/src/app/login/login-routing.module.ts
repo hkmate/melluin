@@ -7,7 +7,7 @@ const routes: Routes = [
     {
         path: '',
         component: LoginComponent,
-        data: {titleKey: 'Titles.LoginAndRegistration.Login'}
+        data: {titleKey: 'Titles.Login'}
     }
 ];
 

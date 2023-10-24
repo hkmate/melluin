@@ -3,7 +3,7 @@ import {Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import {UserEntity} from './model/user.entity';
 import {RoleEntity} from './model/role.entity';
-import {isNil} from '@shared/util/util';
+import {isNil, toOptional} from '@shared/util/util';
 
 @Injectable()
 export class UserDao {
@@ -23,8 +23,8 @@ export class UserDao {
         return this.roleRepository.find();
     }
 
-    public findOneByName(userName: string): Promise<UserEntity | null> {
-        return this.userRepository.findOne({where: {userName}});
+    public findOneByName(userName: string): Promise<UserEntity | undefined> {
+        return this.userRepository.findOne({where: {userName}}).then(toOptional);
     }
 
     public getOne(id: string): Promise<UserEntity> {

@@ -2,7 +2,7 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {In, Repository} from 'typeorm';
 import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
-import {isNil} from '@shared/util/util';
+import {isNil, toOptional} from '@shared/util/util';
 
 @Injectable()
 export class VisitedChildrenDao {
@@ -14,8 +14,8 @@ export class VisitedChildrenDao {
         return this.repository.save(visitedChildEntity);
     }
 
-    public findOne(visitedChildId: string): Promise<VisitedChildEntity | null> {
-        return this.repository.findOneBy({id: visitedChildId});
+    public findOne(visitedChildId: string): Promise<VisitedChildEntity | undefined> {
+        return this.repository.findOneBy({id: visitedChildId}).then(toOptional);
     }
 
     public getOne(id: string): Promise<VisitedChildEntity> {

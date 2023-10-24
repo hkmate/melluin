@@ -1,11 +1,15 @@
 export type VoidFunc = () => void;
 export const NOOP = (): unknown => ({});
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-export const VoidNOOP = (): void => {};
+export const VoidNOOP = (): void => {
+};
 
 export type Nil = null | undefined;
 
-export type Nullable<T> = T | null;
+// Note: if a function returns with nullable this could convert it to optional value. (We do not use null in the system)
+export function toOptional<T>(value: T | null | undefined): T | undefined {
+    return value ?? undefined;
+}
 
 export function isNotNil<T>(value: T | Nil): value is T {
     return !isNil(value);

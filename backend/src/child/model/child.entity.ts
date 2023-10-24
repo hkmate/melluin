@@ -13,6 +13,6 @@ export class ChildEntity {
     guessedBirth: string;
 
     @Column()
-    info: string;
+    info?: string;
 
 }

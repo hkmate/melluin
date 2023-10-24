@@ -14,7 +14,6 @@ import {randomUUID} from 'crypto';
 import {User} from '@shared/user/user';
 import {AuthToken} from '@shared/user/auth-token';
 import {when} from 'jest-when';
-import {Nullable} from '@shared/util/util';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 import Mock = jest.Mock;
@@ -108,7 +107,7 @@ describe('AuthService', () => {
                     {provide: JwtService, useValue: {}},
                     {
                         provide: UserDao, useValue: {
-                            findOneByName: jest.fn().mockReturnValueOnce(null),
+                            findOneByName: jest.fn().mockReturnValueOnce(undefined),
                             save: jest.fn(arg => arg),
                             findAllRole: userServiceFindAllRole
                         }
@@ -294,7 +293,7 @@ describe('AuthService', () => {
             when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
             when(passwordCryptService.match).calledWith(rawPassword, password).mockReturnValue(true);
 
-            const result: Nullable<User> = await authService.validate({username: userName, password: rawPassword});
+            const result: User = await authService.validate({username: userName, password: rawPassword});
 
             expect(result).toEqual(expectedUser);
         });
@@ -342,7 +341,7 @@ describe('AuthService', () => {
         it('When user is not in db Then null returned', async () => {
             const userName: string = randomString();
             const rawPassword: string = randomString();
-            when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(null));
+            when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(undefined));
 
             const testValidate = (): Promise<User> => authService.validate({username: userName, password: rawPassword});
 

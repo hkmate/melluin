@@ -44,8 +44,8 @@ export class UserCreationFormComponent implements OnInit {
     private initForm(): void {
         this.roleOptions = this.permission.getRolesCanBeManaged();
         this.form = this.fb.group({
-            userName: [null, [Validators.required]],
-            password: [null, [Validators.required]],
+            userName: [undefined, [Validators.required]],
+            password: [undefined, [Validators.required]],
             roles: [[]],
         });
     }
