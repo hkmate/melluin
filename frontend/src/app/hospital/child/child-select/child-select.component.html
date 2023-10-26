@@ -10,8 +10,13 @@
         </mat-chip-row>
     </mat-chip-listbox>
     <mat-select [ngModel]="children" (ngModelChange)="childrenChanged($event)" multiple>
-        <mat-option *ngFor="let option of options" [value]="option">
-            {{ option.child.name }}
+        <mat-option *ngFor="let option of options"
+                    class="child-select-option"
+                    [value]="option">
+            <span class="child-info">
+                <span class="name">{{ option.child.name }}</span>
+                <span *ngIf="date" class="age">({{ option.child | childAge : date }})</span>
+            </span>
         </mat-option>
     </mat-select>
 </mat-form-field>

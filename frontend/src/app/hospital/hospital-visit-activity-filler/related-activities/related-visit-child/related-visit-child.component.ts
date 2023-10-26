@@ -13,8 +13,7 @@ export class RelatedVisitChildComponent implements OnInit {
     @Input()
     public visitedChild: VisitedChild;
 
-    protected ageYear: number;
-    protected ageMonths: number;
+    protected visitDate: Date
     protected needCopyBtn$: Observable<boolean>;
 
     constructor(protected readonly filler: HospitalVisitActivityFillerService) {
@@ -22,17 +21,11 @@ export class RelatedVisitChildComponent implements OnInit {
 
     public ngOnInit(): void {
         this.needCopyBtn$ = this.filler.isChildCopyableToActualVisit(this.visitedChild.child.id);
-        this.setAge();
+        this.visitDate = this.filler.getVisitDate();
     }
 
     protected copyChildToActualVisit(): void {
         this.filler.saveNewChild({childId: this.visitedChild.child.id, isParentThere: false}).subscribe();
-    }
-
-    private setAge(): void {
-        const {years, months} = this.filler.childAge(this.visitedChild.child);
-        this.ageYear = years;
-        this.ageMonths = months;
     }
 
 }

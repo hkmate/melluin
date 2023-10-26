@@ -7,6 +7,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
+import {ChildModule} from '@fe/app/hospital/child/child.module';
 
 
 @NgModule({
@@ -18,7 +19,9 @@ import {MatSelectModule} from '@angular/material/select';
         MatFormFieldModule,
         MatIconModule,
         MatOptionModule,
-        MatSelectModule
+        MatSelectModule,
+
+        ChildModule
     ],
     declarations: [
         ChildSelectComponent

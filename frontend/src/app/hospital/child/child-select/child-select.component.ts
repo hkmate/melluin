@@ -22,6 +22,9 @@ export class ChildSelectComponent implements ControlValueAccessor {
     @Input()
     public options: Array<VisitedChild>;
 
+    @Input()
+    public date: Date;
+
     @Output()
     public childrenUnselected = new EventEmitter<Array<VisitedChild>>();
 

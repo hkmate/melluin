@@ -9,3 +9,20 @@ mat-form-field {
         width: 0;
     }
 }
+
+::ng-deep .child-select-option {
+    & > span {
+        margin-right: 0;
+        width: 100%;
+    }
+
+    .child-info {
+        display: flex;
+        justify-content: space-between;
+
+        .age {
+            opacity: 0.5;
+            font-size: small;
+        }
+    }
+}

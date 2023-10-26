@@ -262,8 +262,8 @@
         }
     },
     "ChildCard": {
-        "Age": "{{year}} év, {{months}} hó",
-        "AgeWithoutMonth": "{{year}} év"
+        "Age": "{{years}} év, {{months}} hó",
+        "AgeWithoutMonth": "{{years}} év"
     },
     "ChildrenList": {
         "ChildrenList": "Gyerekek",

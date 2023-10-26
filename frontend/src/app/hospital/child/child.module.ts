@@ -10,6 +10,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ParentInfoIconComponent } from './parent-info-icon/parent-info-icon.component';
+import { ChildAgePipe } from './child-age/child-age.pipe';
 
 
 @NgModule({
@@ -27,11 +28,13 @@ import { ParentInfoIconComponent } from './parent-info-icon/parent-info-icon.com
     declarations: [
         ChildCardComponent,
         ChildrenListComponent,
-        ParentInfoIconComponent
+        ParentInfoIconComponent,
+        ChildAgePipe
     ],
     exports: [
         ChildrenListComponent,
-        ParentInfoIconComponent
+        ParentInfoIconComponent,
+        ChildAgePipe
     ]
 })
 export class ChildModule {

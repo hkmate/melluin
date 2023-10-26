@@ -21,6 +21,7 @@ export class FillerActivityCreateComponent {
     protected activityTypeOptions: Array<VisitActivityType> = Object.values(VisitActivityType);
     protected buttonsDisabled: boolean;
     protected form: FormGroup;
+    protected visitDate: Date;
 
     constructor(private readonly formBuilder: FormBuilder,
                 private readonly filler: HospitalVisitActivityFillerService) {
@@ -28,6 +29,7 @@ export class FillerActivityCreateComponent {
 
     public ngOnInit(): void {
         this.children$ = this.filler.getChildren();
+        this.visitDate = this.filler.getVisitDate();
         this.initForm();
     }
 

@@ -262,8 +262,8 @@
         }
     },
     "ChildCard": {
-        "Age": "{{year}} years, {{months}} months",
-        "AgeWithoutMonth": "{{year}} years"
+        "Age": "{{years}} years, {{months}} months",
+        "AgeWithoutMonth": "{{years}} years"
     },
     "ChildrenList": {
         "ChildrenList": "Children",

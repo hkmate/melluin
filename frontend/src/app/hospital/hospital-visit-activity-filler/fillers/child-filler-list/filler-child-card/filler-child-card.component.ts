@@ -17,24 +17,17 @@ export class FillerChildCardComponent {
     public removeWanted = new EventEmitter<void>();
 
     protected visitedChild: VisitedChild;
-    protected ageYear: number;
-    protected ageMonths: number;
+    protected visitDate: Date;
     protected deleteEnabled$: Observable<boolean>;
 
     @Input()
     public set child(child: VisitedChild) {
         this.visitedChild = child;
-        this.setAge();
+        this.visitDate = this.filler.getVisitDate();
         this.deleteEnabled$ = this.filler.isChildDeletable(child.id);
     }
 
     constructor(protected readonly filler: HospitalVisitActivityFillerService) {
-    }
-
-    private setAge(): void {
-        const {years, months} = this.filler.childAge(this.visitedChild.child);
-        this.ageYear = years;
-        this.ageMonths = months;
     }
 
 }

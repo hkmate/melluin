@@ -3,10 +3,7 @@
         <mat-card-subtitle>
             <span class="child-info">
                 {{ visitedChild.child.name }}
-                <span *ngIf="ageMonths !== 0">
-                    ({{ 'ChildCard.Age' | translate : {year: ageYear, months: ageMonths} }})
-                </span>
-                <span *ngIf="ageMonths === 0">({{ 'ChildCard.AgeWithoutMonth' | translate : {year: ageYear} }})</span>
+                <span>({{ visitedChild.child | childAge : visitDate }})</span>
 
                 <app-parent-info-icon [isParentThere]="visitedChild.isParentThere"></app-parent-info-icon>
             </span>

@@ -6,6 +6,7 @@
                 <app-child-select [options]="children"
                                   formControlName="children"
                                   [label]="'HospitalVisit.Activities.Children' | translate "
+                                  [date]="visitDate"
                                   (childrenSelected)="lockChildren($event)"
                                   (childrenUnselected)="unlockChildren($event)"></app-child-select>
             </ng-container>
