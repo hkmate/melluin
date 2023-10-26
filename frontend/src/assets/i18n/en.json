@@ -251,6 +251,7 @@
         "ConfirmChildRemove": "Are you sure you want to remove {{name}}?",
         "ConfirmActivityRemove": "Are you sure you want to remove activity?",
         "Start": "Start",
+        "ContinueFilling": "Continue filling",
         "Finalized": "Finalize"
     },
     "VisitList": {

@@ -12,6 +12,13 @@
                         <mat-icon>rocket_launch</mat-icon>
                         {{ 'HospitalVisit.Start' | translate }}
                     </button>
+                    <button *ngIf="isStartedAndUserCanContinueTheVisit()"
+                            mat-flat-button
+                            color="accent"
+                            routerLink="fill-activities">
+                        <mat-icon>rocket_launch</mat-icon>
+                        {{ 'HospitalVisit.ContinueFilling' | translate }}
+                    </button>
                     <button *ngIf="permissions.has(Permission.canModifyVisit)"
                             mat-stroked-button
                             color="primary"

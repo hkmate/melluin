@@ -23,10 +23,13 @@ import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status'
 export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
 
     Permission = Permission;
-    private static readonly BEGIN_STATUSES = [
+    private static readonly NOT_DONE_STATUSES = [
         HospitalVisitStatus.DRAFT,
         HospitalVisitStatus.SCHEDULED,
-        HospitalVisitStatus.STARTED
+        HospitalVisitStatus.STARTED,
+        HospitalVisitStatus.CANCELED,
+        HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD,
+        HospitalVisitStatus.FAILED_FOR_OTHER_REASON
     ];
 
     protected isCreation = false;
@@ -86,9 +89,15 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
             && this.permissions.has(Permission.canCreateActivity)
     }
 
+    protected isStartedAndUserCanContinueTheVisit(): boolean {
+        return isNotNil(this.visit)
+            && this.visit.status === HospitalVisitStatus.STARTED
+            && this.permissions.has(Permission.canCreateActivity)
+    }
+
     protected shouldShowActivities(): boolean {
         return isNotNil(this.visit)
-            && !HospitalVisitDetailsComponent.BEGIN_STATUSES.includes(this.visit.status)
+            && !HospitalVisitDetailsComponent.NOT_DONE_STATUSES.includes(this.visit.status)
             && this.permissions.has(Permission.canReadActivity)
     }
 

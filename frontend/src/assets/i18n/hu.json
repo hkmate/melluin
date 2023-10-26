@@ -251,6 +251,7 @@
         "ConfirmChildRemove": "Biztosan el szeretnéd távolítani {{name}}-t?",
         "ConfirmActivityRemove": "Biztosan el szeretnéd távolítani a tevékenységet?",
         "Start": "Kezdés",
+        "ContinueFilling": "Kitöltés folytatása",
         "Finalized": "Véglegesítés"
     },
     "VisitList": {

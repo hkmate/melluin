@@ -5,15 +5,13 @@
                 <mat-card-subtitle>
                     <span class="date-time">
                         {{ activity.hospitalVisit.dateTimeFrom | date : ('EventDateFormat' | translate) }}
-                        {{ activity.hospitalVisit.dateTimeFrom | date : ('TimeFormat' | translate) }}
-                        -
-                        {{ activity.hospitalVisit.dateTimeTo | date : ('TimeFormat' | translate) }}
                     </span>
 
-                    <span *ngFor="let participant of activity.hospitalVisit.participants; let last = last"
-                          class="participants">
-                        {{ participant | personName }}
-                        <span *ngIf="!last">, </span>
+                    <span class="participants">
+                        <span *ngFor="let participant of activity.hospitalVisit.participants; let last = last"
+                              class="participant">
+                            <span class="nowrap">{{ participant | personName }}</span><span *ngIf="!last">, </span>
+                        </span>
                     </span>
                 </mat-card-subtitle>
             </mat-card-header>
