@@ -13,6 +13,8 @@ import {PersonModule} from '@be/person/person.module';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 import {PermissionEntity} from '@be/user/model/permission.entity';
 import {UserRewriteApplierFactory} from '@be/user/applier/user-rewrite-applier.factory';
+import {UserSettingsController} from '@be/user/user-settings.controller';
+import {UserSettingsService} from '@be/user/service/user-settings.service';
 
 @Module({
     imports: [
@@ -25,10 +27,11 @@ import {UserRewriteApplierFactory} from '@be/user/applier/user-rewrite-applier.f
         PersonModule,
         UserEntityToDtoModule
     ],
-    controllers: [UserController],
+    controllers: [UserController, UserSettingsController],
     providers: [
         UserDao,
         UserService,
+        UserSettingsService,
         UserCreationToEntityConverter,
         PersonHasNoUserYetValidator,
         UsernameIsNotUsedValidator,
@@ -38,6 +41,7 @@ import {UserRewriteApplierFactory} from '@be/user/applier/user-rewrite-applier.f
     exports: [
         UserDao,
         UserService,
+        UserSettingsService,
         PasswordCryptService
     ]
 })

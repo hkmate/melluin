@@ -34,11 +34,10 @@ export class UserCreationToEntityConverter implements Converter<UserCreation, Pr
             person,
             userName: dto.userName,
             password: this.passwordEncoder.encrypt(dto.password),
-            customInfo: {},
+            settings: {},
             isActive: true,
             roles: roles.filter(entity => dto.roles.includes(entity.role))
-
-        } as UserEntity;
+        };
     }
 
 }

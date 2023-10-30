@@ -1,8 +1,6 @@
-import {IsEnum, IsOptional, IsUUID, Matches, MinLength, ValidateNested} from 'class-validator';
+import {IsEnum, IsUUID, Matches, MinLength} from 'class-validator';
 import {nameMinLength, passwordMinLength, passwordPattern} from '@shared/constants';
 import {Role} from '@shared/user/role.enum';
-import {UserCustomInfo} from '@shared/user/user';
-import {Type} from 'class-transformer';
 
 export class UserCreation {
 
@@ -18,10 +16,5 @@ export class UserCreation {
 
     @IsEnum(Role, {each: true})
     roles: Array<Role>;
-
-    @ValidateNested()
-    @Type(() => UserCustomInfo)
-    @IsOptional()
-    customInfo?: UserCustomInfo;
 
 }

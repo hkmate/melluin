@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn} from 'typeorm';
 import {RoleEntity} from './role.entity';
 import {PersonEntity} from '../../person/model/person.entity';
-import {UserCustomInfo} from '@shared/user/user';
+import {UserSettings} from '@shared/user/user';
 
 @Entity({name: 'user'})
 export class UserEntity {
@@ -19,7 +19,7 @@ export class UserEntity {
     isActive: boolean;
 
     @Column({name: 'custom_info', type: 'jsonb'})
-    customInfo?: UserCustomInfo;
+    settings?: UserSettings;
 
     @OneToOne(type => PersonEntity, {eager: true, cascade: ['insert', 'update']})
     @JoinColumn({name: 'person_id'})

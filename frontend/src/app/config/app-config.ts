@@ -24,8 +24,7 @@ export class AppConfig {
             })
     }
 
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    public static get(key: keyof AppConfiguration) {
+    public static get(key: keyof AppConfiguration): string {
         return AppConfig.config[key];
     }
 

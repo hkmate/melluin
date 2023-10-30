@@ -27,6 +27,10 @@ export class UserDao {
         return this.userRepository.findOne({where: {userName}}).then(toOptional);
     }
 
+    public findOneWithCache(userName: string): Promise<UserEntity | undefined> {
+        return this.userRepository.findOne({where: {userName}, cache: 3000}).then(toOptional);
+    }
+
     public getOne(id: string): Promise<UserEntity> {
         return this.userRepository.findOne({where: {id}})
             .then(entity => {

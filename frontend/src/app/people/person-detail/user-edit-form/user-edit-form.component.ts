@@ -5,6 +5,7 @@ import {UserRewrite} from '@shared/user/user-rewrite';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Role} from '@shared/user/role.enum';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {passwordMinLength} from '@shared/constants';
 
 @Component({
     selector: 'app-user-edit-form',
@@ -54,8 +55,7 @@ export class UserEditFormComponent {
     private initForm(): void {
         this.roleOptions = this.permission.getRolesCanBeManaged();
         this.form = this.fb.group({
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-            password: [undefined, [Validators.minLength(8)]],
+            password: [undefined, [Validators.minLength(passwordMinLength)]],
             isActive: [this.userToEdit?.isActive],
             roles: [this.userToEdit?.roles],
             userName: [this.userToEdit?.userName]
@@ -70,7 +70,6 @@ export class UserEditFormComponent {
         data.isActive = this.form.controls.isActive.value;
         data.userName = this.form.controls.userName.value;
         data.roles = this.form.controls.roles.value;
-        data.customInfo = this.userToEdit!.customInfo;
         return data;
     }
 

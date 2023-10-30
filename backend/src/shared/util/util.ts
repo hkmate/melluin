@@ -20,8 +20,12 @@ export function isNil<T>(value: T | Nil): value is Nil {
     return value === null || value === undefined;
 }
 
-export function allNil<T>(...values: Array<T | Nil>): boolean {
+export function allNil(...values: Array<unknown | Nil>): boolean {
     return values.every(item => isNil(item));
+}
+
+export function anyNil(...values: Array<unknown | Nil>): boolean {
+    return values.some(item => isNil(item));
 }
 
 export function isEmpty<T>(array: Array<T> | string): boolean {

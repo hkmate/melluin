@@ -24,11 +24,7 @@
                     {{ 'Menu.Departments' | translate }}
                 </a>
                 <mat-divider></mat-divider>
-                <a class="grey"
-                   mat-list-item
-                   [routerLink]="['people', currentUser.personId]">
-                    {{ currentUser.userName }}
-                </a>
+                <a class="grey" mat-list-item routerLink="/my-profile">{{ currentUser.userName }}</a>
                 <a class="grey"
                    mat-list-item
                    routerLink="."

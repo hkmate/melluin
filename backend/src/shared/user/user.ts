@@ -12,10 +12,9 @@ export interface BriefUser {
 export interface User extends BriefUser {
     userName: string;
     permissions: Array<Permission>;
-    customInfo?: UserCustomInfo;
 }
 
-export class UserCustomInfo {
+export class UserSettings {
 
     // Note: this is for class-validator because it does not like empty classes
     @IsOptional()

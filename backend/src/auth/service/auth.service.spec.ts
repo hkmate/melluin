@@ -16,8 +16,8 @@ import {AuthToken} from '@shared/user/auth-token';
 import {when} from 'jest-when';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
-import Mock = jest.Mock;
 import {BadRequestException} from '@nestjs/common';
+import Mock = jest.Mock;
 
 describe('AuthService', () => {
     describe('Construct when default user not needed', () => {
@@ -200,6 +200,7 @@ describe('AuthService', () => {
     describe('getTokenFor', () => {
         let authService: AuthService;
         let jwtService: JwtService;
+        let userDao: UserDao;
         let configService: ConfigService;
 
         beforeEach(async () => {
@@ -211,7 +212,7 @@ describe('AuthService', () => {
                     AuthService,
                     {provide: ConfigService, useValue: {get: jest.fn(() => false)}},
                     {provide: JwtService, useValue: {sign: jest.fn()}},
-                    {provide: UserDao, useValue: {}},
+                    {provide: UserDao, useValue: {findOneWithCache: jest.fn()}},
                     {provide: PersonDao, useValue: {}},
                     {provide: PasswordCryptService, useValue: {}},
                 ],
@@ -219,26 +220,42 @@ describe('AuthService', () => {
 
             authService = moduleRef.get<AuthService>(AuthService);
             jwtService = moduleRef.get<JwtService>(JwtService);
+            userDao = moduleRef.get<UserDao>(UserDao);
             configService = moduleRef.get<ConfigService>(ConfigService);
         });
 
-        it('When user is valid Then token returned with wrapped user', () => {
+        it('When user is valid Then token returned with wrapped user', async () => {
+            const userId: string = randomUUID();
+            const personId: string = randomUUID();
+            const username: string = randomString();
+            const password: string = randomString();
             const user: User = {
-                id: randomString(),
-                personId: randomUUID(),
-                userName: randomString(),
+                id: userId,
+                personId,
+                userName: username,
                 roles: [Role.SYSADMIN],
                 permissions: [],
                 isActive: true
-            }
+            };
+            const userEntity: UserEntity = {
+                userName: username,
+                password,
+                id: userId,
+                isActive: user.isActive,
+                person: cast<PersonEntity>({id: personId}),
+                roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}],
+                settings: {_: randomUUID()}
+            };
             const expectedTokenStr = `&@${JSON.stringify(user)}@&`;
             const expectedToken: AuthToken = {access_token: expectedTokenStr};
             (jwtService.sign as Mock).mockReturnValueOnce(expectedTokenStr);
+            (userDao.findOneWithCache as Mock).mockReturnValueOnce(userEntity);
 
-            const result: AuthToken = authService.getTokenFor(user);
+            const result: AuthToken = await authService.getTokenFor({username, password});
 
             expect(result).toEqual(expectedToken);
-            expect(jwtService.sign).toBeCalledWith({user});
+            expect(jwtService.sign).toBeCalledWith({user, userSettings: userEntity.settings});
+            expect(userDao.findOneWithCache).toBeCalledWith(username);
             expect(configService.get).toBeCalledWith('server.defaultSysAdmin.needToInit', false);
         });
     });
@@ -257,7 +274,7 @@ describe('AuthService', () => {
                 providers: [
                     {provide: ConfigService, useValue: {get: jest.fn(() => false)}},
                     {provide: JwtService, useValue: {sign: jest.fn()}},
-                    {provide: UserDao, useValue: {findOneByName: jest.fn()}},
+                    {provide: UserDao, useValue: {findOneWithCache: jest.fn()}},
                     {provide: PersonDao, useValue: {}},
                     {provide: PasswordCryptService, useValue: {match: jest.fn()}},
                     AuthService,
@@ -281,21 +298,13 @@ describe('AuthService', () => {
                 isActive: true,
                 roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}]
             };
-            const expectedUser: User = {
-                id: userId,
-                personId,
-                userName,
-                permissions: [],
-                roles: [Role.SYSADMIN],
-                isActive: true
-            }
             const rawPassword: string = randomString();
-            when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
+            when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
             when(passwordCryptService.match).calledWith(rawPassword, password).mockReturnValue(true);
 
-            const result: User = await authService.validate({username: userName, password: rawPassword});
+            await authService.validate({username: userName, password: rawPassword});
 
-            expect(result).toEqual(expectedUser);
+            // Note: no expect needed, the validation successful when it returns (not throws error).
         });
 
         it('When user is in db and active and password is not correct Then null returned', async () => {
@@ -311,10 +320,10 @@ describe('AuthService', () => {
                 roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}]
             };
             const rawPassword: string = randomString();
-            when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
+            when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
             when(passwordCryptService.match).calledWith(rawPassword, password).mockReturnValue(false);
 
-            const testValidate = (): Promise<User> => authService.validate({username: userName, password: rawPassword});
+            const testValidate = (): Promise<void> => authService.validate({username: userName, password: rawPassword});
 
             await expect(testValidate).rejects.toThrow(BadRequestException);
         });
@@ -331,9 +340,9 @@ describe('AuthService', () => {
                 roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}]
             };
             const rawPassword: string = randomString();
-            when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
+            when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
 
-            const testValidate = (): Promise<User> => authService.validate({username: userName, password: rawPassword});
+            const testValidate = (): Promise<void> => authService.validate({username: userName, password: rawPassword});
 
             await expect(testValidate).rejects.toThrow(BadRequestException);
         });
@@ -341,9 +350,9 @@ describe('AuthService', () => {
         it('When user is not in db Then null returned', async () => {
             const userName: string = randomString();
             const rawPassword: string = randomString();
-            when(userService.findOneByName).calledWith(userName).mockReturnValue(Promise.resolve(undefined));
+            when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(undefined));
 
-            const testValidate = (): Promise<User> => authService.validate({username: userName, password: rawPassword});
+            const testValidate = (): Promise<void> => authService.validate({username: userName, password: rawPassword});
 
             await expect(testValidate).rejects.toThrow(BadRequestException);
         });

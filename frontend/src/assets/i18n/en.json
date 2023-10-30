@@ -11,6 +11,7 @@
     "OkButton": "Ok",
     "SaveButton": "Save",
     "CancelButton": "Cancel",
+    "BackButton": "Back",
     "NoData": "No data",
     "Search": "Search",
     "NoItemFound": "No item found",
@@ -119,6 +120,7 @@
     },
     "PersonPage": {
         "Data": "Properties",
+        "MyProfile": "My profile",
         "EditData": "Edit properties",
         "AddPerson": "Add person",
         "Present": {
@@ -152,6 +154,8 @@
             "Inactive": "Inactiv",
             "Present": {
                 "UserName": "Username",
+                "Password": "Password",
+                "PasswordPlaceholder": "**********",
                 "Roles": "Roles",
                 "Status": "Status"
             },

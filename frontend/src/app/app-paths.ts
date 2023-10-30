@@ -20,6 +20,10 @@ export const PATHS: PathContainer = {
         new: CREATE_MARKER
     },
 
+    myProfile: {
+        main: 'my-profile'
+    },
+
     hospitalDepartments: {
         main: 'hospital-departments',
         detail: ':id',

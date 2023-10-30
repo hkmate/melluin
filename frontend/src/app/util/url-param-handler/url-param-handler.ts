@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNil, NOOP} from '@shared/util/util';
+import {map, Observable} from 'rxjs';
 
 export type QueryParams = Record<string, string>;
 
@@ -16,6 +17,12 @@ export class UrlParamHandler {
 
     public getParam(paramName: string): string | undefined {
         return this.route.snapshot.queryParams[paramName];
+    }
+
+    public subscribeToParam(paramName: string): Observable<string | undefined> {
+        return this.route.queryParams.pipe(
+            map(params => params[paramName])
+        );
     }
 
     public getNumberParam(paramName: string): number | undefined {

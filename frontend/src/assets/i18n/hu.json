@@ -11,6 +11,7 @@
     "OkButton": "Ok",
     "SaveButton": "Mentés",
     "CancelButton": "Mégse",
+    "BackButton": "Vissza",
     "NoData": "Nincs adat",
     "Search": "Keresés",
     "NoItemFound": "Nincs találat",
@@ -119,6 +120,7 @@
     },
     "PersonPage": {
         "Data": "Adatok",
+        "MyProfile": "Saját profil",
         "EditData": "Adatok szerkesztése",
         "AddPerson": "Személy hozzáadás",
         "Present": {
@@ -152,6 +154,8 @@
             "Inactive": "Inaktív",
             "Present": {
                 "UserName": "Felhasználónév",
+                "Password": "Jelszó",
+                "PasswordPlaceholder": "**********",
                 "Roles": "Szerepkörök",
                 "Status": "Státusz"
             },

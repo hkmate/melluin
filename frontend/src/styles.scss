@@ -71,3 +71,13 @@ form .button-row {
 .empty-list {
     font-style: italic;
 }
+
+.button-row {
+     display: flex;
+     justify-content: flex-end
+ }
+
+.divider {
+    margin: 2rem 0 2rem 0;
+    border: 0.1rem solid;
+}

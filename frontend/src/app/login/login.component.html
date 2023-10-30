@@ -2,30 +2,39 @@
     <div class="page-content">
         <img src="./assets/logo.svg">
 
-        <p>
-            <mat-form-field appearance="outline">
-                <mat-label>{{ 'LoginPage.Form.UserName' | translate }}</mat-label>
-                <input matInput
-                       [placeholder]="'LoginPage.Form.UserNamePlaceholder' | translate"
-                       [(ngModel)]="userName">
-            </mat-form-field>
-        </p>
+        <form>
+            <p>
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'LoginPage.Form.UserName' | translate }}</mat-label>
+                    <input matInput
+                           autocomplete="username"
+                           [placeholder]="'LoginPage.Form.UserNamePlaceholder' | translate"
+                           [(ngModel)]="userName"
+                           [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+            </p>
 
-        <p>
-            <mat-form-field appearance="outline">
-                <mat-label>{{ 'LoginPage.Form.Password' | translate }}</mat-label>
-                <input matInput
-                       [placeholder]="'LoginPage.Form.PasswordPlaceholder' | translate"
-                       [(ngModel)]="password"
-                       type="password">
-            </mat-form-field>
-        </p>
+            <p>
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'LoginPage.Form.Password' | translate }}</mat-label>
+                    <input matInput
+                           autocomplete="current-password"
+                           [placeholder]="'LoginPage.Form.PasswordPlaceholder' | translate"
+                           [(ngModel)]="password"
+                           [ngModelOptions]="{standalone: true}"
+                           type="password">
+                </mat-form-field>
+            </p>
 
-        <div>
-            <button mat-flat-button color="accent"
-                    [disabled]="loading" (click)="onSubmit()">
-                {{ 'LoginPage.Form.LoginButton' | translate }}
-            </button>
-        </div>
+            <div>
+                <button mat-flat-button
+                        type="button"
+                        color="accent"
+                        [disabled]="loading"
+                        (click)="onSubmit()">
+                    {{ 'LoginPage.Form.LoginButton' | translate }}
+                </button>
+            </div>
+        </form>
     </div>
 </section>

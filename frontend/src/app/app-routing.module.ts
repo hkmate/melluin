@@ -26,6 +26,11 @@ const routes: Routes = [
         loadChildren: () => import('./people/people-routing.module').then(m => m.PeopleRoutingModule)
     },
     {
+        path: PATHS.myProfile.main,
+        canLoad: [AuthGuard],
+        loadChildren: () => import('./my-profile/my-profile-routing.module').then(m => m.MyProfileRoutingModule)
+    },
+    {
         path: PATHS.hospitalDepartments.main,
         canLoad: [AuthGuard],
         data: {

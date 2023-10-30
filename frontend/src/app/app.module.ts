@@ -27,10 +27,11 @@ import {AppConfig, appConfigInitializerFn} from '@fe/app/config/app-config';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {currentUserKey} from '@fe/app/state/app.state';
-import {currentUserReducer} from '@fe/app/auth/service/current-user.reducer';
+import {currentUserKey, userSettingsKey} from '@fe/app/state/app.state';
 import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
 import {ConfirmationModule} from '@fe/app/confirmation/confirmation.module';
+import {userSettingsReducer} from '@fe/app/state/reducer/user-settings.reducer';
+import {currentUserReducer} from '@fe/app/state/reducer/current-user.reducer';
 
 registerLocaleData(localeHu);
 
@@ -55,7 +56,8 @@ export function appInitializeCredentialsFactory(credentialStoreService: Credenti
         HttpClientModule,
 
         StoreModule.forRoot({
-            [currentUserKey]: currentUserReducer
+            [currentUserKey]: currentUserReducer,
+            [userSettingsKey]: userSettingsReducer
         }),
         EffectsModule.forRoot([]),
         StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),

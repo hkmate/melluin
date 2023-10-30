@@ -16,7 +16,6 @@ export class UserPrimitivesRewriteApplier implements AsyncApplier<UserEntity> {
     private rewirePrimitiveFields(persisted: UserEntity): void {
         persisted.isActive = this.rewrite.isActive;
         persisted.userName = this.rewrite.userName;
-        persisted.customInfo = this.rewrite.customInfo;
     }
 
 }
