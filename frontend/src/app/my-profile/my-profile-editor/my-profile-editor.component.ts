@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {User, UserSettings} from '@shared/user/user';
+import {User} from '@shared/user/user';
 import {Person} from '@shared/person/person';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MessageService} from '@fe/app/util/message.service';
@@ -9,6 +9,9 @@ import {PeopleService} from '@fe/app/people/people.service';
 import {UserService} from '@fe/app/people/user.service';
 import {PersonRewrite} from '@shared/person/person-rewrite';
 import {UserRewrite} from '@shared/user/user-rewrite';
+import {UserSettings} from '@shared/user/user-settings';
+import {AppActions} from '@fe/app/state/app-actions';
+import {Store} from '@ngrx/store';
 
 @Component({
     selector: 'app-my-profile-editor',
@@ -47,6 +50,7 @@ export class MyProfileEditorComponent {
     }
 
     constructor(private readonly fb: FormBuilder,
+                private readonly store: Store,
                 private readonly msg: MessageService,
                 private readonly peopleService: PeopleService,
                 private readonly userService: UserService) {
@@ -72,9 +76,10 @@ export class MyProfileEditorComponent {
     protected submitUserForm(): void {
         this.userSaveInProcess = true;
         this.userService.updateUser(this.originalUser.id, this.parseUserForm()).subscribe({
-            next: () => {
+            next: (user: User) => {
                 this.userSaveInProcess = false;
                 this.msg.success('SaveSuccessful');
+                this.store.dispatch(AppActions.currentUserLoaded({user}))
             },
             error: () => {
                 this.userSaveInProcess = false;

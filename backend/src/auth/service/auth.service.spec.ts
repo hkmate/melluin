@@ -244,7 +244,7 @@ describe('AuthService', () => {
                 isActive: user.isActive,
                 person: cast<PersonEntity>({id: personId}),
                 roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}],
-                settings: {_: randomUUID()}
+                settings: {eventList: {}}
             };
             const expectedTokenStr = `&@${JSON.stringify(user)}@&`;
             const expectedToken: AuthToken = {access_token: expectedTokenStr};

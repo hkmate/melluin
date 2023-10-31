@@ -1,7 +1,7 @@
 import {createReducer, on} from '@ngrx/store';
 import {AppActions} from '@fe/app/state/app-actions';
-import {UserSettings} from '@shared/user/user';
 import {cast} from '@shared/util/test-util';
+import {UserSettings} from '@shared/user/user-settings';
 
 export const userSettingsReducer = createReducer(
     cast<UserSettings>(undefined),

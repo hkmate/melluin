@@ -1,0 +1,67 @@
+<div class="event-list-settings">
+    <h3>{{ 'PersonPage.EventListSettings.Title' | translate }}</h3>
+
+    <form *ngIf="form" [formGroup]="form">
+
+        <div class="participant-selector">
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'PersonPage.EventListSettings.Date' | translate }}</mat-label>
+                <mat-select formControlName="dateFilter">
+                    <mat-option [value]="undefined">-</mat-option>
+                    <mat-option *ngFor="let option of dateOptions" [value]="option">
+                        {{ 'EventsDateFilter.' + option | translate }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="participant-selector">
+            <app-person-select [label]="'PersonPage.EventListSettings.Participants' | translate"
+                               [options]="personOptions"
+                               formControlName="participants"></app-person-select>
+        </div>
+
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'PersonPage.EventListSettings.Statuses' | translate }}</mat-label>
+                <mat-select formControlName="statuses" multiple>
+                    <mat-option *ngFor="let option of statusOptions" [value]="option">
+                        {{ 'HospitalVisitStatus.' + option | translate }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'PersonPage.EventListSettings.Departments' | translate }}</mat-label>
+                <mat-select formControlName="departmentIds" multiple>
+                    <mat-option *ngFor="let option of departmentOptions" [value]="option.id">
+                        {{ option.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="need-highlight-card">
+            <mat-card>
+                <mat-card-subtitle>
+                    <mat-checkbox formControlName="needHighlight">
+                        {{ 'PersonPage.EventListSettings.NeedHighlight' | translate }}
+                    </mat-checkbox>
+                </mat-card-subtitle>
+            </mat-card>
+        </div>
+
+        <div class="button-row">
+            <button mat-flat-button
+                    color="accent"
+                    [disabled]="isSaveBtnDisabled()"
+                    (click)="submitForm()"
+                    type="button">
+                {{ 'SaveButton' | translate}}
+            </button>
+        </div>
+
+    </form>
+</div>

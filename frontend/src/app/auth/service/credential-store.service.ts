@@ -1,16 +1,19 @@
 import {Injectable} from '@angular/core';
 import {JwtService} from './jwt.service';
-import {User, UserSettings} from '@shared/user/user';
+import {User} from '@shared/user/user';
 import {isNilOrEmpty} from '@shared/util/util';
 import {AuthToken} from '@shared/user/auth-token';
 import {Store} from '@ngrx/store';
 import {AppActions} from '@fe/app/state/app-actions';
 import {DateUtil} from '@shared/util/date-util';
+import {UserSettings} from '@shared/user/user-settings';
 
 @Injectable()
 export class CredentialStoreService {
 
     private static readonly AUTH_TOKEN_KEY = 'authToken';
+    private static readonly USER_KEY = 'user';
+    private static readonly USER_SETTINGS_KEY = 'userSettings';
     private static readonly USER_KEY_IN_TOKEN = 'user';
     private static readonly USER_SETTINGS_KEY_IN_TOKEN = 'userSettings';
     private static readonly EXPIRATION_KEY_IN_TOKEN = 'exp';
@@ -43,10 +46,18 @@ export class CredentialStoreService {
 
     public useToken(token: AuthToken): void {
         this.clear();
-        this.authToken = token.access_token;
+        this.storeToken(token.access_token);
         this.setupUser(this.getUserFromToken(token));
         this.setupUserSettings(this.getUserSettingsFromToken(token));
-        this.storeToken(token.access_token);
+    }
+
+    public storeUser(user: User): void {
+        this.currentUser = user;
+        localStorage.setItem(CredentialStoreService.USER_KEY, JSON.stringify(user));
+    }
+
+    public storeUserSettings(userSettings: UserSettings): void {
+        localStorage.setItem(CredentialStoreService.USER_SETTINGS_KEY, JSON.stringify(userSettings));
     }
 
     private storeToken(accessToken: string): void {
@@ -69,9 +80,13 @@ export class CredentialStoreService {
             return;
         }
         if (this.isTokenExpired(tokenRaw!)) {
+            localStorage.clear();
             return;
         }
-        this.useToken({access_token: tokenRaw!});
+        const token = {access_token: tokenRaw!};
+        this.setupUser(this.getUserFromStorageOrElse(token));
+        this.setupUserSettings(this.getUserSettingsFromStorageOrElse(token));
+        this.storeToken(token.access_token);
     }
 
     private getUserFromToken(token: AuthToken): User {
@@ -80,6 +95,22 @@ export class CredentialStoreService {
 
     private getUserSettingsFromToken(token: AuthToken): UserSettings {
         return this.jwtService.decodeToken(token.access_token)[CredentialStoreService.USER_SETTINGS_KEY_IN_TOKEN];
+    }
+
+    private getUserFromStorageOrElse(token: AuthToken): User {
+        const userRaw: string | null = localStorage.getItem(CredentialStoreService.USER_KEY);
+        if (isNilOrEmpty(userRaw)) {
+            return this.getUserFromToken(token);
+        }
+        return JSON.parse(userRaw!);
+    }
+
+    private getUserSettingsFromStorageOrElse(token: AuthToken): UserSettings {
+        const userSettingsRaw: string | null = localStorage.getItem(CredentialStoreService.USER_SETTINGS_KEY);
+        if (isNilOrEmpty(userSettingsRaw)) {
+            return this.getUserSettingsFromToken(token);
+        }
+        return JSON.parse(userSettingsRaw!);
     }
 
     private isTokenExpired(accessToken: string): boolean {

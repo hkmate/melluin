@@ -32,6 +32,10 @@
     "ConfirmDialog": {
         "Title": "Confirmation needed"
     },
+    "YesNo": {
+        "true": "Yes",
+        "false": "No"
+    },
     "Role": {
         "INTERN_HOSPITAL_VISITOR": "Intern hospital visitor",
         "BEGINNER_HOSPITAL_VISITOR": "Beginner hospital visitor ",
@@ -79,6 +83,12 @@
         "BOARD_GAME": "Board game",
         "OTHER": "Other"
     },
+    "EventsDateFilter": {
+        "WEEK": "Actual week",
+        "TWO_WEEK": "Actual week + next",
+        "THREE_WEEK": "Three weeks, actual in the middle",
+        "MONTH": "Actual month"
+    },
     "Menu": {
         "People": "People",
         "Events": "Events",
@@ -123,6 +133,7 @@
         "MyProfile": "My profile",
         "EditData": "Edit properties",
         "AddPerson": "Add person",
+        "Settings": "Settings",
         "Present": {
             "FirstName": "Firstname",
             "LastName": "Lastname",
@@ -168,6 +179,14 @@
                 "Roles": "Roles",
                 "Status": "Status"
             }
+        },
+        "EventListSettings": {
+            "Title": "Events list default filters",
+            "Date": "Date",
+            "Statuses": "Visit statuses",
+            "Participants": "Participants",
+            "Departments": "Departments",
+            "NeedHighlight": "Highlight rows"
         }
     },
     "DepartmentListPage": {

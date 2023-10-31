@@ -1,8 +1,8 @@
 import {UserEntity} from '@be/user/model/user.entity';
-import {UserSettings} from '@shared/user/user';
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
 import {Converter} from '@shared/converter';
+import {UserSettings} from '@shared/user/user-settings';
 
 @Injectable()
 export class UserEntityToSettingsDtoConverter implements Converter<UserEntity, UserSettings> {

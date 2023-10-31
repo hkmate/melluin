@@ -32,6 +32,7 @@ import {CredentialStoreService} from '@fe/app/auth/service/credential-store.serv
 import {ConfirmationModule} from '@fe/app/confirmation/confirmation.module';
 import {userSettingsReducer} from '@fe/app/state/reducer/user-settings.reducer';
 import {currentUserReducer} from '@fe/app/state/reducer/current-user.reducer';
+import {UserDataSaverEffect} from '@fe/app/state/effect/user-data-saver.effect';
 
 registerLocaleData(localeHu);
 
@@ -59,7 +60,7 @@ export function appInitializeCredentialsFactory(credentialStoreService: Credenti
             [currentUserKey]: currentUserReducer,
             [userSettingsKey]: userSettingsReducer
         }),
-        EffectsModule.forRoot([]),
+        EffectsModule.forRoot(UserDataSaverEffect),
         StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
 
         MatSidenavModule,

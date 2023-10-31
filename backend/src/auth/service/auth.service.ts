@@ -14,7 +14,8 @@ import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoConverter} from '@be/user/converter/user-entity-to-dto.converter';
 import {AuthCredentials} from '@shared/user/auth-credentials';
 import {UserEntityToSettingsDtoConverter} from '@be/user/converter/user-entity-to-settings-dto.converter';
-import {User, UserSettings} from '@shared/user/user';
+import {User} from '@shared/user/user';
+import {UserSettings} from '@shared/user/user-settings';
 
 @Injectable()
 export class AuthService {

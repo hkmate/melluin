@@ -32,6 +32,10 @@
     "ConfirmDialog": {
         "Title": "Megerősítés szükséges"
     },
+    "YesNo": {
+        "true": "Igen",
+        "false": "Nem"
+    },
     "Role": {
         "INTERN_HOSPITAL_VISITOR": "Hospitáló",
         "BEGINNER_HOSPITAL_VISITOR": "Kórházlátogató (kezdő)",
@@ -79,6 +83,12 @@
         "BOARD_GAME": "Társasjáték",
         "OTHER": "Egyéb"
     },
+    "EventsDateFilter": {
+        "WEEK": "Aktuális hét",
+        "TWO_WEEK": "Aktuális hét + következő",
+        "THREE_WEEK": "Három hét, középen az aktuális",
+        "MONTH": "Aktuális hónap"
+    },
     "Menu": {
         "People": "Emberek",
         "Events": "Események",
@@ -123,6 +133,7 @@
         "MyProfile": "Saját profil",
         "EditData": "Adatok szerkesztése",
         "AddPerson": "Személy hozzáadás",
+        "Settings": "Beállítások",
         "Present": {
             "FirstName": "Keresztnév",
             "LastName": "Vezetéknév",
@@ -168,6 +179,14 @@
                 "Roles": "Szerepkörök",
                 "Status": "Státusz"
             }
+        },
+        "EventListSettings": {
+            "Title": "Eseménylista szűrés alap beállítások",
+            "Date": "Dátum",
+            "Statuses": "Foglalkozás státuszok",
+            "Participants": "Résztvevők",
+            "Departments": "Osztályok",
+            "NeedHighlight": "Sorok megjelölése"
         }
     },
     "DepartmentListPage": {

@@ -6,9 +6,10 @@ import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {AutoUnSubscriberComponent} from '@fe/app/util/auto-unsubscriber.component';
 import {Store} from '@ngrx/store';
 import {PeopleService} from '@fe/app/people/people.service';
-import {User, UserSettings} from '@shared/user/user';
+import {User} from '@shared/user/user';
 import {Person} from '@shared/person/person';
 import {selectUserSettings} from '@fe/app/state/selector/user-settings.selector';
+import {UserSettings} from '@shared/user/user-settings';
 
 @Component({
     selector: 'app-my-profile',

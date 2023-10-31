@@ -2,11 +2,12 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {UserCreation} from '@shared/user/user-creation';
-import {User, UserSettings} from '@shared/user/user';
+import {User} from '@shared/user/user';
 import {UserRewrite} from '@shared/user/user-rewrite';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
+import {UserSettings} from '@shared/user/user-settings';
 
 @Injectable({providedIn: 'root'})
 export class UserService {

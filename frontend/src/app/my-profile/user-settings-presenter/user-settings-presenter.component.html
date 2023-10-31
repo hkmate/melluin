@@ -1,0 +1,69 @@
+<div class="user-settings">
+    <h1>{{ 'PersonPage.Settings' | translate }}</h1>
+
+    <div class="event-list-settings">
+        <h3>{{ 'PersonPage.EventListSettings.Title' | translate }}</h3>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Date' | translate }}</mat-card-subtitle>
+                <mat-card-title *ngIf="!settings.eventList?.dateFilter">{{ 'NoData' | translate }}</mat-card-title>
+                <mat-card-title *ngIf="settings.eventList?.dateFilter">
+                    {{ 'EventsDateFilter.' + settings.eventList?.dateFilter | translate }}
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Participants' | translate }}</mat-card-subtitle>
+                <mat-card-title *ngIf="!participants?.length">{{ 'NoData' | translate }}</mat-card-title>
+                <mat-card-title *ngIf="participants?.length">
+                    <ng-container *ngFor="let person of participants">
+                        <mat-chip>{{ person | personName }}</mat-chip>
+                    </ng-container>
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Statuses' | translate }}</mat-card-subtitle>
+                <mat-card-title
+                        *ngIf="!settings.eventList?.statuses?.length">{{ 'NoData' | translate }}</mat-card-title>
+                <mat-card-title *ngIf="settings.eventList?.statuses?.length">
+                    <ng-container *ngFor="let status of settings.eventList?.statuses">
+                        <mat-chip>{{ 'HospitalVisitStatus.' + status | translate }}</mat-chip>
+                    </ng-container>
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Departments' | translate }}</mat-card-subtitle>
+                <mat-card-title *ngIf="!departments?.length">{{ 'NoData' | translate }}</mat-card-title>
+                <mat-card-title *ngIf="departments?.length">
+                    <ng-container *ngFor="let department of departments">
+                        <mat-chip>{{ department.name }}</mat-chip>
+                    </ng-container>
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>
+                    {{ 'PersonPage.EventListSettings.NeedHighlight' | translate }}
+                </mat-card-subtitle>
+                <mat-card-title *ngIf="settings.eventList?.needHighlight === undefined">
+                    {{ 'NoData' | translate }}
+                </mat-card-title>
+                <mat-card-title *ngIf="settings.eventList?.needHighlight !== undefined">
+                    {{ 'YesNo.' + settings.eventList?.needHighlight | translate }}
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
+    </div>
+
+</div>
