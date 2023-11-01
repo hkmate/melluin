@@ -1,8 +1,8 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {Observable, Observer, Subscription} from 'rxjs';
 
-@Component({template: ''})
-export abstract class AutoUnSubscriberComponent implements OnDestroy {
+@Injectable()
+export abstract class AutoUnSubscriber implements OnDestroy {
 
     private subscriptions: Array<Subscription> = [];
 

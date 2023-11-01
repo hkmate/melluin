@@ -1,7 +1,7 @@
 import {Component, forwardRef, Input} from '@angular/core';
 import {PersonIdentifier} from '@shared/person/person';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {NOOP, VoidFunc} from '@shared/util/util';
+import {isNil, NOOP, VoidFunc} from '@shared/util/util';
 
 @Component({
     selector: 'app-person-select',
@@ -21,21 +21,24 @@ export class PersonSelectComponent implements ControlValueAccessor {
     protected filteredOptions: Array<PersonIdentifier>;
     protected people: Array<PersonIdentifier>
 
-    private onChange: (x: Array<PersonIdentifier>) => void = NOOP;
+    private onChange: (x: Array<string>) => void = NOOP;
     private onTouch: VoidFunc = NOOP;
     private peopleOptions: Array<PersonIdentifier>
+    private personIds: Array<string>;
 
     @Input()
     public set options(value: Array<PersonIdentifier>) {
         this.peopleOptions = value;
         this.filteredOptions = value;
+        this.setupPeople();
     }
 
-    public writeValue(value: Array<PersonIdentifier>): void {
-        this.people = value;
+    public writeValue(personIds: Array<string>): void {
+        this.personIds = personIds;
+        this.setupPeople();
     }
 
-    public registerOnChange(fn: (x: Array<PersonIdentifier>) => void): void {
+    public registerOnChange(fn: (x: Array<string>) => void): void {
         this.onChange = fn
     }
 
@@ -45,7 +48,8 @@ export class PersonSelectComponent implements ControlValueAccessor {
 
     protected selectChanged(people: Array<PersonIdentifier>): void {
         this.people = people;
-        this.onChange(this.people);
+        this.personIds = people.map(p => p.id);
+        this.onChange(this.personIds);
     }
 
     protected filterChanged(filter: string): void {
@@ -56,7 +60,15 @@ export class PersonSelectComponent implements ControlValueAccessor {
 
     protected removePerson(removedPerson: PersonIdentifier): void {
         this.people = this.people.filter(person => person.id !== removedPerson.id);
-        this.onChange(this.people);
+        this.personIds = this.people.map(p => p.id);
+        this.onChange(this.personIds);
+    }
+
+    private setupPeople(): void {
+        if (isNil(this.personIds) || isNil(this.peopleOptions)) {
+            return;
+        }
+        this.people = this.peopleOptions.filter(p => this.personIds.includes(p.id));
     }
 
 }

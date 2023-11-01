@@ -22,7 +22,7 @@ export class EventListUserSettings {
 
     @IsOptional()
     @IsEnum(HospitalVisitStatus, {each: true})
-    statuses?: Array<string>;
+    statuses?: Array<HospitalVisitStatus>;
 
     @IsOptional()
     @IsUUID('all', {each: true})

@@ -12,20 +12,24 @@ import {EventListFilterComponent} from './events-list/event-list-filter/event-li
 import {LazyInputModule} from '@fe/app/util/lazy-input/lazy-input.module';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {FormsModule} from '@angular/forms';
-import {MatNativeDateModule} from '@angular/material/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatNativeDateModule, MatOptionModule} from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
 import {HospitalEventCardModule} from '@fe/app/hospital/visit/hospital-event-card/hospital-event-card.module';
 import {HospitalEventsListModule} from '@fe/app/hospital/visit/hospital-events-list/hospital-events-list.module';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {ViewTypeSelectorComponent} from '@fe/app/util/view-type-selector/view-type-selector.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {PersonSelectModule} from '@fe/app/util/person-select/person-select.module';
+import {MatSelectModule} from '@angular/material/select';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         DatePipe,
+        ReactiveFormsModule,
         FormsModule,
 
         MatPaginatorModule,
@@ -38,13 +42,17 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         MatCheckboxModule,
         MatButtonToggleModule,
         MatButtonModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatExpansionModule,
         TranslateModule,
 
         PersonNamePipe,
         LazyInputModule,
         HospitalEventCardModule,
         HospitalEventsListModule,
-        ViewTypeSelectorComponent
+        ViewTypeSelectorComponent,
+        PersonSelectModule,
     ],
     declarations: [
         EventsListComponent,

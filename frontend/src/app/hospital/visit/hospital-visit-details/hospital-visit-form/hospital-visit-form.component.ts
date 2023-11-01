@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {isNil, isNilOrEmpty, parseTime, parseTimeWithDate} from '@shared/util/util';
+import {isNil, parseTime, parseTimeWithDate} from '@shared/util/util';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
@@ -14,7 +14,7 @@ import {EventVisibility} from '@shared/event/event-visibility';
 import {User} from '@shared/user/user';
 import {Store} from '@ngrx/store';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
-import {AutoUnSubscriberComponent} from '@fe/app/util/auto-unsubscriber.component';
+import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import * as _ from 'lodash';
 
 @Component({
@@ -22,7 +22,7 @@ import * as _ from 'lodash';
     templateUrl: './hospital-visit-form.component.html',
     styleUrls: ['./hospital-visit-form.component.scss']
 })
-export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implements OnInit {
+export class HospitalVisitFormComponent extends AutoUnSubscriber implements OnInit {
 
     private static readonly MS_ON_HOUR = 3600000; // 1000 * 60 * 60
     private static readonly MIN_ON_HOUR = 60;
@@ -113,7 +113,7 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
                 [Validators.required]],
             departmentId: [this.visitToEdit?.department?.id, [Validators.required]],
             countedHours: [0, [Validators.max(HospitalVisitFormComponent.MAX_COUNTED_HOURS), Validators.min(0)]],
-            participants: [[], [Validators.required]],
+            participantIds: [this.visitToEdit?.participants.map(p => p.id), [Validators.required]],
         });
     }
 
@@ -147,7 +147,6 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
         }).subscribe(
             (personPageable: Pageable<Person>) => {
                 this.personOptions = personPageable.items;
-                this.initSelectedPeople();
             }
         );
     }
@@ -158,17 +157,6 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
             return;
         }
         this.form.controls.countedHours.setValue(this!.visitToEdit!.countedMinutes / HospitalVisitFormComponent.MIN_ON_HOUR);
-    }
-
-    private initSelectedPeople(): void {
-        const participantIds = this.visitToEdit?.participants?.map(person => person.id);
-        if (isNilOrEmpty(participantIds)) {
-            this.form.controls.participants.setValue([]);
-            return;
-        }
-        this.form.controls.participants.setValue(
-            this.personOptions.filter(person => participantIds?.includes(person.id))
-        );
     }
 
     private getDate(dateTime: string | undefined): Date | undefined {
@@ -202,7 +190,7 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
         data.countedMinutes = this.form.controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
         data.organizerId = this.currentUser.personId;
         data.visibility = EventVisibility.PUBLIC;
-        data.participantIds = this.form.controls.participants.value.map(person => person.id);
+        data.participantIds = this.form.controls.participantIds.value;
         data.dateTimeFrom = parseTimeWithDate(this.form.controls.timeFrom.value, this.form.controls.date.value).toISOString();
         data.dateTimeTo = parseTimeWithDate(this.form.controls.timeTo.value, this.form.controls.date.value).toISOString();
 
@@ -216,7 +204,7 @@ export class HospitalVisitFormComponent extends AutoUnSubscriberComponent implem
         data.status = this.form.controls.status.value;
         data.countedMinutes = this.form.controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
         data.visibility = EventVisibility.PUBLIC;
-        data.participantIds = this.form.controls.participants.value.map(person => person.id);
+        data.participantIds = this.form.controls.participantIds.value;
         data.dateTimeFrom = parseTimeWithDate(this.form.controls.timeFrom.value, this.form.controls.date.value).toISOString();
         data.dateTimeTo = parseTimeWithDate(this.form.controls.timeTo.value, this.form.controls.date.value).toISOString();
         return data;

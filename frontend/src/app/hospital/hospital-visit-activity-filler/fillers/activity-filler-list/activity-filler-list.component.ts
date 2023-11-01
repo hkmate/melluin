@@ -8,7 +8,7 @@ import {
     convertToChildrenById,
     VisitedChildById
 } from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
-import {AutoUnSubscriberComponent} from '@fe/app/util/auto-unsubscriber.component';
+import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {Observable} from 'rxjs';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 
@@ -17,7 +17,7 @@ import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-vi
     templateUrl: './activity-filler-list.component.html',
     styleUrls: ['./activity-filler-list.component.scss']
 })
-export class ActivityFillerListComponent extends AutoUnSubscriberComponent {
+export class ActivityFillerListComponent extends AutoUnSubscriber {
 
     protected readonly Permission = Permission;
 

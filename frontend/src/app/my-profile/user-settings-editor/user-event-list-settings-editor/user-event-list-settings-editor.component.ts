@@ -12,7 +12,6 @@ import {UserService} from '@fe/app/people/user.service';
 import {AppActions} from '@fe/app/state/app-actions';
 import {Pageable} from '@shared/api-util/pageable';
 import {FilterOperationBuilder} from '@shared/api-util/filter-options';
-import {isNilOrEmpty} from '@shared/util/util';
 
 @Component({
     selector: 'app-user-event-list-settings-editor',
@@ -69,7 +68,7 @@ export class UserEventListSettingsEditorComponent {
     private initForm(): void {
         this.form = this.fb.group({
             dateFilter: [this.settings.eventList?.dateFilter],
-            participants: [],
+            participantIds: [this.settings.eventList?.participantIds],
             statuses: [this.settings.eventList?.statuses],
             departmentIds: [this.settings.eventList?.departmentIds],
             needHighlight: [this.settings.eventList?.needHighlight],
@@ -83,7 +82,7 @@ export class UserEventListSettingsEditorComponent {
                 dateFilter: this.form.controls.dateFilter.value,
                 statuses: this.form.controls.statuses.value,
                 departmentIds: this.form.controls.departmentIds.value,
-                participantIds: this.form.controls.participants.value.map(p => p.id),
+                participantIds: this.form.controls.participantIds.value,
                 needHighlight: this.form.controls.needHighlight.value,
             }
         }
@@ -106,19 +105,7 @@ export class UserEventListSettingsEditorComponent {
         }).subscribe(
             (personPageable: Pageable<Person>) => {
                 this.personOptions = personPageable.items;
-                this.initSelectedPeople();
             }
-        );
-    }
-
-    private initSelectedPeople(): void {
-        const participantIds = this.settings.eventList?.participantIds;
-        if (isNilOrEmpty(participantIds)) {
-            this.form.controls.participants.setValue([]);
-            return;
-        }
-        this.form.controls.participants.setValue(
-            this.personOptions.filter(person => participantIds?.includes(person.id))
         );
     }
 

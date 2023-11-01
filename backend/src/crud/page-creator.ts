@@ -17,6 +17,7 @@ export abstract class PageCreator<T extends ObjectLiteral> {
     protected createOptions(pageRequest: PageRequest): Partial<FindManyOptions<T>> {
         const result: Partial<FindManyOptions<T>> = {};
         if (isNotNil(pageRequest.sort)) {
+            // TODO make 'xy.field' work here too!
             result.order = cast<FindOptionsOrder<T>>(pageRequest.sort);
         }
         if (isNotNil(pageRequest.where)) {

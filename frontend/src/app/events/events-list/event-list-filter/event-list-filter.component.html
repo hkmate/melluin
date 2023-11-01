@@ -1,15 +1,56 @@
 <div class="events-filter">
     <div class="date-interval-filter">
         <span class="interval">
-            {{ dateFrom | date : ('EventShortDateFormat' | translate) }}
+            {{ filters.dateFrom | date : ('EventShortDateFormat' | translate) }}
             -
-            {{ dateTo | date : ('EventShortDateFormat' | translate) }}
+            {{ filters.dateTo | date : ('EventShortDateFormat' | translate) }}
         </span>
         <mat-date-range-input class="hidden" [rangePicker]="picker">
-            <input matStartDate [(ngModel)]="dateFrom">
-            <input matEndDate [(ngModel)]="dateTo">
+            <input matStartDate [(ngModel)]="filters.dateFrom">
+            <input matEndDate [(ngModel)]="filters.dateTo">
         </mat-date-range-input>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker (closed)="changed()"></mat-date-range-picker>
+        <mat-date-range-picker #picker (closed)="filterSet()"></mat-date-range-picker>
     </div>
+
+    <div class="participants-filter">
+        <app-person-select [label]="'PersonPage.EventListSettings.Participants' | translate"
+                           [(ngModel)]="filters.participantIds"
+                           (ngModelChange)="filterSet()"
+                           [options]="peopleOptions">
+        </app-person-select>
+    </div>
+
+    <div class="status-filter">
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'PersonPage.EventListSettings.Statuses' | translate }}</mat-label>
+            <mat-select [(ngModel)]="filters.statuses" (ngModelChange)="filterSet()" multiple>
+                <mat-option *ngFor="let option of statusOptions" [value]="option">
+                    {{ 'HospitalVisitStatus.' + option | translate }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="department-filter">
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'PersonPage.EventListSettings.Departments' | translate }}</mat-label>
+            <mat-select [(ngModel)]="filters.departmentIds" (ngModelChange)="filterSet()" multiple>
+                <mat-option *ngFor="let option of departmentOptions" [value]="option.id">
+                    {{ option.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="need-highlight-card">
+        <mat-card>
+            <mat-card-subtitle>
+                <mat-checkbox [(ngModel)]="preferences.needHighlight" (ngModelChange)="preferenceSet()">
+                    {{ 'PersonPage.EventListSettings.NeedHighlight' | translate }}
+                </mat-checkbox>
+            </mat-card-subtitle>
+        </mat-card>
+    </div>
+
 </div>

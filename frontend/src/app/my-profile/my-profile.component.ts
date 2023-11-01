@@ -3,7 +3,7 @@ import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handl
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
-import {AutoUnSubscriberComponent} from '@fe/app/util/auto-unsubscriber.component';
+import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {Store} from '@ngrx/store';
 import {PeopleService} from '@fe/app/people/people.service';
 import {User} from '@shared/user/user';
@@ -17,7 +17,7 @@ import {UserSettings} from '@shared/user/user-settings';
     styleUrls: ['./my-profile.component.scss'],
     providers: [RouteDataHandler]
 })
-export class MyProfileComponent extends AutoUnSubscriberComponent implements OnInit {
+export class MyProfileComponent extends AutoUnSubscriber implements OnInit {
 
     protected editMode: boolean;
     protected user: User;

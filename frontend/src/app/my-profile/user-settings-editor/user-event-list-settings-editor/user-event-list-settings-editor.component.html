@@ -3,7 +3,7 @@
 
     <form *ngIf="form" [formGroup]="form">
 
-        <div class="participant-selector">
+        <div class="date-interval-selector">
             <mat-form-field appearance="fill">
                 <mat-label>{{ 'PersonPage.EventListSettings.Date' | translate }}</mat-label>
                 <mat-select formControlName="dateFilter">
@@ -18,7 +18,7 @@
         <div class="participant-selector">
             <app-person-select [label]="'PersonPage.EventListSettings.Participants' | translate"
                                [options]="personOptions"
-                               formControlName="participants"></app-person-select>
+                               formControlName="participantIds"></app-person-select>
         </div>
 
         <div>

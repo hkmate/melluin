@@ -4,7 +4,7 @@ import {User} from '@shared/user/user';
 import {includeAny, isNil, isNilOrEmpty} from '@shared/util/util';
 import {Permission} from '@shared/user/permission.enum';
 import {Platform} from '@angular/cdk/platform';
-import {AutoUnSubscriberComponent} from '@fe/app/util/auto-unsubscriber.component';
+import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {Store} from '@ngrx/store';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {Actions, ofType} from '@ngrx/effects';
@@ -15,7 +15,7 @@ import {AppActions} from '@fe/app/state/app-actions';
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent extends AutoUnSubscriberComponent implements OnInit {
+export class MenuComponent extends AutoUnSubscriber implements OnInit {
 
     protected canUserSee?: Record<string, boolean>;
 

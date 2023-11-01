@@ -1,10 +1,12 @@
 export const hospitalVisitSortableFields = [
-    'dateTimeFrom', 'dateTimeTo', 'countedMinutes'
+    'dateTimeFrom', 'dateTimeTo', 'countedMinutes', 'department.name'
 ];
 
 export const hospitalVisitFilterableFields = [
     ...hospitalVisitSortableFields,
     'organizer.id',
-    'organizer.name'
-
+    'organizer.name',
+    'department.id',
+    'participants.id',
+    'status'
 ];

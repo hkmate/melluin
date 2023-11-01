@@ -2,8 +2,7 @@
     <mat-card-header>
         <mat-card-subtitle>
             {{ patientInfo.child.name }}
-            <span *ngIf="ageMonths !== 0">({{ 'ChildCard.Age' | translate : {year: ageYear, months: ageMonths} }})</span>
-            <span *ngIf="ageMonths === 0">({{ 'ChildCard.AgeWithoutMonth' | translate : {year: ageYear} }})</span>
+            <span>({{ patientInfo.child | childAge : visitDate}})</span>
 
             <app-parent-info-icon *ngIf="needParentInfo()" [isParentThere]="patientInfo.isParentThere">
             </app-parent-info-icon>

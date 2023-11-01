@@ -25,3 +25,8 @@ export class DateUtil {
     }
 
 }
+
+export interface DateInterval {
+    dateFrom: Date;
+    dateTo: Date;
+}

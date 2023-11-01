@@ -36,6 +36,8 @@ export class HospitalVisitDao extends PageCreator<HospitalVisitEntity> {
     }
 
     public findAll(pageRequest: PageRequest): Promise<Pageable<HospitalVisitEntity>> {
+        // TODO: Make participant filtering work properly. Now the filtered visits contains the only participant that
+        //  are satisfy the filter.
         return this.getPage(pageRequest, {});
     }
 

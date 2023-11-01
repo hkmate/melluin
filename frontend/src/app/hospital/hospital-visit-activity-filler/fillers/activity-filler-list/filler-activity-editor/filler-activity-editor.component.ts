@@ -8,14 +8,14 @@ import {HospitalVisitActivityEditInput} from '@shared/hospital-visit-activity/ho
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 import {VisitedChildById} from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
 import {Observable} from 'rxjs';
-import {AutoUnSubscriberComponent} from '@fe/app/util/auto-unsubscriber.component';
+import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 
 @Component({
     selector: 'app-filler-activity-editor',
     templateUrl: './filler-activity-editor.component.html',
     styleUrls: ['./filler-activity-editor.component.scss']
 })
-export class FillerActivityEditorComponent extends AutoUnSubscriberComponent {
+export class FillerActivityEditorComponent extends AutoUnSubscriber {
 
     @Input()
     public activity: HospitalVisitActivity;

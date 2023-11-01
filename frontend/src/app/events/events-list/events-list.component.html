@@ -1,19 +1,9 @@
 <section>
     <div class="page-content">
-        <h1>{{ 'Titles.EventsList' | translate }}</h1>
-
-        <div class="option-row">
-            <app-event-list-filter [dateFrom]="filter.dateFrom"
-                                   [dateTo]="filter.dateTo"
-                                   (filterChanged)="filterChanged($event)"></app-event-list-filter>
-
+        <span class="page-header">
+            <h1>{{ 'Titles.EventsList' | translate }}</h1>
             <span>
-                <mat-checkbox [(ngModel)]="markRowByDate">
-                    {{ 'EventsList.MarkRowByDate' | translate }}
-                </mat-checkbox>
-
                 <app-view-type-selector [(viewType)]="viewType"></app-view-type-selector>
-
                 <span *ngIf="permissions.has(Permission.canCreateVisit)">
                     <a mat-mini-fab
                        color="accent"
@@ -22,10 +12,25 @@
                     </a>
                 </span>
             </span>
+        </span>
+
+        <div class="settings">
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{ 'EventsList.Settings' | translate }}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <app-event-list-filter (filtersChanged)="filterChanged()"
+                                           (preferencesChanged)="preferencesChanged()">
+                    </app-event-list-filter>
+                </mat-expansion-panel>
+            </mat-accordion>
         </div>
 
         <div class="events-list">
-
             <ng-container *ngIf="viewType === ViewType.LIST">
                 <div *ngFor="let event of eventsList" class="event-card">
                     <app-hospital-event-card [visit]="event" [needFillButton]="true"></app-hospital-event-card>
@@ -33,7 +38,7 @@
             </ng-container>
             <ng-container *ngIf="viewType === ViewType.TABLE">
                 <app-hospital-events-list [eventsList]="eventsList"
-                                          [markRowByDate]="markRowByDate"></app-hospital-events-list>
+                                          [markRowByDate]="preferences.needHighlight"></app-hospital-events-list>
             </ng-container>
 
             <ng-container *ngIf="!eventsList?.length">
