@@ -1,16 +1,24 @@
 <div class="events-filter">
-    <div class="date-interval-filter">
-        <span class="interval">
-            {{ filters.dateFrom | date : ('EventShortDateFormat' | translate) }}
-            -
-            {{ filters.dateTo | date : ('EventShortDateFormat' | translate) }}
-        </span>
-        <mat-date-range-input class="hidden" [rangePicker]="picker">
-            <input matStartDate [(ngModel)]="filters.dateFrom">
-            <input matEndDate [(ngModel)]="filters.dateTo">
-        </mat-date-range-input>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker (closed)="filterSet()"></mat-date-range-picker>
+    <div class="date-interval-filter-card">
+        <mat-card>
+            <mat-card-content>
+                <div class="date-interval-filter" (click)="picker.open()">
+                    <span class="interval">
+                        {{ filters.dateFrom | date : ('EventShortDateFormat' | translate) }}
+                        -
+                        {{ filters.dateTo | date : ('EventShortDateFormat' | translate) }}
+                    </span>
+                    <span class="picker">
+                        <mat-date-range-input class="hidden" [rangePicker]="picker">
+                            <input matStartDate [(ngModel)]="filters.dateFrom">
+                            <input matEndDate [(ngModel)]="filters.dateTo">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker (closed)="filterSet()" [touchUi]="true"></mat-date-range-picker>
+                    </span>
+                </div>
+            </mat-card-content>
+        </mat-card>
     </div>
 
     <div class="participants-filter">

@@ -1,20 +1,29 @@
 .events-filter {
 
-    .date-interval-filter {
+    .date-interval-filter-card {
+        width: 100%;
+        margin-bottom: 1rem;
 
-        mat-date-range-input {
-            display: inline-block;
-            width: 0;
+        mat-card-content {
+            padding-top: 0;
+            padding-bottom: 0;
         }
 
-        .interval {
-            font-size: medium;
-        }
+        .date-interval-filter {
 
-        .text-filter {
-            display: inline-block;
-        }
+            display: flex;
+            justify-content: space-between;
 
+            mat-date-range-input {
+                display: inline-block;
+                width: 0;
+            }
+
+            .interval {
+                font-size: medium;
+                margin: auto 0;
+            }
+        }
     }
 
     .participants-filter, .status-filter, .department-filter, .need-highlight-card {

@@ -1,8 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {EventsFilter} from '@fe/app/events/events-list/event-list-filter/events-filter';
-import {
-    HospitalEventsSettingsService
-} from '@fe/app/events/events-list/event-list-filter/hospital-events-settings.service';
+import {Component, OnInit} from '@angular/core';
 import {FilterOperationBuilder} from '@shared/api-util/filter-options';
 import {Pageable} from '@shared/api-util/pageable';
 import {Person} from '@shared/person/person';
@@ -10,20 +6,19 @@ import {PeopleService} from '@fe/app/people/people.service';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {Department} from '@shared/department/department';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
-import {EventsListPreferences} from '@fe/app/events/events-list/event-list-filter/events-list-preferences';
+import {EventsListPreferences} from '../service/events-list-preferences';
+import {EventsFilter} from '../service/events-filter';
+import {HospitalEventsSettingsService} from '@fe/app/events/events-list/service/hospital-events-settings.service';
+import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
+import {filter} from 'rxjs';
+import {reasonIsNotPageData} from '@fe/app/events/events-list/service/event-list-settings-change-reason';
 
 @Component({
     selector: 'app-event-list-filter',
     templateUrl: './event-list-filter.component.html',
     styleUrls: ['./event-list-filter.component.scss']
 })
-export class EventListFilterComponent implements OnInit {
-
-    @Output()
-    public filtersChanged = new EventEmitter<void>();
-
-    @Output()
-    public preferencesChanged = new EventEmitter<void>();
+export class EventListFilterComponent extends AutoUnSubscriber implements OnInit {
 
     protected filters: EventsFilter;
     protected preferences: EventsListPreferences;
@@ -34,27 +29,31 @@ export class EventListFilterComponent implements OnInit {
     constructor(private readonly filterService: HospitalEventsSettingsService,
                 private readonly departmentService: DepartmentService,
                 private readonly peopleService: PeopleService) {
+        super();
     }
 
     public ngOnInit(): void {
-        this.filters = this.filterService.getFilter();
-        this.preferences = this.filterService.getPreferences();
+        this.addSubscription(this.filterService.onChange().pipe(filter(reasonIsNotPageData)), () => {
+            this.resetSettings()
+        });
+        this.resetSettings();
         this.initPersonOptions();
         this.initDepartmentOptions();
-        this.normalizeDates();
-        this.filtersChanged.emit();
-        this.preferencesChanged.emit();
     }
 
     protected filterSet(): void {
         this.normalizeDates();
         this.filterService.setFilter(this.filters);
-        this.filtersChanged.emit();
     }
 
     protected preferenceSet(): void {
         this.filterService.setPreferences(this.preferences);
-        this.preferencesChanged.emit();
+    }
+
+    private resetSettings(): void {
+        this.filters = this.filterService.getFilter();
+        this.preferences = this.filterService.getPreferences();
+        this.normalizeDates();
     }
 
     private normalizeDates(): void {

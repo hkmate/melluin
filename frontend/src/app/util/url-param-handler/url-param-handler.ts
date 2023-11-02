@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNil, NOOP} from '@shared/util/util';
+import {isNil, NOOP, optionalArrayToArray} from '@shared/util/util';
 import {map, Observable} from 'rxjs';
 
-export type QueryParams = Record<string, string>;
+export type QueryParams = Record<string, string | Array<string>>;
 
 @Injectable()
 export class UrlParamHandler {
@@ -13,6 +13,11 @@ export class UrlParamHandler {
 
     public hasParam(paramName: string): boolean {
         return Object.hasOwn(this.route.snapshot.queryParams, paramName);
+    }
+
+    public getParams(paramName: string): Array<string> | undefined {
+        const params = this.route.snapshot.queryParams[paramName];
+        return isNil(params) ? undefined : optionalArrayToArray(params);
     }
 
     public getParam(paramName: string): string | undefined {

@@ -10,26 +10,36 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
 import {ViewType} from '@fe/app/util/view-type-selector/view-type';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
+import {HospitalEventsSettingsService} from '@fe/app/events/events-list/service/hospital-events-settings.service';
+import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';
+import {EventListUserSettingsInitializer} from '@fe/app/events/events-list/service/event-list-user-settings-initializer';
+import {DefaultEventListSettingsInitializer} from '@fe/app/events/events-list/service/event-list-settings-initializer';
+import {EventListQueryParamSettingsInitializer} from '@fe/app/events/events-list/service/event-list-query-param-settings-initializer';
+import {EventListQueryParamHandler} from '@fe/app/events/events-list/service/event-list-query-param-handler';
+import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
+import {filter} from 'rxjs';
 import {
-    HospitalEventsSettingsService
-} from '@fe/app/events/events-list/event-list-filter/hospital-events-settings.service';
-import {EventsListPreferences} from '@fe/app/events/events-list/event-list-filter/events-list-preferences';
+    reasonIsNotPreferences,
+    reasonIsPreferences
+} from '@fe/app/events/events-list/service/event-list-settings-change-reason';
 
 @Component({
     selector: 'app-events-list',
     templateUrl: './events-list.component.html',
     styleUrls: ['./events-list.component.scss'],
-    providers: [UrlParamHandler, HospitalEventsSettingsService]
+    providers: [
+        UrlParamHandler,
+        EventListQueryParamHandler,
+        DefaultEventListSettingsInitializer,
+        EventListUserSettingsInitializer,
+        EventListQueryParamSettingsInitializer,
+        HospitalEventsSettingsService
+    ]
 })
-export class EventsListComponent {
+export class EventsListComponent extends AutoUnSubscriber {
 
     ViewType = ViewType;
     Permission = Permission;
-    private static readonly FIRST_PAGE = 1;
-    private static readonly PAGE_PARAM_KEY = 'page';
-    private static readonly SIZE_PARAM_KEY = 'size';
-    private static readonly DATE_FROM_PARAM_KEY = 'dateFrom';
-    private static readonly DATE_TO_PARAM_KEY = 'dateTo';
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [10, 20, 50, 100];
@@ -46,45 +56,36 @@ export class EventsListComponent {
         // 'department.name': 'ASC'
     };
 
-
     constructor(private readonly title: AppTitle,
                 protected readonly permissions: PermissionService,
                 private readonly eventsService: HospitalVisitService,
-                private readonly filterService: HospitalEventsSettingsService,
-                private readonly urlParam: UrlParamHandler) {
+                private readonly filterService: HospitalEventsSettingsService) {
+        super();
     }
 
     public ngOnInit(): void {
-        this.title.setTitleByI18n('Titles.EventsList')
-        this.page = this.urlParam.getNumberParam(EventsListComponent.PAGE_PARAM_KEY) ?? EventsListComponent.FIRST_PAGE;
-        this.size = this.urlParam.getNumberParam(EventsListComponent.SIZE_PARAM_KEY) ?? this.sizeOptions[2];
+        this.title.setTitleByI18n('Titles.EventsList');
+        this.addSubscription(this.filterService.onChange().pipe(filter(reasonIsPreferences)), () => {
+            this.preferences = this.filterService.getPreferences();
+        });
+        this.addSubscription(this.filterService.onChange().pipe(filter(reasonIsNotPreferences)), () => {
+            this.setUpPageInfo();
+            this.loadData();
+        });
     }
 
     protected paginateHappened(event: PageEvent): void {
-        this.page = event.pageIndex + 1;
-        this.size = event.pageSize;
-        this.urlParam.setParams({
-            [EventsListComponent.PAGE_PARAM_KEY]: this.page + '',
-            [EventsListComponent.SIZE_PARAM_KEY]: this.size + ''
-        });
-        this.loadData();
+        this.filterService.setPageInfo({page: event.pageIndex + 1, size: event.pageSize});
     }
 
-    protected filterChanged(): void {
-        this.urlParam.setParams({
-            // [EventsListComponent.DATE_FROM_PARAM_KEY]: newFilter.dateFrom,
-            // [EventsListComponent.DATE_TO_PARAM_KEY]: newFilter.dateTo
-            // TODO...
-        });
-        this.loadData();
+    private setUpPageInfo(): void {
+        const pageInfo = this.filterService.getPageInfo();
+        this.page = pageInfo.page;
+        this.size = pageInfo.size;
     }
 
-    protected preferencesChanged(): void {
-        this.preferences = this.filterService.getPreferences();
-    }
-
-    private loadData(page?: number, size?: number): void {
-        this.eventsService.findVisit(this.createPageRequest(page, size)).subscribe(
+    private loadData(): void {
+        this.eventsService.findVisit(this.createPageRequest()).subscribe(
             (page: Pageable<HospitalVisit>) => {
                 this.eventsList = page.items;
                 this.page = page.meta.currentPage;
@@ -94,10 +95,10 @@ export class EventsListComponent {
         );
     }
 
-    private createPageRequest(pageIndex?: number, pageSize?: number): PageQuery {
+    private createPageRequest(): PageQuery {
         return {
-            page: pageIndex ?? this.page,
-            size: pageSize ?? this.size,
+            page: this.page,
+            size: this.size,
             sort: this.sort,
             where: this.createWhereClosure()
         };
