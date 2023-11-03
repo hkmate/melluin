@@ -52,8 +52,7 @@ export class EventsListComponent extends AutoUnSubscriber {
     protected viewType: ViewType = ViewType.TABLE;
     private sort: SortOptions = {
         dateTimeFrom: 'ASC',
-        // TODO: uncomment when it fixed in backend
-        // 'department.name': 'ASC'
+        'department.name': 'ASC'
     };
 
     constructor(private readonly title: AppTitle,
@@ -105,7 +104,7 @@ export class EventsListComponent extends AutoUnSubscriber {
     }
 
     private createWhereClosure(): FilterOptions | undefined {
-        return [this.filterService.generateFilterOptions()];
+        return this.filterService.generateFilterOptions();
     }
 
 }

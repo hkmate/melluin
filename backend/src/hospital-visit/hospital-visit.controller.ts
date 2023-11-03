@@ -41,6 +41,10 @@ export class HospitalVisitController {
         return this.boxStatusCrudService.findByVisit(hospitalVisitId);
     }
 
+    /**
+     * @param pageRequest In where closure on participants.id the only available operator is the 'in'
+     * @param requester
+     */
     @Get()
     @PermissionGuard(Permission.canReadVisit)
     public find(@PageReq() pageRequest: PageRequest,

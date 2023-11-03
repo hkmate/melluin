@@ -3,7 +3,7 @@ import {FindOptionsWhere} from 'typeorm/find-options/FindOptionsWhere';
 import {FindOperator} from 'typeorm/find-options/FindOperator';
 import {Injectable} from '@nestjs/common';
 import {WhereClosureOperationConvertFactory} from '@be/find-option-converter/where-closure-operation-convert.factory';
-
+import * as _ from 'lodash';
 
 @Injectable()
 export class WhereClosureConverter {
@@ -29,30 +29,8 @@ export class WhereClosureConverter {
     }
 
     private whereClosureFieldReducer<T>(previous: FindOptionsWhere<T>, {key, value}): FindOptionsWhere<T> {
-        if (this.isFieldSimply(key)) {
-            previous[key] = value;
-            return previous;
-        }
-        this.defineValueObject(previous, value, this.splitFieldName(key));
+        _.set(previous, key, value);
         return previous;
-    }
-
-    private isFieldSimply(fieldName: string): boolean {
-        return !fieldName.includes('.');
-    }
-
-    private splitFieldName(fieldName: string): Array<string> {
-        return fieldName.split('.');
-    }
-
-    private defineValueObject(target: Record<string, unknown>, value: unknown, keys: Array<string>): void {
-        if (keys.length === 1) {
-            target[keys[0]] = value;
-            return;
-        }
-        const innerTarget = (target[keys[0]] ?? {}) as Record<string, unknown>;
-        this.defineValueObject(innerTarget, value, keys.slice(1));
-        target[keys[0]] = innerTarget;
     }
 
 }

@@ -3,7 +3,8 @@ export const hospitalVisitSortableFields = [
 ];
 
 export const hospitalVisitFilterableFields = [
-    ...hospitalVisitSortableFields,
+    'dateTimeFrom',
+    'dateTimeTo',
     'organizer.id',
     'organizer.name',
     'department.id',
