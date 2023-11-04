@@ -42,7 +42,6 @@ export class EventListFilterComponent extends AutoUnSubscriber implements OnInit
     }
 
     protected filterSet(): void {
-        this.normalizeDates();
         this.filterService.setFilter(this.filters);
     }
 
@@ -53,13 +52,6 @@ export class EventListFilterComponent extends AutoUnSubscriber implements OnInit
     private resetSettings(): void {
         this.filters = this.filterService.getFilter();
         this.preferences = this.filterService.getPreferences();
-        this.normalizeDates();
-    }
-
-    private normalizeDates(): void {
-        this.filters.dateFrom.setHours(0, 0, 0, 0);
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        this.filters.dateTo.setHours(23, 59, 59, 999);
     }
 
     private initPersonOptions(): void {

@@ -26,6 +26,9 @@ export class HospitalEventsSettingsService extends AutoUnSubscriber {
                 private readonly queryParamHandler: EventListQueryParamHandler) {
         super();
         this.addSubscription(this.queryParamHandler.onChange(), () => {
+            this.initFilter();
+            this.initPreferences();
+            this.initPageInfo();
             this.settingsChanged.next(EventListSettingChangeReason.ALL);
         });
     }
@@ -113,8 +116,13 @@ class EventListFilterOptionGenerator {
     }
 
     private decorateDates(filter: EventsFilter): void {
-        this.options.dateTimeFrom = FilterOperationBuilder.lte(filter.dateToStr);
-        this.options.dateTimeTo = FilterOperationBuilder.gte(filter.dateFromStr);
+        const firstDay = filter.dateFrom;
+        const lastDay = filter.dateTo;
+        const nextAfterLastDay = new Date(lastDay);
+        nextAfterLastDay.setDate(nextAfterLastDay.getDate() + 1);
+
+        this.options.dateTimeFrom = FilterOperationBuilder.lt(nextAfterLastDay);
+        this.options.dateTimeTo = FilterOperationBuilder.gte(firstDay);
     }
 
     private decorateStatuses(filter: EventsFilter): void {

@@ -22,21 +22,20 @@ export function dateIntervalGeneratorFactory(dateFilter: EventsDateFilter): Date
     }
 }
 
-
 export class ActualMonthDateIntervalGenerator implements DateIntervalGenerator {
 
     public generate(): DateInterval {
-        return {dateFrom: this.getStartOfMonth(), dateTo: this.getEndOfTheMonth()};
+        return {dateFrom: this.getFirstDayOfMonth(), dateTo: this.getLastDayOfMonth()};
     }
 
-    private getStartOfMonth(): Date {
+    private getFirstDayOfMonth(): Date {
         const date = DateUtil.now();
         date.setDate(1);
         date.setHours(0, 0, 0, 0);
         return date;
     }
 
-    private getEndOfTheMonth(): Date {
+    private getLastDayOfMonth(): Date {
         const date = DateUtil.now();
         date.setMonth(date.getMonth() + 1, 1);
         date.setHours(0, 0, 0, 0);
@@ -48,17 +47,17 @@ export class ActualMonthDateIntervalGenerator implements DateIntervalGenerator {
 export class ActualWeekDateIntervalGenerator implements DateIntervalGenerator {
 
     public generate(): DateInterval {
-        return {dateFrom: this.getStartOfWeek(), dateTo: this.getEndOfTheWeek()};
+        return {dateFrom: this.getFirstDayOfWeek(), dateTo: this.getLastDayOfWeek()};
     }
 
-    protected getStartOfWeek(): Date {
+    protected getFirstDayOfWeek(): Date {
         const date = DateUtil.now();
         date.setDate(date.getDate() - date.getDay() + 1); // Note: +1 needed because Js use sunday as first of the week
         date.setHours(0, 0, 0, 0);
         return date;
     }
 
-    protected getEndOfTheWeek(): Date {
+    protected getLastDayOfWeek(): Date {
         const date = DateUtil.now();
         date.setDate(date.getDate() + WEEKDAYS - date.getDay());
         date.setHours(0, 0, 0, 0);
@@ -70,11 +69,11 @@ export class ActualWeekDateIntervalGenerator implements DateIntervalGenerator {
 export class TwoWeeksDateIntervalGenerator extends ActualWeekDateIntervalGenerator {
 
     public override generate(): DateInterval {
-        return {dateFrom: this.getStartOfWeek(), dateTo: this.getEndOfNextWeek()};
+        return {dateFrom: this.getFirstDayOfWeek(), dateTo: this.getLastDayOfNextWeek()};
     }
 
-    protected getEndOfNextWeek(): Date {
-        const date = this.getEndOfTheWeek();
+    protected getLastDayOfNextWeek(): Date {
+        const date = this.getLastDayOfWeek();
         date.setDate(date.getDate() + WEEKDAYS);
         return date;
     }
@@ -84,11 +83,11 @@ export class TwoWeeksDateIntervalGenerator extends ActualWeekDateIntervalGenerat
 export class ThreeWeeksDateIntervalGenerator extends TwoWeeksDateIntervalGenerator {
 
     public override generate(): DateInterval {
-        return {dateFrom: this.getStartOfPreviousWeek(), dateTo: this.getEndOfNextWeek()};
+        return {dateFrom: this.getFirstDayOfPreviousWeek(), dateTo: this.getLastDayOfNextWeek()};
     }
 
-    protected getStartOfPreviousWeek(): Date {
-        const date = this.getStartOfWeek();
+    protected getFirstDayOfPreviousWeek(): Date {
+        const date = this.getFirstDayOfWeek();
         date.setDate(date.getDate() - WEEKDAYS);
         return date;
     }
