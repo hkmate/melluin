@@ -38,17 +38,17 @@ export class EventListQueryParamHandler extends AutoUnSubscriber {
         );
     }
 
-    public saveSettings(filter: EventsFilter, preferences: EventsListPreferences, pageInfo: PageInfo): void {
+    public saveSettings(filter?: EventsFilter, preferences?: EventsListPreferences, pageInfo?: PageInfo): void {
         this.skipNextParamChangeEvent = true;
         const params: QueryParams = {
-            [PAGE_QUERY_KEY]: pageInfo.page + '',
-            [PAGE_SIZE_QUERY_KEY]: pageInfo.size + '',
-            [EventListQueryParams.dateFrom]: filter.dateFromStr,
-            [EventListQueryParams.dateTo]: filter.dateToStr,
-            [EventListQueryParams.participantIds]: filter.participantIds,
-            [EventListQueryParams.departmentIds]: filter.departmentIds,
-            [EventListQueryParams.statuses]: filter.statuses,
-            [EventListQueryParams.highlight]: preferences.needHighlight + ''
+            [PAGE_QUERY_KEY]: pageInfo?.page + '',
+            [PAGE_SIZE_QUERY_KEY]: pageInfo?.size + '',
+            [EventListQueryParams.dateFrom]: filter?.dateFromStr,
+            [EventListQueryParams.dateTo]: filter?.dateToStr,
+            [EventListQueryParams.participantIds]: filter?.participantIds,
+            [EventListQueryParams.departmentIds]: filter?.departmentIds,
+            [EventListQueryParams.statuses]: filter?.statuses,
+            [EventListQueryParams.highlight]: preferences?.needHighlight + ''
         };
 
         this.urlParamHandler.setParams(params);

@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {isNil, NOOP, optionalArrayToArray} from '@shared/util/util';
 import {map, Observable} from 'rxjs';
 
-export type QueryParams = Record<string, string | Array<string>>;
+export type QueryParams = Record<string, string | Array<string> | undefined>;
 
 @Injectable()
 export class UrlParamHandler {
