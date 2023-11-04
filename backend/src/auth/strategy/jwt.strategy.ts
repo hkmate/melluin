@@ -3,11 +3,13 @@ import {PassportStrategy} from '@nestjs/passport';
 import {ExtractJwt, Strategy} from 'passport-jwt';
 import {User} from '@shared/user/user';
 import {ConfigService} from '@nestjs/config';
+import {JwtUserStorage} from '@be/auth/strategy/jwt-user-storage';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
 
-    constructor(config: ConfigService) {
+    constructor(private readonly userStorage: JwtUserStorage,
+                config: ConfigService) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
@@ -15,8 +17,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         });
     }
 
-    public validate(payload: { user: User }): User {
-        return payload.user;
+    public validate({userId}: { userId: string }): Promise<User> {
+        return this.userStorage.getById(userId);
     }
 
 }

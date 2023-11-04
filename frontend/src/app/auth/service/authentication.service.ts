@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {map, Observable} from 'rxjs';
 import {User} from '@shared/user/user';
 import {isNotNil} from '@shared/util/util';
-import {AuthToken} from '@shared/user/auth-token';
+import {AuthInfo} from '@shared/user/auth-info';
 import {Router} from '@angular/router';
 import {PATHS} from '@fe/app/app-paths';
 import {AppConfig} from '@fe/app/config/app-config';
@@ -29,9 +29,9 @@ export class AuthenticationService {
     public login(username: string, password: string): Observable<User> {
         const authBody: AuthCredentials = {username, password};
 
-        return this.http.post<AuthToken>(`${AppConfig.get('baseURL')}/auth/login`, authBody)
+        return this.http.post<AuthInfo>(`${AppConfig.get('baseURL')}/auth/login`, authBody)
             .pipe(map(
-                (token: AuthToken): User => {
+                (token: AuthInfo): User => {
                     this.credentialStoreService.useToken(token);
                     return this.credentialStoreService.getUser()!;
                 }

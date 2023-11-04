@@ -12,6 +12,7 @@ import {PersonModule} from '../person/person.module';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {Security} from '@be/config/model/security';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
+import {JwtUserStorage} from '@be/auth/strategy/jwt-user-storage';
 
 @Module({
     imports: [
@@ -38,6 +39,7 @@ import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
     controllers: [AuthController],
     providers: [
         AuthService,
+        JwtUserStorage,
         JwtStrategy,
         {
             provide: APP_GUARD,

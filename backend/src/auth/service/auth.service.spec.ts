@@ -12,7 +12,7 @@ import {UserEntity} from '@be/user/model/user.entity';
 import * as crypto from 'crypto';
 import {randomUUID} from 'crypto';
 import {User} from '@shared/user/user';
-import {AuthToken} from '@shared/user/auth-token';
+import {AuthInfo} from '@shared/user/auth-info';
 import {when} from 'jest-when';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
@@ -247,14 +247,14 @@ describe('AuthService', () => {
                 settings: {eventList: {}}
             };
             const expectedTokenStr = `&@${JSON.stringify(user)}@&`;
-            const expectedToken: AuthToken = {access_token: expectedTokenStr};
+            const expectedToken: AuthInfo = {accessToken: expectedTokenStr, user, userSettings: userEntity.settings!};
             (jwtService.sign as Mock).mockReturnValueOnce(expectedTokenStr);
             (userDao.findOneWithCache as Mock).mockReturnValueOnce(userEntity);
 
-            const result: AuthToken = await authService.getTokenFor({username, password});
+            const result: AuthInfo = await authService.getTokenFor({username, password});
 
             expect(result).toEqual(expectedToken);
-            expect(jwtService.sign).toBeCalledWith({user, userSettings: userEntity.settings});
+            expect(jwtService.sign).toBeCalledWith({userId: user.id});
             expect(userDao.findOneWithCache).toBeCalledWith(username);
             expect(configService.get).toBeCalledWith('server.defaultSysAdmin.needToInit', false);
         });

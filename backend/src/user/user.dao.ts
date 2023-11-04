@@ -4,6 +4,7 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {UserEntity} from './model/user.entity';
 import {RoleEntity} from './model/role.entity';
 import {isNil, toOptional} from '@shared/util/util';
+import {FindOneOptions} from 'typeorm/find-options/FindOneOptions';
 
 @Injectable()
 export class UserDao {
@@ -21,6 +22,10 @@ export class UserDao {
 
     public findAllRole(): Promise<Array<RoleEntity>> {
         return this.roleRepository.find();
+    }
+
+    public find(options: FindOneOptions<UserEntity>): Promise<UserEntity | undefined> {
+        return this.userRepository.findOne(options).then(toOptional);
     }
 
     public findOneByName(userName: string): Promise<UserEntity | undefined> {

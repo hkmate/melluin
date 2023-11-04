@@ -6,7 +6,7 @@ import * as crypto from 'crypto';
 import {RoleEntity} from '@be/user/model/role.entity';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {PersonDao} from '@be/person/person.dao';
-import {AuthToken} from '@shared/user/auth-token';
+import {AuthInfo} from '@shared/user/auth-info';
 import {isNil} from '@shared/util/util';
 import {ConfigService} from '@nestjs/config';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
@@ -45,12 +45,14 @@ export class AuthService {
         }
     }
 
-    public async getTokenFor(credentials: AuthCredentials): Promise<AuthToken> {
+    public async getTokenFor(credentials: AuthCredentials): Promise<AuthInfo> {
         const userEntity: UserEntity | undefined = await this.userService.findOneWithCache(credentials.username);
         const user: User = this.userConverter.convert(userEntity!);
         const userSettings: UserSettings = this.userSettingsConverter.convert(userEntity!);
         return {
-            access_token: this.jwtService.sign({user, userSettings}),
+            accessToken: this.jwtService.sign({userId: user.id}),
+            user,
+            userSettings
         };
     }
 
