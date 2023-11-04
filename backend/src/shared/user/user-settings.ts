@@ -34,11 +34,35 @@ export class EventListUserSettings {
 
 }
 
+export enum HomePageOption {
+    DASHBOARD = 'DASHBOARD',
+    EVENT_LIST = 'EVENT_LIST',
+    ACTUAL_HOSPITAL_VISIT_DETAILS = 'ACTUAL_HOSPITAL_VISIT_DETAILS',
+    ACTUAL_HOSPITAL_VISIT_FILLER = 'ACTUAL_HOSPITAL_VISIT_FILLER',
+}
+
+export class HomePageUserSettings {
+
+    @IsOptional()
+    @IsEnum(HomePageOption)
+    inMobile?: HomePageOption;
+
+    @IsOptional()
+    @IsEnum(HomePageOption)
+    inDesktop?: HomePageOption;
+
+}
+
 export class UserSettings {
 
     @IsOptional()
     @ValidateNested()
     @Type(() => EventListUserSettings)
     eventList?: EventListUserSettings;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => HomePageUserSettings)
+    homePage?: HomePageUserSettings;
 
 }

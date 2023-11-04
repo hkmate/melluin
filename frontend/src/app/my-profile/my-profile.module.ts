@@ -19,7 +19,10 @@ import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
 import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {PersonSelectModule} from '@fe/app/util/person-select/person-select.module';
-import { UserEventListSettingsEditorComponent } from './user-settings-editor/user-event-list-settings-editor/user-event-list-settings-editor.component';
+import {UserHomePageSettingsEditorComponent} from '@fe/app/my-profile/user-settings-editor/user-home-page-settings-editor/user-home-page-settings-editor.component';
+import {UserEventListSettingsEditorComponent} from '@fe/app/my-profile/user-settings-editor/user-event-list-settings-editor/user-event-list-settings-editor.component';
+import {MatRadioModule} from '@angular/material/radio';
+import { HomePageOptionSelectorComponent } from './user-settings-editor/user-home-page-settings-editor/home-page-option-selector/home-page-option-selector.component';
 
 @NgModule({
     imports: [
@@ -35,13 +38,14 @@ import { UserEventListSettingsEditorComponent } from './user-settings-editor/use
         MatChipsModule,
         MatOptionModule,
         MatSelectModule,
+        MatRadioModule,
         MatInputModule,
 
         TranslateModule,
 
         OptionalPipe,
         PersonNamePipe,
-        PersonSelectModule
+        PersonSelectModule,
     ],
     declarations: [
         MyProfileComponent,
@@ -49,7 +53,9 @@ import { UserEventListSettingsEditorComponent } from './user-settings-editor/use
         UserSettingsPresenterComponent,
         MyProfileEditorComponent,
         UserSettingsEditorComponent,
-        UserEventListSettingsEditorComponent
+        UserEventListSettingsEditorComponent,
+        UserHomePageSettingsEditorComponent,
+        HomePageOptionSelectorComponent
     ]
 })
 export class MyProfileModule {

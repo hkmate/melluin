@@ -1,0 +1,17 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-subtitle>{{ label }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-radio-group [ngModel]="selected" (ngModelChange)="changed($event)">
+            <div *ngFor="let option of options">
+                <mat-radio-button [value]="option">
+                    {{ 'HomePageOption.' + option | translate }}
+                </mat-radio-button>
+                <div class="description">
+                    {{ 'PersonPage.HomePageSettings.Description.' + option | translate }}
+                </div>
+            </div>
+        </mat-radio-group>
+    </mat-card-content>
+</mat-card>

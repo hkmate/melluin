@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {EventsDateFilter, UserSettings} from '@shared/user/user-settings';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
@@ -9,36 +9,30 @@ import {MessageService} from '@fe/app/util/message.service';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {PeopleService} from '@fe/app/people/people.service';
 import {UserService} from '@fe/app/people/user.service';
-import {AppActions} from '@fe/app/state/app-actions';
 import {Pageable} from '@shared/api-util/pageable';
 import {FilterOperationBuilder} from '@shared/api-util/filter-options';
+import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
 
 @Component({
     selector: 'app-user-event-list-settings-editor',
     templateUrl: './user-event-list-settings-editor.component.html',
     styleUrls: ['./user-event-list-settings-editor.component.scss']
 })
-export class UserEventListSettingsEditorComponent {
-
-    @Input()
-    public userId: string;
-
-    @Input()
-    public settings: UserSettings;
+export class UserEventListSettingsEditorComponent extends CustomUserSettingsEditorBaseComponent {
 
     protected form: FormGroup;
     protected statusOptions: Array<HospitalVisitStatus> = Object.values(HospitalVisitStatus);
     protected departmentOptions: Array<Department>;
     protected personOptions: Array<Person>;
     protected dateOptions: Array<EventsDateFilter> = Object.values(EventsDateFilter);
-    private savingInProcess: boolean;
 
-    constructor(private readonly fb: FormBuilder,
-                private readonly store: Store,
-                private readonly msg: MessageService,
+    constructor(store: Store,
+                msg: MessageService,
+                userService: UserService,
+                private readonly fb: FormBuilder,
                 private readonly departmentService: DepartmentService,
-                private readonly peopleService: PeopleService,
-                private readonly userService: UserService) {
+                private readonly peopleService: PeopleService) {
+        super(store, msg, userService);
     }
 
     public ngOnInit(): void {
@@ -47,35 +41,11 @@ export class UserEventListSettingsEditorComponent {
         this.initDepartmentOptions();
     }
 
-    protected isSaveBtnDisabled(): boolean {
-        return this.form.invalid || this.savingInProcess;
+    protected override isSaveBtnDisabled(): boolean {
+        return this.form.invalid || super.isSaveBtnDisabled();
     }
 
-    protected submitForm(): void {
-        this.savingInProcess = true;
-        this.userService.updateUserSettings(this.userId, this.parseForm()).subscribe({
-            next: (userSettings: UserSettings) => {
-                this.savingInProcess = false;
-                this.msg.success('SaveSuccessful');
-                this.store.dispatch(AppActions.userSettingsLoaded({userSettings}))
-            },
-            error: () => {
-                this.savingInProcess = false;
-            }
-        });
-    }
-
-    private initForm(): void {
-        this.form = this.fb.group({
-            dateFilter: [this.settings.eventList?.dateFilter],
-            participantIds: [this.settings.eventList?.participantIds],
-            statuses: [this.settings.eventList?.statuses],
-            departmentIds: [this.settings.eventList?.departmentIds],
-            needHighlight: [this.settings.eventList?.needHighlight],
-        });
-    }
-
-    private parseForm(): UserSettings {
+    protected override generateNewSettings(): UserSettings {
         return {
             ...this.settings,
             eventList: {
@@ -86,6 +56,16 @@ export class UserEventListSettingsEditorComponent {
                 needHighlight: this.form.controls.needHighlight.value,
             }
         }
+    }
+
+    private initForm(): void {
+        this.form = this.fb.group({
+            dateFilter: [this.settings.eventList?.dateFilter],
+            participantIds: [this.settings.eventList?.participantIds],
+            statuses: [this.settings.eventList?.statuses],
+            departmentIds: [this.settings.eventList?.departmentIds],
+            needHighlight: [this.settings.eventList?.needHighlight],
+        });
     }
 
     private initDepartmentOptions(): void {

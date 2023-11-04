@@ -89,6 +89,12 @@
         "THREE_WEEK": "Three weeks, actual in the middle",
         "MONTH": "Actual month"
     },
+    "HomePageOption": {
+        "DASHBOARD": "Dashboard",
+        "EVENT_LIST": "Events list",
+        "ACTUAL_HOSPITAL_VISIT_DETAILS": "Actual hospital visit - details page",
+        "ACTUAL_HOSPITAL_VISIT_FILLER": "Actual hospital visit - filler page"
+    },
     "Menu": {
         "People": "People",
         "Events": "Events",
@@ -187,6 +193,17 @@
             "Participants": "Participants",
             "Departments": "Departments",
             "NeedHighlight": "Highlight rows"
+        },
+        "HomePageSettings": {
+            "Title": "Homepage",
+            "InMobile": "In mobile",
+            "InDesktop": "In desktop",
+            "Description": {
+                "DASHBOARD": "",
+                "EVENT_LIST": "",
+                "ACTUAL_HOSPITAL_VISIT_DETAILS": "If there is no visit on that day, events list page will be opened.",
+                "ACTUAL_HOSPITAL_VISIT_FILLER": "If the visit is filled already its details page will be opened. If there is no visit on that day, events list page will opened."
+            }
         }
     },
     "DepartmentListPage": {

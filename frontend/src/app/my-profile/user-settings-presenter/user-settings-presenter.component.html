@@ -66,4 +66,34 @@
         </mat-card>
     </div>
 
+    <div class="home-page-settings">
+        <h3>{{ 'PersonPage.HomePageSettings.Title' | translate }}</h3>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.HomePageSettings.InMobile' | translate }}</mat-card-subtitle>
+                <mat-card-title *ngIf="!settings.homePage?.inMobile">{{ 'NoData' | translate }}</mat-card-title>
+                <mat-card-title *ngIf="settings.homePage?.inMobile">
+                    {{ 'HomePageOption.' + settings.homePage?.inMobile | translate }}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content *ngIf="settings.homePage?.inMobile">
+                {{ 'PersonPage.HomePageSettings.Description.' + settings.homePage?.inMobile | translate }}
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.HomePageSettings.InDesktop' | translate }}</mat-card-subtitle>
+                <mat-card-title *ngIf="!settings.homePage?.inDesktop">{{ 'NoData' | translate }}</mat-card-title>
+                <mat-card-title *ngIf="settings.homePage?.inDesktop">
+                    {{ 'HomePageOption.' + settings.homePage?.inDesktop | translate }}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content *ngIf="settings.homePage?.inDesktop">
+                {{ 'PersonPage.HomePageSettings.Description.' + settings.homePage?.inDesktop | translate }}
+            </mat-card-content>
+        </mat-card>
+    </div>
+
 </div>

@@ -1,0 +1,29 @@
+<div class="home-page-settings">
+    <h3>{{ 'PersonPage.HomePageSettings.Title' | translate }}</h3>
+
+    <form *ngIf="form" [formGroup]="form">
+
+        <div class="in-mobile-card">
+            <app-home-page-option-selector [label]="'PersonPage.HomePageSettings.InMobile' | translate"
+                                           formControlName="inMobile">
+            </app-home-page-option-selector>
+        </div>
+
+        <div class="in-desktop-card">
+            <app-home-page-option-selector [label]="'PersonPage.HomePageSettings.InDesktop' | translate"
+                                           formControlName="inDesktop">
+            </app-home-page-option-selector>
+        </div>
+
+        <div class="button-row">
+            <button mat-flat-button
+                    color="accent"
+                    [disabled]="isSaveBtnDisabled()"
+                    (click)="submit()"
+                    type="button">
+                {{ 'SaveButton' | translate}}
+            </button>
+        </div>
+
+    </form>
+</div>

@@ -89,6 +89,12 @@
         "THREE_WEEK": "Három hét, középen az aktuális",
         "MONTH": "Aktuális hónap"
     },
+    "HomePageOption": {
+        "DASHBOARD": "Kezdőlap",
+        "EVENT_LIST": "Események lista ",
+        "ACTUAL_HOSPITAL_VISIT_DETAILS": "Aznapi foglalkozás - részletek oldal",
+        "ACTUAL_HOSPITAL_VISIT_FILLER": "Aznapi foglalkozás - kitöltő oldal"
+    },
     "Menu": {
         "People": "Emberek",
         "Events": "Események",
@@ -187,6 +193,17 @@
             "Participants": "Résztvevők",
             "Departments": "Osztályok",
             "NeedHighlight": "Sorok megjelölése"
+        },
+        "HomePageSettings": {
+            "Title": "Belépés után megnyíló oldal",
+            "InMobile": "Mobilon",
+            "InDesktop": "Asztali gépen",
+            "Description": {
+                "DASHBOARD": "",
+                "EVENT_LIST": "",
+                "ACTUAL_HOSPITAL_VISIT_DETAILS": "Ha nincs aznapra foglalkozás amin részt vennél akkor az események oldal nyílik meg.",
+                "ACTUAL_HOSPITAL_VISIT_FILLER": "Ha már ki lett költve a foglalkozás akkor a részletei oldal nyílik meg. Ha nincs aznap foglalkozás akkor pedig az események oldal."
+            }
         }
     },
     "DepartmentListPage": {
