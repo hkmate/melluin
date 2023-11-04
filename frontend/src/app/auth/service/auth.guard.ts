@@ -1,13 +1,5 @@
-import {Injectable} from '@angular/core';
-import {
-    ActivatedRouteSnapshot,
-    CanActivate,
-    CanLoad,
-    Route,
-    Router,
-    RouterStateSnapshot,
-    UrlSegment
-} from '@angular/router';
+import {inject, Injectable} from '@angular/core';
+import {Route, Router, UrlSegment} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
 import {PATHS} from '../../app-paths';
 import {User} from '@shared/user/user';
@@ -22,8 +14,11 @@ interface RouteData {
     permissions?: Array<Permission>;
 }
 
+export const AuthGuardFn = (route: Route, segments: Array<UrlSegment>): boolean =>
+    inject(AuthGuard).canMatch(route.data as RouteData, segments);
+
 @Injectable()
-export class AuthGuard implements CanActivate, CanLoad {
+export class AuthGuard {
 
     private currentUser?: User = undefined;
 
@@ -39,17 +34,9 @@ export class AuthGuard implements CanActivate, CanLoad {
         })
     }
 
-    public canLoad(route: Route, segments: Array<UrlSegment> = []): boolean {
-        return this.canOpen(route.data as RouteData, segments.map(s => s.path).join('/'));
-    }
-
-    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        return this.canOpen(route.data as RouteData, state.url);
-    }
-
-    // eslint-disable-next-line max-lines-per-function
-    private canOpen(data: RouteData = {}, returnUrl: string): boolean {
-        const permissions: Array<Permission> = data.permissions!;
+    public canMatch(data: RouteData = {}, segments: Array<UrlSegment> = []): boolean {
+        const permissions = data.permissions;
+        const returnUrl = segments.map(s => s.path).join('/');
 
         if (!this.authenticationService.hasAuthenticatedUser()) {
             this.router.navigate([PATHS.login.main], {queryParams: {returnUrl}})
@@ -59,11 +46,11 @@ export class AuthGuard implements CanActivate, CanLoad {
         if (isNilOrEmpty(permissions)) {
             return true;
         }
-        return this.checkUserHasAtLeastOneOfNeededPermissions(permissions);
+        return this.checkUserHasAtLeastOneOfNeededPermissions(permissions!);
     }
 
-    private checkUserHasAtLeastOneOfNeededPermissions(roles: Array<Permission>): boolean {
-        return roles.some((neededPerm: Permission) => this.currentUser!.permissions.includes(neededPerm));
+    private checkUserHasAtLeastOneOfNeededPermissions(permissions: Array<Permission>): boolean {
+        return permissions.some((neededPerm: Permission) => this.currentUser!.permissions.includes(neededPerm));
     }
 
 }

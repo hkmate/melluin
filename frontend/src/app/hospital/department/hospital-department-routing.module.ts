@@ -1,6 +1,6 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {AuthGuard} from '@fe/app/auth/service/auth.guard';
+import {AuthGuardFn} from '@fe/app/auth/service/auth.guard';
 import {PATHS} from '@fe/app/app-paths';
 import {DepartmentResolver} from '@fe/app/hospital/department/department-detail/department.resolver';
 import {DepartmentDetailComponent} from '@fe/app/hospital/department/department-detail/department-detail.component';
@@ -11,14 +11,14 @@ import {Permission} from '@shared/user/permission.enum';
 const routes: Routes = [
     {
         path: '',
-        canActivate: [AuthGuard],
+        canMatch: [AuthGuardFn],
         data: {
             permissions: [Permission.canSearchDepartment]
         },
         component: DepartmentsListComponent,
     }, {
         path: PATHS.hospitalDepartments.detail,
-        canActivate: [AuthGuard],
+        canMatch: [AuthGuardFn],
         component: DepartmentDetailComponent,
         data: {
             permissions: [Permission.canReadDepartment]

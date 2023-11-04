@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {PATHS} from './app-paths';
-import {AuthGuard} from './auth/service/auth.guard';
+import {AuthGuardFn} from './auth/service/auth.guard';
 import {NotFoundComponent} from './not-found-component/not-found.component';
 import {PathResolveService} from './path-resolve/path-resolve.service';
 import {DashboardComponent} from './dashboard/dashboard.component';
@@ -15,12 +15,12 @@ const routes: Routes = [
     },
     {
         path: PATHS.dashboard.main,
-        canActivate: [AuthGuard],
+        canMatch: [AuthGuardFn],
         component: DashboardComponent
     },
     {
         path: PATHS.people.main,
-        canLoad: [AuthGuard],
+        canMatch: [AuthGuardFn],
         data: {
             permissions: [Permission.canSearchPerson, Permission.canReadPerson]
         },
@@ -28,12 +28,12 @@ const routes: Routes = [
     },
     {
         path: PATHS.myProfile.main,
-        canLoad: [AuthGuard],
+        canMatch: [AuthGuardFn],
         loadChildren: () => import('./my-profile/my-profile-routing.module').then(m => m.MyProfileRoutingModule)
     },
     {
         path: PATHS.hospitalDepartments.main,
-        canLoad: [AuthGuard],
+        canMatch: [AuthGuardFn],
         data: {
             permissions: [Permission.canSearchDepartment]
         },
@@ -41,7 +41,7 @@ const routes: Routes = [
     },
     {
         path: PATHS.events.main,
-        canLoad: [AuthGuard],
+        canMatch: [AuthGuardFn],
         data: {
             permissions: [Permission.canReadVisit]
         },
@@ -49,7 +49,7 @@ const routes: Routes = [
     },
     {
         path: PATHS.hospitalVisit.main,
-        canLoad: [AuthGuard],
+        canMatch: [AuthGuardFn],
         data: {
             permissions: [Permission.canReadVisit]
         },
@@ -57,7 +57,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        canActivate: [AuthGuard],
+        canMatch: [AuthGuardFn],
         component: NavigatorComponent
     },
     {path: '**', resolve: {path: PathResolveService}, component: NotFoundComponent}
