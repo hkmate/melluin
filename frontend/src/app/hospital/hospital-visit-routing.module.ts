@@ -20,7 +20,7 @@ const routes: Routes = [
         component: HospitalVisitDetailsComponent,
     },
     {
-        path: PATHS.hospitalVisit.fillActivities,
+        path: `${PATHS.hospitalVisit.detail}/${PATHS.hospitalVisit.fillActivities}`,
         canActivate: [AuthGuard],
         data: {
             permissions: [Permission.canCreateActivity]

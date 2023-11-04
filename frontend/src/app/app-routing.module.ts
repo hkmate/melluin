@@ -6,6 +6,7 @@ import {NotFoundComponent} from './not-found-component/not-found.component';
 import {PathResolveService} from './path-resolve/path-resolve.service';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {Permission} from '@shared/user/permission.enum';
+import {NavigatorComponent} from '@fe/app/navigator.component';
 
 const routes: Routes = [
     {
@@ -56,8 +57,8 @@ const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: PATHS.events.main,
-        pathMatch: 'full'
+        canActivate: [AuthGuard],
+        component: NavigatorComponent
     },
     {path: '**', resolve: {path: PathResolveService}, component: NotFoundComponent}
 ];

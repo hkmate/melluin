@@ -33,6 +33,7 @@ import {ConfirmationModule} from '@fe/app/confirmation/confirmation.module';
 import {userSettingsReducer} from '@fe/app/state/reducer/user-settings.reducer';
 import {currentUserReducer} from '@fe/app/state/reducer/current-user.reducer';
 import {UserDataSaverEffect} from '@fe/app/state/effect/user-data-saver.effect';
+import {NavigatorComponent} from '@fe/app/navigator.component';
 
 registerLocaleData(localeHu);
 
@@ -50,7 +51,7 @@ export function appInitializeCredentialsFactory(credentialStoreService: Credenti
 
 @NgModule({
     bootstrap: [AppComponent],
-    declarations: [AppComponent, MenuComponent],
+    declarations: [AppComponent, NavigatorComponent, MenuComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,

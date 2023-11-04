@@ -1,5 +1,5 @@
 import {createFeatureSelector, select} from '@ngrx/store';
-import {filter, pipe} from 'rxjs';
+import {filter, map, pipe} from 'rxjs';
 import {isNotNil} from '@shared/util/util';
 import {userSettingsKey} from '@fe/app/state/app.state';
 
@@ -11,4 +11,9 @@ export const selectNilableUserSettingsFeature = createFeatureSelector<UserSettin
 export const selectUserSettings = pipe(
     select(selectNilableUserSettingsFeature),
     filter(val => isNotNil(val))
+);
+
+export const selectUserHomePageSettings = pipe(
+    selectUserSettings,
+    map(val => val.homePage)
 );
