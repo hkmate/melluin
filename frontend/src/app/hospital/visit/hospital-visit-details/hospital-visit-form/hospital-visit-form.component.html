@@ -30,7 +30,7 @@
                    (click)="validFromPicker.open()"
                    formControlName="date">
             <mat-datepicker-toggle matIconSuffix [for]="validFromPicker"></mat-datepicker-toggle>
-            <mat-datepicker #validFromPicker></mat-datepicker>
+            <mat-datepicker #validFromPicker [touchUi]="mobileScreen"></mat-datepicker>
         </mat-form-field>
     </div>
 

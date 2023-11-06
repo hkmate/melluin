@@ -19,7 +19,6 @@ import {OptionalPipe} from '@fe/app/util/optional.pipe';
 import {LazyInputModule} from '@fe/app/util/lazy-input/lazy-input.module';
 import {DepartmentDataFormComponent} from '@fe/app/hospital/department/department-detail/department-data-form/department-data-form.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
 import {DepartmentsListComponent} from '@fe/app/hospital/department/departments-list/departments-list.component';
 import {DepartmentBoxModule} from '@fe/app/hospital/department-box/department-box.module';
 
@@ -40,7 +39,6 @@ import {DepartmentBoxModule} from '@fe/app/hospital/department-box/department-bo
         MatPaginatorModule,
         MatSelectModule,
         MatSlideToggleModule,
-        MatNativeDateModule,
         MatDatepickerModule,
         TranslateModule,
 

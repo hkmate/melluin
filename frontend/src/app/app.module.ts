@@ -19,7 +19,7 @@ import {firstValueFrom} from 'rxjs';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {I18nPaginatorIntl} from '@fe/app/util/i18n-paginator-intl';
 import {AppLanguage} from '@fe/app/language/app-language';
-import {MAT_DATE_LOCALE} from '@angular/material/core';
+import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import {registerLocaleData} from '@angular/common';
 import localeHu from '@angular/common/locales/hu';
 import {ToastrModule} from 'ngx-toastr';
@@ -34,6 +34,7 @@ import {userSettingsReducer} from '@fe/app/state/reducer/user-settings.reducer';
 import {currentUserReducer} from '@fe/app/state/reducer/current-user.reducer';
 import {UserDataSaverEffect} from '@fe/app/state/effect/user-data-saver.effect';
 import {NavigatorComponent} from '@fe/app/navigator.component';
+import {MondayFirstDateAdapter} from '@fe/app/util/monday-first-date-adapter';
 
 registerLocaleData(localeHu);
 
@@ -67,6 +68,7 @@ export function appInitializeCredentialsFactory(credentialStoreService: Credenti
         MatSidenavModule,
         MatIconModule,
         MatListModule,
+        MatNativeDateModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -107,6 +109,7 @@ export function appInitializeCredentialsFactory(credentialStoreService: Credenti
         },
         {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
         {provide: LOCALE_ID, useValue: 'hu'},
+        {provide: DateAdapter, useClass: MondayFirstDateAdapter}
     ],
 })
 export class AppModule {

@@ -14,7 +14,7 @@
                             <input matEndDate [(ngModel)]="filters.dateTo">
                         </mat-date-range-input>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-date-range-picker #picker (closed)="filterSet()" [touchUi]="true"></mat-date-range-picker>
+                        <mat-date-range-picker #picker (closed)="filterSet()" [touchUi]="mobileScreen"></mat-date-range-picker>
                     </span>
                 </div>
             </mat-card-content>

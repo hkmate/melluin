@@ -14,7 +14,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MinToHourPipe} from '@fe/app/util/min-to-hour.pipe';
 import {OptionalPipe} from '@fe/app/util/optional.pipe';
@@ -39,7 +38,6 @@ import {PersonSelectModule} from '@fe/app/util/person-select/person-select.modul
         MatCheckboxModule,
         MatDatepickerModule,
         MatExpansionModule,
-        MatNativeDateModule,
         MatIconModule,
 
         TranslateModule,

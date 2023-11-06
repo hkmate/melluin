@@ -12,6 +12,7 @@ import {HospitalEventsSettingsService} from '@fe/app/events/events-list/service/
 import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {filter} from 'rxjs';
 import {reasonIsNotPageData} from '@fe/app/events/events-list/service/event-list-settings-change-reason';
+import {Platform} from '@angular/cdk/platform';
 
 @Component({
     selector: 'app-event-list-filter',
@@ -25,14 +26,17 @@ export class EventListFilterComponent extends AutoUnSubscriber implements OnInit
     protected peopleOptions: Array<Person>;
     protected departmentOptions: Array<Department>;
     protected statusOptions: Array<HospitalVisitStatus> = Object.values(HospitalVisitStatus);
+    protected mobileScreen: boolean;
 
-    constructor(private readonly filterService: HospitalEventsSettingsService,
+    constructor(private readonly platform: Platform,
+                private readonly filterService: HospitalEventsSettingsService,
                 private readonly departmentService: DepartmentService,
                 private readonly peopleService: PeopleService) {
         super();
     }
 
     public ngOnInit(): void {
+        this.mobileScreen = (this.platform.IOS || this.platform.ANDROID);
         this.addSubscription(this.filterService.onChange().pipe(filter(reasonIsNotPageData)), () => {
             this.resetSettings()
         });

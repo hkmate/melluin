@@ -13,7 +13,7 @@ import {LazyInputModule} from '@fe/app/util/lazy-input/lazy-input.module';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatNativeDateModule, MatOptionModule} from '@angular/material/core';
+import {MatOptionModule} from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
 import {HospitalEventCardModule} from '@fe/app/hospital/visit/hospital-event-card/hospital-event-card.module';
 import {HospitalEventsListModule} from '@fe/app/hospital/visit/hospital-events-list/hospital-events-list.module';
@@ -38,7 +38,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
         MatChipsModule,
         MatInputModule,
         MatDatepickerModule,
-        MatNativeDateModule,
         MatCheckboxModule,
         MatButtonToggleModule,
         MatButtonModule,

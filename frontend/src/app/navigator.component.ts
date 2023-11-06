@@ -46,8 +46,8 @@ export class NavigatorComponent extends AutoUnSubscriber implements OnInit {
 
     public ngOnInit(): void {
         this.mobileScreen = (this.platform.IOS || this.platform.ANDROID);
-        this.addSubscription(this.store.pipe(selectUserHomePageSettings), (userSettings: HomePageUserSettings) => {
-            this.processHomePage(this.mobileScreen ? userSettings.inMobile : userSettings.inDesktop);
+        this.addSubscription(this.store.pipe(selectUserHomePageSettings), (userSettings?: HomePageUserSettings) => {
+            this.processHomePage(this.mobileScreen ? userSettings?.inMobile : userSettings?.inDesktop);
         });
     }
 

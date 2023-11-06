@@ -16,6 +16,7 @@ import {Store} from '@ngrx/store';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import * as _ from 'lodash';
+import {Platform} from '@angular/cdk/platform';
 
 @Component({
     selector: 'app-hospital-visit-form',
@@ -48,10 +49,12 @@ export class HospitalVisitFormComponent extends AutoUnSubscriber implements OnIn
     protected personOptions: Array<Person>;
     protected form: FormGroup;
     protected visitToEdit?: HospitalVisit;
+    protected mobileScreen: boolean;
 
     private currentUser: User;
 
     constructor(private readonly fb: FormBuilder,
+                private readonly platform: Platform,
                 private readonly store: Store,
                 private readonly departmentService: DepartmentService,
                 private readonly personService: PeopleService) {
@@ -69,6 +72,7 @@ export class HospitalVisitFormComponent extends AutoUnSubscriber implements OnIn
     }
 
     public ngOnInit(): void {
+        this.mobileScreen = (this.platform.IOS || this.platform.ANDROID);
         this.initCurrentUser();
     }
 

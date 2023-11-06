@@ -56,10 +56,10 @@
                 <mat-card-subtitle>
                     {{ 'PersonPage.EventListSettings.NeedHighlight' | translate }}
                 </mat-card-subtitle>
-                <mat-card-title *ngIf="settings.eventList?.needHighlight === undefined">
+                <mat-card-title *ngIf="!settings.eventList?.needHighlight">
                     {{ 'NoData' | translate }}
                 </mat-card-title>
-                <mat-card-title *ngIf="settings.eventList?.needHighlight !== undefined">
+                <mat-card-title *ngIf="settings.eventList?.needHighlight">
                     {{ 'YesNo.' + settings.eventList?.needHighlight | translate }}
                 </mat-card-title>
             </mat-card-header>
