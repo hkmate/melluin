@@ -64,6 +64,51 @@
 					"response": []
 				},
 				{
+					"name": "Update person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n    \"firstName\": \"Nagy\",\n    \"lastName\": \"Géza\",\n    \"email\": \"sad@asd.asd\",\n    \"phone\": \"+36 30 1241212\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/people/b99ab139-cd63-4639-9b72-7308c9c001f1",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"people",
+								"b99ab139-cd63-4639-9b72-7308c9c001f1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get person",
 					"event": [
 						{
@@ -98,59 +143,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverUrl}}/api/people/ef6a8d4b-a2f5-48d6-b146-4baa04515219",
+							"raw": "{{serverUrl}}/api/people/b99ab139-cd63-4639-9b72-7308c9c001f1",
 							"host": [
 								"{{serverUrl}}"
 							],
 							"path": [
 								"api",
 								"people",
-								"ef6a8d4b-a2f5-48d6-b146-4baa04515219"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update person",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"phone\": \"+36 30 824 6056\",\n    \"lastName\": \"Varga\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{serverUrl}}/api/people/ef6a8d4b-a2f5-48d6-b146-4baa04515219",
-							"host": [
-								"{{serverUrl}}"
-							],
-							"path": [
-								"api",
-								"people",
-								"ef6a8d4b-a2f5-48d6-b146-4baa04515219"
+								"b99ab139-cd63-4639-9b72-7308c9c001f1"
 							]
 						}
 					},
@@ -169,7 +169,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"Kiss\",\n    \"lastName\": \"Béla\",\n    \"nickName\":\"Béci\",\n    \"email\": \"sad@asd.hu\"\n}",
+							"raw": "{\n    \"firstName\": \"Kiss\",\n    \"lastName\": \"Béla\",\n    \"email\": \"sad@asd.hu\",\n    \"phone\": \"+36 30 1231212\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -184,73 +184,6 @@
 							"path": [
 								"api",
 								"people"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Save user",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"userName\": \"kbela2\",\n    \"password\": \"ezalegjobbjelszo\",\n    \"personId\":\"cab30c10-1b80-4f24-b262-b44f957b64d1\",\n    \"roles\": [\"ADMINISTRATOR\"]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{serverUrl}}/api/user",
-							"host": [
-								"{{serverUrl}}"
-							],
-							"path": [
-								"api",
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update user",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"password\": \"ezamasodiklegjobbjelszó\",\n    \"isActive\": true\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{serverUrl}}/api/users/1324dc62-8251-4057-90b4-3f0d521f1e93",
-							"host": [
-								"{{serverUrl}}"
-							],
-							"path": [
-								"api",
-								"users",
-								"1324dc62-8251-4057-90b4-3f0d521f1e93"
 							]
 						}
 					},
@@ -277,7 +210,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"reason\": \"CORRECTED\"\n}",
+									"raw": "{\n    \"reason\": \"BROKEN\",\n    \"affectedObject\": \"pencils\",\n    \"comment\": \"Red pencil ok, others not\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -285,14 +218,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{serverUrl}}/api/departments/fbaf7be5-d69d-423a-8460-0b3197134c75/box-status",
+									"raw": "{{serverUrl}}/api/departments/eacc3c2e-ae2a-41b8-bd14-f88660d14eaf/box-status",
 									"host": [
 										"{{serverUrl}}"
 									],
 									"path": [
 										"api",
 										"departments",
-										"fbaf7be5-d69d-423a-8460-0b3197134c75",
+										"eacc3c2e-ae2a-41b8-bd14-f88660d14eaf",
 										"box-status"
 									]
 								}
@@ -323,14 +256,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{serverUrl}}/api/departments/fbaf7be5-d69d-423a-8460-0b3197134c75/box-status",
+									"raw": "{{serverUrl}}/api/departments/eacc3c2e-ae2a-41b8-bd14-f88660d14eaf/box-status",
 									"host": [
 										"{{serverUrl}}"
 									],
 									"path": [
 										"api",
 										"departments",
-										"fbaf7be5-d69d-423a-8460-0b3197134c75",
+										"eacc3c2e-ae2a-41b8-bd14-f88660d14eaf",
 										"box-status"
 									]
 								}
@@ -421,14 +354,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverUrl}}/api/departments/fbaf7be5-d69d-423a-8460-0b3197134c75",
+							"raw": "{{serverUrl}}/api/departments/eacc3c2e-ae2a-41b8-bd14-f88660d14eaf",
 							"host": [
 								"{{serverUrl}}"
 							],
 							"path": [
 								"api",
 								"departments",
-								"fbaf7be5-d69d-423a-8460-0b3197134c75"
+								"eacc3c2e-ae2a-41b8-bd14-f88660d14eaf"
 							],
 							"query": [
 								{
@@ -487,7 +420,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Légúti ---oszt222\",\n    \"validTo\": \"2025-03-09T20:26:21.500Z\",\n    \"address\": \"József attilla ut333333\",\n    \"diseasesInfo\": \"itt vannak a léguti betegek33333\", \n    \"note\": \"this is a very fasza no231321te\"\n}",
+							"raw": "{\n    \"name\": \"Légúti osztaly\",\n    \"validTo\": \"2032-04-09T20:26:21.500Z\",\n    \"address\": \"József attilla ut 1.\",\n    \"diseasesInfo\": \"léguti betegek vannak\", \n    \"note\": \"this is a very good note\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -495,66 +428,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverUrl}}/api/departments/fbaf7be5-d69d-423a-8460-0b3197134c75",
+							"raw": "{{serverUrl}}/api/departments/eacc3c2e-ae2a-41b8-bd14-f88660d14eaf",
 							"host": [
 								"{{serverUrl}}"
 							],
 							"path": [
 								"api",
 								"departments",
-								"fbaf7be5-d69d-423a-8460-0b3197134c75"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "events",
-			"item": [
-				{
-					"name": "List events",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{serverUrl}}/api/events",
-							"host": [
-								"{{serverUrl}}"
-							],
-							"path": [
-								"api",
-								"events"
+								"eacc3c2e-ae2a-41b8-bd14-f88660d14eaf"
 							]
 						}
 					},
@@ -636,7 +517,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"status\": \"DRAFT\",\n    \"departmentId\": \"36d96963-8c15-4784-a6e2-13ae87368d54\",\n    \"dateTimeFrom\": \"2023-02-21T19:58:34\",\n    \"dateTimeTo\": \"2023-02-21T21:58:34\",\n    \"countedMinutes\": 60,\n    \"visibility\": \"PUBLIC\",\n    \"organizerId\": \"b1238194-8f6c-446c-bc96-ca74f1d4cb20\",\n    \"participantIds\": [\"64289de9-b935-4ff9-ae81-ffb5f457e5c9\", \"f5682bc3-b339-40f8-8979-defe9446f5fd\"]\n}",
+							"raw": "{\n    \"status\": \"DRAFT\",\n    \"departmentId\": \"eacc3c2e-ae2a-41b8-bd14-f88660d14eaf\",\n    \"dateTimeFrom\": \"2023-02-21T16:00:00\",\n    \"dateTimeTo\": \"2023-02-21T18:00:00\",\n    \"countedMinutes\": 60,\n    \"visibility\": \"PUBLIC\",\n    \"organizerId\": \"c2e4b1ed-657b-4972-8fe9-4e6d52de898d\",\n    \"participantIds\": [\"c2e4b1ed-657b-4972-8fe9-4e6d52de898d\", \"b99ab139-cd63-4639-9b72-7308c9c001f1\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -651,6 +532,55 @@
 							"path": [
 								"api",
 								"hospital-visits"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get hospital visit box info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"reason\": \"BROKEN\",\n    \"affectedObject\": \"pencils\",\n    \"comment\": \"Red pencil ok, others not\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/d2149e64-a16e-46d4-a6e0-20ed442a4b9b/box-status",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"d2149e64-a16e-46d4-a6e0-20ed442a4b9b",
+								"box-status"
 							]
 						}
 					},
@@ -680,7 +610,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"1dd04612-1031-4fda-837a-7845c84f2997\",\n    \"status\": \"SCHEDULED\",\n    \"departmentId\": \"36d96963-8c15-4784-a6e2-13ae87368d54\",\n    \"dateTimeFrom\": \"2023-02-21T19:58:34\",\n    \"dateTimeTo\": \"2023-02-21T21:58:34\",\n    \"countedMinutes\": 120,\n    \"visibility\": \"PUBLIC\",\n    \"participantIds\": [\"64289de9-b935-4ff9-ae81-ffb5f457e5c9\", \"f5682bc3-b339-40f8-8979-defe9446f5fd\"]\n}",
+							"raw": "{\n    \"id\": \"d2149e64-a16e-46d4-a6e0-20ed442a4b9b\",\n    \"status\": \"STARTED\",\n    \"departmentId\": \"eacc3c2e-ae2a-41b8-bd14-f88660d14eaf\",\n    \"dateTimeFrom\": \"2023-02-21T19:58:34\",\n    \"dateTimeTo\": \"2023-02-21T21:58:34\",\n    \"countedMinutes\": 120,\n    \"visibility\": \"PUBLIC\",\n    \"participantIds\": [\"c2e4b1ed-657b-4972-8fe9-4e6d52de898d\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -688,14 +618,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverUrl}}/api/hospital-visits/1dd04612-1031-4fda-837a-7845c84f2997",
+							"raw": "{{serverUrl}}/api/hospital-visits/d2149e64-a16e-46d4-a6e0-20ed442a4b9b",
 							"host": [
 								"{{serverUrl}}"
 							],
 							"path": [
 								"api",
 								"hospital-visits",
-								"1dd04612-1031-4fda-837a-7845c84f2997"
+								"d2149e64-a16e-46d4-a6e0-20ed442a4b9b"
 							]
 						}
 					},
@@ -728,7 +658,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\n    \"value\": [\n        {\n            \"childId\": \"478eb1c1-bf7c-4704-92d8-5383a155a9a8\",\n            \"isParentThere\": false\n        },\n        {\n            \"childId\": \"e4f41acb-a537-4570-9ca1-93baff56969c\",\n            \"isParentThere\": false\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -736,14 +666,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverUrl}}/api/hospital-visits/1dd04612-1031-4fda-837a-7845c84f2997",
+							"raw": "{{serverUrl}}/api/hospital-visits/d2149e64-a16e-46d4-a6e0-20ed442a4b9b",
 							"host": [
 								"{{serverUrl}}"
 							],
 							"path": [
 								"api",
 								"hospital-visits",
-								"1dd04612-1031-4fda-837a-7845c84f2997"
+								"d2149e64-a16e-46d4-a6e0-20ed442a4b9b"
 							]
 						}
 					},
@@ -778,7 +708,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Béluka\",\n    \"birthYear\": 2014\n}",
+							"raw": "{\n    \"name\": \"Béluka\",\n    \"guessedBirth\": \"2014.10\",\n    \"info\": \"likes the cars\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -822,7 +752,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Béluka\",\n    \"birthYear\": 2019,\n    \"info\": \"szereti a papírrepülőket\"\n}",
+							"raw": "{\n    \"name\": \"Béluka\",\n    \"guessedBirth\": \"2019.10\",\n    \"info\": \"szereti a papírrepülőket\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -830,14 +760,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverUrl}}/api/children/5d22e646-1d06-499e-a5e6-2967367df0aa",
+							"raw": "{{serverUrl}}/api/children/e9835984-bf48-4be0-8150-fa59cd1c2761",
 							"host": [
 								"{{serverUrl}}"
 							],
 							"path": [
 								"api",
 								"children",
-								"5d22e646-1d06-499e-a5e6-2967367df0aa"
+								"e9835984-bf48-4be0-8150-fa59cd1c2761"
 							]
 						}
 					},
@@ -878,14 +808,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverUrl}}/api/children/5d22e646-1d06-499e-a5e6-2967367df0aa",
+							"raw": "{{serverUrl}}/api/children/e9835984-bf48-4be0-8150-fa59cd1c2761",
 							"host": [
 								"{{serverUrl}}"
 							],
 							"path": [
 								"api",
 								"children",
-								"5d22e646-1d06-499e-a5e6-2967367df0aa"
+								"e9835984-bf48-4be0-8150-fa59cd1c2761"
 							]
 						}
 					},
@@ -911,6 +841,52 @@
 					],
 					"request": {
 						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"children\": [\"a00263c6-7184-49cb-b727-eb50e4ce49fe\", \"de1d3b84-77b9-43a1-8909-5a315a7ac169\"],\n    \"activities\": [\n        \"PAPER_SNAKE_MAKING\",\n        \"OTHER_CARD_GAME\"\n    ],\n    \"comment\": \"it was good\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/d2149e64-a16e-46d4-a6e0-20ed442a4b9b/activities",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"d2149e64-a16e-46d4-a6e0-20ed442a4b9b",
+								"activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update hospital visit activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
@@ -977,15 +953,62 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverUrl}}/api/hospital-visits/67ba50eb-939b-496c-9216-8fba5e8fda1d/activities",
+							"raw": "{{serverUrl}}/api/hospital-visits/d2149e64-a16e-46d4-a6e0-20ed442a4b9b/activities",
 							"host": [
 								"{{serverUrl}}"
 							],
 							"path": [
 								"api",
 								"hospital-visits",
-								"67ba50eb-939b-496c-9216-8fba5e8fda1d",
+								"d2149e64-a16e-46d4-a6e0-20ed442a4b9b",
 								"activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/d2149e64-a16e-46d4-a6e0-20ed442a4b9b/activities/26b9fbd9-14c0-4eb6-b564-f1ffc9517b1c",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"d2149e64-a16e-46d4-a6e0-20ed442a4b9b",
+								"activities",
+								"26b9fbd9-14c0-4eb6-b564-f1ffc9517b1c"
 							]
 						}
 					},
@@ -1018,7 +1041,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"children\": [\n        {\"childId\": \"5d22e646-1d06-499e-a5e6-2967367df0aa\", \"isParentThere\": true },\n        {\"childId\": \"caef37f3-ad10-4036-9b1d-200a7679cd17\", \"isParentThere\": true },\n        {\"childId\": \"afb2c46f-6360-4695-914f-db46dbf1268b\", \"isParentThere\": false }\n    ],\n    \"activities\": [\n    \"PAPER_SNAKE_MAKING\",\n    \"OTHER_CARD_GAME\"\n    ]\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1026,14 +1049,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverUrl}}/api/hospital-visits/67ba50eb-939b-496c-9216-8fba5e8fda1d/related/activities",
+							"raw": "{{serverUrl}}/api/hospital-visits/d2149e64-a16e-46d4-a6e0-20ed442a4b9b/related/activities",
 							"host": [
 								"{{serverUrl}}"
 							],
 							"path": [
 								"api",
 								"hospital-visits",
-								"67ba50eb-939b-496c-9216-8fba5e8fda1d",
+								"d2149e64-a16e-46d4-a6e0-20ed442a4b9b",
 								"related",
 								"activities"
 							]
@@ -1085,6 +1108,376 @@
 			]
 		},
 		{
+			"name": "users",
+			"item": [
+				{
+					"name": "settings",
+					"item": [
+						{
+							"name": "Get user settings",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/api/users/624c31e8-15b6-4b86-a919-968a4933a1c9/settings",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"624c31e8-15b6-4b86-a919-968a4933a1c9",
+										"settings"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update user settings",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{    \n    \"eventList\": {\n        \"dateFilter\": \"WEEK\",\n        \"departmentIds\": [\"eacc3c2e-ae2a-41b8-bd14-f88660d14eaf\"],\n        \"statuses\": [],\n        \"participantIds\": [],\n        \"needHighlight\": true\n    },\n    \"homePage\": {\n        \"inMobile\": \"ACTUAL_HOSPITAL_VISIT_DETAILS\",\n        \"inDesktop\": \"EVENT_LIST\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serverUrl}}/api/users/624c31e8-15b6-4b86-a919-968a4933a1c9/settings",
+									"host": [
+										"{{serverUrl}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"624c31e8-15b6-4b86-a919-968a4933a1c9",
+										"settings"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/users/5b0ff81d-db2d-4a3b-9483-33364e8b7c5c",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"5b0ff81d-db2d-4a3b-9483-33364e8b7c5c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\": \"kbela2\",\n    \"password\": \"ezalegjobbjelszo\",\n    \"personId\":\"b99ab139-cd63-4639-9b72-7308c9c001f1\",\n    \"roles\": [\"INTERN_HOSPITAL_VISITOR\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/users",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\": \"kbela2\",\n    \"password\": \"ezamasodiklegjobbjelszó\",\n    \"isActive\": true,\n    \"roles\": [\"BEGINNER_HOSPITAL_VISITOR\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/users/5b0ff81d-db2d-4a3b-9483-33364e8b7c5c",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"5b0ff81d-db2d-4a3b-9483-33364e8b7c5c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "visited-children",
+			"item": [
+				{
+					"name": "Save visited children",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"child\": {\n        \"name\": \"Johnny\",\n        \"guessedBirth\": \"2015.12\",\n        \"info\": \"like motorbikes\"\n    },\n    \"isParentThere\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/d2149e64-a16e-46d4-a6e0-20ed442a4b9b/children",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"d2149e64-a16e-46d4-a6e0-20ed442a4b9b",
+								"children"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List visited children",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/d2149e64-a16e-46d4-a6e0-20ed442a4b9b/children",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"d2149e64-a16e-46d4-a6e0-20ed442a4b9b",
+								"children"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update visited children",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"2f6fbae2-70c0-48ad-a04b-ad49a95343ca\",\n    \"child\": {\n        \"name\": \"Johnny\",\n        \"guessedBirth\": \"2015.12\",\n        \"info\": \"like horses\"\n    },\n    \"isParentThere\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/d2149e64-a16e-46d4-a6e0-20ed442a4b9b/children/2f6fbae2-70c0-48ad-a04b-ad49a95343ca",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"d2149e64-a16e-46d4-a6e0-20ed442a4b9b",
+								"children",
+								"2f6fbae2-70c0-48ad-a04b-ad49a95343ca"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete visited children",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/d2149e64-a16e-46d4-a6e0-20ed442a4b9b/children/2f6fbae2-70c0-48ad-a04b-ad49a95343ca",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"d2149e64-a16e-46d4-a6e0-20ed442a4b9b",
+								"children",
+								"2f6fbae2-70c0-48ad-a04b-ad49a95343ca"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Login",
 			"event": [
 				{
@@ -1092,7 +1485,7 @@
 					"script": {
 						"exec": [
 							"const responseJson = pm.response.json();",
-							"var accessToken = responseJson.access_token;",
+							"var accessToken = responseJson.accessToken;",
 							"pm.environment.set(\"accessToken\", accessToken)"
 						],
 						"type": "text/javascript"
