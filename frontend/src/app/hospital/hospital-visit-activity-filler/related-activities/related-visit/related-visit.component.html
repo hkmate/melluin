@@ -1,47 +1,38 @@
 <div class="visit-info">
 
-    <mat-accordion [multi]="true">
-        <mat-expansion-panel *ngIf="permissions.has(Permission.canReadChild)" class="children-info">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{ 'HospitalVisit.Activities.Children' | translate }}
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <ng-container *ngIf="hasChild(); else noChildInList">
-                <div class="children-list">
-                    <div *ngFor="let child of wrappedActivity.children" class="child-card">
-                        <app-related-visit-child [visitedChild]="child"></app-related-visit-child>
-                    </div>
-                </div>
-            </ng-container>
-            <ng-template #noChildInList>
-                <div class="empty-list">
-                    {{ 'ChildrenList.NoChildYet' | translate }}
-                </div>
-            </ng-template>
-        </mat-expansion-panel>
+    <div *ngIf="permissions.has(Permission.canReadChild)" class="children-info">
+        <h3>{{ 'HospitalVisit.Activities.Children' | translate }}</h3>
 
-        <mat-expansion-panel *ngIf="permissions.has(Permission.canReadActivity)" class="activity-info">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{ 'HospitalVisit.Activities.Activities' | translate }}
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <ng-container *ngIf="hasActivity(); else noActivityInList">
-                <div class="activities-list">
-                    <div *ngFor="let activity of activities" class="activity-card">
-                        <app-related-activity [activity]="activity" [childrenById]="childrenById">
-                        </app-related-activity>
-                    </div>
+        <ng-container *ngIf="hasChild(); else noChildInList">
+            <div class="children-list">
+                <div *ngFor="let child of wrappedActivity.children" class="child-card">
+                    <app-related-visit-child [visitedChild]="child"></app-related-visit-child>
                 </div>
-            </ng-container>
-            <ng-template #noActivityInList>
-                <div class="empty-list">
-                    {{ 'HospitalVisit.Activities.NoActivityYet' | translate }}
-                </div>
-            </ng-template>
-        </mat-expansion-panel>
+            </div>
+        </ng-container>
+        <ng-template #noChildInList>
+            <div class="empty-list">
+                {{ 'ChildrenList.NoChildYet' | translate }}
+            </div>
+        </ng-template>
+    </div>
 
-    </mat-accordion>
+    <div *ngIf="permissions.has(Permission.canReadActivity)" class="activity-info">
+        <h3>{{ 'HospitalVisit.Activities.Activities' | translate }}</h3>
+
+        <ng-container *ngIf="hasActivity(); else noActivityInList">
+            <div class="activities-list">
+                <div *ngFor="let activity of activities" class="activity-card">
+                    <app-related-activity [activity]="activity" [childrenById]="childrenById">
+                    </app-related-activity>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #noActivityInList>
+            <div class="empty-list">
+                {{ 'HospitalVisit.Activities.NoActivityYet' | translate }}
+            </div>
+        </ng-template>
+    </div>
 
 </div>

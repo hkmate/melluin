@@ -20,21 +20,23 @@ import {FillerChildItemComponent} from './fillers/child-filler-list/filler-child
 import {FillerChildEditorComponent} from '@fe/app/hospital/hospital-visit-activity-filler/fillers/child-filler-list/filler-child-editor/filler-child-editor.component';
 import {DepartmentBoxModule} from '@fe/app/hospital/department-box/department-box.module';
 import {RelatedVisitListComponent} from '@fe/app/hospital/hospital-visit-activity-filler/related-activities/related-visit-list/related-visit-list.component';
-import { RelatedVisitComponent } from '@fe/app/hospital/hospital-visit-activity-filler/related-activities/related-visit/related-visit.component';
+import {RelatedVisitComponent} from '@fe/app/hospital/hospital-visit-activity-filler/related-activities/related-visit/related-visit.component';
 import {ChildModule} from '@fe/app/hospital/child/child.module';
-import { RelatedVisitChildComponent } from './related-activities/related-visit-child/related-visit-child.component';
+import {RelatedVisitChildComponent} from './related-activities/related-visit-child/related-visit-child.component';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
-import { RelatedActivityComponent } from './related-activities/related-activity/related-activity.component';
+import {RelatedActivityComponent} from './related-activities/related-activity/related-activity.component';
 import {MatChipsModule} from '@angular/material/chips';
-import { ActivityFillerListComponent } from './fillers/activity-filler-list/activity-filler-list.component';
-import { FillerActivityCreateComponent } from './fillers/activity-filler-list/filler-activity-create/filler-activity-create.component';
+import {ActivityFillerListComponent} from './fillers/activity-filler-list/activity-filler-list.component';
+import {FillerActivityCreateComponent} from './fillers/activity-filler-list/filler-activity-create/filler-activity-create.component';
 import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
-import { FillerActivityItemComponent } from './fillers/activity-filler-list/filler-activity-item/filler-activity-item.component';
-import { FillerActivityCardComponent } from './fillers/activity-filler-list/filler-activity-card/filler-activity-card.component';
-import { FillerActivityEditorComponent } from './fillers/activity-filler-list/filler-activity-editor/filler-activity-editor.component';
+import {FillerActivityItemComponent} from './fillers/activity-filler-list/filler-activity-item/filler-activity-item.component';
+import {FillerActivityCardComponent} from './fillers/activity-filler-list/filler-activity-card/filler-activity-card.component';
+import {FillerActivityEditorComponent} from './fillers/activity-filler-list/filler-activity-editor/filler-activity-editor.component';
 import {ChildSelectModule} from '@fe/app/hospital/child/child-select/child-select.module';
 import {ActivitySelectModule} from '@fe/app/hospital/visit-activity/activity-select/activity-select.module';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
     imports: [
@@ -52,6 +54,8 @@ import {ActivitySelectModule} from '@fe/app/hospital/visit-activity/activity-sel
         MatOptionModule,
         MatSelectModule,
         MatCheckboxModule,
+        MatProgressSpinnerModule,
+        ScrollingModule,
 
         TranslateModule,
 
@@ -61,13 +65,11 @@ import {ActivitySelectModule} from '@fe/app/hospital/visit-activity/activity-sel
         ChildModule,
         PersonNamePipe,
         ChildSelectModule,
-        ActivitySelectModule,
+        ActivitySelectModule
     ],
     declarations: [
         HospitalVisitActivityFillerComponent,
-
         RelatedVisitListComponent,
-
         ChildFillerListComponent,
         FillerChildCreateComponent,
         FillerChildCardComponent,

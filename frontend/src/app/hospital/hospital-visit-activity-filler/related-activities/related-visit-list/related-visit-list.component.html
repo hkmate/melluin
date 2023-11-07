@@ -1,6 +1,6 @@
-<ng-container *ngIf="visits">
-    <ng-container *ngFor="let activity of visits">
-        <mat-card class="activity-card">
+<div *ngIf="visits" class="related-visit-list">
+    <div *ngFor="let activity of visits" class="related-visit-list-item">
+        <mat-card class="related-visit-card">
             <mat-card-header>
                 <mat-card-subtitle>
                     <span class="date-time">
@@ -15,13 +15,15 @@
                     </span>
                 </mat-card-subtitle>
             </mat-card-header>
-            <mat-card-content class="activity-card-content">
+            <mat-card-content class="visit-card-content">
                 <app-related-visit [wrappedActivity]="activity"></app-related-visit>
             </mat-card-content>
         </mat-card>
-    </ng-container>
-
-    <div *ngIf="!visits.length">
-        {{ 'HospitalVisit.NoRelatedActivities' | translate }}
     </div>
-</ng-container>
+
+    <div *ngIf="!visits.length">{{ 'HospitalVisit.NoRelatedActivities' | translate }}</div>
+</div>
+
+<div *ngIf="loading" class="loading-spinner">
+    <mat-spinner color="accent" diameter="50"></mat-spinner>
+</div>

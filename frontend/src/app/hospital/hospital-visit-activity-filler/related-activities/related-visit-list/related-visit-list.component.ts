@@ -14,14 +14,21 @@ export class RelatedVisitListComponent implements OnInit {
     public visit: HospitalVisit;
 
     protected visits: Array<WrappedHospitalVisitActivity>;
+    protected loading: boolean = false;
 
     constructor(private readonly activityService: VisitActivityService) {
     }
 
     public ngOnInit(): void {
-        this.activityService.getRelatedActivities(this.visit.id).subscribe(wrappedActivities => {
-            this.visits = wrappedActivities;
-        })
+        this.loading = true;
+        this.activityService.getRelatedActivities(this.visit.id).subscribe({
+            next: wrappedActivities => {
+                this.visits = wrappedActivities;
+                this.loading = false;
+            }, error: () => {
+                this.loading = false;
+            }
+        });
     }
 
 }

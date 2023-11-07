@@ -1,26 +1,37 @@
-.activity-card {
-    margin-bottom: 1rem;
-}
 
-.activity-card-content {
-    padding: 0;
-}
+.related-visit-list {
 
-.mat-mdc-card-content:last-child {
-    padding-bottom: 0;
-}
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
 
-.date-time {
-    margin-right: .5rem;
-}
+    .related-visit-list-item {
 
-:host ::ng-deep .activities-info {
+        flex: 0 0 auto;
+        margin: 0 .5rem;
 
-    .children-info, .activity-info {
-        .mat-expansion-panel-body {
-            padding-left: 0;
-            padding-right: 0;
-            padding-bottom: 0;
+        width: 50%;
+        @media screen and (max-width: 1000px) {
+            width: 75%;
+        }
+        @media screen and (max-width: 600px) {
+            width: 90%;
+        }
+
+        .date-time {
+            margin-right: .5rem;
+        }
+
+
+        .related-visit-card {
+            margin-bottom: .5rem;
         }
     }
+
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    padding: .5rem 0;
 }

@@ -1,7 +1,12 @@
 @use '@angular/material' as mat;
 
-.related-activities {
+:host .related-activities {
     margin: 1rem 0 1rem 0;
+
+    ::ng-deep .mat-expansion-panel-body {
+        background-color: whitesmoke;
+        padding: .5rem 0 0 0;
+    }
 }
 
 .start-btn, .finalized-btn {
