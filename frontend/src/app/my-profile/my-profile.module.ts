@@ -23,6 +23,7 @@ import {UserHomePageSettingsEditorComponent} from '@fe/app/my-profile/user-setti
 import {UserEventListSettingsEditorComponent} from '@fe/app/my-profile/user-settings-editor/user-event-list-settings-editor/user-event-list-settings-editor.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { HomePageOptionSelectorComponent } from './user-settings-editor/user-home-page-settings-editor/home-page-option-selector/home-page-option-selector.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
     imports: [
@@ -39,6 +40,7 @@ import { HomePageOptionSelectorComponent } from './user-settings-editor/user-hom
         MatOptionModule,
         MatSelectModule,
         MatRadioModule,
+        MatTabsModule,
         MatInputModule,
 
         TranslateModule,

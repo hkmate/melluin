@@ -1,12 +1,14 @@
 <div class="user-settings">
     <h1>{{ 'PersonPage.Settings' | translate }}</h1>
 
-    <app-user-event-list-settings-editor [userId]="userId" [settings]="settings">
-    </app-user-event-list-settings-editor>
-
-    <div class="divider"></div>
-
-    <app-user-home-page-settings-editor [userId]="userId" [settings]="settings">
-    </app-user-home-page-settings-editor>
-
+    <mat-tab-group dynamicHeight>
+        <mat-tab [label]="'PersonPage.EventListSettings.Title' | translate">
+            <app-user-event-list-settings-editor [userId]="userId" [settings]="settings">
+            </app-user-event-list-settings-editor>
+        </mat-tab>
+        <mat-tab [label]="'PersonPage.HomePageSettings.Title' | translate">
+            <app-user-home-page-settings-editor [userId]="userId" [settings]="settings">
+            </app-user-home-page-settings-editor>
+        </mat-tab>
+    </mat-tab-group>
 </div>
