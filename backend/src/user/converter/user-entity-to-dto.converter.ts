@@ -27,7 +27,8 @@ export class UserEntityToDtoConverter implements Converter<UserEntity, User> {
             roles: entity.roles?.map(roleEntity => roleEntity.role),
             permissions: _.union(flatten(
                 entity.roles.map(role => role.permissions))
-                .map(permission => permission.permission))
+                .map(permission => permission.permission)),
+            customPermissions: entity.customPermissions.map(permission => permission.permission)
         };
     }
 

@@ -5,14 +5,16 @@ import {UserCreation} from '@shared/user/user-creation';
 import {UserEntity} from '@be/user/model/user.entity';
 import {Injectable} from '@nestjs/common';
 import {PersonDao} from '@be/person/person.dao';
-import {UserDao} from '@be/user/user.dao';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
+import {RoleDao} from '@be/user/role.dao';
+import {PermissionDao} from '@be/user/permission.dao';
 
 @Injectable()
 export class UserCreationToEntityConverter implements Converter<UserCreation, Promise<UserEntity>> {
 
     constructor(private readonly personDao: PersonDao,
-                private readonly userDao: UserDao,
+                private readonly roleDao: RoleDao,
+                private readonly permissionDao: PermissionDao,
                 private readonly passwordEncoder: PasswordCryptService) {
     }
 
@@ -28,7 +30,8 @@ export class UserCreationToEntityConverter implements Converter<UserCreation, Pr
 
     private async convertNotNilEntity(dto: UserCreation): Promise<UserEntity> {
         const person = (await this.personDao.findOneWithCache(dto.personId))!;
-        const roles = await this.userDao.findAllRole();
+        const roles = await this.roleDao.findAll();
+        const permissions = await this.permissionDao.findAll();
         return {
             id: randomUUID(),
             person,
@@ -36,7 +39,8 @@ export class UserCreationToEntityConverter implements Converter<UserCreation, Pr
             password: this.passwordEncoder.encrypt(dto.password),
             settings: {},
             isActive: true,
-            roles: roles.filter(entity => dto.roles.includes(entity.role))
+            roles: roles.filter(entity => dto.roles.includes(entity.role)),
+            customPermissions: permissions.filter(entity => dto.customPermissions.includes(entity.permission)),
         };
     }
 

@@ -8,17 +8,17 @@ import {PersonHasNoUserYetValidator} from '@be/user/validator/person-has-no-user
 import {UsernameIsNotUsedValidator} from '@be/user/validator/username-is-not-used.validator';
 import {AsyncValidatorChain} from '@shared/validator/validator-chain';
 import {CanRequesterChangeUserValidator} from '@be/user/validator/can-requester-change-user.validator';
-import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserRewrite} from '@shared/user/user-rewrite';
 import {UserRewriteApplierFactory} from '@be/user/applier/user-rewrite-applier.factory';
 import {UserRewriteValidator} from '@be/user/validator/user-rewrite.validator';
 import {CanRequesterChangeUsersRoleValidator} from '@be/user/validator/can-requester-change-users-role.validator';
+import {CanRequesterChangeUsersPermissionsValidator} from '@be/user/validator/can-requester-change-users-permissions.validator';
+import {CanRequesterCreateUsersPermissionsValidator} from '@be/user/validator/can-requester-create-users-permissions.validator';
 
 @Injectable()
 export class UserService {
 
     constructor(private readonly userDao: UserDao,
-                private readonly passwordEncoder: PasswordCryptService,
                 private readonly personHasNoUserYetValidator: PersonHasNoUserYetValidator,
                 private readonly usernameIsNotUsedValidator: UsernameIsNotUsedValidator,
                 private readonly userConverter: UserEntityToDtoConverter,
@@ -52,7 +52,8 @@ export class UserService {
     private async validateSaving(userCreation: UserCreation, requester: User): Promise<void> {
         await AsyncValidatorChain.of(
             this.personHasNoUserYetValidator,
-            this.usernameIsNotUsedValidator
+            this.usernameIsNotUsedValidator,
+            CanRequesterCreateUsersPermissionsValidator.of(requester)
         ).validate(userCreation);
     }
 
@@ -60,6 +61,7 @@ export class UserService {
         return AsyncValidatorChain.of(
             CanRequesterChangeUserValidator.of(requester),
             CanRequesterChangeUsersRoleValidator.of(requester),
+            CanRequesterChangeUsersPermissionsValidator.of(requester),
             new UsernameIsNotUsedValidator(this.userDao)
         );
     }

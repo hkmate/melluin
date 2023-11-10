@@ -16,14 +16,16 @@ import {AuthCredentials} from '@shared/user/auth-credentials';
 import {UserEntityToSettingsDtoConverter} from '@be/user/converter/user-entity-to-settings-dto.converter';
 import {User} from '@shared/user/user';
 import {UserSettings} from '@shared/user/user-settings';
+import {RoleDao} from '@be/user/role.dao';
 
 @Injectable()
 export class AuthService {
 
     constructor(private readonly config: ConfigService,
                 private readonly jwtService: JwtService,
-                private readonly userService: UserDao,
-                private readonly personService: PersonDao,
+                private readonly userDao: UserDao,
+                private readonly roleDao: RoleDao,
+                private readonly personDao: PersonDao,
                 private readonly userConverter: UserEntityToDtoConverter,
                 private readonly userSettingsConverter: UserEntityToSettingsDtoConverter,
                 private readonly passwordCryptService: PasswordCryptService) {
@@ -34,7 +36,7 @@ export class AuthService {
     }
 
     public async validate(credentials: AuthCredentials): Promise<void> {
-        const user: UserEntity | undefined = await this.userService.findOneWithCache(credentials.username);
+        const user: UserEntity | undefined = await this.userDao.findOneWithCache(credentials.username);
 
         if (isNil(user) || !user.isActive) {
             throw new BadRequestException('Wrong username or password');
@@ -46,7 +48,7 @@ export class AuthService {
     }
 
     public async getTokenFor(credentials: AuthCredentials): Promise<AuthInfo> {
-        const userEntity: UserEntity | undefined = await this.userService.findOneWithCache(credentials.username);
+        const userEntity: UserEntity | undefined = await this.userDao.findOneWithCache(credentials.username);
         const user: User = this.userConverter.convert(userEntity!);
         const userSettings: UserSettings = this.userSettingsConverter.convert(userEntity!);
         return {
@@ -59,7 +61,7 @@ export class AuthService {
     private async initDefaultUser(): Promise<void> {
         const username: string = this.config.get('server.defaultSysAdmin.username')!;
 
-        const sysadmin: UserEntity | undefined = await this.userService.findOneByName(username);
+        const sysadmin: UserEntity | undefined = await this.userDao.findOneByName(username);
         if (isNil(sysadmin)) {
             await this.createDefaultUser();
         }
@@ -72,7 +74,7 @@ export class AuthService {
     }
 
     private insertDefaultAdminPerson(defaultAdmin: DefaultSysAdmin): Promise<PersonEntity> {
-        return this.personService.save({
+        return this.personDao.save({
             id: crypto.randomUUID(),
             firstName: defaultAdmin.firstName,
             lastName: defaultAdmin.lastName
@@ -80,12 +82,13 @@ export class AuthService {
     }
 
     private async insertDefaultAdminUser(defaultAdmin: DefaultSysAdmin, person: PersonEntity): Promise<UserEntity> {
-        const roles: Array<RoleEntity> = await this.userService.findAllRole();
-        return this.userService.save({
+        const roles: Array<RoleEntity> = await this.roleDao.findAll();
+        return this.userDao.save({
             id: crypto.randomUUID(),
             userName: defaultAdmin.username,
             password: this.passwordCryptService.encrypt(defaultAdmin.password),
             person,
+            customPermissions: [],
             isActive: true,
             roles
         });

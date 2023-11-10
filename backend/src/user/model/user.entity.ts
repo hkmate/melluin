@@ -1,8 +1,8 @@
 import {Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn} from 'typeorm';
 import {RoleEntity} from './role.entity';
 import {PersonEntity} from '../../person/model/person.entity';
-
 import {UserSettings} from '@shared/user/user-settings';
+import {PermissionEntity} from '@be/user/model/permission.entity';
 
 @Entity({name: 'user'})
 export class UserEntity {
@@ -39,5 +39,19 @@ export class UserEntity {
         }
     })
     roles: Array<RoleEntity>;
+
+    @ManyToMany(type => PermissionEntity, {eager: true})
+    @JoinTable({
+        name: 'user_permission',
+        joinColumn: {
+            name: 'user_id',
+            referencedColumnName: 'id'
+        },
+        inverseJoinColumn: {
+            name: 'permission_id',
+            referencedColumnName: 'id'
+        }
+    })
+    customPermissions: Array<PermissionEntity>;
 
 }

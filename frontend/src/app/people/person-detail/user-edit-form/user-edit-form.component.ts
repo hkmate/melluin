@@ -70,6 +70,7 @@ export class UserEditFormComponent {
         data.isActive = this.form.controls.isActive.value;
         data.userName = this.form.controls.userName.value;
         data.roles = this.form.controls.roles.value;
+        data.customPermissions = this.userToEdit!.customPermissions;
         return data;
     }
 

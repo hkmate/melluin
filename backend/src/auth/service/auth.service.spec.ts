@@ -18,10 +18,12 @@ import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 import {BadRequestException} from '@nestjs/common';
 import Mock = jest.Mock;
+import {RoleDao} from '@be/user/role.dao';
 
 describe('AuthService', () => {
     describe('Construct when default user not needed', () => {
         let userService: UserDao;
+        let roleDao: RoleDao;
         let personService: PersonDao;
 
         beforeEach(async () => {
@@ -40,18 +42,20 @@ describe('AuthService', () => {
                     AuthService,
                     {provide: ConfigService, useValue: {get: configServiceGet}},
                     {provide: JwtService, useValue: {}},
-                    {provide: UserDao, useValue: {save: jest.fn(), findAllRole: jest.fn()}},
+                    {provide: UserDao, useValue: {save: jest.fn()}},
+                    {provide: RoleDao, useValue: {findAll: jest.fn()}},
                     {provide: PersonDao, useValue: {save: jest.fn()}},
                     {provide: PasswordCryptService, useValue: {}},
                 ],
             }).compile();
 
             userService = moduleRef.get<UserDao>(UserDao);
+            roleDao = moduleRef.get<RoleDao>(RoleDao);
             personService = moduleRef.get<PersonDao>(PersonDao);
         });
 
         it('Then Person-, UserService not called', () => {
-            expect(userService.findAllRole).not.toBeCalled();
+            expect(roleDao.findAll).not.toBeCalled();
             expect(userService.save).not.toBeCalled();
             expect(personService.save).not.toBeCalled();
         });
@@ -59,6 +63,7 @@ describe('AuthService', () => {
 
     describe('Construct when default user needed and not present', () => {
         let userService: UserDao;
+        let roleDao: RoleDao;
         let personService: PersonDao;
         const defaultUser: DefaultSysAdmin = {
             firstName: randomString(),
@@ -108,16 +113,17 @@ describe('AuthService', () => {
                     {
                         provide: UserDao, useValue: {
                             findOneByName: jest.fn().mockReturnValueOnce(undefined),
-                            save: jest.fn(arg => arg),
-                            findAllRole: userServiceFindAllRole
+                            save: jest.fn(arg => arg)
                         }
                     },
+                    {provide: RoleDao, useValue: {findAll: userServiceFindAllRole}},
                     {provide: PersonDao, useValue: {save: jest.fn(arg => arg),}},
                     {provide: PasswordCryptService, useValue: {encrypt: passwordCryptServiceEncrypt}},
                 ],
             }).compile();
 
             userService = moduleRef.get<UserDao>(UserDao);
+            roleDao = moduleRef.get<RoleDao>(RoleDao);
             personService = moduleRef.get<PersonDao>(PersonDao);
         });
 
@@ -133,11 +139,12 @@ describe('AuthService', () => {
                 person: expectedPerson,
                 userName: defaultUser.username,
                 password: expectedPassword,
+                customPermissions: [],
                 isActive: true
             };
 
             expect(userService.findOneByName).toBeCalledWith(defaultUser.username);
-            expect(userService.findAllRole).toBeCalled();
+            expect(roleDao.findAll).toBeCalled();
             expect(personService.save).toBeCalledWith(expectedPerson);
             expect(userService.save).toBeCalledWith(expectedUser);
         });
@@ -145,6 +152,7 @@ describe('AuthService', () => {
 
     describe('Construct when default user needed and present', () => {
         let userService: UserDao;
+        let roleDao: RoleDao;
         let personService: PersonDao;
         const defaultUser: DefaultSysAdmin = {
             firstName: randomString(),
@@ -176,22 +184,23 @@ describe('AuthService', () => {
                     {
                         provide: UserDao, useValue: {
                             findOneByName: jest.fn().mockReturnValueOnce({username: defaultUser.username}),
-                            save: jest.fn(),
-                            findAllRole: jest.fn()
+                            save: jest.fn()
                         }
                     },
+                    {provide: RoleDao, useValue: {findAll: jest.fn()}},
                     {provide: PersonDao, useValue: {save: jest.fn()}},
                     {provide: PasswordCryptService, useValue: {encrypt: jest.fn()}},
                 ],
             }).compile();
 
             userService = moduleRef.get<UserDao>(UserDao);
+            roleDao = moduleRef.get<RoleDao>(RoleDao);
             personService = moduleRef.get<PersonDao>(PersonDao);
         });
 
         it('Then Person-, UserService not called except UserService.findOne', () => {
             expect(userService.findOneByName).toBeCalledWith(defaultUser.username);
-            expect(userService.findAllRole).not.toBeCalled();
+            expect(roleDao.findAll).not.toBeCalled();
             expect(personService.save).not.toBeCalled();
             expect(userService.save).not.toBeCalled();
         });
@@ -213,6 +222,7 @@ describe('AuthService', () => {
                     {provide: ConfigService, useValue: {get: jest.fn(() => false)}},
                     {provide: JwtService, useValue: {sign: jest.fn()}},
                     {provide: UserDao, useValue: {findOneWithCache: jest.fn()}},
+                    {provide: RoleDao, useValue: {}},
                     {provide: PersonDao, useValue: {}},
                     {provide: PasswordCryptService, useValue: {}},
                 ],
@@ -235,6 +245,7 @@ describe('AuthService', () => {
                 userName: username,
                 roles: [Role.SYSADMIN],
                 permissions: [],
+                customPermissions: [],
                 isActive: true
             };
             const userEntity: UserEntity = {
@@ -242,6 +253,7 @@ describe('AuthService', () => {
                 password,
                 id: userId,
                 isActive: user.isActive,
+                customPermissions: [],
                 person: cast<PersonEntity>({id: personId}),
                 roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}],
                 settings: {eventList: {}}
@@ -275,6 +287,7 @@ describe('AuthService', () => {
                     {provide: ConfigService, useValue: {get: jest.fn(() => false)}},
                     {provide: JwtService, useValue: {sign: jest.fn()}},
                     {provide: UserDao, useValue: {findOneWithCache: jest.fn()}},
+                    {provide: RoleDao, useValue: {}},
                     {provide: PersonDao, useValue: {}},
                     {provide: PasswordCryptService, useValue: {match: jest.fn()}},
                     AuthService,
@@ -296,6 +309,7 @@ describe('AuthService', () => {
                 id: userId,
                 person: cast<PersonEntity>({id: personId}),
                 isActive: true,
+                customPermissions: [],
                 roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}]
             };
             const rawPassword: string = randomString();
@@ -317,6 +331,7 @@ describe('AuthService', () => {
                 id: userId,
                 person: cast<PersonEntity>({id: personId}),
                 isActive: true,
+                customPermissions: [],
                 roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}]
             };
             const rawPassword: string = randomString();
@@ -337,6 +352,7 @@ describe('AuthService', () => {
                 id: userId,
                 person: cast<PersonEntity>({}),
                 isActive: false,
+                customPermissions: [],
                 roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}]
             };
             const rawPassword: string = randomString();

@@ -15,6 +15,10 @@ import {PermissionEntity} from '@be/user/model/permission.entity';
 import {UserRewriteApplierFactory} from '@be/user/applier/user-rewrite-applier.factory';
 import {UserSettingsController} from '@be/user/user-settings.controller';
 import {UserSettingsService} from '@be/user/service/user-settings.service';
+import {RoleService} from '@be/user/service/role.service';
+import {RoleController} from '@be/user/role.controller';
+import {RoleDao} from '@be/user/role.dao';
+import {PermissionDao} from '@be/user/permission.dao';
 
 @Module({
     imports: [
@@ -27,10 +31,13 @@ import {UserSettingsService} from '@be/user/service/user-settings.service';
         PersonModule,
         UserEntityToDtoModule
     ],
-    controllers: [UserController, UserSettingsController],
+    controllers: [UserController, UserSettingsController, RoleController],
     providers: [
         UserDao,
         UserService,
+        RoleDao,
+        PermissionDao,
+        RoleService,
         UserSettingsService,
         UserCreationToEntityConverter,
         PersonHasNoUserYetValidator,
@@ -40,6 +47,7 @@ import {UserSettingsService} from '@be/user/service/user-settings.service';
     ],
     exports: [
         UserDao,
+        RoleDao,
         UserService,
         UserSettingsService,
         PasswordCryptService

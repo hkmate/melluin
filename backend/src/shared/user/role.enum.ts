@@ -1,5 +1,6 @@
 import {Permission} from '@shared/user/permission.enum';
 import {cast} from '@shared/util/test-util';
+import {IsEnum, IsString, IsUUID} from 'class-validator';
 
 export enum Role {
 
@@ -21,6 +22,20 @@ export const foundationWorkerRoles = [
     Role.ADMINISTRATOR,
     Role.SYSADMIN
 ];
+
+export class RolePermission {
+
+    @IsString()
+    @IsUUID()
+    id: string;
+
+    @IsEnum(Role)
+    role: Role;
+
+    @IsEnum(Permission, {each: true})
+    permissions: Array<Permission>;
+
+}
 
 // eslint-disable-next-line max-lines-per-function
 export function getPermissionsNeededToChangeRole(role: Role): Permission {
