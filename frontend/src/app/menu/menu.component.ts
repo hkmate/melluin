@@ -66,6 +66,7 @@ export class MenuComponent extends AutoUnSubscriber implements OnInit {
             'people': includeAny(permissions, Permission.canSearchPerson),
             'events': includeAny(permissions, Permission.canReadVisit),
             'departments': true,
+            'admin': includeAny(permissions, Permission.canManagePermissions),
         }
     }
 

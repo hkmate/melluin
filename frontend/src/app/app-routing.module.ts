@@ -56,6 +56,10 @@ const routes: Routes = [
         loadChildren: () => import('./hospital/hospital-visit-routing.module').then(m => m.HospitalVisitRoutingModule)
     },
     {
+        path: PATHS.sysadmin.main,
+        loadChildren: () => import('./sysadmin/sysadmin-routing.module').then(m => m.SysadminRoutingModule)
+    },
+    {
         path: '',
         canMatch: [AuthGuardFn],
         component: NavigatorComponent

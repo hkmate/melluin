@@ -101,6 +101,7 @@
         "Reports": "Reports",
         "Notifications": "Notifications",
         "Departments": "Departments",
+        "System": "System",
         "Logout": "Log out"
     },
     "Paginator": {
@@ -326,5 +327,12 @@
         "PageNotFound404": "The page you were looking for doesn't exist.",
         "WantToGo": "You might want to go to the",
         "Page": "page"
+    },
+    "Sysadmin": {
+        "RoleSettings": {
+            "Title": "Role settings",
+            "NameColHeader": "Role",
+            "PermissionsColHeader": "Permissions"
+        }
     }
 }

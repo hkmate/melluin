@@ -38,6 +38,11 @@ export const PATHS: PathContainer = {
         main: 'hospital-visits',
         detail: ':id',
         fillActivities: 'fill-activities'
+    },
+
+    sysadmin: {
+        main: 'admin',
+        roles: 'roles'
     }
 
 };

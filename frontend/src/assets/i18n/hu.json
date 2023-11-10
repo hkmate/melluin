@@ -101,6 +101,7 @@
         "Reports": "Beszámolók",
         "Notifications": "Értesítések",
         "Departments": "Kórházi osztályok",
+        "System": "Rendszer",
         "Logout": "Kijelentkezés"
     },
     "Paginator": {
@@ -326,5 +327,12 @@
         "PageNotFound404": "Az oldal amit keres nem létezik",
         "WantToGo": "Esetleg a ",
         "Page": "oldalra szeretne menni?"
+    },
+    "Sysadmin": {
+        "RoleSettings": {
+            "Title": "Szerepkör beállítások",
+            "NameColHeader": "Szerepkör",
+            "PermissionsColHeader": "Jogosultságok"
+        }
     }
 }

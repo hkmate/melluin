@@ -1,0 +1,22 @@
+
+.permission-selector {
+    display: flex;
+    align-items: center;
+
+    ::ng-deep {
+        .mat-mdc-select-value, .mat-mdc-select-value-text {
+            width: unset;
+            overflow: unset;
+            text-overflow: unset;
+            white-space: unset;
+        }
+    }
+
+    button {
+        margin-left: .5rem;
+    }
+}
+
+.settings-icon {
+    opacity: .7;
+}
