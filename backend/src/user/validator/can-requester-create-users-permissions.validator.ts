@@ -16,7 +16,7 @@ export class CanRequesterCreateUsersPermissionsValidator implements AsyncValidat
     }
 
     public validate(newUser: UserCreation): Promise<void> {
-        if (!isNilOrEmpty(newUser.customPermissions)) {
+        if (isNilOrEmpty(newUser.customPermissions)) {
             return Promise.resolve();
         }
         if (this.userHas(Permission.canManagePermissions)) {

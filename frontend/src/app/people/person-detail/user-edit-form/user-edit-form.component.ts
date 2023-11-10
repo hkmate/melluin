@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Role} from '@shared/user/role.enum';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {passwordMinLength} from '@shared/constants';
+import {Permission} from '@shared/user/permission.enum';
 
 @Component({
     selector: 'app-user-edit-form',
@@ -14,7 +15,8 @@ import {passwordMinLength} from '@shared/constants';
 })
 export class UserEditFormComponent {
 
-    protected readonly ROLES: Array<string> = Object.keys(Role);
+    protected readonly roles: Array<Role> = Object.values(Role);
+    protected readonly permissions: Array<Permission> = Object.values(Permission);
 
     @Output()
     public submitted = new EventEmitter<UserRewrite>;
@@ -58,8 +60,12 @@ export class UserEditFormComponent {
             password: [undefined, [Validators.minLength(passwordMinLength)]],
             isActive: [this.userToEdit?.isActive],
             roles: [this.userToEdit?.roles],
+            customPermissions: [this.userToEdit?.customPermissions],
             userName: [this.userToEdit?.userName]
         });
+        if (!this.permission.has(Permission.canManagePermissions)) {
+            this.form.controls.customPermissions.disable();
+        }
     }
 
     private createUserUpdate(): UserRewrite {
@@ -70,7 +76,7 @@ export class UserEditFormComponent {
         data.isActive = this.form.controls.isActive.value;
         data.userName = this.form.controls.userName.value;
         data.roles = this.form.controls.roles.value;
-        data.customPermissions = this.userToEdit!.customPermissions;
+        data.customPermissions = this.form.controls.customPermissions.value;
         return data;
     }
 

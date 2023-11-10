@@ -63,6 +63,15 @@
 
     <mat-card>
         <mat-card-header>
+            <mat-card-subtitle>{{ 'PersonPage.User.Present.Status' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                {{  (user.isActive ? 'PersonPage.User.Active' : 'PersonPage.User.Inactive') | translate }}
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
             <mat-card-subtitle>{{ 'PersonPage.User.Present.Roles' | translate }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
@@ -76,11 +85,16 @@
 
     <mat-card>
         <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.User.Present.Status' | translate }}</mat-card-subtitle>
-            <mat-card-title>
-                {{  (user.isActive ? 'PersonPage.User.Active' : 'PersonPage.User.Inactive') | translate }}
-            </mat-card-title>
+            <mat-card-subtitle>{{ 'PersonPage.User.Present.Permissions' | translate }}</mat-card-subtitle>
         </mat-card-header>
+        <mat-card-content>
+            <ul>
+                <ng-container *ngFor="let permission of user.customPermissions">
+                    <li class="permission">{{ permission }}</li>
+                </ng-container>
+            </ul>
+            <div *ngIf="!user.customPermissions?.length">{{ 'NoData' | translate }}</div>
+        </mat-card-content>
     </mat-card>
 
     <div class="divider"></div>

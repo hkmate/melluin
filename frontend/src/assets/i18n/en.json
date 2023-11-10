@@ -175,6 +175,7 @@
                 "Password": "Password",
                 "PasswordPlaceholder": "**********",
                 "Roles": "Roles",
+                "Permissions": "Permissions",
                 "Status": "Status"
             },
             "Form": {
@@ -184,6 +185,7 @@
                 "PasswordPlaceholder": "askjRSsdfkFSDf234lsdf3241",
                 "PasswordHint": "If you leave this empty the user's password won't change",
                 "Roles": "Roles",
+                "Permissions": "Permissions",
                 "Status": "Status"
             }
         },

@@ -175,6 +175,7 @@
                 "Password": "Jelszó",
                 "PasswordPlaceholder": "**********",
                 "Roles": "Szerepkörök",
+                "Permissions": "Jogosultságok",
                 "Status": "Státusz"
             },
             "Form": {
@@ -184,6 +185,7 @@
                 "PasswordPlaceholder": "askjRSsdfkFSDf234lsdf3241",
                 "PasswordHint": "Ha üresen hagyod akkor nem változik a felhasználó jelszava.",
                 "Roles": "Szerepkörök",
+                "Permissions": "Jogosultságok",
                 "Status": "Státusz"
             }
         },
