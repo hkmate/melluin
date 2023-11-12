@@ -21,7 +21,9 @@
                 <td mat-cell *matCellDef="let person">
                     <a class="link" [routerLink]="[person.id]">{{ person | personName }}</a>
 
-                    <mat-icon *ngIf="person.user" class="material-icons-outlined is-user-icon">badge</mat-icon>
+                    @if (person.user) {
+                        <mat-icon class="material-icons-outlined is-user-icon">badge</mat-icon>
+                    }
                 </td>
             </ng-container>
 

@@ -1,29 +1,36 @@
-<div *ngIf="visits" class="related-visit-list">
-    <div *ngFor="let activity of visits" class="related-visit-list-item">
-        <mat-card class="related-visit-card">
-            <mat-card-header>
-                <mat-card-subtitle>
-                    <span class="date-time">
-                        {{ activity.hospitalVisit.dateTimeFrom | date : ('EventDateFormat' | translate) }}
-                    </span>
+@if (visits) {
+    <div class="related-visit-list">
+        @for (activity of visits;track $index) {
+            <div class="related-visit-list-item">
+                <mat-card class="related-visit-card">
+                    <mat-card-header>
+                        <mat-card-subtitle>
+                            <span class="date-time">
+                                {{ activity.hospitalVisit.dateTimeFrom | date : ('EventDateFormat' | translate) }}
+                            </span>
 
-                    <span class="participants">
-                        <span *ngFor="let participant of activity.hospitalVisit.participants; let last = last"
-                              class="participant">
-                            <span class="nowrap">{{ participant | personName }}</span><span *ngIf="!last">, </span>
-                        </span>
-                    </span>
-                </mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content class="visit-card-content">
-                <app-related-visit [wrappedActivity]="activity"></app-related-visit>
-            </mat-card-content>
-        </mat-card>
+                            <span class="participants">
+                                @for (participant of activity.hospitalVisit.participants; track participant.id; let last = $last) {
+                                    <span class="participant">
+                                        <span class="nowrap">{{ participant | personName }}</span><span *ngIf="!last">, </span>
+                                    </span>
+                                }
+                            </span>
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content class="visit-card-content">
+                        <app-related-visit [wrappedActivity]="activity"></app-related-visit>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        } @empty {
+            {{ 'HospitalVisit.NoRelatedActivities' | translate }}
+        }
     </div>
+}
 
-    <div *ngIf="!visits.length">{{ 'HospitalVisit.NoRelatedActivities' | translate }}</div>
-</div>
-
-<div *ngIf="loading" class="loading-spinner">
-    <mat-spinner color="accent" diameter="50"></mat-spinner>
-</div>
+@if (loading) {
+    <div class="loading-spinner">
+        <mat-spinner color="accent" [diameter]="50"></mat-spinner>
+    </div>
+}

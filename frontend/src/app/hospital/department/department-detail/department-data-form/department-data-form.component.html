@@ -1,6 +1,9 @@
 <h1>
-    <ng-container *ngIf="!department">{{ 'DepartmentPage.Add' | translate }}</ng-container>
-    <ng-container *ngIf="!!department">{{ 'DepartmentPage.EditData' | translate }}</ng-container>
+    @if (department) {
+        {{ 'DepartmentPage.EditData' | translate }}
+    } @else {
+        {{ 'DepartmentPage.Add' | translate }}
+    }
 </h1>
 
 <form [formGroup]="form">
@@ -64,7 +67,6 @@
             </textarea>
         </mat-form-field>
     </div>
-
 
     <div class="button-row">
         <button mat-flat-button

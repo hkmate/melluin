@@ -1,14 +1,17 @@
-<mat-card *ngIf="patientInfo">
-    <mat-card-header>
-        <mat-card-subtitle>
-            {{ patientInfo.child.name }}
-            <span>({{ patientInfo.child | childAge : visitDate}})</span>
+@if (patientInfo) {
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>
+                {{ patientInfo.child.name }}
+                <span>({{ patientInfo.child | childAge : visitDate }})</span>
 
-            <app-parent-info-icon *ngIf="needParentInfo()" [isParentThere]="patientInfo.isParentThere">
-            </app-parent-info-icon>
-        </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        {{ patientInfo.child.info }}
-    </mat-card-content>
-</mat-card>
+                @if (needParentInfo()) {
+                    <app-parent-info-icon [isParentThere]="patientInfo.isParentThere"></app-parent-info-icon>
+                }
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            {{ patientInfo.child.info }}
+        </mat-card-content>
+    </mat-card>
+}

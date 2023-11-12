@@ -2,43 +2,48 @@
     <div class="page-content">
 
         <div class="visit-part">
-            <ng-container *ngIf="visit && !isEditMode()">
+            @if (visit && !isEditMode()) {
                 <app-hospital-visit-presenter [visit]="visit!"></app-hospital-visit-presenter>
                 <div class="button-row">
-                    <button *ngIf="canUserStartTheVisit()"
-                            mat-flat-button
-                            color="accent"
-                            routerLink="fill-activities">
-                        <mat-icon>rocket_launch</mat-icon>
-                        {{ 'HospitalVisit.Start' | translate }}
-                    </button>
-                    <button *ngIf="isStartedAndUserCanContinueTheVisit()"
-                            mat-flat-button
-                            color="accent"
-                            routerLink="fill-activities">
-                        <mat-icon>rocket_launch</mat-icon>
-                        {{ 'HospitalVisit.ContinueFilling' | translate }}
-                    </button>
-                    <button *ngIf="permissions.has(Permission.canModifyVisit)"
-                            mat-stroked-button
-                            color="primary"
-                            (click)="switchToEdit()">
-                        {{ 'Edit' | translate }}
-                    </button>
+                    @if (canUserStartTheVisit()) {
+                        <button mat-flat-button
+                                color="accent"
+                                routerLink="fill-activities">
+                            <mat-icon>rocket_launch</mat-icon>
+                            {{ 'HospitalVisit.Start' | translate }}
+                        </button>
+                    }
+                    @if (isStartedAndUserCanContinueTheVisit()) {
+                        <button mat-flat-button
+                                color="accent"
+                                routerLink="fill-activities">
+                            <mat-icon>rocket_launch</mat-icon>
+                            {{ 'HospitalVisit.ContinueFilling' | translate }}
+                        </button>
+                    }
+                    @if (permissions.has(Permission.canModifyVisit)) {
+                        <button mat-stroked-button
+                                color="primary"
+                                (click)="switchToEdit()">
+                            {{ 'Edit' | translate }}
+                        </button>
+                    }
                 </div>
-            </ng-container>
+            }
 
-            <app-hospital-visit-form *ngIf="isEditMode()"
-                                     [visit]="visit"
-                                     [(createNewAfterSave)]="createNewAfterSave"
-                                     (submitted)="saveVisit($event)"
-                                     (canceled)="cancelEditing()">
-            </app-hospital-visit-form>
+            @if (isEditMode()) {
+                <app-hospital-visit-form [visit]="visit"
+                                         [(createNewAfterSave)]="createNewAfterSave"
+                                         (submitted)="saveVisit($event)"
+                                         (canceled)="cancelEditing()">
+                </app-hospital-visit-form>
+            }
         </div>
 
-        <div class="activities-part" *ngIf="shouldShowActivities()">
-            <app-visit-activities [visit]="visit!"></app-visit-activities>
-        </div>
-
+        @if (shouldShowActivities()) {
+            <div class="activities-part">
+                <app-visit-activities [visit]="visit!"></app-visit-activities>
+            </div>
+        }
     </div>
 </section>

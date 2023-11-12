@@ -5,7 +5,7 @@ import {DepartmentService} from '@fe/app/hospital/department/department.service'
 import {Person} from '@shared/person/person';
 import {Department} from '@shared/department/department';
 import {FilterOperationBuilder} from '@shared/api-util/filter-options';
-import {isNilOrEmpty} from '@shared/util/util';
+import {isNil, isNilOrEmpty} from '@shared/util/util';
 
 @Component({
     selector: 'app-user-settings-presenter',
@@ -13,6 +13,8 @@ import {isNilOrEmpty} from '@shared/util/util';
     styleUrls: ['./user-settings-presenter.component.scss']
 })
 export class UserSettingsPresenterComponent {
+
+    protected isNil = isNil;
 
     protected settings: UserSettings;
     protected participants: Array<Person>;

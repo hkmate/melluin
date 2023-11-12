@@ -5,9 +5,9 @@
             <mat-form-field appearance="fill">
                 <mat-label>{{ 'BoxStatus.Reason' | translate }}</mat-label>
                 <mat-select formControlName="reason">
-                    <mat-option *ngFor="let reason of reasonOptions" [value]="reason">
-                        {{ 'BoxStatusChangeReason.' + reason | translate }}
-                    </mat-option>
+                    @for (reason of reasonOptions; track reason) {
+                        <mat-option [value]="reason"> {{ 'BoxStatusChangeReason.' + reason | translate }}</mat-option>
+                    }
                 </mat-select>
             </mat-form-field>
 
@@ -20,9 +20,9 @@
                        [matAutocomplete]="auto">
                 <mat-hint>{{ 'BoxStatus.AffectedObjectHint' | translate }}</mat-hint>
                 <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of affectedObjectsOptions" [value]="option">
-                        {{ option }}
-                    </mat-option>
+                    @for (option of affectedObjectsOptions; track option) {
+                        <mat-option [value]="option">{{ option }}</mat-option>
+                    }
                 </mat-autocomplete>
             </mat-form-field>
 
@@ -40,14 +40,14 @@
                         color="accent"
                         (click)="onFormSubmit()"
                         type="button">
-                    {{ 'SaveButton' | translate}}
+                    {{ 'SaveButton' | translate }}
                 </button>
                 <button mat-stroked-button
                         [disabled]="buttonsDisabled"
                         color="primary"
                         type="button"
                         (click)="cancelEditing()">
-                    {{ 'CancelButton' | translate}}
+                    {{ 'CancelButton' | translate }}
                 </button>
             </div>
         </form>

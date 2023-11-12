@@ -1,32 +1,35 @@
 <div class="user-detail">
 
-    <ng-container *ngIf="needDataPresenter()">
+    @if (needDataPresenter()) {
         <app-user-data-presenter [user]="user"></app-user-data-presenter>
         <div class="button-row">
-            <button *ngIf="editEnabled"
-                    mat-stroked-button
-                    color="primary"
-                    (click)="switchToEdit()">
-                {{ 'Edit' | translate }}
+            @if (editEnabled) {
+                <button mat-stroked-button color="primary" (click)="switchToEdit()">
+                    {{ 'Edit' | translate }}
+                </button>
+            }
+        </div>
+    }
+
+    @if (!user && !createModeOn && permissions.has(Permission.canCreateUser)) {
+        <div class="button-row">
+            <button mat-stroked-button color="primary" (click)="switchToCreate()">
+                {{ 'PersonPage.User.NewUser' | translate }}
             </button>
         </div>
-    </ng-container>
-    <div *ngIf="!user && !createModeOn && permissions.has(Permission.canCreateUser)" class="button-row">
-        <button mat-stroked-button
-                color="primary"
-                (click)="switchToCreate()">
-            {{ 'PersonPage.User.NewUser' | translate }}
-        </button>
-    </div>
-    <app-user-creation-form *ngIf="createModeOn"
-                            [personId]="personId"
-                            (submitted)="createUser($event)"
+    }
+
+    @if (createModeOn) {
+        <app-user-creation-form [personId]="personId"
+                                (submitted)="createUser($event)"
+                                (canceled)="cancelEditing()">
+        </app-user-creation-form>
+    }
+    @if (editModeOn) {
+        <app-user-edit-form [user]="user"
+                            (submitted)="updateUser($event)"
                             (canceled)="cancelEditing()">
-    </app-user-creation-form>
-    <app-user-edit-form *ngIf="editModeOn"
-                        [user]="user"
-                        (submitted)="updateUser($event)"
-                        (canceled)="cancelEditing()">
-    </app-user-edit-form>
+        </app-user-edit-form>
+    }
 
 </div>

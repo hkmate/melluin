@@ -12,7 +12,7 @@
         <mat-card-header>
             <mat-card-subtitle>{{ 'PersonPage.User.Present.Status' | translate }}</mat-card-subtitle>
             <mat-card-title>
-                {{  (user?.isActive ? 'PersonPage.User.Active' : 'PersonPage.User.Inactive') | translate }}
+                {{ (user?.isActive ? 'PersonPage.User.Active' : 'PersonPage.User.Inactive') | translate }}
             </mat-card-title>
         </mat-card-header>
     </mat-card>
@@ -23,9 +23,9 @@
         </mat-card-header>
         <mat-card-content>
             <ul>
-                <ng-container *ngFor="let role of user?.roles">
+                @for (role of user?.roles; track role) {
                     <li class="role">{{ 'Role.' + role | translate }}</li>
-                </ng-container>
+                }
             </ul>
         </mat-card-content>
     </mat-card>
@@ -36,11 +36,12 @@
         </mat-card-header>
         <mat-card-content>
             <ul>
-                <ng-container *ngFor="let permission of user?.customPermissions">
+                @for (permission of user?.customPermissions; track permission) {
                     <li class="permission">{{ permission }}</li>
-                </ng-container>
+                } @empty {
+                    {{ 'NoData' | translate }}
+                }
             </ul>
-            <div *ngIf="!user?.customPermissions?.length">{{ 'NoData' | translate }}</div>
         </mat-card-content>
     </mat-card>
 </div>

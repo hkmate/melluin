@@ -2,33 +2,31 @@
     <div class="page-content">
 
         <div class="person-part">
-            <ng-container *ngIf="!isEditMode()">
+            @if (isEditMode()) {
+                <app-person-data-form [person]="person"
+                                      (submitted)="savePerson($event)"
+                                      (canceled)="cancelEditing()">
+                </app-person-data-form>
+            } @else {
                 <app-person-data-presenter [person]="person"></app-person-data-presenter>
                 <div class="button-row">
-                    <button *ngIf="isEditEnabled"
-                            mat-stroked-button
-                            color="primary"
-                            (click)="switchToEdit()">
-                        {{ 'Edit' | translate }}
-                    </button>
+                    @if (isEditEnabled) {
+                        <button mat-stroked-button color="primary" (click)="switchToEdit()">
+                            {{ 'Edit' | translate }}
+                        </button>
+                    }
                 </div>
-            </ng-container>
-
-            <app-person-data-form *ngIf="isEditMode()"
-                                  [person]="person"
-                                  (submitted)="savePerson($event)"
-                                  (canceled)="cancelEditing()">
-            </app-person-data-form>
+            }
         </div>
 
-        <ng-container *ngIf="person">
+        @if (person) {
             <div class="divider"></div>
             <div class="user-part">
                 <app-user-detail [personId]="person.id"
                                  [userId]="person.user?.id"
                                  [editEnabled]="isEditEnabled"></app-user-detail>
             </div>
-        </ng-container>
+        }
 
     </div>
 </section>

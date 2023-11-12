@@ -18,11 +18,12 @@
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.ValidTo' | translate }}</mat-card-subtitle>
-            <mat-card-title *ngIf="department?.validTo">
-                {{ department?.validTo | date : ('DateFormat' | translate) }}
-            </mat-card-title>
-            <mat-card-title *ngIf="!department?.validTo">
-                {{ 'NoData' | translate }}
+            <mat-card-title>
+                @if (department?.validTo) {
+                    {{ department?.validTo | date : ('DateFormat' | translate) }}
+                } @else {
+                    {{ 'NoData' | translate }}
+                }
             </mat-card-title>
         </mat-card-header>
     </mat-card>

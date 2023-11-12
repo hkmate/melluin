@@ -1,21 +1,22 @@
-<ng-container *ngIf="!isEmpty(); else noBoxInList">
+@if (!isEmpty()) {
     <div class="box-info-list">
-        <div *ngFor="let boxInfo of boxInfoList" class="box-info">
-            <app-department-box-info [boxStatus]="boxInfo"></app-department-box-info>
-        </div>
+        @for (boxInfo of boxInfoList;track boxInfo.id) {
+            <div class="box-info">
+                <app-department-box-info [boxStatus]="boxInfo"></app-department-box-info>
+            </div>
+        }
 
-        <mat-paginator *ngIf="paginatorNeeded"
-                       [length]="countOfAll"
-                       [pageIndex]="page - 1"
-                       [pageSize]="size"
-                       [pageSizeOptions]="sizeOptions"
-                       (page)="paginateHappened($event)">
-        </mat-paginator>
+        @if (paginatorNeeded) {
+            <mat-paginator [length]="countOfAll"
+                           [pageIndex]="page - 1"
+                           [pageSize]="size"
+                           [pageSizeOptions]="sizeOptions"
+                           (page)="paginateHappened($event)">
+            </mat-paginator>
+        }
     </div>
-</ng-container>
-
-<ng-template #noBoxInList>
+} @else {
     <span class="empty-list">
         {{ 'BoxStatus.NoStatusYet' | translate }}
     </span>
-</ng-template>
+}

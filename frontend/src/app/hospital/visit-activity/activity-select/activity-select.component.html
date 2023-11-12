@@ -1,17 +1,18 @@
 <mat-form-field appearance="fill" class="chip-selector">
     <mat-label>{{ label }}</mat-label>
     <mat-chip-listbox>
-        <mat-chip-row *ngFor="let activityType of activityTypes"
-                      (removed)="removeType(activityType)">
-            {{ 'VisitActivityType.' + activityType | translate }}
-            <button matChipRemove>
-                <mat-icon>cancel</mat-icon>
-            </button>
-        </mat-chip-row>
+        @for (activityType of activityTypes; track activityType) {
+            <mat-chip-row (removed)="removeType(activityType)">
+                {{ 'VisitActivityType.' + activityType | translate }}
+                <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
+        }
     </mat-chip-listbox>
-    <mat-select [ngModel]="activityTypes" (ngModelChange)="typesChanged($event)"multiple>
-        <mat-option *ngFor="let option of options" [value]="option">
-            {{ 'VisitActivityType.' + option | translate }}
-        </mat-option>
+    <mat-select [ngModel]="activityTypes" (ngModelChange)="typesChanged($event)" multiple>
+        @for (option of options; track option) {
+            <mat-option [value]="option"> {{ 'VisitActivityType.' + option | translate }}</mat-option>
+        }
     </mat-select>
 </mat-form-field>

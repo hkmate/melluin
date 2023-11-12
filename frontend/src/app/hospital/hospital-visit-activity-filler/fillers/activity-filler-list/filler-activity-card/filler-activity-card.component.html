@@ -2,14 +2,16 @@
     <mat-card-header>
         <mat-card-subtitle>
             <span class="activity-main-info">
-                <span *ngFor="let activityType of activity.activities; last as isLast" class="activity-type">
-                    {{ 'VisitActivityType.' + activityType  | translate }}<span *ngIf="!isLast">,</span>
-                </span>
+                @for (activityType of activity.activities; track activityType; let last = $last) {
+                    <span class="activity-type">
+                        {{ 'VisitActivityType.' + activityType  | translate }}<span *ngIf="!last">,</span>
+                    </span>
+                }
                 <div class="children">
                     <mat-chip-listbox>
-                        <mat-chip-row *ngFor="let visitedChildId of activity.children">
-                            {{ childrenById[visitedChildId].child.name }}
-                        </mat-chip-row>
+                        @for (visitedChildId of activity.children; track visitedChildId) {
+                            <mat-chip-row>{{ childrenById[visitedChildId].child.name }}</mat-chip-row>
+                        }
                     </mat-chip-listbox>
                 </div>
             </span>

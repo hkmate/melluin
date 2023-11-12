@@ -1,54 +1,62 @@
 <section>
-    <div class="page-content" *ngIf="visit">
+    @if (visit) {
+        <div class="page-content">
 
-        <div class="visit-part">
-            <app-hospital-event-card [visit]="visit"></app-hospital-event-card>
-        </div>
-
-        <div class="related-activities">
-            <mat-accordion>
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            {{ 'HospitalVisit.RelatedActivities' | translate }}
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <app-related-visit-list [visit]="visit"></app-related-visit-list>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </div>
-
-        <div class="start-btn" *ngIf="canVisitBeStarted()">
-            <button mat-flat-button
-                    color="accent"
-                    type="button"
-                    [disabled]="!buttonsEnabled"
-                    (click)="startFilling()">
-                {{ 'HospitalVisit.Start' | translate}}
-            </button>
-        </div>
-
-        <div class="activities-part" *ngIf="canActivitiesBeShowed()">
-            <div class="children">
-                <app-child-filler-list></app-child-filler-list>
+            <div class="visit-part">
+                <app-hospital-event-card [visit]="visit"></app-hospital-event-card>
             </div>
-            <div class="activities">
-                <app-activity-filler-list></app-activity-filler-list>
-            </div>
-            <div class="box-info">
-                <app-box-info-manager-by-visit [visitId]="visit.id" [departmentId]="visit.department.id">
-                </app-box-info-manager-by-visit>
-            </div>
-        </div>
 
-        <div class="finalized-btn" *ngIf="canActivitiesBeFinalized()">
-            <button mat-flat-button
-                    color="accent"
-                    type="button"
-                    [disabled]="!buttonsEnabled"
-                    (click)="finalizeFilling()">
-                {{ 'HospitalVisit.Finalized' | translate}}
-            </button>
+            <div class="related-activities">
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{ 'HospitalVisit.RelatedActivities' | translate }}
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-related-visit-list [visit]="visit"></app-related-visit-list>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+            @if (canVisitBeStarted()) {
+                <div class="start-btn">
+                    <button mat-flat-button
+                            color="accent"
+                            type="button"
+                            [disabled]="!buttonsEnabled"
+                            (click)="startFilling()">
+                        {{ 'HospitalVisit.Start' | translate }}
+                    </button>
+                </div>
+            }
+
+            @if (canActivitiesBeShowed()) {
+                <div class="activities-part">
+                    <div class="children">
+                        <app-child-filler-list></app-child-filler-list>
+                    </div>
+                    <div class="activities">
+                        <app-activity-filler-list></app-activity-filler-list>
+                    </div>
+                    <div class="box-info">
+                        <app-box-info-manager-by-visit [visitId]="visit.id" [departmentId]="visit.department.id">
+                        </app-box-info-manager-by-visit>
+                    </div>
+                </div>
+            }
+
+            @if (canActivitiesBeFinalized()) {
+                <div class="finalized-btn" *ngIf="canActivitiesBeFinalized()">
+                    <button mat-flat-button
+                            color="accent"
+                            type="button"
+                            [disabled]="!buttonsEnabled"
+                            (click)="finalizeFilling()">
+                        {{ 'HospitalVisit.Finalized' | translate }}
+                    </button>
+                </div>
+            }
         </div>
-    </div>
+    }
 </section>

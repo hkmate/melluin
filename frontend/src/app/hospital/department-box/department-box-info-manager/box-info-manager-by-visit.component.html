@@ -2,16 +2,21 @@
     <h1>{{ 'DepartmentPage.BoxStatuses' | translate }}</h1>
     <span class="add-btn">
         <button mat-mini-fab color="accent" (click)="creatorToggled()">
-            <mat-icon *ngIf="creatingInProcess">close</mat-icon>
-            <mat-icon *ngIf="!creatingInProcess">add</mat-icon>
+            @if (creatingInProcess) {
+                <mat-icon>close</mat-icon>
+            } @else {
+                <mat-icon>add</mat-icon>
+            }
         </button>
     </span>
 </div>
-<app-department-box-info-create *ngIf="creatingInProcess"
-                                [buttonsDisabled]="saveInProcess"
-                                (submitted)="saveStatusReport($event)"
-                                (canceled)="createCanceled()">
-</app-department-box-info-create>
+
+@if (creatingInProcess) {
+    <app-department-box-info-create [buttonsDisabled]="saveInProcess"
+                                    (submitted)="saveStatusReport($event)"
+                                    (canceled)="createCanceled()">
+    </app-department-box-info-create>
+}
 
 <div class="department-boxes-part">
     <app-box-info-list-by-visit [visitId]="visitId"></app-box-info-list-by-visit>

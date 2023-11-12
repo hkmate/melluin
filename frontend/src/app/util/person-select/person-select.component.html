@@ -1,13 +1,14 @@
 <mat-form-field appearance="fill">
     <mat-label>{{ label }}</mat-label>
     <mat-chip-listbox>
-        <mat-chip-row *ngFor="let person of people"
-                      (removed)="removePerson(person)">
-            {{ person | personName }}
-            <button matChipRemove>
-                <mat-icon>cancel</mat-icon>
-            </button>
-        </mat-chip-row>
+        @for (person of people; track person.id) {
+            <mat-chip-row (removed)="removePerson(person)">
+                {{ person | personName }}
+                <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
+        }
     </mat-chip-listbox>
     <mat-select [ngModel]="people"
                 (ngModelChange)="selectChanged($event)"
@@ -18,8 +19,8 @@
                                    [noEntriesFoundLabel]="'NoItemFound' | translate"
             ></ngx-mat-select-search>
         </mat-option>
-        <mat-option *ngFor="let option of filteredOptions" [value]="option">
-            {{ option | personName }}
-        </mat-option>
+        @for (option of filteredOptions; track option.id) {
+            <mat-option [value]="option">{{ option | personName }}</mat-option>
+        }
     </mat-select>
 </mat-form-field>

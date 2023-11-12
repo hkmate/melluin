@@ -1,6 +1,9 @@
 <h1>
-    <ng-container *ngIf="!person">{{ 'PersonPage.AddPerson' | translate }}</ng-container>
-    <ng-container *ngIf="!!person">{{ 'PersonPage.EditData' | translate }}</ng-container>
+    @if (person) {
+        {{ 'PersonPage.EditData' | translate }}
+    } @else {
+        {{ 'PersonPage.AddPerson' | translate }}
+    }
 </h1>
 
 <form [formGroup]="form">
@@ -37,9 +40,11 @@
             <mat-card-content class="preferences-card-content">
                 <mat-checkbox formControlName="canVolunteerSeeMyEmail"></mat-checkbox>
                 <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyEmail' | translate }}</span>
-                <span *ngIf="selfEdit" class="preference-description">
-                    {{ 'PersonPage.Form.CanVolunteerSeeMyEmailDescription' | translate }}
-                </span>
+                @if (selfEdit) {
+                    <span class="preference-description">
+                        {{ 'PersonPage.Form.CanVolunteerSeeMyEmailDescription' | translate }}
+                    </span>
+                }
             </mat-card-content>
         </mat-card>
     </div>
@@ -58,26 +63,27 @@
             <mat-card-content class="preferences-card-content">
                 <mat-checkbox formControlName="canVolunteerSeeMyPhone"></mat-checkbox>
                 <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyPhone' | translate }}</span>
-                <span *ngIf="selfEdit" class="preference-description">
-                    {{ 'PersonPage.Form.CanVolunteerSeeMyPhoneDescription' | translate }}
-                </span>
+                @if (selfEdit) {
+                    <span class="preference-description">
+                        {{ 'PersonPage.Form.CanVolunteerSeeMyPhoneDescription' | translate }}
+                    </span>
+                }
             </mat-card-content>
         </mat-card>
     </div>
-
 
     <div class="button-row">
         <button mat-flat-button
                 color="accent"
                 (click)="onSubmit()"
                 type="button">
-            {{ 'SaveButton' | translate}}
+            {{ 'SaveButton' | translate }}
         </button>
         <button mat-stroked-button
                 color="primary"
                 type="button"
                 (click)="cancelEditing()">
-            {{ 'CancelButton' | translate}}
+            {{ 'CancelButton' | translate }}
         </button>
     </div>
 

@@ -39,10 +39,11 @@
             <mat-card-subtitle>{{ 'HospitalVisit.Present.Participants' | translate }}</mat-card-subtitle>
             <mat-card-title>
                 <mat-chip-listbox>
-                    <mat-chip-row *ngFor="let participant of visit.participants"
-                                  [routerLink]="['/people', participant.id]">
-                        {{ participant | personName }}
-                    </mat-chip-row>
+                    @for (participant of visit.participants; track participant.id) {
+                        <mat-chip-row [routerLink]="['/people', participant.id]">
+                            {{ participant | personName }}
+                        </mat-chip-row>
+                    }
                 </mat-chip-listbox>
             </mat-card-title>
         </mat-card-header>

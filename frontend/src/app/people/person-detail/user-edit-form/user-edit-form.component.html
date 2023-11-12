@@ -29,7 +29,7 @@
                 <mat-card-subtitle>{{ 'PersonPage.User.Form.Status' | translate }}</mat-card-subtitle>
                 <mat-card-content>
                     <mat-slide-toggle formControlName="isActive">
-                        {{  (isUserSetToActive() ? 'PersonPage.User.Active' : 'PersonPage.User.Inactive') | translate }}
+                        {{ (isUserSetToActive() ? 'PersonPage.User.Active' : 'PersonPage.User.Inactive') | translate }}
                     </mat-slide-toggle>
                 </mat-card-content>
             </mat-card-header>
@@ -40,9 +40,11 @@
         <mat-form-field appearance="fill">
             <mat-label>{{ 'PersonPage.User.Form.Roles' | translate }}</mat-label>
             <mat-select formControlName="roles" multiple>
-                <mat-option *ngFor="let role of roles" [value]="role" [disabled]="!roleOptions.includes(role)">
-                    {{ 'Role.' + role | translate }}
-                </mat-option>
+                @for (role of roles; track role) {
+                    <mat-option [value]="role" [disabled]="!roleOptions.includes(role)">
+                        {{ 'Role.' + role | translate }}
+                    </mat-option>
+                }
             </mat-select>
         </mat-form-field>
     </div>
@@ -51,9 +53,9 @@
         <mat-form-field appearance="fill">
             <mat-label>{{ 'PersonPage.User.Form.Permissions' | translate }}</mat-label>
             <mat-select formControlName="customPermissions" multiple>
-                <mat-option *ngFor="let permission of permissions" [value]="permission">
-                    {{ permission }}
-                </mat-option>
+                @for (permission of permissions; track permission) {
+                    <mat-option [value]="permission">{{ permission }}</mat-option>
+                }
             </mat-select>
         </mat-form-field>
     </div>
@@ -63,13 +65,13 @@
                 color="accent"
                 (click)="onSubmit()"
                 type="button">
-            {{ 'SaveButton' | translate}}
+            {{ 'SaveButton' | translate }}
         </button>
         <button mat-stroked-button
                 color="primary"
                 type="button"
                 (click)="cancelEditing()">
-            {{ 'CancelButton' | translate}}
+            {{ 'CancelButton' | translate }}
         </button>
     </div>
 

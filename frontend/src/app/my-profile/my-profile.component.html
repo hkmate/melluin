@@ -1,21 +1,22 @@
 <section>
     <div class="page-content">
 
-        <ng-container *ngIf="!editMode; else editPart">
+        @if (editMode) {
+            <app-my-profile-editor [user]="user" [person]="person" [userSettings]="userSettings"
+                                   (editEnded)="cancelEdit()">
+            </app-my-profile-editor>
+        } @else {
             <div>
                 <app-my-profile-present [person]="person" [user]="user" [userSettings]="userSettings">
                 </app-my-profile-present>
             </div>
-            <div *ngIf="canWriteSelf()" class="button-row">
-                <button mat-stroked-button color="primary" (click)="switchToEdit()">{{ 'Edit' | translate }}</button>
-            </div>
-        </ng-container>
-
-        <ng-template #editPart>
-            <app-my-profile-editor [user]="user" [person]="person" [userSettings]="userSettings"
-                                   (editEnded)="cancelEdit()">
-            </app-my-profile-editor>
-        </ng-template>
+            @if (canWriteSelf()) {
+                <div class="button-row">
+                    <button mat-stroked-button color="primary" (click)="switchToEdit()">{{ 'Edit' | translate }}
+                    </button>
+                </div>
+            }
+        }
 
     </div>
 </section>

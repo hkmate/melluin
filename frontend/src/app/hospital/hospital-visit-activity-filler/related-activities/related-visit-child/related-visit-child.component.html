@@ -1,22 +1,25 @@
-<mat-card *ngIf="visitedChild">
-    <mat-card-header>
-        <mat-card-subtitle>
+@if (visitedChild) {
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>
             <span class="child-info">
                 {{ visitedChild.child.name }}
                 <span>({{ visitedChild.child | childAge : visitDate }})</span>
 
                 <app-parent-info-icon [isParentThere]="visitedChild.isParentThere"></app-parent-info-icon>
             </span>
+
             <span class="operation-btns">
-                <button *ngIf="needCopyBtn$ | async"
-                        mat-mini-fab color="accent"
-                        (click)="copyChildToActualVisit()">
-                    <mat-icon>content_copy</mat-icon>
-                </button>
+                @if (needCopyBtn$ | async) {
+                    <button mat-mini-fab color="accent" (click)="copyChildToActualVisit()">
+                        <mat-icon>content_copy</mat-icon>
+                    </button>
+                }
             </span>
-        </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        {{ visitedChild.child.info }}
-    </mat-card-content>
-</mat-card>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            {{ visitedChild.child.info }}
+        </mat-card-content>
+    </mat-card>
+}

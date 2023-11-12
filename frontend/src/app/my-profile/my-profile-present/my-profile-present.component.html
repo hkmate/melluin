@@ -1,103 +1,108 @@
 <h1>{{ 'PersonPage.MyProfile' | translate }}</h1>
 
-<div *ngIf="person && user">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.Present.LastName' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ person.lastName }}</mat-card-title>
-        </mat-card-header>
-    </mat-card>
+@if (person && user) {
+    <div>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.Present.LastName' | translate }}</mat-card-subtitle>
+                <mat-card-title>{{ person.lastName }}</mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.Present.FirstName' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ person.firstName }}</mat-card-title>
-        </mat-card-header>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.Present.FirstName' | translate }}</mat-card-subtitle>
+                <mat-card-title>{{ person.firstName }}</mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.Present.Email' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ person.email | optional: '-' }}</mat-card-title>
-        </mat-card-header>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.Present.Email' | translate }}</mat-card-subtitle>
+                <mat-card-title>{{ person.email | optional: '-' }}</mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.Present.Phone' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ person.phone | optional: '-' }}</mat-card-title>
-        </mat-card-header>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.Present.Phone' | translate }}</mat-card-subtitle>
+                <mat-card-title>{{ person.phone | optional: '-' }}</mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.Present.Preferences' | translate }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content class="preferences-card">
-            <div>
-                <mat-checkbox [ngModel]="person.preferences?.canVolunteerSeeMyEmail" [disabled]="true"></mat-checkbox>
-                {{ 'PersonPage.Present.CanVolunteerSeeMyEmail' | translate }}
-            </div>
-            <div>
-                <mat-checkbox [ngModel]="person.preferences?.canVolunteerSeeMyPhone" [disabled]="true"></mat-checkbox>
-                {{ 'PersonPage.Present.CanVolunteerSeeMyPhone' | translate }}
-            </div>
-        </mat-card-content>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.Present.Preferences' | translate }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="preferences-card">
+                <div>
+                    <mat-checkbox [ngModel]="person.preferences?.canVolunteerSeeMyEmail"
+                                  [disabled]="true"></mat-checkbox>
+                    {{ 'PersonPage.Present.CanVolunteerSeeMyEmail' | translate }}
+                </div>
+                <div>
+                    <mat-checkbox [ngModel]="person.preferences?.canVolunteerSeeMyPhone"
+                                  [disabled]="true"></mat-checkbox>
+                    {{ 'PersonPage.Present.CanVolunteerSeeMyPhone' | translate }}
+                </div>
+            </mat-card-content>
+        </mat-card>
 
-    <div class="divider"></div>
+        <div class="divider"></div>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.User.Present.UserName' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ user.userName }}</mat-card-title>
-        </mat-card-header>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.User.Present.UserName' | translate }}</mat-card-subtitle>
+                <mat-card-title>{{ user.userName }}</mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.User.Present.Password' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ 'PersonPage.User.Present.PasswordPlaceholder' | translate }}</mat-card-title>
-        </mat-card-header>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.User.Present.Password' | translate }}</mat-card-subtitle>
+                <mat-card-title>{{ 'PersonPage.User.Present.PasswordPlaceholder' | translate }}</mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.User.Present.Status' | translate }}</mat-card-subtitle>
-            <mat-card-title>
-                {{  (user.isActive ? 'PersonPage.User.Active' : 'PersonPage.User.Inactive') | translate }}
-            </mat-card-title>
-        </mat-card-header>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.User.Present.Status' | translate }}</mat-card-subtitle>
+                <mat-card-title>
+                    {{ (user.isActive ? 'PersonPage.User.Active' : 'PersonPage.User.Inactive') | translate }}
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.User.Present.Roles' | translate }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <ul>
-                <ng-container *ngFor="let role of user.roles">
-                    <li class="role">{{ 'Role.' + role | translate }}</li>
-                </ng-container>
-            </ul>
-        </mat-card-content>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.User.Present.Roles' | translate }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <ul>
+                    @for (role of user.roles; track role) {
+                        <li class="role">{{ 'Role.' + role | translate }}</li>
+                    }
+                </ul>
+            </mat-card-content>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.User.Present.Permissions' | translate }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <ul>
-                <ng-container *ngFor="let permission of user.customPermissions">
-                    <li class="permission">{{ permission }}</li>
-                </ng-container>
-            </ul>
-            <div *ngIf="!user.customPermissions?.length">{{ 'NoData' | translate }}</div>
-        </mat-card-content>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.User.Present.Permissions' | translate }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <ul>
+                    @for (permission of user.customPermissions; track permission) {
+                        <li class="permission">{{ permission }}</li>
+                    } @empty {
+                        {{ 'NoData' | translate }}
+                    }
+                </ul>
+            </mat-card-content>
+        </mat-card>
 
-    <div class="divider"></div>
+        <div class="divider"></div>
 
-    <app-user-settings-presenter [userSettings]="userSettings"></app-user-settings-presenter>
-</div>
+        <app-user-settings-presenter [userSettings]="userSettings"></app-user-settings-presenter>
+    </div>
+}

@@ -7,12 +7,11 @@
                             [value]="filterWord"
                             (changed)="filterChanged($event)"></app-lazy-input>
 
-            <button *ngIf="permissions.has(Permission.canWriteDepartment)"
-                    mat-mini-fab
-                    color="accent"
-                    [routerLink]="['new']">
-                <mat-icon>add</mat-icon>
-            </button>
+            @if (permissions.has(Permission.canWriteDepartment)) {
+                <button mat-mini-fab color="accent" [routerLink]="['new']">
+                    <mat-icon>add</mat-icon>
+                </button>
+            }
         </div>
 
         <table mat-table recycleRows [dataSource]="tableDataSource">
@@ -39,19 +38,22 @@
             <ng-container matColumnDef="validTo">
                 <th mat-header-cell *matHeaderCellDef>{{ 'DepartmentListPage.ListHeader.ValidTo' | translate }}</th>
                 <td mat-cell *matCellDef="let department">
-                    <span *ngIf="department.validTo">{{ department.validTo | date : ('DateFormat' | translate) }}</span>
-                    <span *ngIf="!department.validTo" class="no-data">{{ 'NoData' | translate }}</span>
+                    @if (department.validTo) {
+                        <span>{{ department.validTo | date : ('DateFormat' | translate) }}</span>
+                    } @else {
+                        <span class="no-data">{{ 'NoData' | translate }}</span>
+                    }
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="options">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let department">
-                    <a *ngIf="isEditEnabled(department)"
-                       mat-icon-button
-                       [routerLink]="[department.id]" [queryParams]="{edit: true}">
-                        <mat-icon class="material-icons-outlined settings-icon">settings</mat-icon>
-                    </a>
+                    @if (isEditEnabled(department)) {
+                        <a mat-icon-button [routerLink]="[department.id]" [queryParams]="{edit: true}">
+                            <mat-icon class="material-icons-outlined settings-icon">settings</mat-icon>
+                        </a>
+                    }
                 </td>
             </ng-container>
 

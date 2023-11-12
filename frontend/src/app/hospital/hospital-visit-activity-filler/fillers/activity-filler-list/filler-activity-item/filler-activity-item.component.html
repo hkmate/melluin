@@ -1,12 +1,12 @@
-<app-filler-activity-card *ngIf="!edit"
-                          [activity]="activity"
-                          [childrenById]="childrenById"
-                          (removeWanted)="removeActivity()"
-                          (editWanted)="changeToEdit()">
-</app-filler-activity-card>
-
-<app-filler-activity-editor *ngIf="edit"
-                            [activity]="activity"
-                            [childrenById]="childrenById"
-                            (editDone)="endEdit()">
-</app-filler-activity-editor>
+@if (edit) {
+    <app-filler-activity-editor [activity]="activity"
+                                [childrenById]="childrenById"
+                                (editDone)="endEdit()">
+    </app-filler-activity-editor>
+} @else {
+    <app-filler-activity-card [activity]="activity"
+                              [childrenById]="childrenById"
+                              (removeWanted)="removeActivity()"
+                              (editWanted)="changeToEdit()">
+    </app-filler-activity-card>
+}

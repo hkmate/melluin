@@ -1,4 +1,7 @@
 <span class="parent-info">
-    <mat-icon *ngIf="isParentThere" class="parent-is-there">family_restroom</mat-icon>
-    <mat-icon *ngIf="!isParentThere" class="parent-is-not-there">person_off</mat-icon>
+    @if (isParentThere) {
+        <mat-icon class="parent-is-there">family_restroom</mat-icon>
+    } @else {
+        <mat-icon class="parent-is-not-there">person_off</mat-icon>
+    }
 </span>

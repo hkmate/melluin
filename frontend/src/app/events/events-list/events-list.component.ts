@@ -44,7 +44,7 @@ export class EventsListComponent extends AutoUnSubscriber {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [10, 20, 50, 100];
 
-    protected eventsList: Array<HospitalVisit>;
+    protected eventsList: Array<HospitalVisit> = [];
     protected page: number;
     protected size: number;
     protected countOfAll: number;

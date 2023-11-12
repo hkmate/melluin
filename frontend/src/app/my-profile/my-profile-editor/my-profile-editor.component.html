@@ -1,113 +1,116 @@
 <h1>{{ 'PersonPage.MyProfile' | translate }}</h1>
 
-<form *ngIf="personForm" [formGroup]="personForm">
+@if (personForm) {
+    <form [formGroup]="personForm">
 
-    <div>
-        <mat-form-field appearance="fill">
-            <mat-label>{{ 'PersonPage.Form.LastName' | translate }}</mat-label>
-            <input matInput
-                   [placeholder]="'PersonPage.Form.LastNamePlaceholder' | translate"
-                   formControlName="lastName">
-        </mat-form-field>
-    </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'PersonPage.Form.LastName' | translate }}</mat-label>
+                <input matInput
+                       [placeholder]="'PersonPage.Form.LastNamePlaceholder' | translate"
+                       formControlName="lastName">
+            </mat-form-field>
+        </div>
 
-    <div>
-        <mat-form-field appearance="fill">
-            <mat-label>{{ 'PersonPage.Form.FirstName' | translate }}</mat-label>
-            <input matInput
-                   [placeholder]="'PersonPage.Form.FirstNamePlaceholder' | translate"
-                   formControlName="firstName">
-        </mat-form-field>
-    </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'PersonPage.Form.FirstName' | translate }}</mat-label>
+                <input matInput
+                       [placeholder]="'PersonPage.Form.FirstNamePlaceholder' | translate"
+                       formControlName="firstName">
+            </mat-form-field>
+        </div>
 
-    <div>
-        <mat-form-field appearance="fill">
-            <mat-label>{{ 'PersonPage.Form.Email' | translate }}</mat-label>
-            <input matInput
-                   [placeholder]="'PersonPage.Form.EmailPlaceholder' | translate"
-                   formControlName="email">
-        </mat-form-field>
-    </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'PersonPage.Form.Email' | translate }}</mat-label>
+                <input matInput
+                       [placeholder]="'PersonPage.Form.EmailPlaceholder' | translate"
+                       formControlName="email">
+            </mat-form-field>
+        </div>
 
-    <div class="email-preference-card">
-        <mat-card>
-            <mat-card-content class="preferences-card-content">
-                <mat-checkbox formControlName="canVolunteerSeeMyEmail"></mat-checkbox>
-                <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyEmail' | translate }}</span>
-                <span class="preference-description">
+        <div class="email-preference-card">
+            <mat-card>
+                <mat-card-content class="preferences-card-content">
+                    <mat-checkbox formControlName="canVolunteerSeeMyEmail"></mat-checkbox>
+                    <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyEmail' | translate }}</span>
+                    <span class="preference-description">
                     {{ 'PersonPage.Form.CanVolunteerSeeMyEmailDescription' | translate }}
                 </span>
-            </mat-card-content>
-        </mat-card>
-    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
 
-    <div>
-        <mat-form-field appearance="fill">
-            <mat-label>{{ 'PersonPage.Form.Phone' | translate }}</mat-label>
-            <input matInput
-                   [placeholder]="'PersonPage.Form.PhonePlaceholder' | translate"
-                   formControlName="phone">
-        </mat-form-field>
-    </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'PersonPage.Form.Phone' | translate }}</mat-label>
+                <input matInput
+                       [placeholder]="'PersonPage.Form.PhonePlaceholder' | translate"
+                       formControlName="phone">
+            </mat-form-field>
+        </div>
 
-    <div class="phone-preference-card">
-        <mat-card>
-            <mat-card-content class="preferences-card-content">
-                <mat-checkbox formControlName="canVolunteerSeeMyPhone"></mat-checkbox>
-                <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyPhone' | translate }}</span>
-                <span class="preference-description">
+        <div class="phone-preference-card">
+            <mat-card>
+                <mat-card-content class="preferences-card-content">
+                    <mat-checkbox formControlName="canVolunteerSeeMyPhone"></mat-checkbox>
+                    <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyPhone' | translate }}</span>
+                    <span class="preference-description">
                     {{ 'PersonPage.Form.CanVolunteerSeeMyPhoneDescription' | translate }}
                 </span>
-            </mat-card-content>
-        </mat-card>
-    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
 
-    <div class="button-row">
-        <button mat-flat-button
-                color="accent"
-                [disabled]="isPersonFormBtnDisabled()"
-                (click)="submitPersonForm()"
-                type="button">
-            {{ 'SaveButton' | translate}}
-        </button>
-    </div>
+        <div class="button-row">
+            <button mat-flat-button
+                    color="accent"
+                    [disabled]="isPersonFormBtnDisabled()"
+                    (click)="submitPersonForm()"
+                    type="button">
+                {{ 'SaveButton' | translate }}
+            </button>
+        </div>
 
-</form>
+    </form>
+}
 
 <div class="divider"></div>
-<form *ngIf="userForm" [formGroup]="userForm">
-    <div>
-        <mat-form-field appearance="fill">
-            <mat-label>{{ 'PersonPage.User.Form.UserName' | translate }}</mat-label>
-            <input matInput
-                   type="text"
-                   formControlName="userName">
-        </mat-form-field>
-    </div>
+@if (userForm) {
+    <form [formGroup]="userForm">
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'PersonPage.User.Form.UserName' | translate }}</mat-label>
+                <input matInput
+                       type="text"
+                       formControlName="userName">
+            </mat-form-field>
+        </div>
 
-    <div>
-        <mat-form-field appearance="fill">
-            <mat-label>{{ 'PersonPage.User.Form.Password' | translate }}</mat-label>
-            <input matInput
-                   type="password"
-                   autocomplete="new-password"
-                   [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
-                   formControlName="password">
-            <mat-hint>{{ 'PersonPage.User.Form.PasswordHint' | translate }}</mat-hint>
-        </mat-form-field>
-    </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'PersonPage.User.Form.Password' | translate }}</mat-label>
+                <input matInput
+                       type="password"
+                       autocomplete="new-password"
+                       [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
+                       formControlName="password">
+                <mat-hint>{{ 'PersonPage.User.Form.PasswordHint' | translate }}</mat-hint>
+            </mat-form-field>
+        </div>
 
-    <div class="button-row">
-        <button mat-flat-button
-                color="accent"
-                [disabled]="isUserFormBtnDisabled()"
-                (click)="submitUserForm()"
-                type="button">
-            {{ 'SaveButton' | translate}}
-        </button>
-    </div>
-</form>
-
+        <div class="button-row">
+            <button mat-flat-button
+                    color="accent"
+                    [disabled]="isUserFormBtnDisabled()"
+                    (click)="submitUserForm()"
+                    type="button">
+                {{ 'SaveButton' | translate }}
+            </button>
+        </div>
+    </form>
+}
 <div class="divider"></div>
 
 <app-user-settings-editor [userId]="originalUser.id" [settings]="originalUserSettings"></app-user-settings-editor>
@@ -118,6 +121,6 @@
             type="button"
             [disabled]="isBackBtnDisabled()"
             (click)="cancelEditing()">
-        {{ 'BackButton' | translate}}
+        {{ 'BackButton' | translate }}
     </button>
 </div>

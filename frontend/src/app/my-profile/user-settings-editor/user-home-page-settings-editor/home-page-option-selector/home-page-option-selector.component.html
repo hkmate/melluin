@@ -4,14 +4,16 @@
     </mat-card-header>
     <mat-card-content>
         <mat-radio-group [ngModel]="selected" (ngModelChange)="changed($event)">
-            <div *ngFor="let option of options">
-                <mat-radio-button [value]="option">
-                    {{ 'HomePageOption.' + option | translate }}
-                </mat-radio-button>
-                <div class="description">
-                    {{ 'PersonPage.HomePageSettings.Description.' + option | translate }}
+            @for (option of options; track option) {
+                <div>
+                    <mat-radio-button [value]="option">
+                        {{ 'HomePageOption.' + option | translate }}
+                    </mat-radio-button>
+                    <div class="description">
+                        {{ 'PersonPage.HomePageSettings.Description.' + option | translate }}
+                    </div>
                 </div>
-            </div>
+            }
         </mat-radio-group>
     </mat-card-content>
 </mat-card>

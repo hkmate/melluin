@@ -1,17 +1,19 @@
 <h1>
-    <ng-container *ngIf="!visit">{{ 'HospitalVisit.Form.Add' | translate }}</ng-container>
-    <ng-container *ngIf="!!visit">{{ 'HospitalVisit.Form.Edit' | translate }}</ng-container>
+    @if (visit) {
+        {{ 'HospitalVisit.Form.Edit' | translate }}
+    } @else {
+        {{ 'HospitalVisit.Form.Add' | translate }}
+    }
 </h1>
 
 <form [formGroup]="form">
-
     <div>
         <mat-form-field appearance="fill">
             <mat-label>{{ 'HospitalVisit.Form.Department' | translate }}</mat-label>
             <mat-select formControlName="departmentId">
-                <mat-option *ngFor="let option of departmentOptions" [value]="option.id">
-                    {{ option.name }}
-                </mat-option>
+                @for (option of departmentOptions;track option.id) {
+                    <mat-option [value]="option.id"> {{ option.name }}</mat-option>
+                }
             </mat-select>
         </mat-form-field>
     </div>
@@ -65,34 +67,35 @@
         <mat-form-field appearance="fill">
             <mat-label>{{ 'HospitalVisit.Form.Status' | translate }}</mat-label>
             <mat-select formControlName="status">
-                <mat-option *ngFor="let option of statusOptions" [value]="option">
-                    {{ 'HospitalVisitStatus.' + option | translate }}
-                </mat-option>
+                @for (option of statusOptions; track option) {
+                    <mat-option [value]="option"> {{ 'HospitalVisitStatus.' + option | translate }}</mat-option>
+                }
             </mat-select>
         </mat-form-field>
     </div>
 
     <div class="button-row">
 
-        <mat-checkbox *ngIf="!visitToEdit"
-                      [ngModel]="createNewAfterSave"
-                      (ngModelChange)="setCreateOther($event)"
-                      [ngModelOptions]="{standalone: true}">
-            {{ 'HospitalVisit.Form.CreateOther' | translate}}
-        </mat-checkbox>
+        @if (!visitToEdit) {
+            <mat-checkbox [ngModel]="createNewAfterSave"
+                          (ngModelChange)="setCreateOther($event)"
+                          [ngModelOptions]="{standalone: true}">
+                {{ 'HospitalVisit.Form.CreateOther' | translate }}
+            </mat-checkbox>
+        }
 
         <button mat-flat-button
                 color="accent"
                 type="button"
                 [disabled]="form.invalid"
                 (click)="onSubmit()">
-            {{ 'SaveButton' | translate}}
+            {{ 'SaveButton' | translate }}
         </button>
         <button mat-stroked-button
                 color="primary"
                 type="button"
                 (click)="cancelEditing()">
-            {{ 'CancelButton' | translate}}
+            {{ 'CancelButton' | translate }}
         </button>
     </div>
 

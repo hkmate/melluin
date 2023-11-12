@@ -4,7 +4,9 @@
            [ngModel]="inputText"
            (ngModelChange)="handleInputChange($event)"
            [ngModelOptions]="{standalone: true}">
-    <button *ngIf="inputText && needClearButton" matSuffix mat-icon-button (click)="clear()">
-        <mat-icon>close</mat-icon>
-    </button>
+    @if (inputText && needClearButton) {
+        <button matSuffix mat-icon-button (click)="clear()">
+            <mat-icon>close</mat-icon>
+        </button>
+    }
 </mat-form-field>

@@ -29,27 +29,27 @@
         </div>
 
         <div class="events-list">
-            <ng-container *ngIf="viewType === ViewType.LIST">
+            @if (viewType === ViewType.LIST) {
                 <div *ngFor="let event of eventsList" class="event-card">
                     <app-hospital-event-card [visit]="event" [needFillButton]="true"></app-hospital-event-card>
                 </div>
-            </ng-container>
-            <ng-container *ngIf="viewType === ViewType.TABLE">
+            } @else if (viewType === ViewType.TABLE) {
                 <app-hospital-events-list [eventsList]="eventsList"
                                           [markRowByDate]="preferences.needHighlight"></app-hospital-events-list>
-            </ng-container>
+            }
 
-            <ng-container *ngIf="!eventsList?.length">
+            @if (!eventsList.length) {
                 {{ 'EventsList.NoEventsFound' | translate }}
-            </ng-container>
+            }
         </div>
 
-        <mat-paginator *ngIf="eventsList?.length"
-                       [length]="countOfAll"
-                       [pageIndex]="page - 1"
-                       [pageSize]="size"
-                       [pageSizeOptions]="sizeOptions"
-                       (page)="paginateHappened($event)">
-        </mat-paginator>
+        @if (eventsList.length) {
+            <mat-paginator [length]="countOfAll"
+                           [pageIndex]="page - 1"
+                           [pageSize]="size"
+                           [pageSizeOptions]="sizeOptions"
+                           (page)="paginateHappened($event)">
+            </mat-paginator>
+        }
     </div>
 </section>

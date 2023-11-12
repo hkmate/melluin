@@ -1,10 +1,10 @@
-<app-filler-child-card *ngIf="!edit"
-                       [child]="child"
-                       (editWanted)="changeToEdit()"
-                       (removeWanted)="removeChild()">
-</app-filler-child-card>
-
-<app-filler-child-editor *ngIf="edit"
-                         [visitedChild]="child"
-                         (editDone)="endEdit()">
-</app-filler-child-editor>
+@if (edit) {
+    <app-filler-child-editor [visitedChild]="child"
+                             (editDone)="endEdit()">
+    </app-filler-child-editor>
+} @else {
+    <app-filler-child-card [child]="child"
+                           (editWanted)="changeToEdit()"
+                           (removeWanted)="removeChild()">
+    </app-filler-child-card>
+}

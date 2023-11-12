@@ -1,13 +1,13 @@
-<ng-container *ngIf="!isEmpty(); else noActivityInList">
-    <div class="activities-list">
-        <div *ngFor="let activity of activities" class="activity-card">
-            <app-visit-activity-card [activity]="activity" [childrenById]="childrenById"></app-visit-activity-card>
-        </div>
-    </div>
-</ng-container>
-
-<ng-template #noActivityInList>
+@if (isEmpty()) {
     <div class="empty-list">
         {{ 'HospitalVisit.Activities.NoActivityYet' | translate }}
     </div>
-</ng-template>
+} @else {
+    <div class="activities-list">
+        @for (activity of activities; track activity.id) {
+            <div class="activity-card">
+                <app-visit-activity-card [activity]="activity" [childrenById]="childrenById"></app-visit-activity-card>
+            </div>
+        }
+    </div>
+}

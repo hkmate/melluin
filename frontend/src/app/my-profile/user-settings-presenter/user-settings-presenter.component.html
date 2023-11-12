@@ -6,10 +6,12 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Date' | translate }}</mat-card-subtitle>
-                        <mat-card-title
-                                *ngIf="!settings.eventList?.dateFilter">{{ 'NoData' | translate }}</mat-card-title>
-                        <mat-card-title *ngIf="settings.eventList?.dateFilter">
-                            {{ 'EventsDateFilter.' + settings.eventList?.dateFilter | translate }}
+                        <mat-card-title>
+                            @if (settings.eventList?.dateFilter) {
+                                {{ 'EventsDateFilter.' + settings.eventList?.dateFilter | translate }}
+                            } @else {
+                                {{ 'NoData' | translate }}
+                            }
                         </mat-card-title>
                     </mat-card-header>
                 </mat-card>
@@ -17,11 +19,12 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Participants' | translate }}</mat-card-subtitle>
-                        <mat-card-title *ngIf="!participants?.length">{{ 'NoData' | translate }}</mat-card-title>
-                        <mat-card-title *ngIf="participants?.length">
-                            <ng-container *ngFor="let person of participants">
+                        <mat-card-title>
+                            @for (person of participants; track person.id) {
                                 <mat-chip>{{ person | personName }}</mat-chip>
-                            </ng-container>
+                            } @empty {
+                                {{ 'NoData' | translate }}
+                            }
                         </mat-card-title>
                     </mat-card-header>
                 </mat-card>
@@ -29,12 +32,12 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Statuses' | translate }}</mat-card-subtitle>
-                        <mat-card-title
-                                *ngIf="!settings.eventList?.statuses?.length">{{ 'NoData' | translate }}</mat-card-title>
-                        <mat-card-title *ngIf="settings.eventList?.statuses?.length">
-                            <ng-container *ngFor="let status of settings.eventList?.statuses">
+                        <mat-card-title>
+                            @for (status of settings.eventList?.statuses; track status) {
                                 <mat-chip>{{ 'HospitalVisitStatus.' + status | translate }}</mat-chip>
-                            </ng-container>
+                            } @empty {
+                                {{ 'NoData' | translate }}
+                            }
                         </mat-card-title>
                     </mat-card-header>
                 </mat-card>
@@ -42,11 +45,12 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Departments' | translate }}</mat-card-subtitle>
-                        <mat-card-title *ngIf="!departments?.length">{{ 'NoData' | translate }}</mat-card-title>
-                        <mat-card-title *ngIf="departments?.length">
-                            <ng-container *ngFor="let department of departments">
+                        <mat-card-title>
+                            @for (department of departments; track department.id) {
                                 <mat-chip>{{ department.name }}</mat-chip>
-                            </ng-container>
+                            } @empty {
+                                {{ 'NoData' | translate }}
+                            }
                         </mat-card-title>
                     </mat-card-header>
                 </mat-card>
@@ -56,11 +60,12 @@
                         <mat-card-subtitle>
                             {{ 'PersonPage.EventListSettings.NeedHighlight' | translate }}
                         </mat-card-subtitle>
-                        <mat-card-title *ngIf="!settings.eventList?.needHighlight">
-                            {{ 'NoData' | translate }}
-                        </mat-card-title>
-                        <mat-card-title *ngIf="settings.eventList?.needHighlight">
-                            {{ 'YesNo.' + settings.eventList?.needHighlight | translate }}
+                        <mat-card-title>
+                            @if (isNil(settings.eventList?.needHighlight)) {
+                                {{ 'NoData' | translate }}
+                            } @else {
+                                {{ 'YesNo.' + settings.eventList?.needHighlight | translate }}
+                            }
                         </mat-card-title>
                     </mat-card-header>
                 </mat-card>
@@ -72,28 +77,37 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-card-subtitle>{{ 'PersonPage.HomePageSettings.InMobile' | translate }}</mat-card-subtitle>
-                        <mat-card-title *ngIf="!settings.homePage?.inMobile">{{ 'NoData' | translate }}</mat-card-title>
-                        <mat-card-title *ngIf="settings.homePage?.inMobile">
-                            {{ 'HomePageOption.' + settings.homePage?.inMobile | translate }}
+                        <mat-card-title>
+                            @if (settings.homePage?.inMobile) {
+                                {{ 'HomePageOption.' + settings.homePage?.inMobile | translate }}
+                            } @else {
+                                {{ 'NoData' | translate }}
+                            }
                         </mat-card-title>
                     </mat-card-header>
-                    <mat-card-content *ngIf="settings.homePage?.inMobile">
-                        {{ 'PersonPage.HomePageSettings.Description.' + settings.homePage?.inMobile | translate }}
-                    </mat-card-content>
+                    @if (settings.homePage?.inMobile) {
+                        <mat-card-content>
+                            {{ 'PersonPage.HomePageSettings.Description.' + settings.homePage?.inMobile | translate }}
+                        </mat-card-content>
+                    }
                 </mat-card>
 
                 <mat-card>
                     <mat-card-header>
                         <mat-card-subtitle>{{ 'PersonPage.HomePageSettings.InDesktop' | translate }}</mat-card-subtitle>
-                        <mat-card-title
-                                *ngIf="!settings.homePage?.inDesktop">{{ 'NoData' | translate }}</mat-card-title>
-                        <mat-card-title *ngIf="settings.homePage?.inDesktop">
-                            {{ 'HomePageOption.' + settings.homePage?.inDesktop | translate }}
+                        <mat-card-title>
+                            @if (settings.homePage?.inDesktop) {
+                                {{ 'HomePageOption.' + settings.homePage?.inDesktop | translate }}
+                            } @else {
+                                {{ 'NoData' | translate }}
+                            }
                         </mat-card-title>
                     </mat-card-header>
-                    <mat-card-content *ngIf="settings.homePage?.inDesktop">
-                        {{ 'PersonPage.HomePageSettings.Description.' + settings.homePage?.inDesktop | translate }}
-                    </mat-card-content>
+                    @if (settings.homePage?.inDesktop) {
+                        <mat-card-content>
+                            {{ 'PersonPage.HomePageSettings.Description.' + settings.homePage?.inDesktop | translate }}
+                        </mat-card-content>
+                    }
                 </mat-card>
             </div>
         </mat-tab>

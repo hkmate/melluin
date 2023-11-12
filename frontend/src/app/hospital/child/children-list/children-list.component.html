@@ -1,13 +1,13 @@
-<ng-container *ngIf="!isEmpty(); else noChildInList">
+@if (!isEmpty()) {
     <div class="activities-list">
-        <div *ngFor="let child of children" class="child-card">
-            <app-child-card [child]="child" [date]="visitDate"></app-child-card>
-        </div>
+        @for (child of children; track child.id) {
+            <div class="child-card">
+                <app-child-card [child]="child" [date]="visitDate"></app-child-card>
+            </div>
+        }
     </div>
-</ng-container>
-
-<ng-template #noChildInList>
+} @else {
     <div class="empty-list">
         {{ 'ChildrenList.NoChildYet' | translate }}
     </div>
-</ng-template>
+}

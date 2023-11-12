@@ -2,14 +2,14 @@
     <mat-card-content>
         <form [formGroup]="form">
 
-            <ng-container *ngIf="children$ | async as children">
+            @if (children$ | async; as children) {
                 <app-child-select [options]="children"
                                   formControlName="children"
                                   [label]="'HospitalVisit.Activities.Children' | translate "
                                   [date]="visitDate"
                                   (childrenSelected)="lockChildren($event)"
                                   (childrenUnselected)="unlockChildren($event)"></app-child-select>
-            </ng-container>
+            }
 
             <app-activity-select [options]="activityTypeOptions"
                                  formControlName="activities"
