@@ -72,10 +72,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "melluin_fe:build:production"
+                          "buildTarget": "melluin_fe:build:production"
                         },
                         "development": {
-                            "browserTarget": "melluin_fe:build:development"
+                          "buildTarget": "melluin_fe:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -83,7 +83,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "melluin_fe:build"
+                      "buildTarget": "melluin_fe:build"
                     }
                 },
                 "lint": {
