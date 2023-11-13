@@ -1,5 +1,9 @@
 #!/bin/bash
 
+##
+#    This file should be executed from script in root dir.
+##
+
 echo "Setup database and tools..."
 docker-compose -f dev-env/docker-compose.yml up -d
 

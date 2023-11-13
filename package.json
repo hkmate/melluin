@@ -2,10 +2,10 @@
     "name": "melluin",
     "version": "1.0.1",
     "scripts": {
-        "setup": "./dev-env/auto-setup.sh",
-        "clear": "rm -rf backend/node_modules; rm -rf backend/dist; rm -rf frontend/node_modules",
-        "test": "npm run --prefix backend test; melluinbtest=$?; npm run --prefix frontend test; exit $melluinbtest && exit $?",
-        "lint": "npm run --prefix backend lint; melluinbtest=$?; npm run --prefix frontend lint; exit $melluinbtest && exit $?"
+        "setup": "dev-env/.auto-setup.sh",
+        "clear": "dev-env/.clear-all.sh",
+        "test": "dev-env/.test-all.sh",
+        "lint": "dev-env/.lint-all.sh"
     },
     "private": true
 }

@@ -1,3 +1,7 @@
+/*
+    This file should be executed from script in root dir.
+*/
+
 const fs = require('fs');
 const CONFIG_FILE = 'backend/resources/server-config.json';
 

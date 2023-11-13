@@ -21,7 +21,7 @@ ENV ENV_SECRET_KEY=${SECRET_KEY}
 
 
 RUN echo "Setup environment variables to config"
-RUN node dev-env/set-backend-config.js
+RUN node dev-env/.set-backend-config.js
 
 RUN echo "Install node modules"
 RUN npm install --prefix backend
