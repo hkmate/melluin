@@ -17,3 +17,8 @@ export const selectUserHomePageSettings = pipe(
     selectUserSettings,
     map(val => val.homePage)
 );
+
+export const selectUserWidgetsSettings = pipe(
+    selectUserSettings,
+    map(val => val.dashboard?.widgets)
+);

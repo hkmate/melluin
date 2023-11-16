@@ -1,4 +1,4 @@
-import {IsBoolean, IsEnum, IsOptional, IsUUID, ValidateNested} from 'class-validator';
+import {IsBoolean, IsEnum, IsOptional, IsPositive, IsUUID, ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 
@@ -53,6 +53,27 @@ export class HomePageUserSettings {
 
 }
 
+export class WidgetSetting {
+
+    @IsOptional()
+    @IsBoolean()
+    needed?: boolean;
+
+    @IsOptional()
+    @IsPositive()
+    index?: number;
+
+}
+
+export class DashboardUserSettings {
+
+    @IsOptional()
+    @ValidateNested({each: true})
+    @Type(() => WidgetSetting)
+    widgets?: Array<WidgetSetting>;
+
+}
+
 export class UserSettings {
 
     @IsOptional()
@@ -64,5 +85,10 @@ export class UserSettings {
     @ValidateNested()
     @Type(() => HomePageUserSettings)
     homePage?: HomePageUserSettings;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => DashboardUserSettings)
+    dashboard?: DashboardUserSettings;
 
 }

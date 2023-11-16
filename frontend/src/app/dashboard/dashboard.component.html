@@ -1,6 +1,18 @@
 <section class="dashboard">
     <div class="page-content">
-        <mat-icon class="material-icons-outlined">dashboard</mat-icon>
-        <div class="welcome">{{ "Dashboard.WelcomeText" | translate }}</div>
+        @if (widgets) {
+            @for (widget of widgets;track $index) {
+                <ng-container *ngComponentOutlet="widget.component; inputs: widget.inputs;"/>
+            } @empty {
+                <ng-container [ngTemplateOutlet]="defaultWelcome"></ng-container>
+            }
+        } @else {
+            <ng-container [ngTemplateOutlet]="defaultWelcome"></ng-container>
+        }
     </div>
 </section>
+
+<ng-template #defaultWelcome>
+    <mat-icon class="material-icons-outlined">dashboard</mat-icon>
+    <div class="welcome">{{ "Dashboard.WelcomeText" | translate }}</div>
+</ng-template>
