@@ -29,16 +29,14 @@ export class ActualMonthDateIntervalGenerator implements DateIntervalGenerator {
     }
 
     private getFirstDayOfMonth(): Date {
-        const date = DateUtil.now();
+        const date = DateUtil.truncateToDay(DateUtil.now());
         date.setDate(1);
-        date.setHours(0, 0, 0, 0);
         return date;
     }
 
     private getLastDayOfMonth(): Date {
-        const date = DateUtil.now();
+        const date = DateUtil.truncateToDay(DateUtil.now());
         date.setMonth(date.getMonth() + 1, 1);
-        date.setHours(0, 0, 0, 0);
         return date;
     }
 
@@ -51,16 +49,16 @@ export class ActualWeekDateIntervalGenerator implements DateIntervalGenerator {
     }
 
     protected getFirstDayOfWeek(): Date {
-        const date = DateUtil.now();
-        date.setDate(date.getDate() - date.getDay() + 1); // Note: +1 needed because Js use sunday as first of the week
-        date.setHours(0, 0, 0, 0);
+        const date = DateUtil.truncateToDay(DateUtil.now());
+        date.setDate(date.getDate() - date.getDay() + 1
+            -(date.getDay() === 0 ? WEEKDAYS : 0) // On Sunday we need to set it to last week
+        );
         return date;
     }
 
     protected getLastDayOfWeek(): Date {
-        const date = DateUtil.now();
-        date.setDate(date.getDate() + WEEKDAYS - date.getDay());
-        date.setHours(0, 0, 0, 0);
+        const date = this.getFirstDayOfWeek();
+        date.setDate(date.getDate() + WEEKDAYS - 1);
         return date;
     }
 
