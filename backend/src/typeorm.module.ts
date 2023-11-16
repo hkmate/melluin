@@ -21,6 +21,7 @@ export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
         username: configService.get<string>('database.username'),
         password: configService.get<string>('database.password'),
         database: configService.get<string>('database.name'),
+        ssl: configService.get<boolean>('database.ssl'),
         // DO NOT SET IT TRUE. It not just check if the defined entities compatible with the db,
         // but create the schema every launch of the application
         synchronize: false,

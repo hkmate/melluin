@@ -14,6 +14,9 @@ config.database.host = process.env.ENV_DB_HOST;
 console.log(`Set db port: ${process.env.ENV_DB_PORT}`);
 config.database.port = +process.env.ENV_DB_PORT;
 
+console.log(`Set db ssl param: ${process.env.ENV_DB_SSL}`);
+config.database.ssl = (process.env.ENV_DB_SSL) ? ('true' === process.env.ENV_DB_SSL.toLowerCase()) : false;
+
 console.log(`Set db name: ${process.env.ENV_DB_NAME}`);
 config.database.name = process.env.ENV_DB_NAME;
 
