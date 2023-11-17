@@ -24,6 +24,7 @@ import {UserEventListSettingsEditorComponent} from '@fe/app/my-profile/user-sett
 import {MatRadioModule} from '@angular/material/radio';
 import { HomePageOptionSelectorComponent } from './user-settings-editor/user-home-page-settings-editor/home-page-option-selector/home-page-option-selector.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import {UserDepartmentBoxWidgetSettingsComponent} from '@fe/app/my-profile/user-settings-editor/user-department-box-widget-settings/user-department-box-widget-settings.component';
 
 @NgModule({
     imports: [
@@ -57,6 +58,7 @@ import {MatTabsModule} from '@angular/material/tabs';
         UserSettingsEditorComponent,
         UserEventListSettingsEditorComponent,
         UserHomePageSettingsEditorComponent,
+        UserDepartmentBoxWidgetSettingsComponent,
         HomePageOptionSelectorComponent
     ]
 })

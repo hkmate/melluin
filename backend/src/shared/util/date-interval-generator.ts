@@ -1,5 +1,14 @@
-import {EventsDateFilter} from '@shared/user/user-settings';
 import {DateInterval, DateUtil} from '@shared/util/date-util';
+
+export enum DateIntervalSpecifier {
+    WEEK = 'WEEK',  // Actual week
+    TWO_WEEK = 'TWO_WEEK', // Actual + next week
+    THREE_WEEK = 'THREE_WEEK', // Previous + actual + next week
+    MONTH = 'MONTH', // Actual month
+    LAST_WEEK = 'LAST_WEEK', // Last week
+    LAST_TWO_WEEK = 'LAST_TWO_WEEK', // Last two weeks
+    LAST_MONTH = 'LAST_MONTH', // Last month
+}
 
 const WEEKDAYS = 7;
 
@@ -7,18 +16,25 @@ export interface DateIntervalGenerator {
     generate(): DateInterval;
 }
 
-export function dateIntervalGeneratorFactory(dateFilter: EventsDateFilter): DateIntervalGenerator {
-    switch (dateFilter) {
-        case EventsDateFilter.MONTH:
+// eslint-disable-next-line max-lines-per-function
+export function dateIntervalGeneratorFactory(intervalSpecifier: DateIntervalSpecifier): DateIntervalGenerator {
+    switch (intervalSpecifier) {
+        case DateIntervalSpecifier.MONTH:
             return new ActualMonthDateIntervalGenerator();
-        case EventsDateFilter.THREE_WEEK:
+        case DateIntervalSpecifier.THREE_WEEK:
             return new ThreeWeeksDateIntervalGenerator();
-        case EventsDateFilter.TWO_WEEK:
+        case DateIntervalSpecifier.TWO_WEEK:
             return new TwoWeeksDateIntervalGenerator();
-        case EventsDateFilter.WEEK:
+        case DateIntervalSpecifier.WEEK:
             return new ActualWeekDateIntervalGenerator();
+        case DateIntervalSpecifier.LAST_WEEK:
+            return new LastWeeksDateIntervalGenerator();
+        case DateIntervalSpecifier.LAST_TWO_WEEK:
+            return new LastTwoWeeksDateIntervalGenerator();
+        case DateIntervalSpecifier.LAST_MONTH:
+            return new LastMonthDateIntervalGenerator();
         default:
-            throw new Error(`Unknown date filter type: ${dateFilter}`);
+            throw new Error(`Unknown date interval type: ${intervalSpecifier}`);
     }
 }
 
@@ -51,7 +67,7 @@ export class ActualWeekDateIntervalGenerator implements DateIntervalGenerator {
     protected getFirstDayOfWeek(): Date {
         const date = DateUtil.truncateToDay(DateUtil.now());
         date.setDate(date.getDate() - date.getDay() + 1
-            -(date.getDay() === 0 ? WEEKDAYS : 0) // On Sunday we need to set it to last week
+            - (date.getDay() === 0 ? WEEKDAYS : 0) // On Sunday we need to set it to last week
         );
         return date;
     }
@@ -87,6 +103,52 @@ export class ThreeWeeksDateIntervalGenerator extends TwoWeeksDateIntervalGenerat
     protected getFirstDayOfPreviousWeek(): Date {
         const date = this.getFirstDayOfWeek();
         date.setDate(date.getDate() - WEEKDAYS);
+        return date;
+    }
+
+}
+
+export class LastWeeksDateIntervalGenerator implements DateIntervalGenerator {
+
+    public generate(): DateInterval {
+        return {dateFrom: this.getTheDayBeforeAWeek(), dateTo: this.getToday()};
+    }
+
+    protected getTheDayBeforeAWeek(): Date {
+        const date = this.getToday();
+        date.setDate(date.getDate() - WEEKDAYS);
+        return date;
+    }
+
+    protected getToday(): Date {
+        return DateUtil.truncateToDay(DateUtil.now());
+    }
+
+}
+
+export class LastTwoWeeksDateIntervalGenerator extends LastWeeksDateIntervalGenerator {
+
+    public override generate(): DateInterval {
+        return {dateFrom: this.getTheDayBeforeTwoWeeks(), dateTo: this.getToday()};
+    }
+
+    protected getTheDayBeforeTwoWeeks(): Date {
+        const date = this.getToday();
+        date.setDate(date.getDate() - WEEKDAYS - WEEKDAYS);
+        return date;
+    }
+
+}
+
+export class LastMonthDateIntervalGenerator extends LastWeeksDateIntervalGenerator {
+
+    public override generate(): DateInterval {
+        return {dateFrom: this.getTheDayBeforeAMonth(), dateTo: this.getToday()};
+    }
+
+    protected getTheDayBeforeAMonth(): Date {
+        const date = this.getToday();
+        date.setMonth(date.getMonth() - 1);
         return date;
     }
 

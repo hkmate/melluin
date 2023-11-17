@@ -7,6 +7,8 @@ import {DepartmentPersistenceModule} from '@be/department/department.persistence
 import {DepartmentBoxStatusCrudService} from '@be/department-box/department-box-status.crud.service';
 import {BoxStatusEntityToDtoConverter} from '@be/department-box/converer/box-status-entity-to-dto.converter';
 import {BoxStatusReportToEntityConverter} from '@be/department-box/converer/box-status-report-to-entity.converter';
+import {DepartmentBoxStatusController} from '@be/department-box/department-box-status.controller';
+import {BoxStatusEntityToDtoWithDepartmentBriefConverter} from '@be/department-box/converer/box-status-entity-to-dto-with-department-brief.converter';
 
 @Module({
     imports: [
@@ -22,7 +24,9 @@ import {BoxStatusReportToEntityConverter} from '@be/department-box/converer/box-
         DepartmentBoxStatusCrudService,
         BoxStatusEntityToDtoConverter,
         BoxStatusReportToEntityConverter,
+        BoxStatusEntityToDtoWithDepartmentBriefConverter
     ],
+    controllers: [DepartmentBoxStatusController],
     exports: [DepartmentBoxStatusCrudService]
 })
 export class DepartmentBoxModule {

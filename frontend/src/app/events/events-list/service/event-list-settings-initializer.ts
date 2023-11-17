@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {dateIntervalGeneratorFactory} from '@shared/util/date-interval-generator';
-import {EventsDateFilter} from '@shared/user/user-settings';
+import {dateIntervalGeneratorFactory, DateIntervalSpecifier} from '@shared/util/date-interval-generator';
 import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';
 import {EventsFilter} from '@fe/app/events/events-list/service/events-filter';
 import {PageInfo} from '@shared/api-util/pageable';
@@ -25,7 +24,7 @@ export class DefaultEventListSettingsInitializer implements EventListSettingsIni
     }
 
     public getFilters(): EventsFilter {
-        const dateInterval = dateIntervalGeneratorFactory(EventsDateFilter.MONTH).generate();
+        const dateInterval = dateIntervalGeneratorFactory(DateIntervalSpecifier.MONTH).generate();
         const result = new EventsFilter();
         result.departmentIds = [];
         result.participantIds = [];

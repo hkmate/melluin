@@ -83,11 +83,14 @@
         "BOARD_GAME": "Board game",
         "OTHER": "Other"
     },
-    "EventsDateFilter": {
+    "DateIntervalSpecifier": {
         "WEEK": "Actual week",
         "TWO_WEEK": "Actual week + next",
         "THREE_WEEK": "Three weeks, actual in the middle",
-        "MONTH": "Actual month"
+        "MONTH": "Actual month",
+        "LAST_WEEK": "The last week",
+        "LAST_TWO_WEEK": "The last two weeks",
+        "LAST_MONTH": "The last month"
     },
     "HomePageOption": {
         "DASHBOARD": "Dashboard",
@@ -102,7 +105,8 @@
         "Notifications": "Notifications",
         "Departments": "Departments",
         "System": "System",
-        "Logout": "Log out"
+        "Logout": "Log out",
+        "Dashboard": "Dashboard"
     },
     "Paginator": {
         "FirstPageLabel": "First",
@@ -207,6 +211,14 @@
                 "ACTUAL_HOSPITAL_VISIT_DETAILS": "If there is no visit on that day, events list page will be opened.",
                 "ACTUAL_HOSPITAL_VISIT_FILLER": "If the visit is filled already its details page will be opened. If there is no visit on that day, events list page will opened."
             }
+        },
+        "DepartmentBoxesWidgetSettings": {
+            "Title": "Department box info widget",
+            "Needed": "Needed to show",
+            "Index": "Index",
+            "Limit": "Max items to show",
+            "Date": "Date interval",
+            "Reason": "Reasons"
         }
     },
     "DepartmentListPage": {
@@ -323,7 +335,11 @@
         "IsParentThere": "Parent with her/him"
     },
     "Dashboard": {
-        "WelcomeText": "Welcome to the Nevetnikék App. Choose a page from the menu."
+        "WelcomeText": "Welcome to the Nevetnikék App. Choose a page from the menu or set up a widget in your settings",
+        "BoxInfoWidget": {
+            "Title": "News about department boxes",
+            "Empty": "No news"
+        }
     },
     "PageNotFound": {
         "PageNotFound404": "The page you were looking for doesn't exist.",

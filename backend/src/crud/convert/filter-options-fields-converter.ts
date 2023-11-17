@@ -60,8 +60,8 @@ export class FilterOptionsFieldsConverter implements Converter<FilterOptions, Pr
         await Promise.all(keysToConvert.map(async keyToConvert => {
             const operation = filterOptions[keyToConvert];
             const {key, value} = await this.converters.get(keyToConvert)(operation);
-            filterOptions[key] = value;
             delete filterOptions[keyToConvert];
+            filterOptions[key] = value;
         }));
         return filterOptions;
     }

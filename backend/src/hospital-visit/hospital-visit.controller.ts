@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put, Query} from '@nestjs/common';
 import {Pageable} from '@shared/api-util/pageable';
 import {User} from '@shared/user/user';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
@@ -11,7 +11,8 @@ import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrit
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {Permission} from '@shared/user/permission.enum';
 import {DepartmentBoxStatusCrudService} from '@be/department-box/department-box-status.crud.service';
-import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
+import {BoxStatusWithDepartmentBrief, DepartmentBoxStatus} from '@shared/department/box/department-box-status';
+import {BoxStatusInfoParam} from '@be/department-box/constants/box-status-info-param';
 
 
 @Controller('hospital-visits')
@@ -37,8 +38,10 @@ export class HospitalVisitController {
 
     @Get('/:id/box-status')
     @PermissionGuard(Permission.canReadDepBox)
-    public getBoxStatusesOfVisit(@Param('id', ParseUUIDPipe) hospitalVisitId: string): Promise<Array<DepartmentBoxStatus>> {
-        return this.boxStatusCrudService.findByVisit(hospitalVisitId);
+    public getBoxStatusesOfVisit(@Param('id', ParseUUIDPipe) hospitalVisitId: string,
+                                 @Query('withDepartmentBrief') withDepartmentBrief: boolean): Promise<Array<DepartmentBoxStatus> | Array<BoxStatusWithDepartmentBrief>> {
+        const infoParam = withDepartmentBrief ? BoxStatusInfoParam.WITH_DEPARTMENT_BRIEF : BoxStatusInfoParam.PURE_BOX_STATUS;
+        return this.boxStatusCrudService.findByVisit(hospitalVisitId, infoParam);
     }
 
     /**

@@ -10,3 +10,10 @@ export interface DepartmentBoxStatus {
     comment?: string;
 
 }
+
+export interface BoxStatusWithDepartmentBrief extends DepartmentBoxStatus {
+
+    departmentId: string;
+    departmentName: string;
+
+}

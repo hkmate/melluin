@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {EventsDateFilter, UserSettings} from '@shared/user/user-settings';
+import {EventsDateFilterValues, UserSettings} from '@shared/user/user-settings';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {Department} from '@shared/department/department';
@@ -12,6 +12,7 @@ import {UserService} from '@fe/app/people/user.service';
 import {Pageable} from '@shared/api-util/pageable';
 import {FilterOperationBuilder} from '@shared/api-util/filter-options';
 import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
+import {DateIntervalSpecifier} from '@shared/util/date-interval-generator';
 
 @Component({
     selector: 'app-user-event-list-settings-editor',
@@ -24,7 +25,7 @@ export class UserEventListSettingsEditorComponent extends CustomUserSettingsEdit
     protected statusOptions: Array<HospitalVisitStatus> = Object.values(HospitalVisitStatus);
     protected departmentOptions: Array<Department>;
     protected personOptions: Array<Person>;
-    protected dateOptions: Array<EventsDateFilter> = Object.values(EventsDateFilter);
+    protected dateOptions: Array<DateIntervalSpecifier> = EventsDateFilterValues;
 
     constructor(store: Store,
                 msg: MessageService,

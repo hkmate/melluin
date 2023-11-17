@@ -1,7 +1,7 @@
 {
     "Titles": {
         "Base": "Nevetnikék",
-        "Dashboard": "Kezdőlap",
+        "Dashboard": "Információk",
         "Login": "Bejelentkezés",
         "PeopleList": "Személyek",
         "DepartmentList": "Osztályok",
@@ -83,14 +83,17 @@
         "BOARD_GAME": "Társasjáték",
         "OTHER": "Egyéb"
     },
-    "EventsDateFilter": {
+    "DateIntervalSpecifier": {
         "WEEK": "Aktuális hét",
         "TWO_WEEK": "Aktuális hét + következő",
         "THREE_WEEK": "Három hét, középen az aktuális",
-        "MONTH": "Aktuális hónap"
+        "MONTH": "Aktuális hónap",
+        "LAST_WEEK": "Az elmúlt egy hét",
+        "LAST_TWO_WEEK": "Az elmúlt két hét",
+        "LAST_MONTH": "Az elmúlt hónap"
     },
     "HomePageOption": {
-        "DASHBOARD": "Kezdőlap",
+        "DASHBOARD": "Infók oldal",
         "EVENT_LIST": "Események lista ",
         "ACTUAL_HOSPITAL_VISIT_DETAILS": "Aznapi foglalkozás - részletek oldal",
         "ACTUAL_HOSPITAL_VISIT_FILLER": "Aznapi foglalkozás - kitöltő oldal"
@@ -102,7 +105,8 @@
         "Notifications": "Értesítések",
         "Departments": "Kórházi osztályok",
         "System": "Rendszer",
-        "Logout": "Kijelentkezés"
+        "Logout": "Kijelentkezés",
+        "Dashboard": "Infók"
     },
     "Paginator": {
         "FirstPageLabel": "Első oldal",
@@ -207,6 +211,14 @@
                 "ACTUAL_HOSPITAL_VISIT_DETAILS": "Ha nincs aznapra foglalkozás amin részt vennél akkor az események oldal nyílik meg.",
                 "ACTUAL_HOSPITAL_VISIT_FILLER": "Ha már ki lett költve a foglalkozás akkor a részletei oldal nyílik meg. Ha nincs aznap foglalkozás akkor pedig az események oldal."
             }
+        },
+        "DepartmentBoxesWidgetSettings": {
+            "Title": "Doboz info widget",
+            "Needed": "Megjelenítendő",
+            "Index": "Sorszám",
+            "Limit": "Max megjelenő doboz info",
+            "Date": "Idő intervallum",
+            "Reason": "Doboz info oka"
         }
     },
     "DepartmentListPage": {
@@ -323,7 +335,11 @@
         "IsParentThere": "Szülő vele van"
     },
     "Dashboard": {
-        "WelcomeText": "Üdvözlünk a Nevetnikék App-ban. Válassz egy oldalt menüből."
+        "WelcomeText": "Üdvözlünk a Nevetnikék App-ban. Válassz egy oldalt menüből vagy állíts be widgeteket a beállítások oldaladon",
+        "BoxInfoWidget": {
+            "Title": "Újdonságok a kórházi dobozainkról",
+            "Empty": "Nincs újdonság"
+        }
     },
     "PageNotFound": {
         "PageNotFound404": "Az oldal amit keres nem létezik",

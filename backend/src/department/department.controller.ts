@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, Query} from '@nestjs/common';
 import {Pageable} from '@shared/api-util/pageable';
 import {User} from '@shared/user/user';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
@@ -8,11 +8,12 @@ import {DepartmentCrudService} from '@be/department/department.crud.service';
 import {DepartmentCreation} from '@shared/department/department-creation';
 import {Department} from '@shared/department/department';
 import {DepartmentUpdateChangeSet} from '@shared/department/department-update-change-set';
-import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
+import {BoxStatusWithDepartmentBrief, DepartmentBoxStatus} from '@shared/department/box/department-box-status';
 import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
 import {DepartmentBoxStatusCrudService} from '@be/department-box/department-box-status.crud.service';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {Permission} from '@shared/user/permission.enum';
+import {BoxStatusInfoParam} from '@be/department-box/constants/box-status-info-param';
 
 
 @Controller('departments')
@@ -54,9 +55,10 @@ export class DepartmentController {
     @Get('/:id/box-status')
     @PermissionGuard(Permission.canReadDepBox)
     public findBoxStatuses(@Param('id', ParseUUIDPipe) departmentId: string,
-                           @PageReq() pageRequest: PageRequest,
-                           @CurrentUser() requester: User): Promise<Pageable<DepartmentBoxStatus>> {
-        return this.boxStatusCrudService.find(departmentId, pageRequest, requester);
+                           @Query('withDepartmentBrief') withDepartmentBrief: boolean,
+                           @PageReq() pageRequest: PageRequest): Promise<Pageable<DepartmentBoxStatus> | Pageable<BoxStatusWithDepartmentBrief>> {
+        const infoParam = withDepartmentBrief ? BoxStatusInfoParam.WITH_DEPARTMENT_BRIEF : BoxStatusInfoParam.PURE_BOX_STATUS;
+        return this.boxStatusCrudService.findByDepartment(departmentId, pageRequest, infoParam);
     }
 
     @Patch('/:id')

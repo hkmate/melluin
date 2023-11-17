@@ -1,20 +1,21 @@
-import {IsBoolean, IsEnum, IsOptional, IsPositive, IsUUID, ValidateNested} from 'class-validator';
+import {IsBoolean, IsEnum, IsIn, IsOptional, IsPositive, IsUUID, ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
+import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
+import {DateIntervalSpecifier} from '@shared/util/date-interval-generator';
 
-
-export enum EventsDateFilter {
-    WEEK = 'WEEK',
-    TWO_WEEK = 'TWO_WEEK',
-    THREE_WEEK = 'THREE_WEEK',
-    MONTH = 'MONTH'
-}
+export const EventsDateFilterValues = [
+    DateIntervalSpecifier.WEEK,
+    DateIntervalSpecifier.TWO_WEEK,
+    DateIntervalSpecifier.THREE_WEEK,
+    DateIntervalSpecifier.MONTH
+];
 
 export class EventListUserSettings {
 
     @IsOptional()
-    @IsEnum(EventsDateFilter)
-    dateFilter?: EventsDateFilter;
+    @IsIn(EventsDateFilterValues)
+    dateFilter?: DateIntervalSpecifier;
 
     @IsOptional()
     @IsUUID('all', {each: true})
@@ -53,24 +54,65 @@ export class HomePageUserSettings {
 
 }
 
+export enum WidgetType {
+    DEPARTMENT_BOX = 'DEPARTMENT_BOX',
+}
+
 export class WidgetSetting {
 
     @IsOptional()
     @IsBoolean()
-    needed?: boolean;
+    needed: boolean;
 
     @IsOptional()
     @IsPositive()
-    index?: number;
+    index: number;
+
+    @IsOptional()
+    @IsEnum(WidgetType)
+    type: WidgetType;
+
+}
+
+export const DepartmentBoxInfoSinceDateValues = [
+    DateIntervalSpecifier.LAST_WEEK,
+    DateIntervalSpecifier.LAST_TWO_WEEK,
+    DateIntervalSpecifier.LAST_MONTH
+];
+
+export class DepartmentBoxWidgetSettings extends WidgetSetting {
+
+    override readonly type = WidgetType.DEPARTMENT_BOX;
+
+    @IsOptional()
+    @IsIn(DepartmentBoxInfoSinceDateValues)
+    dateInterval?: DateIntervalSpecifier;
+
+    @IsOptional()
+    @IsEnum(BoxStatusChangeReason, {each: true})
+    reasons?: Array<BoxStatusChangeReason>;
+
+    @IsOptional()
+    @IsPositive()
+    limit?: number;
+
+}
+
+export class DashboardWidgetSettings {
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => DepartmentBoxWidgetSettings)
+    departmentBox?: DepartmentBoxWidgetSettings;
 
 }
 
 export class DashboardUserSettings {
 
     @IsOptional()
-    @ValidateNested({each: true})
-    @Type(() => WidgetSetting)
-    widgets?: Array<WidgetSetting>;
+    @ValidateNested()
+    @Type(() => DashboardWidgetSettings)
+    widgets?: DashboardWidgetSettings;
 
 }
 

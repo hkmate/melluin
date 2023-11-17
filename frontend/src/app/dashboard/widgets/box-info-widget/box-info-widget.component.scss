@@ -1,0 +1,52 @@
+@use '@angular/material' as mat;
+
+.box-info {
+
+    padding: .5rem;
+    border-radius: .5rem;
+    @include mat.elevation(2);
+
+    &:not(:last-of-type) {
+        margin-bottom: .5rem;
+    }
+
+    .reason {
+        font-size: larger;
+    }
+
+    .reason, .date-time, .department {
+        display: inline-block;
+        margin-right: 1rem;
+    }
+
+    .comment {
+        font-size: smaller;
+    }
+}
+
+.reason-MISSING {
+    background-color: #ff9393;
+}
+
+.reason-BROKEN {
+    background-color: #ff9393;
+}
+
+.reason-NEED_REFILL {
+    background-color: #faca8b;
+}
+
+.reason-NEED_CLEANING {
+    background-color: #faca8b;
+}
+
+.reason-CEASED {
+    background-color: #757c75;
+}
+
+.reason-CORRECTED {
+    background-color: #93ff9c;
+}
+
+.reason-COMMENT {
+}

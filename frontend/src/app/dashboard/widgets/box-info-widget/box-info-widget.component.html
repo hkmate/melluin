@@ -1,0 +1,31 @@
+<div class="widget department-box-widget">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'Dashboard.BoxInfoWidget.Title' | translate }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            @for (info of boxInfo;track info.id) {
+                <div [class]="'reason-' + info.reason + ' box-info'">
+                    <div class="reason">{{ 'BoxStatusChangeReason.' + info.reason | translate }}</div>
+
+                    <div class="department">
+                        <a class="link" [routerLink]="['departments', info.departmentId]">
+                            {{ info.departmentName }}
+                        </a>
+                    </div>
+
+                    <div class="date-time">{{ info.dateTime | date : ('DateTimeFormat' | translate) }}</div>
+
+                    @if (info.affectedObject) {
+                        <div class="affected-object">{{ info.affectedObject }}</div>
+                    }
+                    @if (info.comment) {
+                        <div class="comment">{{ info.comment }}</div>
+                    }
+                </div>
+            } @empty {
+                {{ 'Dashboard.BoxInfoWidget.Empty' | translate }}
+            }
+        </mat-card-content>
+    </mat-card>
+</div>

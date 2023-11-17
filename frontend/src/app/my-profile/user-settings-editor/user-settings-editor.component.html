@@ -10,5 +10,9 @@
             <app-user-home-page-settings-editor [userId]="userId" [settings]="settings">
             </app-user-home-page-settings-editor>
         </mat-tab>
+        <mat-tab [label]="'PersonPage.DepartmentBoxesWidgetSettings.Title' | translate">
+            <app-user-department-box-widget-settings [userId]="userId" [settings]="settings">
+            </app-user-department-box-widget-settings>
+        </mat-tab>
     </mat-tab-group>
 </div>

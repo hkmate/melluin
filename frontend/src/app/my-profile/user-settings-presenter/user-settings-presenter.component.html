@@ -8,7 +8,7 @@
                         <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Date' | translate }}</mat-card-subtitle>
                         <mat-card-title>
                             @if (settings.eventList?.dateFilter) {
-                                {{ 'EventsDateFilter.' + settings.eventList?.dateFilter | translate }}
+                                {{ 'DateIntervalSpecifier.' + settings.eventList?.dateFilter | translate }}
                             } @else {
                                 {{ 'NoData' | translate }}
                             }
@@ -20,7 +20,7 @@
                     <mat-card-header>
                         <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Participants' | translate }}</mat-card-subtitle>
                         <mat-card-title>
-                            @for (person of participants; track person.id) {
+                            @for (person of participants;track person.id) {
                                 <mat-chip>{{ person | personName }}</mat-chip>
                             } @empty {
                                 {{ 'NoData' | translate }}
@@ -33,7 +33,7 @@
                     <mat-card-header>
                         <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Statuses' | translate }}</mat-card-subtitle>
                         <mat-card-title>
-                            @for (status of settings.eventList?.statuses; track status) {
+                            @for (status of settings.eventList?.statuses;track status) {
                                 <mat-chip>{{ 'HospitalVisitStatus.' + status | translate }}</mat-chip>
                             } @empty {
                                 {{ 'NoData' | translate }}
@@ -46,7 +46,7 @@
                     <mat-card-header>
                         <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Departments' | translate }}</mat-card-subtitle>
                         <mat-card-title>
-                            @for (department of departments; track department.id) {
+                            @for (department of departments;track department.id) {
                                 <mat-chip>{{ department.name }}</mat-chip>
                             } @empty {
                                 {{ 'NoData' | translate }}
@@ -109,6 +109,58 @@
                         </mat-card-content>
                     }
                 </mat-card>
+            </div>
+        </mat-tab>
+
+        <mat-tab [label]="'PersonPage.DepartmentBoxesWidgetSettings.Title' | translate">
+            <div class="department-boxes-widget-settings">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-subtitle>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Needed' | translate }}</mat-card-subtitle>
+                        <mat-card-title>{{ settings.dashboard?.widgets?.departmentBox?.needed | optional }}</mat-card-title>
+                    </mat-card-header>
+                </mat-card>
+
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-subtitle>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Index' | translate }}</mat-card-subtitle>
+                        <mat-card-title>{{ settings.dashboard?.widgets?.departmentBox?.index | optional }}</mat-card-title>
+                    </mat-card-header>
+                </mat-card>
+
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-subtitle>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Limit' | translate }}</mat-card-subtitle>
+                        <mat-card-title>{{ settings.dashboard?.widgets?.departmentBox?.limit | optional }}</mat-card-title>
+                    </mat-card-header>
+                </mat-card>
+
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-subtitle>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Date' | translate }}</mat-card-subtitle>
+                        <mat-card-title>
+                            @if (settings.dashboard?.widgets?.departmentBox?.dateInterval) {
+                                {{ 'DateIntervalSpecifier.' + settings.dashboard?.widgets?.departmentBox?.dateInterval | translate }}
+                            } @else {
+                                {{ 'NoData' | translate }}
+                            }
+                        </mat-card-title>
+                    </mat-card-header>
+                </mat-card>
+
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-subtitle>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Reason' | translate }}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        @for (reason of settings.dashboard?.widgets?.departmentBox?.reasons ?? [];track reason;let last = $last) {
+                            {{ 'BoxStatusChangeReason.' + reason | translate}}<span *ngIf="!last">, </span>
+                        } @empty {
+                            {{ 'NoData' | translate }}
+                        }
+                    </mat-card-content>
+                </mat-card>
+
             </div>
         </mat-tab>
     </mat-tab-group>

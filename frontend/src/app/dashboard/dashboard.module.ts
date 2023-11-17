@@ -5,6 +5,8 @@ import {DashboardComponent} from './dashboard.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {BoxInfoWidgetComponent} from '@fe/app/dashboard/widgets/box-info-widget/box-info-widget.component';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
     imports: [
@@ -12,11 +14,15 @@ import {MatSidenavModule} from '@angular/material/sidenav';
         RouterModule,
 
         MatIconModule,
+        MatCardModule,
         MatSidenavModule,
 
         TranslateModule
     ],
-    declarations: [DashboardComponent]
+    declarations: [
+        DashboardComponent,
+        BoxInfoWidgetComponent
+    ]
 })
 export class DashboardModule {
 }

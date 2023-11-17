@@ -1,0 +1,64 @@
+<div class="department-box-widget-settings">
+    @if (form) {
+        <form *ngIf="form" [formGroup]="form">
+
+            <div class="needed-card">
+                <mat-card>
+                    <mat-card-subtitle>
+                        <mat-checkbox formControlName="needed">
+                            {{ 'PersonPage.DepartmentBoxesWidgetSettings.Needed' | translate }}
+                        </mat-checkbox>
+                    </mat-card-subtitle>
+                </mat-card>
+            </div>
+
+            <div class="index-input">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Index' | translate }}</mat-label>
+                    <input matInput type="number" formControlName="index">
+                </mat-form-field>
+            </div>
+
+            <div class="limit-input">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Limit' | translate }}</mat-label>
+                    <input matInput type="number" formControlName="limit">
+                </mat-form-field>
+            </div>
+
+            <div class="date-interval-selector">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Date' | translate }}</mat-label>
+                    <mat-select formControlName="dateInterval">
+                        <mat-option [value]="undefined">-</mat-option>
+                        @for (option of dateOptions; track option) {
+                            <mat-option [value]="option">{{ 'DateIntervalSpecifier.' + option | translate }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="date-interval-selector">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Reason' | translate }}</mat-label>
+                    <mat-select formControlName="reasons" multiple>
+                        @for (option of reasonOptions; track option) {
+                            <mat-option [value]="option">{{ 'BoxStatusChangeReason.' + option | translate }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="button-row">
+                <button mat-flat-button
+                        color="accent"
+                        [disabled]="isSaveBtnDisabled()"
+                        (click)="submit()"
+                        type="button">
+                    {{ 'SaveButton' | translate }}
+                </button>
+            </div>
+
+        </form>
+    }
+</div>

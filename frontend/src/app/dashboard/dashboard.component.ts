@@ -28,7 +28,9 @@ export class DashboardComponent extends AutoUnSubscriber implements OnInit {
                 if (isNil(widgets)) {
                     return;
                 }
-                this.widgets = widgets.map(widgetToComponent);
+                const widgetList = Object.values(widgets);
+                widgetList.sort((a, b) => a.index - b.index);
+                this.widgets = widgetList.filter(value => value.needed).map(widgetToComponent);
             }
         });
     }

@@ -25,6 +25,8 @@
                 </a>
                 <a *ngIf="canUserSee?.admin" mat-list-item routerLink="/admin">{{ 'Menu.System' | translate }}</a>
                 <mat-divider></mat-divider>
+                <a mat-list-item routerLink="/dashboard">{{ 'Menu.Dashboard' | translate }}</a>
+                <mat-divider></mat-divider>
                 <a class="grey" mat-list-item routerLink="/my-profile">{{ currentUser.userName }}</a>
                 <a class="grey"
                    mat-list-item

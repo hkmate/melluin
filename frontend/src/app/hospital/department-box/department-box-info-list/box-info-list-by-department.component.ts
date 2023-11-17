@@ -24,7 +24,7 @@ export class BoxInfoListByDepartmentComponent extends DepartmentBoxInfoListCompo
     }
 
     protected override loadData(): void {
-        this.boxStatusService.findBoxStatuses(this.depId, this.createPageRequest(this.page, this.size)).subscribe(
+        this.boxStatusService.findBoxStatusesByDepartment(this.depId, this.createPageRequest(this.page, this.size)).subscribe(
             (page: Pageable<DepartmentBoxStatus>) => {
                 this.boxInfoList = page.items;
                 this.page = page.meta.currentPage;
