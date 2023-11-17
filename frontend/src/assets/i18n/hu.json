@@ -306,6 +306,8 @@
         "NoRelatedActivities": "Nem elérhető korábbi foglalkozásról információ",
         "ConfirmChildRemove": "Biztosan el szeretnéd távolítani {{name}}-t?",
         "ConfirmActivityRemove": "Biztosan el szeretnéd távolítani a tevékenységet?",
+        "WarningOnActivityPresenterWhileStarted": "A megjelenő gyerekek/tevékenységek még nem véglelgesek!",
+        "WarningOnActivityPresenterWhileActivitiesShouldNotBeThere": "A foglalkozás jelen állapotában nem lenne szabad, hogy legyenek felvéve gyerkek/tevékenységek. Valaki rosszul adminisztrált valamit. Vedd fel a kapcsolatot a koordinátorral vagy a rendszer adminnal.",
         "Start": "Kezdés",
         "ContinueFilling": "Kitöltés folytatása",
         "Finalized": "Véglegesítés"

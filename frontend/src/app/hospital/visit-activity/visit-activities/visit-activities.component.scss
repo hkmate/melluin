@@ -1,10 +1,36 @@
 @use '@angular/material' as mat;
 
+.fail-message {
+    font-weight: bold;
+    color: red;
+}
+
 .activities-info {
+    border-radius: .5rem;
+
     .children, .activities, .box-info {
         margin-top: 1rem;
         padding: 1rem;
-        border-radius: 4px;
+        border-radius: .5rem;
         @include mat.elevation(2);
     }
+
+    &.STARTED, {
+        opacity: .6;
+    }
+
+    &.DRAFT,
+    &.SCHEDULED,
+    &.CANCELED,
+    &.FAILED_BECAUSE_NO_CHILD,
+    &.FAILED_FOR_OTHER_REASON {
+        opacity: .6;
+        background: lightpink;
+
+        ::ng-deep .mat-mdc-card,
+        ::ng-deep .mat-mdc-standard-chip {
+            background-color: unset;
+        }
+    }
+
 }

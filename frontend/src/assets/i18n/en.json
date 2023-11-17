@@ -306,6 +306,8 @@
         "NoRelatedActivities": "There is no information about previous activities",
         "ConfirmChildRemove": "Are you sure you want to remove {{name}}?",
         "ConfirmActivityRemove": "Are you sure you want to remove activity?",
+        "WarningOnActivityPresenterWhileStarted": "The showed children/activities are not finalized yet.",
+        "WarningOnActivityPresenterWhileActivitiesShouldNotBeThere": "In the current status of the visit there should not be neither children nor activities. Somebody made an administration mistake. Please contact the coordinator or the system admin.",
         "Start": "Start",
         "ContinueFilling": "Continue filling",
         "Finalized": "Finalize"

@@ -1,4 +1,11 @@
-<div class="activities-info">
+@if (isDataShouldPresent()) {
+    @if (needWarningOnActivitiesWhenStarted()) {
+        <div>{{ 'HospitalVisit.WarningOnActivityPresenterWhileStarted' | translate }}</div>
+    }
+    @if (needWarningOnActivitiesWhenFailed()) {
+        <div class="fail-message">{{ 'HospitalVisit.WarningOnActivityPresenterWhileActivitiesShouldNotBeThere' | translate }}</div>
+    }
+    <div [ngClass]="getStyleNgClasses()">
         <div class="children">
             <h1>{{ 'HospitalVisit.Activities.Children' | translate }}</h1>
             <app-children-list [children]="children" [visitDate]="visitDate"></app-children-list>
@@ -12,4 +19,5 @@
             <h1>{{ 'HospitalVisit.Activities.BoxInfo' | translate }}</h1>
             <app-box-info-list-by-visit [visitId]="visit.id"></app-box-info-list-by-visit>
         </div>
-</div>
+    </div>
+}
