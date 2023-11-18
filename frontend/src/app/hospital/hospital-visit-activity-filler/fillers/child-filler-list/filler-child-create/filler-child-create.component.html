@@ -2,14 +2,13 @@
     <mat-card-content>
         <form [formGroup]="form">
 
-            <mat-form-field appearance="fill">
-                <mat-label>{{ 'ChildrenList.Name' | translate }}</mat-label>
-                <input type="text" matInput
-                       [placeholder]="'ChildrenList.NamePlaceholder' | translate"
-                       formControlName="name">
-            </mat-form-field>
+            <app-trimmed-text-input
+                    [label]="'ChildrenList.Name' | translate"
+                    [placeholder]="'ChildrenList.NamePlaceholder' | translate"
+                    formControlName="name">
+            </app-trimmed-text-input>
 
-            <mat-form-field appearance="fill" class="age-year">
+            <mat-form-field class="age-year">
                 <mat-label>{{ 'ChildrenList.AgeYear' | translate }}</mat-label>
                 <input type="number"
                        matInput
@@ -18,7 +17,7 @@
                        formControlName="ageYear">
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="age-month">
+            <mat-form-field class="age-month">
                 <mat-label>{{ 'ChildrenList.AgeMonth' | translate }}</mat-label>
                 <input type="number"
                        matInput
@@ -27,7 +26,7 @@
                        formControlName="ageMonth">
             </mat-form-field>
 
-            <mat-form-field appearance="fill">
+            <mat-form-field>
                 <mat-label>{{ 'ChildrenList.Info' | translate }}</mat-label>
                 <textarea type="text"
                           matInput

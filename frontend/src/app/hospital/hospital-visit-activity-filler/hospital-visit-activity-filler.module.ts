@@ -37,6 +37,7 @@ import {ChildSelectModule} from '@fe/app/hospital/child/child-select/child-selec
 import {ActivitySelectModule} from '@fe/app/hospital/visit-activity/activity-select/activity-select.module';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {TrimmedTextInputModule} from '@fe/app/util/trimmed-text-input/trimmed-text-input.module';
 
 @NgModule({
     imports: [
@@ -65,7 +66,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
         ChildModule,
         PersonNamePipe,
         ChildSelectModule,
-        ActivitySelectModule
+        ActivitySelectModule,
+        TrimmedTextInputModule
     ],
     declarations: [
         HospitalVisitActivityFillerComponent,

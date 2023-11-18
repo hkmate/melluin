@@ -24,6 +24,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { UserEditFormComponent } from './person-detail/user-edit-form/user-edit-form.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {TrimmedTextInputModule} from '@fe/app/util/trimmed-text-input/trimmed-text-input.module';
 
 @NgModule({
     imports: [
@@ -47,6 +48,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         PersonNamePipe,
         OptionalPipe,
         LazyInputModule,
+        TrimmedTextInputModule,
     ],
     declarations: [
         PeopleListComponent,
@@ -56,7 +58,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         UserDetailComponent,
         UserDataPresenterComponent,
         UserCreationFormComponent,
-        UserEditFormComponent
+        UserEditFormComponent,
     ]
 })
 export class PeopleModule {

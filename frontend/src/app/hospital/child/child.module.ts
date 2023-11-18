@@ -9,8 +9,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { ParentInfoIconComponent } from './parent-info-icon/parent-info-icon.component';
-import { ChildAgePipe } from './child-age/child-age.pipe';
+import {ParentInfoIconComponent} from './parent-info-icon/parent-info-icon.component';
+import {ChildAgePipe} from './child-age/child-age.pipe';
 
 
 @NgModule({

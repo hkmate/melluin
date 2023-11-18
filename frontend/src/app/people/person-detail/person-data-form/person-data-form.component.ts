@@ -11,6 +11,7 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
     templateUrl: './person-data-form.component.html',
     styleUrls: ['./person-data-form.component.scss']
 })
+
 export class PersonDataFormComponent {
 
     @Output()

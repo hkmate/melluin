@@ -21,6 +21,7 @@ import {DepartmentDataFormComponent} from '@fe/app/hospital/department/departmen
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {DepartmentsListComponent} from '@fe/app/hospital/department/departments-list/departments-list.component';
 import {DepartmentBoxModule} from '@fe/app/hospital/department-box/department-box.module';
+import {TrimmedTextInputModule} from '@fe/app/util/trimmed-text-input/trimmed-text-input.module';
 
 
 @NgModule({
@@ -40,12 +41,14 @@ import {DepartmentBoxModule} from '@fe/app/hospital/department-box/department-bo
         MatSelectModule,
         MatSlideToggleModule,
         MatDatepickerModule,
+
         TranslateModule,
 
         PersonNamePipe,
         OptionalPipe,
         LazyInputModule,
-        DepartmentBoxModule
+        DepartmentBoxModule,
+        TrimmedTextInputModule
     ],
     declarations: [
         DepartmentsListComponent,

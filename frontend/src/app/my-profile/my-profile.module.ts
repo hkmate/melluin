@@ -25,6 +25,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { HomePageOptionSelectorComponent } from './user-settings-editor/user-home-page-settings-editor/home-page-option-selector/home-page-option-selector.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {UserDepartmentBoxWidgetSettingsComponent} from '@fe/app/my-profile/user-settings-editor/user-department-box-widget-settings/user-department-box-widget-settings.component';
+import {TrimmedTextInputModule} from '@fe/app/util/trimmed-text-input/trimmed-text-input.module';
 
 @NgModule({
     imports: [
@@ -49,6 +50,7 @@ import {UserDepartmentBoxWidgetSettingsComponent} from '@fe/app/my-profile/user-
         OptionalPipe,
         PersonNamePipe,
         PersonSelectModule,
+        TrimmedTextInputModule,
     ],
     declarations: [
         MyProfileComponent,

@@ -3,24 +3,19 @@
 <form [formGroup]="form">
 
     <div>
-        <mat-form-field appearance="fill">
-            <mat-label>{{ 'PersonPage.User.Form.UserName' | translate }}</mat-label>
-            <input matInput
-                   type="text"
-                   formControlName="userName">
-        </mat-form-field>
+        <app-trimmed-text-input formControlName="userName"
+                                [placeholder]="'PersonPage.User.Form.UserNamePlaceholder' | translate"
+                                [label]="'PersonPage.User.Form.UserName'| translate">
+        </app-trimmed-text-input>
     </div>
 
     <div>
-        <mat-form-field appearance="fill">
-            <mat-label>{{ 'PersonPage.User.Form.Password' | translate }}</mat-label>
-            <input matInput
-                   type="password"
-                   autocomplete="off"
-                   [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
-                   formControlName="password">
-            <mat-hint>{{ 'PersonPage.User.Form.PasswordHint' | translate }}</mat-hint>
-        </mat-form-field>
+        <app-trimmed-text-input formControlName="password"
+                                type="password"
+                                autocomplete="off"
+                                [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
+                                [label]="'PersonPage.User.Form.Password'| translate">
+        </app-trimmed-text-input>
     </div>
 
     <div class="status-card">
@@ -37,10 +32,10 @@
     </div>
 
     <div>
-        <mat-form-field appearance="fill">
+        <mat-form-field>
             <mat-label>{{ 'PersonPage.User.Form.Roles' | translate }}</mat-label>
             <mat-select formControlName="roles" multiple>
-                @for (role of roles; track role) {
+                @for (role of roles;track role) {
                     <mat-option [value]="role" [disabled]="!roleOptions.includes(role)">
                         {{ 'Role.' + role | translate }}
                     </mat-option>
@@ -50,10 +45,10 @@
     </div>
 
     <div>
-        <mat-form-field appearance="fill">
+        <mat-form-field>
             <mat-label>{{ 'PersonPage.User.Form.Permissions' | translate }}</mat-label>
             <mat-select formControlName="customPermissions" multiple>
-                @for (permission of permissions; track permission) {
+                @for (permission of permissions;track permission) {
                     <mat-option [value]="permission">{{ permission }}</mat-option>
                 }
             </mat-select>
