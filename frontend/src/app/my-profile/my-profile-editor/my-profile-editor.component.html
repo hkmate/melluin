@@ -4,30 +4,24 @@
     <form [formGroup]="personForm">
 
         <div>
-            <mat-form-field appearance="fill">
-                <mat-label>{{ 'PersonPage.Form.LastName' | translate }}</mat-label>
-                <input matInput
-                       [placeholder]="'PersonPage.Form.LastNamePlaceholder' | translate"
-                       formControlName="lastName">
-            </mat-form-field>
+            <app-trimmed-text-input formControlName="lastName"
+                                    [label]="'PersonPage.Form.LastName' | translate"
+                                    [placeholder]="'PersonPage.Form.LastNamePlaceholder' | translate">
+            </app-trimmed-text-input>
         </div>
 
         <div>
-            <mat-form-field appearance="fill">
-                <mat-label>{{ 'PersonPage.Form.FirstName' | translate }}</mat-label>
-                <input matInput
-                       [placeholder]="'PersonPage.Form.FirstNamePlaceholder' | translate"
-                       formControlName="firstName">
-            </mat-form-field>
+            <app-trimmed-text-input formControlName="firstName"
+                                    [label]="'PersonPage.Form.FirstName' | translate"
+                                    [placeholder]="'PersonPage.Form.FirstNamePlaceholder' | translate">
+            </app-trimmed-text-input>
         </div>
 
         <div>
-            <mat-form-field appearance="fill">
-                <mat-label>{{ 'PersonPage.Form.Email' | translate }}</mat-label>
-                <input matInput
-                       [placeholder]="'PersonPage.Form.EmailPlaceholder' | translate"
-                       formControlName="email">
-            </mat-form-field>
+            <app-trimmed-text-input formControlName="email"
+                                    [label]="'PersonPage.Form.Email' | translate"
+                                    [placeholder]="'PersonPage.Form.EmailPlaceholder' | translate">
+            </app-trimmed-text-input>
         </div>
 
         <div class="email-preference-card">
@@ -43,12 +37,10 @@
         </div>
 
         <div>
-            <mat-form-field appearance="fill">
-                <mat-label>{{ 'PersonPage.Form.Phone' | translate }}</mat-label>
-                <input matInput
-                       [placeholder]="'PersonPage.Form.PhonePlaceholder' | translate"
-                       formControlName="phone">
-            </mat-form-field>
+            <app-trimmed-text-input formControlName="phone"
+                                    [label]="'PersonPage.Form.Phone' | translate"
+                                    [placeholder]="'PersonPage.Form.PhonePlaceholder' | translate">
+            </app-trimmed-text-input>
         </div>
 
         <div class="phone-preference-card">
@@ -80,7 +72,7 @@
 @if (userForm) {
     <form [formGroup]="userForm">
         <div>
-            <mat-form-field appearance="fill">
+            <mat-form-field>
                 <mat-label>{{ 'PersonPage.User.Form.UserName' | translate }}</mat-label>
                 <input matInput
                        type="text"
@@ -89,7 +81,7 @@
         </div>
 
         <div>
-            <mat-form-field appearance="fill">
+            <mat-form-field>
                 <mat-label>{{ 'PersonPage.User.Form.Password' | translate }}</mat-label>
                 <input matInput
                        type="password"

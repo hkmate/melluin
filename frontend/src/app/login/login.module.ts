@@ -8,6 +8,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import {TrimmedTextInputModule} from '@fe/app/util/trimmed-text-input/trimmed-text-input.module';
 
 @NgModule({
     imports: [
@@ -15,12 +16,14 @@ import {MatButtonModule} from '@angular/material/button';
         RouterModule,
         FormsModule,
 
-        TranslateModule,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
 
+        TranslateModule,
+
         AuthModule,
+        TrimmedTextInputModule,
     ],
     declarations: [LoginComponent],
     exports: [LoginComponent]

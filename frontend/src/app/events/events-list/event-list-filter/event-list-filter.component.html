@@ -31,7 +31,7 @@
     </div>
 
     <div class="status-filter">
-        <mat-form-field appearance="fill">
+        <mat-form-field>
             <mat-label>{{ 'PersonPage.EventListSettings.Statuses' | translate }}</mat-label>
             <mat-select [(ngModel)]="filters.statuses" (ngModelChange)="filterSet()" multiple>
                 @for (option of statusOptions;track option) {
@@ -42,7 +42,7 @@
     </div>
 
     <div class="department-filter">
-        <mat-form-field appearance="fill">
+        <mat-form-field>
             <mat-label>{{ 'PersonPage.EventListSettings.Departments' | translate }}</mat-label>
             <mat-select [(ngModel)]="filters.departmentIds" (ngModelChange)="filterSet()" multiple>
                 @for (option of departmentOptions; track option.id) {

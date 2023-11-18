@@ -13,21 +13,21 @@
             </div>
 
             <div class="index-input">
-                <mat-form-field appearance="fill">
+                <mat-form-field>
                     <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Index' | translate }}</mat-label>
                     <input matInput type="number" formControlName="index">
                 </mat-form-field>
             </div>
 
             <div class="limit-input">
-                <mat-form-field appearance="fill">
+                <mat-form-field>
                     <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Limit' | translate }}</mat-label>
                     <input matInput type="number" formControlName="limit">
                 </mat-form-field>
             </div>
 
             <div class="date-interval-selector">
-                <mat-form-field appearance="fill">
+                <mat-form-field>
                     <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Date' | translate }}</mat-label>
                     <mat-select formControlName="dateInterval">
                         <mat-option [value]="undefined">-</mat-option>
@@ -39,7 +39,7 @@
             </div>
 
             <div class="date-interval-selector">
-                <mat-form-field appearance="fill">
+                <mat-form-field>
                     <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Reason' | translate }}</mat-label>
                     <mat-select formControlName="reasons" multiple>
                         @for (option of reasonOptions; track option) {

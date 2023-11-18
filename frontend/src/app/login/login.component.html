@@ -3,28 +3,20 @@
         <img src="./assets/logo.svg">
 
         <form>
-            <p>
-                <mat-form-field appearance="outline">
-                    <mat-label>{{ 'LoginPage.Form.UserName' | translate }}</mat-label>
-                    <input matInput
-                           autocomplete="username"
-                           [placeholder]="'LoginPage.Form.UserNamePlaceholder' | translate"
-                           [(ngModel)]="userName"
-                           [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-            </p>
+            <app-trimmed-text-input [(ngModel)]="userName"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [label]="'LoginPage.Form.UserName' | translate"
+                                    [placeholder]="'LoginPage.Form.UserNamePlaceholder' | translate"
+                                    autocomplete="username">
+            </app-trimmed-text-input>
 
-            <p>
-                <mat-form-field appearance="outline">
-                    <mat-label>{{ 'LoginPage.Form.Password' | translate }}</mat-label>
-                    <input matInput
-                           autocomplete="current-password"
-                           [placeholder]="'LoginPage.Form.PasswordPlaceholder' | translate"
-                           [(ngModel)]="password"
-                           [ngModelOptions]="{standalone: true}"
-                           type="password">
-                </mat-form-field>
-            </p>
+            <app-trimmed-text-input [(ngModel)]="password"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [label]="'LoginPage.Form.Password' | translate"
+                                    [placeholder]="'LoginPage.Form.PasswordPlaceholder' | translate"
+                                    autocomplete="current-password"
+                                    type="password">
+            </app-trimmed-text-input>
 
             <div>
                 <button mat-flat-button

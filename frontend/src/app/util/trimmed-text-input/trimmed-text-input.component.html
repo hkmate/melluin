@@ -1,0 +1,10 @@
+<mat-form-field>
+    <mat-label>{{ label }}</mat-label>
+    <input matInput
+           [attr.type]="type"
+           [attr.autocomplete]="autocomplete"
+           [placeholder]="placeholder"
+           [(ngModel)]="value"
+           [ngModelOptions]="{standalone: true}"
+           (blur)="focusLost()">
+</mat-form-field>

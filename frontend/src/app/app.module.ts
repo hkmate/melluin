@@ -35,6 +35,7 @@ import {currentUserReducer} from '@fe/app/state/reducer/current-user.reducer';
 import {UserDataSaverEffect} from '@fe/app/state/effect/user-data-saver.effect';
 import {NavigatorComponent} from '@fe/app/navigator.component';
 import {MondayFirstDateAdapter} from '@fe/app/util/monday-first-date-adapter';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 registerLocaleData(localeHu);
 
@@ -108,6 +109,7 @@ export function appInitializeCredentialsFactory(credentialStoreService: Credenti
             multi: true
         },
         {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
+        {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
         {provide: LOCALE_ID, useValue: 'hu'},
         {provide: DateAdapter, useClass: MondayFirstDateAdapter}
     ],
