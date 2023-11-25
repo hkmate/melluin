@@ -2,7 +2,7 @@
     <div class="page-content">
         <img src="./assets/logo.svg">
 
-        <form>
+        <form (ngSubmit)="onSubmit()">
             <app-trimmed-text-input [(ngModel)]="userName"
                                     [ngModelOptions]="{standalone: true}"
                                     [label]="'LoginPage.Form.UserName' | translate"
@@ -20,10 +20,8 @@
 
             <div>
                 <button mat-flat-button
-                        type="button"
                         color="accent"
-                        [disabled]="loading"
-                        (click)="onSubmit()">
+                        [disabled]="isSubmitButtonDisabled()">
                     {{ 'LoginPage.Form.LoginButton' | translate }}
                 </button>
             </div>

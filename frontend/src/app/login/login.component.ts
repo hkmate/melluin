@@ -43,6 +43,10 @@ export class LoginComponent implements OnInit {
         this.returnUrl = this.route.snapshot.queryParams.returnUrl ?? '/';
     }
 
+    protected isSubmitButtonDisabled(): boolean {
+        return this.loading || isNilOrEmpty(this.userName) || isNilOrEmpty(this.password);
+    }
+
     protected onSubmit(): void {
         if (isNilOrEmpty(this.userName) || isNilOrEmpty(this.password)) {
             this.msg.error(LoginComponent.FIELDS_REQUIRED);
