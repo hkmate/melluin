@@ -4,6 +4,7 @@ import {Injectable} from '@nestjs/common';
 import {flatten, isNil} from '@shared/util/util';
 import {Converter} from '@shared/converter';
 import * as _ from 'lodash';
+import {PermissionEntity} from '@be/user/model/permission.entity';
 
 @Injectable()
 export class UserEntityToDtoConverter implements Converter<UserEntity, User> {
@@ -19,16 +20,17 @@ export class UserEntityToDtoConverter implements Converter<UserEntity, User> {
     }
 
     private convertNotNilEntity(entity: UserEntity): User {
+        const customPermissions = entity.customPermissions.map(PermissionEntity.raw);
         return {
             id: entity.id,
             personId: entity.person.id,
             userName: entity.userName,
             isActive: entity.isActive,
             roles: entity.roles?.map(roleEntity => roleEntity.role),
-            permissions: _.union(flatten(
-                entity.roles.map(role => role.permissions))
-                .map(permission => permission.permission)),
-            customPermissions: entity.customPermissions.map(permission => permission.permission)
+            permissions: _.union(
+                flatten(entity.roles.map(role => role.permissions)).map(PermissionEntity.raw),
+                customPermissions),
+            customPermissions,
         };
     }
 

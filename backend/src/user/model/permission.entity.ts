@@ -10,4 +10,8 @@ export class PermissionEntity {
     @Column()
     permission: Permission;
 
+    public static raw(entity: PermissionEntity): Permission {
+        return entity.permission;
+    }
+
 }
