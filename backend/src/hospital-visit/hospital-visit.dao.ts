@@ -28,7 +28,7 @@ export class HospitalVisitDao extends PageCreator<HospitalVisitEntity> {
                     .getMany()
                     .then(entities => entities.map(e => e.id))
                     .then(visitIds => ({key: 'id', value: FilterOperationBuilder.in(visitIds)}))
-        })
+        });
     }
 
     public save(department: HospitalVisitEntity): Promise<HospitalVisitEntity> {

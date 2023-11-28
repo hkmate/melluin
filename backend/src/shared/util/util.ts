@@ -28,15 +28,15 @@ export function anyNil(...values: Array<unknown | Nil>): boolean {
     return values.some(item => isNil(item));
 }
 
-export function isEmpty<T>(array: Array<T> | string): boolean {
+export function isEmpty<T extends { length: number }>(array: T): boolean {
     return array.length === 0;
 }
 
-export function isNotEmpty<T>(array: Array<T> | string): boolean {
+export function isNotEmpty<T extends { length: number }>(array: T): boolean {
     return !isEmpty(array);
 }
 
-export function isNilOrEmpty<T>(value: Array<T> | string | Nil): boolean {
+export function isNilOrEmpty<T extends { length: number }>(value: T | Nil): boolean {
     return isNil(value) || value!.length === 0;
 }
 
@@ -48,8 +48,8 @@ export function isNotNilOrEmptyObj<T extends object>(value: T | Nil): value is T
     return !isNilOrEmptyObj(value);
 }
 
-export function emptyToUndef(value?: string): string | undefined {
-    return isNilOrEmpty(value) ? undefined : value;
+export function emptyToUndef<T extends { length: number }>(value: T | Nil): T | undefined {
+    return isNilOrEmpty(value) ? undefined : value as T;
 }
 
 export function includeAny<T>(arr: Array<T>, ...values: Array<T>): boolean {

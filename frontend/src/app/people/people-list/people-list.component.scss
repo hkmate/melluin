@@ -5,23 +5,9 @@
 
 :host {
 
-    .option-row {
-
+    .page-header {
         display: flex;
-        align-items: center;
-
-        ::ng-deep app-lazy-input {
-
-            flex: auto;
-
-            .mat-mdc-form-field {
-                width: 100%;
-            }
-
-            .mat-mdc-form-field-subscript-wrapper {
-                display: none
-            }
-        }
+        justify-content: space-between;
     }
 
     ::ng-deep .is-user-icon {

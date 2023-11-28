@@ -137,6 +137,14 @@
             "Name": "Name",
             "Email": "Email",
             "Phone": "Phone"
+        },
+        "Filters": "Filters",
+        "Filter": {
+            "Name": "Name",
+            "Email": "Email",
+            "Phone": "Phone",
+            "Role": "Roles",
+            "IsActive": "Is active"
         }
     },
     "PersonPage": {

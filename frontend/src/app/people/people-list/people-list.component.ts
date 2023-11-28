@@ -6,23 +6,32 @@ import {AppTitle} from '@fe/app/app-title.service';
 import {PageEvent} from '@angular/material/paginator';
 import {SortOptions} from '@shared/api-util/sort-options';
 import {FilterOptions} from '@shared/api-util/filter-options';
-import {isNilOrEmpty} from '@shared/util/util';
 import {TableDataSource} from '@fe/app/util/table-data-source';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
+import {PeopleListFilterService} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter.service';
+import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
+import {Permission} from '@shared/user/permission.enum';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {PeopleListQueryParamSettingsInitializer} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-param-settings-initializer';
+import {PeopleListQueryParamHandler} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-param-handler';
+import {PeopleListFilterSensitiveDataHider} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter-sensitive-data-hider';
 
 
 @Component({
     selector: 'app-people-list',
     templateUrl: './people-list.component.html',
     styleUrls: ['./people-list.component.scss'],
-    providers: [UrlParamHandler]
+    providers: [
+        UrlParamHandler,
+        PeopleListFilterService,
+        PeopleListQueryParamSettingsInitializer,
+        PeopleListQueryParamHandler,
+        PeopleListFilterSensitiveDataHider
+    ]
 })
-export class PeopleListComponent implements OnInit {
+export class PeopleListComponent extends AutoUnSubscriber implements OnInit {
 
-    private static readonly FIRST_PAGE = 1;
-    private static readonly PAGE_PARAM_KEY = 'page';
-    private static readonly SIZE_PARAM_KEY = 'size';
-    private static readonly FILTER_PARAM_KEY = 'filter';
+    Permission = Permission;
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [20, 50, 100];
@@ -32,38 +41,33 @@ export class PeopleListComponent implements OnInit {
     protected page: number;
     protected size: number;
     protected countOfAll: number;
-    protected filterWord?: string;
     private sort: SortOptions = {
         lastName: 'ASC'
     };
 
     constructor(private readonly title: AppTitle,
+                protected readonly permissions: PermissionService,
                 private readonly peopleService: PeopleService,
-                private readonly urlParam: UrlParamHandler) {
+                private readonly filterService: PeopleListFilterService) {
+        super();
     }
 
     public ngOnInit(): void {
         this.title.setTitleByI18n('Titles.PeopleList');
-        const page = this.urlParam.getNumberParam(PeopleListComponent.PAGE_PARAM_KEY) ?? PeopleListComponent.FIRST_PAGE;
-        const size = this.urlParam.getNumberParam(PeopleListComponent.SIZE_PARAM_KEY) ?? this.sizeOptions[1];
-        this.filterWord = this.urlParam.getParam(PeopleListComponent.FILTER_PARAM_KEY);
-        this.loadData(page, size);
+        this.addSubscription(this.filterService.onChange(), () => {
+            this.setUpPageInfo();
+            this.loadData();
+        });
     }
 
     protected paginateHappened(event: PageEvent): void {
-        this.page = event.pageIndex + 1;
-        this.size = event.pageSize;
-        this.urlParam.setParams({
-            [PeopleListComponent.PAGE_PARAM_KEY]: this.page + '',
-            [PeopleListComponent.SIZE_PARAM_KEY]: this.size + ''
-        });
-        this.loadData();
+        this.filterService.setPageInfo({page: event.pageIndex + 1, size: event.pageSize});
     }
 
-    protected filterChanged(newFilterWord: string): void {
-        this.filterWord = newFilterWord;
-        this.urlParam.setParam(PeopleListComponent.FILTER_PARAM_KEY, this.filterWord);
-        this.loadData();
+    private setUpPageInfo(): void {
+        const pageInfo = this.filterService.getPageInfo();
+        this.page = pageInfo.page;
+        this.size = pageInfo.size;
     }
 
     private loadData(page?: number, size?: number): void {
@@ -87,16 +91,7 @@ export class PeopleListComponent implements OnInit {
     }
 
     private createWhereClosure(): FilterOptions | undefined {
-        if (isNilOrEmpty(this.filterWord)) {
-            return undefined;
-        }
-        const likeExpr = `%${this.filterWord}%`;
-        return [
-            {firstName: {operator: 'ilike', operand: likeExpr}},
-            {lastName: {operator: 'ilike', operand: likeExpr}},
-            {email: {operator: 'ilike', operand: likeExpr}},
-            {phone: {operator: 'ilike', operand: likeExpr}}
-        ];
+        return this.filterService.generateFilterOptions();
     }
 
 }

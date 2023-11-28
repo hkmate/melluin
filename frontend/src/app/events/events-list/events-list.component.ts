@@ -18,10 +18,7 @@ import {EventListQueryParamSettingsInitializer} from '@fe/app/events/events-list
 import {EventListQueryParamHandler} from '@fe/app/events/events-list/service/event-list-query-param-handler';
 import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {filter} from 'rxjs';
-import {
-    reasonIsNotPreferences,
-    reasonIsPreferences
-} from '@fe/app/events/events-list/service/event-list-settings-change-reason';
+import {reasonIsNotPreferences, reasonIsPreferences} from '@fe/app/util/list-page-settings-change-reason';
 
 @Component({
     selector: 'app-events-list',

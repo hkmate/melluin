@@ -1,18 +1,30 @@
 <section>
     <div class="page-content">
-        <h1>{{ 'Titles.PeopleList' | translate }}</h1>
+        <span class="page-header">
+            <h1>{{ 'Titles.PeopleList' | translate }}</h1>
+            <span>
+                @if (permissions.has(Permission.canCreatePerson)) {
+                    <button mat-mini-fab
+                            color="accent"
+                            [routerLink]="['new']">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                }
+            </span>
+        </span>
 
         <div class="option-row">
-            <app-lazy-input [label]="'Search' | translate"
-                            [value]="filterWord"
-                            (changed)="filterChanged($event)"></app-lazy-input>
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{ 'PeopleListPage.Filters' | translate }}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
 
-            <button mat-mini-fab
-                    color="accent"
-                    [routerLink]="['new']">
-                <mat-icon>add</mat-icon>
-            </button>
-
+                    <app-people-list-filter></app-people-list-filter>
+                </mat-expansion-panel>
+            </mat-accordion>
         </div>
 
         <table mat-table recycleRows [dataSource]="tableDataSource">

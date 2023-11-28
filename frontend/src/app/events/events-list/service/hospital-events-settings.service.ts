@@ -8,15 +8,15 @@ import {EventListUserSettingsInitializer} from '@fe/app/events/events-list/servi
 import {EventListSettingsInitializer} from '@fe/app/events/events-list/service/event-list-settings-initializer';
 import {EventListQueryParamHandler} from '@fe/app/events/events-list/service/event-list-query-param-handler';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {EventListSettingChangeReason} from '@fe/app/events/events-list/service/event-list-settings-change-reason';
 import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {PageInfo} from '@shared/api-util/pageable';
+import {ListPageSettingChangeReason} from '@fe/app/util/list-page-settings-change-reason';
 
 
 @Injectable()
 export class HospitalEventsSettingsService extends AutoUnSubscriber {
 
-    private settingsChanged = new BehaviorSubject<EventListSettingChangeReason>(EventListSettingChangeReason.ALL);
+    private settingsChanged = new BehaviorSubject<ListPageSettingChangeReason>(ListPageSettingChangeReason.ALL);
     private page: PageInfo;
     private filter: EventsFilter;
     private preferences: EventsListPreferences;
@@ -29,11 +29,11 @@ export class HospitalEventsSettingsService extends AutoUnSubscriber {
             this.initFilter();
             this.initPreferences();
             this.initPageInfo();
-            this.settingsChanged.next(EventListSettingChangeReason.ALL);
+            this.settingsChanged.next(ListPageSettingChangeReason.ALL);
         });
     }
 
-    public onChange(): Observable<EventListSettingChangeReason> {
+    public onChange(): Observable<ListPageSettingChangeReason> {
         return this.settingsChanged.asObservable();
     }
 
@@ -47,7 +47,7 @@ export class HospitalEventsSettingsService extends AutoUnSubscriber {
     public setPageInfo(newFilter: PageInfo): void {
         this.page = newFilter;
         this.queryParamHandler.saveSettings(this.filter, this.preferences, this.page);
-        this.settingsChanged.next(EventListSettingChangeReason.PAGE_DATA);
+        this.settingsChanged.next(ListPageSettingChangeReason.PAGE_DATA);
     }
 
     public getFilter(): EventsFilter {
@@ -60,7 +60,7 @@ export class HospitalEventsSettingsService extends AutoUnSubscriber {
     public setFilter(newFilter: EventsFilter): void {
         this.filter = newFilter;
         this.queryParamHandler.saveSettings(this.filter, this.preferences, this.page);
-        this.settingsChanged.next(EventListSettingChangeReason.FILTERS);
+        this.settingsChanged.next(ListPageSettingChangeReason.FILTERS);
     }
 
     public getPreferences(): EventsListPreferences {
@@ -73,7 +73,7 @@ export class HospitalEventsSettingsService extends AutoUnSubscriber {
     public setPreferences(newPreferences: EventsListPreferences): void {
         this.preferences = newPreferences;
         this.queryParamHandler.saveSettings(this.filter, this.preferences, this.page);
-        this.settingsChanged.next(EventListSettingChangeReason.PREFERENCES);
+        this.settingsChanged.next(ListPageSettingChangeReason.PREFERENCES);
     }
 
     public generateFilterOptions(): ConjunctionFilterOptions {

@@ -137,6 +137,14 @@
             "Name": "Név",
             "Email": "Email",
             "Phone": "Tel.szám"
+        },
+        "Filters": "Szűrők",
+        "Filter": {
+            "Name": "Név",
+            "Email": "Email cím",
+            "Phone": "Telefonszám",
+            "Role": "Szerepkör",
+            "IsActive": "Csak aktív"
         }
     },
     "PersonPage": {

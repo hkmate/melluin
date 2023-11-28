@@ -34,7 +34,7 @@ export class PersonController {
     }
 
     @Get()
-    @PermissionGuard(Permission.canSearchPerson)
+    @PermissionGuard(Permission.canReadPerson)
     public find(@PageReq() pageRequest: PageRequest,
                 @CurrentUser() requester: User): Promise<Pageable<Person>> {
         return this.personCrudService.find(pageRequest, requester);

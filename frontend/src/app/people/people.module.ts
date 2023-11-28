@@ -15,16 +15,21 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {RouterModule} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
-import { PersonDataPresenterComponent } from './person-detail/person-data-persenter/person-data-presenter.component';
+import {PersonDataPresenterComponent} from './person-detail/person-data-persenter/person-data-presenter.component';
 import {MatCardModule} from '@angular/material/card';
-import { UserDetailComponent } from './person-detail/user-detail/user-detail.component';
-import { UserDataPresenterComponent } from './person-detail/user-data-presenter/user-data-presenter.component';
-import { UserCreationFormComponent } from './person-detail/user-creation-form/user-creation-form.component';
+import {UserDetailComponent} from './person-detail/user-detail/user-detail.component';
+import {UserDataPresenterComponent} from './person-detail/user-data-presenter/user-data-presenter.component';
+import {UserCreationFormComponent} from './person-detail/user-creation-form/user-creation-form.component';
 import {MatSelectModule} from '@angular/material/select';
-import { UserEditFormComponent } from './person-detail/user-edit-form/user-edit-form.component';
+import {UserEditFormComponent} from './person-detail/user-edit-form/user-edit-form.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {TrimmedTextInputModule} from '@fe/app/util/trimmed-text-input/trimmed-text-input.module';
+import {PeopleListFilterComponent} from '@fe/app/people/people-list/people-list-filter/people-list-filter.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {PersonSelectModule} from '@fe/app/util/person-select/person-select.module';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {ViewTypeSelectorComponent} from '@fe/app/util/view-type-selector/view-type-selector.component';
 
 @NgModule({
     imports: [
@@ -42,13 +47,17 @@ import {TrimmedTextInputModule} from '@fe/app/util/trimmed-text-input/trimmed-te
         MatPaginatorModule,
         MatSelectModule,
         MatSlideToggleModule,
+        MatExpansionModule,
         MatCheckboxModule,
+        MatDatepickerModule,
         TranslateModule,
 
         PersonNamePipe,
         OptionalPipe,
         LazyInputModule,
         TrimmedTextInputModule,
+        PersonSelectModule,
+        ViewTypeSelectorComponent,
     ],
     declarations: [
         PeopleListComponent,
@@ -59,6 +68,7 @@ import {TrimmedTextInputModule} from '@fe/app/util/trimmed-text-input/trimmed-te
         UserDataPresenterComponent,
         UserCreationFormComponent,
         UserEditFormComponent,
+        PeopleListFilterComponent
     ]
 })
 export class PeopleModule {

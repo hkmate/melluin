@@ -7,6 +7,8 @@ import {WhereClosureConverter} from '@be/find-option-converter/where-closure.con
 import {isNil, isNotEmpty} from '@shared/util/util';
 import {PageCreator} from '@be/crud/page-creator';
 import {PageRequest} from '@be/crud/page-request';
+import {FilterOptionsFieldsConverter} from '@be/crud/convert/filter-options-fields-converter';
+import {FilterOperation} from '@shared/api-util/filter-options';
 
 @Injectable()
 export class PersonDao extends PageCreator<PersonEntity> {
@@ -56,7 +58,11 @@ export class PersonDao extends PageCreator<PersonEntity> {
         return people;
     }
 
-    public findAll(pageRequest: PageRequest): Promise<Pageable<PersonEntity>> {
+    public async findAll(pageRequest: PageRequest): Promise<Pageable<PersonEntity>> {
+        const fieldConverter = FilterOptionsFieldsConverter.of({
+            'user.roles': (values: FilterOperation<unknown>) => Promise.resolve({key: 'user.roles.role', value: values})
+        });
+        pageRequest.where = await fieldConverter.convert(pageRequest.where);
         return this.getPage(pageRequest, {relations: {user: true}});
     }
 

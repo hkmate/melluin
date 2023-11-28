@@ -1,11 +1,13 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {debounceTime, distinctUntilChanged, Subject, Subscription} from 'rxjs';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
+import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 
 @Component({
     selector: 'app-lazy-input',
-    templateUrl: './lazy-input.component.html'
+    templateUrl: './lazy-input.component.html',
+    styleUrl: './lazy-input.component.scss'
 })
-export class LazyInputComponent implements OnInit, OnDestroy {
+export class LazyInputComponent extends AutoUnSubscriber implements OnInit {
 
     private readonly delay = 500;
 
@@ -21,18 +23,13 @@ export class LazyInputComponent implements OnInit, OnDestroy {
     public label: string;
 
     @Output()
-    public changed = new EventEmitter<string>();
+    public valueChange = new EventEmitter<string>();
 
     protected inputText = '';
     private inputChanged = new Subject<string>();
-    private inputChangedSubscription: Subscription;
 
     public ngOnInit(): void {
         this.initInputSubscription();
-    }
-
-    public ngOnDestroy(): void {
-        this.inputChangedSubscription.unsubscribe();
     }
 
     protected handleInputChange(newText: string): void {
@@ -46,13 +43,12 @@ export class LazyInputComponent implements OnInit, OnDestroy {
     }
 
     private initInputSubscription(): void {
-        this.inputChangedSubscription = this.inputChanged
-            .pipe(
+        this.addSubscription(this.inputChanged.pipe(
                 debounceTime(this.delay),
                 distinctUntilChanged()
-            )
-            .subscribe(() => {
-                this.changed.emit(this.inputText)
+            ),
+            () => {
+                this.valueChange.emit(this.inputText)
             });
     }
 

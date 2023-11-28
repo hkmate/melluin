@@ -1,0 +1,49 @@
+<div class="people-filter">
+
+    <div class="name-filter">
+        <app-lazy-input [label]="'PeopleListPage.Filter.Name' | translate"
+                        [(value)]="filters.name"
+                        (valueChange)="filterSet()">
+        </app-lazy-input>
+    </div>
+
+    @if (needEmailFilter) {
+        <div class="email-filter">
+            <app-lazy-input [label]="'PeopleListPage.Filter.Email' | translate"
+                            [(value)]="filters.email"
+                            (valueChange)="filterSet()">
+            </app-lazy-input>
+        </div>
+    }
+
+    @if (needPhoneFilter) {
+        <div class="phone-filter">
+            <app-lazy-input [label]="'PeopleListPage.Filter.Phone' | translate"
+                            [(value)]="filters.phone"
+                            (valueChange)="filterSet()">
+            </app-lazy-input>
+        </div>
+    }
+
+    <div class="role-filter">
+        <mat-form-field>
+            <mat-label>{{ 'PeopleListPage.Filter.Role' | translate }}</mat-label>
+            <mat-select [(ngModel)]="filters.role" (ngModelChange)="filterSet()" multiple>
+                @for (role of roleOptions;track role) {
+                    <mat-option [value]="role">{{ 'Role.' + role | translate }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="is-active-card">
+        <mat-card>
+            <mat-card-subtitle>
+                <mat-checkbox [(ngModel)]="filters.isActive" (ngModelChange)="filterSet()">
+                    {{ 'PeopleListPage.Filter.IsActive' | translate }}
+                </mat-checkbox>
+            </mat-card-subtitle>
+        </mat-card>
+    </div>
+
+</div>

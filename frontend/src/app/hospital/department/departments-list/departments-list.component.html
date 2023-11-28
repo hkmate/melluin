@@ -5,7 +5,7 @@
         <div class="option-row">
             <app-lazy-input [label]="'Search' | translate"
                             [value]="filterWord"
-                            (changed)="filterChanged($event)"></app-lazy-input>
+                            (valueChange)="filterChanged($event)"></app-lazy-input>
 
             @if (permissions.has(Permission.canWriteDepartment)) {
                 <button mat-mini-fab color="accent" [routerLink]="['new']">

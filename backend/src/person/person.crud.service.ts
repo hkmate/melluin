@@ -17,6 +17,8 @@ import {PersonRewriteValidator} from '@be/person/validator/person-rewrite.valida
 import {ValidatorChain} from '@shared/validator/validator-chain';
 import {CanUserUpdatePersonPreferencesValidator} from '@be/person/validator/can-user-update-person-preferences.validator';
 import {PersonEntityToDtoConverterFactory} from '@be/person/converer/person-entity-to-dto-converter.factory';
+import {CanUserPerformFindValidator} from '@be/person/validator/can-user-perform-find.validator';
+import {PageRequestValidator} from '@be/crud/validator/page-request.validator';
 
 @Injectable()
 export class PersonCrudService {
@@ -42,8 +44,7 @@ export class PersonCrudService {
     }
 
     public async find(pageRequest: PageRequest, requester: User): Promise<Pageable<Person>> {
-        PageRequestFieldsValidator
-            .of(personSortableFields, personFilterableFields)
+        this.createValidatorsForPage(requester)
             .validate(pageRequest);
 
         const pageOfEntities: Pageable<PersonEntity> = await this.personDao.findAll(pageRequest);
@@ -66,6 +67,13 @@ export class PersonCrudService {
         return ValidatorChain.of(
             CanUserUpdatePersonPrimitiveFieldsValidator.of(requester),
             CanUserUpdatePersonPreferencesValidator.of(requester)
+        );
+    }
+
+    private createValidatorsForPage(requester: User): PageRequestValidator {
+        return ValidatorChain.of(
+            PageRequestFieldsValidator.of(personSortableFields, personFilterableFields),
+            CanUserPerformFindValidator.of(requester)
         );
     }
 

@@ -11,8 +11,8 @@ import {EventsFilter} from '../service/events-filter';
 import {HospitalEventsSettingsService} from '@fe/app/events/events-list/service/hospital-events-settings.service';
 import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {filter} from 'rxjs';
-import {reasonIsNotPageData} from '@fe/app/events/events-list/service/event-list-settings-change-reason';
 import {Platform} from '@angular/cdk/platform';
+import {reasonIsNotPageData} from '@fe/app/util/list-page-settings-change-reason';
 
 @Component({
     selector: 'app-event-list-filter',

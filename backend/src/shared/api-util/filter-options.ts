@@ -17,7 +17,7 @@ export interface FilterOperation<T> {
  * Example 2:
  *      [
  *          { firstName: {operator: 'eq', operand: 'Timber'} },
- *          { lastName: "{operator: 'eq', operand: 'Smith'} }
+ *          { lastName: {operator: 'eq', operand: 'Smith'} }
  *      ]
  *     goes to: firstName == 'Timber' OR lastName == 'Smith'
  * Example 3:
