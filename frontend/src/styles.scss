@@ -37,6 +37,10 @@ section {
 
 }
 
+mat-card.form-card {
+    border: solid var(--mdc-outlined-text-field-outline-width) var(--mdc-outlined-text-field-outline-color);
+}
+
 .link {
     color: black;
     text-decoration: none;

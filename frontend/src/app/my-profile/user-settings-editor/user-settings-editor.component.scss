@@ -3,3 +3,7 @@ form {
         width: 100%;
     }
 }
+
+:host ::ng-deep .tab-content {
+    padding-top: 0.5rem;
+}
