@@ -8,7 +8,7 @@
                     @if (canUserStartTheVisit()) {
                         <button mat-flat-button
                                 color="accent"
-                                routerLink="fill-activities">
+                                [routerLink]="['/hospital-visits', visit.id, 'fill-activities']">
                             <mat-icon>rocket_launch</mat-icon>
                             {{ 'HospitalVisit.Start' | translate }}
                         </button>
@@ -16,7 +16,7 @@
                     @if (isStartedAndUserCanContinueTheVisit()) {
                         <button mat-flat-button
                                 color="accent"
-                                routerLink="fill-activities">
+                                [routerLink]="['/hospital-visits', visit.id, 'fill-activities']">
                             <mat-icon>rocket_launch</mat-icon>
                             {{ 'HospitalVisit.ContinueFilling' | translate }}
                         </button>

@@ -112,7 +112,10 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
             return this.visitService.updateVisit(this.visit!.id, data);
         }
         if (data instanceof HospitalVisitCreate) {
-            return this.visitService.addVisit(data).pipe(tap(visit => this.setIdInUrl(visit.id)));
+            return this.visitService.addVisit(data).pipe(tap(visit => {
+                this.visit = visit;
+                this.setIdInUrl(visit.id);
+            }));
         }
         return throwError(() => new Error('Invalid data to save.'));
     }
