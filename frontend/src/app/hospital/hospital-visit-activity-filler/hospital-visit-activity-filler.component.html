@@ -25,7 +25,7 @@
                             color="accent"
                             type="button"
                             [disabled]="!buttonsEnabled"
-                            (click)="startFilling()">
+                            (click)="triggerStartFilling()">
                         {{ 'HospitalVisit.Start' | translate }}
                     </button>
                 </div>
@@ -52,7 +52,7 @@
                             color="accent"
                             type="button"
                             [disabled]="!buttonsEnabled"
-                            (click)="finalizeFilling()">
+                            (click)="triggerFinalizeFilling()">
                         {{ 'HospitalVisit.Finalized' | translate }}
                     </button>
                 </div>

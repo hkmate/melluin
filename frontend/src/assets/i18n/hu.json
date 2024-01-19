@@ -318,7 +318,8 @@
         "WarningOnActivityPresenterWhileActivitiesShouldNotBeThere": "A foglalkozás jelen állapotában nem lenne szabad, hogy legyenek felvéve gyerkek/tevékenységek. Valaki rosszul adminisztrált valamit. Vedd fel a kapcsolatot a koordinátorral vagy a rendszer adminnal.",
         "Start": "Kezdés",
         "ContinueFilling": "Kitöltés folytatása",
-        "Finalized": "Véglegesítés"
+        "Finalized": "Véglegesítés",
+        "AreYouSureFinalize": "Bizotsan véglegesíted?"
     },
     "VisitList": {
         "ListHeader": {

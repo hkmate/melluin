@@ -318,7 +318,8 @@
         "WarningOnActivityPresenterWhileActivitiesShouldNotBeThere": "In the current status of the visit there should not be neither children nor activities. Somebody made an administration mistake. Please contact the coordinator or the system admin.",
         "Start": "Start",
         "ContinueFilling": "Continue filling",
-        "Finalized": "Finalize"
+        "Finalized": "Finalize",
+        "AreYouSureFinalize": "Are you sure you want to finalize?"
     },
     "VisitList": {
         "ListHeader": {

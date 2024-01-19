@@ -10,6 +10,8 @@ import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrit
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
+import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
+import {NOOP} from '@shared/util/util';
 
 @Component({
     selector: 'app-hospital-visit-activity-filler',
@@ -26,6 +28,7 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
 
     constructor(private readonly router: Router,
                 private readonly route: RouteDataHandler,
+                private readonly confirmDialog: ConfirmationService,
                 protected readonly permissions: PermissionService,
                 private readonly visitService: HospitalVisitService,
                 private readonly filler: HospitalVisitActivityFillerService) {
@@ -58,11 +61,24 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
             && this.permissions.has(Permission.canCreateActivity);
     }
 
-    protected startFilling(): void {
+    protected triggerStartFilling(): void {
+        this.startFilling();
+    }
+
+    protected triggerFinalizeFilling(): void {
+        this.confirmDialog.getI18nConfirm({
+            message: 'HospitalVisit.AreYouSureFinalize',
+            okBtnText: 'YesNo.true'
+        })
+            .then(() => this.finalizeFilling())
+            .catch(NOOP);
+    }
+
+    private startFilling(): void {
         this.saveVisit(HospitalVisitStatus.STARTED).then(() => this.filler.statusChanged(HospitalVisitStatus.STARTED));
     }
 
-    protected finalizeFilling(): void {
+    private finalizeFilling(): void {
         this.saveVisit(HospitalVisitStatus.ACTIVITIES_FILLED_OUT)
             .then(() => {
                 this.filler.statusChanged(HospitalVisitStatus.ACTIVITIES_FILLED_OUT);

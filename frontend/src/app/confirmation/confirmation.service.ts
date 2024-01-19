@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
 import {ConfirmationAnswer, ConfirmationDialogConfig} from '@fe/app/confirmation/confirmation-dialog-config';
 import {ConfirmationDialogComponent} from '@fe/app/confirmation/confirmation-dialog/confirmation-dialog.component';
+import {isNilOrEmpty} from '@shared/util/util';
 
 
 @Injectable()
@@ -12,10 +13,19 @@ export class ConfirmationService {
                 private readonly translate: TranslateService) {
     }
 
+    public getI18nConfirm(configOverride: Partial<ConfirmationDialogConfig>): Promise<void> {
+        const config = this.getTranslatedConfig({
+            ...this.getDefaultConfigI18nKeys(),
+            ...configOverride
+        });
+
+        return this.getConfirm(config);
+    }
+
     // eslint-disable-next-line max-lines-per-function
     public getConfirm(configOverride: Partial<ConfirmationDialogConfig>): Promise<void> {
         const config = {
-            ...this.getDefaultConfig(),
+            ...this.getTranslatedConfig(this.getDefaultConfigI18nKeys()),
             ...configOverride
         };
 
@@ -28,15 +38,24 @@ export class ConfirmationService {
                 error: () => reject(),
                 complete: () => resolve()
             });
-        })
+        });
     }
 
-    private getDefaultConfig(): ConfirmationDialogConfig {
+    private getDefaultConfigI18nKeys(): ConfirmationDialogConfig {
         return {
-            title: this.translate.instant('ConfirmDialog.Title'),
+            title: 'ConfirmDialog.Title',
             message: '',
-            okBtnText: this.translate.instant('OkButton'),
-            cancelBtnText: this.translate.instant('CancelButton'),
+            okBtnText: 'OkButton',
+            cancelBtnText: 'CancelButton',
+        };
+    }
+
+    private getTranslatedConfig(config: ConfirmationDialogConfig): ConfirmationDialogConfig {
+        return {
+            title: isNilOrEmpty(config.title) ? '' : this.translate.instant(config.title),
+            message: isNilOrEmpty(config.message) ? '' : this.translate.instant(config.message),
+            okBtnText: isNilOrEmpty(config.okBtnText) ? '' : this.translate.instant(config.okBtnText),
+            cancelBtnText: isNilOrEmpty(config.cancelBtnText) ? '' : this.translate.instant(config.cancelBtnText),
         };
     }
 
