@@ -319,7 +319,11 @@
         "Start": "Kezdés",
         "ContinueFilling": "Kitöltés folytatása",
         "Finalized": "Véglegesítés",
-        "AreYouSureFinalize": "Bizotsan véglegesíted?"
+        "NoChildFail": "Nincs gyerek akivel megtarthatnánk a foglalkozást.",
+        "OtherFail": "Nem tudjuk megtartani a foglalkozást mások miatt.",
+        "AreYouSureFinalize": "Bizotsan véglegesíted?",
+        "AreYouSureFailBecauseNoChild": "Lezárod a foglalkozást gyerekek hiányában?",
+        "AreYouSureFailBecauseOtherReason": "Lezárod a foglalkozást rajtunk kívül álló okból?"
     },
     "VisitList": {
         "ListHeader": {

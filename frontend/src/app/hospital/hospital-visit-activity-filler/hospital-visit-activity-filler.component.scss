@@ -19,6 +19,17 @@
     margin: 1rem 0 0 0;
 }
 
+.fail-btn {
+    margin-top: 3rem;
+
+    button {
+        margin-top: 1rem;
+        text-align: left;
+        font-size: smaller;
+        display: flex;
+    }
+}
+
 .activities-part {
     .children, .activities, .box-info {
         margin-top: 1rem;

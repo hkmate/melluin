@@ -319,7 +319,11 @@
         "Start": "Start",
         "ContinueFilling": "Continue filling",
         "Finalized": "Finalize",
-        "AreYouSureFinalize": "Are you sure you want to finalize?"
+        "NoChildFail": "No child to visit.",
+        "OtherFail": "Can not visit because others.",
+        "AreYouSureFinalize": "Are you sure you want to finalize?",
+        "AreYouSureFailBecauseNoChild": "Set visit to failed because of no child in department?",
+        "AreYouSureFailBecauseOtherReason": "Set visit to failed because a reason beyond our control?"
     },
     "VisitList": {
         "ListHeader": {

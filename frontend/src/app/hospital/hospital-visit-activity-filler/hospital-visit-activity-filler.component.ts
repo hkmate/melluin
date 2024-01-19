@@ -21,7 +21,11 @@ import {NOOP} from '@shared/util/util';
 })
 export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
 
-    Permission: Permission;
+    HospitalVisitStatus = HospitalVisitStatus;
+
+    private static readonly CLOSED_STATUSES = [HospitalVisitStatus.SUCCESSFUL,
+        HospitalVisitStatus.CANCELED, HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD, HospitalVisitStatus.FAILED_FOR_OTHER_REASON];
+
     protected visit: HospitalVisit;
     protected buttonsEnabled = true;
     private resolverSubscription: Subscription;
@@ -56,6 +60,10 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
             && this.canActivitiesBeShowed();
     }
 
+    protected canCloseVisit(): boolean {
+        return !HospitalVisitActivityFillerComponent.CLOSED_STATUSES.includes(this.visit.status);
+    }
+
     protected canVisitBeStarted(): boolean {
         return this.visit?.status === HospitalVisitStatus.SCHEDULED
             && this.permissions.has(Permission.canCreateActivity);
@@ -70,18 +78,29 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
             message: 'HospitalVisit.AreYouSureFinalize',
             okBtnText: 'YesNo.true'
         })
-            .then(() => this.finalizeFilling())
+            .then(() => this.finalizeFilling(HospitalVisitStatus.ACTIVITIES_FILLED_OUT))
             .catch(NOOP);
+    }
+
+    protected triggerFailedVisit(status: HospitalVisitStatus): void {
+        if (![HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD, HospitalVisitStatus.FAILED_FOR_OTHER_REASON].includes(status)) {
+            return;
+        }
+        const msg
+            = status === HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD
+            ? 'HospitalVisit.AreYouSureFailBecauseNoChild'
+            : 'HospitalVisit.AreYouSureFailBecauseOtherReason'
+        this.confirmDialog.getI18nConfirm({message: msg, okBtnText: 'YesNo.true'})
+            .then(() => this.finalizeFilling(status)).catch(NOOP);
     }
 
     private startFilling(): void {
         this.saveVisit(HospitalVisitStatus.STARTED).then(() => this.filler.statusChanged(HospitalVisitStatus.STARTED));
     }
 
-    private finalizeFilling(): void {
-        this.saveVisit(HospitalVisitStatus.ACTIVITIES_FILLED_OUT)
+    private finalizeFilling(status: HospitalVisitStatus): void {
+        this.saveVisit(status)
             .then(() => {
-                this.filler.statusChanged(HospitalVisitStatus.ACTIVITIES_FILLED_OUT);
                 this.router.navigate(['/hospital-visits', this.visit.id]);
             });
     }

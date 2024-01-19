@@ -47,13 +47,32 @@
             }
 
             @if (canActivitiesBeFinalized()) {
-                <div class="finalized-btn" *ngIf="canActivitiesBeFinalized()">
+                <div class="finalized-btn">
                     <button mat-flat-button
                             color="accent"
                             type="button"
                             [disabled]="!buttonsEnabled"
                             (click)="triggerFinalizeFilling()">
                         {{ 'HospitalVisit.Finalized' | translate }}
+                    </button>
+                </div>
+            }
+
+            @if (canCloseVisit()) {
+                <div class="fail-btn">
+                    <button mat-stroked-button
+                            color="warn"
+                            type="button"
+                            [disabled]="!buttonsEnabled"
+                            (click)="triggerFailedVisit(HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD)">
+                        {{ 'HospitalVisit.NoChildFail' | translate }}
+                    </button>
+                    <button mat-stroked-button
+                            color="warn"
+                            type="button"
+                            [disabled]="!buttonsEnabled"
+                            (click)="triggerFailedVisit(HospitalVisitStatus.FAILED_FOR_OTHER_REASON)">
+                        {{ 'HospitalVisit.OtherFail' | translate }}
                     </button>
                 </div>
             }
