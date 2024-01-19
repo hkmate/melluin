@@ -7,18 +7,6 @@ h1, h3 {
     display: inline-block;
 }
 
-.fill-btn {
-    margin-left: 1rem;
-
-    a {
-        color: #1c87cb;
-
-        &:hover {
-            color: #1c87cb;
-        }
-    }
-}
-
 :host ::ng-deep app-visit-status-icon mat-icon {
     font-size: large;
     height: initial;

@@ -3,7 +3,6 @@
         <span class="page-header">
             <h1>{{ 'Titles.EventsList' | translate }}</h1>
             <span>
-                <app-view-type-selector [(viewType)]="viewType"></app-view-type-selector>
                 <span *ngIf="permissions.has(Permission.canCreateVisit)">
                     <a mat-mini-fab
                        color="accent"
@@ -29,14 +28,8 @@
         </div>
 
         <div class="events-list">
-            @if (viewType === ViewType.LIST) {
-                <div *ngFor="let event of eventsList" class="event-card">
-                    <app-hospital-event-card [visit]="event" [needFillButton]="true"></app-hospital-event-card>
-                </div>
-            } @else if (viewType === ViewType.TABLE) {
-                <app-hospital-events-list [eventsList]="eventsList"
-                                          [markRowByDate]="preferences.needHighlight"></app-hospital-events-list>
-            }
+            <app-hospital-events-list [eventsList]="eventsList"
+                                      [markRowByDate]="preferences.needHighlight"></app-hospital-events-list>
 
             @if (!eventsList.length) {
                 {{ 'EventsList.NoEventsFound' | translate }}

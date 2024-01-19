@@ -18,6 +18,7 @@ import {VisitStatusIconComponent} from '@fe/app/hospital/visit/visit-status-icon
         MatCardModule,
         MatChipsModule,
         MatIconModule,
+
         TranslateModule,
 
         PersonNamePipe,

@@ -29,7 +29,6 @@ import {PeopleListFilterComponent} from '@fe/app/people/people-list/people-list-
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {PersonSelectModule} from '@fe/app/util/person-select/person-select.module';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {ViewTypeSelectorComponent} from '@fe/app/util/view-type-selector/view-type-selector.component';
 
 @NgModule({
     imports: [
@@ -50,14 +49,14 @@ import {ViewTypeSelectorComponent} from '@fe/app/util/view-type-selector/view-ty
         MatExpansionModule,
         MatCheckboxModule,
         MatDatepickerModule,
+
         TranslateModule,
 
         PersonNamePipe,
         OptionalPipe,
         LazyInputModule,
         TrimmedTextInputModule,
-        PersonSelectModule,
-        ViewTypeSelectorComponent,
+        PersonSelectModule
     ],
     declarations: [
         PeopleListComponent,

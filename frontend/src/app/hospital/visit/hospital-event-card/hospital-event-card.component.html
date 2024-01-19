@@ -18,13 +18,6 @@
             ({{ visit.department.address }})
         </h3>
 
-        @if (isFillButtonNeeded()) {
-            <span class="fill-btn">
-                <a [routerLink]="['/hospital-visits', visit.id, 'fill-activities']">
-                    <mat-icon>rocket_launch</mat-icon>
-                </a>
-            </span>
-        }
         <mat-chip-listbox>
             @for (participant of visit.participants; track participant.id) {
                 <mat-chip-row [routerLink]="['/people', participant.id]">

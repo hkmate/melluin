@@ -18,7 +18,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {MinToHourPipe} from '@fe/app/util/min-to-hour.pipe';
 import {OptionalPipe} from '@fe/app/util/optional.pipe';
 import {VisitActivityModule} from '@fe/app/hospital/visit-activity/visit-activity.module';
-import {HospitalEventCardModule} from '@fe/app/hospital/visit/hospital-event-card/hospital-event-card.module';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {PersonSelectModule} from '@fe/app/util/person-select/person-select.module';
@@ -47,7 +46,6 @@ import {PersonSelectModule} from '@fe/app/util/person-select/person-select.modul
         MinToHourPipe,
         OptionalPipe,
         VisitActivityModule,
-        HospitalEventCardModule,
         PersonSelectModule
     ],
     declarations: [

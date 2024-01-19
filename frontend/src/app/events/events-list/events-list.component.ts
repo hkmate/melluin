@@ -8,7 +8,6 @@ import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.servic
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
-import {ViewType} from '@fe/app/util/view-type-selector/view-type';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {HospitalEventsSettingsService} from '@fe/app/events/events-list/service/hospital-events-settings.service';
 import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';
@@ -35,7 +34,6 @@ import {reasonIsNotPreferences, reasonIsPreferences} from '@fe/app/util/list-pag
 })
 export class EventsListComponent extends AutoUnSubscriber {
 
-    ViewType = ViewType;
     Permission = Permission;
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -46,7 +44,6 @@ export class EventsListComponent extends AutoUnSubscriber {
     protected size: number;
     protected countOfAll: number;
     protected preferences: EventsListPreferences = {needHighlight: true};
-    protected viewType: ViewType = ViewType.TABLE;
     private sort: SortOptions = {
         dateTimeFrom: 'ASC',
         'department.name': 'ASC'
