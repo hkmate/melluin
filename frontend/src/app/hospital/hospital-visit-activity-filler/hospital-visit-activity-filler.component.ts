@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
-import {firstValueFrom, Subscription} from 'rxjs';
+import {firstValueFrom} from 'rxjs';
 import {Router} from '@angular/router';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
@@ -11,7 +11,9 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
-import {NOOP} from '@shared/util/util';
+import {isNilOrEmpty, NOOP} from '@shared/util/util';
+import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Component({
     selector: 'app-hospital-visit-activity-filler',
@@ -19,7 +21,7 @@ import {NOOP} from '@shared/util/util';
     styleUrls: ['./hospital-visit-activity-filler.component.scss'],
     providers: [RouteDataHandler]
 })
-export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
+export class HospitalVisitActivityFillerComponent extends AutoUnSubscriber implements OnInit {
 
     HospitalVisitStatus = HospitalVisitStatus;
 
@@ -28,26 +30,31 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
 
     protected visit: HospitalVisit;
     protected buttonsEnabled = true;
-    private resolverSubscription: Subscription;
+    protected childrenAdded: boolean;
+    protected activitiesAdded: boolean;
 
     constructor(private readonly router: Router,
                 private readonly route: RouteDataHandler,
                 private readonly confirmDialog: ConfirmationService,
+                private readonly msg: MessageService,
                 protected readonly permissions: PermissionService,
                 private readonly visitService: HospitalVisitService,
                 private readonly filler: HospitalVisitActivityFillerService) {
+        super();
     }
 
     public ngOnInit(): void {
-        this.resolverSubscription = this.route.getData<HospitalVisit | CreateMarkerType>('visit').subscribe(
+        this.addSubscription(this.route.getData<HospitalVisit | CreateMarkerType>('visit'),
             visitInfo => {
                 this.setUp(visitInfo);
             }
         );
-    }
-
-    public ngOnDestroy(): void {
-        this.resolverSubscription?.unsubscribe();
+        this.addSubscription(this.filler.getChildren(), children => {
+            this.childrenAdded = !isNilOrEmpty(children);
+        });
+        this.addSubscription(this.filler.getActivities(), activities => {
+            this.activitiesAdded = !isNilOrEmpty(activities);
+        });
     }
 
     protected canActivitiesBeShowed(): boolean {
@@ -60,8 +67,8 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
             && this.canActivitiesBeShowed();
     }
 
-    protected canCloseVisit(): boolean {
-        return !HospitalVisitActivityFillerComponent.CLOSED_STATUSES.includes(this.visit.status);
+    protected canSetVisitToFailed(): boolean {
+        return !this.childrenAdded && !HospitalVisitActivityFillerComponent.CLOSED_STATUSES.includes(this.visit.status);
     }
 
     protected canVisitBeStarted(): boolean {
@@ -74,6 +81,9 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
     }
 
     protected triggerFinalizeFilling(): void {
+        if (!this.isVisitFilled()) {
+            this.msg.warning('HospitalVisit.FillingIsNotCompleted');
+        }
         this.confirmDialog.getI18nConfirm({
             message: 'HospitalVisit.AreYouSureFinalize',
             okBtnText: 'YesNo.true'
@@ -92,6 +102,10 @@ export class HospitalVisitActivityFillerComponent implements OnInit, OnDestroy {
             : 'HospitalVisit.AreYouSureFailBecauseOtherReason'
         this.confirmDialog.getI18nConfirm({message: msg, okBtnText: 'YesNo.true'})
             .then(() => this.finalizeFilling(status)).catch(NOOP);
+    }
+
+    private isVisitFilled(): boolean {
+        return this.childrenAdded && this.activitiesAdded;
     }
 
     private startFilling(): void {

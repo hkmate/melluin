@@ -323,7 +323,8 @@
         "OtherFail": "Nem tudjuk megtartani a foglalkozást mások miatt.",
         "AreYouSureFinalize": "Bizotsan véglegesíted?",
         "AreYouSureFailBecauseNoChild": "Lezárod a foglalkozást gyerekek hiányában?",
-        "AreYouSureFailBecauseOtherReason": "Lezárod a foglalkozást rajtunk kívül álló okból?"
+        "AreYouSureFailBecauseOtherReason": "Lezárod a foglalkozást rajtunk kívül álló okból?",
+        "FillingIsNotCompleted": "Hiányos az adatlap!"
     },
     "VisitList": {
         "ListHeader": {

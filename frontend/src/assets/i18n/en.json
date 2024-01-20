@@ -323,7 +323,8 @@
         "OtherFail": "Can not visit because others.",
         "AreYouSureFinalize": "Are you sure you want to finalize?",
         "AreYouSureFailBecauseNoChild": "Set visit to failed because of no child in department?",
-        "AreYouSureFailBecauseOtherReason": "Set visit to failed because a reason beyond our control?"
+        "AreYouSureFailBecauseOtherReason": "Set visit to failed because a reason beyond our control?",
+        "FillingIsNotCompleted": "Data missing!"
     },
     "VisitList": {
         "ListHeader": {

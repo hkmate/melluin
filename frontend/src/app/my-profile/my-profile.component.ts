@@ -51,7 +51,7 @@ export class MyProfileComponent extends AutoUnSubscriber implements OnInit {
     }
 
     private setupEditMode(): void {
-        this.addSubscription(this.route.subscribeToParam('edit'), (edit: string) => {
+        this.addSubscription(this.route.subscribeToParam('edit'), (edit?: string) => {
             this.editMode = Boolean(edit);
             if (!this.canWriteSelf()) {
                 this.editMode = false;

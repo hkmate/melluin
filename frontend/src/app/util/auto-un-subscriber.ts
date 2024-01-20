@@ -11,7 +11,7 @@ export abstract class AutoUnSubscriber implements OnDestroy {
         this.subscriptions = [];
     }
 
-    protected addSubscription<T>(obs: Observable<T>, observer: Partial<Observer<T> | ((value: T) => void)>): void {
+    protected addSubscription<T>(obs: Observable<T>, observer: Partial<Observer<T>> | ((value: T) => void)): void {
         this.subscriptions.push(obs.subscribe(observer));
     }
 
