@@ -44,6 +44,11 @@ export class TrimmedTextInputComponent implements ControlValueAccessor {
         this.value = obj;
     }
 
+    protected valueChanged(newValue: string): void {
+        this.value = newValue;
+        this.onChange(this.value);
+    }
+
     protected focusLost(): void {
         if (isNotNil(this.value)) {
             this.value = this.value.trim();

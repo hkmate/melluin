@@ -123,7 +123,6 @@ export class MyProfileEditorComponent {
 
     private parsePersonForm(): PersonRewrite {
         return {
-            ...this.originalPerson,
             firstName: this.personForm.controls.firstName.value,
             lastName: this.personForm.controls.lastName.value,
             email: this.personForm.controls.email.value,

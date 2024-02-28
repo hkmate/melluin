@@ -4,7 +4,8 @@
            [attr.type]="type"
            [attr.autocomplete]="autocomplete"
            [placeholder]="placeholder"
-           [(ngModel)]="value"
+           [ngModel]="value"
+           (ngModelChange)="valueChanged($event)"
            [ngModelOptions]="{standalone: true}"
            (blur)="focusLost()">
 </mat-form-field>
