@@ -5,6 +5,7 @@ import {BoxStatusWithDepartmentBrief} from '@shared/department/box/department-bo
 import {dateIntervalGeneratorFactory, DateIntervalSpecifier} from '@shared/util/date-interval-generator';
 import {FilterOperationBuilder} from '@shared/api-util/filter-options';
 import {PageQuery} from '@shared/api-util/pageable';
+import _ from 'lodash';
 
 @Component({
     selector: 'app-box-info-widget',
@@ -13,14 +14,18 @@ import {PageQuery} from '@shared/api-util/pageable';
 })
 export class BoxInfoWidgetComponent implements OnInit {
 
-    @Input()
-    dateInterval: DateIntervalSpecifier = DateIntervalSpecifier.LAST_MONTH;
+    private static readonly defaultDateInterval = DateIntervalSpecifier.LAST_MONTH;
+    private static readonly defaultReasons = Object.values(BoxStatusChangeReason).filter(r => r !== BoxStatusChangeReason.CORRECTED);
+    private static readonly defaultLimit = 10;
 
     @Input()
-    reasons: Array<BoxStatusChangeReason> = Object.values(BoxStatusChangeReason).filter(r => r !== BoxStatusChangeReason.CORRECTED);
+    dateInterval?: DateIntervalSpecifier;
 
     @Input()
-    limit: number = 10;
+    reasons?: Array<BoxStatusChangeReason>;
+
+    @Input()
+    limit?: number;
 
     protected boxInfo: Array<BoxStatusWithDepartmentBrief>;
 
@@ -38,13 +43,14 @@ export class BoxInfoWidgetComponent implements OnInit {
     }
 
     private generatePageQuery(): PageQuery {
-        const startDate = dateIntervalGeneratorFactory(this.dateInterval).generate().dateFrom;
+        const startDate = dateIntervalGeneratorFactory(
+            _.defaultTo(this.dateInterval, BoxInfoWidgetComponent.defaultDateInterval)).generate().dateFrom;
         return {
             page: 1,
-            size: this.limit,
+            size: _.defaultTo(this.limit, BoxInfoWidgetComponent.defaultLimit),
             where: {
                 'dateTime': FilterOperationBuilder.gte(startDate),
-                'reason': FilterOperationBuilder.in(this.reasons)
+                'reason': FilterOperationBuilder.in(_.defaultTo(this.reasons, BoxInfoWidgetComponent.defaultReasons))
             },
             sort: {dateTime: 'DESC'}
         };

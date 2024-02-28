@@ -8,6 +8,7 @@ import {MessageService} from '@fe/app/util/message.service';
 import {UserService} from '@fe/app/people/user.service';
 import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
 import * as  _ from 'lodash';
+import {isNotEmpty} from '@shared/util/util';
 
 @Component({
     selector: 'app-user-department-box-widget-settings',
@@ -39,8 +40,10 @@ export class UserDepartmentBoxWidgetSettingsComponent extends CustomUserSettings
 
     protected override generateNewSettings(): UserSettings {
         const newSettings = _.defaultsDeep({}, this.settings);
+        const reasons = this.form.value.reasons;
         _.set(newSettings, 'dashboard.widgets.departmentBox', {
             ...this.form.value,
+            reasons: isNotEmpty(reasons) ? reasons : undefined,
             type: 'DEPARTMENT_BOX'
         } satisfies DepartmentBoxWidgetSettings);
         return newSettings;
