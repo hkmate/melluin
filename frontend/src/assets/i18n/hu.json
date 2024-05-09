@@ -269,8 +269,6 @@
         "NoStatusYet": "Nincs még leadott doboz info",
         "Reason": "Report oka",
         "AffectedObject": "Érintett eszköz",
-        "AffectedObjectPlaceholder": "Ragasztó...",
-        "AffectedObjectHint": "Egyelőre csak egy eszközt írj 1-1 reportba légyszíves. Később lesz lehetőség több felvételére egyben is.",
         "Comment": "Egyéb megjegyzés",
         "CommentPlaceholder": "Ráférne egy rendberakás"
     },

@@ -13,17 +13,11 @@
 
             <mat-form-field>
                 <mat-label>{{ 'BoxStatus.AffectedObject' | translate }}</mat-label>
-                <input type="text"
-                       matInput
-                       [placeholder]="'BoxStatus.AffectedObjectPlaceholder' | translate"
-                       formControlName="affectedObject"
-                       [matAutocomplete]="auto">
-                <mat-hint>{{ 'BoxStatus.AffectedObjectHint' | translate }}</mat-hint>
-                <mat-autocomplete #auto="matAutocomplete">
+                <mat-select formControlName="affectedObject">
                     @for (option of affectedObjectsOptions; track option) {
                         <mat-option [value]="option">{{ option }}</mat-option>
                     }
-                </mat-autocomplete>
+                </mat-select>
             </mat-form-field>
 
             <app-trimmed-text-input

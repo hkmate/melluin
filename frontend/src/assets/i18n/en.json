@@ -269,8 +269,6 @@
         "NoStatusYet": "There is no box status info yet",
         "Reason": "Reason",
         "AffectedObject": "Affected object",
-        "AffectedObjectPlaceholder": "Ragasztó...",
-        "AffectedObjectHint": "Please add just one object at one time. Soon it will be possible to add more.",
         "Comment": "Comment",
         "CommentPlaceholder": "Ráférne egy rendberakás"
     },
