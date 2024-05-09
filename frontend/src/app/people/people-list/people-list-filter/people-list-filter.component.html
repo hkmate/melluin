@@ -39,7 +39,7 @@
     <div class="is-active-card">
         <mat-card>
             <mat-card-subtitle>
-                <mat-checkbox [(ngModel)]="filters.isActive" (ngModelChange)="filterSet()">
+                <mat-checkbox [(ngModel)]="filters.onlyActive" (ngModelChange)="filterSet()">
                     {{ 'PeopleListPage.Filter.IsActive' | translate }}
                 </mat-checkbox>
             </mat-card-subtitle>

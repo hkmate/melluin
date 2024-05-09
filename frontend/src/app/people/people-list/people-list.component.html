@@ -33,7 +33,7 @@
                 <td mat-cell *matCellDef="let person">
                     <a class="link" [routerLink]="[person.id]">{{ person | personName }}</a>
 
-                    @if (person.user) {
+                    @if (person.user?.isActive) {
                         <mat-icon class="material-icons-outlined is-user-icon">badge</mat-icon>
                     }
                 </td>

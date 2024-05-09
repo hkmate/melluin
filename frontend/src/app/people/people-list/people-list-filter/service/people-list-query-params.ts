@@ -4,6 +4,6 @@ export enum PeopleListQueryParams {
     email = 'email',
     phone = 'phone',
     role = 'role',
-    isActive = 'isActive'
+    onlyActive = 'onlyActive'
 
 }

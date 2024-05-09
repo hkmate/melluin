@@ -31,7 +31,7 @@ export class PeopleListQueryParamSettingsInitializer {
         result.name = '';
         result.email = '';
         result.phone = '';
-        result.isActive = true;
+        result.onlyActive = true;
         result.role = [];
         return result;
     }
@@ -77,11 +77,11 @@ export class PeopleListQueryParamSettingsInitializer {
     }
 
     private decorateIsActive(preferences: PeopleFilter): void {
-        const isActive = this.urlParamHandler.getParam(PeopleListQueryParams.isActive);
-        if (isNil(isActive)) {
+        const onlyActive = this.urlParamHandler.getParam(PeopleListQueryParams.onlyActive);
+        if (isNil(onlyActive)) {
             return;
         }
-        preferences.isActive = (isActive.toLowerCase() === 'true');
+        preferences.onlyActive = (onlyActive.toLowerCase() === 'true');
     }
 
     private decoratePageNumber(pageInfo: PageInfo): void {

@@ -5,7 +5,7 @@ export class PeopleFilter {
     public name: string;
     public email: string;
     public phone: string;
-    public isActive: boolean;
+    public onlyActive: boolean;
     public role: Array<Role>;
 
 }

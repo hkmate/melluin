@@ -45,7 +45,7 @@ export class PeopleListQueryParamHandler extends AutoUnSubscriber {
             [PeopleListQueryParams.name]: emptyToUndef(filter?.name),
             [PeopleListQueryParams.email]: emptyToUndef(filter?.email),
             [PeopleListQueryParams.phone]: emptyToUndef(filter?.phone),
-            [PeopleListQueryParams.isActive]: (filter?.isActive ? 'true' : undefined),
+            [PeopleListQueryParams.onlyActive]: (filter?.onlyActive ? 'true' : undefined),
             [PeopleListQueryParams.role]: emptyToUndef(filter?.role),
         };
 

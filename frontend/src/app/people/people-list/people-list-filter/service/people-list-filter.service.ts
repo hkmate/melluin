@@ -105,7 +105,7 @@ class PeopleListFilterOptionGenerator {
     }
 
     private decorateIsActive(filter: PeopleFilter): void {
-        if (filter.isActive) {
+        if (!filter.onlyActive) {
             return;
         }
         this.options['user.isActive'] = FilterOperationBuilder.eq(true);
