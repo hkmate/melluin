@@ -1,7 +1,10 @@
-import {Component, forwardRef, Input} from '@angular/core';
-import {PersonIdentifier} from '@shared/person/person';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Person, PersonIdentifier} from '@shared/person/person';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {isNil, NOOP, VoidFunc} from '@shared/util/util';
+import {CachedPeopleService} from '@fe/app/people/cached-people.service';
+import {Role} from '@shared/user/role.enum';
+import {FilteringInfo} from '@shared/api-util/pageable';
 
 @Component({
     selector: 'app-person-select',
@@ -13,7 +16,9 @@ import {isNil, NOOP, VoidFunc} from '@shared/util/util';
         multi: true
     }]
 })
-export class PersonSelectComponent implements ControlValueAccessor {
+export class PersonSelectComponent implements ControlValueAccessor, OnInit {
+
+    private readonly cacheName = 'peopleFilter';
 
     @Input()
     public label: string;
@@ -23,14 +28,15 @@ export class PersonSelectComponent implements ControlValueAccessor {
 
     private onChange: (x: Array<string>) => void = NOOP;
     private onTouch: VoidFunc = NOOP;
-    private peopleOptions: Array<PersonIdentifier>
+    private peopleOptions: Array<PersonIdentifier>;
+
     private personIds: Array<string>;
 
-    @Input()
-    public set options(value: Array<PersonIdentifier>) {
-        this.peopleOptions = value;
-        this.filteredOptions = value;
-        this.setupPeople();
+    constructor(private readonly personService: CachedPeopleService) {
+    }
+
+    public ngOnInit(): void {
+        this.initPersonOptions();
     }
 
     public writeValue(personIds: Array<string>): void {
@@ -69,6 +75,29 @@ export class PersonSelectComponent implements ControlValueAccessor {
             return;
         }
         this.people = this.peopleOptions.filter(p => this.personIds.includes(p.id));
+    }
+
+    private initPersonOptions(): void {
+        this.personService.loadAllPeople(this.getFilterOptions(), this.cacheName).subscribe(
+            (peopleOptions: Array<Person>) => {
+                this.peopleOptions = peopleOptions;
+                this.filteredOptions = [...this.peopleOptions];
+                this.setupPeople();
+            }
+        );
+    }
+
+    private getFilterOptions(): FilteringInfo {
+        return {
+            sort: {'lastName': 'ASC', 'firstName': 'ASC'},
+            where: [{
+                'user.isActive': {operator: 'eq', operand: true},
+                'user.roles': {
+                    operator: 'in',
+                    operand: [Role.HOSPITAL_VISITOR, Role.BEGINNER_HOSPITAL_VISITOR, Role.MENTOR_HOSPITAL_VISITOR]
+                }
+            }]
+        };
     }
 
 }

@@ -11,7 +11,7 @@
         <mat-form-field>
             <mat-label>{{ 'HospitalVisit.Form.Department' | translate }}</mat-label>
             <mat-select formControlName="departmentId">
-                @for (option of departmentOptions;track option.id) {
+                @for (option of departmentOptions; track option.id) {
                     <mat-option [value]="option.id"> {{ option.name }}</mat-option>
                 }
             </mat-select>
@@ -20,7 +20,6 @@
 
     <div class="participant-selector">
         <app-person-select [label]="'HospitalVisit.Form.Participants' | translate"
-                           [options]="personOptions"
                            formControlName="participantIds"></app-person-select>
     </div>
 

@@ -8,7 +8,6 @@ import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status'
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {Department} from '@shared/department/department';
 import {Person} from '@shared/person/person';
-import {PeopleService} from '@fe/app/people/people.service';
 import {Pageable} from '@shared/api-util/pageable';
 import {EventVisibility} from '@shared/event/event-visibility';
 import {User} from '@shared/user/user';
@@ -56,8 +55,7 @@ export class HospitalVisitFormComponent extends AutoUnSubscriber implements OnIn
     constructor(private readonly fb: FormBuilder,
                 private readonly platform: Platform,
                 private readonly store: Store,
-                private readonly departmentService: DepartmentService,
-                private readonly personService: PeopleService) {
+                private readonly departmentService: DepartmentService) {
         super();
     }
 
@@ -102,7 +100,6 @@ export class HospitalVisitFormComponent extends AutoUnSubscriber implements OnIn
     private initForm(): void {
         this.buildFormGroup();
         this.initStatusOptions();
-        this.initPersonOptions();
         this.initDepartmentOptions();
         this.initCountedHours();
     }
@@ -138,19 +135,6 @@ export class HospitalVisitFormComponent extends AutoUnSubscriber implements OnIn
         this.departmentService.findDepartments({page: 1, size: 100}).subscribe(
             (departmentPage: Pageable<Department>) => {
                 this.departmentOptions = departmentPage.items;
-            }
-        );
-    }
-
-    private initPersonOptions(): void {
-        this.personService.findPeople({
-            page: 1,
-            size: 100,
-            sort: {'lastName': 'ASC', 'firstName': 'ASC'},
-            where: {'user.isActive': {operator: 'eq', operand: true}}
-        }).subscribe(
-            (personPageable: Pageable<Person>) => {
-                this.personOptions = personPageable.items;
             }
         );
     }

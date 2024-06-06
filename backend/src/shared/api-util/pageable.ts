@@ -12,10 +12,12 @@ export interface PageInfo {
     size: number;
 }
 
-export interface PageQuery extends PageInfo {
+export interface FilteringInfo {
     sort?: SortOptions;
     where?: FilterOptions;
 }
+
+export type PageQuery = PageInfo & FilteringInfo;
 
 export interface Pageable<T> {
     items: Array<T>;
