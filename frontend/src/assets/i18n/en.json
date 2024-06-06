@@ -115,7 +115,7 @@
         "LastPageLabel": "Last",
         "NextPageLabel": "Next",
         "PreviousPageLabel": "Previous",
-        "PageOfLabel": "Page {{page}} or {{count}}"
+        "PageOfLabel": "{{first}}-{{last}} / {{total}}  (Page {{page}}/{{totalPages}})"
     },
     "LoginPage": {
         "FieldsRequired": "Both username and password are required",

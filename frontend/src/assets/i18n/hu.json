@@ -115,7 +115,7 @@
         "LastPageLabel": "Utolsó oldal",
         "NextPageLabel": "Következő",
         "PreviousPageLabel": "Előző",
-        "PageOfLabel": "{{page}} / {{count}} oldal"
+        "PageOfLabel": "{{first}}-{{last}} / {{total}}  (Oldal: {{page}}/{{totalPages}})"
     },
     "LoginPage": {
         "FieldsRequired": "Felhasználónév és a jelszó megadása is kötelező",

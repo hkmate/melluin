@@ -21,14 +21,15 @@ export class I18nPaginatorIntl implements MatPaginatorIntl {
         this.previousPageLabel = this.i18n.instant('Paginator.PreviousPageLabel');
     }
 
-    public getRangeLabel(page: number, pageSize: number, length: number): string {
-        /* eslint-disable @typescript-eslint/no-magic-numbers*/
-        if (length === 0) {
-            return this.i18n.instant('Paginator.PageOfLabel', {page: 0, count: 0});
+    public getRangeLabel(page: number, pageSize: number, total: number): string {
+        const pageInfo = {page, totalPages: 0, first: 0, last: 0, total}
+        if (total !== 0) {
+            pageInfo.totalPages = Math.ceil(total / pageSize);
+            pageInfo.first = pageInfo.page * pageSize + 1;
+            pageInfo.last = Math.min(pageInfo.first + pageSize, total);
+            pageInfo.page++;
         }
-        const amountPages = Math.ceil(length / pageSize);
-        return this.i18n.instant('Paginator.PageOfLabel', {page: page + 1, count: amountPages});
-        /* eslint-enable */
+        return this.i18n.instant('Paginator.PageOfLabel', pageInfo);
     }
 
 }
