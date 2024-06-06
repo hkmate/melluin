@@ -1,0 +1,19 @@
+<section>
+    <div class="page-content">
+
+        @if (linkForChild) {
+            <div class="questionnaire-link">
+                <a class="link" [href]="linkForChild" target="_blank">{{ 'Questionnaire.ForChild' | translate }}</a>
+                <app-copier [value]="linkForChild"></app-copier>
+            </div>
+        }
+
+        @if (linkForParent) {
+            <div class="questionnaire-link">
+                <a class="link" [href]="linkForParent" target="_blank">{{ 'Questionnaire.ForParent' | translate }}</a>
+                <app-copier [value]="linkForParent"></app-copier>
+            </div>
+        }
+
+    </div>
+</section>

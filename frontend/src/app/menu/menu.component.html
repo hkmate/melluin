@@ -24,6 +24,7 @@
                     {{ 'Menu.Departments' | translate }}
                 </a>
                 <a *ngIf="canUserSee?.admin" mat-list-item routerLink="/admin">{{ 'Menu.System' | translate }}</a>
+                <a *ngIf="isThereQuestionnaire()" mat-list-item routerLink="/questionnaire">{{ 'Menu.Questionnaire' | translate }}</a>
                 <mat-divider></mat-divider>
                 <a mat-list-item routerLink="/dashboard">{{ 'Menu.Dashboard' | translate }}</a>
                 <mat-divider></mat-divider>

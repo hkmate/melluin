@@ -1,0 +1,16 @@
+
+
+.questionnaire-link {
+
+    margin-top: 1.5em;
+    margin-left: .5em;
+
+    a {
+        font-size: large;
+        margin-right: .5em;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: 1em;
+    }
+}

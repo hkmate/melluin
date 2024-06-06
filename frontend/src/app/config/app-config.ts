@@ -4,6 +4,8 @@ import {firstValueFrom} from 'rxjs';
 
 export interface AppConfiguration {
     baseURL: string;
+    questionnaireForChild?: string;
+    questionnaireForParent?: string;
 }
 
 @Injectable()
@@ -25,7 +27,7 @@ export class AppConfig {
     }
 
     public static get(key: keyof AppConfiguration): string {
-        return AppConfig.config[key];
+        return AppConfig.config[key] ?? '';
     }
 
 }

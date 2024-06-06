@@ -106,7 +106,8 @@
         "Departments": "Kórházi osztályok",
         "System": "Rendszer",
         "Logout": "Kijelentkezés",
-        "Dashboard": "Infók"
+        "Dashboard": "Infók",
+        "Questionnaire": "Kérdőívek"
     },
     "Paginator": {
         "FirstPageLabel": "Első oldal",
@@ -366,5 +367,9 @@
             "NameColHeader": "Szerepkör",
             "PermissionsColHeader": "Jogosultságok"
         }
+    },
+    "Questionnaire": {
+        "ForChild": "Kérdőív gyerekeknek",
+        "ForParent": "Kérdőív szülőknek"
     }
 }

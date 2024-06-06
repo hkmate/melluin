@@ -21,6 +21,7 @@ import {VisitActivityModule} from '@fe/app/hospital/visit-activity/visit-activit
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {PersonSelectModule} from '@fe/app/util/person-select/person-select.module';
+import {CopierComponent} from '@fe/app/util/copier/copier.component';
 
 @NgModule({
     imports: [
@@ -46,7 +47,8 @@ import {PersonSelectModule} from '@fe/app/util/person-select/person-select.modul
         MinToHourPipe,
         OptionalPipe,
         VisitActivityModule,
-        PersonSelectModule
+        PersonSelectModule,
+        CopierComponent
     ],
     declarations: [
         HospitalVisitDetailsComponent,

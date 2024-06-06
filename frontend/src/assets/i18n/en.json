@@ -106,7 +106,8 @@
         "Departments": "Departments",
         "System": "System",
         "Logout": "Log out",
-        "Dashboard": "Dashboard"
+        "Dashboard": "Dashboard",
+        "Questionnaire": "Questionnaires"
     },
     "Paginator": {
         "FirstPageLabel": "First",
@@ -366,5 +367,9 @@
             "NameColHeader": "Role",
             "PermissionsColHeader": "Permissions"
         }
+    },
+    "Questionnaire": {
+        "ForChild": "Questionnaire for child",
+        "ForParent": "Questionnaire for parent"
     }
 }

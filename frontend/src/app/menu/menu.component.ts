@@ -9,6 +9,7 @@ import {Store} from '@ngrx/store';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {Actions, ofType} from '@ngrx/effects';
 import {AppActions} from '@fe/app/state/app-actions';
+import {AppConfig} from '@fe/app/config/app-config';
 
 @Component({
     selector: 'app-menu',
@@ -53,6 +54,11 @@ export class MenuComponent extends AutoUnSubscriber implements OnInit {
 
     protected logout(): void {
         this.authService.logout();
+    }
+
+    protected isThereQuestionnaire(): boolean {
+        return !isNilOrEmpty(AppConfig.get('questionnaireForChild'))
+            || !isNilOrEmpty(AppConfig.get('questionnaireForParent'));
     }
 
     private initializeVisibilityOfMenuItems(): void {

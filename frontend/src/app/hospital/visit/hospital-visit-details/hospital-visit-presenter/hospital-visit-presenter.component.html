@@ -1,9 +1,7 @@
 <h1>
     {{ 'HospitalVisit.Title' | translate }}
 
-    <a class="copy-link" (click)="copyLink()">
-        <mat-icon>link</mat-icon>
-    </a>
+    <app-copier [value]="selfLink()"></app-copier>
 </h1>
 
 <div class="hospital-visit-data-presenter">

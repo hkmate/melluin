@@ -60,6 +60,10 @@ const routes: Routes = [
         loadChildren: () => import('./sysadmin/sysadmin-routing.module').then(m => m.SysadminRoutingModule)
     },
     {
+        path: PATHS.questionnaire.main,
+        loadChildren: () => import('./questionnaire/questionnaire-routing.module').then(m => m.QuestionnaireRoutingModule)
+    },
+    {
         path: '',
         canMatch: [AuthGuardFn],
         component: NavigatorComponent

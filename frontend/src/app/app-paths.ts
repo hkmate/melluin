@@ -43,6 +43,10 @@ export const PATHS: PathContainer = {
     sysadmin: {
         main: 'admin',
         roles: 'roles'
+    },
+
+    questionnaire: {
+        main: 'questionnaire'
     }
 
 };
