@@ -94,7 +94,8 @@ export class PersonSelectComponent implements ControlValueAccessor, OnInit {
                 'user.isActive': {operator: 'eq', operand: true},
                 'user.roles': {
                     operator: 'in',
-                    operand: [Role.HOSPITAL_VISITOR, Role.BEGINNER_HOSPITAL_VISITOR, Role.MENTOR_HOSPITAL_VISITOR]
+                    operand: [Role.HOSPITAL_VISITOR, Role.BEGINNER_HOSPITAL_VISITOR, Role.MENTOR_HOSPITAL_VISITOR,
+                        Role.INTERN_HOSPITAL_VISITOR, Role.HOSPITAL_VISIT_COORDINATOR]
                 }
             }]
         };
