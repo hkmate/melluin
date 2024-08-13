@@ -86,24 +86,11 @@
                         "buildTarget": "melluin_fe:build"
                     }
                 },
-                "lint": {
-                    "builder": "@angular-eslint/builder:lint",
-                    "options": {
-                        "eslintConfig": ".eslintrc.json",
-                        "lintFilePatterns": [
-                            "**/*.spec.ts",
-                            "**/*.ts"
-                        ]
-                    }
-                },
                 "test": {
-                    "builder": "@angular-devkit/build-angular:jest",
+                    "builder": "@angular-builders/jest:run",
                     "options": {
-                        "tsConfig": "tsconfig.spec.json",
-                        "polyfills": [
-                            "zone.js",
-                            "zone.js/testing"
-                        ]
+                        "configPath": "jest.config.ts",
+                        "tsConfig": "tsconfig.spec.json"
                     }
                 }
             }
