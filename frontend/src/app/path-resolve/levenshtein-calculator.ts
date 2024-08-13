@@ -13,7 +13,7 @@ export class LevenshteinCalculator {
         return this.createLevenshteinMatrix(a, b)[b.length][a.length];
     }
 
-    /* eslint-disable max-lines-per-function, @typescript-eslint/array-type, @typescript-eslint/no-magic-numbers */
+    /* eslint-disable max-lines-per-function, @typescript-eslint/array-type */
     private static createLevenshteinMatrix(a: string, b: string): number[][] {
         const matrix: number[][] = [];
         for (let i = 0; i <= b.length; i++) {
