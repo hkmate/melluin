@@ -10,12 +10,16 @@
     </div>
 
     <div>
-        <app-trimmed-text-input formControlName="password"
-                                type="password"
-                                autocomplete="off"
-                                [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
-                                [label]="'PersonPage.User.Form.Password'| translate">
-        </app-trimmed-text-input>
+        <mat-form-field>
+            <mat-label>{{ 'PersonPage.User.Form.Password' | translate }}</mat-label>
+            <input matInput
+                   type="password"
+                   formControlName="password"
+                   autocomplete="new-password"
+                   [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate">
+            <mat-hint>{{ 'PersonPage.User.Form.PasswordHint' | translate }}</mat-hint>
+            <mat-hint>{{ 'PersonPage.User.Form.PasswordPatternHint' | translate : {passwordMinLength} }}</mat-hint>
+        </mat-form-field>
     </div>
 
     <div class="status-card">

@@ -4,7 +4,7 @@ import {Person} from '@shared/person/person';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MessageService} from '@fe/app/util/message.service';
 import {anyNil, isNilOrEmpty} from '@shared/util/util';
-import {passwordMinLength} from '@shared/constants';
+import {passwordMinLength, passwordPattern} from '@shared/constants';
 import {PeopleService} from '@fe/app/people/people.service';
 import {UserService} from '@fe/app/people/user.service';
 import {PersonRewrite} from '@shared/person/person-rewrite';
@@ -19,6 +19,8 @@ import {Store} from '@ngrx/store';
     styleUrls: ['./my-profile-editor.component.scss']
 })
 export class MyProfileEditorComponent {
+
+    protected readonly passwordMinLength = passwordMinLength;
 
     @Output()
     public editEnded = new EventEmitter<void>();
@@ -117,7 +119,7 @@ export class MyProfileEditorComponent {
         });
         this.userForm = this.fb.group({
             userName: [this.originalUser.userName],
-            password: [undefined, [Validators.minLength(passwordMinLength)]]
+            password: [undefined, [Validators.pattern(passwordPattern)]]
         });
     }
 
@@ -135,12 +137,14 @@ export class MyProfileEditorComponent {
     }
 
     private parseUserForm(): UserRewrite {
-        const newPassword = this.personForm.controls.password.value;
+        const newPassword = this.userForm.controls.password.value;
         return {
-            ...this.originalUser,
-            userName: this.personForm.controls.userName.value,
+            userName: this.userForm.controls.userName.value,
             password: isNilOrEmpty(newPassword) ? undefined : newPassword,
-        }
+            isActive: this.originalUser.isActive,
+            roles: this.originalUser.roles,
+            customPermissions: this.originalUser.customPermissions
+        };
     }
 
 }
