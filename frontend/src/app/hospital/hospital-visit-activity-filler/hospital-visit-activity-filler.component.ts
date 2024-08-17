@@ -82,7 +82,8 @@ export class HospitalVisitActivityFillerComponent extends AutoUnSubscriber imple
 
     protected triggerFinalizeFilling(): void {
         if (!this.isVisitFilled()) {
-            this.msg.warning('HospitalVisit.FillingIsNotCompleted');
+            this.msg.error('HospitalVisit.FillingIsNotCompleted');
+            return;
         }
         this.confirmDialog.getI18nConfirm({
             message: 'HospitalVisit.AreYouSureFinalize',

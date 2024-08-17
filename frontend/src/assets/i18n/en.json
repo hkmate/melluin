@@ -271,7 +271,8 @@
         "Reason": "Reason",
         "AffectedObject": "Affected object",
         "Comment": "Comment",
-        "CommentPlaceholder": "Ráférne egy rendberakás"
+        "CommentPlaceholder": "Ráférne egy rendberakás",
+        "ReasonIsRequired": "No reason selected"
     },
     "EventsList": {
         "MarkRowByDate": "Mark rows by date",
