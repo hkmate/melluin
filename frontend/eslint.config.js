@@ -5,12 +5,6 @@ const maxParamsNoConstr = require('eslint-plugin-max-params-no-constructor');
 
 module.exports = tseslint.config(
     {
-        ignores: [
-            "*",
-            "!src/"
-        ]
-    },
-    {
         files: ['**/*.ts'],
         extends: [
             eslint.configs.recommended,
