@@ -197,6 +197,7 @@
                 "Password": "Password",
                 "PasswordPlaceholder": "askjRSsdfkFSDf234lsdf3241",
                 "PasswordHint": "If you leave this empty the user's password won't change",
+                "PasswordPatternHint": "Min length: {{passwordMinLength}}.",
                 "Roles": "Roles",
                 "Permissions": "Permissions",
                 "Status": "Status"

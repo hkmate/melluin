@@ -197,6 +197,7 @@
                 "Password": "Jelszó",
                 "PasswordPlaceholder": "askjRSsdfkFSDf234lsdf3241",
                 "PasswordHint": "Ha üresen hagyod akkor nem változik a felhasználó jelszava.",
+                "PasswordPatternHint": "A jelszó kis- és nagybetűket valamint számokat tartalmazhat. Minimális hossza: {{passwordMinLength}}",
                 "Roles": "Szerepkörök",
                 "Permissions": "Jogosultságok",
                 "Status": "Státusz"

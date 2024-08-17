@@ -5,7 +5,7 @@ import {UserRewrite} from '@shared/user/user-rewrite';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Role} from '@shared/user/role.enum';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {passwordMinLength} from '@shared/constants';
+import {passwordMinLength, passwordPattern} from '@shared/constants';
 import {Permission} from '@shared/user/permission.enum';
 
 @Component({
@@ -15,6 +15,7 @@ import {Permission} from '@shared/user/permission.enum';
 })
 export class UserEditFormComponent {
 
+    protected readonly passwordMinLength = passwordMinLength;
     protected readonly roles: Array<Role> = Object.values(Role);
     protected readonly permissions: Array<Permission> = Object.values(Permission);
 
@@ -57,7 +58,7 @@ export class UserEditFormComponent {
     private initForm(): void {
         this.roleOptions = this.permission.getRolesCanBeManaged();
         this.form = this.fb.group({
-            password: [undefined, [Validators.minLength(passwordMinLength)]],
+            password: [undefined, [Validators.pattern(passwordPattern)]],
             isActive: [this.userToEdit?.isActive],
             roles: [this.userToEdit?.roles],
             customPermissions: [this.userToEdit?.customPermissions],
