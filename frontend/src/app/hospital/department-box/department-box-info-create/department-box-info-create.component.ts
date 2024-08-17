@@ -3,6 +3,7 @@ import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-s
 import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {affectedObjectsList} from '@fe/app/hospital/department-box/affected-objects-list';
+import {MessageService} from '@fe/app/util/message.service';
 
 @Component({
     selector: 'app-department-box-info-create',
@@ -24,7 +25,8 @@ export class DepartmentBoxInfoCreateComponent implements OnInit {
     protected affectedObjectsOptions = affectedObjectsList;
     protected form: FormGroup;
 
-    constructor(private readonly formBuilder: FormBuilder) {
+    constructor(private readonly formBuilder: FormBuilder,
+                private readonly msg: MessageService) {
     }
 
     public ngOnInit(): void {
@@ -32,6 +34,10 @@ export class DepartmentBoxInfoCreateComponent implements OnInit {
     }
 
     protected onFormSubmit(): void {
+        if (this.form.invalid) {
+            this.msg.error('BoxStatus.ReasonIsRequired');
+            return;
+        }
         this.submitted.emit(this.createObjectFromForm());
     }
 
@@ -39,9 +45,10 @@ export class DepartmentBoxInfoCreateComponent implements OnInit {
         this.canceled.emit();
     }
 
+
     private initForm(): void {
         this.form = this.formBuilder.group({
-            reason: [BoxStatusChangeReason.COMMENT, [Validators.required]],
+            reason: [null, [Validators.required]],
             affectedObject: [],
             comment: []
         })

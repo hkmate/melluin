@@ -5,8 +5,9 @@
             <mat-form-field>
                 <mat-label>{{ 'BoxStatus.Reason' | translate }}</mat-label>
                 <mat-select formControlName="reason">
+                    <mat-option [value]="null">-</mat-option>
                     @for (reason of reasonOptions; track reason) {
-                        <mat-option [value]="reason"> {{ 'BoxStatusChangeReason.' + reason | translate }}</mat-option>
+                        <mat-option [value]="reason">{{ 'BoxStatusChangeReason.' + reason | translate }}</mat-option>
                     }
                 </mat-select>
             </mat-form-field>

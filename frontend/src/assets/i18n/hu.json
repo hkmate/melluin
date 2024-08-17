@@ -271,7 +271,8 @@
         "Reason": "Report oka",
         "AffectedObject": "Érintett eszköz",
         "Comment": "Egyéb megjegyzés",
-        "CommentPlaceholder": "Ráférne egy rendberakás"
+        "CommentPlaceholder": "Ráférne egy rendberakás",
+        "ReasonIsRequired": "Nincs kiválasztva ok"
     },
     "EventsList": {
         "MarkRowByDate": "Jelöld meg a sorokat",
