@@ -2,8 +2,10 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserCreation} from '@shared/user/user-creation';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {Role} from '@shared/user/role.enum';
 import {Permission} from '@shared/user/permission.enum';
+import {Role, RoleBrief} from '@shared/user/role';
+import {RoleService} from '@fe/app/sysadmin/role-settings/role.service';
+import {GetRolesService} from '@fe/app/util/get-roles.service';
 
 @Component({
     selector: 'app-user-creation-form',
@@ -12,9 +14,7 @@ import {Permission} from '@shared/user/permission.enum';
 })
 export class UserCreationFormComponent implements OnInit {
 
-    protected readonly roles: Array<Role> = Object.values(Role);
     protected readonly permissions: Array<Permission> = Object.values(Permission);
-
     @Input()
     public personId: string;
 
@@ -26,12 +26,17 @@ export class UserCreationFormComponent implements OnInit {
 
     protected form: FormGroup;
     protected roleOptions: Array<string>;
+    protected roles: Array<RoleBrief>;
 
-    constructor(private fb: FormBuilder,
-                private permission: PermissionService) {
+    constructor(private readonly fb: FormBuilder,
+                private readonly roleService: GetRolesService,
+                private readonly permission: PermissionService) {
     }
 
     public ngOnInit(): void {
+        this.roleService.getAll().subscribe(roles => {
+            this.roles = roles;
+        });
         this.initForm();
     }
 
@@ -44,11 +49,11 @@ export class UserCreationFormComponent implements OnInit {
     }
 
     private initForm(): void {
-        this.roleOptions = this.permission.getRolesCanBeManaged();
+        this.roleOptions = this.permission.getRolesTypesCanBeManaged();
         this.form = this.fb.group({
             userName: [undefined, [Validators.required]],
             password: [undefined, [Validators.required]],
-            roles: [[]],
+            roleNames: [[]],
             customPermissions: [[]],
         });
         if (!this.permission.has(Permission.canManagePermissions)) {
@@ -61,7 +66,7 @@ export class UserCreationFormComponent implements OnInit {
         data.personId = this.personId;
         data.userName = this.form.controls.userName.value;
         data.password = this.form.controls.password.value;
-        data.roles = this.form.controls.roles.value;
+        data.roleNames = this.form.controls.roleIds.value;
         data.customPermissions = this.form.controls.customPermissions.value;
         return data;
     }

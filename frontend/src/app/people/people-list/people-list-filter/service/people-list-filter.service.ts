@@ -112,10 +112,10 @@ class PeopleListFilterOptionGenerator {
     }
 
     private decorateRoles(filter: PeopleFilter): void {
-        if (isNilOrEmpty(filter.role)) {
+        if (isNilOrEmpty(filter.roleNames)) {
             return;
         }
-        this.options['user.roles'] = FilterOperationBuilder.in(filter.role)
+        this.options['user.roleNames'] = FilterOperationBuilder.in(filter.roleNames)
     }
 
     private generateWithNameOptions(filter: PeopleFilter): FilterOptions {

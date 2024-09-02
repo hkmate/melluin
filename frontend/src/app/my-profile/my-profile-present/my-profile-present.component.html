@@ -80,7 +80,7 @@
             <mat-card-content>
                 <ul>
                     @for (role of user.roles; track role) {
-                        <li class="role">{{ 'Role.' + role | translate }}</li>
+                        <li class="role">{{ role.name }}</li>
                     }
                 </ul>
             </mat-card-content>

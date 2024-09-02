@@ -19,10 +19,10 @@
     <div>
         <mat-form-field>
             <mat-label>{{ 'PersonPage.User.Form.Roles' | translate }}</mat-label>
-            <mat-select formControlName="roles" multiple>
-                @for (role of roles;track role) {
-                    <mat-option [value]="role" [disabled]="!roleOptions.includes(role)">
-                        {{ 'Role.' + role | translate }}
+            <mat-select formControlName="roleIds" multiple>
+                @for (role of roles; track role) {
+                    <mat-option [value]="role.name" [disabled]="!roleOptions.includes(role.type)">
+                        {{ role.name }}
                     </mat-option>
                 }
             </mat-select>
@@ -33,7 +33,7 @@
         <mat-form-field>
             <mat-label>{{ 'PersonPage.User.Form.Permissions' | translate }}</mat-label>
             <mat-select formControlName="customPermissions" multiple>
-                @for (permission of permissions;track permission) {
+                @for (permission of permissions; track permission) {
                     <mat-option [value]="permission">{{ permission }}</mat-option>
                 }
             </mat-select>

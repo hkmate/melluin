@@ -3,5 +3,5 @@ export const personSortableFields = [
 ];
 
 export const personFilterableFields = [
-    ...personSortableFields, 'id', 'user.isActive', 'user.roles'
+    ...personSortableFields, 'id', 'user.isActive', 'user.roleTypes', 'user.roleNames'
 ];

@@ -88,8 +88,10 @@
                        autocomplete="new-password"
                        [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
                        formControlName="password">
-                <mat-hint>{{ 'PersonPage.User.Form.PasswordHint' | translate }}</mat-hint>
-                <mat-hint>{{ 'PersonPage.User.Form.PasswordPatternHint' | translate : {passwordMinLength} }}</mat-hint>
+                <mat-hint>{{ 'PersonPage.User.Form.PasswordHint' | translate }}
+                    <br/>
+                    {{ 'PersonPage.User.Form.PasswordPatternHint' | translate : {passwordMinLength} }}
+                </mat-hint>
             </mat-form-field>
         </div>
 

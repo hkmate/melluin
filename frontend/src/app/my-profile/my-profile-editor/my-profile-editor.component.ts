@@ -142,7 +142,7 @@ export class MyProfileEditorComponent {
             userName: this.userForm.controls.userName.value,
             password: isNilOrEmpty(newPassword) ? undefined : newPassword,
             isActive: this.originalUser.isActive,
-            roles: this.originalUser.roles,
+            roleNames: this.originalUser.roles.map(role => role.name),
             customPermissions: this.originalUser.customPermissions
         };
     }

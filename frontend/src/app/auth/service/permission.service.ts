@@ -3,11 +3,11 @@ import {User} from '@shared/user/user';
 import {isNotNil} from '@shared/util/util';
 import {Permission} from '@shared/user/permission.enum';
 import {cast} from '@shared/util/test-util';
-import {Role} from '@shared/user/role.enum';
 import {Store} from '@ngrx/store';
 import {Actions, ofType} from '@ngrx/effects';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {AppActions} from '@fe/app/state/app-actions';
+import {RoleType} from '@shared/user/role';
 
 @Injectable()
 export class PermissionService {
@@ -32,13 +32,12 @@ export class PermissionService {
         return this.currentUser?.personId;
     }
 
-    public getRolesCanBeManaged(): Array<Role> {
+    public getRolesTypesCanBeManaged(): Array<RoleType> {
         const permissionToRolesMap = {
-            [Permission.canWriteVisitor]: [Role.HOSPITAL_VISITOR, Role.BEGINNER_HOSPITAL_VISITOR,
-                Role.INTERN_HOSPITAL_VISITOR, Role.MENTOR_HOSPITAL_VISITOR],
-            [Permission.canWriteCoordinator]: [Role.HOSPITAL_VISIT_COORDINATOR, Role.FAIRY_PAINTING_COORDINATOR, Role.TOY_MAKING_COORDINATOR],
-            [Permission.canWriteAdmin]: [Role.ADMINISTRATOR],
-            [Permission.canWriteSysAdmin]: [Role.SYSADMIN]
+            [Permission.canWriteVisitor]: [RoleType.VISITOR, RoleType.INTERN],
+            [Permission.canWriteCoordinator]: [RoleType.COORDINATOR],
+            [Permission.canWriteAdmin]: [RoleType.ADMINISTRATOR],
+            [Permission.canWriteSysAdmin]: [RoleType.SYSADMIN]
         }
         return this.listPermissions()
             .map(p => permissionToRolesMap[p])

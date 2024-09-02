@@ -10,9 +10,9 @@ import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handl
 import {Observable, Subscription, tap, throwError} from 'rxjs';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {isNil} from '@shared/util/util';
-import {getPermissionsNeededToChangeRole} from '@shared/user/role.enum';
 import {Permission} from '@shared/user/permission.enum';
 import {MessageService} from '@fe/app/util/message.service';
+import {getPermissionsNeededToChangeRole} from '@shared/user/role';
 
 @Component({
     selector: 'app-person-detail',
@@ -116,7 +116,7 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
             return;
         }
         this.isEditEnabled = this.person.user?.roles.every(role => {
-            const neededPermission = getPermissionsNeededToChangeRole(role);
+            const neededPermission = getPermissionsNeededToChangeRole(role.type);
             return this.permission.has(neededPermission);
         }) ?? false;
     }

@@ -3,9 +3,13 @@ import {BriefUser} from '@shared/user/user';
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
 import {Converter} from '@shared/converter';
+import {RoleEntityToBriefDtoConverter} from '@be/user/converter/role-entity-to-brief-dto.converter';
 
 @Injectable()
 export class UserEntityToBriefDtoConverter implements Converter<UserEntity, BriefUser> {
+
+    constructor(private roleConverter: RoleEntityToBriefDtoConverter) {
+    }
 
     public convert(entity: UserEntity): BriefUser;
     public convert(entity: undefined): undefined;
@@ -22,7 +26,7 @@ export class UserEntityToBriefDtoConverter implements Converter<UserEntity, Brie
             id: entity.id,
             personId: entity.person.id,
             isActive: entity.isActive,
-            roles: entity.roles?.map(roleEntity => roleEntity.role)
+            roles: entity.roles?.map(roleEntity => this.roleConverter.convert(roleEntity))
         };
     }
 

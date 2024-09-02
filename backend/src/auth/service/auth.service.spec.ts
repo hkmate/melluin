@@ -6,7 +6,6 @@ import {UserDao} from '@be/user/user.dao';
 import {PersonDao} from '@be/person/person.dao';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
 import {cast, randomString} from '@shared/util/test-util';
-import {Role} from '@shared/user/role.enum';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {UserEntity} from '@be/user/model/user.entity';
 import * as crypto from 'crypto';
@@ -17,8 +16,9 @@ import {when} from 'jest-when';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 import {BadRequestException} from '@nestjs/common';
-import Mock = jest.Mock;
 import {RoleDao} from '@be/user/role.dao';
+import {RoleBrief, RoleType} from '@shared/user/role';
+import Mock = jest.Mock;
 
 describe('AuthService', () => {
     describe('Construct when default user not needed', () => {
@@ -74,7 +74,7 @@ describe('AuthService', () => {
         };
         const mockedPersonId = 'c3121569-ccb8-4600-b07b-3f59b4a477fa';
         const mockedUserId = 'c0b74770-5be3-4d44-84c8-596f244488c9';
-        const expectedRoles = [{id: randomString(), role: Role.SYSADMIN, permissions: []}];
+        const expectedRoles = [{id: randomString(), name: 'role1', type: RoleType.SYSADMIN, permissions: []}];
         const expectedPassword = randomString();
 
         beforeEach(async () => {
@@ -243,7 +243,7 @@ describe('AuthService', () => {
                 id: userId,
                 personId,
                 userName: username,
-                roles: [Role.SYSADMIN],
+                roles: [cast<RoleBrief>({name: 'role1', type: RoleType.SYSADMIN})],
                 permissions: [],
                 customPermissions: [],
                 isActive: true
@@ -255,7 +255,7 @@ describe('AuthService', () => {
                 isActive: user.isActive,
                 customPermissions: [],
                 person: cast<PersonEntity>({id: personId}),
-                roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}],
+                roles: [{id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: []}],
                 settings: {eventList: {}}
             };
             const expectedTokenStr = `&@${JSON.stringify(user)}@&`;
@@ -310,7 +310,7 @@ describe('AuthService', () => {
                 person: cast<PersonEntity>({id: personId}),
                 isActive: true,
                 customPermissions: [],
-                roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}]
+                roles: [{id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: []}]
             };
             const rawPassword: string = randomString();
             when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
@@ -332,7 +332,7 @@ describe('AuthService', () => {
                 person: cast<PersonEntity>({id: personId}),
                 isActive: true,
                 customPermissions: [],
-                roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}]
+                roles: [{id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: []}]
             };
             const rawPassword: string = randomString();
             when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
@@ -353,7 +353,7 @@ describe('AuthService', () => {
                 person: cast<PersonEntity>({}),
                 isActive: false,
                 customPermissions: [],
-                roles: [{id: randomUUID(), role: Role.SYSADMIN, permissions: []}]
+                roles: [{id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: []}]
             };
             const rawPassword: string = randomString();
             when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));

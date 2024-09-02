@@ -19,6 +19,7 @@ import {RoleService} from '@be/user/service/role.service';
 import {RoleController} from '@be/user/role.controller';
 import {RoleDao} from '@be/user/role.dao';
 import {PermissionDao} from '@be/user/permission.dao';
+import {RoleCreationToEntityConverter} from '@be/user/converter/role-creation-to-entity.converter';
 
 @Module({
     imports: [
@@ -40,6 +41,7 @@ import {PermissionDao} from '@be/user/permission.dao';
         RoleService,
         UserSettingsService,
         UserCreationToEntityConverter,
+        RoleCreationToEntityConverter,
         PersonHasNoUserYetValidator,
         UsernameIsNotUsedValidator,
         PasswordCryptService,

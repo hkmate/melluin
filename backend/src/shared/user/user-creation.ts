@@ -1,6 +1,5 @@
-import {IsEnum, IsUUID, Matches, MinLength} from 'class-validator';
+import {IsEnum, IsString, IsUUID, Matches, MinLength} from 'class-validator';
 import {nameMinLength, passwordMinLength, passwordPattern} from '@shared/constants';
-import {Role} from '@shared/user/role.enum';
 import {Permission} from '@shared/user/permission.enum';
 
 export class UserCreation {
@@ -15,8 +14,8 @@ export class UserCreation {
     @IsUUID()
     personId: string;
 
-    @IsEnum(Role, {each: true})
-    roles: Array<Role>;
+    @IsString({each: true})
+    roleNames: Array<string>;
 
     @IsEnum(Permission, {each: true})
     customPermissions: Array<Permission>;

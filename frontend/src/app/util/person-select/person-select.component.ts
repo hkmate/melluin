@@ -3,8 +3,8 @@ import {Person, PersonIdentifier} from '@shared/person/person';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {isNil, NOOP, VoidFunc} from '@shared/util/util';
 import {CachedPeopleService} from '@fe/app/people/cached-people.service';
-import {Role} from '@shared/user/role.enum';
 import {FilteringInfo} from '@shared/api-util/pageable';
+import {RoleType} from '@shared/user/role';
 
 @Component({
     selector: 'app-person-select',
@@ -92,10 +92,9 @@ export class PersonSelectComponent implements ControlValueAccessor, OnInit {
             sort: {'lastName': 'ASC', 'firstName': 'ASC'},
             where: [{
                 'user.isActive': {operator: 'eq', operand: true},
-                'user.roles': {
+                'user.roleTypes': {
                     operator: 'in',
-                    operand: [Role.HOSPITAL_VISITOR, Role.BEGINNER_HOSPITAL_VISITOR, Role.MENTOR_HOSPITAL_VISITOR,
-                        Role.INTERN_HOSPITAL_VISITOR, Role.HOSPITAL_VISIT_COORDINATOR]
+                    operand: [RoleType.INTERN, RoleType.VISITOR, RoleType.COORDINATOR]
                 }
             }]
         };

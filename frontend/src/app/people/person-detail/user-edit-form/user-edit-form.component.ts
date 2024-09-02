@@ -1,22 +1,23 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '@shared/user/user';
 import {isNotNil} from '@shared/util/util';
 import {UserRewrite} from '@shared/user/user-rewrite';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Role} from '@shared/user/role.enum';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {passwordMinLength, passwordPattern} from '@shared/constants';
 import {Permission} from '@shared/user/permission.enum';
+import {RoleBrief} from '@shared/user/role';
+import {GetRolesService} from '@fe/app/util/get-roles.service';
 
 @Component({
     selector: 'app-user-edit-form',
     templateUrl: './user-edit-form.component.html',
     styleUrls: ['./user-edit-form.component.scss']
 })
-export class UserEditFormComponent {
+export class UserEditFormComponent implements OnInit {
 
     protected readonly passwordMinLength = passwordMinLength;
-    protected readonly roles: Array<Role> = Object.values(Role);
+    protected readonly roles: Array<RoleBrief>;
     protected readonly permissions: Array<Permission> = Object.values(Permission);
 
     @Output()
@@ -25,12 +26,13 @@ export class UserEditFormComponent {
     @Output()
     public canceled = new EventEmitter<void>;
 
-    protected roleOptions: Array<string>;
+    protected roleOptions: Array<RoleBrief>;
     protected userToEdit?: User;
     protected form: FormGroup;
 
-    constructor(private fb: FormBuilder,
-                private permission: PermissionService) {
+    constructor(private readonly fb: FormBuilder,
+                private readonly roleService: GetRolesService,
+                private readonly permission: PermissionService) {
     }
 
     @Input()
@@ -41,6 +43,13 @@ export class UserEditFormComponent {
 
     public get user(): User | undefined {
         return this.userToEdit;
+    }
+
+    public ngOnInit(): void {
+        this.roleService.getAll().subscribe(roles => {
+            const manageableRoleTypes = this.permission.getRolesTypesCanBeManaged();
+            this.roleOptions = roles.filter(role => manageableRoleTypes.includes(role.type));
+        });
     }
 
     protected isUserSetToActive(): boolean {
@@ -56,7 +65,6 @@ export class UserEditFormComponent {
     }
 
     private initForm(): void {
-        this.roleOptions = this.permission.getRolesCanBeManaged();
         this.form = this.fb.group({
             password: [undefined, [Validators.pattern(passwordPattern)]],
             isActive: [this.userToEdit?.isActive],
@@ -76,7 +84,7 @@ export class UserEditFormComponent {
         }
         data.isActive = this.form.controls.isActive.value;
         data.userName = this.form.controls.userName.value;
-        data.roles = this.form.controls.roles.value;
+        data.roleNames = this.form.controls.roles.value.map((role: RoleBrief) => role.name);
         data.customPermissions = this.form.controls.customPermissions.value;
         return data;
     }

@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
-import {RolePermission} from '@shared/user/role.enum';
+import {Role, RoleCreation} from '@shared/user/role';
 
 @Injectable({providedIn: 'root'})
 export class RoleService {
@@ -17,14 +17,24 @@ export class RoleService {
         return `${AppConfig.get('baseURL')}/roles`;
     }
 
-    public getAll(): Observable<Array<RolePermission>> {
-        return this.http.get<Array<RolePermission>>(`${this.rolesUrl}`)
-            .pipe(getErrorHandler<Array<RolePermission>>(this.msg));
+    public getAll(): Observable<Array<Role>> {
+        return this.http.get<Array<Role>>(`${this.rolesUrl}`)
+            .pipe(getErrorHandler<Array<Role>>(this.msg));
     }
 
-    public update(data: RolePermission): Observable<RolePermission> {
-        return this.http.put<RolePermission>(`${this.rolesUrl}/${data.role}`, data)
-            .pipe(getErrorHandler<RolePermission>(this.msg));
+    public create(data: RoleCreation): Observable<Role> {
+        return this.http.post<Role>(`${this.rolesUrl}`, data)
+            .pipe(getErrorHandler<Role>(this.msg));
+    }
+
+    public update(data: Role): Observable<Role> {
+        return this.http.put<Role>(`${this.rolesUrl}/${data.id}`, data)
+            .pipe(getErrorHandler<Role>(this.msg));
+    }
+
+    public delete(roleId: string): Observable<void> {
+        return this.http.delete<void>(`${this.rolesUrl}/${roleId}`)
+            .pipe(getErrorHandler<void>(this.msg));
     }
 
 }

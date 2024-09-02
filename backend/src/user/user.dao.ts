@@ -2,7 +2,6 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import {Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import {UserEntity} from './model/user.entity';
-import {RoleEntity} from './model/role.entity';
 import {isNil, toOptional} from '@shared/util/util';
 import {FindOneOptions} from 'typeorm/find-options/FindOneOptions';
 
@@ -11,17 +10,11 @@ export class UserDao {
 
     constructor(
         @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>,
-        @InjectRepository(RoleEntity)
-        private readonly roleRepository: Repository<RoleEntity>) {
+        private readonly userRepository: Repository<UserEntity>) {
     }
 
     public save(user: UserEntity): Promise<UserEntity> {
         return this.userRepository.save(user);
-    }
-
-    public findAllRole(): Promise<Array<RoleEntity>> {
-        return this.roleRepository.find();
     }
 
     public find(options: FindOneOptions<UserEntity>): Promise<UserEntity | undefined> {
@@ -34,6 +27,10 @@ export class UserDao {
 
     public findOneWithCache(userName: string): Promise<UserEntity | undefined> {
         return this.userRepository.findOne({where: {userName}, cache: 3000}).then(toOptional);
+    }
+
+    public hasAnyWithRole(roleId: string): Promise<boolean> {
+        return this.userRepository.exist({where: {roles: {id: roleId}}});
     }
 
     public getOne(id: string): Promise<UserEntity> {

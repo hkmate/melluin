@@ -28,9 +28,9 @@
     <div class="role-filter">
         <mat-form-field>
             <mat-label>{{ 'PeopleListPage.Filter.Role' | translate }}</mat-label>
-            <mat-select [(ngModel)]="filters.role" (ngModelChange)="filterSet()" multiple>
+            <mat-select [(ngModel)]="filters.roleNames" (ngModelChange)="filterSet()" multiple>
                 @for (role of roleOptions;track role) {
-                    <mat-option [value]="role">{{ 'Role.' + role | translate }}</mat-option>
+                    <mat-option [value]="role.name">{{ role.name }}</mat-option>
                 }
             </mat-select>
         </mat-form-field>
