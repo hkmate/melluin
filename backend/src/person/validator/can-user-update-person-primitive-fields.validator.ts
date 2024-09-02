@@ -2,9 +2,9 @@ import {User} from '@shared/user/user';
 import {ForbiddenException} from '@nestjs/common';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {Permission} from '@shared/user/permission.enum';
-import {getPermissionsNeededToChangeRole} from '@shared/user/role.enum';
 import {PersonRewriteValidator, PersonRewriteWithEntity} from '@be/person/validator/person-rewrite.validator';
 import {isNil} from '@shared/util/util';
+import {getPermissionsNeededToChangeRole} from '@shared/user/role';
 
 
 export class CanUserUpdatePersonPrimitiveFieldsValidator implements PersonRewriteValidator {
@@ -31,7 +31,7 @@ export class CanUserUpdatePersonPrimitiveFieldsValidator implements PersonRewrit
             return true;
         }
         return person.user?.roles.every(role => {
-            const neededPermission = getPermissionsNeededToChangeRole(role.role);
+            const neededPermission = getPermissionsNeededToChangeRole(role.type);
             return this.userHas(neededPermission);
         }) ?? false;
     }

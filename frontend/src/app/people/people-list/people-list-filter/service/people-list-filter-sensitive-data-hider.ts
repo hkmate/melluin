@@ -4,8 +4,7 @@ import {Store} from '@ngrx/store';
 import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {User} from '@shared/user/user';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
-import {includeAny} from '@shared/util/util';
-import {foundationWorkerRoles} from '@shared/user/role.enum';
+import {Permission} from '@shared/user/permission.enum';
 
 
 @Injectable()
@@ -21,7 +20,7 @@ export class PeopleListFilterSensitiveDataHider extends AutoUnSubscriber {
     }
 
     public hideData(parsedFilters: PeopleFilter): PeopleFilter {
-        const canUserFilterSensitiveData = includeAny(this.currentUser.roles, ...foundationWorkerRoles);
+        const canUserFilterSensitiveData = this.currentUser.permissions.includes(Permission.canReadSensitivePersonData);
         if (canUserFilterSensitiveData) {
             return parsedFilters;
         }

@@ -1,9 +1,9 @@
 import {User} from '@shared/user/user';
-import {getPermissionsNeededToChangeRole} from '@shared/user/role.enum';
 import {ForbiddenException} from '@nestjs/common';
 import {UserEntity} from '@be/user/model/user.entity';
 import {Permission} from '@shared/user/permission.enum';
 import {UserRewriteValidator, UserRewriteWithEntity} from '@be/user/validator/user-rewrite.validator';
+import {getPermissionsNeededToChangeRole} from '@shared/user/role';
 
 
 export class CanRequesterChangeUserValidator implements UserRewriteValidator {
@@ -28,7 +28,7 @@ export class CanRequesterChangeUserValidator implements UserRewriteValidator {
 
     private hasUserPermissionToChange(user: UserEntity): boolean {
         return user.roles.every(role => {
-            const neededPermission = getPermissionsNeededToChangeRole(role.role);
+            const neededPermission = getPermissionsNeededToChangeRole(role.type);
             return this.userHas(neededPermission);
         }) ?? false;
     }

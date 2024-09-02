@@ -39,7 +39,7 @@ export class UserCreationToEntityConverter implements Converter<UserCreation, Pr
             password: this.passwordEncoder.encrypt(dto.password),
             settings: {},
             isActive: true,
-            roles: roles.filter(entity => dto.roles.includes(entity.role)),
+            roles: roles.filter(entity => dto.roleNames.includes(entity.name)),
             customPermissions: permissions.filter(entity => dto.customPermissions.includes(entity.permission)),
         };
     }

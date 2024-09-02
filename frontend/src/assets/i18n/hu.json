@@ -366,8 +366,12 @@
     "Sysadmin": {
         "RoleSettings": {
             "Title": "Szerepkör beállítások",
+            "NameLabel": "Szerepkör név",
+            "NamePlaceholder": "Admin",
             "NameColHeader": "Szerepkör",
-            "PermissionsColHeader": "Jogosultságok"
+            "TypeColHeader": "Role típus",
+            "PermissionsColHeader": "Jogosultságok",
+            "DeleteRole": "Biztosan törölni szeretnéd: '{{roleName}}'?"
         }
     },
     "Questionnaire": {

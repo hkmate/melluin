@@ -14,11 +14,14 @@ import {UserRewriteValidator} from '@be/user/validator/user-rewrite.validator';
 import {CanRequesterChangeUsersRoleValidator} from '@be/user/validator/can-requester-change-users-role.validator';
 import {CanRequesterChangeUsersPermissionsValidator} from '@be/user/validator/can-requester-change-users-permissions.validator';
 import {CanRequesterCreateUsersPermissionsValidator} from '@be/user/validator/can-requester-create-users-permissions.validator';
+import {RoleDao} from '@be/user/role.dao';
+import {CanRequesterCreateUsersRoleValidator} from '@be/user/validator/can-requester-create-users-role.validator';
 
 @Injectable()
 export class UserService {
 
     constructor(private readonly userDao: UserDao,
+                private readonly roleDao: RoleDao,
                 private readonly personHasNoUserYetValidator: PersonHasNoUserYetValidator,
                 private readonly usernameIsNotUsedValidator: UsernameIsNotUsedValidator,
                 private readonly userConverter: UserEntityToDtoConverter,
@@ -53,14 +56,15 @@ export class UserService {
         await AsyncValidatorChain.of(
             this.personHasNoUserYetValidator,
             this.usernameIsNotUsedValidator,
-            CanRequesterCreateUsersPermissionsValidator.of(requester)
+            CanRequesterCreateUsersPermissionsValidator.of(requester),
+            new CanRequesterCreateUsersRoleValidator(this.roleDao, requester)
         ).validate(userCreation);
     }
 
     private createRewriteValidators(requester: User): UserRewriteValidator {
         return AsyncValidatorChain.of(
             CanRequesterChangeUserValidator.of(requester),
-            CanRequesterChangeUsersRoleValidator.of(requester),
+            new CanRequesterChangeUsersRoleValidator(this.roleDao, requester),
             CanRequesterChangeUsersPermissionsValidator.of(requester),
             new UsernameIsNotUsedValidator(this.userDao)
         );

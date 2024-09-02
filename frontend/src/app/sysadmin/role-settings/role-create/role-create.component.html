@@ -1,0 +1,39 @@
+<div class="role-create">
+
+    <div class="role-name">
+        <app-trimmed-text-input [(ngModel)]="newRole.name"
+                                [label]="'Sysadmin.RoleSettings.NameLabel' | translate"
+                                [placeholder]="'Sysadmin.RoleSettings.NamePlaceholder' | translate">
+        </app-trimmed-text-input>
+    </div>
+
+    <div class="role-type">
+        <mat-select [(ngModel)]="newRole.type">
+            @for (option of roleTypeOptions; track option) {
+                <mat-option [value]="option">{{ option }}</mat-option>
+            }
+        </mat-select>
+    </div>
+
+    <div class="role-permission">
+        <mat-select [(ngModel)]="newRole.permissions" multiple>
+            @for (option of permissionOptions; track option) {
+                <mat-option [value]="option">{{ option }}</mat-option>
+            }
+        </mat-select>
+    </div>
+
+    <div class="btns">
+        <button mat-icon-button
+                type="button"
+                [disabled]="loading"
+                (click)="save()">
+            <mat-icon class="material-icons-outlined settings-icon">save</mat-icon>
+        </button>
+
+
+        <button mat-icon-button type="button" (click)="cancel()">
+            <mat-icon class="material-icons-outlined settings-icon">delete</mat-icon>
+        </button>
+    </div>
+</div>

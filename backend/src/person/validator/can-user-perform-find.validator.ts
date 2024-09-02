@@ -1,10 +1,10 @@
 import {User} from '@shared/user/user';
 import {ForbiddenException} from '@nestjs/common';
-import {includeAny, isNil} from '@shared/util/util';
+import {isNil} from '@shared/util/util';
 import {ConjunctionFilterOptions, FilterOptions} from '@shared/api-util/filter-options';
 import {PageRequest} from '@be/crud/page-request';
 import {PageRequestValidator} from '@be/crud/validator/page-request.validator';
-import {foundationWorkerRoles} from '@shared/user/role.enum';
+import {Permission} from '@shared/user/permission.enum';
 
 export class CanUserPerformFindValidator implements PageRequestValidator {
 
@@ -49,7 +49,7 @@ export class CanUserPerformFindValidator implements PageRequestValidator {
     }
 
     private isUserEmployee(): boolean {
-        return includeAny(this.currentUser.roles, ...foundationWorkerRoles);
+        return this.currentUser.permissions.includes(Permission.canReadSensitivePersonData);
     }
 
 }

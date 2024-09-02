@@ -367,7 +367,9 @@
         "RoleSettings": {
             "Title": "Role settings",
             "NameColHeader": "Role",
-            "PermissionsColHeader": "Permissions"
+            "TypeColHeader": "Role type",
+            "PermissionsColHeader": "Permissions",
+            "DeleteRole": "Are you sure you want to delete: '{roleName}'?"
         }
     },
     "Questionnaire": {

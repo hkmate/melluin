@@ -1,6 +1,6 @@
 import {Column, Entity, JoinTable, ManyToMany, PrimaryColumn} from 'typeorm';
-import {Role} from '@shared/user/role.enum';
 import {PermissionEntity} from '@be/user/model/permission.entity';
+import {RoleType} from '@shared/user/role';
 
 @Entity({name: 'role'})
 export class RoleEntity {
@@ -9,7 +9,10 @@ export class RoleEntity {
     id: string
 
     @Column()
-    role: Role;
+    name: string;
+
+    @Column()
+    type: RoleType;
 
     @ManyToMany(
         type => PermissionEntity,

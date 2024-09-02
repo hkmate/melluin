@@ -4,7 +4,6 @@ import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler'
 import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo} from '@shared/api-util/pageable';
 import {PeopleFilter} from '@fe/app/people/people-list/people-list-filter/service/people-filter';
 import {PeopleListQueryParams} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-params';
-import {Role} from '@shared/user/role.enum';
 
 
 @Injectable()
@@ -32,7 +31,7 @@ export class PeopleListQueryParamSettingsInitializer {
         result.email = '';
         result.phone = '';
         result.onlyActive = true;
-        result.role = [];
+        result.roleNames = [];
         return result;
     }
 
@@ -40,7 +39,7 @@ export class PeopleListQueryParamSettingsInitializer {
         this.decorateNameFilter(filters);
         this.decorateEmailFilter(filters);
         this.decoratePhoneFilter(filters);
-        this.decorateRolesFilter(filters);
+        this.decorateRoleNamesFilter(filters);
         this.decorateIsActive(filters);
     }
 
@@ -68,12 +67,12 @@ export class PeopleListQueryParamSettingsInitializer {
         filter.phone = phone;
     }
 
-    private decorateRolesFilter(filter: PeopleFilter): void {
+    private decorateRoleNamesFilter(filter: PeopleFilter): void {
         const roles = this.urlParamHandler.getParams(PeopleListQueryParams.role);
         if (isNilOrEmpty(roles)) {
             return;
         }
-        filter.role = roles! as Array<Role>;
+        filter.roleNames = roles!;
     }
 
     private decorateIsActive(preferences: PeopleFilter): void {

@@ -3,12 +3,13 @@ import {filter} from 'rxjs';
 import {reasonIsNotPageData} from '@fe/app/util/list-page-settings-change-reason';
 import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {PeopleFilter} from '@fe/app/people/people-list/people-list-filter/service/people-filter';
-import {foundationWorkerRoles, Role} from '@shared/user/role.enum';
 import {PeopleListFilterService} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter.service';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {Store} from '@ngrx/store';
-import {includeAny} from '@shared/util/util';
 import {User} from '@shared/user/user';
+import {Permission} from '@shared/user/permission.enum';
+import {GetRolesService} from '@fe/app/util/get-roles.service';
+import {RoleBrief} from '@shared/user/role';
 
 @Component({
     selector: 'app-people-list-filter',
@@ -18,11 +19,12 @@ import {User} from '@shared/user/user';
 export class PeopleListFilterComponent extends AutoUnSubscriber implements OnInit {
 
     protected filters: PeopleFilter;
-    protected roleOptions: Array<Role> = Object.values(Role);
+    protected roleOptions: Array<RoleBrief>;
     protected needEmailFilter: boolean = true;
     protected needPhoneFilter: boolean = true;
 
     constructor(private readonly store: Store,
+                private readonly roleService: GetRolesService,
                 private readonly filterService: PeopleListFilterService) {
         super();
     }
@@ -32,6 +34,7 @@ export class PeopleListFilterComponent extends AutoUnSubscriber implements OnIni
             this.resetSettings()
         });
         this.addSubscription(this.store.pipe(selectCurrentUser), cu => this.hideSensitiveDataFiltersIfUserIsNotEmployee(cu));
+        this.loadRoles();
         this.resetSettings();
     }
 
@@ -43,8 +46,14 @@ export class PeopleListFilterComponent extends AutoUnSubscriber implements OnIni
         this.filters = this.filterService.getFilter();
     }
 
+    private loadRoles(): void {
+        this.roleService.getAll().subscribe(roles => {
+            this.roleOptions = roles;
+        })
+    }
+
     private hideSensitiveDataFiltersIfUserIsNotEmployee(user: User): void {
-        const canFilterSensitiveData = includeAny(user.roles, ...foundationWorkerRoles);
+        const canFilterSensitiveData = user.permissions.includes(Permission.canReadSensitivePersonData);
         this.needEmailFilter = canFilterSensitiveData;
         this.needPhoneFilter = canFilterSensitiveData;
     }

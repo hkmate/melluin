@@ -60,7 +60,8 @@ export class PersonDao extends PageCreator<PersonEntity> {
 
     public async findAll(pageRequest: PageRequest): Promise<Pageable<PersonEntity>> {
         const fieldConverter = FilterOptionsFieldsConverter.of({
-            'user.roles': (values: FilterOperation<unknown>) => Promise.resolve({key: 'user.roles.role', value: values})
+            'user.roleNames': (values: FilterOperation<unknown>) => Promise.resolve({key: 'user.roles.name', value: values}),
+            'user.roleTypes': (values: FilterOperation<unknown>) => Promise.resolve({key: 'user.roles.type', value: values})
         });
         pageRequest.where = await fieldConverter.convert(pageRequest.where);
         return this.getPage(pageRequest, {relations: {user: true}});

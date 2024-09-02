@@ -1,5 +1,11 @@
 
-.permission-selector {
+.page-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.permission-selector, role-type-selector {
     display: flex;
     align-items: center;
 
@@ -10,10 +16,6 @@
             text-overflow: unset;
             white-space: unset;
         }
-    }
-
-    button {
-        margin-left: .5rem;
     }
 }
 

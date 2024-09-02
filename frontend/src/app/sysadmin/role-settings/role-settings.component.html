@@ -1,36 +1,72 @@
 <section>
     <div class="page-content">
+        <span class="page-header">
         <h1>{{ 'Sysadmin.RoleSettings.Title' | translate }}</h1>
+            <span>
+                @if (!creation) {
+                    <button mat-mini-fab
+                            color="accent"
+                            (click)="openCreation()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                }
+            </span>
+        </span>
+
+        @if (creation) {
+            <app-role-create (done)="closeCreation($event)"></app-role-create>
+        }
 
         <table mat-table [dataSource]="rolesTableDataSource">
 
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>{{ 'Sysadmin.RoleSettings.NameColHeader' | translate }}</th>
-                <td mat-cell *matCellDef="let rolePermission"> {{ 'Role.' + rolePermission.role | translate }}</td>
+                <td mat-cell *matCellDef="let role">
+                    @if (editions[role.id]; as edition) {
+                        <div class="role-name-selector">
+                            <app-trimmed-text-input [(ngModel)]="edition.name"
+                                                    [label]="'Sysadmin.RoleSettings.NameLabel' | translate"
+                                                    [placeholder]="'Sysadmin.RoleSettings.NamePlaceholder' | translate">
+                            </app-trimmed-text-input>
+                        </div>
+                    } @else {
+                        {{ role.name | translate }}
+                    }
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef>{{ 'Sysadmin.RoleSettings.TypeColHeader' | translate }}</th>
+                <td mat-cell *matCellDef="let role">
+                    @if (editions[role.id]; as edition) {
+                        <div class="role-type-selector">
+                            <mat-select [(ngModel)]="edition.type">
+                                @for (option of roleTypeOptions; track option) {
+                                    <mat-option [value]="option">{{ option }}</mat-option>
+                                }
+                            </mat-select>
+                        </div>
+                    } @else {
+                        {{ role.type | translate }}
+                    }
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="permissions">
                 <th mat-header-cell
                     *matHeaderCellDef>{{ 'Sysadmin.RoleSettings.PermissionsColHeader' | translate }}
                 </th>
-                <td mat-cell *matCellDef="let rolePermission">
-                    @if (editions[rolePermission.role];as edition) {
+                <td mat-cell *matCellDef="let role">
+                    @if (editions[role.id]; as edition) {
                         <div class="permission-selector">
                             <mat-select [(ngModel)]="edition.permissions" multiple>
                                 @for (option of permissionOptions; track option) {
                                     <mat-option [value]="option">{{ option }}</mat-option>
                                 }
                             </mat-select>
-                            <button mat-flat-button
-                                    color="accent"
-                                    type="button"
-                                    [disabled]="edition.loading"
-                                    (click)="save(rolePermission, edition.permissions)">
-                                {{ 'SaveButton' | translate }}
-                            </button>
                         </div>
                     } @else {
-                        @for (permission of rolePermission.permissions; track permission; let last = $last) {
+                        @for (permission of role.permissions; track permission; let last = $last) {
                             <span class="permission">
                               {{ permission }}<span *ngIf="!last">, </span>
                             </span>
@@ -41,16 +77,23 @@
 
             <ng-container matColumnDef="options">
                 <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let rolePermission">
-                    @if (editions[rolePermission.role]) {
-                        <button mat-stroked-button color="primary"
-                                (click)="cancelEditing(rolePermission)">
-                            {{ 'CancelButton' | translate }}
+                <td mat-cell *matCellDef="let role">
+                    @if (editions[role.id]; as edition) {
+                        <button mat-icon-button
+                                type="button"
+                                [disabled]="edition.loading"
+                                (click)="save(role, edition)">
+                            <mat-icon class="material-icons-outlined settings-icon">save</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="cancelEditing(role)">
+                            <mat-icon class="material-icons-outlined settings-icon">cancel</mat-icon>
                         </button>
                     } @else {
-                        <button mat-icon-button type="button"
-                                (click)="changeToEdit(rolePermission)">
+                        <button mat-icon-button type="button" (click)="changeToEdit(role)">
                             <mat-icon class="material-icons-outlined settings-icon">settings</mat-icon>
+                        </button>
+                        <button mat-icon-button type="button" (click)="deleteRole(role)">
+                            <mat-icon class="material-icons-outlined settings-icon">delete</mat-icon>
                         </button>
                     }
                 </td>

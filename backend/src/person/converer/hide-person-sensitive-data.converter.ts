@@ -3,7 +3,7 @@ import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
 import {Converter} from '@shared/converter';
 import {User} from '@shared/user/user';
-import {foundationWorkerRoles} from '@shared/user/role.enum';
+import {Permission} from '@shared/user/permission.enum';
 
 @Injectable()
 export class HidePersonSensitiveDataConverter implements Converter<Person, Person> {
@@ -37,7 +37,7 @@ export class HidePersonSensitiveDataConverter implements Converter<Person, Perso
     }
 
     private isUserAFoundationWorker(): boolean {
-        return this.currentUser.roles.some(role => foundationWorkerRoles.includes(role));
+        return this.currentUser.permissions.includes(Permission.canReadSensitivePersonData);
     }
 
     private hidePhone(person: Person): Person {
