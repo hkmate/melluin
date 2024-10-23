@@ -3,8 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserCreation} from '@shared/user/user-creation';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
-import {Role, RoleBrief} from '@shared/user/role';
-import {RoleService} from '@fe/app/sysadmin/role-settings/role.service';
+import {RoleBrief} from '@shared/user/role';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
 
 @Component({
