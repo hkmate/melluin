@@ -19,7 +19,7 @@
     <div>
         <mat-form-field>
             <mat-label>{{ 'PersonPage.User.Form.Roles' | translate }}</mat-label>
-            <mat-select formControlName="roleIds" multiple>
+            <mat-select formControlName="roleNames" multiple>
                 @for (role of roles; track role) {
                     <mat-option [value]="role.name" [disabled]="!roleOptions.includes(role.type)">
                         {{ role.name }}

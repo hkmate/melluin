@@ -17,8 +17,10 @@
                    formControlName="password"
                    autocomplete="new-password"
                    [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate">
-            <mat-hint>{{ 'PersonPage.User.Form.PasswordHint' | translate }}</mat-hint>
-            <mat-hint>{{ 'PersonPage.User.Form.PasswordPatternHint' | translate : {passwordMinLength} }}</mat-hint>
+            <mat-hint>
+                {{ 'PersonPage.User.Form.PasswordHint' | translate }}<br>
+                {{ 'PersonPage.User.Form.PasswordPatternHint' | translate : {passwordMinLength} }}
+            </mat-hint>
         </mat-form-field>
     </div>
 
@@ -39,9 +41,9 @@
         <mat-form-field>
             <mat-label>{{ 'PersonPage.User.Form.Roles' | translate }}</mat-label>
             <mat-select formControlName="roles" multiple>
-                @for (role of roles;track role) {
-                    <mat-option [value]="role" [disabled]="!roleOptions.includes(role)">
-                        {{ 'Role.' + role | translate }}
+                @for (role of roles; track role.name) {
+                    <mat-option [value]="role.name" [disabled]="!roleOptions.includes(role)">
+                        {{ role.name | translate }}
                     </mat-option>
                 }
             </mat-select>
@@ -52,7 +54,7 @@
         <mat-form-field>
             <mat-label>{{ 'PersonPage.User.Form.Permissions' | translate }}</mat-label>
             <mat-select formControlName="customPermissions" multiple>
-                @for (permission of permissions;track permission) {
+                @for (permission of permissions; track permission) {
                     <mat-option [value]="permission">{{ permission }}</mat-option>
                 }
             </mat-select>

@@ -1,4 +1,4 @@
-import {IsBoolean, IsEnum, IsOptional, IsUUID, Matches, MinLength} from 'class-validator';
+import {IsBoolean, IsEnum, IsOptional, IsString, Matches, MinLength} from 'class-validator';
 import {nameMinLength, passwordMinLength, passwordPattern} from '@shared/constants';
 import {Permission} from '@shared/user/permission.enum';
 
@@ -15,7 +15,7 @@ export class UserRewrite {
     @IsBoolean()
     isActive: boolean;
 
-    @IsUUID('all', {each: true})
+    @IsString({each: true})
     roleNames: Array<string>;
 
     @IsEnum(Permission, {each: true})

@@ -65,7 +65,7 @@ export class UserCreationFormComponent implements OnInit {
         data.personId = this.personId;
         data.userName = this.form.controls.userName.value;
         data.password = this.form.controls.password.value;
-        data.roleNames = this.form.controls.roleIds.value;
+        data.roleNames = this.form.controls.roleNames.value;
         data.customPermissions = this.form.controls.customPermissions.value;
         return data;
     }

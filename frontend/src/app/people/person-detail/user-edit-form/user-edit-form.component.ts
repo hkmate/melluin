@@ -17,9 +17,7 @@ import {GetRolesService} from '@fe/app/util/get-roles.service';
 export class UserEditFormComponent implements OnInit {
 
     protected readonly passwordMinLength = passwordMinLength;
-    protected readonly roles: Array<RoleBrief>;
     protected readonly permissions: Array<Permission> = Object.values(Permission);
-
     @Output()
     public submitted = new EventEmitter<UserRewrite>;
 
@@ -27,6 +25,7 @@ export class UserEditFormComponent implements OnInit {
     public canceled = new EventEmitter<void>;
 
     protected roleOptions: Array<RoleBrief>;
+    protected roles: Array<RoleBrief>;
     protected userToEdit?: User;
     protected form: FormGroup;
 
@@ -47,6 +46,7 @@ export class UserEditFormComponent implements OnInit {
 
     public ngOnInit(): void {
         this.roleService.getAll().subscribe(roles => {
+            this.roles = roles;
             const manageableRoleTypes = this.permission.getRolesTypesCanBeManaged();
             this.roleOptions = roles.filter(role => manageableRoleTypes.includes(role.type));
         });
@@ -68,7 +68,7 @@ export class UserEditFormComponent implements OnInit {
         this.form = this.fb.group({
             password: [undefined, [Validators.pattern(passwordPattern)]],
             isActive: [this.userToEdit?.isActive],
-            roles: [this.userToEdit?.roles],
+            roles: [this.userToEdit?.roles.map(r => r.name)],
             customPermissions: [this.userToEdit?.customPermissions],
             userName: [this.userToEdit?.userName]
         });
@@ -84,7 +84,7 @@ export class UserEditFormComponent implements OnInit {
         }
         data.isActive = this.form.controls.isActive.value;
         data.userName = this.form.controls.userName.value;
-        data.roleNames = this.form.controls.roles.value.map((role: RoleBrief) => role.name);
+        data.roleNames = this.form.controls.roles.value;
         data.customPermissions = this.form.controls.customPermissions.value;
         return data;
     }
