@@ -43,7 +43,7 @@
             <mat-select formControlName="roles" multiple>
                 @for (role of roles; track role.name) {
                     <mat-option [value]="role.name" [disabled]="!roleOptions.includes(role)">
-                        {{ role.name | translate }}
+                        {{ role.name }}
                     </mat-option>
                 }
             </mat-select>
