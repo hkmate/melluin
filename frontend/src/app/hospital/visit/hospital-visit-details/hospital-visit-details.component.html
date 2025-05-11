@@ -5,6 +5,11 @@
             @if (visit && !isEditMode()) {
                 <app-hospital-visit-presenter [visit]="visit!"></app-hospital-visit-presenter>
                 <div class="button-row">
+                    @if (isFilledAndUserIsParticipant()) {
+                        <button mat-flat-button color="primary" (click)="prepareReport()">
+                            {{ 'HospitalVisit.OpenReportDraft' | translate }}
+                        </button>
+                    }
                     @if (canUserStartTheVisit()) {
                         <button mat-flat-button
                                 color="accent"

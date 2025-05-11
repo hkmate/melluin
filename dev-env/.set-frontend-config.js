@@ -17,5 +17,8 @@ config.questionnaireForChild = process.env.QUESTIONNAIRE_FOR_CHILD;
 console.log(`Set questionnaire for parent url: '${process.env.QUESTIONNAIRE_FOR_PARENT}'`);
 config.questionnaireForParent = process.env.QUESTIONNAIRE_FOR_PARENT;
 
+console.log(`Set personal report url: '${process.env.PERSONAL_REPORT_MAIL_ADDRESS}'`);
+config.reportMailAddress = process.env.PERSONAL_REPORT_MAIL_ADDRESS;
+
 let data = JSON.stringify(config, null, '    ');
 fs.writeFileSync(CONFIG_FILE, data);

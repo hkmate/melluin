@@ -1,11 +1,12 @@
-import {Injectable} from '@angular/core';
-import {HttpBackend, HttpClient} from '@angular/common/http';
-import {firstValueFrom} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpBackend, HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 export interface AppConfiguration {
     baseURL: string;
     questionnaireForChild?: string;
     questionnaireForParent?: string;
+    reportMailAddress?: string;
 }
 
 @Injectable()

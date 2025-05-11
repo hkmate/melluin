@@ -318,6 +318,7 @@
         "WarningOnActivityPresenterWhileStarted": "A megjelenő gyerekek/tevékenységek még nem véglelgesek!",
         "WarningOnActivityPresenterWhileActivitiesShouldNotBeThere": "A foglalkozás jelen állapotában nem lenne szabad, hogy legyenek felvéve gyerkek/tevékenységek. Valaki rosszul adminisztrált valamit. Vedd fel a kapcsolatot a koordinátorral vagy a rendszer adminnal.",
         "Start": "Kezdés",
+        "OpenReportDraft": "Beszámoló előkészítése",
         "ContinueFilling": "Kitöltés folytatása",
         "Finalized": "Véglegesítés",
         "NoChildFail": "Nincs gyerek akivel megtarthatnánk a foglalkozást.",

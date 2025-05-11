@@ -11,14 +11,15 @@ import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrit
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
 import {MessageService} from '@fe/app/util/message.service';
-import {isNotNil} from '@shared/util/util';
+import {isNil, isNotNil} from '@shared/util/util';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
+import {ReportPrepareService} from './report-prepare.service';
 
 @Component({
     selector: 'app-hospital-visit-details',
     templateUrl: './hospital-visit-details.component.html',
     styleUrls: ['./hospital-visit-details.component.scss'],
-    providers: [RouteDataHandler]
+    providers: [RouteDataHandler, ReportPrepareService]
 })
 export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
 
@@ -31,11 +32,12 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
     private resolverSubscription: Subscription;
 
     constructor(private readonly router: Router,
-                private readonly location: Location,
-                protected readonly permissions: PermissionService,
-                private readonly msg: MessageService,
-                private readonly route: RouteDataHandler,
-                private readonly visitService: HospitalVisitService) {
+        private readonly location: Location,
+        protected readonly permissions: PermissionService,
+        private readonly msg: MessageService,
+        private readonly route: RouteDataHandler,
+        private readonly visitService: HospitalVisitService,
+        private readonly reportPrepareService: ReportPrepareService) {
     }
 
     public ngOnInit(): void {
@@ -63,6 +65,14 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
         });
     }
 
+    protected async prepareReport(): Promise<void> {
+        if (isNil(this.visit)) {
+            return;
+        }
+        const draftCreater = await this.reportPrepareService.draftCreater(this.visit.id)
+        draftCreater.openReportDraft();
+    }
+
     protected cancelEditing(): void {
         if (this.isCreation) {
             this.router.navigate([PATHS.events.main]);
@@ -85,6 +95,12 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
         return isNotNil(this.visit)
             && this.visit.status === HospitalVisitStatus.STARTED
             && this.permissions.has(Permission.canCreateActivity)
+    }
+
+    protected isFilledAndUserIsParticipant(): boolean {
+        return isNotNil(this.visit)
+            && this.visit.status === HospitalVisitStatus.ACTIVITIES_FILLED_OUT
+            && this.visit.participants.map(p => p.id).includes(this.permissions.personId!);
     }
 
     protected shouldShowActivities(): boolean {
