@@ -1,22 +1,22 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
-import {JwtService} from '@nestjs/jwt';
-import {UserDao} from '@be/user/user.dao';
-import {UserEntity} from 'src/user/model/user.entity';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UserDao } from '@be/user/user.dao';
+import { UserEntity } from 'src/user/model/user.entity';
 import * as crypto from 'crypto';
-import {RoleEntity} from '@be/user/model/role.entity';
-import {PersonEntity} from '@be/person/model/person.entity';
-import {PersonDao} from '@be/person/person.dao';
-import {AuthInfo} from '@shared/user/auth-info';
-import {isNil} from '@shared/util/util';
-import {ConfigService} from '@nestjs/config';
-import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
-import {PasswordCryptService} from '@be/user/service/password-crypt.service';
-import {UserEntityToDtoConverter} from '@be/user/converter/user-entity-to-dto.converter';
-import {AuthCredentials} from '@shared/user/auth-credentials';
-import {UserEntityToSettingsDtoConverter} from '@be/user/converter/user-entity-to-settings-dto.converter';
-import {User} from '@shared/user/user';
-import {UserSettings} from '@shared/user/user-settings';
-import {RoleDao} from '@be/user/role.dao';
+import { RoleEntity } from '@be/user/model/role.entity';
+import { PersonEntity } from '@be/person/model/person.entity';
+import { PersonDao } from '@be/person/person.dao';
+import { AuthInfo } from '@shared/user/auth-info';
+import { isNil } from '@shared/util/util';
+import { ConfigService } from '@nestjs/config';
+import { DefaultSysAdmin } from '@be/config/model/default-sys-admin';
+import { PasswordCryptService } from '@be/user/service/password-crypt.service';
+import { UserEntityToDtoConverter } from '@be/user/converter/user-entity-to-dto.converter';
+import { AuthCredentials } from '@shared/user/auth-credentials';
+import { UserEntityToSettingsDtoConverter } from '@be/user/converter/user-entity-to-settings-dto.converter';
+import { User } from '@shared/user/user';
+import { UserSettings } from '@shared/user/user-settings';
+import { RoleDao } from '@be/user/role.dao';
 
 @Injectable()
 export class AuthService {
@@ -52,9 +52,9 @@ export class AuthService {
         const user: User = this.userConverter.convert(userEntity!);
         const userSettings: UserSettings = this.userSettingsConverter.convert(userEntity!);
         return {
-            accessToken: this.jwtService.sign({userId: user.id}),
+            accessToken: this.jwtService.sign({ userId: user.id }),
             user,
-            userSettings
+            userSettings,
         };
     }
 
@@ -77,7 +77,11 @@ export class AuthService {
         return this.personDao.save({
             id: crypto.randomUUID(),
             firstName: defaultAdmin.firstName,
-            lastName: defaultAdmin.lastName
+            lastName: defaultAdmin.lastName,
+            email: null,
+            phone: null,
+            user: null,
+            preferences: null,
         });
     }
 
@@ -90,7 +94,7 @@ export class AuthService {
             person,
             customPermissions: [],
             isActive: true,
-            roles
+            roles,
         });
     }
 

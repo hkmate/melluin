@@ -24,7 +24,7 @@ export class PersonEntityToDtoConverter implements Converter<PersonEntity, Perso
     private convertNotNilEntity(entity: PersonEntity): Person {
         return {
             id: entity.id,
-            user: this.userConverter.convert(entity.user),
+            user: this.userConverter.convert(entity.user ?? undefined),
             firstName: entity.firstName,
             lastName: entity.lastName,
             email: entity.email,
