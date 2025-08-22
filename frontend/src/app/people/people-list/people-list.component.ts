@@ -35,7 +35,7 @@ export class PeopleListComponent extends AutoUnSubscriber implements OnInit {
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [20, 50, 100];
-    protected readonly columns = ['name', 'email', 'phone', 'options'];
+    protected readonly columns = ['name', 'email', 'phone', 'lastLogin', 'options'];
 
     protected tableDataSource = new TableDataSource<Person>();
     protected page: number;

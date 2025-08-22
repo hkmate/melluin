@@ -53,6 +53,19 @@
                 </td>
             </ng-container>
 
+            <ng-container matColumnDef="lastLogin">
+                <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.LastLogin' | translate }}</th>
+                <td mat-cell *matCellDef="let person">
+                    <span [ngClass]="{'no-data': !person.user?.lastLogin}">
+                        @if (person.user?.lastLogin) {
+                            {{ person.user?.lastLogin | date :'YYYY.MM.dd HH:mm:ss' }}
+                        } @else {
+                            {{ 'NoData' | translate }}
+                        }
+                    </span>
+                </td>
+            </ng-container>
+
             <ng-container matColumnDef="options">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let person">

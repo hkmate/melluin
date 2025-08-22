@@ -1,23 +1,24 @@
-import {Test} from '@nestjs/testing';
-import {AuthService} from '@be/auth/service/auth.service';
-import {ConfigService} from '@nestjs/config';
-import {JwtService} from '@nestjs/jwt';
-import {UserDao} from '@be/user/user.dao';
-import {PersonDao} from '@be/person/person.dao';
-import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
-import {cast, randomString} from '@shared/util/test-util';
-import {PersonEntity} from '@be/person/model/person.entity';
-import {UserEntity} from '@be/user/model/user.entity';
+import { Test } from '@nestjs/testing';
+import { AuthService } from '@be/auth/service/auth.service';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { UserDao } from '@be/user/user.dao';
+import { PersonDao } from '@be/person/person.dao';
+import { DefaultSysAdmin } from '@be/config/model/default-sys-admin';
+import { cast, randomString } from '@shared/util/test-util';
+import { PersonEntity } from '@be/person/model/person.entity';
+import { UserEntity } from '@be/user/model/user.entity';
 import * as crypto from 'crypto';
-import {randomUUID} from 'crypto';
-import {User} from '@shared/user/user';
-import {AuthInfo} from '@shared/user/auth-info';
-import {when} from 'jest-when';
-import {PasswordCryptService} from '@be/user/service/password-crypt.service';
-import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
-import {BadRequestException} from '@nestjs/common';
-import {RoleDao} from '@be/user/role.dao';
-import {RoleBrief, RoleType} from '@shared/user/role';
+import { randomUUID } from 'crypto';
+import { User } from '@shared/user/user';
+import { AuthInfo } from '@shared/user/auth-info';
+import { when } from 'jest-when';
+import { PasswordCryptService } from '@be/user/service/password-crypt.service';
+import { UserEntityToDtoModule } from '@be/user/user-entity-to-dto.module';
+import { BadRequestException } from '@nestjs/common';
+import { RoleDao } from '@be/user/role.dao';
+import { RoleBrief, RoleType } from '@shared/user/role';
+import * as Utils from '@be/util/util';
 import Mock = jest.Mock;
 
 describe('AuthService', () => {
@@ -36,16 +37,16 @@ describe('AuthService', () => {
 
             const moduleRef = await Test.createTestingModule({
                 imports: [
-                    UserEntityToDtoModule
+                    UserEntityToDtoModule,
                 ],
                 providers: [
                     AuthService,
-                    {provide: ConfigService, useValue: {get: configServiceGet}},
-                    {provide: JwtService, useValue: {}},
-                    {provide: UserDao, useValue: {save: jest.fn()}},
-                    {provide: RoleDao, useValue: {findAll: jest.fn()}},
-                    {provide: PersonDao, useValue: {save: jest.fn()}},
-                    {provide: PasswordCryptService, useValue: {}},
+                    { provide: ConfigService, useValue: { get: configServiceGet } },
+                    { provide: JwtService, useValue: {} },
+                    { provide: UserDao, useValue: { save: jest.fn() } },
+                    { provide: RoleDao, useValue: { findAll: jest.fn() } },
+                    { provide: PersonDao, useValue: { save: jest.fn() } },
+                    { provide: PasswordCryptService, useValue: {} },
                 ],
             }).compile();
 
@@ -70,11 +71,11 @@ describe('AuthService', () => {
             lastName: randomString(),
             password: randomString(),
             username: randomString(),
-            needToInit: true
+            needToInit: true,
         };
         const mockedPersonId = 'c3121569-ccb8-4600-b07b-3f59b4a477fa';
         const mockedUserId = 'c0b74770-5be3-4d44-84c8-596f244488c9';
-        const expectedRoles = [{id: randomString(), name: 'role1', type: RoleType.SYSADMIN, permissions: []}];
+        const expectedRoles = [{ id: randomString(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }];
         const expectedPassword = randomString();
 
         beforeEach(async () => {
@@ -104,21 +105,21 @@ describe('AuthService', () => {
 
             const moduleRef = await Test.createTestingModule({
                 imports: [
-                    UserEntityToDtoModule
+                    UserEntityToDtoModule,
                 ],
                 providers: [
                     AuthService,
-                    {provide: ConfigService, useValue: {get: configServiceGet}},
-                    {provide: JwtService, useValue: {}},
+                    { provide: ConfigService, useValue: { get: configServiceGet } },
+                    { provide: JwtService, useValue: {} },
                     {
                         provide: UserDao, useValue: {
                             findOneByName: jest.fn().mockReturnValueOnce(undefined),
-                            save: jest.fn(arg => arg)
-                        }
+                            save: jest.fn(arg => arg),
+                        },
                     },
-                    {provide: RoleDao, useValue: {findAll: userServiceFindAllRole}},
-                    {provide: PersonDao, useValue: {save: jest.fn(arg => arg),}},
-                    {provide: PasswordCryptService, useValue: {encrypt: passwordCryptServiceEncrypt}},
+                    { provide: RoleDao, useValue: { findAll: userServiceFindAllRole } },
+                    { provide: PersonDao, useValue: { save: jest.fn(arg => arg) } },
+                    { provide: PasswordCryptService, useValue: { encrypt: passwordCryptServiceEncrypt } },
                 ],
             }).compile();
 
@@ -135,7 +136,7 @@ describe('AuthService', () => {
                 email: null,
                 phone: null,
                 user: null,
-                preferences: null
+                preferences: null,
             };
             const expectedUser: UserEntity = {
                 id: mockedUserId,
@@ -144,7 +145,8 @@ describe('AuthService', () => {
                 userName: defaultUser.username,
                 password: expectedPassword,
                 customPermissions: [],
-                isActive: true
+                isActive: true,
+                lastLogin: null,
             };
 
             expect(userService.findOneByName).toBeCalledWith(defaultUser.username);
@@ -163,7 +165,7 @@ describe('AuthService', () => {
             lastName: randomString(),
             password: randomString(),
             username: randomString(),
-            needToInit: true
+            needToInit: true,
         };
 
         beforeEach(async () => {
@@ -179,21 +181,21 @@ describe('AuthService', () => {
 
             const moduleRef = await Test.createTestingModule({
                 imports: [
-                    UserEntityToDtoModule
+                    UserEntityToDtoModule,
                 ],
                 providers: [
                     AuthService,
-                    {provide: ConfigService, useValue: {get: configServiceGet}},
-                    {provide: JwtService, useValue: {}},
+                    { provide: ConfigService, useValue: { get: configServiceGet } },
+                    { provide: JwtService, useValue: {} },
                     {
                         provide: UserDao, useValue: {
-                            findOneByName: jest.fn().mockReturnValueOnce({username: defaultUser.username}),
-                            save: jest.fn()
-                        }
+                            findOneByName: jest.fn().mockReturnValueOnce({ username: defaultUser.username }),
+                            save: jest.fn(),
+                        },
                     },
-                    {provide: RoleDao, useValue: {findAll: jest.fn()}},
-                    {provide: PersonDao, useValue: {save: jest.fn()}},
-                    {provide: PasswordCryptService, useValue: {encrypt: jest.fn()}},
+                    { provide: RoleDao, useValue: { findAll: jest.fn() } },
+                    { provide: PersonDao, useValue: { save: jest.fn() } },
+                    { provide: PasswordCryptService, useValue: { encrypt: jest.fn() } },
                 ],
             }).compile();
 
@@ -219,16 +221,16 @@ describe('AuthService', () => {
         beforeEach(async () => {
             const moduleRef = await Test.createTestingModule({
                 imports: [
-                    UserEntityToDtoModule
+                    UserEntityToDtoModule,
                 ],
                 providers: [
                     AuthService,
-                    {provide: ConfigService, useValue: {get: jest.fn(() => false)}},
-                    {provide: JwtService, useValue: {sign: jest.fn()}},
-                    {provide: UserDao, useValue: {findOneWithCache: jest.fn()}},
-                    {provide: RoleDao, useValue: {}},
-                    {provide: PersonDao, useValue: {}},
-                    {provide: PasswordCryptService, useValue: {}},
+                    { provide: ConfigService, useValue: { get: jest.fn(() => false) } },
+                    { provide: JwtService, useValue: { sign: jest.fn() } },
+                    { provide: UserDao, useValue: { findOneWithCache: jest.fn(), save: jest.fn() } },
+                    { provide: RoleDao, useValue: {} },
+                    { provide: PersonDao, useValue: {} },
+                    { provide: PasswordCryptService, useValue: {} },
                 ],
             }).compile();
 
@@ -239,6 +241,8 @@ describe('AuthService', () => {
         });
 
         it('When user is valid Then token returned with wrapped user', async () => {
+            const mockedDate = new Date();
+            jest.spyOn(Utils, 'now').mockReturnValue(mockedDate);
             const userId: string = randomUUID();
             const personId: string = randomUUID();
             const username: string = randomString();
@@ -247,10 +251,11 @@ describe('AuthService', () => {
                 id: userId,
                 personId,
                 userName: username,
-                roles: [cast<RoleBrief>({name: 'role1', type: RoleType.SYSADMIN})],
+                roles: [cast<RoleBrief>({ name: 'role1', type: RoleType.SYSADMIN })],
+                lastLogin: mockedDate.toISOString(),
                 permissions: [],
                 customPermissions: [],
-                isActive: true
+                isActive: true,
             };
             const userEntity: UserEntity = {
                 userName: username,
@@ -258,20 +263,27 @@ describe('AuthService', () => {
                 id: userId,
                 isActive: user.isActive,
                 customPermissions: [],
-                person: cast<PersonEntity>({id: personId}),
-                roles: [{id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: []}],
-                settings: {eventList: {}}
+                person: cast<PersonEntity>({ id: personId }),
+                roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
+                settings: { eventList: {} },
+                lastLogin: null,
+            };
+            const expectedRefreshedUser: UserEntity = {
+                ...userEntity,
+                lastLogin: mockedDate,
             };
             const expectedTokenStr = `&@${JSON.stringify(user)}@&`;
-            const expectedToken: AuthInfo = {accessToken: expectedTokenStr, user, userSettings: userEntity.settings!};
+            const expectedToken: AuthInfo = { accessToken: expectedTokenStr, user, userSettings: userEntity.settings! };
             (jwtService.sign as Mock).mockReturnValueOnce(expectedTokenStr);
             (userDao.findOneWithCache as Mock).mockReturnValueOnce(userEntity);
+            (userDao.save as Mock).mockImplementation(x => x);
 
-            const result: AuthInfo = await authService.getTokenFor({username, password});
+            const result: AuthInfo = await authService.getTokenFor({ username, password });
 
             expect(result).toEqual(expectedToken);
-            expect(jwtService.sign).toBeCalledWith({userId: user.id});
+            expect(jwtService.sign).toBeCalledWith({ userId: user.id });
             expect(userDao.findOneWithCache).toBeCalledWith(username);
+            expect(userDao.save).toBeCalledWith(expectedRefreshedUser);
             expect(configService.get).toBeCalledWith('server.defaultSysAdmin.needToInit', false);
         });
     });
@@ -285,15 +297,15 @@ describe('AuthService', () => {
         beforeEach(async () => {
             const moduleRef = await Test.createTestingModule({
                 imports: [
-                    UserEntityToDtoModule
+                    UserEntityToDtoModule,
                 ],
                 providers: [
-                    {provide: ConfigService, useValue: {get: jest.fn(() => false)}},
-                    {provide: JwtService, useValue: {sign: jest.fn()}},
-                    {provide: UserDao, useValue: {findOneWithCache: jest.fn()}},
-                    {provide: RoleDao, useValue: {}},
-                    {provide: PersonDao, useValue: {}},
-                    {provide: PasswordCryptService, useValue: {match: jest.fn()}},
+                    { provide: ConfigService, useValue: { get: jest.fn(() => false) } },
+                    { provide: JwtService, useValue: { sign: jest.fn() } },
+                    { provide: UserDao, useValue: { findOneWithCache: jest.fn() } },
+                    { provide: RoleDao, useValue: {} },
+                    { provide: PersonDao, useValue: {} },
+                    { provide: PasswordCryptService, useValue: { match: jest.fn() } },
                     AuthService,
                 ],
             }).compile();
@@ -311,16 +323,17 @@ describe('AuthService', () => {
             const userEntity: UserEntity = {
                 userName, password,
                 id: userId,
-                person: cast<PersonEntity>({id: personId}),
+                person: cast<PersonEntity>({ id: personId }),
                 isActive: true,
                 customPermissions: [],
-                roles: [{id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: []}]
+                lastLogin: null,
+                roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
             };
             const rawPassword: string = randomString();
             when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
             when(passwordCryptService.match).calledWith(rawPassword, password).mockReturnValue(true);
 
-            await authService.validate({username: userName, password: rawPassword});
+            await authService.validate({ username: userName, password: rawPassword });
 
             // Note: no expect needed, the validation successful when it returns (not throws error).
         });
@@ -333,16 +346,20 @@ describe('AuthService', () => {
             const userEntity: UserEntity = {
                 userName, password,
                 id: userId,
-                person: cast<PersonEntity>({id: personId}),
+                person: cast<PersonEntity>({ id: personId }),
                 isActive: true,
                 customPermissions: [],
-                roles: [{id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: []}]
+                lastLogin: null,
+                roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
             };
             const rawPassword: string = randomString();
             when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
             when(passwordCryptService.match).calledWith(rawPassword, password).mockReturnValue(false);
 
-            const testValidate = (): Promise<void> => authService.validate({username: userName, password: rawPassword});
+            const testValidate = (): Promise<void> => authService.validate({
+                username: userName,
+                password: rawPassword,
+            });
 
             await expect(testValidate).rejects.toThrow(BadRequestException);
         });
@@ -356,13 +373,17 @@ describe('AuthService', () => {
                 id: userId,
                 person: cast<PersonEntity>({}),
                 isActive: false,
+                lastLogin: null,
                 customPermissions: [],
-                roles: [{id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: []}]
+                roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
             };
             const rawPassword: string = randomString();
             when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
 
-            const testValidate = (): Promise<void> => authService.validate({username: userName, password: rawPassword});
+            const testValidate = (): Promise<void> => authService.validate({
+                username: userName,
+                password: rawPassword,
+            });
 
             await expect(testValidate).rejects.toThrow(BadRequestException);
         });
@@ -372,7 +393,10 @@ describe('AuthService', () => {
             const rawPassword: string = randomString();
             when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(undefined));
 
-            const testValidate = (): Promise<void> => authService.validate({username: userName, password: rawPassword});
+            const testValidate = (): Promise<void> => authService.validate({
+                username: userName,
+                password: rawPassword,
+            });
 
             await expect(testValidate).rejects.toThrow(BadRequestException);
         });

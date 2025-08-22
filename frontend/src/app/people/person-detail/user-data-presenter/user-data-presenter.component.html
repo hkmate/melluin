@@ -19,6 +19,19 @@
 
     <mat-card>
         <mat-card-header>
+            <mat-card-subtitle>{{ 'PersonPage.User.Present.LastLogin' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                @if (user?.lastLogin) {
+                    {{ user?.lastLogin | date :'YYYY.MM.dd HH:mm:ss' }}
+                } @else {
+                    {{ 'NotLoggedInYet' | translate }}
+                }
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
             <mat-card-subtitle>{{ 'PersonPage.User.Present.Roles' | translate }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
