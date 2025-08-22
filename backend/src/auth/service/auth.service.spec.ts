@@ -132,6 +132,10 @@ describe('AuthService', () => {
                 id: mockedPersonId,
                 firstName: defaultUser.firstName,
                 lastName: defaultUser.lastName,
+                email: null,
+                phone: null,
+                user: null,
+                preferences: null
             };
             const expectedUser: UserEntity = {
                 id: mockedUserId,

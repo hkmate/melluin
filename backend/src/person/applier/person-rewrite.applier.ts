@@ -1,5 +1,5 @@
-import {PersonEntity} from '@be/person/model/person.entity';
-import {PersonRewrite} from '@shared/person/person-rewrite';
+import { PersonEntity } from '@be/person/model/person.entity';
+import { PersonRewrite } from '@shared/person/person-rewrite';
 
 
 export class PersonRewriteApplier {
@@ -16,9 +16,9 @@ export class PersonRewriteApplier {
     private rewirePrimitiveFields(): void {
         this.persisted.firstName = this.rewrite.firstName;
         this.persisted.lastName = this.rewrite.lastName;
-        this.persisted.phone = this.rewrite.phone;
-        this.persisted.email = this.rewrite.email;
-        this.persisted.preferences = this.rewrite.preferences;
+        this.persisted.phone = this.rewrite.phone ?? null;
+        this.persisted.email = this.rewrite.email ?? null;
+        this.persisted.preferences = this.rewrite.preferences ?? null;
     }
 
 }
