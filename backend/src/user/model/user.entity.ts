@@ -22,6 +22,12 @@ export class UserEntity {
     @Column({ name: 'last_login', type: 'timestamp', nullable: true })
     lastLogin: Date | null;
 
+    @Column({ name: 'created', type: 'timestamp', nullable: true })
+    created: Date | null;
+
+    @Column({ name: 'created_by', type: 'uuid', nullable: true })
+    createdByPersonId: string | null;
+
     @Column({ name: 'custom_info', type: 'jsonb' })
     settings?: UserSettings;
 

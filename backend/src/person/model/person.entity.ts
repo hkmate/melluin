@@ -30,6 +30,12 @@ export class PersonEntity {
     @Column({ type: 'text', nullable: true })
     phone: string | null;
 
+    @Column({ name: 'created', type: 'timestamp', nullable: true })
+    created: Date | null;
+
+    @Column({ name: 'created_by', type: 'uuid', nullable: true })
+    createdByPersonId: string | null;
+
     @OneToOne(type => UserEntity, (user: UserEntity) => user.person, { nullable: true })
     user: UserEntity | null;
 

@@ -13,4 +13,6 @@ export interface User extends BriefUser {
     userName: string;
     customPermissions: Array<Permission>;
     permissions: Array<Permission>;
+    created?: string;
+    createdByPersonId?: string;
 }

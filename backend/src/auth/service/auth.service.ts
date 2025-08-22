@@ -89,6 +89,8 @@ export class AuthService {
             phone: null,
             user: null,
             preferences: null,
+            created: now(),
+            createdByPersonId: null
         });
     }
 
@@ -103,6 +105,8 @@ export class AuthService {
             isActive: true,
             lastLogin: null,
             roles,
+            created: now(),
+            createdByPersonId: null
         });
     }
 
