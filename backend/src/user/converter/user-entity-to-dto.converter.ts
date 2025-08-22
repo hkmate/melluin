@@ -10,7 +10,7 @@ import { RoleEntityToBriefDtoConverter } from '@be/user/converter/role-entity-to
 @Injectable()
 export class UserEntityToDtoConverter implements Converter<UserEntity, User> {
 
-    constructor(private roleConverter: RoleEntityToBriefDtoConverter) {
+    constructor(private readonly roleConverter: RoleEntityToBriefDtoConverter) {
     }
 
     public convert(entity: UserEntity): User;
@@ -36,6 +36,8 @@ export class UserEntityToDtoConverter implements Converter<UserEntity, User> {
                 customPermissions),
             customPermissions,
             lastLogin: entity.lastLogin?.toISOString(),
+            created: entity.created?.toISOString(),
+            createdByPersonId: entity.createdByPersonId ?? undefined,
         };
     }
 

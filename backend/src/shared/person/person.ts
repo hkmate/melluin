@@ -1,5 +1,5 @@
-import {BriefUser} from '@shared/user/user';
-import {IsBoolean, IsOptional} from 'class-validator';
+import { BriefUser } from '@shared/user/user';
+import { IsBoolean, IsOptional } from 'class-validator';
 
 
 export interface PersonIdentifier {
@@ -13,6 +13,8 @@ export interface Person extends PersonIdentifier {
     phone?: string;
     user?: BriefUser;
     preferences?: PersonPreferences;
+    created?: string;
+    createdByPersonId?: BriefUser;
 }
 
 export class PersonPreferences {
@@ -26,7 +28,7 @@ export class PersonPreferences {
     canVolunteerSeeMyEmail?: boolean;
 
     public static createDefault(): PersonPreferences {
-        const value =  new PersonPreferences();
+        const value = new PersonPreferences();
         value.canVolunteerSeeMyEmail = false;
         value.canVolunteerSeeMyPhone = false;
         return value;

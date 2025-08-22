@@ -29,6 +29,8 @@ export class PersonEntityToDtoConverter implements Converter<PersonEntity, Perso
             lastName: entity.lastName,
             email: entity.email ?? undefined,
             phone: entity.phone ?? undefined,
+            created: entity.created?.toISOString(),
+            createdByPersonId: entity.createdByPersonId ?? undefined,
             preferences: entity.preferences,
         } as Person;
     }

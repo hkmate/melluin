@@ -31,7 +31,7 @@ export class PersonCrudService {
     }
 
     public async save(personCreation: PersonCreation, requester: User): Promise<Person> {
-        const creationEntity = this.personCreationConverter.convert(personCreation);
+        const creationEntity = this.personCreationConverter.convert({newPerson: personCreation, requester});
         const personEntity = await this.personDao.save(creationEntity);
         return this.personConverterFactory.createFor(requester)
             .convert(personEntity);
