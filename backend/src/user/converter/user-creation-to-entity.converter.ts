@@ -41,6 +41,7 @@ export class UserCreationToEntityConverter implements Converter<UserCreation, Pr
             isActive: true,
             roles: roles.filter(entity => dto.roleNames.includes(entity.name)),
             customPermissions: permissions.filter(entity => dto.customPermissions.includes(entity.permission)),
+            lastLogin: null,
         };
     }
 

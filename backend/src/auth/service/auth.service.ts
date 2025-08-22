@@ -17,6 +17,7 @@ import { UserEntityToSettingsDtoConverter } from '@be/user/converter/user-entity
 import { User } from '@shared/user/user';
 import { UserSettings } from '@shared/user/user-settings';
 import { RoleDao } from '@be/user/role.dao';
+import { now } from '@be/util/util';
 
 @Injectable()
 export class AuthService {
@@ -48,14 +49,20 @@ export class AuthService {
     }
 
     public async getTokenFor(credentials: AuthCredentials): Promise<AuthInfo> {
-        const userEntity: UserEntity | undefined = await this.userDao.findOneWithCache(credentials.username);
-        const user: User = this.userConverter.convert(userEntity!);
-        const userSettings: UserSettings = this.userSettingsConverter.convert(userEntity!);
+        let userEntity: UserEntity = (await this.userDao.findOneWithCache(credentials.username))!;
+        userEntity = await this.saveLastLogin(userEntity);
+        const user: User = this.userConverter.convert(userEntity);
+        const userSettings: UserSettings = this.userSettingsConverter.convert(userEntity);
         return {
             accessToken: this.jwtService.sign({ userId: user.id }),
             user,
             userSettings,
         };
+    }
+
+    private saveLastLogin(userEntity: UserEntity): Promise<UserEntity> {
+        userEntity.lastLogin = now();
+        return this.userDao.save(userEntity);
     }
 
     private async initDefaultUser(): Promise<void> {
@@ -94,6 +101,7 @@ export class AuthService {
             person,
             customPermissions: [],
             isActive: true,
+            lastLogin: null,
             roles,
         });
     }

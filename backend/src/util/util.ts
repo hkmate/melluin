@@ -5,3 +5,7 @@ export function areArrayHasSameItems<T>(arr1: Array<T>, arr2: Array<T>): boolean
     const set2 = new Set(arr2);
     return _.isEqual(set1, set2);
 }
+
+export function now(): Date {
+    return new Date();
+}

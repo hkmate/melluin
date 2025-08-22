@@ -26,7 +26,8 @@ export class UserEntityToBriefDtoConverter implements Converter<UserEntity, Brie
             id: entity.id,
             personId: entity.person.id,
             isActive: entity.isActive,
-            roles: entity.roles?.map(roleEntity => this.roleConverter.convert(roleEntity))
+            roles: entity.roles?.map(roleEntity => this.roleConverter.convert(roleEntity)),
+            lastLogin: entity.lastLogin?.toISOString()
         };
     }
 

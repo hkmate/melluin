@@ -29,6 +29,7 @@
     "EventShortDateFormat": "MM.dd. EE",
     "TimeFormat": "HH:mm",
     "LinkCopied": "Link a vágólapra másolva",
+    "NotLoggedInYet": "Még nem jelentkezett be",
     "ConfirmDialog": {
         "Title": "Megerősítés szükséges"
     },
@@ -137,7 +138,8 @@
         "ListHeader": {
             "Name": "Név",
             "Email": "Email",
-            "Phone": "Tel.szám"
+            "Phone": "Tel.szám",
+            "LastLogin": "Bejelentkezett"
         },
         "Filters": "Szűrők",
         "Filter": {
@@ -187,6 +189,7 @@
                 "UserName": "Felhasználónév",
                 "Password": "Jelszó",
                 "PasswordPlaceholder": "**********",
+                "LastLogin": "Utolsó bejelentkezés",
                 "Roles": "Szerepkörök",
                 "Permissions": "Jogosultságok",
                 "Status": "Státusz"
