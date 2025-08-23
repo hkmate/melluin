@@ -139,7 +139,9 @@
             "Name": "Név",
             "Email": "Email",
             "Phone": "Tel.szám",
-            "LastLogin": "Bejelentkezett"
+            "LastLogin": "Bejelentkezett",
+            "Created": "Felvéve",
+            "CreatedBy": "Felvevő"
         },
         "Filters": "Szűrők",
         "Filter": {
@@ -162,6 +164,8 @@
             "Email": "Email",
             "Phone": "Telefonszám",
             "Preferences": "Egyéb",
+            "Created": "Felvéve",
+            "CreatedBy": "Felvevő",
             "CanVolunteerSeeMyEmail": "Látható az email cím más önkétesek számára",
             "CanVolunteerSeeMyPhone": "Látható az telefonszám más önkétesek számára"
         },
@@ -192,6 +196,8 @@
                 "LastLogin": "Utolsó bejelentkezés",
                 "Roles": "Szerepkörök",
                 "Permissions": "Jogosultságok",
+                "Created": "Felvéve",
+                "CreatedBy": "Felvevő",
                 "Status": "Státusz"
             },
             "Form": {

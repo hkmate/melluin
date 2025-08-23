@@ -1,60 +1,90 @@
 <h1>{{ 'PersonPage.User.Data' | translate }}</h1>
 
-<div class="user-data-presenter">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.User.Present.UserName' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ user?.userName }}</mat-card-title>
-        </mat-card-header>
-    </mat-card>
+@let userValue = user();
+@if (userValue) {
+    <div class="user-data-presenter">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.User.Present.UserName' | translate }}</mat-card-subtitle>
+                <mat-card-title>{{ userValue.userName }}</mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.User.Present.Status' | translate }}</mat-card-subtitle>
-            <mat-card-title>
-                {{ (user?.isActive ? 'PersonPage.User.Active' : 'PersonPage.User.Inactive') | translate }}
-            </mat-card-title>
-        </mat-card-header>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.User.Present.Status' | translate }}</mat-card-subtitle>
+                <mat-card-title>
+                    {{ (userValue.isActive ? 'PersonPage.User.Active' : 'PersonPage.User.Inactive') | translate }}
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.User.Present.LastLogin' | translate }}</mat-card-subtitle>
-            <mat-card-title>
-                @if (user?.lastLogin) {
-                    {{ user?.lastLogin | date :'YYYY.MM.dd HH:mm:ss' }}
-                } @else {
-                    {{ 'NotLoggedInYet' | translate }}
-                }
-            </mat-card-title>
-        </mat-card-header>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.User.Present.LastLogin' | translate }}</mat-card-subtitle>
+                <mat-card-title>
+                    @if (userValue.lastLogin) {
+                        {{ userValue.lastLogin | date :'YYYY.MM.dd HH:mm:ss' }}
+                    } @else {
+                        {{ 'NotLoggedInYet' | translate }}
+                    }
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.User.Present.Roles' | translate }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <ul>
-                @for (role of user?.roles; track role) {
-                    <li class="role">{{ role.name }}</li>
-                }
-            </ul>
-        </mat-card-content>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.User.Present.Created' | translate }}</mat-card-subtitle>
+                <mat-card-title>
+                    @if (userValue.created) {
+                        {{ userValue.created | date :'YYYY.MM.dd HH:mm:ss' }}
+                    } @else {
+                        {{ '-' }}
+                    }
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.User.Present.Permissions' | translate }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <ul>
-                @for (permission of user?.customPermissions; track permission) {
-                    <li class="permission">{{ permission }}</li>
-                } @empty {
-                    {{ 'NoData' | translate }}
-                }
-            </ul>
-        </mat-card-content>
-    </mat-card>
-</div>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.User.Present.CreatedBy' | translate }}</mat-card-subtitle>
+                <mat-card-title>
+                    @let creatorValue = creator();
+                    @if (creatorValue) {
+                        {{ creatorValue.lastName }} {{ creatorValue.firstName }}
+                    } @else {
+                        {{ '-' }}
+                    }
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.User.Present.Roles' | translate }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <ul>
+                    @for (role of userValue.roles; track role) {
+                        <li class="role">{{ role.name }}</li>
+                    }
+                </ul>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.User.Present.Permissions' | translate }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <ul>
+                    @for (permission of userValue.customPermissions; track permission) {
+                        <li class="permission">{{ permission }}</li>
+                    } @empty {
+                        {{ 'NoData' | translate }}
+                    }
+                </ul>
+            </mat-card-content>
+        </mat-card>
+    </div>
+}
