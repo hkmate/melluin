@@ -77,8 +77,11 @@ describe('AuthService', () => {
         const mockedUserId = 'c0b74770-5be3-4d44-84c8-596f244488c9';
         const expectedRoles = [{ id: randomString(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }];
         const expectedPassword = randomString();
+        const mockedDate = new Date();
 
         beforeEach(async () => {
+            jest.spyOn(Utils, 'now').mockReturnValue(mockedDate);
+
             const configServiceGet = jest.fn().mockImplementation((paramName: string) => {
                 if (paramName === 'server.defaultSysAdmin.needToInit') {
                     return true;
@@ -137,6 +140,8 @@ describe('AuthService', () => {
                 phone: null,
                 user: null,
                 preferences: null,
+                created: mockedDate,
+                createdByPersonId: null,
             };
             const expectedUser: UserEntity = {
                 id: mockedUserId,
@@ -147,6 +152,8 @@ describe('AuthService', () => {
                 customPermissions: [],
                 isActive: true,
                 lastLogin: null,
+                created: mockedDate,
+                createdByPersonId: null,
             };
 
             expect(userService.findOneByName).toBeCalledWith(defaultUser.username);
@@ -267,6 +274,8 @@ describe('AuthService', () => {
                 roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
                 settings: { eventList: {} },
                 lastLogin: null,
+                created: null,
+                createdByPersonId: null,
             };
             const expectedRefreshedUser: UserEntity = {
                 ...userEntity,
@@ -327,6 +336,8 @@ describe('AuthService', () => {
                 isActive: true,
                 customPermissions: [],
                 lastLogin: null,
+                created: null,
+                createdByPersonId: null,
                 roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
             };
             const rawPassword: string = randomString();
@@ -350,6 +361,8 @@ describe('AuthService', () => {
                 isActive: true,
                 customPermissions: [],
                 lastLogin: null,
+                created: null,
+                createdByPersonId: null,
                 roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
             };
             const rawPassword: string = randomString();
@@ -374,6 +387,8 @@ describe('AuthService', () => {
                 person: cast<PersonEntity>({}),
                 isActive: false,
                 lastLogin: null,
+                created: null,
+                createdByPersonId: null,
                 customPermissions: [],
                 roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
             };
