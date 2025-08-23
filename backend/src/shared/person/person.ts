@@ -14,7 +14,7 @@ export interface Person extends PersonIdentifier {
     user?: BriefUser;
     preferences?: PersonPreferences;
     created?: string;
-    createdByPersonId?: BriefUser;
+    createdByPersonId?: string;
 }
 
 export class PersonPreferences {

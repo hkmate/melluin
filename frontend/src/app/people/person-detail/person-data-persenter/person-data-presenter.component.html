@@ -1,47 +1,79 @@
 <h1>{{ 'PersonPage.Data' | translate }}</h1>
 
-<div *ngIf="person" class="person-data-presenter">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.Present.LastName' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ person.lastName }}</mat-card-title>
-        </mat-card-header>
-    </mat-card>
+@let personValue = person();
+@if (personValue) {
+    <div class="person-data-presenter">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.Present.LastName' | translate }}</mat-card-subtitle>
+                <mat-card-title>{{ personValue.lastName }}</mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.Present.FirstName' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ person.firstName }}</mat-card-title>
-        </mat-card-header>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.Present.FirstName' | translate }}</mat-card-subtitle>
+                <mat-card-title>{{ personValue.firstName }}</mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.Present.Email' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ person.email | optional: '-' }}</mat-card-title>
-        </mat-card-header>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.Present.Email' | translate }}</mat-card-subtitle>
+                <mat-card-title>{{ personValue.email | optional: '-' }}</mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.Present.Phone' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ person.phone | optional: '-' }}</mat-card-title>
-        </mat-card-header>
-    </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.Present.Phone' | translate }}</mat-card-subtitle>
+                <mat-card-title>{{ personValue.phone | optional: '-' }}</mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>{{ 'PersonPage.Present.Preferences' | translate }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content class="preferences-card">
-            <div>
-                <mat-checkbox [ngModel]="person.preferences?.canVolunteerSeeMyEmail" [disabled]="true"></mat-checkbox>
-                {{ 'PersonPage.Present.CanVolunteerSeeMyEmail' | translate }}
-            </div>
-            <div>
-                <mat-checkbox [ngModel]="person.preferences?.canVolunteerSeeMyPhone" [disabled]="true"></mat-checkbox>
-                {{ 'PersonPage.Present.CanVolunteerSeeMyPhone' | translate }}
-            </div>
-        </mat-card-content>
-    </mat-card>
-</div>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.Present.Created' | translate }}</mat-card-subtitle>
+                <mat-card-title>
+                    @if (personValue.created) {
+                        {{ personValue.created | date :'YYYY.MM.dd HH:mm:ss' }}
+                    } @else {
+                        {{ '-' }}
+                    }
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.Present.CreatedBy' | translate }}</mat-card-subtitle>
+                <mat-card-title>
+                    @let creatorValue = creator();
+                    @if (creatorValue) {
+                        {{ creatorValue.lastName }} {{ creatorValue.firstName }}
+                    } @else {
+                        {{ '-' }}
+                    }
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.Present.Preferences' | translate }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="preferences-card">
+                <div>
+                    <mat-checkbox [ngModel]="personValue.preferences?.canVolunteerSeeMyEmail"
+                                  [disabled]="true"/>
+                    {{ 'PersonPage.Present.CanVolunteerSeeMyEmail' | translate }}
+                </div>
+                <div>
+                    <mat-checkbox [ngModel]="personValue.preferences?.canVolunteerSeeMyPhone"
+                                  [disabled]="true"/>
+                    {{ 'PersonPage.Present.CanVolunteerSeeMyPhone' | translate }}
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+}
