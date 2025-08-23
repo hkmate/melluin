@@ -30,7 +30,7 @@ export class PeopleListQueryParamSettingsInitializer {
         result.name = '';
         result.email = '';
         result.phone = '';
-        result.onlyActive = true;
+        result.onlyActive = false;
         result.roleNames = [];
         return result;
     }
