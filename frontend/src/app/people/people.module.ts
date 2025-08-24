@@ -29,6 +29,8 @@ import {PeopleListFilterComponent} from '@fe/app/people/people-list/people-list-
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {PersonSelectModule} from '@fe/app/util/person-select/person-select.module';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {PeopleLastLoginStylePipe} from '@fe/app/people/people-list/people-last-login-style.pipe';
+import {MatTooltip} from '@angular/material/tooltip';
 
 @NgModule({
     imports: [
@@ -49,6 +51,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
         MatExpansionModule,
         MatCheckboxModule,
         MatDatepickerModule,
+        MatTooltip,
 
         TranslateModule,
 
@@ -56,7 +59,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
         OptionalPipe,
         LazyInputModule,
         TrimmedTextInputModule,
-        PersonSelectModule
+        PersonSelectModule,
+        PeopleLastLoginStylePipe
     ],
     declarations: [
         PeopleListComponent,

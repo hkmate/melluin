@@ -143,6 +143,8 @@
             "Created": "Felvéve",
             "CreatedBy": "Felvevő"
         },
+        "NoUserAdded": "Nincs létrehozva felhasználója",
+        "Active": "Aktív",
         "Filters": "Szűrők",
         "Filter": {
             "Name": "Név",
