@@ -37,6 +37,7 @@
         "true": "Igen",
         "false": "Nem"
     },
+    "NoBackendError": "Valószínüleg nem elérhető a server. (Ismeretlen hiba)",
     "Role": {
         "INTERN_HOSPITAL_VISITOR": "Hospitáló",
         "BEGINNER_HOSPITAL_VISITOR": "Kórházlátogató (kezdő)",
