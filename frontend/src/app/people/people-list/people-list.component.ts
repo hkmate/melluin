@@ -1,4 +1,4 @@
-import {Component, signal, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {Pageable, PageQuery} from '@shared/api-util/pageable';
 import {Person} from '@shared/person/person';
 import {PeopleService} from '@fe/app/people/people.service';
@@ -35,7 +35,7 @@ export class PeopleListComponent extends AutoUnSubscriber implements OnInit {
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [20, 50, 100];
-    protected readonly columns = ['name', 'email', 'phone', 'lastLogin', 'created', 'createdBy', 'options'];
+    protected readonly columns = ['name', 'status', 'email', 'phone', 'lastLogin', 'created', 'createdBy', 'options'];
 
     protected tableDataSource = new TableDataSource<Person>();
     protected page: number;
@@ -64,7 +64,7 @@ export class PeopleListComponent extends AutoUnSubscriber implements OnInit {
     }
 
     protected paginateHappened(event: PageEvent): void {
-        this.filterService.setPageInfo({ page: event.pageIndex + 1, size: event.pageSize });
+        this.filterService.setPageInfo({page: event.pageIndex + 1, size: event.pageSize});
     }
 
     private setUpPageInfo(): void {
@@ -104,7 +104,7 @@ export class PeopleListComponent extends AutoUnSubscriber implements OnInit {
         this.peopleService.findPeople({
             page: 1,
             size: 100,
-            where: [{ 'id': { operator: 'in', operand: uniqueCreatorIds } }]
+            where: [{'id': {operator: 'in', operand: uniqueCreatorIds}}]
         }).subscribe(people => {
             this.creators.set(_.keyBy(people.items, 'id'));
         });

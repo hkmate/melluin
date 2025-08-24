@@ -21,4 +21,13 @@
         opacity: .7;
     }
 
+    ::ng-deep .last-login-moderate-warning {
+        color: orange;
+    }
+
+    ::ng-deep .last-login-full-warning {
+        font-weight: bold;
+        color: #ff002d;
+    }
+
 }
