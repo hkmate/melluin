@@ -27,49 +27,50 @@
             </mat-accordion>
         </div>
 
-        <table mat-table recycleRows [dataSource]="tableDataSource">
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Name' | translate }}</th>
-                <td mat-cell *matCellDef="let person">
-                    <a class="link" [routerLink]="[person.id]">{{ person | personName }}</a>
-                </td>
-            </ng-container>
+        <div class="scrollable-table">
+            <table mat-table recycleRows [dataSource]="tableDataSource">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Name' | translate }}</th>
+                    <td mat-cell *matCellDef="let person">
+                        <a class="link" [routerLink]="[person.id]">{{ person | personName }}</a>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let person">
-                    @if (!person.user) {
-                        <mat-icon class="material-icons-outlined is-user-icon"
-                                  [matTooltip]="'PeopleListPage.NoUserAdded' | translate">
-                            no_accounts
-                        </mat-icon>
-                    }
-                    @if (person.user?.isActive) {
-                        <mat-icon class="material-icons-outlined is-user-icon"
-                                  [matTooltip]="'PeopleListPage.Active' | translate">
-                            badge
-                        </mat-icon>
-                    }
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let person">
+                        @if (!person.user) {
+                            <mat-icon class="material-icons-outlined is-user-icon"
+                                      [matTooltip]="'PeopleListPage.NoUserAdded' | translate">
+                                no_accounts
+                            </mat-icon>
+                        }
+                        @if (person.user?.isActive) {
+                            <mat-icon class="material-icons-outlined is-user-icon"
+                                      [matTooltip]="'PeopleListPage.Active' | translate">
+                                badge
+                            </mat-icon>
+                        }
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Email' | translate }}</th>
-                <td mat-cell *matCellDef="let person">
-                    <span [ngClass]="{'no-data': !person.email}">{{ person.email | optional }}</span>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Email' | translate }}</th>
+                    <td mat-cell *matCellDef="let person">
+                        <span [ngClass]="{'no-data': !person.email}">{{ person.email | optional }}</span>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="phone">
-                <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Phone' | translate }}</th>
-                <td mat-cell *matCellDef="let person">
-                    <span [ngClass]="{'no-data': !person.phone}">{{ person.phone | optional }}</span>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="phone">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Phone' | translate }}</th>
+                    <td mat-cell *matCellDef="let person">
+                        <span [ngClass]="{'no-data': !person.phone}">{{ person.phone | optional }}</span>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="lastLogin">
-                <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.LastLogin' | translate }}</th>
-                <td mat-cell *matCellDef="let person">
+                <ng-container matColumnDef="lastLogin">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.LastLogin' | translate }}</th>
+                    <td mat-cell *matCellDef="let person">
                     <span [ngClass]="person | lastLoginStyle">
                         @if (person.user?.lastLogin) {
                             {{ person.user?.lastLogin | date :'YYYY.MM.dd HH:mm:ss' }}
@@ -77,12 +78,12 @@
                             {{ 'NoData' | translate }}
                         }
                     </span>
-                </td>
-            </ng-container>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="created">
-                <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Created' | translate }}</th>
-                <td mat-cell *matCellDef="let person">
+                <ng-container matColumnDef="created">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Created' | translate }}</th>
+                    <td mat-cell *matCellDef="let person">
                     <span [ngClass]="{'no-data': !person.created}">
                         @if (person.created) {
                             {{ person.created | date :'YYYY.MM.dd HH:mm:ss' }}
@@ -90,35 +91,36 @@
                             {{ 'NoData' | translate }}
                         }
                     </span>
-                </td>
-            </ng-container>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="createdBy">
-                <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.CreatedBy' | translate }}</th>
-                <td mat-cell *matCellDef="let person">
-                    @let createdBy = person.createdByPersonId ? creators()[person.createdByPersonId] : undefined;
-                    <span [ngClass]="{'no-data': !createdBy}">
+                <ng-container matColumnDef="createdBy">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.CreatedBy' | translate }}</th>
+                    <td mat-cell *matCellDef="let person">
+                        @let createdBy = person.createdByPersonId ? creators()[person.createdByPersonId] : undefined;
+                        <span [ngClass]="{'no-data': !createdBy}">
                         @if (createdBy) {
                             <a class="link" [routerLink]="[createdBy.id]">{{ createdBy | personName }}</a>
                         } @else {
                             {{ 'NoData' | translate }}
                         }
                     </span>
-                </td>
-            </ng-container>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="options">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let person">
-                    <a mat-icon-button [routerLink]="[person.id]" [queryParams]="{edit: true}">
-                        <mat-icon class="material-icons-outlined settings-icon">settings</mat-icon>
-                    </a>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="options">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let person">
+                        <a mat-icon-button [routerLink]="[person.id]" [queryParams]="{edit: true}">
+                            <mat-icon class="material-icons-outlined settings-icon">settings</mat-icon>
+                        </a>
+                    </td>
+                </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="columns"></tr>
-            <tr mat-row *matRowDef="let row; columns: columns;"></tr>
-        </table>
+                <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+            </table>
+        </div>
 
         <mat-paginator [length]="countOfAll"
                        [pageIndex]="page - 1"
