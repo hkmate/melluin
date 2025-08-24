@@ -10,11 +10,15 @@ import {HospitalVisitModule} from '@be/hospital-visit/hospital-visit.module';
 import {ActivityRewriteApplierFactory} from '@be/hospital-visit-activity/applier/activity-rewrite-applier.factory';
 import {VisitedChildrenPersistenceModule} from '@be/hospital-visit-children/persistence/visited-children.persistence.module';
 import {VisitedChildrenModule} from '@be/hospital-visit-children/visited-children.module';
+import {HospitalVisitActivityInfoPersistenceModule} from '@be/hospital-visit-activity-info/hospital-visit-activity-info.persistence.module';
+import {HospitalVisitActivityInfoModule} from '@be/hospital-visit-activity-info/hospital-visit-activity-info.module';
 
 @Module({
     imports: [
         HospitalVisitActivityPersistenceModule,
         HospitalVisitPersistenceModule,
+        HospitalVisitActivityInfoPersistenceModule,
+        HospitalVisitActivityInfoModule,
         HospitalVisitModule,
         VisitedChildrenPersistenceModule,
         VisitedChildrenModule

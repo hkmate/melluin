@@ -1067,6 +1067,106 @@
 			]
 		},
 		{
+			"name": "hospital-visit-activity-info",
+			"item": [
+				{
+					"name": "Add hospital visit activity information",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"askjaklsfjahkjkasdasd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/6522d516-d5bc-4a4b-a403-39ca079110bf/activities-information",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"6522d516-d5bc-4a4b-a403-39ca079110bf",
+								"activities-information"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get hospital visit activity information",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/api/hospital-visits/6522d516-d5bc-4a4b-a403-39ca079110bf/activities-information",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"api",
+								"hospital-visits",
+								"6522d516-d5bc-4a4b-a403-39ca079110bf",
+								"activities-information"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "health-check",
 			"item": [
 				{
@@ -1343,7 +1443,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"child\": {\n        \"name\": \"Johnny\",\n        \"guessedBirth\": \"2015.12\",\n        \"info\": \"like motorbikes\"\n    },\n    \"isParentThere\": false\n}",
+							"raw": "{\n    \"childId\": \"fb4f5545-cc7b-4620-9976-49ae69985acc\",\n    \"isParentThere\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1351,14 +1451,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverUrl}}/api/hospital-visits/d2149e64-a16e-46d4-a6e0-20ed442a4b9b/children",
+							"raw": "{{serverUrl}}/api/hospital-visits/1e0f0d4b-6e43-4d18-96a6-1ac73ef685bf/children",
 							"host": [
 								"{{serverUrl}}"
 							],
 							"path": [
 								"api",
 								"hospital-visits",
-								"d2149e64-a16e-46d4-a6e0-20ed442a4b9b",
+								"1e0f0d4b-6e43-4d18-96a6-1ac73ef685bf",
 								"children"
 							]
 						}

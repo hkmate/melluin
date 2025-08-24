@@ -17,12 +17,14 @@ import {ActivityRewriteApplierFactory} from '@be/hospital-visit-activity/applier
 import {DateUtil} from '@shared/util/date-util';
 import {VisitedChildrenDao} from '@be/hospital-visit-children/persistence/visited-children.dao';
 import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
+import {HospitalVisitActivityInfoDao} from '@be/hospital-visit-activity-info/hospital-visit-activity-info.dao';
 
 @Injectable()
 export class HospitalVisitActivityCrudService {
 
     constructor(private readonly hospitalVisitActivityDao: HospitalVisitActivityDao,
                 private readonly hospitalVisitDao: HospitalVisitDao,
+                private readonly hospitalVisitActivityInfoDao: HospitalVisitActivityInfoDao,
                 private readonly visitedChildrenDao: VisitedChildrenDao,
                 private readonly activityInputToEntityConverter: ActivityInputToEntityConverter,
                 private readonly basicDtoConverter: ActivityEntityToBasicDtoConverter,
@@ -64,7 +66,8 @@ export class HospitalVisitActivityCrudService {
         const visit = await this.hospitalVisitDao.getOne(visitId);
         const activities = await this.hospitalVisitActivityDao.findByVisitIds([visitId]);
         const children = await this.visitedChildrenDao.findAllByVisitId(visitId);
-        return await this.wrappedDtoConverter.convert({visit, activities, children});
+        const info = await this.hospitalVisitActivityInfoDao.getOneByVisitId(visitId);
+        return await this.wrappedDtoConverter.convert({visit, activities, children, info});
     }
 
     public async findByVisitIds(visitIds: Array<string>, requester: User): Promise<Array<WrappedHospitalVisitActivity>> {

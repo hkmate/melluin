@@ -10,6 +10,7 @@ import {ChildEntity} from '@be/child/model/child.entity';
 import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
 import {PermissionEntity} from '@be/user/model/permission.entity';
 import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
+import {HospitalVisitActivityInfoEntity} from '@be/hospital-visit-activity-info/model/hospital-visit-activity-info.entity';
 
 export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
@@ -36,6 +37,7 @@ export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
             HospitalVisitEntity,
             VisitedChildEntity,
             HospitalVisitActivityEntity,
+            HospitalVisitActivityInfoEntity,
             ChildEntity
         ],
 
