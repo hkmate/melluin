@@ -22,7 +22,7 @@ export class ChildEntityToDtoConverter implements Converter<ChildEntity, Child> 
             id: entity.id,
             name: entity.name,
             guessedBirth: entity.guessedBirth,
-            info: entity.info
+            info: entity.info ?? undefined
         }
     }
 
