@@ -1,5 +1,5 @@
 import {Pageable} from '@shared/api-util/pageable';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 import {isNil} from '@shared/util/util';
 
 

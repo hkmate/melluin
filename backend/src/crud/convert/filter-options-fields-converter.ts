@@ -1,6 +1,6 @@
 import {isNil, isNotNil} from '@shared/util/util';
 import {ConjunctionFilterOptions, FilterOperation, FilterOptions} from '@shared/api-util/filter-options';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 
 export type  FilterConverter = (value: FilterOperation<unknown>) => Promise<{
     key: string,

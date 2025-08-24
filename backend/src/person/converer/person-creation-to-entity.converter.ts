@@ -1,7 +1,7 @@
 import { PersonEntity } from '@be/person/model/person.entity';
 import { Injectable } from '@nestjs/common';
 import { isNil } from '@shared/util/util';
-import { Converter } from '@shared/converter';
+import { Converter } from '@shared/converter/converter';
 import { PersonCreation } from '@shared/person/person-creation';
 import { randomUUID } from 'crypto';
 import { now } from '@be/util/util';

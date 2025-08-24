@@ -22,6 +22,9 @@ export enum Permission {
     canReadPerson = 'canReadPerson',
     canSearchPerson = 'canSearchPerson',
     canReadSensitivePersonData = 'canReadSensitivePersonData',
+    canReadPersonCreateData = 'canReadPersonCreateData',
+    canReadUserCreateData = 'canReadUserCreateData',
+    canReadUserLastLoginData = 'canReadUserLastLoginData',
     canManagePermissions = 'canManagePermissions',
 
 }

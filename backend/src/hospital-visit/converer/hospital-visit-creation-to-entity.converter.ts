@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 import {randomUUID} from 'crypto';
 import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';

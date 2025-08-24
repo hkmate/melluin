@@ -1,5 +1,5 @@
 import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 import {randomUUID} from 'crypto';
 import {Injectable} from '@nestjs/common';
 import {PermissionDao} from '@be/user/permission.dao';

@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 import {ChildEntity} from '@be/child/model/child.entity';
 import {Child} from '@shared/child/child';
 

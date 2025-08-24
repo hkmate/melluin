@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 import {randomUUID} from 'crypto';
 import {DepartmentCreation} from '@shared/department/department-creation';
 import {DepartmentEntity} from '@be/department/model/department.entity';

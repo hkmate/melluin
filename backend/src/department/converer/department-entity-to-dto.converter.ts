@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import {Department} from '@shared/department/department';
 import {DEFAULT_TO_DATE} from '@shared/api-util/default-to-date';

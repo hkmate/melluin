@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 import {DepartmentBoxStatusEntity} from '@be/department-box/model/department-box-status.entity';
 import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
 

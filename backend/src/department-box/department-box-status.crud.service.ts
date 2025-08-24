@@ -16,7 +16,7 @@ import {
 } from '@shared/department/box/department-box-status-filterable-fields';
 import {BoxStatusInfoParam} from '@be/department-box/constants/box-status-info-param';
 import {BoxStatusEntityToDtoWithDepartmentBriefConverter} from '@be/department-box/converer/box-status-entity-to-dto-with-department-brief.converter';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 
 @Injectable()
 export class DepartmentBoxStatusCrudService {

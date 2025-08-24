@@ -4,6 +4,7 @@ import {UserEntityToBriefDtoConverter} from '@be/user/converter/user-entity-to-b
 import {UserEntityToSettingsDtoConverter} from '@be/user/converter/user-entity-to-settings-dto.converter';
 import {RoleEntityToDtoConverter} from '@be/user/converter/role-entity-to-dto.converter';
 import {RoleEntityToBriefDtoConverter} from '@be/user/converter/role-entity-to-brief-dto.converter';
+import {UserEntityToDtoConverterFactory} from '@be/user/converter/user-entity-to-dto-converter.factory';
 
 @Module({
     providers: [
@@ -11,14 +12,16 @@ import {RoleEntityToBriefDtoConverter} from '@be/user/converter/role-entity-to-b
         UserEntityToSettingsDtoConverter,
         UserEntityToBriefDtoConverter,
         RoleEntityToDtoConverter,
-        RoleEntityToBriefDtoConverter
+        RoleEntityToBriefDtoConverter,
+        UserEntityToDtoConverterFactory
     ],
     exports: [
         UserEntityToDtoConverter,
         UserEntityToSettingsDtoConverter,
         UserEntityToBriefDtoConverter,
         RoleEntityToDtoConverter,
-        RoleEntityToBriefDtoConverter
+        RoleEntityToBriefDtoConverter,
+        UserEntityToDtoConverterFactory
     ]
 })
 export class UserEntityToDtoModule {
