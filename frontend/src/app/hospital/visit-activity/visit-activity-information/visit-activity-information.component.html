@@ -1,0 +1,11 @@
+@if (empty()) {
+    <div class="empty-list">
+        {{ 'HospitalVisit.Activities.NoInformation' | translate }}
+    </div>
+} @else {
+    <mat-card>
+        <mat-card-content>
+            {{ info()?.content }}
+        </mat-card-content>
+    </mat-card>
+}

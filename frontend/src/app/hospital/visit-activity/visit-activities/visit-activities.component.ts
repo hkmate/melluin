@@ -13,6 +13,7 @@ import {
     VisitedChildById
 } from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
+import {HospitalVisitActivityInfo} from '@shared/hospital-visit-activity/hospital-visit-activity-info';
 
 @Component({
     selector: 'app-visit-activities',
@@ -32,7 +33,7 @@ export class VisitActivitiesComponent implements OnInit {
         HospitalVisitStatus.FAILED_FOR_OTHER_REASON
     ];
 
-    private readonly statusesWhenActivitiesShouldBeShowed  = [
+    private readonly statusesWhenActivitiesShouldBeShowed = [
         HospitalVisitStatus.STARTED,
         HospitalVisitStatus.ACTIVITIES_FILLED_OUT,
         HospitalVisitStatus.ALL_FILLED_OUT,
@@ -47,6 +48,7 @@ export class VisitActivitiesComponent implements OnInit {
 
     protected children: Array<VisitedChild> = [];
     protected activities: Array<HospitalVisitActivity> = [];
+    protected information?: HospitalVisitActivityInfo = undefined;
     protected visitDate: Date;
     protected childrenById: VisitedChildById;
 
@@ -93,6 +95,7 @@ export class VisitActivitiesComponent implements OnInit {
         this.children = wrapped.children;
         this.activities = wrapped.activities;
         this.childrenById = convertToChildrenById(this.children);
+        this.information = wrapped.info;
     }
 
     private getWrappedActivities(): Promise<WrappedHospitalVisitActivity> {

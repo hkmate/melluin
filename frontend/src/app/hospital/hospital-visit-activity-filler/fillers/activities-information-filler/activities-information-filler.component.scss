@@ -1,0 +1,14 @@
+.activities-information-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.activities-information-edit {
+    mat-form-field {
+        width: 100%;
+
+        textarea {
+            min-height: 10rem;
+        }
+    }
+}

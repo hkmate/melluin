@@ -6,6 +6,18 @@
                 <app-hospital-event-card [visit]="visit"></app-hospital-event-card>
             </div>
 
+            @if (canVisitBeStarted()) {
+                <div class="start-btn">
+                    <button mat-flat-button
+                            color="accent"
+                            type="button"
+                            [disabled]="!buttonsEnabled"
+                            (click)="triggerStartFilling()">
+                        {{ 'HospitalVisit.Start' | translate }}
+                    </button>
+                </div>
+            }
+
             <div class="related-activities">
                 <mat-accordion>
                     <mat-expansion-panel>
@@ -19,29 +31,19 @@
                 </mat-accordion>
             </div>
 
-            @if (canVisitBeStarted()) {
-                <div class="start-btn">
-                    <button mat-flat-button
-                            color="accent"
-                            type="button"
-                            [disabled]="!buttonsEnabled"
-                            (click)="triggerStartFilling()">
-                        {{ 'HospitalVisit.Start' | translate }}
-                    </button>
-                </div>
-            }
-
             @if (canActivitiesBeShowed()) {
                 <div class="activities-part">
                     <div class="children">
-                        <app-child-filler-list></app-child-filler-list>
+                        <app-child-filler-list/>
                     </div>
                     <div class="activities">
-                        <app-activity-filler-list></app-activity-filler-list>
+                        <app-activity-filler-list/>
+                    </div>
+                    <div class="info">
+                        <app-activities-information-filler [visitId]="visit.id"/>
                     </div>
                     <div class="box-info">
-                        <app-box-info-manager-by-visit [visitId]="visit.id" [departmentId]="visit.department.id">
-                        </app-box-info-manager-by-visit>
+                        <app-box-info-manager-by-visit [visitId]="visit.id" [departmentId]="visit.department.id" />
                     </div>
                 </div>
             }

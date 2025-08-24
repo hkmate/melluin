@@ -14,6 +14,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
+import {VisitActivityInformationComponent} from '@fe/app/hospital/visit-activity/visit-activity-information/visit-activity-information.component';
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
         VisitActivitiesComponent,
         VisitActivityCardComponent,
         VisitActivitiesListComponent,
+        VisitActivityInformationComponent
     ],
     exports: [
         VisitActivitiesComponent

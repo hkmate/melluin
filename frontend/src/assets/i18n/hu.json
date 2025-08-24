@@ -318,9 +318,12 @@
         "Activities": {
             "Children": "Gyerekek",
             "Activities": "Tevékenységek",
+            "Information": "Egyéb információ",
             "Comment": "Megjegyzés",
             "CommentPlaceholder": "nagyon jó buli volt",
             "NoActivityYet": "Nincs még felvéve tevékenység",
+            "NoInformation": "Nincs felvéve egyéb információ",
+            "InformationHint": "Ide írhatsz olyan dolgokat a foglalkozásról amik hasznosak lehetnek a következő párosnak, de nem kapcsolódik egyik gyerekehez vagy konkrét tevékenységhez sem.",
             "BoxInfo": "Doboz info"
         },
         "RelatedActivities": "Korábbi foglalkozások",

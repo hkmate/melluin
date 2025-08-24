@@ -1,5 +1,19 @@
 <div class="visit-info">
 
+    @if (permissions.has(Permission.canReadActivity) && !infoIsEmpty()) {
+        <div>
+            <h3>{{ 'HospitalVisit.Activities.Information' | translate }}</h3>
+
+            <div>
+                <mat-card>
+                    <mat-card-content>
+                        {{ information()?.content }}
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    }
+
     @if (permissions.has(Permission.canReadChild)) {
         <div class="children-info">
             <h3>{{ 'HospitalVisit.Activities.Children' | translate }}</h3>
@@ -7,7 +21,7 @@
             <div class="children-list">
                 @for (child of wrappedActivity.children; track child.id) {
                     <div class="child-card">
-                        <app-related-visit-child [visitedChild]="child"></app-related-visit-child>
+                        <app-related-visit-child [visitedChild]="child"/>
                     </div>
                 } @empty {
                     <div class="empty-list">
@@ -25,7 +39,8 @@
             <div class="activities-list">
                 @for (activity of activities; track activity.id) {
                     <div class="activity-card">
-                        <app-related-activity [activity]="activity" [childrenById]="childrenById"></app-related-activity>
+                        <app-related-activity [activity]="activity"
+                                              [childrenById]="childrenById"/>
                     </div>
                 } @empty {
                     <div class="empty-list">
