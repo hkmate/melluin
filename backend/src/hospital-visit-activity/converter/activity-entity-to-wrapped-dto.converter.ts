@@ -8,11 +8,14 @@ import {HospitalVisitEntityToDtoConverter} from '@be/hospital-visit/converer/hos
 import {VisitedChildEntityToDtoConverter} from '@be/hospital-visit-children/converer/visited-child-entity-to-dto.converter';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
+import {HospitalVisitActivityInfoEntity} from '@be/hospital-visit-activity-info/model/hospital-visit-activity-info.entity';
+import {ActivityInfoEntityToDtoConverter} from '@be/hospital-visit-activity-info/converter/activity-info-entity-to-dto.converter';
 
 export interface WrappedHospitalVisitEntities {
     visit: HospitalVisitEntity;
     activities: Array<HospitalVisitActivityEntity>;
     children: Array<VisitedChildEntity>;
+    info: HospitalVisitActivityInfoEntity;
 }
 
 
@@ -21,6 +24,7 @@ export class ActivityEntityToWrappedDtoConverter implements Converter<WrappedHos
 
     constructor(private readonly basicDtoConverter: ActivityEntityToBasicDtoConverter,
                 private readonly childConverter: VisitedChildEntityToDtoConverter,
+                private readonly infoConverter: ActivityInfoEntityToDtoConverter,
                 private readonly visitEntityToDtoConverter: HospitalVisitEntityToDtoConverter) {
     }
 
@@ -42,7 +46,8 @@ export class ActivityEntityToWrappedDtoConverter implements Converter<WrappedHos
         return {
             hospitalVisit: this.visitEntityToDtoConverter.convert(hospitalVisit),
             children: children.map(visitedChildEntity => this.childConverter.convert(visitedChildEntity)),
-            activities: entities.activities.map(group => this.basicDtoConverter.convert(group))
+            activities: entities.activities.map(group => this.basicDtoConverter.convert(group)),
+            info: this.infoConverter.convert(entities.info)
         }
     }
 
