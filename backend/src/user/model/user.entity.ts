@@ -28,8 +28,8 @@ export class UserEntity {
     @Column({ name: 'created_by', type: 'uuid', nullable: true })
     createdByPersonId: string | null;
 
-    @Column({ name: 'custom_info', type: 'jsonb' })
-    settings?: UserSettings;
+    @Column({ name: 'custom_info', type: 'jsonb', nullable: true })
+    settings: UserSettings | null;
 
     @OneToOne(type => PersonEntity, { eager: true, cascade: ['insert', 'update'] })
     @JoinColumn({ name: 'person_id' })

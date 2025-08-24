@@ -153,6 +153,7 @@ describe('AuthService', () => {
                 isActive: true,
                 lastLogin: null,
                 created: mockedDate,
+                settings: {},
                 createdByPersonId: null,
             };
 
@@ -336,6 +337,7 @@ describe('AuthService', () => {
                 isActive: true,
                 customPermissions: [],
                 lastLogin: null,
+                settings: {},
                 created: null,
                 createdByPersonId: null,
                 roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
@@ -357,6 +359,7 @@ describe('AuthService', () => {
             const userEntity: UserEntity = {
                 userName, password,
                 id: userId,
+                settings: {},
                 person: cast<PersonEntity>({ id: personId }),
                 isActive: true,
                 customPermissions: [],
@@ -388,6 +391,7 @@ describe('AuthService', () => {
                 isActive: false,
                 lastLogin: null,
                 created: null,
+                settings: {},
                 createdByPersonId: null,
                 customPermissions: [],
                 roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],

@@ -18,10 +18,10 @@ export class DepartmentEntity {
     @Column()
     address: string;
 
-    @Column({name: 'diseases_info'})
-    diseasesInfo?: string;
+    @Column({name: 'diseases_info', type: 'text', nullable: true})
+    diseasesInfo: string | null;
 
-    @Column()
-    note?: string;
+    @Column({type: 'text', nullable: true})
+    note: string | null;
 
 }

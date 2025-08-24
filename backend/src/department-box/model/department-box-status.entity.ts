@@ -8,8 +8,8 @@ export class DepartmentBoxStatusEntity {
     @PrimaryColumn('uuid')
     id: string;
 
-    @Column({name: 'visit_id', type: 'uuid'})
-    visitId?: string;
+    @Column({name: 'visit_id', type: 'uuid', nullable: true})
+    visitId: string | null;
 
     @Column({name: 'date_time', type: 'timestamp'})
     dateTime: Date;
@@ -17,11 +17,11 @@ export class DepartmentBoxStatusEntity {
     @Column()
     reason: BoxStatusChangeReason;
 
-    @Column({name: 'affected_object'})
-    affectedObject?: string;
+    @Column({name: 'affected_object', type: 'text', nullable: true})
+    affectedObject: string | null;
 
-    @Column()
-    comment?: string;
+    @Column({type: 'text', nullable: true})
+    comment: string | null;
 
     @ManyToOne(type => DepartmentEntity)
     @JoinColumn({name: 'hospital_department_id'})

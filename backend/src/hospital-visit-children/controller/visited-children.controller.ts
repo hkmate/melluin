@@ -7,7 +7,6 @@ import {
     VisitedChildInput
 } from '@shared/hospital-visit/visited-child';
 import {VisitedChildrenService} from '@be/hospital-visit-children/service/visited-children.service';
-import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {User} from '@shared/user/user';
 import {VisitedChildSaverService} from '@be/hospital-visit-children/service/visited-child-saver.service';
@@ -32,7 +31,7 @@ export class VisitedChildrenController {
     @Get('/:hospitalVisitId/children')
     @PermissionGuard(Permission.canReadVisit, Permission.canReadChild)
     public getVisitedChildren(@Param('hospitalVisitId', ParseUUIDPipe) hospitalVisitId: string)
-        : Promise<Array<VisitedChildEntity>> {
+        : Promise<Array<VisitedChild>> {
         return this.visitedChildrenService.findAll(hospitalVisitId);
     }
 

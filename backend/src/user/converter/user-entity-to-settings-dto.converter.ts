@@ -18,6 +18,9 @@ export class UserEntityToSettingsDtoConverter implements Converter<UserEntity, U
     }
 
     private convertNotNilEntity(entity: UserEntity): UserSettings {
+        if (isNil(entity.settings)) {
+            return {};
+        }
         return {
             ...entity.settings
         };

@@ -15,6 +15,6 @@ export class ChildInput {
 
     @IsString()
     @IsOptional()
-    info: string;
+    info?: string;
 
 }

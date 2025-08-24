@@ -45,7 +45,7 @@ export class ChildCrudService {
     }
 
     public async remove(childId: string): Promise<void> {
-        const entity = await this.getOne(childId);
+        const entity = await this.childDao.getOne(childId);
         return this.childDao.remove(entity);
     }
 

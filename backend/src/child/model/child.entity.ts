@@ -12,7 +12,7 @@ export class ChildEntity {
     @Column({name: 'guessed_birth'})
     guessedBirth: string;
 
-    @Column()
-    info?: string;
+    @Column({type: 'text', nullable: true})
+    info: string | null;
 
 }

@@ -105,6 +105,7 @@ export class AuthService {
             isActive: true,
             lastLogin: null,
             roles,
+            settings: {},
             created: now(),
             createdByPersonId: null
         });
