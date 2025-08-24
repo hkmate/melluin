@@ -1,6 +1,6 @@
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {isNil, isNilOrEmpty} from '@shared/util/util';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
 import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
 import {ActivityEntityToBasicDtoConverter} from '@be/hospital-visit-activity/converter/activity-entity-to-basic-dto.converter';

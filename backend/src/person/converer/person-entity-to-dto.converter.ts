@@ -2,7 +2,7 @@ import { PersonEntity } from '@be/person/model/person.entity';
 import { Person } from '@shared/person/person';
 import { Injectable } from '@nestjs/common';
 import { isNil } from '@shared/util/util';
-import { Converter } from '@shared/converter';
+import { Converter } from '@shared/converter/converter';
 import { UserEntityToBriefDtoConverter } from '@be/user/converter/user-entity-to-brief-dto.converter';
 
 @Injectable()

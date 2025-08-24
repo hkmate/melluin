@@ -1,7 +1,7 @@
 import {UserEntity} from '@be/user/model/user.entity';
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 import {UserSettings} from '@shared/user/user-settings';
 
 @Injectable()

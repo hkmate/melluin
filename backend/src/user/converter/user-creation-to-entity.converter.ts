@@ -1,5 +1,5 @@
 import { isNil } from '@shared/util/util';
-import { Converter } from '@shared/converter';
+import { Converter } from '@shared/converter/converter';
 import { randomUUID } from 'crypto';
 import { UserCreation } from '@shared/user/user-creation';
 import { UserEntity } from '@be/user/model/user.entity';

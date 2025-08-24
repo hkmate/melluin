@@ -4,7 +4,7 @@ import {Converter} from '@shared/converter/converter';
 import {User} from '@shared/user/user';
 import {Permission} from '@shared/user/permission.enum';
 
-export class HidePersonSensitiveDataConverter implements Converter<Person, Person> {
+export class HidePersonBriefUserLastLoginDataConverter implements Converter<Person, Person> {
 
     constructor(private readonly currentUser: User) {
     }
@@ -23,34 +23,27 @@ export class HidePersonSensitiveDataConverter implements Converter<Person, Perso
         if (this.isUserHasSamePersonAsTheOneToConvert(person)) {
             return person;
         }
-        if (this.isUserAFoundationWorker()) {
+        if (this.isUserHasReadPermission()) {
             return person;
         }
 
-        return this.hidePhone(this.hideEmail(person));
+        return this.hideLastLoginData(person);
     }
 
     private isUserHasSamePersonAsTheOneToConvert(person: Person): boolean {
         return this.currentUser.personId === person.id;
     }
 
-    private isUserAFoundationWorker(): boolean {
-        return this.currentUser.permissions.includes(Permission.canReadSensitivePersonData);
+    private isUserHasReadPermission(): boolean {
+        return this.currentUser.permissions.includes(Permission.canReadUserLastLoginData);
     }
 
-    private hidePhone(person: Person): Person {
-        if (person?.preferences?.canVolunteerSeeMyPhone) {
-            return person;
+    private hideLastLoginData(person: Person): Person {
+        if (isNil(person.user)) {
+            return person
         }
-        delete person.phone;
-        return person;
-    }
 
-    private hideEmail(person: Person): Person {
-        if (person?.preferences?.canVolunteerSeeMyEmail) {
-            return person;
-        }
-        delete person.email;
+        delete person.user.lastLogin;
         return person;
     }
 

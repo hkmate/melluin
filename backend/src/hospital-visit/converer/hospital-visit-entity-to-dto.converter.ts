@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 import {PersonEntityToIdentifierDtoConverter} from '@be/person/converer/person-entity-to-identifier-dto.converter';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {BaseEventEntityToDtoConverter} from '@be/event/converer/base-event-entity-to-dto.converter';

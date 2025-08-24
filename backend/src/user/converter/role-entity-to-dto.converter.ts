@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 import {RoleEntity} from '@be/user/model/role.entity';
 import { Role } from '@shared/user/role';
 

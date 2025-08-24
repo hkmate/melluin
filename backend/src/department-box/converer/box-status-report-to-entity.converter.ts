@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 import {randomUUID} from 'crypto';
 import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
 import {DepartmentBoxStatusEntity} from '@be/department-box/model/department-box-status.entity';

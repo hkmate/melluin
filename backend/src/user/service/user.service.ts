@@ -1,25 +1,21 @@
-import { Injectable } from '@nestjs/common';
-import { UserDao } from '@be/user/user.dao';
-import { User } from '@shared/user/user';
-import { UserCreation } from '@shared/user/user-creation';
-import { UserCreationToEntityConverter } from '@be/user/converter/user-creation-to-entity.converter';
-import { UserEntityToDtoConverter } from '@be/user/converter/user-entity-to-dto.converter';
-import { PersonHasNoUserYetValidator } from '@be/user/validator/person-has-no-user-yet.validator';
-import { UsernameIsNotUsedValidator } from '@be/user/validator/username-is-not-used.validator';
-import { AsyncValidatorChain } from '@shared/validator/validator-chain';
-import { CanRequesterChangeUserValidator } from '@be/user/validator/can-requester-change-user.validator';
-import { UserRewrite } from '@shared/user/user-rewrite';
-import { UserRewriteApplierFactory } from '@be/user/applier/user-rewrite-applier.factory';
-import { UserRewriteValidator } from '@be/user/validator/user-rewrite.validator';
-import { CanRequesterChangeUsersRoleValidator } from '@be/user/validator/can-requester-change-users-role.validator';
-import {
-    CanRequesterChangeUsersPermissionsValidator,
-} from '@be/user/validator/can-requester-change-users-permissions.validator';
-import {
-    CanRequesterCreateUsersPermissionsValidator,
-} from '@be/user/validator/can-requester-create-users-permissions.validator';
-import { RoleDao } from '@be/user/role.dao';
-import { CanRequesterCreateUsersRoleValidator } from '@be/user/validator/can-requester-create-users-role.validator';
+import {Injectable} from '@nestjs/common';
+import {UserDao} from '@be/user/user.dao';
+import {User} from '@shared/user/user';
+import {UserCreation} from '@shared/user/user-creation';
+import {UserCreationToEntityConverter} from '@be/user/converter/user-creation-to-entity.converter';
+import {PersonHasNoUserYetValidator} from '@be/user/validator/person-has-no-user-yet.validator';
+import {UsernameIsNotUsedValidator} from '@be/user/validator/username-is-not-used.validator';
+import {AsyncValidatorChain} from '@shared/validator/validator-chain';
+import {CanRequesterChangeUserValidator} from '@be/user/validator/can-requester-change-user.validator';
+import {UserRewrite} from '@shared/user/user-rewrite';
+import {UserRewriteApplierFactory} from '@be/user/applier/user-rewrite-applier.factory';
+import {UserRewriteValidator} from '@be/user/validator/user-rewrite.validator';
+import {CanRequesterChangeUsersRoleValidator} from '@be/user/validator/can-requester-change-users-role.validator';
+import {CanRequesterChangeUsersPermissionsValidator,} from '@be/user/validator/can-requester-change-users-permissions.validator';
+import {CanRequesterCreateUsersPermissionsValidator,} from '@be/user/validator/can-requester-create-users-permissions.validator';
+import {RoleDao} from '@be/user/role.dao';
+import {CanRequesterCreateUsersRoleValidator} from '@be/user/validator/can-requester-create-users-role.validator';
+import {UserEntityToDtoConverterFactory} from '@be/user/converter/user-entity-to-dto-converter.factory';
 
 @Injectable()
 export class UserService {
@@ -28,32 +24,32 @@ export class UserService {
                 private readonly roleDao: RoleDao,
                 private readonly personHasNoUserYetValidator: PersonHasNoUserYetValidator,
                 private readonly usernameIsNotUsedValidator: UsernameIsNotUsedValidator,
-                private readonly userConverter: UserEntityToDtoConverter,
+                private readonly userConverterFactor: UserEntityToDtoConverterFactory,
                 private readonly userCreationConverter: UserCreationToEntityConverter,
                 private readonly rewriteFactory: UserRewriteApplierFactory) {
     }
 
     public async save(userCreation: UserCreation, requester: User): Promise<User> {
         await this.validateSaving(userCreation, requester);
-        const creationEntity = await this.userCreationConverter.convert({ newUser: userCreation, requester });
+        const creationEntity = await this.userCreationConverter.convert({newUser: userCreation, requester});
         const userEntity = await this.userDao.save(creationEntity);
-        return this.userConverter.convert(userEntity);
+        return this.userConverterFactor.createFor(requester).convert(userEntity);
     }
 
     public async get(userId: string, requester: User): Promise<User> {
         const entity = await this.userDao.getOne(userId);
-        return this.userConverter.convert(entity);
+        return this.userConverterFactor.createFor(requester).convert(entity);
     }
 
     public async update(userId: string, userRewrite: UserRewrite, requester: User): Promise<User> {
         const entity = await this.userDao.getOne(userId);
         await this.createRewriteValidators(requester)
-            .validate({ entity, rewrite: userRewrite });
+            .validate({entity, rewrite: userRewrite});
 
         await this.rewriteFactory.createFor(userRewrite)
             .applyOn(entity);
         const savedEntity = await this.userDao.save(entity);
-        return this.userConverter.convert(savedEntity);
+        return this.userConverterFactor.createFor(requester).convert(savedEntity);
     }
 
     private async validateSaving(userCreation: UserCreation, requester: User): Promise<void> {

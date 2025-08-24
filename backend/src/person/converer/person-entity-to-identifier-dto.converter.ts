@@ -2,7 +2,7 @@ import {PersonEntity} from '@be/person/model/person.entity';
 import {PersonIdentifier} from '@shared/person/person';
 import {Injectable} from '@nestjs/common';
 import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter';
+import {Converter} from '@shared/converter/converter';
 
 @Injectable()
 export class PersonEntityToIdentifierDtoConverter implements Converter<PersonEntity, PersonIdentifier> {
