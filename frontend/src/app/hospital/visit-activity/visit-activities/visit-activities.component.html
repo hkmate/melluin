@@ -8,16 +8,20 @@
     <div [ngClass]="getStyleNgClasses()">
         <div class="children">
             <h1>{{ 'HospitalVisit.Activities.Children' | translate }}</h1>
-            <app-children-list [children]="children" [visitDate]="visitDate"></app-children-list>
+            <app-children-list [children]="children" [visitDate]="visitDate"/>
         </div>
         <div class="activities">
             <h1>{{ 'HospitalVisit.Activities.Activities' | translate }}</h1>
             <app-visit-activities-list [childrenById]="childrenById"
-                                       [activities]="activities"></app-visit-activities-list>
+                                       [activities]="activities"/>
+        </div>
+        <div class="info">
+            <h1>{{ 'HospitalVisit.Activities.Information' | translate }}</h1>
+            <app-visit-activity-information [info]="information"/>
         </div>
         <div class="box-info">
             <h1>{{ 'HospitalVisit.Activities.BoxInfo' | translate }}</h1>
-            <app-box-info-list-by-visit [visitId]="visit.id"></app-box-info-list-by-visit>
+            <app-box-info-list-by-visit [visitId]="visit.id"/>
         </div>
     </div>
 }

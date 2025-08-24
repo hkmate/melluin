@@ -1,0 +1,54 @@
+<div class="activities-information-header">
+    <h1>{{ 'HospitalVisit.Activities.Information' | translate }}</h1>
+    @if (permissions.has(Permission.canCreateActivity)) {
+        <span class="add-btn">
+            <button mat-mini-fab color="accent" (click)="toggleEditMode()">
+                @if (editMode()) {
+                    <mat-icon>close</mat-icon>
+                } @else {
+                    <mat-icon>add</mat-icon>
+                }
+            </button>
+        </span>
+    }
+</div>
+
+@if (editMode()) {
+    <form>
+        <div class="activities-information-edit">
+            <mat-form-field>
+                <textarea matInput [formControl]="formControl"
+                          [placeholder]="'HospitalVisit.Activities.InformationHint' | translate"></textarea>
+            </mat-form-field>
+
+            <div class="button-row">
+                <button mat-flat-button
+                        [disabled]="buttonsDisabled()"
+                        color="accent"
+                        (click)="submitForm()"
+                        type="button">
+                    {{ 'SaveButton' | translate }}
+                </button>
+                <button mat-stroked-button
+                        [disabled]="buttonsDisabled()"
+                        color="primary"
+                        type="button"
+                        (click)="toggleEditMode()">
+                    {{ 'CancelButton' | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+} @else {
+    @if (originalInfo().length === 0) {
+        <div class="empty-list">
+            {{ 'HospitalVisit.Activities.NoInformation' | translate }}
+        </div>
+    } @else {
+        <mat-card>
+            <mat-card-content>
+                {{ originalInfo() }}
+            </mat-card-content>
+        </mat-card>
+    }
+}
