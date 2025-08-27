@@ -1,6 +1,6 @@
 <h1>{{ 'PersonPage.User.EditData' | translate }}</h1>
 
-<form [formGroup]="form">
+<form [formGroup]="form()">
     <div>
         <app-trimmed-text-input formControlName="userName"
                                 [placeholder]="'PersonPage.User.Form.UserNamePlaceholder' | translate"

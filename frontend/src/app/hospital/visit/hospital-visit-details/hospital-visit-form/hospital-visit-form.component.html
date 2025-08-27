@@ -6,7 +6,7 @@
     }
 </h1>
 
-<form [formGroup]="form">
+<form [formGroup]="form()">
     <div>
         <mat-form-field>
             <mat-label>{{ 'HospitalVisit.Form.Department' | translate }}</mat-label>
@@ -86,7 +86,7 @@
         <button mat-flat-button
                 color="accent"
                 type="button"
-                [disabled]="form.invalid"
+                [disabled]="form().invalid"
                 (click)="onSubmit()">
             {{ 'SaveButton' | translate }}
         </button>

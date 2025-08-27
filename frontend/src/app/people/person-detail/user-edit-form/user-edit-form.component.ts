@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, output} from '@angular/core';
+import {Component, computed, inject, input, output} from '@angular/core';
 import {User} from '@shared/user/user';
 import {isNotNil} from '@shared/util/util';
 import {UserRewrite} from '@shared/user/user-rewrite';
@@ -16,9 +16,9 @@ import {GetRolesService} from '@fe/app/util/get-roles.service';
 })
 export class UserEditFormComponent {
 
-    private readonly fb=inject(FormBuilder);
-    private readonly roleService=inject(GetRolesService);
-    private readonly permission=inject(PermissionService);
+    private readonly fb = inject(FormBuilder);
+    private readonly roleService = inject(GetRolesService);
+    private readonly permission = inject(PermissionService);
 
     protected readonly passwordMinLength = passwordMinLength;
     protected readonly permissions: Array<Permission> = Object.values(Permission);
@@ -30,11 +30,9 @@ export class UserEditFormComponent {
 
     protected roleOptions: Array<RoleBrief>;
     protected roles: Array<RoleBrief>;
-    protected form: FormGroup;
+    protected readonly form = computed(() => this.initForm());
 
     constructor() {
-        effect(() => this.initForm());
-
         this.roleService.getAll().subscribe(roles => {
             this.roles = roles;
             const manageableRoleTypes = this.permission.getRolesTypesCanBeManaged();
@@ -43,7 +41,7 @@ export class UserEditFormComponent {
     }
 
     protected isUserSetToActive(): boolean {
-        return this.form.controls.isActive.value;
+        return this.form().controls.isActive.value;
     }
 
     protected onSubmit(): void {
@@ -54,9 +52,9 @@ export class UserEditFormComponent {
         this.canceled.emit();
     }
 
-    private initForm(): void {
+    private initForm(): FormGroup {
         const userToEdit = this.user();
-        this.form = this.fb.group({
+        const form = this.fb.group({
             password: [undefined, [Validators.pattern(passwordPattern)]],
             isActive: [userToEdit?.isActive],
             roles: [userToEdit?.roles.map(r => r.name)],
@@ -64,19 +62,20 @@ export class UserEditFormComponent {
             userName: [userToEdit?.userName]
         });
         if (!this.permission.has(Permission.canManagePermissions)) {
-            this.form.controls.customPermissions.disable();
+            form.controls.customPermissions.disable();
         }
+        return form;
     }
 
     private createUserUpdate(): UserRewrite {
         const data = new UserRewrite();
-        if (isNotNil(this.form.controls.password.value)) {
-            data.password = this.form.controls.password.value
+        if (isNotNil(this.form().controls.password.value)) {
+            data.password = this.form().controls.password.value
         }
-        data.isActive = this.form.controls.isActive.value;
-        data.userName = this.form.controls.userName.value;
-        data.roleNames = this.form.controls.roles.value;
-        data.customPermissions = this.form.controls.customPermissions.value;
+        data.isActive = this.form().controls.isActive.value;
+        data.userName = this.form().controls.userName.value;
+        data.roleNames = this.form().controls.roles.value;
+        data.customPermissions = this.form().controls.customPermissions.value;
         return data;
     }
 

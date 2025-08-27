@@ -1,7 +1,7 @@
 <h1>{{ 'PersonPage.MyProfile' | translate }}</h1>
 
-@if (personForm) {
-    <form [formGroup]="personForm">
+@if (personForm()) {
+    <form [formGroup]="personForm()">
 
         <div>
             <app-trimmed-text-input formControlName="lastName"
@@ -65,8 +65,8 @@
 }
 
 <div class="divider"></div>
-@if (userForm) {
-    <form [formGroup]="userForm">
+@if (userForm()) {
+    <form [formGroup]="userForm()">
         <div>
             <mat-form-field>
                 <mat-label>{{ 'PersonPage.User.Form.UserName' | translate }}</mat-label>

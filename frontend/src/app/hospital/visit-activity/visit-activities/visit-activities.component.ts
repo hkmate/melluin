@@ -1,4 +1,4 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, inject, input, OnInit} from '@angular/core';
 import {VisitActivityService} from '@fe/app/hospital/visit-activity/visit-activity.service';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
@@ -20,7 +20,7 @@ import {HospitalVisitActivityInfo} from '@shared/hospital-visit-activity/hospita
     templateUrl: './visit-activities.component.html',
     styleUrls: ['./visit-activities.component.scss']
 })
-export class VisitActivitiesComponent {
+export class VisitActivitiesComponent implements OnInit {
 
     protected readonly permissions = inject(PermissionService);
     private readonly activityService = inject(VisitActivityService);
@@ -52,7 +52,7 @@ export class VisitActivitiesComponent {
     protected visitDate: Date;
     protected childrenById: VisitedChildById;
 
-    constructor() {
+    public ngOnInit(): void {
         this.visitDate = new Date(this.visit().dateTimeFrom);
         this.setupActivities().then();
     }

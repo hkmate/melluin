@@ -1,4 +1,4 @@
-import {Component, inject, input, output} from '@angular/core';
+import {Component, computed, inject, input, output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserCreation} from '@shared/user/user-creation';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
@@ -24,7 +24,7 @@ export class UserCreationFormComponent {
     public readonly submitted = output<UserCreation>();
     public readonly canceled = output<void>();
 
-    protected form: FormGroup;
+    protected readonly form = computed(() => this.initForm());
     protected roleOptions: Array<string>;
     protected roles: Array<RoleBrief>;
 
@@ -32,7 +32,6 @@ export class UserCreationFormComponent {
         this.roleService.getAll().subscribe(roles => {
             this.roles = roles;
         });
-        this.initForm();
     }
 
     protected onSubmit(): void {
@@ -43,26 +42,27 @@ export class UserCreationFormComponent {
         this.canceled.emit();
     }
 
-    private initForm(): void {
+    private initForm(): FormGroup {
         this.roleOptions = this.permission.getRolesTypesCanBeManaged();
-        this.form = this.fb.group({
+        const form = this.fb.group({
             userName: [undefined, [Validators.required]],
             password: [undefined, [Validators.required]],
             roleNames: [[]],
             customPermissions: [[]],
         });
         if (!this.permission.has(Permission.canManagePermissions)) {
-            this.form.controls.customPermissions.disable();
+            form.controls.customPermissions.disable();
         }
+        return form;
     }
 
     private createUserCreation(): UserCreation {
         const data = new UserCreation();
         data.personId = this.personId();
-        data.userName = this.form.controls.userName.value;
-        data.password = this.form.controls.password.value;
-        data.roleNames = this.form.controls.roleNames.value;
-        data.customPermissions = this.form.controls.customPermissions.value;
+        data.userName = this.form().controls.userName.value;
+        data.password = this.form().controls.password.value;
+        data.roleNames = this.form().controls.roleNames.value;
+        data.customPermissions = this.form().controls.customPermissions.value;
         return data;
     }
 

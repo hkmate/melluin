@@ -36,7 +36,6 @@ export class EventsListComponent {
 
     Permission = Permission;
 
-
     private readonly title = inject(AppTitle);
     protected readonly permissions = inject(PermissionService,);
     private readonly eventsService = inject(HospitalVisitService,);

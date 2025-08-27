@@ -1,4 +1,4 @@
-import {Component, inject, input, output} from '@angular/core';
+import {Component, computed, inject, input, output} from '@angular/core';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
 import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -27,13 +27,12 @@ export class FillerActivityEditorComponent {
     protected children$: Observable<Array<VisitedChild>>;
     protected activityTypeOptions: Array<VisitActivityType> = Object.values(VisitActivityType);
     protected buttonsDisabled: boolean;
-    protected form: FormGroup;
+    protected readonly form = computed(() => this.initForm());
     protected visitDate: Date;
 
     constructor() {
         this.children$ = this.filler.getChildren();
         this.visitDate = this.filler.getVisitDate();
-        this.initForm();
     }
 
     protected onFormSubmit(): void {
@@ -63,9 +62,9 @@ export class FillerActivityEditorComponent {
         this.filler.unlockVisitedChildId(...removedChildren.map(c => c.id));
     }
 
-    private initForm(): void {
+    private initForm(): FormGroup {
         const children = this.activity().children.map(childId => this.childrenById()[childId]);
-        this.form = this.formBuilder.group({
+        return this.formBuilder.group({
             children: [children, [Validators.required, isNotEmptyValidator]],
             activities: [this.activity().activities, [Validators.required, isNotEmptyValidator]],
             comment: [this.activity().comment]
@@ -75,14 +74,14 @@ export class FillerActivityEditorComponent {
     private createObjectFromForm(): HospitalVisitActivityEditInput {
         return {
             ...this.activity(),
-            activities: this.form.controls.activities.value,
+            activities: this.form().controls.activities.value,
             children: this.createActivityChildInfoList(),
-            comment: this.form.controls.comment.value
+            comment: this.form().controls.comment.value
         }
     }
 
     private createActivityChildInfoList(): Array<string> {
-        return (this.form.controls.children.value as Array<VisitedChild>)
+        return (this.form().controls.children.value as Array<VisitedChild>)
             .map(value => value.id);
     }
 

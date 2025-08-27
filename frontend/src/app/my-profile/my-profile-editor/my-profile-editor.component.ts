@@ -1,9 +1,9 @@
-import {Component, effect, inject, input, output} from '@angular/core';
+import {Component, computed, inject, input, output} from '@angular/core';
 import {User} from '@shared/user/user';
 import {Person} from '@shared/person/person';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MessageService} from '@fe/app/util/message.service';
-import {anyNil, isNilOrEmpty} from '@shared/util/util';
+import {isNilOrEmpty} from '@shared/util/util';
 import {passwordMinLength, passwordPattern} from '@shared/constants';
 import {PeopleService} from '@fe/app/people/people.service';
 import {UserService} from '@fe/app/people/user.service';
@@ -34,14 +34,10 @@ export class MyProfileEditorComponent {
 
     public editEnded = output<void>();
 
-    protected personForm: FormGroup;
-    protected userForm: FormGroup;
+    protected personForm = computed(() => this.setupPersonForm());
+    protected userForm = computed(() => this.setupUserForm());
     private personSaveInProcess: boolean;
     private userSaveInProcess: boolean;
-
-    constructor() {
-        effect(() => this.init());
-    }
 
     protected cancelEditing(): void {
         this.editEnded.emit();
@@ -75,26 +71,26 @@ export class MyProfileEditorComponent {
     }
 
     protected isPersonFormBtnDisabled(): boolean {
-        return this.personForm.invalid || this.personSaveInProcess;
+        return this.personForm().invalid || this.personSaveInProcess;
     }
 
     protected isUserFormBtnDisabled(): boolean {
-        return this.userForm.invalid || this.userSaveInProcess;
+        return this.userForm().invalid || this.userSaveInProcess;
     }
 
     protected isBackBtnDisabled(): boolean {
         return this.personSaveInProcess || this.userSaveInProcess;
     }
 
-    private init(): void {
-        if (anyNil(this.person(), this.user(), this.userSettings())) {
-            return;
-        }
-        this.setupForm();
+    private setupUserForm(): FormGroup {
+        return this.fb.group({
+            userName: [this.user().userName],
+            password: [undefined, [Validators.pattern(passwordPattern)]]
+        });
     }
 
-    private setupForm(): void {
-        this.personForm = this.fb.group({
+    private setupPersonForm(): FormGroup {
+        return this.fb.group({
             firstName: [this.person().firstName, [Validators.required]],
             lastName: [this.person().lastName, [Validators.required]],
             email: [this.person().email],
@@ -102,29 +98,25 @@ export class MyProfileEditorComponent {
             canVolunteerSeeMyEmail: [this.person().preferences?.canVolunteerSeeMyEmail ?? false],
             canVolunteerSeeMyPhone: [this.person().preferences?.canVolunteerSeeMyPhone ?? false]
         });
-        this.userForm = this.fb.group({
-            userName: [this.user().userName],
-            password: [undefined, [Validators.pattern(passwordPattern)]]
-        });
     }
 
     private parsePersonForm(): PersonRewrite {
         return {
-            firstName: this.personForm.controls.firstName.value,
-            lastName: this.personForm.controls.lastName.value,
-            email: this.personForm.controls.email.value,
-            phone: this.personForm.controls.phone.value,
+            firstName: this.personForm().controls.firstName.value,
+            lastName: this.personForm().controls.lastName.value,
+            email: this.personForm().controls.email.value,
+            phone: this.personForm().controls.phone.value,
             preferences: {
-                canVolunteerSeeMyEmail: this.personForm.controls.canVolunteerSeeMyEmail.value,
-                canVolunteerSeeMyPhone: this.personForm.controls.canVolunteerSeeMyPhone.value
+                canVolunteerSeeMyEmail: this.personForm().controls.canVolunteerSeeMyEmail.value,
+                canVolunteerSeeMyPhone: this.personForm().controls.canVolunteerSeeMyPhone.value
             }
         }
     }
 
     private parseUserForm(): UserRewrite {
-        const newPassword = this.userForm.controls.password.value;
+        const newPassword = this.userForm().controls.password.value;
         return {
-            userName: this.userForm.controls.userName.value,
+            userName: this.userForm().controls.userName.value,
             password: isNilOrEmpty(newPassword) ? undefined : newPassword,
             isActive: this.user().isActive,
             roleNames: this.user().roles.map(role => role.name),

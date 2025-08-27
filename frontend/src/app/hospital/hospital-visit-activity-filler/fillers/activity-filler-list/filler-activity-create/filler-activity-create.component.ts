@@ -1,4 +1,4 @@
-import {Component, inject, output} from '@angular/core';
+import {Component, inject, output, signal} from '@angular/core';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
 import {HospitalVisitActivityInput} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
 import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
@@ -22,13 +22,12 @@ export class FillerActivityCreateComponent {
     protected children$: Observable<Array<VisitedChild>>;
     protected activityTypeOptions: Array<VisitActivityType> = Object.values(VisitActivityType);
     protected buttonsDisabled: boolean;
-    protected form: FormGroup;
+    protected readonly form = signal(this.initForm());
     protected visitDate: Date;
 
     constructor() {
         this.children$ = this.filler.getChildren();
         this.visitDate = this.filler.getVisitDate();
-        this.initForm();
     }
 
     protected onFormSubmit(): void {
@@ -58,8 +57,8 @@ export class FillerActivityCreateComponent {
         this.filler.unlockVisitedChildId(...removedChildren.map(c => c.id));
     }
 
-    private initForm(): void {
-        this.form = this.formBuilder.group({
+    private initForm(): FormGroup {
+        return this.formBuilder.group({
             children: [[], [Validators.required, isNotEmptyValidator]],
             activities: [[], [Validators.required, isNotEmptyValidator]],
             comment: []
@@ -68,14 +67,14 @@ export class FillerActivityCreateComponent {
 
     private createObjectFromForm(): HospitalVisitActivityInput {
         return {
-            activities: this.form.controls.activities.value,
+            activities: this.form().controls.activities.value,
             children: this.createActivityChildInfoList(),
-            comment: this.form.controls.comment.value
+            comment: this.form().controls.comment.value
         }
     }
 
     private createActivityChildInfoList(): Array<string> {
-        return (this.form.controls.children.value as Array<VisitedChild>)
+        return (this.form().controls.children.value as Array<VisitedChild>)
             .map(value => value.id);
     }
 

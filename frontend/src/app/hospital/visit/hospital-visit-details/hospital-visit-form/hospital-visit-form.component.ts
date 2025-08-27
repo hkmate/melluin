@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, output, signal} from '@angular/core';
+import {Component, computed, effect, inject, input, output, signal} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {isNil, parseTime, parseTimeWithDate} from '@shared/util/util';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
@@ -45,7 +45,7 @@ export class HospitalVisitFormComponent {
     protected createNewAfterOneSaved = signal(false);
     protected statusOptions: Array<HospitalVisitStatus>;
     protected departmentOptions: Array<Department>;
-    protected form: FormGroup;
+    protected readonly form = computed(() => this.buildFormGroup());
     protected mobileScreen: boolean;
 
     private currentUser: User;
@@ -55,11 +55,11 @@ export class HospitalVisitFormComponent {
         this.initCurrentUser();
         // TODO: change it to linkedSignal after upgraded to angular 19+
         effect(() => this.createNewAfterOneSaved.set(this.createNewAfterSave()), {allowSignalWrites: true});
-        effect(() => this.initForm());
+        effect(() => this.initFormOptions());
     }
 
     protected onSubmit(): void {
-        if (this.form.valid) {
+        if (this.form().valid) {
             this.submitted.emit(this.createDataForSubmit());
         }
     }
@@ -69,11 +69,11 @@ export class HospitalVisitFormComponent {
     }
 
     protected setCountedHours(): void {
-        const from = parseTime(this.form.controls.timeFrom.value);
-        const to = parseTime(this.form.controls.timeTo.value);
+        const from = parseTime(this.form().controls.timeFrom.value);
+        const to = parseTime(this.form().controls.timeTo.value);
         const diff = to.getTime() - from.getTime();
         const hourValue = diff / HospitalVisitFormComponent.MS_ON_HOUR;
-        this.form.controls.countedHours.setValue(_.round(hourValue, HospitalVisitFormComponent.DECIMALS_IN_COUNTED_HOURS));
+        this.form().controls.countedHours.setValue(_.round(hourValue, HospitalVisitFormComponent.DECIMALS_IN_COUNTED_HOURS));
     }
 
     protected setCreateOther(newValue: boolean): void {
@@ -81,15 +81,14 @@ export class HospitalVisitFormComponent {
         this.createNewAfterSaveChange.emit(newValue);
     }
 
-    private initForm(): void {
-        this.buildFormGroup();
+    private initFormOptions(): void {
         this.initStatusOptions();
         this.initDepartmentOptions();
         this.initCountedHours();
     }
 
-    private buildFormGroup(): void {
-        this.form = this.fb.group({
+    private buildFormGroup(): FormGroup {
+        return this.fb.group({
             status: [this.visit()?.status ?? HospitalVisitStatus.SCHEDULED, [Validators.required]],
             date: [this.getDate(this.visit()?.dateTimeFrom), [Validators.required]],
             timeFrom: [this.getTime(this.visit()?.dateTimeFrom, HospitalVisitFormComponent.defaultTimeFrom),
@@ -129,7 +128,7 @@ export class HospitalVisitFormComponent {
             this.setCountedHours();
             return;
         }
-        this.form.controls.countedHours.setValue(countedMinutes / HospitalVisitFormComponent.MIN_ON_HOUR);
+        this.form().controls.countedHours.setValue(countedMinutes / HospitalVisitFormComponent.MIN_ON_HOUR);
     }
 
     private getDate(dateTime: string | undefined): Date | undefined {
@@ -158,14 +157,14 @@ export class HospitalVisitFormComponent {
 
     private createCreation(): HospitalVisitCreate {
         const data = new HospitalVisitCreate();
-        data.departmentId = this.form.controls.departmentId.value;
-        data.status = this.form.controls.status.value;
-        data.countedMinutes = this.form.controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
+        data.departmentId = this.form().controls.departmentId.value;
+        data.status = this.form().controls.status.value;
+        data.countedMinutes = this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
         data.organizerId = this.currentUser.personId;
         data.visibility = EventVisibility.PUBLIC;
-        data.participantIds = this.form.controls.participantIds.value;
-        data.dateTimeFrom = parseTimeWithDate(this.form.controls.timeFrom.value, this.form.controls.date.value).toISOString();
-        data.dateTimeTo = parseTimeWithDate(this.form.controls.timeTo.value, this.form.controls.date.value).toISOString();
+        data.participantIds = this.form().controls.participantIds.value;
+        data.dateTimeFrom = parseTimeWithDate(this.form().controls.timeFrom.value, this.form().controls.date.value).toISOString();
+        data.dateTimeTo = parseTimeWithDate(this.form().controls.timeTo.value, this.form().controls.date.value).toISOString();
 
         return data;
     }
@@ -173,13 +172,13 @@ export class HospitalVisitFormComponent {
     private createRewrite(): HospitalVisitRewrite {
         const data = new HospitalVisitRewrite();
         data.id = this.visit()!.id;
-        data.departmentId = this.form.controls.departmentId.value;
-        data.status = this.form.controls.status.value;
-        data.countedMinutes = this.form.controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
+        data.departmentId = this.form().controls.departmentId.value;
+        data.status = this.form().controls.status.value;
+        data.countedMinutes = this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
         data.visibility = EventVisibility.PUBLIC;
-        data.participantIds = this.form.controls.participantIds.value;
-        data.dateTimeFrom = parseTimeWithDate(this.form.controls.timeFrom.value, this.form.controls.date.value).toISOString();
-        data.dateTimeTo = parseTimeWithDate(this.form.controls.timeTo.value, this.form.controls.date.value).toISOString();
+        data.participantIds = this.form().controls.participantIds.value;
+        data.dateTimeFrom = parseTimeWithDate(this.form().controls.timeFrom.value, this.form().controls.date.value).toISOString();
+        data.dateTimeTo = parseTimeWithDate(this.form().controls.timeTo.value, this.form().controls.date.value).toISOString();
         return data;
     }
 

@@ -41,11 +41,10 @@ export class PeopleListComponent {
     protected readonly sizeOptions = [20, 50, 100];
     protected readonly columns = ['name', 'status', 'email', 'phone', 'lastLogin', 'created', 'createdBy', 'options'];
 
-    protected items = signal<Array<Person>>([]);
     protected page: number;
     protected size: number;
     protected countOfAll: number;
-
+    protected items = signal<Array<Person>>([]);
     protected creators = signal<Record<string, Person>>({});
 
     private sort: SortOptions = {
