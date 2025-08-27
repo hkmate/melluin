@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {UserCreation} from '@shared/user/user-creation';
@@ -12,9 +12,8 @@ import {UserSettings} from '@shared/user/user-settings';
 @Injectable({providedIn: 'root'})
 export class UserService {
 
-    constructor(private readonly http: HttpClient,
-                private readonly msg: MessageService) {
-    }
+    private readonly http = inject(HttpClient);
+    private readonly msg = inject(MessageService);
 
     private get userUrl(): string {
         return `${AppConfig.get('baseURL')}/users`;

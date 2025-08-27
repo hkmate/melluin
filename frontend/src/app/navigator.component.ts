@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {selectUserHomePageSettings} from '@fe/app/state/selector/user-settings.selector';
 import {HomePageOption, HomePageUserSettings} from '@shared/user/user-settings';
-import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
 import {Platform} from '@angular/cdk/platform';
 import {Router} from '@angular/router';
@@ -14,12 +13,20 @@ import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status'
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {firstValueFrom, map} from 'rxjs';
 import {isNilOrEmpty, isNotNil} from '@shared/util/util';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-navigator',
     template: ''
 })
-export class NavigatorComponent extends AutoUnSubscriber implements OnInit {
+export class NavigatorComponent {
+
+    private readonly router = inject(Router);
+    private readonly platform = inject(Platform);
+    private readonly store = inject(Store);
+    private readonly credentialStoreService = inject(CredentialStoreService);
+    private readonly visitService = inject(HospitalVisitService);
+
 
     private readonly availableVisitStatuses = [
         HospitalVisitStatus.SCHEDULED,
@@ -36,17 +43,9 @@ export class NavigatorComponent extends AutoUnSubscriber implements OnInit {
 
     private mobileScreen: boolean;
 
-    constructor(private readonly router: Router,
-                private readonly platform: Platform,
-                private readonly store: Store,
-                private readonly credentialStoreService: CredentialStoreService,
-                private readonly visitService: HospitalVisitService) {
-        super();
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.mobileScreen = (this.platform.IOS || this.platform.ANDROID);
-        this.addSubscription(this.store.pipe(selectUserHomePageSettings), (userSettings?: HomePageUserSettings) => {
+        this.store.pipe(selectUserHomePageSettings, takeUntilDestroyed()).subscribe((userSettings?: HomePageUserSettings) => {
             this.processHomePage(this.mobileScreen ? userSettings?.inMobile : userSettings?.inDesktop);
         });
     }

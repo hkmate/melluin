@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {isNil, isNilOrEmpty} from '@shared/util/util';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo} from '@shared/api-util/pageable';
@@ -9,8 +9,7 @@ import {PeopleListQueryParams} from '@fe/app/people/people-list/people-list-filt
 @Injectable()
 export class PeopleListQueryParamSettingsInitializer {
 
-    constructor(private readonly urlParamHandler: UrlParamHandler) {
-    }
+    private readonly urlParamHandler = inject(UrlParamHandler);
 
     public getFilters(): PeopleFilter {
         const result = this.getDefaultFilter();

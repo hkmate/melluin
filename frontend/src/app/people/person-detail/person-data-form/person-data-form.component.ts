@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, computed, effect, inject, input, output} from '@angular/core';
 import {Person} from '@shared/person/person';
 import {PersonRewrite} from '@shared/person/person-rewrite';
 import {PersonCreation} from '@shared/person/person-creation';
@@ -14,30 +14,19 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 export class PersonDataFormComponent {
 
-    @Output()
-    public submitted = new EventEmitter<PersonRewrite | PersonCreation>;
+    private readonly fb = inject(FormBuilder);
+    private readonly permissionService = inject(PermissionService);
 
-    @Output()
-    public canceled = new EventEmitter<void>;
+    public readonly person = input<Person>();
 
-    protected selfEdit: boolean;
+    public readonly submitted = output<PersonRewrite | PersonCreation>();
+    public readonly canceled = output<void>();
+
+    protected readonly selfEdit = computed(() => this.person()?.id === this.permissionService.personId);
     protected form: FormGroup;
 
-    private personToEdit?: Person;
-
-    constructor(private readonly fb: FormBuilder,
-                private readonly permissionService: PermissionService) {
-    }
-
-    @Input()
-    public set person(person: Person | undefined) {
-        this.personToEdit = person;
-        this.selfEdit = (person?.id === this.permissionService.personId);
-        this.initForm();
-    }
-
-    public get person(): Person | undefined {
-        return this.personToEdit;
+    constructor() {
+        effect(() => this.initForm());
     }
 
     protected onSubmit(): void {
@@ -49,15 +38,16 @@ export class PersonDataFormComponent {
     }
 
     private initForm(): void {
+        const personToEdit = this.person();
         this.form = this.fb.group({
-            firstName: [this.personToEdit?.firstName, [Validators.required]],
-            lastName: [this.personToEdit?.lastName, [Validators.required]],
-            email: [this.personToEdit?.email],
-            phone: [this.personToEdit?.phone],
-            canVolunteerSeeMyEmail: [this.personToEdit?.preferences?.canVolunteerSeeMyEmail ?? false],
-            canVolunteerSeeMyPhone: [this.personToEdit?.preferences?.canVolunteerSeeMyPhone ?? false],
+            firstName: [personToEdit?.firstName, [Validators.required]],
+            lastName: [personToEdit?.lastName, [Validators.required]],
+            email: [personToEdit?.email],
+            phone: [personToEdit?.phone],
+            canVolunteerSeeMyEmail: [personToEdit?.preferences?.canVolunteerSeeMyEmail ?? false],
+            canVolunteerSeeMyPhone: [personToEdit?.preferences?.canVolunteerSeeMyPhone ?? false],
         });
-        if (!this.selfEdit) {
+        if (!this.selfEdit()) {
             this.form.controls.canVolunteerSeeMyEmail.disable();
             this.form.controls.canVolunteerSeeMyPhone.disable();
         }
@@ -71,7 +61,7 @@ export class PersonDataFormComponent {
         data.email = emptyToUndef(this.form.controls.email.value);
         data.phone = emptyToUndef(this.form.controls.phone.value);
         data.preferences = {
-            ...this.personToEdit?.preferences,
+            ...this.person()?.preferences,
             canVolunteerSeeMyEmail: this.form.controls.canVolunteerSeeMyEmail.value,
             canVolunteerSeeMyPhone: this.form.controls.canVolunteerSeeMyPhone.value,
         };
@@ -80,7 +70,7 @@ export class PersonDataFormComponent {
 
 
     private createEmptySubmitObject(): PersonRewrite | PersonCreation {
-        if (isNotNil(this.personToEdit)) {
+        if (isNotNil(this.person())) {
             return new PersonRewrite();
         }
         return new PersonCreation();

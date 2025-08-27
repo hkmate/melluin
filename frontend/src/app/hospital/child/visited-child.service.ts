@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
@@ -9,9 +9,8 @@ import {VisitedChild, VisitedChildEditInput, VisitedChildInput} from '@shared/ho
 @Injectable({providedIn: 'root'})
 export class VisitedChildService {
 
-    constructor(private readonly http: HttpClient,
-                private readonly msg: MessageService) {
-    }
+    private readonly http = inject(HttpClient);
+    private readonly msg = inject(MessageService);
 
     private getChildrenUrl(visitId: string): string {
         return `${AppConfig.get('baseURL')}/hospital-visits/${visitId}/children`;

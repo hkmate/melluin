@@ -1,55 +1,42 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, effect, input, output, signal} from '@angular/core';
 import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
-import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-lazy-input',
     templateUrl: './lazy-input.component.html',
     styleUrl: './lazy-input.component.scss'
 })
-export class LazyInputComponent extends AutoUnSubscriber implements OnInit {
+export class LazyInputComponent {
 
     private readonly delay = 500;
 
-    @Input()
-    public needClearButton = true;
+    public readonly needClearButton = input(true);
+    public readonly value = input<string>();
+    public readonly label = input.required<string>();
 
-    @Input()
-    public set value(newValue: string | undefined) {
-        this.inputText = newValue ?? '';
-    }
+    public readonly valueChange = output<string>();
 
-    @Input()
-    public label: string;
-
-    @Output()
-    public valueChange = new EventEmitter<string>();
-
-    protected inputText = '';
+    protected readonly inputText = signal('');
     private inputChanged = new Subject<string>();
 
-    public ngOnInit(): void {
-        this.initInputSubscription();
+    constructor() {
+        effect(() => this.inputText.set(this.value() ?? ''), {allowSignalWrites: true});
+        this.inputChanged.pipe(
+            takeUntilDestroyed(),
+            debounceTime(this.delay),
+            distinctUntilChanged()
+        ).subscribe(() => this.valueChange.emit(this.inputText()));
     }
 
     protected handleInputChange(newText: string): void {
-        this.inputText = newText;
-        this.inputChanged.next(this.inputText);
+        this.inputText.set(newText);
+        this.inputChanged.next(this.inputText());
     }
 
     protected clear(): void {
-        this.inputText = '';
-        this.inputChanged.next(this.inputText);
-    }
-
-    private initInputSubscription(): void {
-        this.addSubscription(this.inputChanged.pipe(
-                debounceTime(this.delay),
-                distinctUntilChanged()
-            ),
-            () => {
-                this.valueChange.emit(this.inputText)
-            });
+        this.inputText.set('');
+        this.inputChanged.next(this.inputText());
     }
 
 }

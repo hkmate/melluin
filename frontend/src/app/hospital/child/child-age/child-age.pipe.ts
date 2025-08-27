@@ -4,7 +4,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {getChildAge} from '@shared/child/child-age-calculator';
 
 @Pipe({
-    name: 'childAge'
+    name: 'childAge',
+    pure: true
 })
 export class ChildAgePipe implements PipeTransform {
 

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, inject, output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {getGuessedBirthFromYears} from '@shared/child/child-age-calculator';
 import {VisitedChildInput} from '@shared/hospital-visit/visited-child';
@@ -14,17 +14,15 @@ export class FillerChildCreateComponent {
     private static readonly CHILD_AGE_LIMIT = 18;
     private static readonly MAX_MONTH_IN_YEAR = 11;
 
-    @Output()
-    public creationEnded = new EventEmitter<void>();
+    private readonly formBuilder = inject(FormBuilder);
+    protected readonly filler = inject(HospitalVisitActivityFillerService);
+
+    public readonly creationEnded = output<void>();
 
     protected buttonsDisabled: boolean;
     protected form: FormGroup;
 
-    constructor(private readonly formBuilder: FormBuilder,
-                protected readonly filler: HospitalVisitActivityFillerService) {
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.initForm();
     }
 

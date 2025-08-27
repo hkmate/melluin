@@ -1,9 +1,9 @@
 <mat-form-field>
-    <mat-label>{{ label }}</mat-label>
+    <mat-label>{{ label() }}</mat-label>
     <input matInput
-           [attr.type]="type"
-           [attr.autocomplete]="autocomplete"
-           [placeholder]="placeholder"
+           [attr.type]="type()"
+           [attr.autocomplete]="autocomplete()"
+           [placeholder]="placeholder()"
            [ngModel]="value"
            (ngModelChange)="valueChanged($event)"
            [ngModelOptions]="{standalone: true}"

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, Pageable, PageQuery, QUERY_QUERY_KEY} from '@shared/api-util/pageable';
@@ -11,9 +11,8 @@ import {AppConfig} from '@fe/app/config/app-config';
 @Injectable({providedIn: 'root'})
 export class DepartmentBoxService {
 
-    constructor(private readonly http: HttpClient,
-                private readonly msg: MessageService) {
-    }
+    private readonly http = inject(HttpClient);
+    private readonly msg = inject(MessageService);
 
     private getDepartmentBoxByDepartmentUrl(departmentId: string): string {
         return `${AppConfig.get('baseURL')}/departments/${departmentId}/box-status`;

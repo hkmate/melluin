@@ -9,10 +9,10 @@
         <mat-card-header>
             <mat-card-subtitle>{{ 'HospitalVisit.Present.Date' | translate }}</mat-card-subtitle>
             <mat-card-title>
-                {{ visit.dateTimeFrom | date : ('EventDateFormat' | translate) }}
-                {{ visit.dateTimeFrom | date : ('TimeFormat' | translate) }}
+                {{ visit().dateTimeFrom | date : ('EventDateFormat' | translate) }}
+                {{ visit().dateTimeFrom | date : ('TimeFormat' | translate) }}
                 -
-                {{ visit.dateTimeTo | date : ('TimeFormat' | translate) }}
+                {{ visit().dateTimeTo | date : ('TimeFormat' | translate) }}
             </mat-card-title>
         </mat-card-header>
     </mat-card>
@@ -22,11 +22,11 @@
             <mat-card-subtitle>{{ 'HospitalVisit.Present.Place' | translate }}</mat-card-subtitle>
             <mat-card-title>
                 <a class="link"
-                   [routerLink]="['/hospital-departments', visit.department.id]">
-                    {{ visit.department.name }}
+                   [routerLink]="['/hospital-departments', visit().department.id]">
+                    {{ visit().department.name }}
                 </a>
                 <span class="department-address">
-                    ({{ visit.department.address }})
+                    ({{ visit().department.address }})
                 </span>
             </mat-card-title>
         </mat-card-header>
@@ -37,7 +37,7 @@
             <mat-card-subtitle>{{ 'HospitalVisit.Present.Participants' | translate }}</mat-card-subtitle>
             <mat-card-title>
                 <mat-chip-listbox>
-                    @for (participant of visit.participants; track participant.id) {
+                    @for (participant of visit().participants; track participant.id) {
                         <mat-chip-row [routerLink]="['/people', participant.id]">
                             {{ participant | personName }}
                         </mat-chip-row>
@@ -51,11 +51,11 @@
         <mat-card-header>
             <mat-card-subtitle>{{ 'HospitalVisit.Present.Status' | translate }}</mat-card-subtitle>
             <mat-card-title>
-                <span [class]="'visit-status-' + visit.status">
-                    {{ 'HospitalVisitStatus.' + visit.status | translate }}
+                <span [class]="'visit-status-' + visit().status">
+                    {{ 'HospitalVisitStatus.' + visit().status | translate }}
                 </span>
                 <span class="status-icon">
-                    <app-visit-status-icon [status]="visit.status"></app-visit-status-icon>
+                    <app-visit-status-icon [status]="visit().status"/>
                 </span>
             </mat-card-title>
         </mat-card-header>
@@ -65,7 +65,7 @@
         <mat-card-header>
             <mat-card-subtitle>{{ 'HospitalVisit.Present.Organizer' | translate }}</mat-card-subtitle>
             <mat-card-title>
-                {{ visit.organizer | personName }}
+                {{ visit().organizer | personName }}
             </mat-card-title>
         </mat-card-header>
     </mat-card>
@@ -74,7 +74,7 @@
         <mat-card-header>
             <mat-card-subtitle>{{ 'HospitalVisit.Present.CountedHours' | translate }}</mat-card-subtitle>
             <mat-card-title>
-                {{ visit.countedMinutes | minToHour | optional }}
+                {{ visit().countedMinutes | minToHour | optional }}
             </mat-card-title>
         </mat-card-header>
     </mat-card>

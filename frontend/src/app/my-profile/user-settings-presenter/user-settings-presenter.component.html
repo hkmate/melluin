@@ -1,5 +1,6 @@
 <div class="user-settings">
     <h1>{{ 'PersonPage.Settings' | translate }}</h1>
+    @let settings = userSettings();
     <mat-tab-group dynamicHeight>
         <mat-tab [label]="'PersonPage.EventListSettings.Title' | translate">
             <div class="event-list-settings">
@@ -20,7 +21,7 @@
                     <mat-card-header>
                         <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Participants' | translate }}</mat-card-subtitle>
                         <mat-card-title>
-                            @for (person of participants;track person.id) {
+                            @for (person of participants; track person.id) {
                                 <mat-chip>{{ person | personName }}</mat-chip>
                             } @empty {
                                 {{ 'NoData' | translate }}
@@ -33,7 +34,7 @@
                     <mat-card-header>
                         <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Statuses' | translate }}</mat-card-subtitle>
                         <mat-card-title>
-                            @for (status of settings.eventList?.statuses;track status) {
+                            @for (status of settings.eventList?.statuses; track status) {
                                 <mat-chip>{{ 'HospitalVisitStatus.' + status | translate }}</mat-chip>
                             } @empty {
                                 {{ 'NoData' | translate }}
@@ -46,7 +47,7 @@
                     <mat-card-header>
                         <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Departments' | translate }}</mat-card-subtitle>
                         <mat-card-title>
-                            @for (department of departments;track department.id) {
+                            @for (department of departments; track department.id) {
                                 <mat-chip>{{ department.name }}</mat-chip>
                             } @empty {
                                 {{ 'NoData' | translate }}
@@ -153,8 +154,9 @@
                         <mat-card-subtitle>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Reason' | translate }}</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
-                        @for (reason of settings.dashboard?.widgets?.departmentBox?.reasons ?? [];track reason;let last = $last) {
-                            {{ 'BoxStatusChangeReason.' + reason | translate}}<span *ngIf="!last">, </span>
+                        @for (reason of settings.dashboard?.widgets?.departmentBox?.reasons ?? []; track reason; let
+                                last = $last) {
+                            {{ 'BoxStatusChangeReason.' + reason | translate }}<span *ngIf="!last">, </span>
                         } @empty {
                             {{ 'NoData' | translate }}
                         }

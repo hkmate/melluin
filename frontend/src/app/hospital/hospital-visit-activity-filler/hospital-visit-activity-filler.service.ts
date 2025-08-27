@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {Child, ChildAge} from '@shared/child/child';
 import {getChildAge} from '@shared/child/child-age-calculator';
@@ -19,17 +19,16 @@ import * as _ from 'lodash';
 @Injectable()
 export class HospitalVisitActivityFillerService {
 
+    private readonly msg = inject(MessageService);
+    private readonly visitedChildService = inject(VisitedChildService);
+    private readonly activityService = inject(VisitActivityService);
+
     private visitDate: Date;
     private visit: HospitalVisit;
     private children$: BehaviorSubject<Array<VisitedChild>>;
     private lockedChildIds$: BehaviorSubject<Array<string>>;
     private activities$: BehaviorSubject<Array<HospitalVisitActivity>>;
     private visitStatus$: BehaviorSubject<HospitalVisitStatus>;
-
-    constructor(private readonly msg: MessageService,
-                private readonly visitedChildService: VisitedChildService,
-                private readonly activityService: VisitActivityService) {
-    }
 
     public startFilling(visit: HospitalVisit): void {
         this.visit = visit;

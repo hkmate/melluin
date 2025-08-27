@@ -1,16 +1,18 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {QueryParams, UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo} from '@shared/api-util/pageable';
 import {filter, map, Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {emptyToUndef, VoidNOOP} from '@shared/util/util';
 import {PeopleFilter} from '@fe/app/people/people-list/people-list-filter/service/people-filter';
 import {PeopleListQueryParams} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-params';
 
 
 @Injectable()
-export class PeopleListQueryParamHandler extends AutoUnSubscriber {
+export class PeopleListQueryParamHandler {
+
+    private readonly route = inject(ActivatedRoute);
+    private readonly urlParamHandler = inject(UrlParamHandler);
 
     /*
      Note: This needed because when we set query params the router will trigger an event and the route.queryParams
@@ -18,11 +20,6 @@ export class PeopleListQueryParamHandler extends AutoUnSubscriber {
      query params. Because of this we skip this changing event.
      */
     private skipNextParamChangeEvent = false;
-
-    constructor(private readonly route: ActivatedRoute,
-                private readonly urlParamHandler: UrlParamHandler) {
-        super();
-    }
 
     public onChange(): Observable<void> {
         return this.route.queryParams.pipe(

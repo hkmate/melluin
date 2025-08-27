@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, effect, inject, input, output} from '@angular/core';
 import {User} from '@shared/user/user';
 import {isNotNil} from '@shared/util/util';
 import {UserRewrite} from '@shared/user/user-rewrite';
@@ -14,37 +14,27 @@ import {GetRolesService} from '@fe/app/util/get-roles.service';
     templateUrl: './user-edit-form.component.html',
     styleUrls: ['./user-edit-form.component.scss']
 })
-export class UserEditFormComponent implements OnInit {
+export class UserEditFormComponent {
+
+    private readonly fb=inject(FormBuilder);
+    private readonly roleService=inject(GetRolesService);
+    private readonly permission=inject(PermissionService);
 
     protected readonly passwordMinLength = passwordMinLength;
     protected readonly permissions: Array<Permission> = Object.values(Permission);
-    @Output()
-    public submitted = new EventEmitter<UserRewrite>;
 
-    @Output()
-    public canceled = new EventEmitter<void>;
+    public readonly user = input<User>();
+
+    public readonly submitted = output<UserRewrite>();
+    public readonly canceled = output<void>();
 
     protected roleOptions: Array<RoleBrief>;
     protected roles: Array<RoleBrief>;
-    protected userToEdit?: User;
     protected form: FormGroup;
 
-    constructor(private readonly fb: FormBuilder,
-                private readonly roleService: GetRolesService,
-                private readonly permission: PermissionService) {
-    }
+    constructor() {
+        effect(() => this.initForm());
 
-    @Input()
-    public set user(user: User | undefined) {
-        this.userToEdit = user;
-        this.initForm();
-    }
-
-    public get user(): User | undefined {
-        return this.userToEdit;
-    }
-
-    public ngOnInit(): void {
         this.roleService.getAll().subscribe(roles => {
             this.roles = roles;
             const manageableRoleTypes = this.permission.getRolesTypesCanBeManaged();
@@ -65,12 +55,13 @@ export class UserEditFormComponent implements OnInit {
     }
 
     private initForm(): void {
+        const userToEdit = this.user();
         this.form = this.fb.group({
             password: [undefined, [Validators.pattern(passwordPattern)]],
-            isActive: [this.userToEdit?.isActive],
-            roles: [this.userToEdit?.roles.map(r => r.name)],
-            customPermissions: [this.userToEdit?.customPermissions],
-            userName: [this.userToEdit?.userName]
+            isActive: [userToEdit?.isActive],
+            roles: [userToEdit?.roles.map(r => r.name)],
+            customPermissions: [userToEdit?.customPermissions],
+            userName: [userToEdit?.userName]
         });
         if (!this.permission.has(Permission.canManagePermissions)) {
             this.form.controls.customPermissions.disable();

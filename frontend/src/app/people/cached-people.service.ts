@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {map, mergeMap, Observable, of, tap} from 'rxjs';
 import {Person} from '@shared/person/person';
 import {PeopleService} from '@fe/app/people/people.service';
@@ -11,8 +11,7 @@ export class CachedPeopleService {
 
     private static readonly MAX_SIZE_OF_DATA = 100;
 
-    constructor(private readonly personService: PeopleService) {
-    }
+    private readonly personService = inject(PeopleService);
 
     public loadAllPeople(query: FilteringInfo, cacheName: string): Observable<Array<Person>> {
         const cached = this.getFromCache(cacheName);

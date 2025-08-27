@@ -1,22 +1,21 @@
 <section>
     <div class="page-content">
-
-        @if (editMode) {
-            <app-my-profile-editor [user]="user" [person]="person" [userSettings]="userSettings"
-                                   (editEnded)="cancelEdit()">
-            </app-my-profile-editor>
-        } @else {
-            <div>
-                <app-my-profile-present [person]="person" [user]="user" [userSettings]="userSettings">
-                </app-my-profile-present>
-            </div>
-            @if (canWriteSelf()) {
-                <div class="button-row">
-                    <button mat-stroked-button color="primary" (click)="switchToEdit()">{{ 'Edit' | translate }}
-                    </button>
+        @if (user && person && userSettings) {
+            @if (editMode) {
+                <app-my-profile-editor [user]="user" [person]="person" [userSettings]="userSettings"
+                                       (editEnded)="cancelEdit()"/>
+            } @else {
+                <div>
+                    <app-my-profile-present [person]="person" [user]="user" [userSettings]="userSettings"/>
                 </div>
+                @if (canWriteSelf()) {
+                    <div class="button-row">
+                        <button mat-stroked-button color="primary" (click)="switchToEdit()">
+                            {{ 'Edit' | translate }}
+                        </button>
+                    </div>
+                }
             }
         }
-
     </div>
 </section>

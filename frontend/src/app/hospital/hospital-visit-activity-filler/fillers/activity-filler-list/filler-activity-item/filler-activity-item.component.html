@@ -1,12 +1,10 @@
-@if (edit) {
-    <app-filler-activity-editor [activity]="activity"
-                                [childrenById]="childrenById"
-                                (editDone)="endEdit()">
-    </app-filler-activity-editor>
+@if (edit()) {
+    <app-filler-activity-editor [activity]="activity()"
+                                [childrenById]="childrenById()"
+                                (editDone)="endEdit()"/>
 } @else {
-    <app-filler-activity-card [activity]="activity"
-                              [childrenById]="childrenById"
+    <app-filler-activity-card [activity]="activity()"
+                              [childrenById]="childrenById()"
                               (removeWanted)="removeActivity()"
-                              (editWanted)="changeToEdit()">
-    </app-filler-activity-card>
+                              (editWanted)="changeToEdit()"/>
 }

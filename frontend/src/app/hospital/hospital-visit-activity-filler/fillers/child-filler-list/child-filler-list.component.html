@@ -15,7 +15,7 @@
 
 @if (creatingInProcess) {
     <div class="child-create">
-        <app-filler-child-create (creationEnded)="creatorToggled(false)"></app-filler-child-create>
+        <app-filler-child-create (creationEnded)="creatorToggled(false)"/>
     </div>
 }
 
@@ -23,7 +23,7 @@
     @if (children$ | async; as children) {
         @for (child of children; track child.id) {
             <div class="child-item">
-                <app-filler-child-item [child]="child"></app-filler-child-item>
+                <app-filler-child-item [child]="child"/>
             </div>
         } @empty {
             <div class="empty-list">

@@ -3,7 +3,7 @@
         <div class="page-content">
 
             <div class="visit-part">
-                <app-hospital-event-card [visit]="visit"></app-hospital-event-card>
+                <app-hospital-event-card [visit]="visit"/>
             </div>
 
             @if (canVisitBeStarted()) {
@@ -26,7 +26,7 @@
                                 {{ 'HospitalVisit.RelatedActivities' | translate }}
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <app-related-visit-list [visit]="visit"></app-related-visit-list>
+                        <app-related-visit-list [visit]="visit"/>
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>

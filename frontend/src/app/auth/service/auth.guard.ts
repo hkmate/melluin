@@ -20,12 +20,14 @@ export const AuthGuardFn = (route: Route, segments: Array<UrlSegment>): boolean 
 @Injectable()
 export class AuthGuard {
 
+    private readonly router = inject(Router);
+    private readonly store = inject(Store);
+    private readonly actions$ = inject(Actions);
+    private readonly authenticationService = inject(AuthenticationService);
+
     private currentUser?: User = undefined;
 
-    constructor(private readonly router: Router,
-                private readonly store: Store,
-                private readonly actions$: Actions,
-                private readonly authenticationService: AuthenticationService) {
+    constructor() {
         this.store.pipe(selectCurrentUser).subscribe(cu => {
             this.currentUser = cu;
         });

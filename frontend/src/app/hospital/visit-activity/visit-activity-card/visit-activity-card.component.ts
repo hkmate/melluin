@@ -1,18 +1,14 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
 
 @Component({
     selector: 'app-visit-activity-card',
-    templateUrl: './visit-activity-card.component.html',
-    styleUrls: ['./visit-activity-card.component.scss']
+    templateUrl: './visit-activity-card.component.html'
 })
 export class VisitActivityCardComponent {
 
-    @Input()
-    public childrenById: Record<string, VisitedChild>;
-
-    @Input()
-    public activity: HospitalVisitActivity;
+    public readonly childrenById = input.required<Record<string, VisitedChild>>();
+    public readonly activity = input.required<HospitalVisitActivity>();
 
 }

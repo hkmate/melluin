@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
     HttpErrorResponse,
     HttpEvent,
@@ -15,9 +15,11 @@ import {AppConfig} from '@fe/app/config/app-config';
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
+    private readonly authService = inject(AuthenticationService);
+
     private readonly PUBLIC_ENDPOINTS = new EndpointMap();
 
-    constructor(private readonly authService: AuthenticationService) {
+    constructor() {
         this.initPublicEndpoints();
     }
 

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, effect, inject, input, output} from '@angular/core';
 import {User} from '@shared/user/user';
 import {Person} from '@shared/person/person';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -20,42 +20,27 @@ import {Store} from '@ngrx/store';
 })
 export class MyProfileEditorComponent {
 
+    private readonly fb = inject(FormBuilder);
+    private readonly store = inject(Store);
+    private readonly msg = inject(MessageService);
+    private readonly peopleService = inject(PeopleService);
+    private readonly userService = inject(UserService);
+
     protected readonly passwordMinLength = passwordMinLength;
 
-    @Output()
-    public editEnded = new EventEmitter<void>();
+    public readonly user = input.required<User>();
+    public readonly person = input.required<Person>();
+    public readonly userSettings = input.required<UserSettings>();
+
+    public editEnded = output<void>();
 
     protected personForm: FormGroup;
     protected userForm: FormGroup;
-    private originalPerson: Person;
-    protected originalUser: User;
-    protected originalUserSettings: UserSettings;
     private personSaveInProcess: boolean;
     private userSaveInProcess: boolean;
 
-    @Input()
-    public set user(user: User) {
-        this.originalUser = user;
-        this.init();
-    }
-
-    @Input()
-    public set person(person: Person) {
-        this.originalPerson = person;
-        this.init();
-    }
-
-    @Input()
-    public set userSettings(settings: UserSettings) {
-        this.originalUserSettings = settings;
-        this.init();
-    }
-
-    constructor(private readonly fb: FormBuilder,
-                private readonly store: Store,
-                private readonly msg: MessageService,
-                private readonly peopleService: PeopleService,
-                private readonly userService: UserService) {
+    constructor() {
+        effect(() => this.init());
     }
 
     protected cancelEditing(): void {
@@ -64,7 +49,7 @@ export class MyProfileEditorComponent {
 
     protected submitPersonForm(): void {
         this.personSaveInProcess = true;
-        this.peopleService.updatePerson(this.originalPerson.id, this.parsePersonForm()).subscribe({
+        this.peopleService.updatePerson(this.person().id, this.parsePersonForm()).subscribe({
             next: () => {
                 this.personSaveInProcess = false;
                 this.msg.success('SaveSuccessful');
@@ -77,7 +62,7 @@ export class MyProfileEditorComponent {
 
     protected submitUserForm(): void {
         this.userSaveInProcess = true;
-        this.userService.updateUser(this.originalUser.id, this.parseUserForm()).subscribe({
+        this.userService.updateUser(this.user().id, this.parseUserForm()).subscribe({
             next: (user: User) => {
                 this.userSaveInProcess = false;
                 this.msg.success('SaveSuccessful');
@@ -102,7 +87,7 @@ export class MyProfileEditorComponent {
     }
 
     private init(): void {
-        if (anyNil(this.originalPerson, this.originalUser, this.originalUserSettings)) {
+        if (anyNil(this.person(), this.user(), this.userSettings())) {
             return;
         }
         this.setupForm();
@@ -110,15 +95,15 @@ export class MyProfileEditorComponent {
 
     private setupForm(): void {
         this.personForm = this.fb.group({
-            firstName: [this.originalPerson.firstName, [Validators.required]],
-            lastName: [this.originalPerson.lastName, [Validators.required]],
-            email: [this.originalPerson.email],
-            phone: [this.originalPerson.phone],
-            canVolunteerSeeMyEmail: [this.originalPerson.preferences?.canVolunteerSeeMyEmail ?? false],
-            canVolunteerSeeMyPhone: [this.originalPerson.preferences?.canVolunteerSeeMyPhone ?? false]
+            firstName: [this.person().firstName, [Validators.required]],
+            lastName: [this.person().lastName, [Validators.required]],
+            email: [this.person().email],
+            phone: [this.person().phone],
+            canVolunteerSeeMyEmail: [this.person().preferences?.canVolunteerSeeMyEmail ?? false],
+            canVolunteerSeeMyPhone: [this.person().preferences?.canVolunteerSeeMyPhone ?? false]
         });
         this.userForm = this.fb.group({
-            userName: [this.originalUser.userName],
+            userName: [this.user().userName],
             password: [undefined, [Validators.pattern(passwordPattern)]]
         });
     }
@@ -141,9 +126,9 @@ export class MyProfileEditorComponent {
         return {
             userName: this.userForm.controls.userName.value,
             password: isNilOrEmpty(newPassword) ? undefined : newPassword,
-            isActive: this.originalUser.isActive,
-            roleNames: this.originalUser.roles.map(role => role.name),
-            customPermissions: this.originalUser.customPermissions
+            isActive: this.user().isActive,
+            roleNames: this.user().roles.map(role => role.name),
+            customPermissions: this.user().customPermissions
         };
     }
 

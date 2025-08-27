@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, UrlSegment} from '@angular/router';
 import {LevenshteinCalculator} from './levenshtein-calculator';
 import {isNotNil} from '@shared/util/util';
@@ -20,8 +20,7 @@ export class PathResolveService implements Resolve<string> {
     private static readonly NO_DISTANCE = 0;
     private static readonly UUID_CHARSET_REGEX = /[0-9\-a-fA-F]{33,39}/; // The normal UUID's size is 36 char, I add +-3 difference.
 
-    constructor(private readonly pathProvider: PathProvider) {
-    }
+    private readonly pathProvider = inject(PathProvider);
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): string {
         const typoUrlSegments = route.url.map((urlSegment: UrlSegment) => urlSegment.path);

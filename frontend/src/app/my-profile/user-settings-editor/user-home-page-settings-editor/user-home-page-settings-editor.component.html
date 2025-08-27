@@ -1,16 +1,14 @@
 <div class="home-page-settings">
-    <form *ngIf="form" [formGroup]="form">
+    <form [formGroup]="form">
 
         <div class="in-mobile-card">
             <app-home-page-option-selector [label]="'PersonPage.HomePageSettings.InMobile' | translate"
-                                           formControlName="inMobile">
-            </app-home-page-option-selector>
+                                           formControlName="inMobile"/>
         </div>
 
         <div class="in-desktop-card">
             <app-home-page-option-selector [label]="'PersonPage.HomePageSettings.InDesktop' | translate"
-                                           formControlName="inDesktop">
-            </app-home-page-option-selector>
+                                           formControlName="inDesktop"/>
         </div>
 
         <div class="button-row">
@@ -19,7 +17,7 @@
                     [disabled]="isSaveBtnDisabled()"
                     (click)="submit()"
                     type="button">
-                {{ 'SaveButton' | translate}}
+                {{ 'SaveButton' | translate }}
             </button>
         </div>
     </form>

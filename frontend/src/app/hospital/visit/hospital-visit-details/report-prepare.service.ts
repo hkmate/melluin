@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {VisitActivityService} from '../../visit-activity/visit-activity.service';
 import {firstValueFrom} from 'rxjs';
 import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
@@ -19,18 +19,16 @@ import {TranslateService} from '@ngx-translate/core';
 @Injectable()
 export class ReportPrepareService {
 
-    constructor(private readonly activityServise: VisitActivityService,
-        private readonly currentUserService: CredentialStoreService,
-        private readonly translate: TranslateService
-    ) {
-    }
+    private readonly activityService = inject(VisitActivityService);
+    private readonly currentUserService = inject(CredentialStoreService);
+    private readonly translate = inject(TranslateService);
 
     public async draftCreater(visitId): Promise<ReportPrepareCreater> {
         const currentUser = this.currentUserService.getUser();
         if (isNil(currentUser)) {
             throw new Error('Draft could be prepared with logged in user!');
         }
-        const wrappedActivities = await firstValueFrom(this.activityServise.getActivities(visitId));
+        const wrappedActivities = await firstValueFrom(this.activityService.getActivities(visitId));
         const currentPerson = wrappedActivities.hospitalVisit.participants.find(p => p.id === currentUser.personId);
         const activityTypeToStr = (activityType: VisitActivityType): string => this.translate.instant('VisitActivityType.' + activityType);
 
@@ -53,8 +51,8 @@ export class ReportPrepareCreater {
     private readonly activities: Array<HospitalVisitActivity>;
 
     constructor(wrappedActivities: WrappedHospitalVisitActivity,
-        private readonly activityTypeToStr: (type: VisitActivityType) => string,
-        private readonly currentPerson: PersonIdentifier) {
+                private readonly activityTypeToStr: (type: VisitActivityType) => string,
+                private readonly currentPerson: PersonIdentifier) {
         this.children = wrappedActivities.children;
         this.hospitalVisit = wrappedActivities.hospitalVisit;
         this.activities = wrappedActivities.activities;

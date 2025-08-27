@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, Observable, of} from 'rxjs';
 import {Person} from '@shared/person/person';
@@ -15,10 +15,9 @@ import {Permission} from '@shared/user/permission.enum';
 })
 export class PersonResolver implements Resolve<Person | CreateMarkerType | undefined> {
 
-    constructor(private readonly router: Router,
-                private readonly permissions: PermissionService,
-                private readonly peopleService: PeopleService) {
-    }
+    private readonly router = inject(Router);
+    private readonly permissions = inject(PermissionService);
+    private readonly peopleService = inject(PeopleService);
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
         : Observable<Person | CreateMarkerType | undefined> {

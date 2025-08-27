@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
@@ -9,9 +9,8 @@ import {Role, RoleCreation} from '@shared/user/role';
 @Injectable({providedIn: 'root'})
 export class RoleService {
 
-    constructor(private readonly http: HttpClient,
-                private readonly msg: MessageService) {
-    }
+    private readonly http = inject(HttpClient);
+    private readonly msg = inject(MessageService);
 
     private get rolesUrl(): string {
         return `${AppConfig.get('baseURL')}/roles`;

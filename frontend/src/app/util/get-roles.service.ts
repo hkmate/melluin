@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of, tap} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
@@ -10,12 +10,10 @@ import {isNil} from '@shared/util/util';
 @Injectable({providedIn: 'root'})
 export class GetRolesService {
 
+    private readonly http = inject(HttpClient);
+    private readonly msg = inject(MessageService);
 
     private cache?: Array<RoleBrief> = undefined;
-
-    constructor(private readonly http: HttpClient,
-                private readonly msg: MessageService) {
-    }
 
     private get rolesUrl(): string {
         return `${AppConfig.get('baseURL')}/roles/:brief`;

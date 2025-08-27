@@ -25,9 +25,9 @@
                 </a>
                 <a *ngIf="canUserSee?.admin" mat-list-item routerLink="/admin">{{ 'Menu.System' | translate }}</a>
                 <a *ngIf="isThereQuestionnaire()" mat-list-item routerLink="/questionnaire">{{ 'Menu.Questionnaire' | translate }}</a>
-                <mat-divider></mat-divider>
+                <mat-divider/>
                 <a mat-list-item routerLink="/dashboard">{{ 'Menu.Dashboard' | translate }}</a>
-                <mat-divider></mat-divider>
+                <mat-divider/>
                 <a class="grey" mat-list-item routerLink="/my-profile">{{ currentUser.userName }}</a>
                 <a class="grey"
                    mat-list-item
@@ -39,11 +39,11 @@
         </mat-sidenav>
 
         <mat-sidenav-content>
-            <ng-container [ngTemplateOutlet]="justNgContentTemplate"></ng-container>
+            <ng-container [ngTemplateOutlet]="justNgContentTemplate"/>
         </mat-sidenav-content>
     </mat-sidenav-container>
 </ng-template>
 
 <ng-template #justNgContentTemplate>
-    <ng-content></ng-content>
+    <ng-content/>
 </ng-template>

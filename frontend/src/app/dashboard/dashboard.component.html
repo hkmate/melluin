@@ -4,10 +4,10 @@
             @for (widget of widgets;track $index) {
                 <ng-container *ngComponentOutlet="widget.component; inputs: widget.inputs;"/>
             } @empty {
-                <ng-container [ngTemplateOutlet]="defaultWelcome"></ng-container>
+                <ng-container [ngTemplateOutlet]="defaultWelcome"/>
             }
         } @else {
-            <ng-container [ngTemplateOutlet]="defaultWelcome"></ng-container>
+            <ng-container [ngTemplateOutlet]="defaultWelcome"/>
         }
     </div>
 </section>

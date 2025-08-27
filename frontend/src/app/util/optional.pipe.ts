@@ -1,4 +1,4 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import {inject, Pipe, PipeTransform} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {isNotNil} from '@shared/util/util';
 
@@ -8,8 +8,7 @@ import {isNotNil} from '@shared/util/util';
 })
 export class OptionalPipe implements PipeTransform {
 
-    constructor(private readonly i18n: TranslateService) {
-    }
+    private readonly i18n = inject(TranslateService);
 
     public transform<T>(value?: T, message?: string): string | T {
         return isNotNil(value) ? value : this.getMessage(message);

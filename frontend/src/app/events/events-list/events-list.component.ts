@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {SortOptions} from '@shared/api-util/sort-options';
 import {AppTitle} from '@fe/app/app-title.service';
 import {PageEvent} from '@angular/material/paginator';
@@ -15,9 +15,9 @@ import {EventListUserSettingsInitializer} from '@fe/app/events/events-list/servi
 import {DefaultEventListSettingsInitializer} from '@fe/app/events/events-list/service/event-list-settings-initializer';
 import {EventListQueryParamSettingsInitializer} from '@fe/app/events/events-list/service/event-list-query-param-settings-initializer';
 import {EventListQueryParamHandler} from '@fe/app/events/events-list/service/event-list-query-param-handler';
-import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {filter} from 'rxjs';
 import {reasonIsNotPreferences, reasonIsPreferences} from '@fe/app/util/list-page-settings-change-reason';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-events-list',
@@ -32,9 +32,15 @@ import {reasonIsNotPreferences, reasonIsPreferences} from '@fe/app/util/list-pag
         HospitalEventsSettingsService
     ]
 })
-export class EventsListComponent extends AutoUnSubscriber {
+export class EventsListComponent {
 
     Permission = Permission;
+
+
+    private readonly title = inject(AppTitle);
+    protected readonly permissions = inject(PermissionService,);
+    private readonly eventsService = inject(HospitalVisitService,);
+    private readonly filterService = inject(HospitalEventsSettingsService);
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [10, 20, 50, 100];
@@ -49,19 +55,12 @@ export class EventsListComponent extends AutoUnSubscriber {
         'department.name': 'ASC'
     };
 
-    constructor(private readonly title: AppTitle,
-                protected readonly permissions: PermissionService,
-                private readonly eventsService: HospitalVisitService,
-                private readonly filterService: HospitalEventsSettingsService) {
-        super();
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.title.setTitleByI18n('Titles.EventsList');
-        this.addSubscription(this.filterService.onChange().pipe(filter(reasonIsPreferences)), () => {
+        this.filterService.onChange().pipe(takeUntilDestroyed(), filter(reasonIsPreferences)).subscribe(() => {
             this.preferences = this.filterService.getPreferences();
         });
-        this.addSubscription(this.filterService.onChange().pipe(filter(reasonIsNotPreferences)), () => {
+        this.filterService.onChange().pipe(takeUntilDestroyed(), filter(reasonIsNotPreferences)).subscribe(() => {
             this.setUpPageInfo();
             this.loadData();
         });

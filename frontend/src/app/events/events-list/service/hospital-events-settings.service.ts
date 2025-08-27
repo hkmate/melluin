@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {ConjunctionFilterOptions, FilterOperationBuilder} from '@shared/api-util/filter-options';
 import {isNil, isNilOrEmpty} from '@shared/util/util';
 import {EventsFilter} from './events-filter';
@@ -8,24 +8,24 @@ import {EventListUserSettingsInitializer} from '@fe/app/events/events-list/servi
 import {EventListSettingsInitializer} from '@fe/app/events/events-list/service/event-list-settings-initializer';
 import {EventListQueryParamHandler} from '@fe/app/events/events-list/service/event-list-query-param-handler';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {PageInfo} from '@shared/api-util/pageable';
 import {ListPageSettingChangeReason} from '@fe/app/util/list-page-settings-change-reason';
 
 
 @Injectable()
-export class HospitalEventsSettingsService extends AutoUnSubscriber {
+export class HospitalEventsSettingsService {
+
+    private readonly queryParamSettingsIntr = inject(EventListQueryParamSettingsInitializer);
+    private readonly userSettingsIntr = inject(EventListUserSettingsInitializer);
+    private readonly queryParamHandler = inject(EventListQueryParamHandler);
 
     private settingsChanged = new BehaviorSubject<ListPageSettingChangeReason>(ListPageSettingChangeReason.ALL);
     private page: PageInfo;
     private filter: EventsFilter;
     private preferences: EventsListPreferences;
 
-    constructor(private readonly queryParamSettingsIntr: EventListQueryParamSettingsInitializer,
-                private readonly userSettingsIntr: EventListUserSettingsInitializer,
-                private readonly queryParamHandler: EventListQueryParamHandler) {
-        super();
-        this.addSubscription(this.queryParamHandler.onChange(), () => {
+    constructor() {
+        this.queryParamHandler.onChange().subscribe(() => {
             this.initFilter();
             this.initPreferences();
             this.initPageInfo();

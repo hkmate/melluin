@@ -1,12 +1,13 @@
-@if (visitedChild) {
+@let visitedChildValue = visitedChild();
+@if (visitedChildValue) {
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>
             <span class="child-info">
-                {{ visitedChild.child.name }}
-                <span>({{ visitedChild.child | childAge : visitDate }})</span>
+                {{ visitedChildValue.child.name }}
+                <span>({{ visitedChildValue.child | childAge : visitDate }})</span>
 
-                <app-parent-info-icon [isParentThere]="visitedChild.isParentThere"></app-parent-info-icon>
+                <app-parent-info-icon [isParentThere]="visitedChildValue.isParentThere"/>
             </span>
 
             <span class="operation-btns">
@@ -19,7 +20,7 @@
             </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            {{ visitedChild.child.info }}
+            {{ visitedChildValue.child.info }}
         </mat-card-content>
     </mat-card>
 }

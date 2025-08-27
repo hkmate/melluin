@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 
 @Component({
     selector: 'app-parent-info-icon',
@@ -7,7 +7,6 @@ import {Component, Input} from '@angular/core';
 })
 export class ParentInfoIconComponent {
 
-    @Input()
-    public isParentThere: boolean;
+    public readonly isParentThere = input.required<boolean>();
 
 }

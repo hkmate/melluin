@@ -14,10 +14,10 @@
         </span>
 
         @if (creation) {
-            <app-role-create (done)="closeCreation($event)"></app-role-create>
+            <app-role-create (done)="closeCreation($event)"/>
         }
 
-        <table mat-table [dataSource]="rolesTableDataSource">
+        <table mat-table [dataSource]="items()">
 
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>{{ 'Sysadmin.RoleSettings.NameColHeader' | translate }}</th>
@@ -26,8 +26,7 @@
                         <div class="role-name-selector">
                             <app-trimmed-text-input [(ngModel)]="edition.name"
                                                     [label]="'Sysadmin.RoleSettings.NameLabel' | translate"
-                                                    [placeholder]="'Sysadmin.RoleSettings.NamePlaceholder' | translate">
-                            </app-trimmed-text-input>
+                                                    [placeholder]="'Sysadmin.RoleSettings.NamePlaceholder' | translate"/>
                         </div>
                     } @else {
                         {{ role.name }}

@@ -4,9 +4,9 @@
     </div>
 } @else {
     <div class="activities-list">
-        @for (activity of activities; track activity.id) {
+        @for (activity of activities(); track activity.id) {
             <div class="activity-card">
-                <app-visit-activity-card [activity]="activity" [childrenById]="childrenById"></app-visit-activity-card>
+                <app-visit-activity-card [activity]="activity" [childrenById]="childrenById()"/>
             </div>
         }
     </div>

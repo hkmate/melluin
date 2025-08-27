@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {firstValueFrom} from 'rxjs';
 import {Router} from '@angular/router';
@@ -12,8 +12,8 @@ import {Permission} from '@shared/user/permission.enum';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {isNilOrEmpty, NOOP} from '@shared/util/util';
-import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {MessageService} from '@fe/app/util/message.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-hospital-visit-activity-filler',
@@ -21,8 +21,15 @@ import {MessageService} from '@fe/app/util/message.service';
     styleUrls: ['./hospital-visit-activity-filler.component.scss'],
     providers: [RouteDataHandler]
 })
-export class HospitalVisitActivityFillerComponent extends AutoUnSubscriber implements OnInit {
+export class HospitalVisitActivityFillerComponent {
 
+    private readonly router = inject(Router);
+    private readonly route = inject(RouteDataHandler);
+    private readonly confirmDialog = inject(ConfirmationService);
+    private readonly msg = inject(MessageService);
+    protected readonly permissions = inject(PermissionService);
+    private readonly visitService = inject(HospitalVisitService);
+    private readonly filler = inject(HospitalVisitActivityFillerService);
     HospitalVisitStatus = HospitalVisitStatus;
 
     private static readonly CLOSED_STATUSES = [HospitalVisitStatus.SUCCESSFUL,
@@ -33,26 +40,16 @@ export class HospitalVisitActivityFillerComponent extends AutoUnSubscriber imple
     protected childrenAdded: boolean;
     protected activitiesAdded: boolean;
 
-    constructor(private readonly router: Router,
-                private readonly route: RouteDataHandler,
-                private readonly confirmDialog: ConfirmationService,
-                private readonly msg: MessageService,
-                protected readonly permissions: PermissionService,
-                private readonly visitService: HospitalVisitService,
-                private readonly filler: HospitalVisitActivityFillerService) {
-        super();
-    }
-
-    public ngOnInit(): void {
-        this.addSubscription(this.route.getData<HospitalVisit | CreateMarkerType>('visit'),
+    constructor() {
+        this.route.getData<HospitalVisit | CreateMarkerType>('visit').pipe(takeUntilDestroyed()).subscribe(
             visitInfo => {
                 this.setUp(visitInfo);
             }
         );
-        this.addSubscription(this.filler.getChildren(), children => {
+        this.filler.getChildren().pipe(takeUntilDestroyed()).subscribe(children => {
             this.childrenAdded = !isNilOrEmpty(children);
         });
-        this.addSubscription(this.filler.getActivities(), activities => {
+        this.filler.getActivities().pipe(takeUntilDestroyed()).subscribe(activities => {
             this.activitiesAdded = !isNilOrEmpty(activities);
         });
     }

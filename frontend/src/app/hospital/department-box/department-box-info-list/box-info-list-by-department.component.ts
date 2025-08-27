@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, effect, inject, input} from '@angular/core';
 import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
 import {Pageable} from '@shared/api-util/pageable';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
@@ -11,20 +11,17 @@ import {DepartmentBoxInfoListComponent} from '@fe/app/hospital/department-box/de
 })
 export class BoxInfoListByDepartmentComponent extends DepartmentBoxInfoListComponent {
 
-    private depId: string;
+    private readonly boxStatusService = inject(DepartmentBoxService);
 
-    constructor(private readonly boxStatusService: DepartmentBoxService) {
+    public readonly departmentId = input.required<string>();
+
+    constructor() {
         super();
-    }
-
-    @Input()
-    public set departmentId(departmentId: string) {
-        this.depId = departmentId;
-        this.loadData();
+        effect(() => this.loadData());
     }
 
     protected override loadData(): void {
-        this.boxStatusService.findBoxStatusesByDepartment(this.depId, this.createPageRequest(this.page, this.size)).subscribe(
+        this.boxStatusService.findBoxStatusesByDepartment(this.departmentId(), this.createPageRequest(this.page, this.size)).subscribe(
             (page: Pageable<DepartmentBoxStatus>) => {
                 this.boxInfoList = page.items;
                 this.page = page.meta.currentPage;

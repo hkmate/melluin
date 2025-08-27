@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
@@ -14,9 +14,8 @@ import {
 @Injectable({providedIn: 'root'})
 export class VisitActivityService {
 
-    constructor(private readonly http: HttpClient,
-                private readonly msg: MessageService) {
-    }
+    private readonly http = inject(HttpClient);
+    private readonly msg = inject(MessageService);
 
     private getActivitiesUrl(visitId: string): string {
         return `${AppConfig.get('baseURL')}/hospital-visits/${visitId}/activities`;

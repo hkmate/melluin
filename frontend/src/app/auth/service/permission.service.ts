@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {User} from '@shared/user/user';
 import {isNotNil} from '@shared/util/util';
 import {Permission} from '@shared/user/permission.enum';
@@ -12,11 +12,13 @@ import {RoleType} from '@shared/user/role';
 @Injectable()
 export class PermissionService {
 
+    private readonly store = inject(Store);
+    private readonly actions$ = inject(Actions);
+
     private currentUser?: User;
     private permissionInfo: Record<Permission, boolean>;
 
-    constructor(private readonly store: Store,
-                private readonly actions$: Actions) {
+    constructor() {
         this.setup();
     }
 

@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {NOOP, VoidFunc} from '@shared/util/util';
 import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
@@ -15,11 +15,8 @@ import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-
 })
 export class ActivitySelectComponent implements ControlValueAccessor {
 
-    @Input()
-    public label: string;
-
-    @Input()
-    public options: Array<VisitActivityType>;
+    public readonly label = input.required<string>();
+    public readonly options = input.required<Array<VisitActivityType>>();
 
     private onChange: (x: Array<VisitActivityType>) => void = NOOP;
     private onTouch: VoidFunc = NOOP;

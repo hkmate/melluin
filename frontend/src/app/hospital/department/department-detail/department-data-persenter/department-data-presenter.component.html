@@ -1,17 +1,18 @@
 <h1>{{ 'DepartmentPage.Data' | translate }}</h1>
 
+@let departmentValue = department();
 <div class="department-data-presenter">
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.Name' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ department?.name }}</mat-card-title>
+            <mat-card-title>{{ departmentValue?.name }}</mat-card-title>
         </mat-card-header>
     </mat-card>
 
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.ValidFrom' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ department?.validFrom | date : ('DateFormat' | translate) }}</mat-card-title>
+            <mat-card-title>{{ departmentValue?.validFrom | date : ('DateFormat' | translate) }}</mat-card-title>
         </mat-card-header>
     </mat-card>
 
@@ -19,8 +20,8 @@
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.ValidTo' | translate }}</mat-card-subtitle>
             <mat-card-title>
-                @if (department?.validTo) {
-                    {{ department?.validTo | date : ('DateFormat' | translate) }}
+                @if (departmentValue?.validTo) {
+                    {{ departmentValue?.validTo | date : ('DateFormat' | translate) }}
                 } @else {
                     {{ 'NoData' | translate }}
                 }
@@ -31,7 +32,7 @@
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.Address' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ department?.address }}</mat-card-title>
+            <mat-card-title>{{ departmentValue?.address }}</mat-card-title>
         </mat-card-header>
     </mat-card>
 
@@ -39,14 +40,14 @@
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.DiseasesInfo' | translate }}</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>{{ department?.diseasesInfo | optional }}</mat-card-content>
+        <mat-card-content>{{ departmentValue?.diseasesInfo | optional }}</mat-card-content>
     </mat-card>
 
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.Note' | translate }}</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>{{ department?.note | optional }}</mat-card-content>
+        <mat-card-content>{{ departmentValue?.note | optional }}</mat-card-content>
     </mat-card>
 
 </div>

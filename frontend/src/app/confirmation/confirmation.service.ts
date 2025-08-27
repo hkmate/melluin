@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
 import {ConfirmationAnswer, ConfirmationDialogConfig} from '@fe/app/confirmation/confirmation-dialog-config';
@@ -9,9 +9,8 @@ import {isNilOrEmpty} from '@shared/util/util';
 @Injectable()
 export class ConfirmationService {
 
-    constructor(private readonly dialog: MatDialog,
-                private readonly translate: TranslateService) {
-    }
+    private readonly dialog = inject(MatDialog);
+    private readonly translate = inject(TranslateService);
 
     public getI18nConfirm(configOverride: Partial<ConfirmationDialogConfig>): Promise<void> {
         const config = this.getTranslatedConfig({

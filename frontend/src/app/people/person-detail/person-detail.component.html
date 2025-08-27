@@ -5,10 +5,9 @@
             @if (isEditMode()) {
                 <app-person-data-form [person]="person"
                                       (submitted)="savePerson($event)"
-                                      (canceled)="cancelEditing()">
-                </app-person-data-form>
+                                      (canceled)="cancelEditing()"/>
             } @else {
-                <app-person-data-presenter [person]="person"></app-person-data-presenter>
+                <app-person-data-presenter [person]="person"/>
                 <div class="button-row">
                     @if (isEditEnabled) {
                         <button mat-stroked-button color="primary" (click)="switchToEdit()">
@@ -24,7 +23,7 @@
             <div class="user-part">
                 <app-user-detail [personId]="person.id"
                                  [userId]="person.user?.id"
-                                 [editEnabled]="isEditEnabled"></app-user-detail>
+                                 [editEnabled]="isEditEnabled"/>
             </div>
         }
 

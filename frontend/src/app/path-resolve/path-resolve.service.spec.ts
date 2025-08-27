@@ -1,5 +1,6 @@
 import {PathProvider, PathResolveService} from './path-resolve.service';
 import {ActivatedRouteSnapshot, RouterStateSnapshot, UrlSegment} from '@angular/router';
+import {inject, Injector, runInInjectionContext} from '@angular/core';
 
 function convertToActivatedRouteSnapshot(path: Array<string>): ActivatedRouteSnapshot {
     return {
@@ -31,8 +32,19 @@ class MockPathProvider implements PathProvider {
 }
 
 describe('PathResolveService', () => {
-    const pathResolver = new PathResolveService(new MockPathProvider());
+    let pathResolver: PathResolveService;
     const mockRouterStateSnapshot: RouterStateSnapshot = {} as RouterStateSnapshot;
+
+    beforeEach(() => {
+        runInInjectionContext(Injector.create({
+            providers: [{
+                provide: PathProvider,
+                useValue: new MockPathProvider()
+            }, PathResolveService]
+        }), (): void => {
+            pathResolver = inject(PathResolveService);
+        })
+    })
 
     describe('resolve', () => {
         it('There is same path in PATHS as typo', () => {

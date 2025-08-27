@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {Pageable, PageQuery} from '@shared/api-util/pageable';
 import {AppTitle} from '@fe/app/app-title.service';
 import {PageEvent} from '@angular/material/paginator';
 import {SortOptions} from '@shared/api-util/sort-options';
 import {ConjunctionFilterOptions, FilterOptions} from '@shared/api-util/filter-options';
 import {isEmpty, isNil, isNilOrEmpty} from '@shared/util/util';
-import {TableDataSource} from '@fe/app/util/table-data-source';
 import {Department} from '@shared/department/department';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {Permission} from '@shared/user/permission.enum';
@@ -18,7 +17,7 @@ import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler'
     styleUrls: ['./departments-list.component.scss'],
     providers: [UrlParamHandler]
 })
-export class DepartmentsListComponent implements OnInit {
+export class DepartmentsListComponent {
 
     Permission = Permission;
     private static readonly FIRST_PAGE = 1;
@@ -27,11 +26,17 @@ export class DepartmentsListComponent implements OnInit {
     private static readonly FILTER_PARAM_KEY = 'filter';
     private static readonly ONLY_VALID_PARAM_KEY = 'only-valid';
 
+    private readonly title = inject(AppTitle);
+    protected readonly permissions = inject(PermissionService);
+    private readonly departmentService = inject(DepartmentService);
+    private readonly urlParam = inject(UrlParamHandler);
+
+
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [10, 20, 50];
     protected readonly columns = ['name', 'address', 'validFrom', 'validTo', 'options'];
 
-    protected tableDataSource = new TableDataSource<Department>();
+    protected readonly items = signal<Array<Department>>([]);
     protected page: number;
     protected size: number;
     protected countOfAll: number;
@@ -42,13 +47,7 @@ export class DepartmentsListComponent implements OnInit {
         name: 'ASC'
     };
 
-    constructor(private readonly title: AppTitle,
-                protected readonly permissions: PermissionService,
-                private readonly departmentService: DepartmentService,
-                private readonly urlParam: UrlParamHandler) {
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.title.setTitleByI18n('Titles.DepartmentList')
         this.page = this.urlParam.getNumberParam(DepartmentsListComponent.PAGE_PARAM_KEY) ?? DepartmentsListComponent.FIRST_PAGE;
         this.size = this.urlParam.getNumberParam(DepartmentsListComponent.SIZE_PARAM_KEY) ?? this.sizeOptions[2];
@@ -93,7 +92,7 @@ export class DepartmentsListComponent implements OnInit {
     private loadData(page?: number, size?: number): void {
         this.departmentService.findDepartments(this.createPageRequest(page, size)).subscribe(
             (page: Pageable<Department>) => {
-                this.tableDataSource.emit(page.items);
+                this.items.set(page.items);
                 this.page = page.meta.currentPage;
                 this.countOfAll = page.meta.totalItems!;
                 this.size = page.meta.itemsPerPage;

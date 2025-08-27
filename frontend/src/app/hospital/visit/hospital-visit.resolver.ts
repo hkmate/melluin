@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, Observable, of} from 'rxjs';
 import {isNilOrEmpty} from '@shared/util/util';
@@ -15,10 +15,9 @@ import {Permission} from '@shared/user/permission.enum';
 })
 export class HospitalVisitResolver implements Resolve<HospitalVisit | CreateMarkerType | undefined> {
 
-    constructor(private readonly router: Router,
-                private readonly visitService: HospitalVisitService,
-                private readonly permissions: PermissionService) {
-    }
+    private readonly router = inject(Router);
+    private readonly visitService = inject(HospitalVisitService);
+    private readonly permissions = inject(PermissionService);
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
         : Observable<HospitalVisit | CreateMarkerType | undefined> {

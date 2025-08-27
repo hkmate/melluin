@@ -40,14 +40,13 @@
                 <app-hospital-visit-form [visit]="visit"
                                          [(createNewAfterSave)]="createNewAfterSave"
                                          (submitted)="saveVisit($event)"
-                                         (canceled)="cancelEditing()">
-                </app-hospital-visit-form>
+                                         (canceled)="cancelEditing()"/>
             }
         </div>
 
         @if (shouldShowActivities()) {
             <div class="activities-part">
-                <app-visit-activities [visit]="visit!" [needWarnings]="true"></app-visit-activities>
+                <app-visit-activities [visit]="visit!" [needWarnings]="true"/>
             </div>
         }
     </div>

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, inject, output} from '@angular/core';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
 import {HospitalVisitActivityInput} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
 import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
@@ -14,8 +14,10 @@ import {Observable} from 'rxjs';
 })
 export class FillerActivityCreateComponent {
 
-    @Output()
-    public creationEnded = new EventEmitter<void>();
+    private readonly formBuilder = inject(FormBuilder);
+    private readonly filler = inject(HospitalVisitActivityFillerService);
+
+    public readonly creationEnded = output<void>();
 
     protected children$: Observable<Array<VisitedChild>>;
     protected activityTypeOptions: Array<VisitActivityType> = Object.values(VisitActivityType);
@@ -23,11 +25,7 @@ export class FillerActivityCreateComponent {
     protected form: FormGroup;
     protected visitDate: Date;
 
-    constructor(private readonly formBuilder: FormBuilder,
-                private readonly filler: HospitalVisitActivityFillerService) {
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.children$ = this.filler.getChildren();
         this.visitDate = this.filler.getVisitDate();
         this.initForm();

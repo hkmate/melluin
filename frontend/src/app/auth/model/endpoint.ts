@@ -11,7 +11,7 @@ export interface Endpoint {
 
 export class EndpointMap {
 
-    private instance: { [method in HttpMethod]?: Array<string> } = {};
+    private instance: Partial<Record<HttpMethod, Array<string>>> = {};
 
     public add(endpoint: Endpoint): EndpointMap {
         const urlsOfMethod = this.getUrlListByMethod(endpoint.method);

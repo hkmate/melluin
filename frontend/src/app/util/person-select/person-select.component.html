@@ -1,5 +1,5 @@
 <mat-form-field>
-    <mat-label>{{ label }}</mat-label>
+    <mat-label>{{ label() }}</mat-label>
     <mat-chip-listbox>
         @for (person of people; track person.id) {
             <mat-chip-row (removed)="removePerson(person)">

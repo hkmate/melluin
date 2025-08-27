@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, Observable, of} from 'rxjs';
 import {isNilOrEmpty} from '@shared/util/util';
@@ -13,9 +13,8 @@ import {DepartmentService} from '@fe/app/hospital/department/department.service'
 })
 export class DepartmentResolver implements Resolve<Department | CreateMarkerType | undefined> {
 
-    constructor(private readonly departmentService: DepartmentService,
-                private readonly router: Router) {
-    }
+    private readonly departmentService = inject(DepartmentService);
+    private readonly router = inject(Router);
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
         : Observable<Department | CreateMarkerType | undefined> {

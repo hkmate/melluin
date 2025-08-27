@@ -6,32 +6,29 @@
         <div>
             <app-trimmed-text-input formControlName="lastName"
                                     [label]="'PersonPage.Form.LastName' | translate"
-                                    [placeholder]="'PersonPage.Form.LastNamePlaceholder' | translate">
-            </app-trimmed-text-input>
+                                    [placeholder]="'PersonPage.Form.LastNamePlaceholder' | translate"/>
         </div>
 
         <div>
             <app-trimmed-text-input formControlName="firstName"
                                     [label]="'PersonPage.Form.FirstName' | translate"
-                                    [placeholder]="'PersonPage.Form.FirstNamePlaceholder' | translate">
-            </app-trimmed-text-input>
+                                    [placeholder]="'PersonPage.Form.FirstNamePlaceholder' | translate"/>
         </div>
 
         <div>
             <app-trimmed-text-input formControlName="email"
                                     [label]="'PersonPage.Form.Email' | translate"
-                                    [placeholder]="'PersonPage.Form.EmailPlaceholder' | translate">
-            </app-trimmed-text-input>
+                                    [placeholder]="'PersonPage.Form.EmailPlaceholder' | translate"/>
         </div>
 
         <div class="email-preference-card">
             <mat-card class="form-card">
                 <mat-card-content class="preferences-card-content">
-                    <mat-checkbox formControlName="canVolunteerSeeMyEmail"></mat-checkbox>
+                    <mat-checkbox formControlName="canVolunteerSeeMyEmail"/>
                     <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyEmail' | translate }}</span>
                     <span class="preference-description">
-                    {{ 'PersonPage.Form.CanVolunteerSeeMyEmailDescription' | translate }}
-                </span>
+                      {{ 'PersonPage.Form.CanVolunteerSeeMyEmailDescription' | translate }}
+                    </span>
                 </mat-card-content>
             </mat-card>
         </div>
@@ -39,8 +36,7 @@
         <div>
             <app-trimmed-text-input formControlName="phone"
                                     [label]="'PersonPage.Form.Phone' | translate"
-                                    [placeholder]="'PersonPage.Form.PhonePlaceholder' | translate">
-            </app-trimmed-text-input>
+                                    [placeholder]="'PersonPage.Form.PhonePlaceholder' | translate"/>
         </div>
 
         <div class="phone-preference-card">
@@ -49,8 +45,8 @@
                     <mat-checkbox formControlName="canVolunteerSeeMyPhone"></mat-checkbox>
                     <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyPhone' | translate }}</span>
                     <span class="preference-description">
-                    {{ 'PersonPage.Form.CanVolunteerSeeMyPhoneDescription' | translate }}
-                </span>
+                        {{ 'PersonPage.Form.CanVolunteerSeeMyPhoneDescription' | translate }}
+                    </span>
                 </mat-card-content>
             </mat-card>
         </div>
@@ -88,7 +84,8 @@
                        autocomplete="new-password"
                        [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
                        formControlName="password">
-                <mat-hint>{{ 'PersonPage.User.Form.PasswordHint' | translate }}
+                <mat-hint>
+                    {{ 'PersonPage.User.Form.PasswordHint' | translate }}
                     <br/>
                     {{ 'PersonPage.User.Form.PasswordPatternHint' | translate : {passwordMinLength} }}
                 </mat-hint>
@@ -108,7 +105,7 @@
 }
 <div class="divider"></div>
 
-<app-user-settings-editor [userId]="originalUser.id" [settings]="originalUserSettings"></app-user-settings-editor>
+<app-user-settings-editor [userId]="user().id" [settings]="userSettings()"></app-user-settings-editor>
 
 <div class="button-row">
     <button mat-stroked-button

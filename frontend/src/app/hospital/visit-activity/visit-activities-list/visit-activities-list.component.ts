@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, computed, input} from '@angular/core';
 import {isNilOrEmpty} from '@shared/util/util';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
@@ -10,14 +10,9 @@ import {VisitedChild} from '@shared/hospital-visit/visited-child';
 })
 export class VisitActivitiesListComponent {
 
-    @Input()
-    public childrenById: Record<string, VisitedChild>;
+    public readonly childrenById = input.required<Record<string, VisitedChild>>();
+    public readonly activities = input.required<Array<HospitalVisitActivity>>();
 
-    @Input()
-    public activities: Array<HospitalVisitActivity>;
-
-    protected isEmpty(): boolean {
-        return isNilOrEmpty(this.activities);
-    }
+    protected readonly isEmpty = computed(() => isNilOrEmpty(this.activities()));
 
 }

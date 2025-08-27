@@ -1,12 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {EventsDateFilterValues, UserSettings} from '@shared/user/user-settings';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {Department} from '@shared/department/department';
-import {Store} from '@ngrx/store';
-import {MessageService} from '@fe/app/util/message.service';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
-import {UserService} from '@fe/app/people/user.service';
 import {Pageable} from '@shared/api-util/pageable';
 import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
 import {DateIntervalSpecifier} from '@shared/util/date-interval-generator';
@@ -18,20 +15,16 @@ import {DateIntervalSpecifier} from '@shared/util/date-interval-generator';
 })
 export class UserEventListSettingsEditorComponent extends CustomUserSettingsEditorBaseComponent {
 
+    private readonly fb = inject(FormBuilder);
+    private readonly departmentService = inject(DepartmentService);
+
     protected form: FormGroup;
     protected statusOptions: Array<HospitalVisitStatus> = Object.values(HospitalVisitStatus);
     protected departmentOptions: Array<Department>;
     protected dateOptions: Array<DateIntervalSpecifier> = EventsDateFilterValues;
 
-    constructor(store: Store,
-                msg: MessageService,
-                userService: UserService,
-                private readonly fb: FormBuilder,
-                private readonly departmentService: DepartmentService) {
-        super(store, msg, userService);
-    }
-
-    public ngOnInit(): void {
+    constructor() {
+        super();
         this.initForm();
         this.initDepartmentOptions();
     }
@@ -42,7 +35,7 @@ export class UserEventListSettingsEditorComponent extends CustomUserSettingsEdit
 
     protected override generateNewSettings(): UserSettings {
         return {
-            ...this.settings,
+            ...this.settings(),
             eventList: {
                 dateFilter: this.form.controls.dateFilter.value,
                 statuses: this.form.controls.statuses.value,
@@ -54,12 +47,13 @@ export class UserEventListSettingsEditorComponent extends CustomUserSettingsEdit
     }
 
     private initForm(): void {
+        const eventList = this.settings().eventList;
         this.form = this.fb.group({
-            dateFilter: [this.settings.eventList?.dateFilter],
-            participantIds: [this.settings.eventList?.participantIds],
-            statuses: [this.settings.eventList?.statuses],
-            departmentIds: [this.settings.eventList?.departmentIds],
-            needHighlight: [this.settings.eventList?.needHighlight],
+            dateFilter: [eventList?.dateFilter],
+            participantIds: [eventList?.participantIds],
+            statuses: [eventList?.statuses],
+            departmentIds: [eventList?.departmentIds],
+            needHighlight: [eventList?.needHighlight],
         });
     }
 

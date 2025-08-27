@@ -22,14 +22,14 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
 
-                    <app-event-list-filter></app-event-list-filter>
+                    <app-event-list-filter/>
                 </mat-expansion-panel>
             </mat-accordion>
         </div>
 
         <div class="events-list">
             <app-hospital-events-list [eventsList]="eventsList"
-                                      [markRowByDate]="preferences.needHighlight"></app-hospital-events-list>
+                                      [markRowByDate]="preferences.needHighlight"/>
 
             @if (!eventsList.length) {
                 {{ 'EventsList.NoEventsFound' | translate }}
@@ -41,8 +41,7 @@
                            [pageIndex]="page - 1"
                            [pageSize]="size"
                            [pageSizeOptions]="sizeOptions"
-                           (page)="paginateHappened($event)">
-            </mat-paginator>
+                           (page)="paginateHappened($event)"/>
         }
     </div>
 </section>

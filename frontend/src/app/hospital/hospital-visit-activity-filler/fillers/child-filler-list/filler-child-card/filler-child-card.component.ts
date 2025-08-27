@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, effect, inject, input, output} from '@angular/core';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 import {Observable} from 'rxjs';
@@ -10,24 +10,22 @@ import {Observable} from 'rxjs';
 })
 export class FillerChildCardComponent {
 
-    @Output()
-    public editWanted = new EventEmitter<void>();
+    protected readonly filler = inject(HospitalVisitActivityFillerService);
 
-    @Output()
-    public removeWanted = new EventEmitter<void>();
+    public readonly child = input.required<VisitedChild>();
+
+    public readonly editWanted = output<void>();
+    public readonly removeWanted = output<void>();
 
     protected visitedChild: VisitedChild;
     protected visitDate: Date;
     protected deleteEnabled$: Observable<boolean>;
 
-    @Input()
-    public set child(child: VisitedChild) {
-        this.visitedChild = child;
-        this.visitDate = this.filler.getVisitDate();
-        this.deleteEnabled$ = this.filler.isChildDeletable(child.id);
-    }
-
-    constructor(protected readonly filler: HospitalVisitActivityFillerService) {
+    constructor() {
+        effect(() => {
+            this.visitDate = this.filler.getVisitDate();
+            this.deleteEnabled$ = this.filler.isChildDeletable(this.child().id);
+        });
     }
 
 }

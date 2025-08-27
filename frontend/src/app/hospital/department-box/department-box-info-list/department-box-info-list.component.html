@@ -1,8 +1,8 @@
 @if (!isEmpty()) {
     <div class="box-info-list">
-        @for (boxInfo of boxInfoList;track boxInfo.id) {
+        @for (boxInfo of boxInfoList; track boxInfo.id) {
             <div class="box-info">
-                <app-department-box-info [boxStatus]="boxInfo"></app-department-box-info>
+                <app-department-box-info [boxStatus]="boxInfo"/>
             </div>
         }
 

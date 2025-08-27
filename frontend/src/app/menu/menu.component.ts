@@ -1,22 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AuthenticationService} from '@fe/app/auth/service/authentication.service';
 import {User} from '@shared/user/user';
 import {includeAny, isNil, isNilOrEmpty} from '@shared/util/util';
 import {Permission} from '@shared/user/permission.enum';
 import {Platform} from '@angular/cdk/platform';
-import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {Store} from '@ngrx/store';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {Actions, ofType} from '@ngrx/effects';
 import {AppActions} from '@fe/app/state/app-actions';
 import {AppConfig} from '@fe/app/config/app-config';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-menu',
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent extends AutoUnSubscriber implements OnInit {
+export class MenuComponent {
+
+    private readonly store = inject(Store);
+    private readonly actions$ = inject(Actions);
+    private readonly platform = inject(Platform);
+    private readonly authService = inject(AuthenticationService);
 
     protected canUserSee?: Record<string, boolean>;
 
@@ -24,21 +29,14 @@ export class MenuComponent extends AutoUnSubscriber implements OnInit {
     protected menuOpened = false;
     protected currentUser?: User;
 
-    constructor(private readonly store: Store,
-                private readonly actions$: Actions,
-                private readonly platform: Platform,
-                private readonly authService: AuthenticationService) {
-        super();
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.menuMode = (this.platform.IOS || this.platform.ANDROID) ? 'over' : 'side';
-        this.addSubscription(this.store.pipe(selectCurrentUser), cu => {
+        this.store.pipe(selectCurrentUser, takeUntilDestroyed()).subscribe(cu => {
             this.currentUser = cu;
             this.menuOpened = !(this.platform.IOS || this.platform.ANDROID);
             this.initializeVisibilityOfMenuItems();
         });
-        this.addSubscription(this.actions$.pipe(ofType(AppActions.userLogout)), () => {
+        this.actions$.pipe(ofType(AppActions.userLogout), takeUntilDestroyed()).subscribe(() => {
             this.currentUser = undefined;
             this.initializeVisibilityOfMenuItems();
         });

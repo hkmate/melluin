@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, effect, inject, input, output, signal} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {isNil, parseTime, parseTimeWithDate} from '@shared/util/util';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
@@ -7,22 +7,21 @@ import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrit
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {Department} from '@shared/department/department';
-import {Person} from '@shared/person/person';
 import {Pageable} from '@shared/api-util/pageable';
 import {EventVisibility} from '@shared/event/event-visibility';
 import {User} from '@shared/user/user';
 import {Store} from '@ngrx/store';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
-import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import * as _ from 'lodash';
 import {Platform} from '@angular/cdk/platform';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-hospital-visit-form',
     templateUrl: './hospital-visit-form.component.html',
     styleUrls: ['./hospital-visit-form.component.scss']
 })
-export class HospitalVisitFormComponent extends AutoUnSubscriber implements OnInit {
+export class HospitalVisitFormComponent {
 
     private static readonly MS_ON_HOUR = 3600000; // 1000 * 60 * 60
     private static readonly MIN_ON_HOUR = 60;
@@ -31,47 +30,32 @@ export class HospitalVisitFormComponent extends AutoUnSubscriber implements OnIn
     private static readonly defaultTimeFrom = '16:00';
     private static readonly defaultTimeTo = '18:00';
 
-    @Input()
-    public createNewAfterSave: boolean;
+    private readonly fb = inject(FormBuilder);
+    private readonly platform = inject(Platform);
+    private readonly store = inject(Store);
+    private readonly departmentService = inject(DepartmentService);
 
-    @Output()
-    public createNewAfterSaveChange = new EventEmitter<boolean>;
+    public readonly createNewAfterSave = input.required<boolean>();
+    public readonly visit = input<HospitalVisit>();
 
-    @Output()
-    public submitted = new EventEmitter<HospitalVisitCreate | HospitalVisitRewrite>;
+    public createNewAfterSaveChange = output<boolean>();
+    public submitted = output<HospitalVisitCreate | HospitalVisitRewrite>();
+    public canceled = output<void>();
 
-    @Output()
-    public canceled = new EventEmitter<void>;
-
+    protected createNewAfterOneSaved = signal(false);
     protected statusOptions: Array<HospitalVisitStatus>;
     protected departmentOptions: Array<Department>;
-    protected personOptions: Array<Person>;
     protected form: FormGroup;
-    protected visitToEdit?: HospitalVisit;
     protected mobileScreen: boolean;
 
     private currentUser: User;
 
-    constructor(private readonly fb: FormBuilder,
-                private readonly platform: Platform,
-                private readonly store: Store,
-                private readonly departmentService: DepartmentService) {
-        super();
-    }
-
-    @Input()
-    public set visit(visit: HospitalVisit | undefined) {
-        this.visitToEdit = visit;
-        this.initForm();
-    }
-
-    public get visit(): HospitalVisit | undefined {
-        return this.visitToEdit;
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.mobileScreen = (this.platform.IOS || this.platform.ANDROID);
         this.initCurrentUser();
+        // TODO: change it to linkedSignal after upgraded to angular 19+
+        effect(() => this.createNewAfterOneSaved.set(this.createNewAfterSave()), {allowSignalWrites: true});
+        effect(() => this.initForm());
     }
 
     protected onSubmit(): void {
@@ -93,7 +77,7 @@ export class HospitalVisitFormComponent extends AutoUnSubscriber implements OnIn
     }
 
     protected setCreateOther(newValue: boolean): void {
-        this.createNewAfterSave = newValue;
+        this.createNewAfterOneSaved.set(newValue);
         this.createNewAfterSaveChange.emit(newValue);
     }
 
@@ -106,27 +90,27 @@ export class HospitalVisitFormComponent extends AutoUnSubscriber implements OnIn
 
     private buildFormGroup(): void {
         this.form = this.fb.group({
-            status: [this.visitToEdit?.status ?? HospitalVisitStatus.SCHEDULED, [Validators.required]],
-            date: [this.getDate(this.visitToEdit?.dateTimeFrom), [Validators.required]],
-            timeFrom: [this.getTime(this.visitToEdit?.dateTimeFrom, HospitalVisitFormComponent.defaultTimeFrom),
+            status: [this.visit()?.status ?? HospitalVisitStatus.SCHEDULED, [Validators.required]],
+            date: [this.getDate(this.visit()?.dateTimeFrom), [Validators.required]],
+            timeFrom: [this.getTime(this.visit()?.dateTimeFrom, HospitalVisitFormComponent.defaultTimeFrom),
                 [Validators.required]],
-            timeTo: [this.getTime(this.visitToEdit?.dateTimeTo, HospitalVisitFormComponent.defaultTimeTo),
+            timeTo: [this.getTime(this.visit()?.dateTimeTo, HospitalVisitFormComponent.defaultTimeTo),
                 [Validators.required]],
-            departmentId: [this.visitToEdit?.department?.id, [Validators.required]],
+            departmentId: [this.visit()?.department?.id, [Validators.required]],
             countedHours: [0, [Validators.max(HospitalVisitFormComponent.MAX_COUNTED_HOURS), Validators.min(0)]],
-            participantIds: [this.visitToEdit?.participants.map(p => p.id), [Validators.required]],
+            participantIds: [this.visit()?.participants.map(p => p.id), [Validators.required]],
         });
     }
 
     private initCurrentUser(): void {
-        this.addSubscription(this.store.pipe(selectCurrentUser), cu => {
+        this.store.pipe(selectCurrentUser, takeUntilDestroyed()).subscribe(cu => {
                 this.currentUser = cu;
             }
         );
     }
 
     private initStatusOptions(): void {
-        this.statusOptions = isNil(this.visitToEdit)
+        this.statusOptions = isNil(this.visit())
             ? [HospitalVisitStatus.DRAFT, HospitalVisitStatus.SCHEDULED]
             : Object.values(HospitalVisitStatus);
     }
@@ -140,11 +124,12 @@ export class HospitalVisitFormComponent extends AutoUnSubscriber implements OnIn
     }
 
     private initCountedHours(): void {
-        if (isNil(this.visitToEdit?.countedMinutes)) {
+        const countedMinutes = this.visit()?.countedMinutes
+        if (isNil(countedMinutes)) {
             this.setCountedHours();
             return;
         }
-        this.form.controls.countedHours.setValue(this!.visitToEdit!.countedMinutes / HospitalVisitFormComponent.MIN_ON_HOUR);
+        this.form.controls.countedHours.setValue(countedMinutes / HospitalVisitFormComponent.MIN_ON_HOUR);
     }
 
     private getDate(dateTime: string | undefined): Date | undefined {
@@ -165,7 +150,7 @@ export class HospitalVisitFormComponent extends AutoUnSubscriber implements OnIn
     }
 
     private createDataForSubmit(): HospitalVisitCreate | HospitalVisitRewrite {
-        if (isNil(this.visitToEdit)) {
+        if (isNil(this.visit())) {
             return this.createCreation();
         }
         return this.createRewrite();
@@ -187,7 +172,7 @@ export class HospitalVisitFormComponent extends AutoUnSubscriber implements OnIn
 
     private createRewrite(): HospitalVisitRewrite {
         const data = new HospitalVisitRewrite();
-        data.id = this.visitToEdit!.id;
+        data.id = this.visit()!.id;
         data.departmentId = this.form.controls.departmentId.value;
         data.status = this.form.controls.status.value;
         data.countedMinutes = this.form.controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
