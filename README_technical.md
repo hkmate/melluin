@@ -103,18 +103,3 @@ checked by tests and lint.
 To test the endpoints manually you can use Postman. There is a predefined collection and an environment
 in directory dev-env/postman. You can import them.
 When you add a new (or modify an existent) rest endpoint please update the collection!
-
-### Frontend
-
-In NgModule the imports should be ordered: 
-1. Angular modules
-1. *empty line*
-1. Material modules
-1. *empty line*
-1. Other 3rd party modules
-1. *empty line*
-1. Our modules
-In backend use the same concept but with NestJs modules.
-
-In constructors for dependency injection use this order too. (Here empty lines are not needed).
-
