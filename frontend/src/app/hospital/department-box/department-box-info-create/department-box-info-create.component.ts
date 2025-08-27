@@ -1,4 +1,4 @@
-import {Component, inject, input, output} from '@angular/core';
+import {Component, inject, input, output, signal} from '@angular/core';
 import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
 import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -23,14 +23,10 @@ export class DepartmentBoxInfoCreateComponent {
 
     protected reasonOptions: Array<BoxStatusChangeReason> = Object.values(BoxStatusChangeReason);
     protected affectedObjectsOptions = affectedObjectsList;
-    protected form: FormGroup;
-
-    constructor() {
-        this.initForm();
-    }
+    protected readonly form = signal(this.initForm());
 
     protected onFormSubmit(): void {
-        if (this.form.invalid) {
+        if (this.form().invalid) {
             this.msg.error('BoxStatus.ReasonIsRequired');
             return;
         }
@@ -41,8 +37,8 @@ export class DepartmentBoxInfoCreateComponent {
         this.canceled.emit();
     }
 
-    private initForm(): void {
-        this.form = this.formBuilder.group({
+    private initForm(): FormGroup {
+        return this.formBuilder.group({
             reason: [null, [Validators.required]],
             affectedObject: [],
             comment: []
@@ -51,9 +47,9 @@ export class DepartmentBoxInfoCreateComponent {
 
     private createObjectFromForm(): DepartmentBoxStatusReport {
         return {
-            reason: this.form.controls.reason.value,
-            affectedObject: this.form.controls.affectedObject.value,
-            comment: this.form.controls.comment.value,
+            reason: this.form().controls.reason.value,
+            affectedObject: this.form().controls.affectedObject.value,
+            comment: this.form().controls.comment.value,
         }
     }
 

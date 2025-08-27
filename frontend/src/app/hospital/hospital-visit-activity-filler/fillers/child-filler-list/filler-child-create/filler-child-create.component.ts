@@ -1,4 +1,4 @@
-import {Component, inject, output} from '@angular/core';
+import {Component, inject, output, signal} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {getGuessedBirthFromYears} from '@shared/child/child-age-calculator';
 import {VisitedChildInput} from '@shared/hospital-visit/visited-child';
@@ -20,11 +20,8 @@ export class FillerChildCreateComponent {
     public readonly creationEnded = output<void>();
 
     protected buttonsDisabled: boolean;
-    protected form: FormGroup;
+    protected readonly form = signal(this.initForm());
 
-    constructor() {
-        this.initForm();
-    }
 
     protected onFormSubmit(): void {
         this.buttonsDisabled = true;
@@ -43,8 +40,8 @@ export class FillerChildCreateComponent {
         this.creationEnded.emit();
     }
 
-    private initForm(): void {
-        this.form = this.formBuilder.group({
+    private initForm(): FormGroup {
+        return this.formBuilder.group({
             name: ['', [Validators.required]],
             ageYear: [0, [Validators.required, Validators.pattern('[0-9]*'),
                 Validators.min(0), Validators.max(FillerChildCreateComponent.CHILD_AGE_LIMIT)]],
@@ -58,13 +55,13 @@ export class FillerChildCreateComponent {
     private createObjectFromForm(): VisitedChildInput {
         return {
             child: {
-                name: this.form.controls.name.value,
-                guessedBirth: getGuessedBirthFromYears(this.form.controls.ageYear.value,
-                    this.form.controls.ageMonth.value,
+                name: this.form().controls.name.value,
+                guessedBirth: getGuessedBirthFromYears(this.form().controls.ageYear.value,
+                    this.form().controls.ageMonth.value,
                     this.filler.getVisitDate()),
-                info: this.form.controls.info.value,
+                info: this.form().controls.info.value,
             },
-            isParentThere: this.form.controls.isParentThere.value
+            isParentThere: this.form().controls.isParentThere.value
         }
     }
 

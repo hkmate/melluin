@@ -31,7 +31,6 @@ export class DepartmentsListComponent {
     private readonly departmentService = inject(DepartmentService);
     private readonly urlParam = inject(UrlParamHandler);
 
-
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [10, 20, 50];
     protected readonly columns = ['name', 'address', 'validFrom', 'validTo', 'options'];

@@ -21,6 +21,7 @@ export class LazyInputComponent {
     private inputChanged = new Subject<string>();
 
     constructor() {
+        // TODO: change it to linkedSignal after upgraded to angular 19+
         effect(() => this.inputText.set(this.value() ?? ''), {allowSignalWrites: true});
         this.inputChanged.pipe(
             takeUntilDestroyed(),

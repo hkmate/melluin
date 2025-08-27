@@ -1,4 +1,4 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, effect, inject, input} from '@angular/core';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 import {Observable} from 'rxjs';
@@ -18,8 +18,10 @@ export class RelatedVisitChildComponent {
     protected needCopyBtn$: Observable<boolean>;
 
     constructor() {
-        this.needCopyBtn$ = this.filler.isChildCopyableToActualVisit(this.visitedChild().child.id);
-        this.visitDate = this.filler.getVisitDate();
+        effect(() => {
+            this.needCopyBtn$ = this.filler.isChildCopyableToActualVisit(this.visitedChild().child.id);
+            this.visitDate = this.filler.getVisitDate();
+        });
     }
 
     protected copyChildToActualVisit(): void {

@@ -1,4 +1,4 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, effect, inject, input} from '@angular/core';
 import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
 import {BoxStatusWithDepartmentBrief} from '@shared/department/box/department-box-status';
@@ -27,7 +27,7 @@ export class BoxInfoWidgetComponent {
     protected boxInfo: Array<BoxStatusWithDepartmentBrief>;
 
     constructor() {
-        this.loadBoxInfo();
+        effect(() => this.loadBoxInfo());
     }
 
     private loadBoxInfo(): void {

@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, output} from '@angular/core';
+import {Component, computed, inject, input, output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {allNil, isNil, isNotNil} from '@shared/util/util';
 import {DepartmentCreation} from '@shared/department/department-creation';
@@ -19,11 +19,7 @@ export class DepartmentDataFormComponent {
     public readonly submitted = output<DepartmentCreation | DepartmentUpdateChangeSet>();
     public readonly canceled = output<void>();
 
-    protected form: FormGroup;
-
-    constructor() {
-        effect(() => this.initForm());
-    }
+    protected readonly form = computed(() => this.initForm());
 
     protected onSubmit(): void {
         this.submitted.emit(this.createDataForSubmit());
@@ -33,9 +29,9 @@ export class DepartmentDataFormComponent {
         this.canceled.emit();
     }
 
-    private initForm(): void {
+    private initForm(): FormGroup {
         const dep = this.department();
-        this.form = this.fb.group({
+        return this.fb.group({
             name: [dep?.name, [Validators.required]],
             address: [dep?.address, [Validators.required]],
             validFrom: [
@@ -57,12 +53,12 @@ export class DepartmentDataFormComponent {
 
     private createDepartmentCreation(): DepartmentCreation {
         const data = new DepartmentCreation();
-        data.name = this.form.controls.name.value;
-        data.address = this.form.controls.address.value;
-        data.validFrom = this.form.controls.validFrom.value;
-        data.validTo = this.form.controls.validTo.value;
-        data.diseasesInfo = this.form.controls.diseasesInfo.value;
-        data.note = this.form.controls.note.value;
+        data.name = this.form().controls.name.value;
+        data.address = this.form().controls.address.value;
+        data.validFrom = this.form().controls.validFrom.value;
+        data.validTo = this.form().controls.validTo.value;
+        data.diseasesInfo = this.form().controls.diseasesInfo.value;
+        data.note = this.form().controls.note.value;
         return data;
     }
 
@@ -77,7 +73,7 @@ export class DepartmentDataFormComponent {
     }
 
     private addFieldIfDifferentThenStored(data: DepartmentUpdateChangeSet, field: keyof DepartmentUpdateChangeSet): void {
-        const newField = this.form.controls[field].value;
+        const newField = this.form().controls[field].value;
         const storedField = this.department()?.[field];
         if (allNil(newField, storedField)) {
             return;

@@ -1,4 +1,4 @@
-import {Component, computed, inject, input, signal} from '@angular/core';
+import {Component, computed, effect, inject, input, signal} from '@angular/core';
 import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
@@ -29,8 +29,10 @@ export class RelatedVisitComponent {
     protected visitDate: Date;
 
     constructor() {
-        this.visitDate = new Date(this.wrappedActivity().hospitalVisit.dateTimeFrom);
-        this.setupActivities()
+        effect(() => {
+            this.visitDate = new Date(this.wrappedActivity().hospitalVisit.dateTimeFrom);
+            this.setupActivities();
+        });
     }
 
     private setupActivities(): void {

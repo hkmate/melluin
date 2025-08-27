@@ -1,4 +1,4 @@
-import {Component, inject, input, output} from '@angular/core';
+import {Component, computed, inject, input, output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {getGuessedBirthFromYears} from '@shared/child/child-age-calculator';
 import {VisitedChild, VisitedChildEditInput} from '@shared/hospital-visit/visited-child';
@@ -22,11 +22,7 @@ export class FillerChildEditorComponent {
     public readonly editDone = output<void>();
 
     protected buttonsDisabled: boolean;
-    protected form: FormGroup;
-
-    constructor() {
-        this.initForm();
-    }
+    protected readonly form = computed(() => this.initForm());
 
     protected cancelEditing(): void {
         this.editDone.emit();
@@ -45,9 +41,9 @@ export class FillerChildEditorComponent {
         });
     }
 
-    private initForm(): void {
+    private initForm(): FormGroup {
         const {years, months} = this.filler.childAge(this.visitedChild().child);
-        this.form = this.formBuilder.group({
+        return this.formBuilder.group({
             name: [this.visitedChild().child.name, [Validators.required]],
             ageYear: [years, [Validators.required, Validators.pattern('[0-9]*'),
                 Validators.min(0), Validators.max(FillerChildEditorComponent.CHILD_AGE_LIMIT)]],
@@ -62,13 +58,13 @@ export class FillerChildEditorComponent {
         return {
             id: this.visitedChild().id,
             child: {
-                name: this.form.controls.name.value,
-                guessedBirth: getGuessedBirthFromYears(this.form.controls.ageYear.value,
-                    this.form.controls.ageMonth.value,
+                name: this.form().controls.name.value,
+                guessedBirth: getGuessedBirthFromYears(this.form().controls.ageYear.value,
+                    this.form().controls.ageMonth.value,
                     this.filler.getVisitDate()),
-                info: this.form.controls.info.value,
+                info: this.form().controls.info.value,
             },
-            isParentThere: this.form.controls.isParentThere.value
+            isParentThere: this.form().controls.isParentThere.value
         }
     }
 
