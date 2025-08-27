@@ -1,5 +1,5 @@
 <h1>
-    @if (department) {
+    @if (department()) {
         {{ 'DepartmentPage.EditData' | translate }}
     } @else {
         {{ 'DepartmentPage.Add' | translate }}
@@ -12,16 +12,14 @@
         <app-trimmed-text-input
                 [label]=" 'DepartmentPage.Form.Name' | translate"
                 [placeholder]="'DepartmentPage.Form.NamePlaceholder' | translate"
-                formControlName="name">
-        </app-trimmed-text-input>
+                formControlName="name"/>
     </div>
 
     <div>
         <app-trimmed-text-input
                 [label]=" 'DepartmentPage.Form.Address' | translate"
                 [placeholder]="'DepartmentPage.Form.AddressPlaceholder' | translate"
-                formControlName="address">
-        </app-trimmed-text-input>
+                formControlName="address"/>
     </div>
 
     <div>
@@ -30,8 +28,8 @@
             <input matInput
                    [matDatepicker]="validFromPicker"
                    formControlName="validFrom">
-            <mat-datepicker-toggle matIconSuffix [for]="validFromPicker"></mat-datepicker-toggle>
-            <mat-datepicker #validFromPicker></mat-datepicker>
+            <mat-datepicker-toggle matIconSuffix [for]="validFromPicker"/>
+            <mat-datepicker #validFromPicker/>
         </mat-form-field>
     </div>
 
@@ -41,8 +39,8 @@
             <input matInput
                    [matDatepicker]="validToPicker"
                    formControlName="validTo">
-            <mat-datepicker-toggle matIconSuffix [for]="validToPicker"></mat-datepicker-toggle>
-            <mat-datepicker #validToPicker></mat-datepicker>
+            <mat-datepicker-toggle matIconSuffix [for]="validToPicker"/>
+            <mat-datepicker #validToPicker/>
         </mat-form-field>
     </div>
 

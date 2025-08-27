@@ -3,7 +3,7 @@
     @if (needDataPresenter()) {
         <app-user-data-presenter [user]="user"></app-user-data-presenter>
         <div class="button-row">
-            @if (editEnabled) {
+            @if (editEnabled()) {
                 <button mat-stroked-button color="primary" (click)="switchToEdit()">
                     {{ 'Edit' | translate }}
                 </button>
@@ -20,16 +20,14 @@
     }
 
     @if (createModeOn) {
-        <app-user-creation-form [personId]="personId"
+        <app-user-creation-form [personId]="personId()"
                                 (submitted)="createUser($event)"
-                                (canceled)="cancelEditing()">
-        </app-user-creation-form>
+                                (canceled)="cancelEditing()"/>
     }
     @if (editModeOn) {
         <app-user-edit-form [user]="user"
                             (submitted)="updateUser($event)"
-                            (canceled)="cancelEditing()">
-        </app-user-edit-form>
+                            (canceled)="cancelEditing()"/>
     }
 
 </div>

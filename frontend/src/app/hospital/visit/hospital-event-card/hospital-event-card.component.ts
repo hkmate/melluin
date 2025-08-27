@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 
 @Component({
@@ -8,7 +8,6 @@ import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 })
 export class HospitalEventCardComponent {
 
-    @Input()
-    public visit: HospitalVisit;
+    public readonly visit = input.required<HospitalVisit>();
 
 }

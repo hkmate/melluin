@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MessageService} from '@fe/app/util/message.service';
@@ -12,21 +12,15 @@ import {MessageService} from '@fe/app/util/message.service';
 })
 export class CopierComponent {
 
-    @Input()
-    public value: string;
+    private readonly msg = inject(MessageService);
 
-    @Input()
-    public icon: string = 'link'
-
-    @Input()
-    public disableMsg: boolean = false;
-
-    constructor(private readonly msg: MessageService) {
-    }
+    public readonly value = input.required<string>();
+    public readonly icon = input('link');
+    public readonly disableMsg = input(false);
 
     protected copyLink(): void {
-        navigator.clipboard.writeText(this.value);
-        if (!this.disableMsg) {
+        navigator.clipboard.writeText(this.value());
+        if (!this.disableMsg()) {
             this.msg.info('LinkCopied');
         }
     }

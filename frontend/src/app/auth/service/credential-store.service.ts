@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {JwtService} from './jwt.service';
 import {User} from '@shared/user/user';
 import {isNilOrEmpty} from '@shared/util/util';
@@ -16,12 +16,11 @@ export class CredentialStoreService {
     private static readonly USER_SETTINGS_KEY = 'userSettings';
     private static readonly EXPIRATION_KEY_IN_TOKEN = 'exp';
 
+    private readonly store = inject(Store);
+    private readonly jwtService= inject(JwtService);
+
     private currentUser?: User;
     private authToken?: string;
-
-    constructor(private readonly store: Store,
-                private readonly jwtService: JwtService) {
-    }
 
     public init(): void {
         this.initCurrentUserFromStorage();

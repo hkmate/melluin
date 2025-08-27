@@ -3,16 +3,14 @@
     <div class="name-filter">
         <app-lazy-input [label]="'PeopleListPage.Filter.Name' | translate"
                         [(value)]="filters.name"
-                        (valueChange)="filterSet()">
-        </app-lazy-input>
+                        (valueChange)="filterSet()"/>
     </div>
 
     @if (needEmailFilter) {
         <div class="email-filter">
             <app-lazy-input [label]="'PeopleListPage.Filter.Email' | translate"
                             [(value)]="filters.email"
-                            (valueChange)="filterSet()">
-            </app-lazy-input>
+                            (valueChange)="filterSet()"/>
         </div>
     }
 
@@ -20,8 +18,7 @@
         <div class="phone-filter">
             <app-lazy-input [label]="'PeopleListPage.Filter.Phone' | translate"
                             [(value)]="filters.phone"
-                            (valueChange)="filterSet()">
-            </app-lazy-input>
+                            (valueChange)="filterSet()"/>
         </div>
     }
 

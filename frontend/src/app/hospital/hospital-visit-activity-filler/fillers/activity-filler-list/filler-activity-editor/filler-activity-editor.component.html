@@ -8,12 +8,12 @@
                                   [label]="'HospitalVisit.Activities.Children' | translate "
                                   [date]="visitDate"
                                   (childrenSelected)="lockChildren($event)"
-                                  (childrenUnselected)="unlockChildren($event)"></app-child-select>
+                                  (childrenUnselected)="unlockChildren($event)"/>
             }
 
             <app-activity-select [options]="activityTypeOptions"
                                  formControlName="activities"
-                                 [label]="'HospitalVisit.Activities.Activities' | translate"></app-activity-select>
+                                 [label]="'HospitalVisit.Activities.Activities' | translate"/>
 
             <mat-form-field>
                 <mat-label>{{ 'HospitalVisit.Activities.Comment' | translate }}</mat-label>

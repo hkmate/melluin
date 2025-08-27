@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable, Subscription, tap, throwError} from 'rxjs';
+import {Component, inject} from '@angular/core';
+import {Observable, tap, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
@@ -14,6 +14,7 @@ import {MessageService} from '@fe/app/util/message.service';
 import {isNil, isNotNil} from '@shared/util/util';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {ReportPrepareService} from './report-prepare.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-hospital-visit-details',
@@ -21,7 +22,15 @@ import {ReportPrepareService} from './report-prepare.service';
     styleUrls: ['./hospital-visit-details.component.scss'],
     providers: [RouteDataHandler, ReportPrepareService]
 })
-export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
+export class HospitalVisitDetailsComponent {
+
+    private readonly router = inject(Router);
+    private readonly location = inject(Location);
+    protected readonly permissions = inject(PermissionService);
+    private readonly msg = inject(MessageService);
+    private readonly route = inject(RouteDataHandler);
+    private readonly visitService = inject(HospitalVisitService);
+    private readonly reportPrepareService = inject(ReportPrepareService);
 
     Permission = Permission;
 
@@ -29,25 +38,11 @@ export class HospitalVisitDetailsComponent implements OnInit, OnDestroy {
     protected isEdit = false;
     protected createNewAfterSave = false;
     protected visit?: HospitalVisit;
-    private resolverSubscription: Subscription;
 
-    constructor(private readonly router: Router,
-        private readonly location: Location,
-        protected readonly permissions: PermissionService,
-        private readonly msg: MessageService,
-        private readonly route: RouteDataHandler,
-        private readonly visitService: HospitalVisitService,
-        private readonly reportPrepareService: ReportPrepareService) {
-    }
-
-    public ngOnInit(): void {
-        this.resolverSubscription = this.route.getData<HospitalVisit | CreateMarkerType>('visit').subscribe(
+    constructor() {
+        this.route.getData<HospitalVisit | CreateMarkerType>('visit').pipe(takeUntilDestroyed()).subscribe(
             visitInfo => this.setUp(visitInfo)
         );
-    }
-
-    public ngOnDestroy(): void {
-        this.resolverSubscription?.unsubscribe();
     }
 
     protected isEditMode(): boolean {

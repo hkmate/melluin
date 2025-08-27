@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {UserSettings} from '@shared/user/user-settings';
 import {AppActions} from '@fe/app/state/app-actions';
 import {Store} from '@ngrx/store';
@@ -12,30 +12,22 @@ import {UserService} from '@fe/app/people/user.service';
 })
 export class UserSettingsEditorComponent {
 
-    @Input()
-    public userId: string;
-
-    @Input()
-    public settings: UserSettings;
+    public userId = input.required<string>();
+    public settings = input.required<UserSettings>();
 
 }
-
 
 @Component({template: ''})
 export abstract class CustomUserSettingsEditorBaseComponent {
 
-    @Input()
-    public userId: string;
+    protected readonly store = inject(Store);
+    protected readonly msg = inject(MessageService);
+    protected readonly userService = inject(UserService);
 
-    @Input()
-    public settings: UserSettings;
+    public userId = input.required<string>();
+    public settings = input.required<UserSettings>();
 
     protected savingInProcess: boolean;
-
-    protected constructor(protected readonly store: Store,
-                          protected readonly msg: MessageService,
-                          protected readonly userService: UserService) {
-    }
 
     protected isSaveBtnDisabled(): boolean {
         return this.savingInProcess;
@@ -43,7 +35,7 @@ export abstract class CustomUserSettingsEditorBaseComponent {
 
     protected submit(): void {
         this.savingInProcess = true;
-        this.userService.updateUserSettings(this.userId, this.generateNewSettings()).subscribe({
+        this.userService.updateUserSettings(this.userId(), this.generateNewSettings()).subscribe({
             next: (userSettings: UserSettings) => {
                 this.savingInProcess = false;
                 this.msg.success('SaveSuccessful');

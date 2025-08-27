@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ActivatedRoute, Data} from '@angular/router';
 import {first} from 'rxjs/operators';
 import {AppTitle} from '@fe/app/app-title.service';
@@ -7,15 +7,14 @@ import {AppTitle} from '@fe/app/app-title.service';
     selector: 'app-not-found-component',
     templateUrl: './not-found.component.html',
 })
-export class NotFoundComponent implements OnInit {
+export class NotFoundComponent {
+
+    private readonly route = inject(ActivatedRoute);
+    private readonly title = inject(AppTitle);
 
     protected path?: string;
 
-    constructor(private readonly route: ActivatedRoute,
-                private readonly title: AppTitle) {
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.title.setTitleByI18n('Titles.NotFound');
 
         this.route.data

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, Output} from '@angular/core';
+import {Component, forwardRef, input, output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {NOOP, VoidFunc} from '@shared/util/util';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
@@ -16,20 +16,12 @@ import * as _ from 'lodash';
 })
 export class ChildSelectComponent implements ControlValueAccessor {
 
-    @Input()
-    public label: string;
+    public readonly label = input.required<string>();
+    public readonly options = input.required<Array<VisitedChild>>();
+    public readonly date = input<Date>();
 
-    @Input()
-    public options: Array<VisitedChild>;
-
-    @Input()
-    public date: Date;
-
-    @Output()
-    public childrenUnselected = new EventEmitter<Array<VisitedChild>>();
-
-    @Output()
-    public childrenSelected = new EventEmitter<Array<VisitedChild>>();
+    public readonly childrenUnselected = output<Array<VisitedChild>>();
+    public readonly childrenSelected = output<Array<VisitedChild>>();
 
     private onChange: (x: Array<VisitedChild>) => void = NOOP;
     private onTouch: VoidFunc = NOOP;

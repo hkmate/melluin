@@ -19,7 +19,7 @@
                         </mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content class="visit-card-content">
-                        <app-related-visit [wrappedActivity]="activity"></app-related-visit>
+                        <app-related-visit [wrappedActivity]="activity"/>
                     </mat-card-content>
                 </mat-card>
             </div>
@@ -29,7 +29,7 @@
     </div>
 }
 
-@if (loading) {
+@if (loading()) {
     <div class="loading-spinner">
         <mat-spinner color="accent" [diameter]="50"></mat-spinner>
     </div>

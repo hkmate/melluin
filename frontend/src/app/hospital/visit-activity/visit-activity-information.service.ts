@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
@@ -10,9 +10,8 @@ import {HospitalVisitActivityInfoInput} from '@shared/hospital-visit-activity/ho
 @Injectable({providedIn: 'root'})
 export class VisitActivityInformationService {
 
-    constructor(private readonly http: HttpClient,
-                private readonly msg: MessageService) {
-    }
+    private readonly http = inject(HttpClient);
+    private readonly msg = inject(MessageService);
 
     private getActivitiesInformationUrl(visitId: string): string {
         return `${AppConfig.get('baseURL')}/hospital-visits/${visitId}/activities-information`;

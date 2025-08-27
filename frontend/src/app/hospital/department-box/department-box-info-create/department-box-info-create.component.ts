@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, inject, input, output} from '@angular/core';
 import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
 import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -10,26 +10,22 @@ import {MessageService} from '@fe/app/util/message.service';
     templateUrl: './department-box-info-create.component.html',
     styleUrls: ['./department-box-info-create.component.scss']
 })
-export class DepartmentBoxInfoCreateComponent implements OnInit {
+export class DepartmentBoxInfoCreateComponent {
 
-    @Input()
-    public buttonsDisabled: boolean;
+    private readonly formBuilder = inject(FormBuilder);
+    private readonly msg = inject(MessageService);
 
-    @Output()
-    public submitted = new EventEmitter<DepartmentBoxStatusReport>();
 
-    @Output()
-    public canceled = new EventEmitter<void>();
+    public readonly buttonsDisabled = input<boolean>(false);
+
+    public readonly submitted = output<DepartmentBoxStatusReport>();
+    public readonly canceled = output<void>();
 
     protected reasonOptions: Array<BoxStatusChangeReason> = Object.values(BoxStatusChangeReason);
     protected affectedObjectsOptions = affectedObjectsList;
     protected form: FormGroup;
 
-    constructor(private readonly formBuilder: FormBuilder,
-                private readonly msg: MessageService) {
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.initForm();
     }
 
@@ -44,7 +40,6 @@ export class DepartmentBoxInfoCreateComponent implements OnInit {
     protected cancelEditing(): void {
         this.canceled.emit();
     }
-
 
     private initForm(): void {
         this.form = this.formBuilder.group({

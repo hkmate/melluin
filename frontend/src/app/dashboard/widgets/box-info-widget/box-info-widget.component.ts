@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
 import {BoxStatusWithDepartmentBrief} from '@shared/department/box/department-box-status';
@@ -12,27 +12,21 @@ import _ from 'lodash';
     templateUrl: './box-info-widget.component.html',
     styleUrl: './box-info-widget.component.scss'
 })
-export class BoxInfoWidgetComponent implements OnInit {
+export class BoxInfoWidgetComponent {
 
     private static readonly defaultDateInterval = DateIntervalSpecifier.LAST_MONTH;
     private static readonly defaultReasons = Object.values(BoxStatusChangeReason).filter(r => r !== BoxStatusChangeReason.CORRECTED);
     private static readonly defaultLimit = 10;
 
-    @Input()
-    dateInterval?: DateIntervalSpecifier;
+    private readonly boxService = inject(DepartmentBoxService)
 
-    @Input()
-    reasons?: Array<BoxStatusChangeReason>;
-
-    @Input()
-    limit?: number;
+    public readonly dateInterval = input<DateIntervalSpecifier>()
+    public readonly reasons = input<Array<BoxStatusChangeReason>>();
+    public readonly limit = input<number>();
 
     protected boxInfo: Array<BoxStatusWithDepartmentBrief>;
 
-    constructor(private readonly boxService: DepartmentBoxService) {
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.loadBoxInfo();
     }
 
@@ -44,13 +38,13 @@ export class BoxInfoWidgetComponent implements OnInit {
 
     private generatePageQuery(): PageQuery {
         const startDate = dateIntervalGeneratorFactory(
-            _.defaultTo(this.dateInterval, BoxInfoWidgetComponent.defaultDateInterval)).generate().dateFrom;
+            _.defaultTo(this.dateInterval(), BoxInfoWidgetComponent.defaultDateInterval)).generate().dateFrom;
         return {
             page: 1,
-            size: _.defaultTo(this.limit, BoxInfoWidgetComponent.defaultLimit),
+            size: _.defaultTo(this.limit(), BoxInfoWidgetComponent.defaultLimit),
             where: {
                 'dateTime': FilterOperationBuilder.gte(startDate),
-                'reason': FilterOperationBuilder.in(_.defaultTo(this.reasons, BoxInfoWidgetComponent.defaultReasons))
+                'reason': FilterOperationBuilder.in(_.defaultTo(this.reasons(), BoxInfoWidgetComponent.defaultReasons))
             },
             sort: {dateTime: 'DESC'}
         };

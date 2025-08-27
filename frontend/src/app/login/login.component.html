@@ -7,16 +7,14 @@
                                     [ngModelOptions]="{standalone: true}"
                                     [label]="'LoginPage.Form.UserName' | translate"
                                     [placeholder]="'LoginPage.Form.UserNamePlaceholder' | translate"
-                                    autocomplete="username">
-            </app-trimmed-text-input>
+                                    autocomplete="username"/>
 
             <app-trimmed-text-input [(ngModel)]="password"
                                     [ngModelOptions]="{standalone: true}"
                                     [label]="'LoginPage.Form.Password' | translate"
                                     [placeholder]="'LoginPage.Form.PasswordPlaceholder' | translate"
                                     autocomplete="current-password"
-                                    type="password">
-            </app-trimmed-text-input>
+                                    type="password"/>
 
             <div>
                 <button mat-flat-button

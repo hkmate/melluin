@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ChildInput} from '@shared/child/child-input';
@@ -10,9 +10,8 @@ import {AppConfig} from '@fe/app/config/app-config';
 @Injectable({providedIn: 'root'})
 export class ChildService {
 
-    constructor(private readonly http: HttpClient,
-                private readonly msg: MessageService) {
-    }
+    private readonly http = inject(HttpClient);
+    private readonly msg = inject(MessageService);
 
     private get childrenUrl(): string {
         return `${AppConfig.get('baseURL')}/children`;

@@ -3,7 +3,7 @@
         <div class="department-part">
 
             @if (!isEditMode()) {
-                <app-department-data-presenter [department]="department"></app-department-data-presenter>
+                <app-department-data-presenter [department]="department"/>
                 @if (isEditEnabled()) {
                     <div class="button-row">
                         <button mat-stroked-button color="primary" (click)="switchToEdit()">
@@ -16,14 +16,13 @@
             @if (isEditMode()) {
                 <app-department-data-form [department]="department"
                                           (submitted)="saveDepartment($event)"
-                                          (canceled)="cancelEditing()">
-                </app-department-data-form>
+                                          (canceled)="cancelEditing()"/>
             }
         </div>
 
         @if (department) {
             <div class="divider"></div>
-            <app-box-info-manager-by-department [departmentId]="department.id"></app-box-info-manager-by-department>
+            <app-box-info-manager-by-department [departmentId]="department.id"/>
         }
     </div>
 </section>

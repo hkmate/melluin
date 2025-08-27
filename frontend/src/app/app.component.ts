@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {AppLanguage} from './language/app-language';
 import {Store} from '@ngrx/store';
@@ -8,13 +8,12 @@ import {AppActions} from '@fe/app/state/app-actions';
     selector: 'app-root',
     template: '<app-menu><router-outlet></router-outlet></app-menu>'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-    constructor(private readonly translate: TranslateService,
-                private readonly store: Store) {
-    }
+    private readonly translate = inject(TranslateService);
+    private readonly store = inject(Store);
 
-    public ngOnInit(): void {
+    constructor() {
         this.translate.addLangs(Object.values(AppLanguage));
         this.store.dispatch(AppActions.appStarts());
     }

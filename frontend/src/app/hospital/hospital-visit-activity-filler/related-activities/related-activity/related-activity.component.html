@@ -1,21 +1,21 @@
 <mat-card>
     <mat-card-header>
         <mat-card-subtitle>
-            @for (activityType of activity.activities; track activityType; let last = $last) {
+            @for (activityType of activity().activities; track activityType; let last = $last) {
                 <span class="activity-type">
                     {{ 'VisitActivityType.' + activityType  | translate }}<span *ngIf="!last">,</span>
                 </span>
             }
             <div class="children">
                 <mat-chip-listbox>
-                    @for (visitedChildId of activity.children; track visitedChildId) {
-                        <mat-chip-row> {{ childrenById[visitedChildId].child.name }}</mat-chip-row>
+                    @for (visitedChildId of activity().children; track visitedChildId) {
+                        <mat-chip-row> {{ childrenById()[visitedChildId].child.name }}</mat-chip-row>
                     }
                 </mat-chip-listbox>
             </div>
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        {{ activity.comment }}
+        {{ activity().comment }}
     </mat-card-content>
 </mat-card>

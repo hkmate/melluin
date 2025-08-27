@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-header>
-        <mat-card-subtitle>{{ label }}</mat-card-subtitle>
+        <mat-card-subtitle>{{ label() }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <mat-radio-group [ngModel]="selected" (ngModelChange)="changed($event)">

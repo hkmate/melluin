@@ -29,7 +29,7 @@ export class ActivitiesInformationFillerComponent {
                 this.originalInfo.set(info.content ?? '');
                 this.formControl.setValue(this.originalInfo());
             })
-        });
+        }, {allowSignalWrites: true});
     }
 
     protected toggleEditMode(): void {

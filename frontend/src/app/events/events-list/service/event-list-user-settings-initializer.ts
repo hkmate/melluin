@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {EventListUserSettings, UserSettings} from '@shared/user/user-settings';
 import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';
 import {EventsFilter} from '@fe/app/events/events-list/service/events-filter';
@@ -8,22 +8,22 @@ import {
 } from '@fe/app/events/events-list/service/event-list-settings-initializer';
 import {Store} from '@ngrx/store';
 import {selectUserSettings} from '@fe/app/state/selector/user-settings.selector';
-import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {isNil} from '@shared/util/util';
 import {dateIntervalGeneratorFactory} from '@shared/util/date-interval-generator';
 import {PageInfo} from '@shared/api-util/pageable';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 
 @Injectable()
-export class EventListUserSettingsInitializer extends AutoUnSubscriber implements EventListSettingsInitializer {
+export class EventListUserSettingsInitializer implements EventListSettingsInitializer {
+
+    private readonly store = inject(Store);
+    private readonly defaultInitializer = inject(DefaultEventListSettingsInitializer);
 
     private userSettings: EventListUserSettings;
 
-    constructor(private readonly store: Store,
-                private readonly defaultInitializer: DefaultEventListSettingsInitializer) {
-        super();
-
-        this.addSubscription(this.store.pipe(selectUserSettings), (userSettings: UserSettings) => {
+    constructor() {
+        this.store.pipe(selectUserSettings, takeUntilDestroyed()).subscribe((userSettings: UserSettings) => {
             this.userSettings = userSettings.eventList ?? {};
         });
     }

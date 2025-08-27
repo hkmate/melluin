@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, computed, input} from '@angular/core';
 import {isNilOrEmpty} from '@shared/util/util';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
 
@@ -9,14 +9,8 @@ import {VisitedChild} from '@shared/hospital-visit/visited-child';
 })
 export class ChildrenListComponent {
 
-    @Input()
-    public visitDate: Date;
-
-    @Input()
-    public children: Array<VisitedChild>;
-
-    protected isEmpty(): boolean {
-        return isNilOrEmpty(this.children);
-    }
+    public readonly visitDate = input.required<Date>();
+    public readonly children = input.required<Array<VisitedChild>>();
+    public readonly noChild = computed(() => isNilOrEmpty(this.children()));
 
 }

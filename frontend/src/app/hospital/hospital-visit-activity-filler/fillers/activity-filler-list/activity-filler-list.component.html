@@ -15,7 +15,7 @@
 
 @if (creatingInProcess) {
     <div class="activity-create">
-        <app-filler-activity-create (creationEnded)="toggleCreator(false)"></app-filler-activity-create>
+        <app-filler-activity-create (creationEnded)="toggleCreator(false)"/>
     </div>
 }
 
@@ -24,8 +24,7 @@
         @for (activity of activities; track activity.id) {
             <div class="activity-item">
                 <app-filler-activity-item [activity]="activity"
-                                          [childrenById]="childrenById">
-                </app-filler-activity-item>
+                                          [childrenById]="childrenById"/>
             </div>
         } @empty {
             <div class="empty-list">

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../auth/service/authentication.service';
 import {isNilOrEmpty, NOOP} from '@shared/util/util';
@@ -12,28 +12,25 @@ import {TranslateService} from '@ngx-translate/core';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
     private static readonly BAD_CREDENTIALS = 'LoginPage.BadCredentials';
     private static readonly SERVER_NOT_WORK = 'LoginPage.ServerNotWork';
     private static readonly FIELDS_REQUIRED = 'LoginPage.FieldsRequired';
+
+    private readonly title = inject(AppTitle);
+    private readonly route = inject(ActivatedRoute);
+    private readonly router = inject(Router);
+    private readonly translate = inject(TranslateService);
+    private readonly msg = inject(MessageService);
+    private readonly authenticationService = inject(AuthenticationService);
 
     private returnUrl?: string;
     protected loading = false;
     protected userName?: string;
     protected password?: string;
 
-    constructor(
-        private readonly title: AppTitle,
-        private readonly route: ActivatedRoute,
-        private readonly router: Router,
-        private readonly translate: TranslateService,
-        private readonly msg: MessageService,
-        private readonly authenticationService: AuthenticationService,
-    ) {
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.title.setTitleByI18n('Titles.Login')
         if (this.authenticationService.hasAuthenticatedUser()) {
             this.router.navigate(['/'])

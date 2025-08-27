@@ -1,6 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
-import {TableDataSource} from '@fe/app/util/table-data-source';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {DateUtil} from '@shared/util/date-util';
 
@@ -13,15 +12,9 @@ export class HospitalEventsListComponent {
 
     protected readonly columns = ['status', 'date', 'department', 'participants', 'options'];
 
-    @Input()
-    public markRowByDate: boolean;
+    public readonly markRowByDate = input.required<boolean>();
+    public readonly eventsList = input.required< Array<HospitalVisit>>();
 
-    @Input()
-    public set eventsList(list: Array<HospitalVisit>) {
-        this.tableDataSource.emit(list);
-    }
-
-    protected tableDataSource = new TableDataSource<HospitalVisit>();
     private todayDawn = DateUtil.truncateToDay(DateUtil.now()).toISOString();
     private tomorrowDawn = this.getTomorrowDawn();
 

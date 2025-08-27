@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
 
 @Component({
@@ -8,7 +8,6 @@ import {DepartmentBoxStatus} from '@shared/department/box/department-box-status'
 })
 export class DepartmentBoxInfoComponent {
 
-    @Input()
-    public boxStatus: DepartmentBoxStatus;
+    public readonly boxStatus = input.required<DepartmentBoxStatus>();
 
 }

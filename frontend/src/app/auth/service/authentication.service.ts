@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map, Observable} from 'rxjs';
 import {User} from '@shared/user/user';
@@ -13,10 +13,9 @@ import {AuthCredentials} from '@shared/user/auth-credentials';
 @Injectable()
 export class AuthenticationService {
 
-    constructor(private readonly http: HttpClient,
-                private readonly router: Router,
-                private readonly credentialStoreService: CredentialStoreService) {
-    }
+    private readonly http = inject(HttpClient);
+    private readonly router = inject(Router);
+    private readonly credentialStoreService = inject(CredentialStoreService);
 
     public get token(): string | undefined {
         return this.credentialStoreService.getToken();

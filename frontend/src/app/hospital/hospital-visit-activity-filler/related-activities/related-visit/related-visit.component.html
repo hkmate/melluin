@@ -1,5 +1,4 @@
 <div class="visit-info">
-
     @if (permissions.has(Permission.canReadActivity) && !infoIsEmpty()) {
         <div>
             <h3>{{ 'HospitalVisit.Activities.Information' | translate }}</h3>
@@ -19,7 +18,7 @@
             <h3>{{ 'HospitalVisit.Activities.Children' | translate }}</h3>
 
             <div class="children-list">
-                @for (child of wrappedActivity.children; track child.id) {
+                @for (child of wrappedActivity().children; track child.id) {
                     <div class="child-card">
                         <app-related-visit-child [visitedChild]="child"/>
                     </div>
@@ -50,5 +49,4 @@
             </div>
         </div>
     }
-
 </div>

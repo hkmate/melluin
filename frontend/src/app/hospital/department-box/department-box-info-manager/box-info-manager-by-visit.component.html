@@ -14,10 +14,9 @@
 @if (creatingInProcess) {
     <app-department-box-info-create [buttonsDisabled]="saveInProcess"
                                     (submitted)="saveStatusReport($event)"
-                                    (canceled)="createCanceled()">
-    </app-department-box-info-create>
+                                    (canceled)="createCanceled()"/>
 }
 
 <div class="department-boxes-part">
-    <app-box-info-list-by-visit [visitId]="visitId"></app-box-info-list-by-visit>
+    <app-box-info-list-by-visit [visitId]="visitId()"/>
 </div>

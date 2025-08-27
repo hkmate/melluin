@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, effect, inject, input} from '@angular/core';
 import {User} from '@shared/user/user';
 import {isNil, isNotNil} from '@shared/util/util';
 import {UserCreation} from '@shared/user/user-creation';
@@ -15,31 +15,22 @@ import {MessageService} from '@fe/app/util/message.service';
 })
 export class UserDetailComponent {
 
+    protected readonly permissions = inject(PermissionService);
+    private readonly msg = inject(MessageService);
+    private readonly userService = inject(UserService);
+
     Permission = Permission;
 
-    @Input()
-    public personId: string;
-
-    @Input()
-    public editEnabled: boolean;
+    public readonly personId = input.required<string>();
+    public readonly editEnabled = input.required<boolean>();
+    public readonly userId = input<string>();
 
     protected editModeOn = false;
     protected createModeOn = false;
     protected user?: User;
 
-    constructor(protected readonly permissions: PermissionService,
-                private readonly msg: MessageService,
-                private readonly userService: UserService) {
-    }
-
-    @Input()
-    public set userId(userId: string | undefined) {
-        if (isNil(userId)) {
-            return;
-        }
-        this.userService.get(userId).subscribe(user => {
-            this.user = user;
-        });
+    constructor() {
+        effect(() => this.loadUser());
     }
 
     protected needDataPresenter(): boolean {
@@ -73,6 +64,16 @@ export class UserDetailComponent {
     protected cancelEditing(): void {
         this.editModeOn = false;
         this.createModeOn = false;
+    }
+
+    private loadUser(): void {
+        const userIdValue = this.userId();
+        if (isNil(userIdValue)) {
+            return;
+        }
+        this.userService.get(userIdValue).subscribe(user => {
+            this.user = user;
+        });
     }
 
 }

@@ -1,5 +1,5 @@
 <mat-form-field class="chip-selector">
-    <mat-label>{{ label }}</mat-label>
+    <mat-label>{{ label() }}</mat-label>
     <mat-chip-listbox>
         @for (patientInfo of children; track patientInfo.id) {
             <mat-chip-row (removed)="removeChild(patientInfo)">
@@ -11,11 +11,14 @@
         }
     </mat-chip-listbox>
     <mat-select [ngModel]="children" (ngModelChange)="childrenChanged($event)" multiple>
-        @for (option of options; track option.id) {
+        @for (option of options(); track option.id) {
             <mat-option class="child-select-option" [value]="option">
                 <span class="child-info">
                     <span class="name">{{ option.child.name }}</span>
-                    <span *ngIf="date" class="age">({{ option.child | childAge : date }})</span>
+                    @let dateValue = date();
+                    @if (dateValue) {
+                        <span class="age">({{ option.child | childAge : dateValue }})</span>
+                    }
                 </span>
             </mat-option>
         }

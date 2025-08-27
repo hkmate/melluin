@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, effect, inject, input} from '@angular/core';
 import {UserSettings} from '@shared/user/user-settings';
 import {PeopleService} from '@fe/app/people/people.service';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
@@ -14,20 +14,18 @@ import {isNil, isNilOrEmpty} from '@shared/util/util';
 })
 export class UserSettingsPresenterComponent {
 
+    private readonly peopleService = inject(PeopleService);
+    private readonly departmentService = inject(DepartmentService);
+
     protected isNil = isNil;
 
-    protected settings: UserSettings;
+    public readonly userSettings = input.required<UserSettings>();
+
     protected participants: Array<Person>;
     protected departments: Array<Department>;
 
-    @Input()
-    public set userSettings(settings: UserSettings) {
-        this.settings = settings;
-        this.init();
-    }
-
-    constructor(private readonly peopleService: PeopleService,
-                private readonly departmentService: DepartmentService) {
+    constructor() {
+        effect(() => this.init());
     }
 
     private init(): void {
@@ -36,7 +34,7 @@ export class UserSettingsPresenterComponent {
     }
 
     private initParticipants(): void {
-        const participantIds = this.settings.eventList?.participantIds;
+        const participantIds = this.userSettings().eventList?.participantIds;
         if (isNilOrEmpty(participantIds)) {
             return;
         }
@@ -50,7 +48,7 @@ export class UserSettingsPresenterComponent {
     }
 
     private initDepartments(): void {
-        const departmentIds = this.settings.eventList?.departmentIds;
+        const departmentIds = this.userSettings().eventList?.departmentIds;
         if (isNilOrEmpty(departmentIds)) {
             return;
         }

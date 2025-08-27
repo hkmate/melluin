@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {isNotNil} from '@shared/util/util';
 
@@ -16,17 +16,10 @@ import {isNotNil} from '@shared/util/util';
 })
 export class TrimmedTextInputComponent implements ControlValueAccessor {
 
-    @Input()
-    placeholder: string;
-
-    @Input()
-    label: string;
-
-    @Input()
-    type: string;
-
-    @Input()
-    autocomplete: AutoFill;
+    public readonly placeholder = input.required<string>();
+    public readonly label = input.required<string>();
+    public readonly type = input<string>('text');
+    public readonly autocomplete = input<AutoFill>();
 
     protected value: string;
     private onChange: (value: string) => void;

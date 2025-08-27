@@ -1,9 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {UserSettings} from '@shared/user/user-settings';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {Store} from '@ngrx/store';
-import {MessageService} from '@fe/app/util/message.service';
-import {UserService} from '@fe/app/people/user.service';
 import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
 
 @Component({
@@ -13,16 +10,12 @@ import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-set
 })
 export class UserHomePageSettingsEditorComponent extends CustomUserSettingsEditorBaseComponent {
 
+    private readonly fb = inject(FormBuilder);
+
     protected form: FormGroup;
 
-    constructor(private readonly fb: FormBuilder,
-                store: Store,
-                msg: MessageService,
-                userService: UserService) {
-        super(store, msg, userService);
-    }
-
-    public ngOnInit(): void {
+    constructor() {
+        super();
         this.initForm();
     }
 
@@ -32,7 +25,7 @@ export class UserHomePageSettingsEditorComponent extends CustomUserSettingsEdito
 
     protected override generateNewSettings(): UserSettings {
         return {
-            ...this.settings,
+            ...this.settings(),
             homePage: {
                 inDesktop: this.form.controls.inDesktop.value,
                 inMobile: this.form.controls.inMobile.value
@@ -42,8 +35,8 @@ export class UserHomePageSettingsEditorComponent extends CustomUserSettingsEdito
 
     private initForm(): void {
         this.form = this.fb.group({
-            inDesktop: [this.settings.homePage?.inDesktop],
-            inMobile: [this.settings.homePage?.inMobile],
+            inDesktop: [this.settings().homePage?.inDesktop],
+            inMobile: [this.settings().homePage?.inMobile],
         });
     }
 

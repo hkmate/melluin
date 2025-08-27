@@ -1,9 +1,9 @@
 @if (edit) {
-    <app-filler-child-editor [visitedChild]="child"
+    <app-filler-child-editor [visitedChild]="child()"
                              (editDone)="endEdit()">
     </app-filler-child-editor>
 } @else {
-    <app-filler-child-card [child]="child"
+    <app-filler-child-card [child]="child()"
                            (editWanted)="changeToEdit()"
                            (removeWanted)="removeChild()">
     </app-filler-child-card>

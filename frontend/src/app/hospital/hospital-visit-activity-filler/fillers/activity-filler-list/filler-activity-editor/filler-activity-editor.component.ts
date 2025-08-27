@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, inject, input, output} from '@angular/core';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
 import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -8,23 +8,21 @@ import {HospitalVisitActivityEditInput} from '@shared/hospital-visit-activity/ho
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 import {VisitedChildById} from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
 import {Observable} from 'rxjs';
-import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 
 @Component({
     selector: 'app-filler-activity-editor',
     templateUrl: './filler-activity-editor.component.html',
     styleUrls: ['./filler-activity-editor.component.scss']
 })
-export class FillerActivityEditorComponent extends AutoUnSubscriber {
+export class FillerActivityEditorComponent {
 
-    @Input()
-    public activity: HospitalVisitActivity;
+    private readonly formBuilder = inject(FormBuilder);
+    private readonly filler = inject(HospitalVisitActivityFillerService);
 
-    @Input()
-    public childrenById: VisitedChildById;
+    public readonly activity = input.required<HospitalVisitActivity>();
+    public readonly childrenById = input.required<VisitedChildById>();
 
-    @Output()
-    public editDone = new EventEmitter<void>();
+    public readonly editDone = output<void>();
 
     protected children$: Observable<Array<VisitedChild>>;
     protected activityTypeOptions: Array<VisitActivityType> = Object.values(VisitActivityType);
@@ -32,12 +30,7 @@ export class FillerActivityEditorComponent extends AutoUnSubscriber {
     protected form: FormGroup;
     protected visitDate: Date;
 
-    constructor(private readonly formBuilder: FormBuilder,
-                private readonly filler: HospitalVisitActivityFillerService) {
-        super();
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.children$ = this.filler.getChildren();
         this.visitDate = this.filler.getVisitDate();
         this.initForm();
@@ -71,17 +64,17 @@ export class FillerActivityEditorComponent extends AutoUnSubscriber {
     }
 
     private initForm(): void {
-        const children = this.activity.children.map(childId => this.childrenById[childId]);
+        const children = this.activity().children.map(childId => this.childrenById()[childId]);
         this.form = this.formBuilder.group({
             children: [children, [Validators.required, isNotEmptyValidator]],
-            activities: [this.activity.activities, [Validators.required, isNotEmptyValidator]],
-            comment: [this.activity.comment]
+            activities: [this.activity().activities, [Validators.required, isNotEmptyValidator]],
+            comment: [this.activity().comment]
         });
     }
 
     private createObjectFromForm(): HospitalVisitActivityEditInput {
         return {
-            ...this.activity,
+            ...this.activity(),
             activities: this.form.controls.activities.value,
             children: this.createActivityChildInfoList(),
             comment: this.form.controls.comment.value

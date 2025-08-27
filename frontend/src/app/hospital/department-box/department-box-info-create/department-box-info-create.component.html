@@ -24,19 +24,18 @@
             <app-trimmed-text-input
                     [label]="'BoxStatus.Comment' | translate"
                     [placeholder]="'BoxStatus.CommentPlaceholder' | translate"
-                    formControlName="comment">
-            </app-trimmed-text-input>
+                    formControlName="comment"/>
 
             <div class="button-row">
                 <button mat-flat-button
-                        [disabled]="buttonsDisabled"
+                        [disabled]="buttonsDisabled()"
                         color="accent"
                         (click)="onFormSubmit()"
                         type="button">
                     {{ 'SaveButton' | translate }}
                 </button>
                 <button mat-stroked-button
-                        [disabled]="buttonsDisabled"
+                        [disabled]="buttonsDisabled()"
                         color="primary"
                         type="button"
                         (click)="cancelEditing()">

@@ -1,5 +1,5 @@
 <h1>
-    @if (visit) {
+    @if (visit()) {
         {{ 'HospitalVisit.Form.Edit' | translate }}
     } @else {
         {{ 'HospitalVisit.Form.Add' | translate }}
@@ -30,8 +30,8 @@
                    [matDatepicker]="validFromPicker"
                    (click)="validFromPicker.open()"
                    formControlName="date">
-            <mat-datepicker-toggle matIconSuffix [for]="validFromPicker"></mat-datepicker-toggle>
-            <mat-datepicker #validFromPicker [touchUi]="mobileScreen"></mat-datepicker>
+            <mat-datepicker-toggle matIconSuffix [for]="validFromPicker"/>
+            <mat-datepicker #validFromPicker [touchUi]="mobileScreen"/>
         </mat-form-field>
     </div>
 
@@ -75,8 +75,8 @@
 
     <div class="button-row">
 
-        @if (!visitToEdit) {
-            <mat-checkbox [ngModel]="createNewAfterSave"
+        @if (!visit()) {
+            <mat-checkbox [ngModel]="createNewAfterOneSaved()"
                           (ngModelChange)="setCreateOther($event)"
                           [ngModelOptions]="{standalone: true}">
                 {{ 'HospitalVisit.Form.CreateOther' | translate }}

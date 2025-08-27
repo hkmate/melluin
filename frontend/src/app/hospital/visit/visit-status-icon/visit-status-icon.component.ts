@@ -1,6 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, computed, input} from '@angular/core';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {TranslateModule} from '@ngx-translate/core';
@@ -10,9 +9,6 @@ import {TranslateModule} from '@ngx-translate/core';
     templateUrl: './visit-status-icon.component.html',
     styleUrls: ['./visit-status-icon.component.scss'],
     imports: [
-        NgSwitch,
-        NgSwitchDefault,
-        NgSwitchCase,
         MatIconModule,
         MatTooltipModule,
         TranslateModule
@@ -36,16 +32,8 @@ export class VisitStatusIconComponent {
         [HospitalVisitStatus.SUCCESSFUL]: 'check_circle',
     }
 
-    @Input()
-    public tooltipDisabled = true;
-
-    protected icon: string;
-    protected visitStatus: HospitalVisitStatus;
-
-    @Input()
-    public set status(value: HospitalVisitStatus) {
-        this.visitStatus = value;
-        this.icon = VisitStatusIconComponent.STATUS_ICON_MAPPER[value];
-    }
+    public readonly tooltipDisabled = input(true);
+    public readonly status = input.required<HospitalVisitStatus>();
+    protected readonly icon = computed(() => VisitStatusIconComponent.STATUS_ICON_MAPPER[this.status()]);
 
 }

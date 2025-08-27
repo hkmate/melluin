@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable, Subscription, tap, throwError} from 'rxjs';
+import {Component, computed, inject, signal} from '@angular/core';
+import {Observable, tap, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
@@ -13,6 +13,7 @@ import {Permission} from '@shared/user/permission.enum';
 import {DateUtil} from '@shared/util/date-util';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {MessageService} from '@fe/app/util/message.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-department-detail',
@@ -20,36 +21,28 @@ import {MessageService} from '@fe/app/util/message.service';
     styleUrls: ['./department-detail.component.scss'],
     providers: [RouteDataHandler]
 })
-export class DepartmentDetailComponent implements OnInit, OnDestroy {
+export class DepartmentDetailComponent {
 
-    protected isCreation = false;
-    protected isEdit = false;
+    private readonly router = inject(Router);
+    private readonly location = inject(Location);
+    private readonly msg = inject(MessageService);
+    private readonly route = inject(RouteDataHandler);
+    private readonly permissions = inject(PermissionService);
+    private readonly departmentService = inject(DepartmentService);
+
+    protected isEditMode = computed(() => this.isEdit() || this.isCreation());
     protected department?: Department;
-    private resolverSubscription: Subscription;
+
+    private isCreation = signal(false);
+    private isEdit = signal(false);
     private now = DateUtil.now().toISOString();
 
-    constructor(private readonly router: Router,
-                private readonly location: Location,
-                private readonly msg: MessageService,
-                private readonly route: RouteDataHandler,
-                private readonly permissions: PermissionService,
-                private readonly departmentService: DepartmentService) {
-    }
-
-    public ngOnInit(): void {
-        this.resolverSubscription = this.route.getData<Department | CreateMarkerType>('department').subscribe(
+    constructor() {
+        this.route.getData<Department | CreateMarkerType>('department').pipe(takeUntilDestroyed()).subscribe(
             departmentInfo => {
                 this.setUp(departmentInfo);
             }
         );
-    }
-
-    public ngOnDestroy(): void {
-        this.resolverSubscription?.unsubscribe();
-    }
-
-    protected isEditMode(): boolean {
-        return this.isEdit || this.isCreation;
     }
 
     protected saveDepartment(data: DepartmentUpdateChangeSet | DepartmentCreation): void {
@@ -61,7 +54,7 @@ export class DepartmentDetailComponent implements OnInit, OnDestroy {
     }
 
     protected cancelEditing(): void {
-        if (this.isCreation) {
+        if (this.isCreation()) {
             this.router.navigate([PATHS.people.main]);
         }
         this.setToPresent();
@@ -71,7 +64,7 @@ export class DepartmentDetailComponent implements OnInit, OnDestroy {
         if (!this.isEditEnabled()) {
             return;
         }
-        this.isEdit = true;
+        this.isEdit.set(true);
         this.route.setParam('edit', true);
     }
 
@@ -82,14 +75,14 @@ export class DepartmentDetailComponent implements OnInit, OnDestroy {
     }
 
     private setToPresent(): void {
-        this.isEdit = false;
-        this.isCreation = false;
+        this.isEdit.set(false);
+        this.isCreation.set(false);
         this.route.removeParam('edit');
     }
 
     private setUp(departmentInfo: Department | CreateMarkerType): void {
         if (departmentInfo === CREATE_MARKER) {
-            this.isCreation = true;
+            this.isCreation.set(true);
             return;
         }
         this.setUpDepartment(departmentInfo);

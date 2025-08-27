@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, inject, input, output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserCreation} from '@shared/user/user-creation';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
@@ -11,28 +11,24 @@ import {GetRolesService} from '@fe/app/util/get-roles.service';
     templateUrl: './user-creation-form.component.html',
     styleUrls: ['./user-creation-form.component.scss']
 })
-export class UserCreationFormComponent implements OnInit {
+export class UserCreationFormComponent {
+
+    private readonly fb = inject(FormBuilder);
+    private readonly roleService = inject(GetRolesService);
+    private readonly permission = inject(PermissionService);
 
     protected readonly permissions: Array<Permission> = Object.values(Permission);
-    @Input()
-    public personId: string;
 
-    @Output()
-    public submitted = new EventEmitter<UserCreation>;
+    public readonly personId = input.required<string>();
 
-    @Output()
-    public canceled = new EventEmitter<void>;
+    public readonly submitted = output<UserCreation>();
+    public readonly canceled = output<void>();
 
     protected form: FormGroup;
     protected roleOptions: Array<string>;
     protected roles: Array<RoleBrief>;
 
-    constructor(private readonly fb: FormBuilder,
-                private readonly roleService: GetRolesService,
-                private readonly permission: PermissionService) {
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.roleService.getAll().subscribe(roles => {
             this.roles = roles;
         });
@@ -62,7 +58,7 @@ export class UserCreationFormComponent implements OnInit {
 
     private createUserCreation(): UserCreation {
         const data = new UserCreation();
-        data.personId = this.personId;
+        data.personId = this.personId();
         data.userName = this.form.controls.userName.value;
         data.password = this.form.controls.password.value;
         data.roleNames = this.form.controls.roleNames.value;

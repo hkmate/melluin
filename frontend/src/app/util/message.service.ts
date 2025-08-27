@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -7,9 +7,9 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class MessageService {
 
-    constructor(private readonly toastr: ToastrService,
-                private readonly i18n: TranslateService) {
-    }
+    private readonly toastr = inject(ToastrService);
+    private readonly i18n = inject(TranslateService);
+
 
     public success(msgKey: string): void {
         this.successRaw(this.i18n.instant(msgKey));

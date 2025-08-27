@@ -1,5 +1,5 @@
 <h1>
-    @if (person) {
+    @if (person()) {
         {{ 'PersonPage.EditData' | translate }}
     } @else {
         {{ 'PersonPage.AddPerson' | translate }}
@@ -12,23 +12,21 @@
         <app-trimmed-text-input
                 [placeholder]="'PersonPage.Form.LastNamePlaceholder' | translate"
                 [label]="'PersonPage.Form.LastName' | translate"
-                formControlName="lastName"></app-trimmed-text-input>
+                formControlName="lastName"/>
     </div>
 
     <div>
         <app-trimmed-text-input
                 [label]=" 'PersonPage.Form.FirstName' | translate"
                 [placeholder]="'PersonPage.Form.FirstNamePlaceholder' | translate"
-                formControlName="firstName">
-        </app-trimmed-text-input>
+                formControlName="firstName"/>
     </div>
 
     <div>
         <app-trimmed-text-input
                 [label]=" 'PersonPage.Form.Email' | translate"
                 [placeholder]="'PersonPage.Form.EmailPlaceholder' | translate"
-                formControlName="email">
-        </app-trimmed-text-input>
+                formControlName="email"/>
     </div>
 
     <div class="email-preference-card">
@@ -36,7 +34,7 @@
             <mat-card-content class="preferences-card-content">
                 <mat-checkbox formControlName="canVolunteerSeeMyEmail"></mat-checkbox>
                 <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyEmail' | translate }}</span>
-                @if (selfEdit) {
+                @if (selfEdit()) {
                     <span class="preference-description">
                         {{ 'PersonPage.Form.CanVolunteerSeeMyEmailDescription' | translate }}
                     </span>
@@ -58,7 +56,7 @@
             <mat-card-content class="preferences-card-content">
                 <mat-checkbox formControlName="canVolunteerSeeMyPhone"></mat-checkbox>
                 <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyPhone' | translate }}</span>
-                @if (selfEdit) {
+                @if (selfEdit()) {
                     <span class="preference-description">
                         {{ 'PersonPage.Form.CanVolunteerSeeMyPhoneDescription' | translate }}
                     </span>

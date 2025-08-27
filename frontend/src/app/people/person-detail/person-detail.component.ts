@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Location} from '@angular/common';
 import {Person} from '@shared/person/person';
 import {PersonRewrite} from '@shared/person/person-rewrite';
@@ -7,45 +7,39 @@ import {PeopleService} from '@fe/app/people/people.service';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {Router} from '@angular/router';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
-import {Observable, Subscription, tap, throwError} from 'rxjs';
+import {Observable, tap, throwError} from 'rxjs';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {isNil} from '@shared/util/util';
 import {Permission} from '@shared/user/permission.enum';
 import {MessageService} from '@fe/app/util/message.service';
 import {getPermissionsNeededToChangeRole} from '@shared/user/role';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-person-detail',
     templateUrl: './person-detail.component.html',
-    styleUrls: ['./person-detail.component.scss'],
     providers: [RouteDataHandler]
 })
-export class PersonDetailComponent implements OnInit, OnDestroy {
+export class PersonDetailComponent {
+
+    private readonly router = inject(Router);
+    private readonly location = inject(Location);
+    private readonly msg = inject(MessageService);
+    private readonly route = inject(RouteDataHandler);
+    private readonly permission = inject(PermissionService);
+    private readonly peopleService = inject(PeopleService);
 
     protected isCreation = false;
     protected isEdit = false;
     protected isEditEnabled = false;
     protected person?: Person;
-    private resolverSubscription: Subscription;
 
-    constructor(private readonly router: Router,
-                private readonly location: Location,
-                private readonly msg: MessageService,
-                private readonly route: RouteDataHandler,
-                private readonly permission: PermissionService,
-                private readonly peopleService: PeopleService) {
-    }
-
-    public ngOnInit(): void {
-        this.resolverSubscription = this.route.getData<Person | CreateMarkerType>('person').subscribe(
+    constructor() {
+        this.route.getData<Person | CreateMarkerType>('person').pipe(takeUntilDestroyed()).subscribe(
             personInfo => {
                 this.setUp(personInfo);
             }
         );
-    }
-
-    public ngOnDestroy(): void {
-        this.resolverSubscription?.unsubscribe();
     }
 
     protected isEditMode(): boolean {

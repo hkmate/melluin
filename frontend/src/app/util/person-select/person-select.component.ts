@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, forwardRef, inject, input} from '@angular/core';
 import {Person, PersonIdentifier} from '@shared/person/person';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {isNil, NOOP, VoidFunc} from '@shared/util/util';
@@ -16,12 +16,13 @@ import {RoleType} from '@shared/user/role';
         multi: true
     }]
 })
-export class PersonSelectComponent implements ControlValueAccessor, OnInit {
+export class PersonSelectComponent implements ControlValueAccessor {
+
+    private readonly personService = inject(CachedPeopleService);
 
     private readonly cacheName = 'peopleFilter';
 
-    @Input()
-    public label: string;
+    public readonly label = input.required<string>();
 
     protected filteredOptions: Array<PersonIdentifier>;
     protected people: Array<PersonIdentifier>
@@ -32,10 +33,7 @@ export class PersonSelectComponent implements ControlValueAccessor, OnInit {
 
     private personIds: Array<string>;
 
-    constructor(private readonly personService: CachedPeopleService) {
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.initPersonOptions();
     }
 

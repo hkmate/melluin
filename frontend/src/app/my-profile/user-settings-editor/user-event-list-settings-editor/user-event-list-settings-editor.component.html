@@ -1,6 +1,6 @@
 <div class="event-list-settings">
     @if (form) {
-        <form *ngIf="form" [formGroup]="form">
+        <form [formGroup]="form">
 
             <div class="date-interval-selector">
                 <mat-form-field>
@@ -8,7 +8,8 @@
                     <mat-select formControlName="dateFilter">
                         <mat-option [value]="undefined">-</mat-option>
                         @for (option of dateOptions; track option) {
-                            <mat-option [value]="option">{{ 'DateIntervalSpecifier.' + option | translate }}
+                            <mat-option [value]="option">
+                                {{ 'DateIntervalSpecifier.' + option | translate }}
                             </mat-option>
                         }
                     </mat-select>
@@ -17,7 +18,7 @@
 
             <div class="participant-selector">
                 <app-person-select [label]="'PersonPage.EventListSettings.Participants' | translate"
-                                   formControlName="participantIds"></app-person-select>
+                                   formControlName="participantIds"/>
             </div>
 
             <div>

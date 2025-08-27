@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, effect, inject, input, output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {allNil, isNil, isNotNil} from '@shared/util/util';
 import {DepartmentCreation} from '@shared/department/department-creation';
@@ -12,27 +12,17 @@ import {Department} from '@shared/department/department';
 })
 export class DepartmentDataFormComponent {
 
-    @Output()
-    public submitted = new EventEmitter<DepartmentCreation | DepartmentUpdateChangeSet>;
+    private readonly fb = inject(FormBuilder);
 
-    @Output()
-    public canceled = new EventEmitter<void>;
+    public readonly department = input<Department>();
+
+    public readonly submitted = output<DepartmentCreation | DepartmentUpdateChangeSet>();
+    public readonly canceled = output<void>();
 
     protected form: FormGroup;
 
-    private departmentToEdit?: Department;
-
-    constructor(private fb: FormBuilder) {
-    }
-
-    @Input()
-    public set department(department: Department | undefined) {
-        this.departmentToEdit = department;
-        this.initForm();
-    }
-
-    public get department(): Department | undefined {
-        return this.departmentToEdit;
+    constructor() {
+        effect(() => this.initForm());
     }
 
     protected onSubmit(): void {
@@ -44,21 +34,22 @@ export class DepartmentDataFormComponent {
     }
 
     private initForm(): void {
+        const dep = this.department();
         this.form = this.fb.group({
-            name: [this.departmentToEdit?.name, [Validators.required]],
-            address: [this.departmentToEdit?.address, [Validators.required]],
+            name: [dep?.name, [Validators.required]],
+            address: [dep?.address, [Validators.required]],
             validFrom: [
-                {value: this.departmentToEdit?.validFrom, disabled: isNotNil(this.department)},
+                {value: dep?.validFrom, disabled: isNotNil(this.department)},
                 [Validators.required]
             ],
-            validTo: [this.departmentToEdit?.validTo, []],
-            diseasesInfo: [this.departmentToEdit?.diseasesInfo, []],
-            note: [this.departmentToEdit?.note, []],
+            validTo: [dep?.validTo, []],
+            diseasesInfo: [dep?.diseasesInfo, []],
+            note: [dep?.note, []],
         });
     }
 
     private createDataForSubmit(): DepartmentCreation | DepartmentUpdateChangeSet {
-        if (isNil(this.departmentToEdit)) {
+        if (isNil(this.department())) {
             return this.createDepartmentCreation();
         }
         return this.createDepartmentUpdate();
@@ -87,7 +78,7 @@ export class DepartmentDataFormComponent {
 
     private addFieldIfDifferentThenStored(data: DepartmentUpdateChangeSet, field: keyof DepartmentUpdateChangeSet): void {
         const newField = this.form.controls[field].value;
-        const storedField = this.departmentToEdit?.[field];
+        const storedField = this.department()?.[field];
         if (allNil(newField, storedField)) {
             return;
         }

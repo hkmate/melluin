@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';
 import {EventsFilter} from '@fe/app/events/events-list/service/events-filter';
 import {DefaultEventListSettingsInitializer} from '@fe/app/events/events-list/service/event-list-settings-initializer';
@@ -12,9 +12,7 @@ import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status'
 @Injectable()
 export class EventListQueryParamSettingsInitializer extends DefaultEventListSettingsInitializer {
 
-    constructor(private readonly urlParamHandler: UrlParamHandler) {
-        super();
-    }
+    private readonly urlParamHandler = inject(UrlParamHandler);
 
     public override available(): boolean {
         return this.isAnyQueryParam();

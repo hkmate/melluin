@@ -1,8 +1,8 @@
-@if (!isEmpty()) {
+@if (!noChild()) {
     <div class="activities-list">
-        @for (child of children; track child.id) {
+        @for (child of children(); track child.id) {
             <div class="child-card">
-                <app-child-card [child]="child" [date]="visitDate"></app-child-card>
+                <app-child-card [child]="child" [date]="visitDate()"/>
             </div>
         }
     </div>

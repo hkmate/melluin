@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, inject, input, signal} from '@angular/core';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 import {VisitedChildById} from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
@@ -9,35 +9,30 @@ import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 
 @Component({
     selector: 'app-filler-activity-item',
-    templateUrl: './filler-activity-item.component.html',
-    styleUrls: ['./filler-activity-item.component.scss']
+    templateUrl: './filler-activity-item.component.html'
 })
 export class FillerActivityItemComponent {
 
-    @Input()
-    public activity: HospitalVisitActivity;
+    private readonly translateService = inject(TranslateService);
+    private readonly confirmation = inject(ConfirmationService);
+    private readonly fillerService = inject(HospitalVisitActivityFillerService);
 
-    @Input()
-    public childrenById: VisitedChildById;
+    public readonly activity = input.required<HospitalVisitActivity>();
+    public readonly childrenById = input.required<VisitedChildById>();
 
-    protected edit = false;
-
-    constructor(private readonly translateService: TranslateService,
-                private readonly confirmation: ConfirmationService,
-                private readonly fillerService: HospitalVisitActivityFillerService) {
-    }
+    protected readonly edit = signal(false);
 
     protected changeToEdit(): void {
-        this.edit = true;
+        this.edit.set(true);
     }
 
     protected endEdit(): void {
-        this.edit = false;
+        this.edit.set(false);
     }
 
     protected removeActivity(): void {
         this.confirmation.getConfirm(this.getDeleteConfirmDialogConfig())
-            .then(() => this.fillerService.removeActivity(this.activity).subscribe())
+            .then(() => this.fillerService.removeActivity(this.activity()).subscribe())
             .catch(NOOP);
     }
 

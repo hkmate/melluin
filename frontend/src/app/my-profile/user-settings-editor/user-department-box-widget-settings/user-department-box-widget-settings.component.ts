@@ -1,13 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DateIntervalSpecifier} from '@shared/util/date-interval-generator';
 import {DepartmentBoxInfoSinceDateValues, DepartmentBoxWidgetSettings, UserSettings} from '@shared/user/user-settings';
-import {Store} from '@ngrx/store';
-import {MessageService} from '@fe/app/util/message.service';
-import {UserService} from '@fe/app/people/user.service';
 import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
-import * as  _ from 'lodash';
+import * as _ from 'lodash';
 import {isNotEmpty} from '@shared/util/util';
 
 @Component({
@@ -19,18 +16,14 @@ export class UserDepartmentBoxWidgetSettingsComponent extends CustomUserSettings
 
     private static DEFAULT_LIMIT = 10;
 
+    private readonly fb = inject(FormBuilder);
+
     protected form: FormGroup;
     protected reasonOptions: Array<BoxStatusChangeReason> = Object.values(BoxStatusChangeReason);
     protected dateOptions: Array<DateIntervalSpecifier> = DepartmentBoxInfoSinceDateValues;
 
-    constructor(store: Store,
-                msg: MessageService,
-                userService: UserService,
-                private readonly fb: FormBuilder) {
-        super(store, msg, userService);
-    }
-
-    public ngOnInit(): void {
+    constructor() {
+        super();
         this.initForm();
     }
 
@@ -39,7 +32,7 @@ export class UserDepartmentBoxWidgetSettingsComponent extends CustomUserSettings
     }
 
     protected override generateNewSettings(): UserSettings {
-        const newSettings = _.defaultsDeep({}, this.settings);
+        const newSettings = _.defaultsDeep({}, this.settings());
         const reasons = this.form.value.reasons;
         _.set(newSettings, 'dashboard.widgets.departmentBox', {
             ...this.form.value,
@@ -50,7 +43,7 @@ export class UserDepartmentBoxWidgetSettingsComponent extends CustomUserSettings
     }
 
     private initForm(): void {
-        const boxWidget = this.settings.dashboard?.widgets?.departmentBox;
+        const boxWidget = this.settings().dashboard?.widgets?.departmentBox;
         this.form = this.fb.group({
             needed: [boxWidget?.needed ?? false],
             index: [boxWidget?.index ?? 1],

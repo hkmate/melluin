@@ -6,7 +6,7 @@
                 <span>({{ patientInfo.child | childAge : visitDate }})</span>
 
                 @if (needParentInfo()) {
-                    <app-parent-info-icon [isParentThere]="patientInfo.isParentThere"></app-parent-info-icon>
+                    <app-parent-info-icon [isParentThere]="patientInfo.isParentThere"/>
                 }
             </mat-card-subtitle>
         </mat-card-header>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 import {Observable} from 'rxjs';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
@@ -11,18 +11,17 @@ import {isNotNil} from '@shared/util/util';
     templateUrl: './child-filler-list.component.html',
     styleUrls: ['./child-filler-list.component.scss']
 })
-export class ChildFillerListComponent implements OnInit {
+export class ChildFillerListComponent {
+
+    protected readonly permissions = inject(PermissionService);
+    private readonly filler = inject(HospitalVisitActivityFillerService);
 
     protected readonly Permission = Permission;
 
     protected children$: Observable<Array<VisitedChild>>;
     protected creatingInProcess = false;
 
-    constructor(protected readonly permissions: PermissionService,
-                private readonly filler: HospitalVisitActivityFillerService) {
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.children$ = this.filler.getChildren();
     }
 

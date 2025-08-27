@@ -4,20 +4,17 @@
     <mat-tab-group dynamicHeight>
         <mat-tab [label]="'PersonPage.EventListSettings.Title' | translate">
             <div class="tab-content">
-                <app-user-event-list-settings-editor [userId]="userId" [settings]="settings">
-                </app-user-event-list-settings-editor>
+                <app-user-event-list-settings-editor [userId]="userId()" [settings]="settings()"/>
             </div>
         </mat-tab>
         <mat-tab [label]="'PersonPage.HomePageSettings.Title' | translate">
             <div class="tab-content">
-                <app-user-home-page-settings-editor [userId]="userId" [settings]="settings">
-                </app-user-home-page-settings-editor>
+                <app-user-home-page-settings-editor [userId]="userId()" [settings]="settings()"/>
             </div>
         </mat-tab>
         <mat-tab [label]="'PersonPage.DepartmentBoxesWidgetSettings.Title' | translate">
             <div class="tab-content">
-                <app-user-department-box-widget-settings [userId]="userId" [settings]="settings">
-                </app-user-department-box-widget-settings>
+                <app-user-department-box-widget-settings [userId]="userId()" [settings]="settings()"/>
             </div>
         </mat-tab>
     </mat-tab-group>

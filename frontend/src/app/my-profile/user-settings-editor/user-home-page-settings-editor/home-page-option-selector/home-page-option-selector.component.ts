@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, input} from '@angular/core';
 import {HomePageOption} from '@shared/user/user-settings';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {NOOP, VoidFunc} from '@shared/util/util';
@@ -15,8 +15,7 @@ import {NOOP, VoidFunc} from '@shared/util/util';
 })
 export class HomePageOptionSelectorComponent implements ControlValueAccessor {
 
-    @Input()
-    public label: string;
+    public readonly label = input.required<string>();
 
     protected selected: HomePageOption;
     protected options: Array<HomePageOption> = Object.values(HomePageOption);

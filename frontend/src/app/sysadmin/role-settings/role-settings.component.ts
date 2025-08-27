@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {AppTitle} from '@fe/app/app-title.service';
 import {RoleService} from '@fe/app/sysadmin/role-settings/role.service';
 import {Permission} from '@shared/user/permission.enum';
-import {TableDataSource} from '@fe/app/util/table-data-source';
 import {isNil, isNotNil, NOOP} from '@shared/util/util';
 import {Role, RoleType} from '@shared/user/role';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
@@ -17,23 +16,23 @@ type RoleEdit = Role & {
     templateUrl: './role-settings.component.html',
     styleUrls: ['./role-settings.component.scss']
 })
-export class RoleSettingsComponent implements OnInit {
+export class RoleSettingsComponent {
+
+    private readonly title = inject(AppTitle);
+    private readonly translate = inject(TranslateService);
+    private readonly confirm = inject(ConfirmationService);
+    private readonly roleService = inject(RoleService);
 
     protected readonly roleTypeOptions = Object.values(RoleType);
     protected readonly permissionOptions = Object.values(Permission);
-    protected tableHeaders = ['name', 'type', 'permissions', 'options'];
-    protected rolesTableDataSource = new TableDataSource<Role>();
+    protected readonly tableHeaders = ['name', 'type', 'permissions', 'options'];
+
+    protected items = signal<Array<Role>>([]);
     protected editions: Partial<Record<string, RoleEdit>> = {};
     protected originalRoles: Array<Role>;
     protected creation = false;
 
-    constructor(private readonly title: AppTitle,
-                private readonly translate: TranslateService,
-                private readonly confirm: ConfirmationService,
-                private readonly roleService: RoleService) {
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.title.setTitleByI18n('Sysadmin.RoleSettings.Title');
         this.initRoles();
     }
@@ -51,7 +50,7 @@ export class RoleSettingsComponent implements OnInit {
         this.roleService.update({...role, ...roleChanges}).subscribe({
             next: (newRole: Role) => {
                 this.changeRoleInOriginal(newRole);
-                this.rolesTableDataSource.emit(this.originalRoles);
+                this.items.set(this.originalRoles);
                 this.closeEdition(role.id);
             },
             error: () => {
@@ -80,7 +79,7 @@ export class RoleSettingsComponent implements OnInit {
     protected closeCreation(newRole: Role | undefined): void {
         if (isNotNil(newRole)) {
             this.originalRoles.push(newRole);
-            this.rolesTableDataSource.emit(this.originalRoles);
+            this.items.set(this.originalRoles);
         }
         this.creation = false;
     }
@@ -88,7 +87,7 @@ export class RoleSettingsComponent implements OnInit {
     private initRoles(): void {
         this.roleService.getAll().subscribe(value => {
             this.originalRoles = value;
-            this.rolesTableDataSource.emit(value);
+            this.items.set(value);
         });
     }
 

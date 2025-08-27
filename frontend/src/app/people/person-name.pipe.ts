@@ -1,4 +1,4 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import {inject, Pipe, PipeTransform} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {Person} from '@shared/person/person';
 import {isNil} from '@shared/util/util';
@@ -10,8 +10,7 @@ import {AppLanguage} from '@fe/app/language/app-language';
 })
 export class PersonNamePipe implements PipeTransform {
 
-    constructor(private readonly i18n: TranslateService) {
-    }
+    private readonly i18n = inject(TranslateService);
 
     public transform(person: Person): string {
         if (isNil(person)) {

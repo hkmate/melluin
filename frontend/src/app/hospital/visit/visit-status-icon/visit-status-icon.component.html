@@ -1,6 +1,6 @@
-<span [class]="visitStatus">
-    <mat-icon [matTooltipDisabled]="tooltipDisabled"
-              [matTooltip]="'HospitalVisitStatus.' + visitStatus | translate">
-        {{icon}}
+<span [class]="status()">
+    <mat-icon [matTooltipDisabled]="tooltipDisabled()"
+              [matTooltip]="'HospitalVisitStatus.' + status() | translate">
+        {{ icon() }}
     </mat-icon>
 </span>

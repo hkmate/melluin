@@ -1,19 +1,16 @@
 <h1>{{ 'PersonPage.User.EditData' | translate }}</h1>
 
 <form [formGroup]="form">
-
     <div>
         <app-trimmed-text-input formControlName="userName"
                                 [placeholder]="'PersonPage.User.Form.UserNamePlaceholder' | translate"
-                                [label]="'PersonPage.User.Form.UserName'| translate">
-        </app-trimmed-text-input>
+                                [label]="'PersonPage.User.Form.UserName'| translate"/>
     </div>
 
     <div>
         <app-trimmed-text-input formControlName="password"
                                 [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
-                                [label]="'PersonPage.User.Form.Password'| translate">
-        </app-trimmed-text-input>
+                                [label]="'PersonPage.User.Form.Password'| translate"/>
     </div>
 
     <div>
@@ -54,5 +51,4 @@
             {{ 'CancelButton' | translate }}
         </button>
     </div>
-
 </form>

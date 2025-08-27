@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, effect, inject, signal} from '@angular/core';
 import {Pageable, PageQuery} from '@shared/api-util/pageable';
 import {Person} from '@shared/person/person';
 import {PeopleService} from '@fe/app/people/people.service';
@@ -6,16 +6,15 @@ import {AppTitle} from '@fe/app/app-title.service';
 import {PageEvent} from '@angular/material/paginator';
 import {SortOptions} from '@shared/api-util/sort-options';
 import {FilterOptions} from '@shared/api-util/filter-options';
-import {TableDataSource} from '@fe/app/util/table-data-source';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {PeopleListFilterService} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter.service';
-import {AutoUnSubscriber} from '@fe/app/util/auto-un-subscriber';
 import {Permission} from '@shared/user/permission.enum';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {PeopleListQueryParamSettingsInitializer} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-param-settings-initializer';
 import {PeopleListQueryParamHandler} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-param-handler';
 import {PeopleListFilterSensitiveDataHider} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter-sensitive-data-hider';
 import _ from 'lodash';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-people-list',
@@ -29,7 +28,12 @@ import _ from 'lodash';
         PeopleListFilterSensitiveDataHider
     ]
 })
-export class PeopleListComponent extends AutoUnSubscriber implements OnInit {
+export class PeopleListComponent {
+
+    private readonly title = inject(AppTitle);
+    protected readonly permissions = inject(PermissionService);
+    private readonly peopleService = inject(PeopleService);
+    private readonly filterService = inject(PeopleListFilterService);
 
     Permission = Permission;
 
@@ -37,7 +41,7 @@ export class PeopleListComponent extends AutoUnSubscriber implements OnInit {
     protected readonly sizeOptions = [20, 50, 100];
     protected readonly columns = ['name', 'status', 'email', 'phone', 'lastLogin', 'created', 'createdBy', 'options'];
 
-    protected tableDataSource = new TableDataSource<Person>();
+    protected items = signal<Array<Person>>([]);
     protected page: number;
     protected size: number;
     protected countOfAll: number;
@@ -48,19 +52,13 @@ export class PeopleListComponent extends AutoUnSubscriber implements OnInit {
         lastName: 'ASC'
     };
 
-    constructor(private readonly title: AppTitle,
-                protected readonly permissions: PermissionService,
-                private readonly peopleService: PeopleService,
-                private readonly filterService: PeopleListFilterService) {
-        super();
-    }
-
-    public ngOnInit(): void {
+    constructor() {
         this.title.setTitleByI18n('Titles.PeopleList');
-        this.addSubscription(this.filterService.onChange(), () => {
+        this.filterService.onChange().pipe(takeUntilDestroyed()).subscribe(() => {
             this.setUpPageInfo();
             this.loadData();
         });
+        effect(() => this.setUpCreators(), {allowSignalWrites: true});
     }
 
     protected paginateHappened(event: PageEvent): void {
@@ -76,8 +74,7 @@ export class PeopleListComponent extends AutoUnSubscriber implements OnInit {
     private loadData(page?: number, size?: number): void {
         this.peopleService.findPeople(this.createPageRequest(page, size)).subscribe(
             (page: Pageable<Person>) => {
-                this.tableDataSource.emit(page.items);
-                this.setUpCreators(page.items);
+                this.items.set(page.items);
                 this.page = page.meta.currentPage;
                 this.countOfAll = page.meta.totalItems!;
                 this.size = page.meta.itemsPerPage;
@@ -98,8 +95,8 @@ export class PeopleListComponent extends AutoUnSubscriber implements OnInit {
         return this.filterService.generateFilterOptions();
     }
 
-    private setUpCreators(persons: Array<Person>): void {
-        const creatorIds = persons.map(person => person.createdByPersonId);
+    private setUpCreators(): void {
+        const creatorIds = this.items().map(person => person.createdByPersonId);
         const uniqueCreatorIds = _.uniq(creatorIds);
         this.peopleService.findPeople({
             page: 1,

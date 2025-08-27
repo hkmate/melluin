@@ -1,13 +1,12 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({providedIn: 'root'})
 export class AppTitle {
 
-    constructor(private readonly title: Title,
-                private readonly translate: TranslateService) {
-    }
+    private readonly title = inject(Title);
+    private readonly translate = inject(TranslateService);
 
     public setTitleByI18n(i18nKey: string): void {
         this.title.setTitle(

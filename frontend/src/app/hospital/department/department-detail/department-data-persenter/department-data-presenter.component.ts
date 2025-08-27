@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {Department} from '@shared/department/department';
 
 @Component({
@@ -8,7 +8,6 @@ import {Department} from '@shared/department/department';
 })
 export class DepartmentDataPresenterComponent {
 
-    @Input()
-    public department?: Department;
+    public readonly department = input<Department>();
 
 }
