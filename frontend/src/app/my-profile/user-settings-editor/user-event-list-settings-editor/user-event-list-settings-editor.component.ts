@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {EventsDateFilterValues, UserSettings} from '@shared/user/user-settings';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
@@ -18,37 +18,36 @@ export class UserEventListSettingsEditorComponent extends CustomUserSettingsEdit
     private readonly fb = inject(FormBuilder);
     private readonly departmentService = inject(DepartmentService);
 
-    protected form: FormGroup;
+    protected form = computed(() => this.initForm());
     protected statusOptions: Array<HospitalVisitStatus> = Object.values(HospitalVisitStatus);
     protected departmentOptions: Array<Department>;
     protected dateOptions: Array<DateIntervalSpecifier> = EventsDateFilterValues;
 
     constructor() {
         super();
-        this.initForm();
         this.initDepartmentOptions();
     }
 
     protected override isSaveBtnDisabled(): boolean {
-        return this.form.invalid || super.isSaveBtnDisabled();
+        return this.form().invalid || super.isSaveBtnDisabled();
     }
 
     protected override generateNewSettings(): UserSettings {
         return {
             ...this.settings(),
             eventList: {
-                dateFilter: this.form.controls.dateFilter.value,
-                statuses: this.form.controls.statuses.value,
-                departmentIds: this.form.controls.departmentIds.value,
-                participantIds: this.form.controls.participantIds.value,
-                needHighlight: this.form.controls.needHighlight.value,
+                dateFilter: this.form().controls.dateFilter.value,
+                statuses: this.form().controls.statuses.value,
+                departmentIds: this.form().controls.departmentIds.value,
+                participantIds: this.form().controls.participantIds.value,
+                needHighlight: this.form().controls.needHighlight.value,
             }
         }
     }
 
-    private initForm(): void {
+    private initForm(): FormGroup {
         const eventList = this.settings().eventList;
-        this.form = this.fb.group({
+        return this.fb.group({
             dateFilter: [eventList?.dateFilter],
             participantIds: [eventList?.participantIds],
             statuses: [eventList?.statuses],

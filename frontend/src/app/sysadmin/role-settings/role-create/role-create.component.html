@@ -7,19 +7,23 @@
     </div>
 
     <div class="role-type">
-        <mat-select [(ngModel)]="newRole.type">
-            @for (option of roleTypeOptions; track option) {
-                <mat-option [value]="option">{{ option }}</mat-option>
-            }
-        </mat-select>
+        <mat-form-field>
+            <mat-select [(ngModel)]="newRole.type">
+                @for (option of roleTypeOptions; track option) {
+                    <mat-option [value]="option">{{ option }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
     </div>
 
     <div class="role-permission">
-        <mat-select [(ngModel)]="newRole.permissions" multiple>
-            @for (option of permissionOptions; track option) {
-                <mat-option [value]="option">{{ option }}</mat-option>
-            }
-        </mat-select>
+        <mat-form-field>
+            <mat-select [(ngModel)]="newRole.permissions" multiple>
+                @for (option of permissionOptions; track option) {
+                    <mat-option [value]="option">{{ option }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
     </div>
 
     <div class="btns">

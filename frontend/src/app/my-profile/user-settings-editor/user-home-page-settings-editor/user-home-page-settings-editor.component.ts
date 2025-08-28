@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {UserSettings} from '@shared/user/user-settings';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
@@ -12,29 +12,24 @@ export class UserHomePageSettingsEditorComponent extends CustomUserSettingsEdito
 
     private readonly fb = inject(FormBuilder);
 
-    protected form: FormGroup;
-
-    constructor() {
-        super();
-        this.initForm();
-    }
+    protected form = computed(() => this.initForm());
 
     protected override isSaveBtnDisabled(): boolean {
-        return this.form.invalid || super.isSaveBtnDisabled();
+        return this.form().invalid || super.isSaveBtnDisabled();
     }
 
     protected override generateNewSettings(): UserSettings {
         return {
             ...this.settings(),
             homePage: {
-                inDesktop: this.form.controls.inDesktop.value,
-                inMobile: this.form.controls.inMobile.value
+                inDesktop: this.form().controls.inDesktop.value,
+                inMobile: this.form().controls.inMobile.value
             }
         }
     }
 
-    private initForm(): void {
-        this.form = this.fb.group({
+    private initForm(): FormGroup {
+        return this.fb.group({
             inDesktop: [this.settings().homePage?.inDesktop],
             inMobile: [this.settings().homePage?.inMobile],
         });

@@ -1,6 +1,6 @@
 <div class="event-list-settings">
-    @if (form) {
-        <form [formGroup]="form">
+    @if (form()) {
+        <form [formGroup]="form()">
 
             <div class="date-interval-selector">
                 <mat-form-field>

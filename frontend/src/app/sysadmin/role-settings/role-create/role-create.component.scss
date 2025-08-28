@@ -6,6 +6,9 @@
 
     .role-name, .role-type, .role-permission {
         width: 30%;
+        mat-form-field {
+            width: 100%;
+        }
     }
 
     .role-name {
