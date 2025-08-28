@@ -1,6 +1,6 @@
 <div class="home-page-settings">
-    @if (form) {
-        <form [formGroup]="form">
+    @if (form()) {
+        <form [formGroup]="form()">
 
             <div class="in-mobile-card">
                 <app-home-page-option-selector [label]="'PersonPage.HomePageSettings.InMobile' | translate"

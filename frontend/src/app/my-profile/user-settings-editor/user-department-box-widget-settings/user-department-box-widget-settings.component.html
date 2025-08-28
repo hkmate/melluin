@@ -1,6 +1,6 @@
 <div class="department-box-widget-settings">
-    @if (form) {
-        <form [formGroup]="form">
+    @if (form()) {
+        <form [formGroup]="form()">
 
             <div class="needed-card">
                 <mat-card class="form-card">

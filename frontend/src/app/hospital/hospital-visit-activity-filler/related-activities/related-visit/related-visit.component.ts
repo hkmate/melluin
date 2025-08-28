@@ -32,7 +32,7 @@ export class RelatedVisitComponent {
         effect(() => {
             this.visitDate = new Date(this.wrappedActivity().hospitalVisit.dateTimeFrom);
             this.setupActivities();
-        });
+        }, {allowSignalWrites: true});
     }
 
     private setupActivities(): void {

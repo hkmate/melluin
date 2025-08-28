@@ -35,7 +35,7 @@ export class DepartmentDataFormComponent {
             name: [dep?.name, [Validators.required]],
             address: [dep?.address, [Validators.required]],
             validFrom: [
-                {value: dep?.validFrom, disabled: isNotNil(this.department)},
+                {value: dep?.validFrom, disabled: isNotNil(this.department())},
                 [Validators.required]
             ],
             validTo: [dep?.validTo, []],
