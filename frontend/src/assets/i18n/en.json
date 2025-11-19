@@ -81,6 +81,7 @@
         "TALE_TELLING": "Tale telling",
         "DRAWING": "Drawing",
         "BOARD_GAME": "Board game",
+        "WALKING": "Walking",
         "OTHER": "Other"
     },
     "DateIntervalSpecifier": {

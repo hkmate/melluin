@@ -13,6 +13,7 @@ export enum VisitActivityType {
     TALE_TELLING = 'TALE_TELLING',
     DRAWING = 'DRAWING',
     BOARD_GAME = 'BOARD_GAME',
+    WALKING = 'WALKING',
     OTHER = 'OTHER',
 
 }

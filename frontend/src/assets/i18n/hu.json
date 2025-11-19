@@ -83,6 +83,7 @@
         "TALE_TELLING": "Mesélés",
         "DRAWING": "Rajzolás",
         "BOARD_GAME": "Társasjáték",
+        "WALKING": "Séta",
         "OTHER": "Egyéb"
     },
     "DateIntervalSpecifier": {
