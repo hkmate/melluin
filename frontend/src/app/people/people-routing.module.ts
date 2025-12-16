@@ -35,5 +35,5 @@ const routes: Routes = [
     ],
     exports: [RouterModule]
 })
-export class PeopleRoutingModule {
+export default class PeopleRoutingModule {
 }

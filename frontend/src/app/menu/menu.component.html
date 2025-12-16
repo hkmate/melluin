@@ -23,6 +23,7 @@
                    routerLink="/hospital-departments">
                     {{ 'Menu.Departments' | translate }}
                 </a>
+                <a *ngIf="canUserSee?.statistics" mat-list-item routerLink="/statistics">{{ 'Menu.Statistics' | translate }}</a>
                 <a *ngIf="canUserSee?.admin" mat-list-item routerLink="/admin">{{ 'Menu.System' | translate }}</a>
                 <a *ngIf="isThereQuestionnaire()" mat-list-item routerLink="/questionnaire">{{ 'Menu.Questionnaire' | translate }}</a>
                 <mat-divider/>

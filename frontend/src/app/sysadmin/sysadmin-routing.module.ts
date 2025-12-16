@@ -29,5 +29,5 @@ const routes: Routes = [
     ],
     exports: [RouterModule]
 })
-export class SysadminRoutingModule {
+export default class SysadminRoutingModule {
 }

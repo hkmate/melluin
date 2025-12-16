@@ -18,5 +18,5 @@ const routes: Routes = [
     ],
     exports: [RouterModule]
 })
-export class QuestionnaireRoutingModule {
+export default class QuestionnaireRoutingModule {
 }

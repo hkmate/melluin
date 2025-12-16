@@ -1,0 +1,15 @@
+.date-interval-filter {
+
+    display: flex;
+    justify-content: space-between;
+
+    mat-date-range-input {
+        display: inline-block;
+        width: 0;
+    }
+
+    .interval {
+        font-size: medium;
+        margin: auto 0;
+    }
+}
