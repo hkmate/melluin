@@ -1,3 +1,5 @@
+import {DepartmentCity} from '@shared/department/department-city';
+
 export interface Department {
 
     id: string;
@@ -5,6 +7,7 @@ export interface Department {
     validFrom: string;
     validTo?: string;
     address: string;
+    city: DepartmentCity;
     diseasesInfo?: string;
     note?: string;
 

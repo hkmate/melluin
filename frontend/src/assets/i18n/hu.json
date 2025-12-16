@@ -251,6 +251,7 @@
         "ListHeader": {
             "Name": "Név",
             "Address": "Cím",
+            "City": "Város",
             "ValidFrom": "Érvényesség kezdete",
             "ValidTo": "Érvényesség vége"
         },
@@ -276,6 +277,7 @@
             "ValidFrom": "Érvényesség kezdete",
             "ValidTo": "Érvényesség vége",
             "Address": "Cím",
+            "City": "Város",
             "DiseasesInfo": "Információ az itt kezelt betegekről",
             "Note": "Megjegyzés"
         },
@@ -284,6 +286,7 @@
             "NamePlaceholder": "Belgyógyászat",
             "Address": "Cím",
             "AddressPlaceholder": "Kórház u. 1.",
+            "City": "Város",
             "ValidFrom": "Érvényesség kezdete",
             "ValidTo": "Érvényesség vége",
             "DiseasesInfo": "Info a betegekről",
@@ -406,5 +409,10 @@
     "Questionnaire": {
         "ForChild": "Kérdőív gyerekeknek",
         "ForParent": "Kérdőív szülőknek"
+    },
+    "DepartmentCity": {
+        "PECS": "Pécs",
+        "KAPOSVAR": "Kaposvár",
+        "SZIGETVAR": "Szigetvár"
     }
 }

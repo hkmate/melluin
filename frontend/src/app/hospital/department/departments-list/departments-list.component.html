@@ -29,6 +29,13 @@
                 </td>
             </ng-container>
 
+            <ng-container matColumnDef="city">
+                <th mat-header-cell *matHeaderCellDef>{{ 'DepartmentListPage.ListHeader.City' | translate }}</th>
+                <td mat-cell *matCellDef="let department">
+                    <span>{{ 'DepartmentCity.' + department.city | translate }}</span>
+                </td>
+            </ng-container>
+
             <ng-container matColumnDef="validFrom">
                 <th mat-header-cell *matHeaderCellDef>{{ 'DepartmentListPage.ListHeader.ValidFrom' | translate }}</th>
                 <td mat-cell *matCellDef="let department">

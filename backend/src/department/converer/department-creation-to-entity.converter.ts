@@ -24,6 +24,7 @@ export class DepartmentCreationToEntityConverter implements Converter<Department
             id: randomUUID(),
             name: dto.name,
             address: dto.address,
+            city: dto.city,
             note: dto.note ?? null,
             diseasesInfo: dto.diseasesInfo ?? null,
             validFrom: new Date(dto.validFrom),

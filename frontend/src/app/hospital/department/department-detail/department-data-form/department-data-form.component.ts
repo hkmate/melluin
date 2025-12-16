@@ -4,6 +4,7 @@ import {allNil, isNil, isNotNil} from '@shared/util/util';
 import {DepartmentCreation} from '@shared/department/department-creation';
 import {DepartmentUpdateChangeSet} from '@shared/department/department-update-change-set';
 import {Department} from '@shared/department/department';
+import {DepartmentCity} from '@shared/department/department-city';
 
 @Component({
     selector: 'app-department-data-form',
@@ -11,6 +12,8 @@ import {Department} from '@shared/department/department';
     styleUrls: ['./department-data-form.component.scss']
 })
 export class DepartmentDataFormComponent {
+
+    protected readonly cityOptions = Object.keys(DepartmentCity);
 
     private readonly fb = inject(FormBuilder);
 
@@ -34,6 +37,7 @@ export class DepartmentDataFormComponent {
         return this.fb.group({
             name: [dep?.name, [Validators.required]],
             address: [dep?.address, [Validators.required]],
+            city: [dep?.city, [Validators.required]],
             validFrom: [
                 {value: dep?.validFrom, disabled: isNotNil(this.department())},
                 [Validators.required]
@@ -55,6 +59,7 @@ export class DepartmentDataFormComponent {
         const data = new DepartmentCreation();
         data.name = this.form().controls.name.value;
         data.address = this.form().controls.address.value;
+        data.city = this.form().controls.city.value;
         data.validFrom = this.form().controls.validFrom.value;
         data.validTo = this.form().controls.validTo.value;
         data.diseasesInfo = this.form().controls.diseasesInfo.value;
@@ -66,6 +71,7 @@ export class DepartmentDataFormComponent {
         const data = new DepartmentUpdateChangeSet();
         this.addFieldIfDifferentThenStored(data, 'name');
         this.addFieldIfDifferentThenStored(data, 'address');
+        this.addFieldIfDifferentThenStored(data, 'city');
         this.addFieldIfDifferentThenStored(data, 'validTo');
         this.addFieldIfDifferentThenStored(data, 'diseasesInfo');
         this.addFieldIfDifferentThenStored(data, 'note');

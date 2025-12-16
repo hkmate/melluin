@@ -38,6 +38,13 @@
 
     <mat-card>
         <mat-card-header>
+            <mat-card-subtitle>{{ 'DepartmentPage.Present.City' | translate }}</mat-card-subtitle>
+            <mat-card-title>{{ 'DepartmentCity.'+ departmentValue?.city | translate }}</mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.DiseasesInfo' | translate }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>{{ departmentValue?.diseasesInfo | optional }}</mat-card-content>
