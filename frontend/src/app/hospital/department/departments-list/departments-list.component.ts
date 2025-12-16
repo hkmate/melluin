@@ -33,7 +33,7 @@ export class DepartmentsListComponent {
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [10, 20, 50];
-    protected readonly columns = ['name', 'address', 'validFrom', 'validTo', 'options'];
+    protected readonly columns = ['name', 'address', 'city', 'validFrom', 'validTo', 'options'];
 
     protected readonly items = signal<Array<Department>>([]);
     protected page: number;

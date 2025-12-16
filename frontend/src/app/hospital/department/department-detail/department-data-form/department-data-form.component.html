@@ -24,6 +24,17 @@
 
     <div>
         <mat-form-field>
+            <mat-label>{{ 'DepartmentPage.Form.City' | translate }}</mat-label>
+            <mat-select formControlName="city">
+                @for (city of cityOptions; track city) {
+                    <mat-option [value]="city">{{ 'DepartmentCity.' + city | translate }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field>
             <mat-label>{{ 'DepartmentPage.Form.ValidFrom' | translate }}</mat-label>
             <input matInput
                    [matDatepicker]="validFromPicker"
@@ -69,13 +80,13 @@
                 color="accent"
                 (click)="onSubmit()"
                 type="button">
-            {{ 'SaveButton' | translate}}
+            {{ 'SaveButton' | translate }}
         </button>
         <button mat-stroked-button
                 color="primary"
                 type="button"
                 (click)="cancelEditing()">
-            {{ 'CancelButton' | translate}}
+            {{ 'CancelButton' | translate }}
         </button>
     </div>
 </form>
