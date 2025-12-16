@@ -45,6 +45,10 @@ export const PATHS: PathContainer = {
         roles: 'roles'
     },
 
+    statistics: {
+        main: 'statistics'
+    },
+
     questionnaire: {
         main: 'questionnaire'
     }

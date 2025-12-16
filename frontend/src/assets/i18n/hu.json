@@ -5,6 +5,7 @@
         "Login": "Bejelentkezés",
         "PeopleList": "Személyek",
         "DepartmentList": "Osztályok",
+        "Statistics": "Statisztika",
         "EventsList": "Események",
         "NotFound": "404"
     },
@@ -107,6 +108,7 @@
         "Reports": "Beszámolók",
         "Notifications": "Értesítések",
         "Departments": "Kórházi osztályok",
+        "Statistics": "Statisztika",
         "System": "Rendszer",
         "Logout": "Kijelentkezés",
         "Dashboard": "Infók",
@@ -253,6 +255,16 @@
             "ValidTo": "Érvényesség vége"
         },
         "OnlyValid": "Csak az aktuálisak."
+    },
+    "StatisticsPage": {
+        "Generate": "Lekérés",
+        "Filter": "Szűrés",
+        "Widget": {
+            "Chart": "Diagram",
+            "Table": "Táblázat",
+            "Export": "Export",
+            "Loading": "Betöltés..."
+        }
     },
     "DepartmentPage": {
         "Data": "Adatok",

@@ -1,0 +1,45 @@
+<mat-accordion>
+    <mat-expansion-panel #panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                @if (panel.expanded) {
+                    {{ 'StatisticsPage.Filter' | translate }}
+                } @else {
+                    {{ fromControl.value | date : ('EventShortDateFormat' | translate) }}
+                    -
+                    {{ toControl.value | date : ('EventShortDateFormat' | translate) }}
+                }
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+
+        <form [formGroup]="form" (ngSubmit)="submitForm()">
+            <div>
+                <div class="date-interval-filter" (click)="picker.open()">
+                    <span class="interval">
+                        {{ fromControl.value | date : ('EventShortDateFormat' | translate) }}
+                        -
+                        {{ toControl.value | date : ('EventShortDateFormat' | translate) }}
+                    </span>
+                    <span class="picker">
+                        <mat-date-range-input class="hidden" [rangePicker]="picker">
+                            <input matStartDate [formControl]="fromControl">
+                            <input matEndDate [formControl]="toControl">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"/>
+                        <mat-date-range-picker #picker [touchUi]="mobileScreen"/>
+                    </span>
+                </div>
+
+
+                <div>
+                    <button mat-flat-button
+                            color="accent"
+                            type="submit">
+                        {{ 'StatisticsPage.Generate' | translate }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+</mat-accordion>

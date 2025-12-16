@@ -11,7 +11,7 @@ import {NavigatorComponent} from '@fe/app/navigator.component';
 const routes: Routes = [
     {
         path: PATHS.login.main,
-        loadChildren: () => import('./login/login-routing.module').then(m => m.LoginRoutingModule)
+        loadChildren: () => import('./login/login-routing.module')
     },
     {
         path: PATHS.dashboard.main,
@@ -24,12 +24,12 @@ const routes: Routes = [
         data: {
             permissions: [Permission.canSearchPerson, Permission.canReadPerson]
         },
-        loadChildren: () => import('./people/people-routing.module').then(m => m.PeopleRoutingModule)
+        loadChildren: () => import('./people/people-routing.module')
     },
     {
         path: PATHS.myProfile.main,
         canMatch: [AuthGuardFn],
-        loadChildren: () => import('./my-profile/my-profile-routing.module').then(m => m.MyProfileRoutingModule)
+        loadChildren: () => import('./my-profile/my-profile-routing.module')
     },
     {
         path: PATHS.hospitalDepartments.main,
@@ -37,7 +37,7 @@ const routes: Routes = [
         data: {
             permissions: [Permission.canSearchDepartment]
         },
-        loadChildren: () => import('./hospital/department/hospital-department-routing.module').then(m => m.HospitalDepartmentRoutingModule)
+        loadChildren: () => import('./hospital/department/hospital-department-routing.module')
     },
     {
         path: PATHS.events.main,
@@ -45,7 +45,7 @@ const routes: Routes = [
         data: {
             permissions: [Permission.canReadVisit]
         },
-        loadChildren: () => import('./events/events-routing.module').then(m => m.EventsRoutingModule)
+        loadChildren: () => import('./events/events-routing.module')
     },
     {
         path: PATHS.hospitalVisit.main,
@@ -53,15 +53,19 @@ const routes: Routes = [
         data: {
             permissions: [Permission.canReadVisit]
         },
-        loadChildren: () => import('./hospital/hospital-visit-routing.module').then(m => m.HospitalVisitRoutingModule)
+        loadChildren: () => import('./hospital/hospital-visit-routing.module')
+    },
+    {
+        path: PATHS.statistics.main,
+        loadChildren: () => import('./statistics/statistics-routing.module')
     },
     {
         path: PATHS.sysadmin.main,
-        loadChildren: () => import('./sysadmin/sysadmin-routing.module').then(m => m.SysadminRoutingModule)
+        loadChildren: () => import('./sysadmin/sysadmin-routing.module')
     },
     {
         path: PATHS.questionnaire.main,
-        loadChildren: () => import('./questionnaire/questionnaire-routing.module').then(m => m.QuestionnaireRoutingModule)
+        loadChildren: () => import('./questionnaire/questionnaire-routing.module')
     },
     {
         path: '',

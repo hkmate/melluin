@@ -35,5 +35,5 @@ const routes: Routes = [
     ],
     exports: [RouterModule]
 })
-export class HospitalDepartmentRoutingModule {
+export default class HospitalDepartmentRoutingModule {
 }

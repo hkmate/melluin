@@ -20,5 +20,5 @@ const routes: Routes = [
     ],
     exports: [RouterModule]
 })
-export class MyProfileRoutingModule {
+export default class MyProfileRoutingModule {
 }

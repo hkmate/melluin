@@ -25,12 +25,11 @@ export class MenuComponent {
 
     protected canUserSee?: Record<string, boolean>;
 
-    protected menuMode: 'side' | 'over' = 'side';
+    protected readonly menuMode: 'side' | 'over' = (this.platform.IOS || this.platform.ANDROID) ? 'over' : 'side';
     protected menuOpened = false;
     protected currentUser?: User;
 
     constructor() {
-        this.menuMode = (this.platform.IOS || this.platform.ANDROID) ? 'over' : 'side';
         this.store.pipe(selectCurrentUser, takeUntilDestroyed()).subscribe(cu => {
             this.currentUser = cu;
             this.menuOpened = !(this.platform.IOS || this.platform.ANDROID);
@@ -70,6 +69,7 @@ export class MenuComponent {
             'people': includeAny(permissions, Permission.canSearchPerson),
             'events': includeAny(permissions, Permission.canReadVisit),
             'departments': true,
+            'statistics': includeAny(permissions, Permission.canReadStatistics),
             'admin': includeAny(permissions, Permission.canManagePermissions),
         }
     }

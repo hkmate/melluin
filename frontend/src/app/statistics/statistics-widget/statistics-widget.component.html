@@ -1,0 +1,30 @@
+<div>
+
+    <div class="button-row">
+        <button mat-stroked-button color="primary" [disabled]="mode() === 'chart'" (click)="switchToChart()">
+            {{ 'StatisticsPage.Widget.Chart' | translate }}
+        </button>
+        <button mat-stroked-button color="primary" [disabled]="mode() === 'table'" (click)="switchToTable()">
+            {{ 'StatisticsPage.Widget.Table' | translate }}
+        </button>
+        <button mat-stroked-button color="primary" (click)="exportData()">
+            {{ 'StatisticsPage.Widget.Export' | translate }}
+        </button>
+    </div>
+
+
+    <div>
+        @if (mode() === 'chart') {
+            @if (chartData) {
+                <app-chart [chartId]="widgetId()" [data]="chartData"/>
+            } @else {
+                {{ 'StatisticsPage.Widget.Loading' | translate }}
+            }
+        } @else if (tableData) {
+            <app-statistic-widget-table [data]="tableData"/>
+        } @else {
+            {{ 'StatisticsPage.Widget.Loading' | translate }}
+        }
+    </div>
+
+</div>
