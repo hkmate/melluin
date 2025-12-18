@@ -1,3 +1,5 @@
+import {OperationCity} from '@shared/person/operation-city';
+
 export class PeopleFilter {
 
     public name: string;
@@ -5,5 +7,6 @@ export class PeopleFilter {
     public phone: string;
     public onlyActive: boolean;
     public roleNames: Array<string>;
+    public cities: Array<OperationCity>;
 
 }

@@ -10,6 +10,7 @@ import {Permission} from '@shared/user/permission.enum';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
 import {RoleBrief} from '@shared/user/role';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {OperationCity} from '@shared/person/operation-city';
 
 @Component({
     selector: 'app-people-list-filter',
@@ -17,6 +18,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     styleUrl: './people-list-filter.component.scss'
 })
 export class PeopleListFilterComponent {
+
+    protected readonly cityOptions = Object.keys(OperationCity);
 
     private readonly store = inject(Store);
     private readonly roleService = inject(GetRolesService);

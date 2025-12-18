@@ -1,6 +1,5 @@
-
 export type FilterOperator = 'eq' | 'neq' | 'lt' | 'lte' | 'gt' | 'gte'
-    | 'like' | 'ilike' | 'between' | 'in' | 'isNull' | 'notNull';
+    | 'like' | 'ilike' | 'between' | 'in' | 'isNull' | 'notNull' | 'jsonContains';
 
 export interface FilterOperation<T> {
     operator: FilterOperator,
@@ -42,6 +41,7 @@ export class FilterOperationBuilder {
     public static ilike = <T>(value: T): FilterOperation<T> => ({operator: 'ilike', operand: value});
     public static between = <T>(begin: T, end: T): FilterOperation<T> => ({operator: 'between', operand: [begin, end]});
     public static in = <T>(values: Array<T>): FilterOperation<T> => ({operator: 'in', operand: values});
+    public static jsonContains = <T>(values: Array<T>): FilterOperation<T> => ({operator: 'jsonContains', operand: values});
     public static isNull = (): FilterOperation<undefined> => ({operator: 'isNull', operand: undefined});
     public static notNull = (): FilterOperation<undefined> => ({operator: 'notNull', operand: undefined});
 

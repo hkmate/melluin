@@ -1,14 +1,14 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { In, Not, Repository } from 'typeorm';
-import { PersonEntity } from './model/person.entity';
-import { Pageable } from '@shared/api-util/pageable';
-import { WhereClosureConverter } from '@be/find-option-converter/where-closure.converter';
-import { isNil, isNilOrEmpty, isNotEmpty } from '@shared/util/util';
-import { PageCreator } from '@be/crud/page-creator';
-import { PageRequest } from '@be/crud/page-request';
-import { FilterOptionsFieldsConverter } from '@be/crud/convert/filter-options-fields-converter';
-import { FilterOperation } from '@shared/api-util/filter-options';
+import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
+import {InjectRepository} from '@nestjs/typeorm';
+import {In, Not, Repository} from 'typeorm';
+import {PersonEntity} from './model/person.entity';
+import {Pageable} from '@shared/api-util/pageable';
+import {WhereClosureConverter} from '@be/find-option-converter/where-closure.converter';
+import {isNil, isNilOrEmpty, isNotEmpty} from '@shared/util/util';
+import {PageCreator} from '@be/crud/page-creator';
+import {PageRequest} from '@be/crud/page-request';
+import {FilterOptionsFieldsConverter} from '@be/crud/convert/filter-options-fields-converter';
+import {FilterOperation} from '@shared/api-util/filter-options';
 
 @Injectable()
 export class PersonDao extends PageCreator<PersonEntity> {
@@ -24,21 +24,21 @@ export class PersonDao extends PageCreator<PersonEntity> {
 
     public findOne(id: string): Promise<PersonEntity | undefined> {
         return this.repository.findOne({
-            where: { id },
-            relations: { user: true },
+            where: {id},
+            relations: {user: true},
         }).then(entity => entity ?? undefined);
     }
 
     public findOneWithCache(id: string): Promise<PersonEntity | undefined> {
         return this.repository.findOne({
-            where: { id },
-            relations: { user: true },
+            where: {id},
+            relations: {user: true},
             cache: 10000,
         }).then(entity => entity ?? undefined);
     }
 
     public getOne(id: string): Promise<PersonEntity> {
-        return this.repository.findOne({ where: { id }, relations: { user: true } })
+        return this.repository.findOne({where: {id}, relations: {user: true}})
             .then(entity => {
                 if (isNil(entity)) {
                     throw new NotFoundException(`Person not found with id: ${id}`);
@@ -51,7 +51,7 @@ export class PersonDao extends PageCreator<PersonEntity> {
         if (isNilOrEmpty(email)) {
             return;
         }
-        const isEmailExist = await this.repository.exist({ where: { email } });
+        const isEmailExist = await this.repository.exist({where: {email}});
         if (isEmailExist) {
             throw new ConflictException('Email is already used.');
         }
@@ -61,7 +61,7 @@ export class PersonDao extends PageCreator<PersonEntity> {
         if (isNilOrEmpty(email)) {
             return;
         }
-        const isEmailExist = await this.repository.exist({ where: { email, id: Not(personId) } });
+        const isEmailExist = await this.repository.exist({where: {email, id: Not(personId)}});
         if (isEmailExist) {
             throw new ConflictException('Email is already used by someone else.');
         }

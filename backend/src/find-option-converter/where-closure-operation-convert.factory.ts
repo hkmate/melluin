@@ -10,14 +10,15 @@ import {
     Like,
     MoreThan,
     MoreThanOrEqual,
-    Not
+    Not,
+    Raw
 } from 'typeorm';
 import {Injectable} from '@nestjs/common';
 import {FindOperator} from 'typeorm/find-options/FindOperator';
 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type WhereClosureOperationConvert = (_:any) => FindOperator<any>;
+export type WhereClosureOperationConvert = (_: any) => FindOperator<any>;
 
 @Injectable()
 export class WhereClosureOperationConvertFactory {
@@ -35,6 +36,7 @@ export class WhereClosureOperationConvertFactory {
         in: <T>(values: Array<T>) => In(values),
         isNull: () => IsNull(),
         notNull: () => Not(IsNull()),
+        jsonContains: <T>(value: Array<T>) => Raw(alias => `${alias} ?| array[${value.map(x => `'${x}'`).join(', ')}]`)
     }
 
     public get(operator: FilterOperator): WhereClosureOperationConvert {
