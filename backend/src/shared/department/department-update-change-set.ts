@@ -1,6 +1,6 @@
 import {IsDateString, IsEnum, IsOptional, MinLength} from 'class-validator';
 import {nameMinLength} from '@shared/constants';
-import {DepartmentCity} from '@shared/department/department-city';
+import {OperationCity} from '@shared/person/operation-city';
 
 export class DepartmentUpdateChangeSet {
 
@@ -17,8 +17,8 @@ export class DepartmentUpdateChangeSet {
     address?: string;
 
     @IsOptional()
-    @IsEnum(DepartmentCity)
-    city: DepartmentCity;
+    @IsEnum(OperationCity)
+    city: OperationCity;
 
     @IsOptional()
     diseasesInfo?: string;

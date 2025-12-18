@@ -27,7 +27,7 @@
             <mat-label>{{ 'DepartmentPage.Form.City' | translate }}</mat-label>
             <mat-select formControlName="city">
                 @for (city of cityOptions; track city) {
-                    <mat-option [value]="city">{{ 'DepartmentCity.' + city | translate }}</mat-option>
+                    <mat-option [value]="city">{{ 'OperationCity.' + city | translate }}</mat-option>
                 }
             </mat-select>
         </mat-form-field>

@@ -20,13 +20,16 @@ import {RoleController} from '@be/user/role.controller';
 import {RoleDao} from '@be/user/role.dao';
 import {PermissionDao} from '@be/user/permission.dao';
 import {RoleCreationToEntityConverter} from '@be/user/converter/role-creation-to-entity.converter';
+import {UserActivationEntity} from '@be/user/model/user-activation.entity';
+import {UserActivationDao} from '@be/user/user-activation.dao';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([
             UserEntity,
             RoleEntity,
-            PermissionEntity
+            PermissionEntity,
+            UserActivationEntity,
         ]),
 
         PersonModule,
@@ -38,6 +41,7 @@ import {RoleCreationToEntityConverter} from '@be/user/converter/role-creation-to
         UserService,
         RoleDao,
         PermissionDao,
+        UserActivationDao,
         RoleService,
         UserSettingsService,
         UserCreationToEntityConverter,

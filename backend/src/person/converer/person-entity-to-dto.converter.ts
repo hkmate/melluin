@@ -27,6 +27,7 @@ export class PersonEntityToDtoConverter implements Converter<PersonEntity, Perso
             user: this.userConverter.convert(entity.user ?? undefined),
             firstName: entity.firstName,
             lastName: entity.lastName,
+            cities: entity.cities,
             email: entity.email ?? undefined,
             phone: entity.phone ?? undefined,
             created: entity.created?.toISOString(),

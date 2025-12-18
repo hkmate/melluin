@@ -1,24 +1,25 @@
-import { Test } from '@nestjs/testing';
-import { AuthService } from '@be/auth/service/auth.service';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
-import { UserDao } from '@be/user/user.dao';
-import { PersonDao } from '@be/person/person.dao';
-import { DefaultSysAdmin } from '@be/config/model/default-sys-admin';
-import { cast, randomString } from '@shared/util/test-util';
-import { PersonEntity } from '@be/person/model/person.entity';
-import { UserEntity } from '@be/user/model/user.entity';
+import {Test} from '@nestjs/testing';
+import {AuthService} from '@be/auth/service/auth.service';
+import {ConfigService} from '@nestjs/config';
+import {JwtService} from '@nestjs/jwt';
+import {UserDao} from '@be/user/user.dao';
+import {PersonDao} from '@be/person/person.dao';
+import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
+import {cast, randomString} from '@shared/util/test-util';
+import {PersonEntity} from '@be/person/model/person.entity';
+import {UserEntity} from '@be/user/model/user.entity';
 import * as crypto from 'crypto';
-import { randomUUID } from 'crypto';
-import { User } from '@shared/user/user';
-import { AuthInfo } from '@shared/user/auth-info';
-import { when } from 'jest-when';
-import { PasswordCryptService } from '@be/user/service/password-crypt.service';
-import { UserEntityToDtoModule } from '@be/user/user-entity-to-dto.module';
-import { BadRequestException } from '@nestjs/common';
-import { RoleDao } from '@be/user/role.dao';
-import { RoleBrief, RoleType } from '@shared/user/role';
+import {randomUUID} from 'crypto';
+import {User} from '@shared/user/user';
+import {AuthInfo} from '@shared/user/auth-info';
+import {when} from 'jest-when';
+import {PasswordCryptService} from '@be/user/service/password-crypt.service';
+import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
+import {BadRequestException} from '@nestjs/common';
+import {RoleDao} from '@be/user/role.dao';
+import {RoleBrief, RoleType} from '@shared/user/role';
 import * as Utils from '@be/util/util';
+import {OperationCity} from '@shared/person/operation-city';
 import Mock = jest.Mock;
 
 describe('AuthService', () => {
@@ -140,6 +141,7 @@ describe('AuthService', () => {
                 phone: null,
                 user: null,
                 preferences: null,
+                cities: [OperationCity.PECS, OperationCity.KAPOSVAR, OperationCity.SZIGETVAR],
                 created: mockedDate,
                 createdByPersonId: null,
             };

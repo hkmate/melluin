@@ -16,12 +16,17 @@ import {CanRequesterCreateUsersPermissionsValidator,} from '@be/user/validator/c
 import {RoleDao} from '@be/user/role.dao';
 import {CanRequesterCreateUsersRoleValidator} from '@be/user/validator/can-requester-create-users-role.validator';
 import {UserEntityToDtoConverterFactory} from '@be/user/converter/user-entity-to-dto-converter.factory';
+import {UserActivation} from '@be/user/model/user-activation';
+import {UserEntity} from '@be/user/model/user.entity';
+import {UserActivationDao} from '@be/user/user-activation.dao';
+import {isNotNil} from '@shared/util/util';
 
 @Injectable()
 export class UserService {
 
     constructor(private readonly userDao: UserDao,
                 private readonly roleDao: RoleDao,
+                private readonly userActivationDao: UserActivationDao,
                 private readonly personHasNoUserYetValidator: PersonHasNoUserYetValidator,
                 private readonly usernameIsNotUsedValidator: UsernameIsNotUsedValidator,
                 private readonly userConverterFactor: UserEntityToDtoConverterFactory,
@@ -45,10 +50,15 @@ export class UserService {
         const entity = await this.userDao.getOne(userId);
         await this.createRewriteValidators(requester)
             .validate({entity, rewrite: userRewrite});
+        const activationAction: UserActivation | null = this.getActivationAction(entity, userRewrite);
 
         await this.rewriteFactory.createFor(userRewrite)
             .applyOn(entity);
         const savedEntity = await this.userDao.save(entity);
+
+        if (isNotNil(activationAction)) {
+            await this.userActivationDao.saveBy(entity, activationAction);
+        }
         return this.userConverterFactor.createFor(requester).convert(savedEntity);
     }
 
@@ -68,6 +78,13 @@ export class UserService {
             CanRequesterChangeUsersPermissionsValidator.of(requester),
             new UsernameIsNotUsedValidator(this.userDao),
         );
+    }
+
+    private getActivationAction(entity: UserEntity, rewrite: UserRewrite): UserActivation | null {
+        if (entity.isActive === rewrite.isActive) {
+            return null;
+        }
+        return rewrite.isActive ? UserActivation.ACTIVATE : UserActivation.INACTIVATE;
     }
 
 }

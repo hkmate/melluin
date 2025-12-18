@@ -1,5 +1,5 @@
 // TODO make it dynamically configurable
-export enum DepartmentCity {
+export enum OperationCity {
 
     PECS = 'PECS',
     KAPOSVAR = 'KAPOSVAR',

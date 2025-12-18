@@ -16,6 +16,7 @@ export class PersonRewriteApplier {
     private rewirePrimitiveFields(): void {
         this.persisted.firstName = this.rewrite.firstName;
         this.persisted.lastName = this.rewrite.lastName;
+        this.persisted.cities = this.rewrite.cities;
         this.persisted.phone = this.rewrite.phone ?? null;
         this.persisted.email = this.rewrite.email ?? null;
         this.persisted.preferences = this.rewrite.preferences ?? null;

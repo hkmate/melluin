@@ -33,6 +33,18 @@
 
         <mat-card>
             <mat-card-header>
+                <mat-card-subtitle>{{ 'PersonPage.Present.OperationCities' | translate }}</mat-card-subtitle>
+                <mat-card-title>
+                    @for (city of personValue.cities!; track city) {
+                        {{ 'OperationCity.' + city | translate }}<span *ngIf="!$last">, </span>
+                    }
+
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
                 <mat-card-subtitle>{{ 'PersonPage.Present.Created' | translate }}</mat-card-subtitle>
                 <mat-card-title>
                     @if (personValue.created) {

@@ -109,7 +109,8 @@ export class MyProfileEditorComponent {
             preferences: {
                 canVolunteerSeeMyEmail: this.personForm().controls.canVolunteerSeeMyEmail.value,
                 canVolunteerSeeMyPhone: this.personForm().controls.canVolunteerSeeMyPhone.value
-            }
+            },
+            cities: this.person().cities!
         }
     }
 
