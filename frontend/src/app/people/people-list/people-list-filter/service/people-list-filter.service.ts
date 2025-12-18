@@ -86,6 +86,7 @@ class PeopleListFilterOptionGenerator {
         this.decoratePhone(filter);
         this.decorateIsActive(filter);
         this.decorateRoles(filter);
+        this.decorateCities(filter);
         return this.generateWithNameOptions(filter);
     }
 
@@ -117,6 +118,13 @@ class PeopleListFilterOptionGenerator {
             return;
         }
         this.options['user.roleNames'] = FilterOperationBuilder.in(filter.roleNames)
+    }
+
+    private decorateCities(filter: PeopleFilter): void {
+        if (isNilOrEmpty(filter.cities)) {
+            return;
+        }
+        this.options.cities = FilterOperationBuilder.jsonContains(filter.cities)
     }
 
     private generateWithNameOptions(filter: PeopleFilter): FilterOptions {

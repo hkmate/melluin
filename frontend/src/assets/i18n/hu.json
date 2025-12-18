@@ -155,6 +155,7 @@
             "Email": "Email cím",
             "Phone": "Telefonszám",
             "Role": "Szerepkör",
+            "City": "Város",
             "IsActive": "Csak aktív"
         }
     },
