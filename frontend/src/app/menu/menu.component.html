@@ -13,23 +13,28 @@
                 </div>
             </div>
             <mat-nav-list>
-                <a mat-list-item routerLink="." class="dashboard-menu-item">
+                <a mat-list-item (click)="navigateTo('.')" class="dashboard-menu-item">
                     <img class="logo-nav" src="assets/logo.svg">
                 </a>
-                <a *ngIf="canUserSee?.people" mat-list-item routerLink="/people">{{ 'Menu.People' | translate }}</a>
-                <a *ngIf="canUserSee?.events" mat-list-item routerLink="/events">{{ 'Menu.Events' | translate }}</a>
+                <a *ngIf="canUserSee?.people" mat-list-item
+                   (click)="navigateTo('/people')">{{ 'Menu.People' | translate }}</a>
+                <a *ngIf="canUserSee?.events" mat-list-item
+                   (click)="navigateTo('/events')">{{ 'Menu.Events' | translate }}</a>
                 <a *ngIf="canUserSee?.departments"
                    mat-list-item
-                   routerLink="/hospital-departments">
+                   (click)="navigateTo('/hospital-departments')">
                     {{ 'Menu.Departments' | translate }}
                 </a>
-                <a *ngIf="canUserSee?.statistics" mat-list-item routerLink="/statistics">{{ 'Menu.Statistics' | translate }}</a>
-                <a *ngIf="canUserSee?.admin" mat-list-item routerLink="/admin">{{ 'Menu.System' | translate }}</a>
-                <a *ngIf="isThereQuestionnaire()" mat-list-item routerLink="/questionnaire">{{ 'Menu.Questionnaire' | translate }}</a>
+                <a *ngIf="canUserSee?.statistics" mat-list-item
+                   (click)="navigateTo('/statistics')">{{ 'Menu.Statistics' | translate }}</a>
+                <a *ngIf="canUserSee?.admin" mat-list-item
+                   (click)="navigateTo('/admin')">{{ 'Menu.System' | translate }}</a>
+                <a *ngIf="isThereQuestionnaire()" mat-list-item
+                   (click)="navigateTo('/questionnaire')">{{ 'Menu.Questionnaire' | translate }}</a>
                 <mat-divider/>
-                <a mat-list-item routerLink="/dashboard">{{ 'Menu.Dashboard' | translate }}</a>
+                <a mat-list-item (click)="navigateTo('/dashboard')">{{ 'Menu.Dashboard' | translate }}</a>
                 <mat-divider/>
-                <a class="grey" mat-list-item routerLink="/my-profile">{{ currentUser.userName }}</a>
+                <a class="grey" mat-list-item (click)="navigateTo('/my-profile')">{{ currentUser.userName }}</a>
                 <a class="grey"
                    mat-list-item
                    routerLink="."
