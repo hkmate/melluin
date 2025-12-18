@@ -23,6 +23,7 @@ import {
 import { PersonEntityToDtoConverterFactory } from '@be/person/converer/person-entity-to-dto-converter.factory';
 import { CanUserPerformFindValidator } from '@be/person/validator/can-user-perform-find.validator';
 import { PageRequestValidator } from '@be/crud/validator/page-request.validator';
+import {CanUserUpdateCityValidator} from '@be/person/validator/can-user-update-city.validator';
 
 @Injectable()
 export class PersonCrudService {
@@ -77,6 +78,7 @@ export class PersonCrudService {
         return ValidatorChain.of(
             CanUserUpdatePersonPrimitiveFieldsValidator.of(requester),
             CanUserUpdatePersonPreferencesValidator.of(requester),
+            CanUserUpdateCityValidator.of(requester),
         );
     }
 

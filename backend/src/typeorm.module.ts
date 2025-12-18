@@ -11,6 +11,7 @@ import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hos
 import {PermissionEntity} from '@be/user/model/permission.entity';
 import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
 import {HospitalVisitActivityInfoEntity} from '@be/hospital-visit-activity-info/model/hospital-visit-activity-info.entity';
+import {UserActivationEntity} from '@be/user/model/user-activation.entity';
 
 export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
@@ -38,7 +39,8 @@ export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
             VisitedChildEntity,
             HospitalVisitActivityEntity,
             HospitalVisitActivityInfoEntity,
-            ChildEntity
+            ChildEntity,
+            UserActivationEntity
         ],
 
         // logging: true

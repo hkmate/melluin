@@ -1,7 +1,8 @@
-import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
-import { UserEntity } from '@be/user/model/user.entity';
-import { PersonPreferences } from '@shared/person/person';
-import { plainToInstance } from 'class-transformer';
+import {Column, Entity, OneToOne, PrimaryColumn} from 'typeorm';
+import {UserEntity} from '@be/user/model/user.entity';
+import {PersonPreferences} from '@shared/person/person';
+import {plainToInstance} from 'class-transformer';
+import {OperationCity} from '@shared/person/operation-city';
 
 @Entity({ name: 'person' })
 export class PersonEntity {
@@ -35,6 +36,9 @@ export class PersonEntity {
 
     @Column({ name: 'created_by', type: 'uuid', nullable: true })
     createdByPersonId: string | null;
+
+    @Column({type: 'jsonb'})
+    cities: Array<OperationCity>;
 
     @OneToOne(type => UserEntity, (user: UserEntity) => user.person, { nullable: true })
     user: UserEntity | null;

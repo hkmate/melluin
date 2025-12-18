@@ -34,6 +34,7 @@ export class PersonCreationToEntityConverter implements Converter<PersonCreation
             phone: newPerson.phone,
             created: now(),
             createdByPersonId: requester.personId,
+            cities: newPerson.cities
         } as PersonEntity;
     }
 

@@ -1,4 +1,4 @@
-import {DepartmentCity} from '@shared/department/department-city';
+import {OperationCity} from '@shared/person/operation-city';
 
 export interface Department {
 
@@ -7,7 +7,7 @@ export interface Department {
     validFrom: string;
     validTo?: string;
     address: string;
-    city: DepartmentCity;
+    city: OperationCity;
     diseasesInfo?: string;
     note?: string;
 

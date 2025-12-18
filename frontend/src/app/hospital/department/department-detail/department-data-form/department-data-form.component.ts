@@ -4,7 +4,7 @@ import {allNil, isNil, isNotNil} from '@shared/util/util';
 import {DepartmentCreation} from '@shared/department/department-creation';
 import {DepartmentUpdateChangeSet} from '@shared/department/department-update-change-set';
 import {Department} from '@shared/department/department';
-import {DepartmentCity} from '@shared/department/department-city';
+import {OperationCity} from '@shared/person/operation-city';
 
 @Component({
     selector: 'app-department-data-form',
@@ -13,7 +13,7 @@ import {DepartmentCity} from '@shared/department/department-city';
 })
 export class DepartmentDataFormComponent {
 
-    protected readonly cityOptions = Object.keys(DepartmentCity);
+    protected readonly cityOptions = Object.keys(OperationCity);
 
     private readonly fb = inject(FormBuilder);
 

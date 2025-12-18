@@ -1,7 +1,8 @@
-import {IsEmail, IsOptional, IsPhoneNumber, MinLength, ValidateNested} from 'class-validator';
+import {IsEmail, IsEnum, IsOptional, IsPhoneNumber, MinLength, ValidateNested} from 'class-validator';
 import {nameMinLength} from '@shared/constants';
 import {PersonPreferences} from '@shared/person/person';
 import {Type} from 'class-transformer';
+import {OperationCity} from '@shared/person/operation-city';
 
 export class PersonCreation {
 
@@ -23,5 +24,8 @@ export class PersonCreation {
     @IsPhoneNumber()
     @IsOptional()
     phone?: string;
+
+    @IsEnum(OperationCity, {each: true})
+    cities: Array<OperationCity>;
 
 }

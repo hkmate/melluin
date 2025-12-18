@@ -5,6 +5,7 @@ import {PersonCreation} from '@shared/person/person-creation';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {emptyToUndef, isNotNil} from '@shared/util/util';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {OperationCity} from '@shared/person/operation-city';
 
 @Component({
     selector: 'app-person-data-form',
@@ -13,6 +14,8 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
 })
 
 export class PersonDataFormComponent {
+
+    protected readonly cityOptions = Object.keys(OperationCity);
 
     private readonly fb = inject(FormBuilder);
     private readonly permissionService = inject(PermissionService);
@@ -26,6 +29,9 @@ export class PersonDataFormComponent {
     protected readonly form = computed(() => this.initForm());
 
     protected onSubmit(): void {
+        if (this.form().invalid) {
+            return;
+        }
         this.submitted.emit(this.createDataForSubmit());
     }
 
@@ -38,6 +44,7 @@ export class PersonDataFormComponent {
         const form = this.fb.group({
             firstName: [personToEdit?.firstName, [Validators.required]],
             lastName: [personToEdit?.lastName, [Validators.required]],
+            cities: [personToEdit?.cities, [Validators.required, Validators.minLength(1)]],
             email: [personToEdit?.email],
             phone: [personToEdit?.phone],
             canVolunteerSeeMyEmail: [personToEdit?.preferences?.canVolunteerSeeMyEmail ?? false],
@@ -56,6 +63,7 @@ export class PersonDataFormComponent {
 
         data.firstName = this.form().controls.firstName.value;
         data.lastName = this.form().controls.lastName.value;
+        data.cities = this.form().controls.cities.value;
         data.email = emptyToUndef(this.form().controls.email.value);
         data.phone = emptyToUndef(this.form().controls.phone.value);
         data.preferences = {

@@ -1,5 +1,5 @@
 import {Column, Entity, PrimaryColumn} from 'typeorm';
-import {DepartmentCity} from '@shared/department/department-city';
+import {OperationCity} from '@shared/person/operation-city';
 
 @Entity({name: 'hospital_department'})
 export class DepartmentEntity {
@@ -20,7 +20,7 @@ export class DepartmentEntity {
     address: string;
 
     @Column()
-    city: DepartmentCity;
+    city: OperationCity;
 
     @Column({name: 'diseases_info', type: 'text', nullable: true})
     diseasesInfo: string | null;

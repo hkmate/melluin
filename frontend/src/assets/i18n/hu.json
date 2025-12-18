@@ -169,6 +169,7 @@
             "LastName": "Vezetéknév",
             "Email": "Email",
             "Phone": "Telefonszám",
+            "OperationCities": "Város",
             "Preferences": "Egyéb",
             "Created": "Felvéve",
             "CreatedBy": "Felvevő",
@@ -184,6 +185,7 @@
             "EmailPlaceholder": "julcsi@nevetnikek.hu",
             "Phone": "Telefonszám",
             "PhonePlaceholder": "+36 30 123 4567",
+            "OperationCities": "Város",
             "CanVolunteerSeeMyEmail": "Látható az email cím más önkétesek számára",
             "CanVolunteerSeeMyEmailDescription": "Ha ezt elfogadod akkor nem csak a koorddinátor, hanem a többi önkéntes is láthatja az email címedet.",
             "CanVolunteerSeeMyPhone": "Látható az telefonszám más önkétesek számára",
@@ -410,7 +412,7 @@
         "ForChild": "Kérdőív gyerekeknek",
         "ForParent": "Kérdőív szülőknek"
     },
-    "DepartmentCity": {
+    "OperationCity": {
         "PECS": "Pécs",
         "KAPOSVAR": "Kaposvár",
         "SZIGETVAR": "Szigetvár"
