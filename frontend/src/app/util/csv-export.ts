@@ -1,9 +1,9 @@
 import {stringify} from 'csv-stringify/browser/esm/sync'
 
-export function exportCSV(name: string, header: Record<string, string>, data: Array<Record<string, string>>): void {
+export function exportCSV<T>(name: string, header: Record<keyof T, string>, data: Array<T>): void {
     const csvString = stringify(data, {
         header: true,
-        columns: Object.entries(header).map(([key, header]) => ({key, header}))
+        columns: Object.entries(header as Record<string, string>).map(([key, header]) => ({key, header}))
     });
 
     downloadStringFile(name, csvString);

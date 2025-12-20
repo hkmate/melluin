@@ -1,0 +1,23 @@
+.widget-header {
+    width: 100%;
+
+    .widget-title {
+        height: var(--mdc-text-button-container-height);
+        display: inline-flex;
+        align-items: center;
+        font-size: large;
+    }
+
+    .button-row {
+        float: right;
+
+        .export {
+            margin-left: .5rem;
+        }
+
+    }
+}
+
+:host ::ng-deep .mat-button-toggle-label-content {
+    color: var(--mat-standard-button-toggle-text-color) !important;
+}

@@ -1,7 +1,5 @@
 <div>
-
     @for (controller of controllers; track controller.getName()) {
         <app-statistics-widget [widgetId]="'widget_' + $index" [controller]="controller"/>
     }
-
 </div>

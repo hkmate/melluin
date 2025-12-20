@@ -1,8 +1,8 @@
-export interface WidgetTableData {
-    headers: Record<string, string>; // key -> translated
-    data: Array<Record<string, string>>; // (key -> value)[]
+export interface WidgetTableData<T> {
+    headers: Record<keyof T, string>; // key -> translated
+    data: Array<T>;
 }
 
-export type WidgetExportingInfo = {
+export type WidgetExportingInfo<T> = {
     fileName: string;
-} & WidgetTableData;
+} & WidgetTableData<T>;

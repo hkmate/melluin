@@ -44,6 +44,7 @@ export class PeopleListQueryParamHandler {
             [PeopleListQueryParams.phone]: emptyToUndef(filter?.phone),
             [PeopleListQueryParams.onlyActive]: (filter?.onlyActive ? 'true' : undefined),
             [PeopleListQueryParams.role]: emptyToUndef(filter?.roleNames),
+            [PeopleListQueryParams.city]: emptyToUndef(filter?.cities),
         };
 
         this.urlParamHandler.setParams(params);

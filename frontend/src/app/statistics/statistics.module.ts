@@ -4,8 +4,8 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {StatisticsLayoutComponent} from '@fe/app/statistics/statistics-layout/statistics-layout.component';
-import {StatisticsIntervalFilterComponent} from '@fe/app/statistics/statistics-interval-filter/statistics-interval-filter.component';
-import {MatCard, MatCardContent} from '@angular/material/card';
+import {StatisticsFilterComponent} from '@fe/app/statistics/statistics-filter/statistics-filter.component';
+import {MatCard, MatCardContent, MatCardHeader} from '@angular/material/card';
 import {
     MatDatepickerToggle,
     MatDateRangeInput,
@@ -13,7 +13,7 @@ import {
     MatEndDate,
     MatStartDate
 } from '@angular/material/datepicker';
-import {MatSuffix} from '@angular/material/form-field';
+import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatButton, MatMiniFabAnchor} from '@angular/material/button';
 import {
     MatAccordion,
@@ -32,13 +32,21 @@ import {
     MatCell,
     MatCellDef,
     MatColumnDef,
-    MatHeaderCell, MatHeaderCellDef,
+    MatHeaderCell,
+    MatHeaderCellDef,
     MatHeaderRow,
     MatHeaderRowDef,
-    MatRecycleRows, MatRow, MatRowDef, MatTable
+    MatRecycleRows,
+    MatRow,
+    MatRowDef,
+    MatTable
 } from '@angular/material/table';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
 import {VisitStatusIconComponent} from '@fe/app/hospital/visit/visit-status-icon/visit-status-icon.component';
+import {StatisticsService} from '@fe/app/statistics/statistics.service';
+import {MatOption} from '@angular/material/core';
+import {MatSelect} from '@angular/material/select';
+import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 
 @NgModule({
     imports: [
@@ -79,12 +87,20 @@ import {VisitStatusIconComponent} from '@fe/app/hospital/visit/visit-status-icon
         PersonNamePipe,
         VisitStatusIconComponent,
         MatHeaderCellDef,
+        MatFormField,
+        MatLabel,
+        MatOption,
+        MatSelect,
+        MatCardHeader,
+        MatButtonToggleGroup,
+        MatButtonToggle,
 
     ],
     declarations: [
         StatisticsLayoutComponent,
-        StatisticsIntervalFilterComponent, StatisticsWidgetComponent, StatisticsWidgetContainerComponent, StatisticWidgetTableComponent
-    ]
+        StatisticsFilterComponent, StatisticsWidgetComponent, StatisticsWidgetContainerComponent, StatisticWidgetTableComponent
+    ],
+    providers: [StatisticsService]
 })
 export class StatisticsModule {
 }

@@ -1,5 +1,5 @@
 <mat-accordion>
-    <mat-expansion-panel #panel>
+    <mat-expansion-panel #panel [expanded]="true">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 @if (panel.expanded) {
@@ -30,7 +30,16 @@
                         <mat-date-range-picker #picker [touchUi]="mobileScreen"/>
                     </span>
                 </div>
-
+                <div class="city-filter">
+                    <mat-form-field>
+                        <mat-label>{{ 'DepartmentPage.Form.City' | translate }}</mat-label>
+                        <mat-select [formControl]="cityControl">
+                            @for (city of cityOptions; track city) {
+                                <mat-option [value]="city">{{ 'OperationCity.' + city | translate }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
 
                 <div>
                     <button mat-flat-button
