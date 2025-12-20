@@ -1,30 +1,34 @@
-<div>
+<mat-card>
+    <mat-card-header>
+        <div class="widget-header">
+            <div class="widget-title">{{ title() }}</div>
+            <div class="button-row">
+                <mat-button-toggle-group [(ngModel)]="mode" appearance="legacy">
+                    <mat-button-toggle value="chart">{{ 'StatisticsPage.Widget.Chart' | translate }}</mat-button-toggle>
+                    <mat-button-toggle value="table">{{ 'StatisticsPage.Widget.Table' | translate }}</mat-button-toggle>
+                </mat-button-toggle-group>
 
-    <div class="button-row">
-        <button mat-stroked-button color="primary" [disabled]="mode() === 'chart'" (click)="switchToChart()">
-            {{ 'StatisticsPage.Widget.Chart' | translate }}
-        </button>
-        <button mat-stroked-button color="primary" [disabled]="mode() === 'table'" (click)="switchToTable()">
-            {{ 'StatisticsPage.Widget.Table' | translate }}
-        </button>
-        <button mat-stroked-button color="primary" (click)="exportData()">
-            {{ 'StatisticsPage.Widget.Export' | translate }}
-        </button>
-    </div>
+                <button mat-button color="primary" class="export" (click)="exportData()">
+                    <mat-icon>file_download</mat-icon>
+                    {{ 'StatisticsPage.Widget.Export' | translate }}
+                </button>
+            </div>
+        </div>
 
+    </mat-card-header>
+    <mat-card-content>
 
-    <div>
-        @if (mode() === 'chart') {
-            @if (chartData) {
-                <app-chart [chartId]="widgetId()" [data]="chartData"/>
+        <div>
+            @if (dataReady()) {
+                @if (mode() === 'chart') {
+                    <app-chart [chartId]="widgetId()" [data]="chartData()"/>
+                } @else {
+                    <app-statistic-widget-table [data]="tableData()"/>
+                }
             } @else {
                 {{ 'StatisticsPage.Widget.Loading' | translate }}
             }
-        } @else if (tableData) {
-            <app-statistic-widget-table [data]="tableData"/>
-        } @else {
-            {{ 'StatisticsPage.Widget.Loading' | translate }}
-        }
-    </div>
+        </div>
 
-</div>
+    </mat-card-content>
+</mat-card>

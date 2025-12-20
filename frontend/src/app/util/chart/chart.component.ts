@@ -1,4 +1,4 @@
-import {Component, computed, effect, input, viewChild} from '@angular/core';
+import {Component, effect, ElementRef, input, viewChild} from '@angular/core';
 import {isNotNil} from '@shared/util/util';
 import {Chart} from 'chart.js';
 import {ChartConfiguration} from 'chart.js/dist/types';
@@ -8,7 +8,7 @@ import {ChartConfiguration} from 'chart.js/dist/types';
     standalone: true,
     imports: [],
     template: `
-        <canvas [id]="chartInternalId()"></canvas>`,
+        <canvas #chartCanvas></canvas>`,
     styleUrl: './chart.component.scss'
 })
 export class ChartComponent {
@@ -16,15 +16,13 @@ export class ChartComponent {
     public readonly chartId = input.required<string>();
     public readonly data = input.required<ChartConfiguration>();
 
-    protected readonly chartInternalId = computed(() => `${this.chartId}__chart`);
-
-    protected readonly canvas = viewChild<HTMLCanvasElement>(this.chartInternalId())
+    protected readonly canvas = viewChild<ElementRef<HTMLCanvasElement>>('chartCanvas');
 
     protected chart: Chart;
 
     constructor() {
         effect(() => {
-            const canvas = this.canvas();
+            const canvas = this.canvas()?.nativeElement;
             if (isNotNil(canvas)) {
                 this.chart = new Chart(canvas, this.data());
             }

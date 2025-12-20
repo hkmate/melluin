@@ -266,8 +266,46 @@
         "Widget": {
             "Chart": "Diagram",
             "Table": "Táblázat",
-            "Export": "Export",
+            "Export": "CSV letöltése",
             "Loading": "Betöltés..."
+        },
+        "VisitsByDepartments": {
+            "Title": "Foglalkozások osztályonként"
+        },
+        "Activities": {
+            "Title": "Tevékenységek",
+            "ExportedFileName": "tevekenysegek.csv",
+            "Activity": "Tevékenység",
+            "Count": "Alkalmazások száma"
+        },
+        "ChildAgesByDepartments": {
+            "Title": "Gyerekek száma korosztály szerint osztályonként",
+            "ExportedFileName": "gyerek_korosztaly_szerint_osztalyonkent.csv",
+            "departmentName": "Osztály",
+            "sum": "Összes gyekek",
+            "zeroToHalf": "0-fél év",
+            "halfToOne": "fél-1 év",
+            "oneToThree": "1-3 év",
+            "threeToFive": "3-5 év",
+            "fiveToSeven": "5-7 év",
+            "sevenToNine": "7-9 év",
+            "nineToEleven": "9-11 év",
+            "elevenToThirteen": "11-13 év",
+            "thirteenToFifteen": "13-15 év",
+            "fifteenToSeventeen": "15-17 év",
+            "seventeenToUp": "17-"
+        },
+        "ChildAges": {
+            "Title": "Gyerekek száma korosztály szerint"
+        },
+        "ChildrenByDepartments": {
+            "Title": "Gyerekek / gyerek kontaktok száma osztályonként"
+        },
+        "VisitsByStatuses": {
+            "Title": "Foglalkozások státuszonként"
+        },
+        "VolunteersByDepartments": {
+            "Title": "Önkéntesek foglalkozásai osztályonként"
         }
     },
     "DepartmentPage": {

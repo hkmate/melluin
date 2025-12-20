@@ -7,11 +7,13 @@
         </span>
 
         <div class="settings">
-            <app-statistics-interval-filter [timeInterval]="timeInterval()" (timeIntervalSubmitted)="setTimeInterval($event)"/>
+            <app-statistics-filter [filter]="statFilter()" (filterSubmitted)="setFilter($event)"/>
         </div>
 
 
-
+        @if (submitted()) {
+            <app-statistics-widget-container [filter]="statFilter()"/>
+        }
 
     </div>
 </section>

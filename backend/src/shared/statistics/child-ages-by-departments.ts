@@ -1,6 +1,6 @@
 export interface ChildAgesByDepartments {
     departmentId: string;
-    departmentMame: string;
+    departmentName: string;
     sum: number;
     zeroToHalf: number;
     halfToOne: number;
