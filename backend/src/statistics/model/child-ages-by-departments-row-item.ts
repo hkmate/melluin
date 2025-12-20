@@ -1,7 +1,3 @@
-import * as _ from 'lodash';
-import {cast} from '@shared/util/test-util';
-import {ChildAgesByDepartments} from '@shared/statistics/child-ages-by-departments';
-
 export interface ChildAgesByDepartmentsRowItem {
     department_id: string;
     department_name: string;
@@ -17,9 +13,4 @@ export interface ChildAgesByDepartmentsRowItem {
     thirteen_to_fifteen: number;
     fifteen_to_seventeen: number;
     seventeen_to_up: number;
-}
-
-export function mapToChildAgesByDepartments(item: ChildAgesByDepartmentsRowItem): ChildAgesByDepartments {
-    const mapped =_.mapKeys(item, (value, key) => _.camelCase(key));
-    return cast<ChildAgesByDepartments>(mapped);
 }
