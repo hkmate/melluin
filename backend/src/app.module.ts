@@ -9,6 +9,7 @@ import {HospitalVisitModule} from '@be/hospital-visit/hospital-visit.module';
 import {ChildModule} from '@be/child/child.module';
 import {HospitalVisitActivityModule} from '@be/hospital-visit-activity/hospital-visit-activity.module';
 import {HealthCheckModule} from '@be/health-check/health-check.module';
+import {StatisticsModule} from '@be/statistics/statistics.module';
 
 @Module({
     imports: [
@@ -22,7 +23,8 @@ import {HealthCheckModule} from '@be/health-check/health-check.module';
         DepartmentModule,
         HospitalVisitModule,
         HospitalVisitActivityModule,
-        ChildModule
+        ChildModule,
+        StatisticsModule
     ]
 })
 export class AppModule {
