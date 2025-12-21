@@ -3,6 +3,11 @@ import {AppModule} from './app.module';
 import {ConfigService} from '@nestjs/config';
 import {ValidationPipe} from '@nestjs/common';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const types = require('pg').types
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+types.setTypeParser(20, val => parseInt(val, 10));
+
 process.env.TZ = 'UTC';
 
 // eslint-disable-next-line max-lines-per-function
