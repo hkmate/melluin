@@ -18,6 +18,10 @@
     }
 }
 
+.data-viewer {
+    margin-top: 1rem;
+}
+
 :host ::ng-deep .mat-button-toggle-label-content {
     color: var(--mat-standard-button-toggle-text-color) !important;
 }

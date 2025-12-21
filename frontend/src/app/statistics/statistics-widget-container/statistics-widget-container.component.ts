@@ -5,6 +5,12 @@ import {TranslateService} from '@ngx-translate/core';
 import {StatFilter} from '@fe/app/statistics/model/stat-filter';
 import {ActivitiesStatController} from '@fe/app/statistics/controller/activities-stat-controller';
 import {ChildAgesByDepartmentsStatController} from '@fe/app/statistics/controller/child-ages-by-departments-stat-controller';
+import {VisitsByDepartmentsStatController} from '@fe/app/statistics/controller/visits-by-departments-stat-controller';
+import {VisitsByStatusesStatController} from '@fe/app/statistics/controller/visits-by-statuses-stat-controller';
+import {ChildrenByDepartmentsStatController} from '@fe/app/statistics/controller/children-by-departments-stat-controller';
+import {ChildAgesStatController} from '@fe/app/statistics/controller/child-ages-stat-controller';
+import {VolunteersByDepartmentsStatController} from '@fe/app/statistics/controller/volunteers-by-departments-stat-controller';
+import {VolunteersVisitsStatController} from '@fe/app/statistics/controller/volunteers-visits-stat-controller';
 
 @Component({
     selector: 'app-statistics-widget-container',
@@ -30,8 +36,14 @@ export class StatisticsWidgetContainerComponent {
 
     private createControllers(): Array<StatisticWidgetController<unknown>> {
         return [
+            new VisitsByDepartmentsStatController(this.translateService, this.service),
+            new ChildrenByDepartmentsStatController(this.translateService, this.service),
+            new ChildAgesStatController(this.translateService, this.service),
+            new ChildAgesByDepartmentsStatController(this.translateService, this.service),
+            new VolunteersVisitsStatController(this.translateService, this.service),
+            new VolunteersByDepartmentsStatController(this.translateService, this.service),
+            new VisitsByStatusesStatController(this.translateService, this.service),
             new ActivitiesStatController(this.translateService, this.service),
-            new ChildAgesByDepartmentsStatController(this.translateService, this.service)
         ];
     }
 

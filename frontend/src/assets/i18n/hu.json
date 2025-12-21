@@ -270,7 +270,11 @@
             "Loading": "Betöltés..."
         },
         "VisitsByDepartments": {
-            "Title": "Foglalkozások osztályonként"
+            "Title": "Foglalkozások osztályonként",
+            "ExportedFileName": "foglalkozasok_osztalyonkent.csv",
+            "DepartmentName": "Osztály",
+            "VisitCount": "Foglalkozások száma",
+            "VisitHours": "Foglalkozások összesített időtartama (óra)"
         },
         "Activities": {
             "Title": "Tevékenységek",
@@ -282,30 +286,63 @@
             "Title": "Gyerekek száma korosztály szerint osztályonként",
             "ExportedFileName": "gyerek_korosztaly_szerint_osztalyonkent.csv",
             "departmentName": "Osztály",
-            "sum": "Összes gyekek",
-            "zeroToHalf": "0-fél év",
-            "halfToOne": "fél-1 év",
-            "oneToThree": "1-3 év",
-            "threeToFive": "3-5 év",
-            "fiveToSeven": "5-7 év",
-            "sevenToNine": "7-9 év",
-            "nineToEleven": "9-11 év",
-            "elevenToThirteen": "11-13 év",
-            "thirteenToFifteen": "13-15 év",
-            "fifteenToSeventeen": "15-17 év",
-            "seventeenToUp": "17-"
+            "Sum": "Összes",
+            "ZeroToHalf": "0-fél év",
+            "HalfToOne": "fél-1 év",
+            "OneToThree": "1-3 év",
+            "ThreeToFive": "3-5 év",
+            "FiveToSeven": "5-7 év",
+            "SevenToNine": "7-9 év",
+            "NineToEleven": "9-11 év",
+            "ElevenToThirteen": "11-13 év",
+            "ThirteenToFifteen": "13-15 év",
+            "FifteenToSeventeen": "15-17 év",
+            "SeventeenToUp": "17-"
         },
         "ChildAges": {
-            "Title": "Gyerekek száma korosztály szerint"
+            "Title": "Gyerekek száma korosztály szerint",
+            "ExportedFileName": "gyerkek_szama_korosztaly_szerint.csv",
+            "Sum": "Összes",
+            "ZeroToHalf": "0-fél év",
+            "HalfToOne": "fél-1 év",
+            "OneToThree": "1-3 év",
+            "ThreeToFive": "3-5 év",
+            "FiveToSeven": "5-7 év",
+            "SevenToNine": "7-9 év",
+            "NineToEleven": "9-11 év",
+            "ElevenToThirteen": "11-13 év",
+            "ThirteenToFifteen": "13-15 év",
+            "FifteenToSeventeen": "15-17 év",
+            "SeventeenToUp": "17-"
         },
         "ChildrenByDepartments": {
-            "Title": "Gyerekek / gyerek kontaktok száma osztályonként"
+            "Title": "Gyerekek / gyerek kontaktok száma osztályonként",
+            "ExportedFileName": "gyerekek_osztalyonkent.csv",
+            "DepartmentName": "Osztály",
+            "ChildContact": "Gyerek kontakt",
+            "Child": "Gyerekek száma",
+            "ChildWithRelativePresent": "Hozzátartozó jelen volt"
         },
         "VisitsByStatuses": {
-            "Title": "Foglalkozások státuszonként"
+            "Title": "Foglalkozások státuszonként",
+            "ExportedFileName": "foglalkozasok_statuszonkent.csv",
+            "Status": "Státusz",
+            "Count": "Foglalkozások száma"
         },
         "VolunteersByDepartments": {
-            "Title": "Önkéntesek foglalkozásai osztályonként"
+            "Title": "Önkéntesek foglalkozásai osztályonként",
+            "ExportedFileName": "onkentesek_foglalkozasai_osztalyonkent.csv",
+            "PersonName": "Név",
+            "DepartmentName": "Osztály",
+            "VisitCount": "Foglalkozások száma",
+            "VisitHours": "Foglalkozások összesített időtartama (óra)"
+        },
+        "VolunteersVisits": {
+            "Title": "Önkéntesek foglalkozásai",
+            "ExportedFileName": "onkentesek_foglalkozasai.csv",
+            "PersonName": "Név",
+            "VisitCount": "Foglalkozások száma",
+            "VisitHours": "Foglalkozások összesített időtartama (óra)"
         }
     },
     "DepartmentPage": {
