@@ -1,6 +1,6 @@
 import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
 import {TranslateService} from '@ngx-translate/core';
-import {StatisticsService} from '@fe/app/statistics/statistics.service';
+import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
 import {WidgetExportingInfo, WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
 import {computed, Signal, signal} from '@angular/core';

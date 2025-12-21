@@ -43,10 +43,13 @@ import {
 } from '@angular/material/table';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
 import {VisitStatusIconComponent} from '@fe/app/hospital/visit/visit-status-icon/visit-status-icon.component';
-import {StatisticsService} from '@fe/app/statistics/statistics.service';
+import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
 import {MatOption} from '@angular/material/core';
 import {MatSelect} from '@angular/material/select';
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {ChildrenByDepartmentsStatProviderService} from '@fe/app/statistics/service/children-by-departments-stat-provider';
+import {ChildAgesByDepartmentsStatProviderService} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
+import {VolunteersByDepartmentsStatProviderService} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
 
 @NgModule({
     imports: [
@@ -98,9 +101,17 @@ import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-to
     ],
     declarations: [
         StatisticsLayoutComponent,
-        StatisticsFilterComponent, StatisticsWidgetComponent, StatisticsWidgetContainerComponent, StatisticWidgetTableComponent
+        StatisticsFilterComponent,
+        StatisticsWidgetComponent,
+        StatisticsWidgetContainerComponent,
+        StatisticWidgetTableComponent
     ],
-    providers: [StatisticsService]
+    providers: [
+        StatisticsService,
+        ChildrenByDepartmentsStatProviderService,
+        ChildAgesByDepartmentsStatProviderService,
+        VolunteersByDepartmentsStatProviderService
+    ]
 })
 export class StatisticsModule {
 }
