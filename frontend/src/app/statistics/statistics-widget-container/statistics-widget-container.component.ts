@@ -11,6 +11,7 @@ import {ChildrenByDepartmentsStatController} from '@fe/app/statistics/controller
 import {ChildAgesStatController} from '@fe/app/statistics/controller/child-ages-stat-controller';
 import {VolunteersByDepartmentsStatController} from '@fe/app/statistics/controller/volunteers-by-departments-stat-controller';
 import {VolunteersVisitsStatController} from '@fe/app/statistics/controller/volunteers-visits-stat-controller';
+import {ChildrenStatController} from '@fe/app/statistics/controller/children-stat-controller';
 
 @Component({
     selector: 'app-statistics-widget-container',
@@ -37,6 +38,7 @@ export class StatisticsWidgetContainerComponent {
     private createControllers(): Array<StatisticWidgetController<unknown>> {
         return [
             new VisitsByDepartmentsStatController(this.translateService, this.service),
+            new ChildrenStatController(this.translateService, this.service),
             new ChildrenByDepartmentsStatController(this.translateService, this.service),
             new ChildAgesStatController(this.translateService, this.service),
             new ChildAgesByDepartmentsStatController(this.translateService, this.service),
