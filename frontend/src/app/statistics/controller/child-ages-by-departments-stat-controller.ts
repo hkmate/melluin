@@ -54,18 +54,18 @@ export class ChildAgesByDepartmentsStatController implements StatisticWidgetCont
         return {
             headers: {
                 departmentName: this.translate.instant('StatisticsPage.ChildAgesByDepartments.departmentName'),
-                sum: this.translate.instant('StatisticsPage.ChildAgesByDepartments.sum'),
-                zeroToHalf: this.translate.instant('StatisticsPage.ChildAgesByDepartments.zeroToHalf'),
-                halfToOne: this.translate.instant('StatisticsPage.ChildAgesByDepartments.halfToOne'),
-                oneToThree: this.translate.instant('StatisticsPage.ChildAgesByDepartments.oneToThree'),
-                threeToFive: this.translate.instant('StatisticsPage.ChildAgesByDepartments.threeToFive'),
-                fiveToSeven: this.translate.instant('StatisticsPage.ChildAgesByDepartments.fiveToSeven'),
-                sevenToNine: this.translate.instant('StatisticsPage.ChildAgesByDepartments.sevenToNine'),
-                nineToEleven: this.translate.instant('StatisticsPage.ChildAgesByDepartments.nineToEleven'),
-                elevenToThirteen: this.translate.instant('StatisticsPage.ChildAgesByDepartments.elevenToThirteen'),
-                thirteenToFifteen: this.translate.instant('StatisticsPage.ChildAgesByDepartments.thirteenToFifteen'),
-                fifteenToSeventeen: this.translate.instant('StatisticsPage.ChildAgesByDepartments.fifteenToSeventeen'),
-                seventeenToUp: this.translate.instant('StatisticsPage.ChildAgesByDepartments.seventeenToUp')
+                sum: this.translate.instant('StatisticsPage.ChildAgesByDepartments.Sum'),
+                zeroToHalf: this.translate.instant('StatisticsPage.ChildAgesByDepartments.ZeroToHalf'),
+                halfToOne: this.translate.instant('StatisticsPage.ChildAgesByDepartments.HalfToOne'),
+                oneToThree: this.translate.instant('StatisticsPage.ChildAgesByDepartments.OneToThree'),
+                threeToFive: this.translate.instant('StatisticsPage.ChildAgesByDepartments.ThreeToFive'),
+                fiveToSeven: this.translate.instant('StatisticsPage.ChildAgesByDepartments.FiveToSeven'),
+                sevenToNine: this.translate.instant('StatisticsPage.ChildAgesByDepartments.SevenToNine'),
+                nineToEleven: this.translate.instant('StatisticsPage.ChildAgesByDepartments.NineToEleven'),
+                elevenToThirteen: this.translate.instant('StatisticsPage.ChildAgesByDepartments.ElevenToThirteen'),
+                thirteenToFifteen: this.translate.instant('StatisticsPage.ChildAgesByDepartments.ThirteenToFifteen'),
+                fifteenToSeventeen: this.translate.instant('StatisticsPage.ChildAgesByDepartments.FifteenToSeventeen'),
+                seventeenToUp: this.translate.instant('StatisticsPage.ChildAgesByDepartments.SeventeenToUp')
             },
             data: this.data() ?? []
         }
