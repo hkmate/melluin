@@ -131,7 +131,10 @@ export class StatisticsDao {
                   FROM hospital_visit_activity x_hva
                            JOIN hospital_visit x_hv ON x_hva.hospital_visit_id = x_hv.id
                            JOIN hospital_department x_hd ON x_hd.id = x_hv.department_id
-                  WHERE valid_from < ($2)::timestamptz
+                  WHERE datetime_from < ($2)::timestamptz
+                    AND datetime_to >= ($1)::timestamptz
+                    AND status IN ('ACTIVITIES_FILLED_OUT', 'ALL_FILLED_OUT', 'SUCCESSFUL')
+                    AND valid_from < ($2)::timestamptz
                     AND valid_to >= ($1)::timestamptz
                     AND city = $3) hva ON hva.activities::jsonb ? a.act
             GROUP BY a.act
