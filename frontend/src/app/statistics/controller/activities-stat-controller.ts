@@ -8,6 +8,7 @@ import {computed, signal, Signal} from '@angular/core';
 import {isNotNil} from '@shared/util/util';
 import {ActivitiesCount} from '@shared/statistics/activities-count';
 import {firstValueFrom} from 'rxjs';
+import {ChartColor} from '@fe/app/util/chart/chart-color';
 
 
 export interface ActivitiesCountTableData {
@@ -32,11 +33,21 @@ export class ActivitiesStatController implements StatisticWidgetController<Activ
         this.data.set(this.prepareData(data));
     }
 
+    // eslint-disable-next-line max-lines-per-function
     public getChartData(): ChartConfiguration {
+        const data = this.data() ?? [];
         return {
             type: 'bar',
             data: {
-                // datasets: this.data() ?? []
+                labels: data.map(x => x.activity),
+                datasets: [
+                    {
+                        label: this.translate.instant('StatisticsPage.Activities.Count'),
+                        data: data.map(x => x.count),
+                        backgroundColor: ChartColor.blue,
+                        stack: 'stack 0'
+                    },
+                ]
             }
         } as ChartConfiguration;
     }

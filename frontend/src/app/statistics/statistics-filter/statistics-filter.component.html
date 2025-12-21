@@ -1,5 +1,5 @@
 <mat-accordion>
-    <mat-expansion-panel #panel [expanded]="true">
+    <mat-expansion-panel #panel [(expanded)]="filterExpanded">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 @if (panel.expanded) {

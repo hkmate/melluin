@@ -301,6 +301,7 @@
         },
         "ChildAges": {
             "Title": "Gyerekek száma korosztály szerint",
+            "ChartBarLabel": "Gyerekek száma (össz: {{sum}})",
             "ExportedFileName": "gyerkek_szama_korosztaly_szerint.csv",
             "Sum": "Összes",
             "ZeroToHalf": "0-fél év",

@@ -19,7 +19,7 @@
         <div class="data-viewer">
             @if (dataReady()) {
                 @if (mode() === 'chart') {
-                    <app-chart [chartId]="widgetId()" [data]="chartData()"/>
+                    <app-chart [data]="chartData()"/>
                 } @else {
                     <app-statistic-widget-table [data]="tableData()"/>
                 }

@@ -8,6 +8,7 @@ import {isNotNil} from '@shared/util/util';
 import {OperationCity} from '@shared/person/operation-city';
 import {firstValueFrom} from 'rxjs';
 import {ChildrenByDepartments} from '@shared/statistics/children-by-departments';
+import {ChartColor} from '@fe/app/util/chart/chart-color';
 
 export type ChildrenByDepartmentsTableData = Omit<ChildrenByDepartments, 'departmentId'>;
 
@@ -28,11 +29,33 @@ export class ChildrenByDepartmentsStatController implements StatisticWidgetContr
         this.data.set(data);
     }
 
+    // eslint-disable-next-line max-lines-per-function
     public getChartData(): ChartConfiguration {
+        const data = this.data() ?? [];
         return {
             type: 'bar',
             data: {
-                // datasets: this.data() ?? []
+                labels: data.map(x => x.departmentName),
+                datasets: [
+                    {
+                        label: this.translate.instant('StatisticsPage.ChildrenByDepartments.ChildContact'),
+                        data: data.map(x => x.childContact),
+                        backgroundColor: ChartColor.yellow,
+                        stack: 'stack 0'
+                    },
+                    {
+                        label: this.translate.instant('StatisticsPage.ChildrenByDepartments.Child'),
+                        data: data.map(x => x.child),
+                        backgroundColor: ChartColor.blue,
+                        stack: 'stack 1'
+                    },
+                    {
+                        label: this.translate.instant('StatisticsPage.ChildrenByDepartments.ChildWithRelativePresent'),
+                        data: data.map(x => x.childWithRelativePresent),
+                        backgroundColor: ChartColor.purple,
+                        stack: 'stack 2'
+                    }
+                ]
             }
         } as ChartConfiguration;
     }
