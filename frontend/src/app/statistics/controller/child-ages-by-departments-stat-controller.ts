@@ -1,6 +1,5 @@
 import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
 import {TranslateService} from '@ngx-translate/core';
-import {StatisticsService} from '@fe/app/statistics/statistics.service';
 import {WidgetExportingInfo, WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
 import {Signal, signal} from '@angular/core';
@@ -9,6 +8,7 @@ import {firstValueFrom} from 'rxjs';
 import {ChildAgesByDepartments} from '@shared/statistics/child-ages-by-departments';
 import {ChartDataset} from 'chart.js/dist/types';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
+import {ChildAgesByDepartmentsStatProviderService} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
 
 
 export type ChildAgesByDepartmentsTableData = Omit<ChildAgesByDepartments, 'departmentId'>;
@@ -19,7 +19,7 @@ export class ChildAgesByDepartmentsStatController implements StatisticWidgetCont
     protected readonly data = signal<Array<ChildAgesByDepartmentsTableData>>([]);
     private readonly ready = signal(false);
 
-    constructor(private readonly translate: TranslateService, private readonly statisticsService: StatisticsService) {
+    constructor(private readonly translate: TranslateService, private readonly providerService: ChildAgesByDepartmentsStatProviderService) {
     }
 
     public hasData(): Signal<boolean> {
@@ -27,7 +27,7 @@ export class ChildAgesByDepartmentsStatController implements StatisticWidgetCont
     }
 
     public async load(from: string, to: string, city: OperationCity): Promise<void> {
-        const data = await firstValueFrom(this.statisticsService.getChildAgesByDepartmentsStat(from, to, city));
+        const data = await firstValueFrom(this.providerService.getChildAgesByDepartmentsStat(from, to, city));
         this.data.set(data);
         this.ready.set(true);
     }

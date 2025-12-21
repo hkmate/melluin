@@ -42,7 +42,6 @@ export class StatisticsService {
         return this.getStat<VisitStatusCount>('visits-by-statuses', from, to, city);
     }
 
-    // TODO This method is used in multiple widgets. Should cache the value to avoid unnecessary requests.
     public getVolunteersByDepartmentsStat(from: string, to: string, city: OperationCity): Observable<Array<VolunteerByDepartments>> {
         return this.getStat<VolunteerByDepartments>('volunteer-by-departments', from, to, city);
     }
@@ -51,7 +50,6 @@ export class StatisticsService {
         return this.getStat<ActivitiesCount>('activities', from, to, city);
     }
 
-    // TODO This method is used in multiple widgets. Should cache the value to avoid unnecessary requests.
     public getChildAgesByDepartmentsStat(from: string, to: string, city: OperationCity): Observable<Array<ChildAgesByDepartments>> {
         return this.getStat<ChildAgesByDepartments>('child-ages-by-departments', from, to, city);
     }
@@ -73,3 +71,5 @@ export class StatisticsService {
     }
 
 }
+
+

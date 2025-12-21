@@ -1,6 +1,5 @@
 import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
 import {TranslateService} from '@ngx-translate/core';
-import {StatisticsService} from '@fe/app/statistics/statistics.service';
 import {WidgetExportingInfo, WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
 import {VolunteerByDepartments} from '@shared/statistics/volunteer-by-departments';
@@ -10,6 +9,7 @@ import {OperationCity} from '@shared/person/operation-city';
 import {firstValueFrom} from 'rxjs';
 import {isNil} from 'lodash';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
+import {VolunteersByDepartmentsStatProvider} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
 
 
 export type VolunteersVisitsCleanData = Omit<VolunteerByDepartments, 'personId' | 'departmentId' | 'departmentName'>;
@@ -20,7 +20,7 @@ export class VolunteersVisitsStatController implements StatisticWidgetController
     protected readonly data = signal<Array<VolunteersVisitsTableData> | null>(null);
     private readonly ready = computed(() => isNotNil(this.data()));
 
-    constructor(private readonly translate: TranslateService, private readonly statisticsService: StatisticsService) {
+    constructor(private readonly translate: TranslateService, private readonly statProvider: VolunteersByDepartmentsStatProvider) {
     }
 
     public hasData(): Signal<boolean> {
@@ -28,7 +28,7 @@ export class VolunteersVisitsStatController implements StatisticWidgetController
     }
 
     public async load(from: string, to: string, city: OperationCity): Promise<void> {
-        const data = await firstValueFrom(this.statisticsService.getVolunteersByDepartmentsStat(from, to, city));
+        const data = await firstValueFrom(this.statProvider.getVolunteersByDepartmentsStat(from, to, city));
         this.data.set(this.prepareData(data));
     }
 
