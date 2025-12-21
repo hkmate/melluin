@@ -1,0 +1,17 @@
+export const ChartColor = {
+    yellow: '#ffcf00',
+    blue: '#0044ce',
+    purple: '#c26dff',
+    green: '#27fc06',
+    darkGreen: '#16600b',
+    turquoise: '#00bba2',
+    turquoise2: '#016455',
+    red: '#ff1f1f',
+    darkRed: '#6e0101',
+    orange: '#ff9000',
+    brown: '#624210',
+    darkYellow: '#ffd63d',
+    darkPurple: '#8a4cff',
+    pink: '#fd8888',
+    grey: '#757575',
+};

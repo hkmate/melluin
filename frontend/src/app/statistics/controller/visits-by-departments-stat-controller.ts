@@ -8,6 +8,7 @@ import {isNotNil} from '@shared/util/util';
 import {OperationCity} from '@shared/person/operation-city';
 import {firstValueFrom} from 'rxjs';
 import {VisitByDepartments} from '@shared/statistics/visit-by-departments';
+import {ChartColor} from '@fe/app/util/chart/chart-color';
 
 export type VisitByDepartmentsTableData = Omit<VisitByDepartments, 'departmentId' | 'visitMinutes'> & {
     'visitHours': number
@@ -30,11 +31,27 @@ export class VisitsByDepartmentsStatController implements StatisticWidgetControl
         this.data.set(data.map(this.prepareData.bind(this)));
     }
 
+    // eslint-disable-next-line max-lines-per-function
     public getChartData(): ChartConfiguration {
+        const data = this.data() ?? [];
         return {
             type: 'bar',
             data: {
-                // datasets: this.data() ?? []
+                labels: data.map(x => x.departmentName),
+                datasets: [
+                    {
+                        label: this.translate.instant('StatisticsPage.VisitsByDepartments.VisitCount'),
+                        data: data.map(x => x.visitCount),
+                        backgroundColor: ChartColor.yellow,
+                        stack: 'stack 0'
+                    },
+                    {
+                        label: this.translate.instant('StatisticsPage.VisitsByDepartments.VisitHours'),
+                        data: data.map(x => x.visitHours),
+                        backgroundColor: ChartColor.blue,
+                        stack: 'stack 1'
+                    }
+                ]
             }
         } as ChartConfiguration;
     }

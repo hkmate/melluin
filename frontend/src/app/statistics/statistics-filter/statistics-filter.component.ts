@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, output} from '@angular/core';
+import {Component, effect, inject, input, output, signal} from '@angular/core';
 import {Platform} from '@angular/cdk/platform';
 import {FormControl, FormGroup} from '@angular/forms';
 import {OperationCity} from '@shared/person/operation-city';
@@ -27,7 +27,9 @@ export class StatisticsFilterComponent {
         from: this.fromControl,
         to: this.toControl,
         city: this.cityControl,
-    })
+    });
+
+    protected readonly filterExpanded = signal(true);
 
     constructor() {
         effect(() => {
@@ -43,6 +45,7 @@ export class StatisticsFilterComponent {
             to: this.toControl.value.toISOString(),
             city: this.cityControl.value
         });
+        this.filterExpanded.set(false);
     }
 
 }

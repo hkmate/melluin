@@ -9,6 +9,7 @@ import {isNotNil} from '@shared/util/util';
 import {OperationCity} from '@shared/person/operation-city';
 import {firstValueFrom} from 'rxjs';
 import {isNil} from 'lodash';
+import {ChartColor} from '@fe/app/util/chart/chart-color';
 
 
 export type VolunteersVisitsCleanData = Omit<VolunteerByDepartments, 'personId' | 'departmentId' | 'departmentName'>;
@@ -31,11 +32,27 @@ export class VolunteersVisitsStatController implements StatisticWidgetController
         this.data.set(this.prepareData(data));
     }
 
+    // eslint-disable-next-line max-lines-per-function
     public getChartData(): ChartConfiguration {
+        const data = this.data() ?? [];
         return {
             type: 'bar',
             data: {
-                // datasets: this.data() ?? []
+                labels: data.map(x => x.personName),
+                datasets: [
+                    {
+                        label: this.translate.instant('StatisticsPage.VolunteersVisits.VisitCount'),
+                        data: data.map(x => x.visitCount),
+                        backgroundColor: ChartColor.yellow,
+                        stack: 'stack 0'
+                    },
+                    {
+                        label: this.translate.instant('StatisticsPage.VolunteersVisits.VisitHours'),
+                        data: data.map(x => x.visitHours),
+                        backgroundColor: ChartColor.blue,
+                        stack: 'stack 1'
+                    }
+                ]
             }
         } as ChartConfiguration;
     }
