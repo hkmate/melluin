@@ -10,7 +10,6 @@ import {Actions, ofType} from '@ngrx/effects';
 import {AppActions} from '@fe/app/state/app-actions';
 import {AppConfig} from '@fe/app/config/app-config';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-menu',
@@ -21,7 +20,6 @@ export class MenuComponent {
 
     private readonly store = inject(Store);
     private readonly actions$ = inject(Actions);
-    private readonly router = inject(Router);
     private readonly platform = inject(Platform);
     private readonly authService = inject(AuthenticationService);
 
@@ -51,8 +49,7 @@ export class MenuComponent {
         this.menuOpened = false;
     }
 
-    protected navigateTo(routerLink: string): void {
-        this.router.navigate([routerLink]);
+    protected navigateHappen(): void {
         if (this.menuMode === 'over') {
             this.menuOpened = false;
         }
