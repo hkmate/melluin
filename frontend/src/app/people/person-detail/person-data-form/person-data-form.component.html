@@ -66,18 +66,14 @@
     </div>
 
     <div>
-        <mat-card class="form-card">
-            <mat-card-content>
-                <mat-form-field>
-                    <mat-label>{{ 'PersonPage.Form.OperationCities' | translate }}</mat-label>
-                    <mat-select formControlName="cities" [multiple]="true">
-                        @for (city of cityOptions; track city) {
-                            <mat-option [value]="city">{{ 'OperationCity.' + city | translate }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </mat-card-content>
-        </mat-card>
+        <mat-form-field>
+            <mat-label>{{ 'PersonPage.Form.OperationCities' | translate }}</mat-label>
+            <mat-select formControlName="cities" [multiple]="true">
+                @for (city of cityOptions; track city) {
+                    <mat-option [value]="city">{{ 'OperationCity.' + city | translate }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
     </div>
 
     <div class="button-row">
