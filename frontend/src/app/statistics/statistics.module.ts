@@ -50,6 +50,7 @@ import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-to
 import {ChildrenByDepartmentsStatProviderService} from '@fe/app/statistics/service/children-by-departments-stat-provider';
 import {ChildAgesByDepartmentsStatProviderService} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
 import {VolunteersByDepartmentsStatProviderService} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
     imports: [
@@ -97,7 +98,7 @@ import {VolunteersByDepartmentsStatProviderService} from '@fe/app/statistics/ser
         MatCardHeader,
         MatButtonToggleGroup,
         MatButtonToggle,
-
+        MatSortModule,
     ],
     declarations: [
         StatisticsLayoutComponent,
