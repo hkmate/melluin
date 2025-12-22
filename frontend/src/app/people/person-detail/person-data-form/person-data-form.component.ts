@@ -2,10 +2,11 @@ import {Component, computed, inject, input, output} from '@angular/core';
 import {Person} from '@shared/person/person';
 import {PersonRewrite} from '@shared/person/person-rewrite';
 import {PersonCreation} from '@shared/person/person-creation';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {emptyToUndef, isNotNil} from '@shared/util/util';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {OperationCity} from '@shared/person/operation-city';
+import {Permission} from '@shared/user/permission.enum';
 
 @Component({
     selector: 'app-person-data-form',
@@ -39,12 +40,16 @@ export class PersonDataFormComponent {
         this.canceled.emit();
     }
 
+    // eslint-disable-next-line max-lines-per-function
     private initForm(): FormGroup {
         const personToEdit = this.person();
         const form = this.fb.group({
             firstName: [personToEdit?.firstName, [Validators.required]],
             lastName: [personToEdit?.lastName, [Validators.required]],
-            cities: [personToEdit?.cities, [Validators.required, Validators.minLength(1)]],
+            cities: new FormControl({
+                value: personToEdit?.cities,
+                disabled: !this.permissionService.has(Permission.canModifyPersonCity)
+            }, [Validators.required, Validators.minLength(1)]),
             email: [personToEdit?.email],
             phone: [personToEdit?.phone],
             canVolunteerSeeMyEmail: [personToEdit?.preferences?.canVolunteerSeeMyEmail ?? false],
