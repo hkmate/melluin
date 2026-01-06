@@ -262,7 +262,7 @@
     },
     "StatisticsPage": {
         "Generate": "Lekérés",
-        "Filter": "Szűrés",
+        "Filter": "Adatok",
         "Widget": {
             "Chart": "Diagram",
             "Table": "Táblázat",

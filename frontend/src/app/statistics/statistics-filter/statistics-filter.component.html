@@ -5,9 +5,14 @@
                 @if (panel.expanded) {
                     {{ 'StatisticsPage.Filter' | translate }}
                 } @else {
-                    {{ fromControl.value | date : ('EventShortDateFormat' | translate) }}
+                    <span class="filter-title-interval">
+                        {{ fromControl.value | date : ('EventShortDateFormat' | translate) }}
                     -
                     {{ toControl.value | date : ('EventShortDateFormat' | translate) }}
+                    </span>
+                    <span>
+                        ({{ 'OperationCity.' + cityControl.value | translate }})
+                    </span>
                 }
             </mat-panel-title>
         </mat-expansion-panel-header>
