@@ -365,7 +365,9 @@
             "Address": "Cím",
             "City": "Város",
             "DiseasesInfo": "Információ az itt kezelt betegekről",
-            "Note": "Megjegyzés"
+            "Note": "Megjegyzés",
+            "LimitOfVisits": "Egyidejű foglalkozások száma maximum",
+            "VicariousMomIncludedInLimit": "Pótmami foglalkozás beleszámít a foglalkozások számába"
         },
         "Form": {
             "Name": "Név",
@@ -378,7 +380,9 @@
             "DiseasesInfo": "Info a betegekről",
             "DiseasesInfoPlaceholder": "Ezen az osztályon jellemzően előforduló betegségek: ....",
             "Note": "Megyjegyzések",
-            "NotePlaceholder": "A keleti épületben van, a rózsaszín ajtón kell felmenni...."
+            "NotePlaceholder": "A keleti épületben van, a rózsaszín ajtón kell felmenni....",
+            "LimitOfVisits": "Egyidejű foglalkozások száma maximum",
+            "VicariousMomIncludedInLimit": "Pótmami foglalkozás beleszámít a foglalkozások számába"
         }
     },
     "BoxStatus": {
@@ -402,7 +406,8 @@
             "Participants": "Résztvevők",
             "Status": "Státusz",
             "Organizer": "Szervező",
-            "CountedHours": "Elszámolandó órák"
+            "CountedHours": "Elszámolandó órák",
+            "VicariousMomVisit": "Pótmami foglalkozás"
         },
         "Form": {
             "Add": "Új látogatás szervezése",
@@ -415,7 +420,9 @@
             "CountedHours": "Elszámolandó órák",
             "CountedHoursPlaceholder": "2",
             "Status": "Státusz",
-            "CreateOther": "Másik látogatás felvétle"
+            "CreateOther": "Másik látogatás felvétle",
+            "VicariousMomVisit": "Pótmami foglalkozás",
+            "VicariousMomVisitError": "Pótmami foglalkozás csak olyan lehet amin egy résztvevő van"
         },
         "Activities": {
             "Children": "Gyerekek",
@@ -450,7 +457,8 @@
             "Date": "Időpont",
             "Department": "Helyszín",
             "Participants": "Résztvevők"
-        }
+        },
+        "VicariousMomVisit": "Pótmami foglalkozás"
     },
     "ChildCard": {
         "Age": "{{years}} év, {{months}} hó",

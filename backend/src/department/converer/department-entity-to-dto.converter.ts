@@ -28,6 +28,8 @@ export class DepartmentEntityToDtoConverter implements Converter<DepartmentEntit
             city: entity.city,
             note: entity.note ?? undefined,
             diseasesInfo: entity.diseasesInfo ?? undefined,
+            limitOfVisits: entity.limitOfVisits,
+            vicariousMomIncludedInLimit: entity.vicariousMomIncludedInLimit,
         };
     }
 

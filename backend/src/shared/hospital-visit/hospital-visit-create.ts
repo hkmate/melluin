@@ -1,5 +1,5 @@
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {IsEnum, IsIn, IsString, IsUUID} from 'class-validator';
+import {IsBoolean, IsEnum, IsIn, IsString, IsUUID} from 'class-validator';
 import {EventCreate} from '@shared/event/event-create';
 
 
@@ -12,5 +12,8 @@ export class HospitalVisitCreate extends EventCreate {
     @IsUUID()
     @IsString()
     departmentId: string;
+
+    @IsBoolean()
+    vicariousMomVisit: boolean;
 
 }

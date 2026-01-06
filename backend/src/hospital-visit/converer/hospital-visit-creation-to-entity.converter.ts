@@ -39,6 +39,7 @@ export class HospitalVisitCreationToEntityConverter
             dateTimeFrom: new Date(dto.dateTimeFrom),
             dateTimeTo: new Date(dto.dateTimeTo),
             countedMinutes: dto.countedMinutes,
+            vicariousMomVisit: dto.vicariousMomVisit,
             participants,
         };
     }

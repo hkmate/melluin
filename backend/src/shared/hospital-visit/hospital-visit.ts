@@ -10,5 +10,6 @@ export interface HospitalVisit extends MelluinEvent {
     status: HospitalVisitStatus;
     department: Department;
     participants: Array<PersonIdentifier>;
+    vicariousMomVisit: boolean;
 
 }

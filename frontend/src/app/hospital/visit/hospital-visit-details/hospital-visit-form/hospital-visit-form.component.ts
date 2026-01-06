@@ -16,6 +16,7 @@ import * as _ from 'lodash';
 import {Platform} from '@angular/cdk/platform';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
+// TODO refactor: Form components should be refactored to new forms when updated Angular to 21
 @Component({
     selector: 'app-hospital-visit-form',
     templateUrl: './hospital-visit-form.component.html',
@@ -59,7 +60,7 @@ export class HospitalVisitFormComponent {
     }
 
     protected onSubmit(): void {
-        if (this.form().valid) {
+        if (this.form().valid && !this.needVicariousMomVisitWarning()) {
             this.submitted.emit(this.createDataForSubmit());
         }
     }
@@ -81,6 +82,12 @@ export class HospitalVisitFormComponent {
         this.createNewAfterSaveChange.emit(newValue);
     }
 
+    protected needVicariousMomVisitWarning(): boolean {
+        const vicariousMomVisit = this.form().controls.vicariousMomVisit.value as boolean;
+        const participantCount = this.form().controls.participantIds.value?.length ?? 0;
+        return vicariousMomVisit && participantCount !== 1;
+    }
+
     private initFormOptions(): void {
         this.initStatusOptions();
         this.initDepartmentOptions();
@@ -98,6 +105,7 @@ export class HospitalVisitFormComponent {
             departmentId: [this.visit()?.department?.id, [Validators.required]],
             countedHours: [0, [Validators.max(HospitalVisitFormComponent.MAX_COUNTED_HOURS), Validators.min(0)]],
             participantIds: [this.visit()?.participants.map(p => p.id), [Validators.required]],
+            vicariousMomVisit: [this.visit()?.vicariousMomVisit ?? false],
         });
     }
 
@@ -162,6 +170,7 @@ export class HospitalVisitFormComponent {
         data.countedMinutes = this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
         data.organizerId = this.currentUser.personId;
         data.visibility = EventVisibility.PUBLIC;
+        data.vicariousMomVisit = this.form().controls.vicariousMomVisit.value;
         data.participantIds = this.form().controls.participantIds.value;
         data.dateTimeFrom = parseTimeWithDate(this.form().controls.timeFrom.value, this.form().controls.date.value).toISOString();
         data.dateTimeTo = parseTimeWithDate(this.form().controls.timeTo.value, this.form().controls.date.value).toISOString();
@@ -176,6 +185,7 @@ export class HospitalVisitFormComponent {
         data.status = this.form().controls.status.value;
         data.countedMinutes = this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
         data.visibility = EventVisibility.PUBLIC;
+        data.vicariousMomVisit = this.form().controls.vicariousMomVisit.value;
         data.participantIds = this.form().controls.participantIds.value;
         data.dateTimeFrom = parseTimeWithDate(this.form().controls.timeFrom.value, this.form().controls.date.value).toISOString();
         data.dateTimeTo = parseTimeWithDate(this.form().controls.timeTo.value, this.form().controls.date.value).toISOString();

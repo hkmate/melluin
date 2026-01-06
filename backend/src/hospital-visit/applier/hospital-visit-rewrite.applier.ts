@@ -16,6 +16,7 @@ export class HospitalVisitRewriteApplier {
 
     public async applyChanges(): Promise<HospitalVisitEntity> {
         this.verifyVisitIdIsCorrect();
+        this.verifyVicariousMomVisitCorrect();
         this.rewirePrimitiveFields();
         await this.rewriteDepartment();
         await this.rewriteParticipants();
@@ -29,12 +30,20 @@ export class HospitalVisitRewriteApplier {
         }
     }
 
+    private verifyVicariousMomVisitCorrect(): void {
+        const {vicariousMomVisit, participantIds} = this.rewrite;
+        if (vicariousMomVisit && participantIds.length !== 1) {
+            throw new BadRequestException('VicariousMomVisit could be only when there is one participant');
+        }
+    }
+
     private rewirePrimitiveFields(): void {
         this.persisted.status = this.rewrite.status;
         this.persisted.countedMinutes = this.rewrite.countedMinutes;
         this.persisted.dateTimeFrom = new Date(this.rewrite.dateTimeFrom);
         this.persisted.dateTimeTo = new Date(this.rewrite.dateTimeTo);
         this.persisted.visibility = this.rewrite.visibility;
+        this.persisted.vicariousMomVisit = this.rewrite.vicariousMomVisit;
     }
 
     private async rewriteDepartment(): Promise<void> {

@@ -28,7 +28,9 @@ export class DepartmentCreationToEntityConverter implements Converter<Department
             note: dto.note ?? null,
             diseasesInfo: dto.diseasesInfo ?? null,
             validFrom: new Date(dto.validFrom),
-            validTo: isNil(dto.validTo) ? DEFAULT_TO_DATE : new Date(dto.validTo)
+            validTo: isNil(dto.validTo) ? DEFAULT_TO_DATE : new Date(dto.validTo),
+            vicariousMomIncludedInLimit: dto.vicariousMomIncludedInLimit,
+            limitOfVisits: dto.limitOfVisits
         } satisfies DepartmentEntity;
     }
 

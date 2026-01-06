@@ -9,6 +9,7 @@ import {OptionalPipe} from '@fe/app/util/optional.pipe';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
 import {TranslateModule} from '@ngx-translate/core';
 import {VisitStatusIconComponent} from '@fe/app/hospital/visit/visit-status-icon/visit-status-icon.component';
+import {MatTooltip} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {VisitStatusIconComponent} from '@fe/app/hospital/visit/visit-status-icon
         MatButtonModule,
         MatIconModule,
         MatTableModule,
+        MatTooltip,
         TranslateModule,
 
         OptionalPipe,

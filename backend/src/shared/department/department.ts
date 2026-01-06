@@ -8,6 +8,8 @@ export interface Department {
     validTo?: string;
     address: string;
     city: OperationCity;
+    limitOfVisits: number;
+    vicariousMomIncludedInLimit: boolean;
     diseasesInfo?: string;
     note?: string;
 

@@ -16,6 +16,12 @@ export class DepartmentEntity {
     @Column({name: 'valid_to', type: 'timestamp'})
     validTo: Date;
 
+    @Column({name: 'limit_of_visits'})
+    limitOfVisits: number;
+
+    @Column({name: 'vicarious_mom_included_in_limit'})
+    vicariousMomIncludedInLimit: boolean;
+
     @Column()
     address: string;
 

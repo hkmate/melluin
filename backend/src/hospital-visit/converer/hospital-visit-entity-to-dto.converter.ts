@@ -34,7 +34,8 @@ export class HospitalVisitEntityToDtoConverter extends BaseEventEntityToDtoConve
             id: entity.id,
             department: this.departmentConverter.convert(entity.department),
             status: entity.status,
-            participants: entity.participants.map(participant => this.personConverter.convert(participant))
+            participants: entity.participants.map(participant => this.personConverter.convert(participant)),
+            vicariousMomVisit: entity.vicariousMomVisit
         }
     }
 

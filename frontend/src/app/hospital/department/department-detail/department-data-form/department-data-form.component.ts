@@ -45,6 +45,8 @@ export class DepartmentDataFormComponent {
             validTo: [dep?.validTo, []],
             diseasesInfo: [dep?.diseasesInfo, []],
             note: [dep?.note, []],
+            limitOfVisits: [dep?.limitOfVisits, [Validators.required, Validators.min(1)]],
+            vicariousMomIncludedInLimit: [dep?.vicariousMomIncludedInLimit, [Validators.required]],
         });
     }
 
@@ -64,6 +66,8 @@ export class DepartmentDataFormComponent {
         data.validTo = this.form().controls.validTo.value;
         data.diseasesInfo = this.form().controls.diseasesInfo.value;
         data.note = this.form().controls.note.value;
+        data.limitOfVisits = this.form().controls.limitOfVisits.value;
+        data.vicariousMomIncludedInLimit = this.form().controls.vicariousMomIncludedInLimit.value;
         return data;
     }
 
@@ -75,6 +79,8 @@ export class DepartmentDataFormComponent {
         this.addFieldIfDifferentThenStored(data, 'validTo');
         this.addFieldIfDifferentThenStored(data, 'diseasesInfo');
         this.addFieldIfDifferentThenStored(data, 'note');
+        this.addFieldIfDifferentThenStored(data, 'limitOfVisits');
+        this.addFieldIfDifferentThenStored(data, 'vicariousMomIncludedInLimit');
         return data;
     }
 

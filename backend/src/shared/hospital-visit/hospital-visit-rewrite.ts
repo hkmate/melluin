@@ -1,5 +1,5 @@
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {IsEnum, IsString, IsUUID} from 'class-validator';
+import {IsBoolean, IsEnum, IsString, IsUUID} from 'class-validator';
 import {EventRewrite} from '@shared/event/event-rewrite';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 
@@ -16,6 +16,9 @@ export class HospitalVisitRewrite extends EventRewrite {
     @IsString()
     departmentId: string;
 
+    @IsBoolean()
+    vicariousMomVisit: boolean;
+
 
     public static from(visit: HospitalVisit): HospitalVisitRewrite {
         return {
@@ -27,6 +30,7 @@ export class HospitalVisitRewrite extends EventRewrite {
             countedMinutes: visit.countedMinutes,
             participantIds: visit.participants.map(p => p.id),
             status: visit.status,
+            vicariousMomVisit: visit.vicariousMomVisit
         };
     }
 

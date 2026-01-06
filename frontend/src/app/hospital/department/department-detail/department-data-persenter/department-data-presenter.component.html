@@ -57,4 +57,18 @@
         <mat-card-content>{{ departmentValue?.note | optional }}</mat-card-content>
     </mat-card>
 
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'DepartmentPage.Present.LimitOfVisits' | translate }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>{{ departmentValue?.limitOfVisits }}</mat-card-content>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'DepartmentPage.Present.VicariousMomIncludedInLimit' | translate }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>{{ 'YesNo.' + departmentValue?.vicariousMomIncludedInLimit | translate }}</mat-card-content>
+    </mat-card>
+
 </div>

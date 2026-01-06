@@ -1,4 +1,4 @@
-import {IsDateString, IsEnum, IsOptional, MinLength} from 'class-validator';
+import {IsBoolean, IsDateString, IsEnum, IsOptional, IsPositive, MinLength} from 'class-validator';
 import {nameMinLength} from '@shared/constants';
 import {OperationCity} from '@shared/person/operation-city';
 
@@ -20,6 +20,12 @@ export class DepartmentCreation {
 
     @IsEnum(OperationCity)
     city: OperationCity;
+
+    @IsPositive()
+    limitOfVisits: number;
+
+    @IsBoolean()
+    vicariousMomIncludedInLimit: boolean;
 
     @IsOptional()
     diseasesInfo?: string;

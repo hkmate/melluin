@@ -22,6 +22,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {DepartmentsListComponent} from '@fe/app/hospital/department/departments-list/departments-list.component';
 import {DepartmentBoxModule} from '@fe/app/hospital/department-box/department-box.module';
 import {TrimmedTextInputModule} from '@fe/app/util/trimmed-text-input/trimmed-text-input.module';
+import {MatCheckbox} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {TrimmedTextInputModule} from '@fe/app/util/trimmed-text-input/trimmed-te
         OptionalPipe,
         LazyInputModule,
         DepartmentBoxModule,
-        TrimmedTextInputModule
+        TrimmedTextInputModule,
+        MatCheckbox
     ],
     declarations: [
         DepartmentsListComponent,

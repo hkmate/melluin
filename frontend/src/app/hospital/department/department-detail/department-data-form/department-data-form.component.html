@@ -75,6 +75,29 @@
         </mat-form-field>
     </div>
 
+    <div>
+        <mat-form-field>
+            <mat-label>{{ 'DepartmentPage.Form.Note' | translate }}</mat-label>
+            <textarea matInput
+                      [placeholder]="'DepartmentPage.Form.NotePlaceholder' | translate"
+                      formControlName="note">
+            </textarea>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field>
+            <mat-label>{{ 'DepartmentPage.Form.LimitOfVisits' | translate }}</mat-label>
+            <input matInput [min]="1" type="number" formControlName="limitOfVisits"/>
+        </mat-form-field>
+    </div>
+
+    <mat-card>
+        <mat-checkbox formControlName="vicariousMomIncludedInLimit">
+            {{ 'DepartmentPage.Form.VicariousMomIncludedInLimit' | translate }}
+        </mat-checkbox>
+    </mat-card>
+
     <div class="button-row">
         <button mat-flat-button
                 color="accent"

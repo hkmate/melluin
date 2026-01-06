@@ -37,6 +37,16 @@ td, th {
     &.date-column {
         padding-left: .5rem;
     }
+
+    &.mat-column-participants {
+
+        mat-icon {
+            margin-left: .5rem;
+            color: #b29700;
+            height: 1rem;
+            font-size: 1rem;
+        }
+    }
 }
 
 $tr-border-radius: 1rem;
