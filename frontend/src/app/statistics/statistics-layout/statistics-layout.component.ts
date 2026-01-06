@@ -4,6 +4,7 @@ import {Permission} from '@shared/user/permission.enum';
 import {StatFilter} from '@fe/app/statistics/model/stat-filter';
 import {OperationCity} from '@shared/person/operation-city';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
+import {AppTitle} from '@fe/app/app-title.service';
 
 function getDefaultFilter(): StatFilter {
     const now = dayjs().toISOString();
@@ -21,11 +22,16 @@ function getDefaultFilter(): StatFilter {
 })
 export class StatisticsLayoutComponent {
 
+    private readonly title = inject(AppTitle);
     protected readonly Permission = Permission;
     private readonly urlParams = inject(UrlParamHandler);
 
     protected readonly statFilter = signal<StatFilter>(this.getFilterOnConstruct());
     protected readonly submitted = signal(false)
+
+    constructor() {
+        this.title.setTitleByI18n('Titles.Statistics');
+    }
 
     protected setFilter(newValue: StatFilter): void {
         this.statFilter.set(newValue);
