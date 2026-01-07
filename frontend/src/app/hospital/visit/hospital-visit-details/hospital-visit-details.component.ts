@@ -15,6 +15,9 @@ import {isNil, isNotNil} from '@shared/util/util';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {ReportPrepareService} from './report-prepare.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ApiError} from '@shared/api-util/api-error';
+import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 
 @Component({
     selector: 'app-hospital-visit-details',
@@ -28,6 +31,7 @@ export class HospitalVisitDetailsComponent {
     private readonly location = inject(Location);
     protected readonly permissions = inject(PermissionService);
     private readonly msg = inject(MessageService);
+    private readonly confirm = inject(ConfirmationService);
     private readonly route = inject(RouteDataHandler);
     private readonly visitService = inject(HospitalVisitService);
     private readonly reportPrepareService = inject(ReportPrepareService);
@@ -49,14 +53,17 @@ export class HospitalVisitDetailsComponent {
         return this.isEdit || this.isCreation;
     }
 
-    protected saveVisit(data: HospitalVisitRewrite | HospitalVisitCreate): void {
-        this.createSaveRequest(data).subscribe(visit => {
-            this.msg.success('SaveSuccessful');
-            this.visit = visit;
-            this.setToPresent();
-            if (this.createNewAfterSave) {
-                this.changeToAddOther();
-            }
+    protected saveVisit(data: HospitalVisitRewrite | HospitalVisitCreate, options = {forceSameTimeVisit: false}): void {
+        this.createSaveRequest(data, options).subscribe({
+            next: visit => {
+                this.msg.success('SaveSuccessful');
+                this.visit = visit;
+                this.setToPresent();
+                if (this.createNewAfterSave) {
+                    this.changeToAddOther();
+                }
+            },
+            error: err => this.handleSaveError(data, err)
         });
     }
 
@@ -118,17 +125,41 @@ export class HospitalVisitDetailsComponent {
         }
     }
 
-    private createSaveRequest(data: HospitalVisitCreate | HospitalVisitRewrite): Observable<HospitalVisit> {
+    private createSaveRequest(data: HospitalVisitCreate | HospitalVisitRewrite, options: {forceSameTimeVisit: boolean}): Observable<HospitalVisit> {
         if (data instanceof HospitalVisitRewrite) {
-            return this.visitService.updateVisit(this.visit!.id, data);
+            return this.visitService.updateVisit(this.visit!.id, data, options);
         }
         if (data instanceof HospitalVisitCreate) {
-            return this.visitService.addVisit(data).pipe(tap(visit => {
+            return this.visitService.addVisit(data, options).pipe(tap(visit => {
                 this.visit = visit;
                 this.setIdInUrl(visit.id);
             }));
         }
         return throwError(() => new Error('Invalid data to save.'));
+    }
+
+    private handleSaveError(dataToSave: HospitalVisitRewrite | HospitalVisitCreate, error: HttpErrorResponse): void {
+        if (!('code' in error.error)) {
+            this.msg.errorRaw(error.message);
+            return;
+        }
+        if (error.error.code === ApiError.VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED) {
+            this.handleLimitExceededSaveError(dataToSave);
+            return;
+        }
+        this.msg.error(`ApiError.${error.error.code}`);
+    }
+
+    private handleLimitExceededSaveError(dataToSave: HospitalVisitRewrite | HospitalVisitCreate): void {
+        if (!this.permissions.has(Permission.canForceSameTimeVisitWrite)) {
+            this.msg.error('ApiError.VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED');
+            return;
+        }
+        this.confirm.getI18nConfirm({
+            title: 'HospitalVisit.Form.SameTimeErrorTitle',
+            message: 'HospitalVisit.Form.SameTimeErrorMessage',
+            okBtnText: 'HospitalVisit.Form.SameTimeErrorOkText'
+        }).then(() => this.saveVisit(dataToSave, {forceSameTimeVisit: true}));
     }
 
     private setIdInUrl(id: string): void {

@@ -1,4 +1,16 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put, Query} from '@nestjs/common';
+import {
+    Body,
+    Controller, DefaultValuePipe,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Param,
+    ParseBoolPipe,
+    ParseUUIDPipe,
+    Post,
+    Put,
+    Query
+} from '@nestjs/common';
 import {Pageable} from '@shared/api-util/pageable';
 import {User} from '@shared/user/user';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
@@ -25,9 +37,10 @@ export class HospitalVisitController {
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @PermissionGuard(Permission.canCreateVisit)
-    public save(@Body() hospitalVisitCreate: HospitalVisitCreate,
+    public save(@Query('forceSameTime', new DefaultValuePipe(false), ParseBoolPipe) sameTimeVisitForced: boolean,
+                @Body() hospitalVisitCreate: HospitalVisitCreate,
                 @CurrentUser() requester: User): Promise<HospitalVisit> {
-        return this.visitCrudService.save(hospitalVisitCreate, requester);
+        return this.visitCrudService.save(hospitalVisitCreate, sameTimeVisitForced, requester);
     }
 
     @Get('/:id')
@@ -58,9 +71,10 @@ export class HospitalVisitController {
     @Put('/:id')
     @PermissionGuard(Permission.canModifyVisit)
     public update(@Param('id', ParseUUIDPipe) hospitalVisitId: string,
+                  @Query('forceSameTime', new DefaultValuePipe(false), ParseBoolPipe) sameTimeVisitForced: boolean,
                   @Body() visitRewrite: HospitalVisitRewrite,
                   @CurrentUser() requester: User): Promise<HospitalVisit> {
-        return this.visitCrudService.rewrite(hospitalVisitId, visitRewrite, requester);
+        return this.visitCrudService.rewrite(hospitalVisitId, visitRewrite, sameTimeVisitForced, requester);
     }
 
 }

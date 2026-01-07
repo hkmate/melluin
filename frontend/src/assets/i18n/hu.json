@@ -422,7 +422,10 @@
             "Status": "Státusz",
             "CreateOther": "Másik látogatás felvétle",
             "VicariousMomVisit": "Pótmami foglalkozás",
-            "VicariousMomVisitError": "Pótmami foglalkozás csak olyan lehet amin egy résztvevő van"
+            "VicariousMomVisitError": "Pótmami foglalkozás csak olyan lehet amin egy résztvevő van",
+            "SameTimeErrorTitle": "Vigyázz!",
+            "SameTimeErrorMessage": "Ezen az osztályon egyidőben nem lehet több foglalkozást tartani. Ha figyelmenen kívül hagynád ezt a beállítást kattintst a 'Csináld!' gombra.",
+            "SameTimeErrorOkText": "Csináld!"
         },
         "Activities": {
             "Children": "Gyerekek",
@@ -508,5 +511,8 @@
         "PECS": "Pécs",
         "KAPOSVAR": "Kaposvár",
         "SZIGETVAR": "Szigetvár"
+    },
+    "ApiError": {
+        "VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED": "Egy időben nem lehet már több foglalkozás ezen az osztályon"
     }
 }

@@ -28,5 +28,6 @@ export enum Permission {
     canReadUserLastLoginData = 'canReadUserLastLoginData',
     canManagePermissions = 'canManagePermissions',
     canReadStatistics = 'canReadStatistics',
+    canForceSameTimeVisitWrite = 'canForceSameTimeVisitWrite',
 
 }

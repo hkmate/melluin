@@ -9,6 +9,7 @@ import {DepartmentModule} from '@be/department/department.module';
 import {DepartmentPersistenceModule} from '@be/department/department.persistence.module';
 import {DepartmentBoxModule} from '@be/department-box/department-box.module';
 import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/applier/hospital-visit-rewrite-applier.factory';
+import {VisitIsNotInSameTimeAsOtherValidator} from '@be/hospital-visit/validator/visit-is-not-in-same-time-as-other.validator';
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/applier/hos
     ],
     providers: [
         HospitalVisitCreationToEntityConverter,
+        VisitIsNotInSameTimeAsOtherValidator,
         HospitalVisitEntityToDtoConverter,
         HospitalVisitRewriteApplierFactory,
         HospitalVisitCrudService,

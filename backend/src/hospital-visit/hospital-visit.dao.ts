@@ -1,6 +1,6 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository} from 'typeorm';
+import {Equal, LessThan, MoreThanOrEqual, Repository} from 'typeorm';
 import {Pageable} from '@shared/api-util/pageable';
 import {WhereClosureConverter} from '@be/find-option-converter/where-closure.converter';
 import {PageCreator} from '@be/crud/page-creator';
@@ -9,6 +9,14 @@ import {isNil, toOptional} from '@shared/util/util';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {FilterOptionsFieldsConverter} from '@be/crud/convert/filter-options-fields-converter';
 import {FilterOperation, FilterOperationBuilder} from '@shared/api-util/filter-options';
+import {FindOptionsWhere} from 'typeorm/find-options/FindOptionsWhere';
+
+interface SameTimeVisitCountParams {
+    from: string;
+    to: string;
+    departmentId: string;
+    vicariousMomVisitIncluded: boolean;
+}
 
 @Injectable()
 export class HospitalVisitDao extends PageCreator<HospitalVisitEntity> {
@@ -48,6 +56,19 @@ export class HospitalVisitDao extends PageCreator<HospitalVisitEntity> {
             }
             return entity;
         });
+    }
+
+    public countForSameTime(params: SameTimeVisitCountParams): Promise<number> {
+        const query: FindOptionsWhere<HospitalVisitEntity> = {
+            department: {id: params.departmentId},
+            dateTimeFrom: LessThan(new Date(params.to)),
+            dateTimeTo: MoreThanOrEqual(new Date(params.from))
+        };
+        if (!params.vicariousMomVisitIncluded) {
+            query.vicariousMomVisit = Equal(false);
+        }
+
+        return this.repository.countBy(query);
     }
 
     public async findAll(pageRequest: PageRequest): Promise<Pageable<HospitalVisitEntity>> {

@@ -19,18 +19,24 @@ export class HospitalVisitService {
         return `${AppConfig.get('baseURL')}/hospital-visits`;
     }
 
-    public addVisit(data: HospitalVisitCreate): Observable<HospitalVisit> {
-        return this.http.post<HospitalVisit>(this.hospitalVisitUrl, data)
-            .pipe(getErrorHandler<HospitalVisit>(this.msg));
+    public addVisit(data: HospitalVisitCreate, options = {forceSameTimeVisit: false}): Observable<HospitalVisit> {
+        const params = {} as Record<string, string | boolean>;
+        if (options.forceSameTimeVisit) {
+            params.forceSameTime = true;
+        }
+        return this.http.post<HospitalVisit>(this.hospitalVisitUrl, data, {params});
     }
 
     public getVisit(visitId: string): Observable<HospitalVisit> {
         return this.http.get<HospitalVisit>(`${this.hospitalVisitUrl}/${visitId}`);
     }
 
-    public updateVisit(visitId: string, data: HospitalVisitRewrite): Observable<HospitalVisit> {
-        return this.http.put<HospitalVisit>(`${this.hospitalVisitUrl}/${visitId}`, data)
-            .pipe(getErrorHandler<HospitalVisit>(this.msg));
+    public updateVisit(visitId: string, data: HospitalVisitRewrite, options = {forceSameTimeVisit: false}): Observable<HospitalVisit> {
+        const params = {} as Record<string, string | boolean>;
+        if (options.forceSameTimeVisit) {
+            params.forceSameTime = true;
+        }
+        return this.http.put<HospitalVisit>(`${this.hospitalVisitUrl}/${visitId}`, data, {params});
     }
 
     public findVisit(filters: PageQuery): Observable<Pageable<HospitalVisit>> {

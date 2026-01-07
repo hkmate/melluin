@@ -16,6 +16,10 @@ import {
     hospitalVisitSortableFields
 } from '@shared/hospital-visit/hospital-visit-filterable-fields';
 import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/applier/hospital-visit-rewrite-applier.factory';
+import {AsyncValidatorChain} from '@shared/validator/validator-chain';
+import {VisitIsNotInSameTimeAsOtherValidator} from '@be/hospital-visit/validator/visit-is-not-in-same-time-as-other.validator';
+import {VisitCreateValidator, VisitRewriteValidator} from '@be/hospital-visit/validator/visit-validator';
+import {VicariousMomVisitCorrectValidator} from '@be/hospital-visit/validator/vicarious-mom-visit-correct.validator';
 
 @Injectable()
 export class HospitalVisitCrudService {
@@ -23,10 +27,14 @@ export class HospitalVisitCrudService {
     constructor(private readonly hospitalVisitDao: HospitalVisitDao,
                 private readonly rewriteApplierFactory: HospitalVisitRewriteApplierFactory,
                 private readonly visitConverter: HospitalVisitEntityToDtoConverter,
+                private readonly notInSameTimeAsOtherValidator: VisitIsNotInSameTimeAsOtherValidator,
                 private readonly visitCreationToEntityConverter: HospitalVisitCreationToEntityConverter) {
     }
 
-    public async save(visitCreate: HospitalVisitCreate, requester: User): Promise<HospitalVisit> {
+    public async save(visitCreate: HospitalVisitCreate,
+                      sameTimeVisitForced: boolean, requester: User): Promise<HospitalVisit> {
+        await this.createValidatorsForCreate().validate({item: visitCreate, sameTimeVisitForced, requester});
+
         const creationEntity = await this.visitCreationToEntityConverter.convert(visitCreate);
         const visitEntity = await this.hospitalVisitDao.save(creationEntity);
         return this.visitConverter.convert(visitEntity);
@@ -49,11 +57,29 @@ export class HospitalVisitCrudService {
 
     public async rewrite(hospitalVisitId: string,
                          visitRewrite: HospitalVisitRewrite,
+                         sameTimeVisitForced: boolean,
                          requester: User): Promise<HospitalVisit> {
-        const visitEntity = await this.hospitalVisitDao.getOne(hospitalVisitId);
-        const changedEntity = await this.rewriteApplierFactory.createFor(visitRewrite, visitEntity).applyChanges();
+        const entity = await this.hospitalVisitDao.getOne(hospitalVisitId);
+
+        await this.createValidatorsForUpdate().validate({item: visitRewrite, entity, sameTimeVisitForced, requester});
+
+        const changedEntity = await this.rewriteApplierFactory.createFor(visitRewrite, entity).applyChanges();
         const savedVisit = await this.hospitalVisitDao.save(changedEntity);
         return this.visitConverter.convert(savedVisit);
+    }
+
+    private createValidatorsForCreate(): VisitCreateValidator {
+        return AsyncValidatorChain.of(
+            new VicariousMomVisitCorrectValidator(),
+            this.notInSameTimeAsOtherValidator
+        );
+    }
+
+    private createValidatorsForUpdate(): VisitRewriteValidator {
+        return AsyncValidatorChain.of(
+            new VicariousMomVisitCorrectValidator(),
+            this.notInSameTimeAsOtherValidator
+        );
     }
 
 }

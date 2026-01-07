@@ -16,7 +16,6 @@ export class HospitalVisitRewriteApplier {
 
     public async applyChanges(): Promise<HospitalVisitEntity> {
         this.verifyVisitIdIsCorrect();
-        this.verifyVicariousMomVisitCorrect();
         this.rewirePrimitiveFields();
         await this.rewriteDepartment();
         await this.rewriteParticipants();
@@ -27,13 +26,6 @@ export class HospitalVisitRewriteApplier {
     private verifyVisitIdIsCorrect(): void {
         if (this.rewrite.id !== this.persisted.id) {
             throw new BadRequestException('Id from url is not match the one from the body.');
-        }
-    }
-
-    private verifyVicariousMomVisitCorrect(): void {
-        const {vicariousMomVisit, participantIds} = this.rewrite;
-        if (vicariousMomVisit && participantIds.length !== 1) {
-            throw new BadRequestException('VicariousMomVisit could be only when there is one participant');
         }
     }
 
