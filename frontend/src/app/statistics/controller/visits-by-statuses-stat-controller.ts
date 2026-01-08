@@ -10,6 +10,7 @@ import {firstValueFrom} from 'rxjs';
 import {VisitStatusCount} from '@shared/statistics/visit-status-count';
 import {visitStatusOrders} from '@shared/hospital-visit/hospital-visit-status';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
+import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 
 
 export type VisitStatusCountTableData = Omit<VisitStatusCount, 'status'> & { status: string };
@@ -24,6 +25,10 @@ export class VisitsByStatusesStatController implements StatisticWidgetController
 
     public hasData(): Signal<boolean> {
         return this.ready;
+    }
+
+    public defaultMode(): WidgetMode {
+        return WidgetMode.CHART;
     }
 
     public async load(from: string, to: string, city: OperationCity): Promise<void> {

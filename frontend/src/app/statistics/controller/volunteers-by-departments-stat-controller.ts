@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import {isNil} from '@shared/util/util';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {VolunteersByDepartmentsStatProvider} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
+import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 
 export type VolunteerByDepartmentsTableData =
     Omit<VolunteerByDepartments, 'personId' | 'departmentId' | 'visitMinutes'>
@@ -27,6 +28,10 @@ export class VolunteersByDepartmentsStatController implements StatisticWidgetCon
 
     public hasData(): Signal<boolean> {
         return this.ready;
+    }
+
+    public defaultMode(): WidgetMode {
+        return WidgetMode.CHART;
     }
 
     public async load(from: string, to: string, city: OperationCity): Promise<void> {

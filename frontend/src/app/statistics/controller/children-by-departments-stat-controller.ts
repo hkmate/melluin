@@ -9,6 +9,7 @@ import {firstValueFrom} from 'rxjs';
 import {ChildrenByDepartments} from '@shared/statistics/children-by-departments';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {ChildrenByDepartmentsStatProvider} from '@fe/app/statistics/service/children-by-departments-stat-provider';
+import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 
 export type ChildrenByDepartmentsTableData = Omit<ChildrenByDepartments, 'departmentId'>;
 
@@ -22,6 +23,10 @@ export class ChildrenByDepartmentsStatController implements StatisticWidgetContr
 
     public hasData(): Signal<boolean> {
         return this.ready;
+    }
+
+    public defaultMode(): WidgetMode {
+        return WidgetMode.CHART;
     }
 
     public async load(from: string, to: string, city: OperationCity): Promise<void> {

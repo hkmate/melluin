@@ -9,6 +9,7 @@ import {OperationCity} from '@shared/person/operation-city';
 import {firstValueFrom} from 'rxjs';
 import {VisitByDepartments} from '@shared/statistics/visit-by-departments';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
+import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 
 export type VisitByDepartmentsTableData = Omit<VisitByDepartments, 'departmentId' | 'visitMinutes'> & {
     'visitHours': number
@@ -24,6 +25,10 @@ export class VisitsByDepartmentsStatController implements StatisticWidgetControl
 
     public hasData(): Signal<boolean> {
         return this.ready;
+    }
+
+    public defaultMode(): WidgetMode {
+        return WidgetMode.CHART;
     }
 
     public async load(from: string, to: string, city: OperationCity): Promise<void> {

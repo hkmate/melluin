@@ -1,7 +1,8 @@
-import {Component, computed, effect, input, model, signal} from '@angular/core';
+import {Component, computed, effect, input, signal} from '@angular/core';
 import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
 import {exportCSV} from '@fe/app/util/csv-export';
 import {ChartComponent} from '@fe/app/util/chart/chart.component';
+import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 
 @Component({
     selector: 'app-statistics-widget',
@@ -11,10 +12,12 @@ import {ChartComponent} from '@fe/app/util/chart/chart.component';
 })
 export class StatisticsWidgetComponent<T> {
 
+    WidgetMode = WidgetMode;
+
     public readonly widgetId = input.required<string>();
     public readonly controller = input.required<StatisticWidgetController<T>>();
 
-    protected readonly mode = model<'chart' | 'table'>('chart');
+    protected readonly mode = signal<WidgetMode>(WidgetMode.CHART);
     protected readonly dataReady = computed(() => this.controller().hasData()());
     protected readonly title = computed(() => this.controller().getName());
 
@@ -26,6 +29,9 @@ export class StatisticsWidgetComponent<T> {
             if (this.dataReady()) {
                 this.chartData.set(this.controller().getChartData());
             }
+        }, {allowSignalWrites: true});
+        effect(() => {
+            this.mode.set(this.controller().defaultMode());
         }, {allowSignalWrites: true});
     }
 

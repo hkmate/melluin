@@ -9,6 +9,7 @@ import {ChildAgesByDepartments} from '@shared/statistics/child-ages-by-departmen
 import {ChartDataset} from 'chart.js/dist/types';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {ChildAgesByDepartmentsStatProviderService} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
+import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 
 
 export type ChildAgesByDepartmentsTableData = Omit<ChildAgesByDepartments, 'departmentId'>;
@@ -24,6 +25,10 @@ export class ChildAgesByDepartmentsStatController implements StatisticWidgetCont
 
     public hasData(): Signal<boolean> {
         return this.ready;
+    }
+
+    public defaultMode(): WidgetMode {
+        return WidgetMode.CHART;
     }
 
     public async load(from: string, to: string, city: OperationCity): Promise<void> {

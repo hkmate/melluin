@@ -7,7 +7,7 @@ import {MatTableDataSource} from '@angular/material/table';
     selector: 'app-statistic-widget-table',
     templateUrl: './statistic-widget-table.component.html',
     styleUrl: './statistic-widget-table.component.scss',
-    host: {style: 'display: block; overflow-x: auto'},
+    host: {style: 'display: block; overflow-x: auto; max-height: 80dvh'},
 })
 export class StatisticWidgetTableComponent<T> {
 

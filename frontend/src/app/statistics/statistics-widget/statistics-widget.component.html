@@ -4,8 +4,12 @@
             <div class="widget-title">{{ title() }}</div>
             <div class="button-row">
                 <mat-button-toggle-group [(ngModel)]="mode" appearance="legacy">
-                    <mat-button-toggle value="chart">{{ 'StatisticsPage.Widget.Chart' | translate }}</mat-button-toggle>
-                    <mat-button-toggle value="table">{{ 'StatisticsPage.Widget.Table' | translate }}</mat-button-toggle>
+                    <mat-button-toggle [value]="WidgetMode.CHART">
+                        {{ 'StatisticsPage.Widget.Chart' | translate }}
+                    </mat-button-toggle>
+                    <mat-button-toggle [value]="WidgetMode.TABLE">
+                        {{ 'StatisticsPage.Widget.Table' | translate }}
+                    </mat-button-toggle>
                 </mat-button-toggle-group>
 
                 <button mat-button color="primary" class="export" (click)="exportData()">
@@ -18,7 +22,7 @@
     <mat-card-content>
         <div class="data-viewer">
             @if (dataReady()) {
-                @if (mode() === 'chart') {
+                @if (mode() === WidgetMode.CHART) {
                     <app-chart [data]="chartData()"/>
                 } @else {
                     <app-statistic-widget-table [data]="tableData()"/>

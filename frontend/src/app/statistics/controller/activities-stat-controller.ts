@@ -9,6 +9,7 @@ import {isNotNil} from '@shared/util/util';
 import {ActivitiesCount} from '@shared/statistics/activities-count';
 import {firstValueFrom} from 'rxjs';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
+import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 
 
 export interface ActivitiesCountTableData {
@@ -26,6 +27,10 @@ export class ActivitiesStatController implements StatisticWidgetController<Activ
 
     public hasData(): Signal<boolean> {
         return this.ready;
+    }
+
+    public defaultMode(): WidgetMode {
+        return WidgetMode.CHART;
     }
 
     public async load(from: string, to: string, city: OperationCity): Promise<void> {
