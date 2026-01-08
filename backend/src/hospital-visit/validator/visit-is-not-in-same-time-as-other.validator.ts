@@ -45,7 +45,7 @@ export class VisitIsNotInSameTimeAsOtherValidator implements AsyncValidator<Visi
     }
 
     private getSameLikeVisitCount(item: HospitalVisitRewrite | HospitalVisitCreate, vicariousMomVisitCounts: boolean): Promise<number> {
-        return this.visitDao.countForSameTime({
+        return this.visitDao.countForSameTimeAndDepartment({
             from: item.dateTimeFrom,
             to: item.dateTimeTo,
             departmentId: item.departmentId,

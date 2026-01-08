@@ -1,21 +1,28 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Equal, LessThan, MoreThanOrEqual, Repository} from 'typeorm';
+import {Equal, In, LessThan, MoreThan, Not, Repository} from 'typeorm';
 import {Pageable} from '@shared/api-util/pageable';
 import {WhereClosureConverter} from '@be/find-option-converter/where-closure.converter';
 import {PageCreator} from '@be/crud/page-creator';
 import {PageRequest} from '@be/crud/page-request';
-import {isNil, toOptional} from '@shared/util/util';
+import {isNil, isNotNil, toOptional} from '@shared/util/util';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {FilterOptionsFieldsConverter} from '@be/crud/convert/filter-options-fields-converter';
 import {FilterOperation, FilterOperationBuilder} from '@shared/api-util/filter-options';
 import {FindOptionsWhere} from 'typeorm/find-options/FindOptionsWhere';
 
-interface SameTimeVisitCountParams {
+interface SameTimeAndDepartmentVisitCountParams {
     from: string;
     to: string;
     departmentId: string;
     vicariousMomVisitIncluded: boolean;
+}
+
+interface SameTimeAndDParticipantsVisitCountParams {
+    from: string;
+    to: string;
+    participantsIds: Array<string>;
+    id?: string;
 }
 
 @Injectable()
@@ -58,14 +65,27 @@ export class HospitalVisitDao extends PageCreator<HospitalVisitEntity> {
         });
     }
 
-    public countForSameTime(params: SameTimeVisitCountParams): Promise<number> {
+    public countForSameTimeAndDepartment(params: SameTimeAndDepartmentVisitCountParams): Promise<number> {
         const query: FindOptionsWhere<HospitalVisitEntity> = {
             department: {id: params.departmentId},
             dateTimeFrom: LessThan(new Date(params.to)),
-            dateTimeTo: MoreThanOrEqual(new Date(params.from))
+            dateTimeTo: MoreThan(new Date(params.from))
         };
         if (!params.vicariousMomVisitIncluded) {
             query.vicariousMomVisit = Equal(false);
+        }
+
+        return this.repository.countBy(query);
+    }
+
+    public countForSameTimeAndParticipants(params: SameTimeAndDParticipantsVisitCountParams): Promise<number> {
+        const query: FindOptionsWhere<HospitalVisitEntity> = {
+            participants: {id: In(params.participantsIds)},
+            dateTimeFrom: LessThan(new Date(params.to)),
+            dateTimeTo: MoreThan(new Date(params.from))
+        };
+        if (isNotNil(params.id)) {
+            query.id = Not(Equal(params.id));
         }
 
         return this.repository.countBy(query);

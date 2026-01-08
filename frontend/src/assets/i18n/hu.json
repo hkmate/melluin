@@ -513,6 +513,7 @@
         "SZIGETVAR": "Szigetvár"
     },
     "ApiError": {
-        "VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED": "Egy időben nem lehet már több foglalkozás ezen az osztályon"
+        "VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED": "Egy időben nem lehet már több foglalkozás ezen az osztályon!",
+        "VOLUNTEER_COULD_PARTICIPANT_ONE_VISIT_AT_SAME_TIME": "Ugyan az az önkéntes egy időben csak egy foglalkozáson vehet részt!"
     }
 }

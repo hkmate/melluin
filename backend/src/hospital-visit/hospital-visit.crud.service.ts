@@ -20,6 +20,7 @@ import {AsyncValidatorChain} from '@shared/validator/validator-chain';
 import {VisitIsNotInSameTimeAsOtherValidator} from '@be/hospital-visit/validator/visit-is-not-in-same-time-as-other.validator';
 import {VisitCreateValidator, VisitRewriteValidator} from '@be/hospital-visit/validator/visit-validator';
 import {VicariousMomVisitCorrectValidator} from '@be/hospital-visit/validator/vicarious-mom-visit-correct.validator';
+import {ParticipantsIsInOneVisitAtSameTimeValidator} from '@be/hospital-visit/validator/participants-is-in-one-visit-at-same-time.validator';
 
 @Injectable()
 export class HospitalVisitCrudService {
@@ -28,6 +29,7 @@ export class HospitalVisitCrudService {
                 private readonly rewriteApplierFactory: HospitalVisitRewriteApplierFactory,
                 private readonly visitConverter: HospitalVisitEntityToDtoConverter,
                 private readonly notInSameTimeAsOtherValidator: VisitIsNotInSameTimeAsOtherValidator,
+                private readonly participantsIsInOneVisitAtSameTimeValidator: ParticipantsIsInOneVisitAtSameTimeValidator,
                 private readonly visitCreationToEntityConverter: HospitalVisitCreationToEntityConverter) {
     }
 
@@ -71,14 +73,16 @@ export class HospitalVisitCrudService {
     private createValidatorsForCreate(): VisitCreateValidator {
         return AsyncValidatorChain.of(
             new VicariousMomVisitCorrectValidator(),
-            this.notInSameTimeAsOtherValidator
+            this.notInSameTimeAsOtherValidator,
+            this.participantsIsInOneVisitAtSameTimeValidator
         );
     }
 
     private createValidatorsForUpdate(): VisitRewriteValidator {
         return AsyncValidatorChain.of(
             new VicariousMomVisitCorrectValidator(),
-            this.notInSameTimeAsOtherValidator
+            this.notInSameTimeAsOtherValidator,
+            this.participantsIsInOneVisitAtSameTimeValidator
         );
     }
 
