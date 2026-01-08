@@ -1,42 +1,24 @@
-import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
 import {TranslateService} from '@ngx-translate/core';
-import {WidgetExportingInfo, WidgetTableData} from '@fe/app/statistics/model/widget-data';
+import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
-import {computed, Signal, signal} from '@angular/core';
-import {isNotNil} from '@shared/util/util';
 import {OperationCity} from '@shared/person/operation-city';
 import {firstValueFrom} from 'rxjs';
 import {ChildrenByDepartments} from '@shared/statistics/children-by-departments';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
+import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {ChildrenByDepartmentsStatProvider} from '@fe/app/statistics/service/children-by-departments-stat-provider';
-import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 
 export type ChildrenByDepartmentsTableData = Omit<ChildrenByDepartments, 'departmentId'>;
 
-export class ChildrenByDepartmentsStatController implements StatisticWidgetController<ChildrenByDepartmentsTableData> {
+export class ChildrenByDepartmentsStatController extends AbstractStatisticWidgetController<ChildrenByDepartmentsTableData> {
 
-    protected readonly data = signal<Array<ChildrenByDepartmentsTableData> | null>(null);
-    private readonly ready = computed(() => isNotNil(this.data()));
-
-    constructor(private readonly translate: TranslateService, private readonly statProvider: ChildrenByDepartmentsStatProvider) {
-    }
-
-    public hasData(): Signal<boolean> {
-        return this.ready;
-    }
-
-    public defaultMode(): WidgetMode {
-        return WidgetMode.CHART;
-    }
-
-    public async load(from: string, to: string, city: OperationCity): Promise<void> {
-        const data = await firstValueFrom(this.statProvider.getChildrenByDepartmentsStat(from, to, city));
-        this.data.set(data);
+    constructor(translate: TranslateService, private readonly statProvider: ChildrenByDepartmentsStatProvider) {
+        super(translate, 'StatisticsPage.ChildrenByDepartments');
     }
 
     // eslint-disable-next-line max-lines-per-function
     public getChartData(): ChartConfiguration {
-        const data = this.data() ?? [];
+        const data = this.data();
         return {
             type: 'bar',
             data: {
@@ -65,18 +47,6 @@ export class ChildrenByDepartmentsStatController implements StatisticWidgetContr
         } as ChartConfiguration;
     }
 
-    public getExportingInfo(): WidgetExportingInfo<ChildrenByDepartmentsTableData> {
-        return {
-            ...this.getTableData(),
-            fileName: this.translate.instant('StatisticsPage.ChildrenByDepartments.ExportedFileName')
-        }
-    }
-
-    public getName(): string {
-        return this.translate.instant('StatisticsPage.ChildrenByDepartments.Title');
-    }
-
-
     public getTableData(): WidgetTableData<ChildrenByDepartmentsTableData> {
         return {
             headers: {
@@ -85,8 +55,12 @@ export class ChildrenByDepartmentsStatController implements StatisticWidgetContr
                 child: this.translate.instant('StatisticsPage.ChildrenByDepartments.Child'),
                 childWithRelativePresent: this.translate.instant('StatisticsPage.ChildrenByDepartments.ChildWithRelativePresent'),
             },
-            data: this.data() ?? []
+            data: this.data()
         }
+    }
+
+    protected loadData(from: string, to: string, city: OperationCity): Promise<Array<ChildrenByDepartmentsTableData>> {
+        return firstValueFrom(this.statProvider.getChildrenByDepartmentsStat(from, to, city));
     }
 
 }

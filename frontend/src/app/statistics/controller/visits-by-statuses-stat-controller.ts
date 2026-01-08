@@ -1,44 +1,26 @@
-import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
 import {TranslateService} from '@ngx-translate/core';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
-import {WidgetExportingInfo, WidgetTableData} from '@fe/app/statistics/model/widget-data';
+import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
-import {computed, Signal, signal} from '@angular/core';
-import {isNotNil} from '@shared/util/util';
 import {OperationCity} from '@shared/person/operation-city';
 import {firstValueFrom} from 'rxjs';
 import {VisitStatusCount} from '@shared/statistics/visit-status-count';
 import {visitStatusOrders} from '@shared/hospital-visit/hospital-visit-status';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
-import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
+import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 
 
 export type VisitStatusCountTableData = Omit<VisitStatusCount, 'status'> & { status: string };
 
-export class VisitsByStatusesStatController implements StatisticWidgetController<VisitStatusCountTableData> {
+export class VisitsByStatusesStatController extends AbstractStatisticWidgetController<VisitStatusCountTableData> {
 
-    protected readonly data = signal<Array<VisitStatusCountTableData> | null>(null);
-    private readonly ready = computed(() => isNotNil(this.data()));
-
-    constructor(private readonly translate: TranslateService, private readonly statisticsService: StatisticsService) {
-    }
-
-    public hasData(): Signal<boolean> {
-        return this.ready;
-    }
-
-    public defaultMode(): WidgetMode {
-        return WidgetMode.CHART;
-    }
-
-    public async load(from: string, to: string, city: OperationCity): Promise<void> {
-        const data = await firstValueFrom(this.statisticsService.getVisitsByStatusesStat(from, to, city));
-        this.data.set(this.prepareData(data));
+    constructor(translate: TranslateService, private readonly statProvider: StatisticsService) {
+        super(translate, 'StatisticsPage.VisitsByStatuses');
     }
 
     // eslint-disable-next-line max-lines-per-function
     public getChartData(): ChartConfiguration {
-        const data = this.data() ?? [];
+        const data = this.data();
         return {
             type: 'bar',
             data: {
@@ -63,26 +45,19 @@ export class VisitsByStatusesStatController implements StatisticWidgetController
         } as ChartConfiguration;
     }
 
-    public getExportingInfo(): WidgetExportingInfo<VisitStatusCountTableData> {
-        return {
-            ...this.getTableData(),
-            fileName: this.translate.instant('StatisticsPage.VisitsByStatuses.ExportedFileName')
-        }
-    }
-
-    public getName(): string {
-        return this.translate.instant('StatisticsPage.VisitsByStatuses.Title');
-    }
-
-
     public getTableData(): WidgetTableData<VisitStatusCountTableData> {
         return {
             headers: {
                 status: this.translate.instant('StatisticsPage.VisitsByStatuses.Status'),
                 count: this.translate.instant('StatisticsPage.VisitsByStatuses.Count'),
             },
-            data: this.data() ?? []
+            data: this.data()
         }
+    }
+
+    protected async loadData(from: string, to: string, city: OperationCity): Promise<Array<VisitStatusCountTableData>> {
+        const data = await firstValueFrom(this.statProvider.getVisitsByStatusesStat(from, to, city));
+        return this.prepareData(data);
     }
 
     private prepareData(original: Array<VisitStatusCount>): Array<VisitStatusCountTableData> {

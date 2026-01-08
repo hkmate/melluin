@@ -1,51 +1,22 @@
-import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
 import {TranslateService} from '@ngx-translate/core';
-import {WidgetExportingInfo, WidgetTableData} from '@fe/app/statistics/model/widget-data';
+import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
-import {Signal, signal} from '@angular/core';
 import {OperationCity} from '@shared/person/operation-city';
 import {firstValueFrom} from 'rxjs';
 import {ChildAgesByDepartments} from '@shared/statistics/child-ages-by-departments';
 import {ChartDataset} from 'chart.js/dist/types';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
-import {ChildAgesByDepartmentsStatProviderService} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
-import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
+import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
+import {ChildAgesByDepartmentsStatProvider} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
 
 
 export type ChildAgesByDepartmentsTableData = Omit<ChildAgesByDepartments, 'departmentId'>;
 type AgesKeys = keyof Omit<ChildAgesByDepartmentsTableData, 'departmentName' | 'sum'>;
 
-export class ChildAgesByDepartmentsStatController implements StatisticWidgetController<ChildAgesByDepartmentsTableData> {
+export class ChildAgesByDepartmentsStatController extends AbstractStatisticWidgetController<ChildAgesByDepartmentsTableData> {
 
-    protected readonly data = signal<Array<ChildAgesByDepartmentsTableData>>([]);
-    private readonly ready = signal(false);
-
-    constructor(private readonly translate: TranslateService, private readonly providerService: ChildAgesByDepartmentsStatProviderService) {
-    }
-
-    public hasData(): Signal<boolean> {
-        return this.ready;
-    }
-
-    public defaultMode(): WidgetMode {
-        return WidgetMode.CHART;
-    }
-
-    public async load(from: string, to: string, city: OperationCity): Promise<void> {
-        const data = await firstValueFrom(this.providerService.getChildAgesByDepartmentsStat(from, to, city));
-        this.data.set(data);
-        this.ready.set(true);
-    }
-
-    public getExportingInfo(): WidgetExportingInfo<ChildAgesByDepartmentsTableData> {
-        return {
-            ...this.getTableData(),
-            fileName: this.translate.instant('StatisticsPage.ChildAgesByDepartments.ExportedFileName')
-        }
-    }
-
-    public getName(): string {
-        return this.translate.instant('StatisticsPage.ChildAgesByDepartments.Title');
+    constructor(translate: TranslateService, private readonly statProvider: ChildAgesByDepartmentsStatProvider) {
+        super(translate, 'StatisticsPage.ChildAgesByDepartments');
     }
 
     public getTableData(): WidgetTableData<ChildAgesByDepartmentsTableData> {
@@ -69,6 +40,10 @@ export class ChildAgesByDepartmentsStatController implements StatisticWidgetCont
                 datasets: ages.map(([field, label], index) => this.createDataset(field, label, colors[index])),
             }
         } as ChartConfiguration;
+    }
+
+    protected loadData(from: string, to: string, city: OperationCity): Promise<Array<ChildAgesByDepartmentsTableData>> {
+        return firstValueFrom(this.statProvider.getChildAgesByDepartmentsStat(from, to, city));
     }
 
     private createDataset(field: AgesKeys, label: string, color: string): ChartDataset {

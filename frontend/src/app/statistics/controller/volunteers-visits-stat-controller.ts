@@ -1,45 +1,32 @@
-import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
 import {TranslateService} from '@ngx-translate/core';
-import {WidgetExportingInfo, WidgetTableData} from '@fe/app/statistics/model/widget-data';
+import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
 import {VolunteerByDepartments} from '@shared/statistics/volunteer-by-departments';
-import {computed, Signal, signal} from '@angular/core';
-import {isNotNil} from '@shared/util/util';
 import {OperationCity} from '@shared/person/operation-city';
 import {firstValueFrom} from 'rxjs';
 import {isNil} from 'lodash';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
-import {VolunteersByDepartmentsStatProvider} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
 import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
+import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
+import {VolunteersByDepartmentsStatProvider} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
 
 
 export type VolunteersVisitsCleanData = Omit<VolunteerByDepartments, 'personId' | 'departmentId' | 'departmentName'>;
 export type VolunteersVisitsTableData = Omit<VolunteersVisitsCleanData, 'visitMinutes'> & { 'visitHours': number };
 
-export class VolunteersVisitsStatController implements StatisticWidgetController<VolunteersVisitsTableData> {
+export class VolunteersVisitsStatController extends AbstractStatisticWidgetController<VolunteersVisitsTableData> {
 
-    protected readonly data = signal<Array<VolunteersVisitsTableData> | null>(null);
-    private readonly ready = computed(() => isNotNil(this.data()));
-
-    constructor(private readonly translate: TranslateService, private readonly statProvider: VolunteersByDepartmentsStatProvider) {
+    constructor(translate: TranslateService, private readonly statProvider: VolunteersByDepartmentsStatProvider) {
+        super(translate, 'StatisticsPage.VolunteersVisits');
     }
 
-    public hasData(): Signal<boolean> {
-        return this.ready;
-    }
-
-    public defaultMode(): WidgetMode {
+    public override defaultMode(): WidgetMode {
         return WidgetMode.TABLE;
-    }
-
-    public async load(from: string, to: string, city: OperationCity): Promise<void> {
-        const data = await firstValueFrom(this.statProvider.getVolunteersByDepartmentsStat(from, to, city));
-        this.data.set(this.prepareData(data));
     }
 
     // eslint-disable-next-line max-lines-per-function
     public getChartData(): ChartConfiguration {
-        const data = this.data() ?? [];
+        const data = this.data();
         return {
             type: 'bar',
             data: {
@@ -62,18 +49,6 @@ export class VolunteersVisitsStatController implements StatisticWidgetController
         } as ChartConfiguration;
     }
 
-    public getExportingInfo(): WidgetExportingInfo<VolunteersVisitsTableData> {
-        return {
-            ...this.getTableData(),
-            fileName: this.translate.instant('StatisticsPage.VolunteersVisits.ExportedFileName')
-        }
-    }
-
-    public getName(): string {
-        return this.translate.instant('StatisticsPage.VolunteersVisits.Title');
-    }
-
-
     public getTableData(): WidgetTableData<VolunteersVisitsTableData> {
         return {
             headers: {
@@ -81,9 +56,15 @@ export class VolunteersVisitsStatController implements StatisticWidgetController
                 visitCount: this.translate.instant('StatisticsPage.VolunteersVisits.VisitCount'),
                 visitHours: this.translate.instant('StatisticsPage.VolunteersVisits.VisitHours'),
             },
-            data: this.data() ?? []
+            data: this.data()
         }
     }
+
+    protected async loadData(from: string, to: string, city: OperationCity): Promise<Array<VolunteersVisitsTableData>> {
+        const data = await firstValueFrom(this.statProvider.getVolunteersByDepartmentsStat(from, to, city));
+        return this.prepareData(data);
+    }
+
 
     // eslint-disable-next-line max-lines-per-function
     private prepareData(original: Array<VolunteerByDepartments>): Array<VolunteersVisitsTableData> {

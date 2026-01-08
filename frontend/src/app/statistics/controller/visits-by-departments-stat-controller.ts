@@ -1,39 +1,21 @@
-import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
 import {TranslateService} from '@ngx-translate/core';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
-import {WidgetExportingInfo, WidgetTableData} from '@fe/app/statistics/model/widget-data';
+import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
-import {computed, Signal, signal} from '@angular/core';
-import {isNotNil} from '@shared/util/util';
 import {OperationCity} from '@shared/person/operation-city';
 import {firstValueFrom} from 'rxjs';
 import {VisitByDepartments} from '@shared/statistics/visit-by-departments';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
-import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
+import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 
 export type VisitByDepartmentsTableData = Omit<VisitByDepartments, 'departmentId' | 'visitMinutes'> & {
     'visitHours': number
 };
 
-export class VisitsByDepartmentsStatController implements StatisticWidgetController<VisitByDepartmentsTableData> {
+export class VisitsByDepartmentsStatController extends AbstractStatisticWidgetController<VisitByDepartmentsTableData> {
 
-    protected readonly data = signal<Array<VisitByDepartmentsTableData> | null>(null);
-    private readonly ready = computed(() => isNotNil(this.data()));
-
-    constructor(private readonly translate: TranslateService, private readonly statisticsService: StatisticsService) {
-    }
-
-    public hasData(): Signal<boolean> {
-        return this.ready;
-    }
-
-    public defaultMode(): WidgetMode {
-        return WidgetMode.CHART;
-    }
-
-    public async load(from: string, to: string, city: OperationCity): Promise<void> {
-        const data = await firstValueFrom(this.statisticsService.getVisitsByDepartmentsStat(from, to, city));
-        this.data.set(data.map(this.prepareData.bind(this)));
+    constructor(translate: TranslateService, private readonly statProvider: StatisticsService) {
+        super(translate, 'StatisticsPage.VisitsByDepartments');
     }
 
     // eslint-disable-next-line max-lines-per-function
@@ -61,18 +43,6 @@ export class VisitsByDepartmentsStatController implements StatisticWidgetControl
         } as ChartConfiguration;
     }
 
-    public getExportingInfo(): WidgetExportingInfo<VisitByDepartmentsTableData> {
-        return {
-            ...this.getTableData(),
-            fileName: this.translate.instant('StatisticsPage.VisitsByDepartments.ExportedFileName')
-        }
-    }
-
-    public getName(): string {
-        return this.translate.instant('StatisticsPage.VisitsByDepartments.Title');
-    }
-
-
     public getTableData(): WidgetTableData<VisitByDepartmentsTableData> {
         return {
             headers: {
@@ -82,6 +52,11 @@ export class VisitsByDepartmentsStatController implements StatisticWidgetControl
             },
             data: this.data() ?? []
         }
+    }
+
+    protected async loadData(from: string, to: string, city: OperationCity): Promise<Array<VisitByDepartmentsTableData>> {
+        const data = await firstValueFrom(this.statProvider.getVisitsByDepartmentsStat(from, to, city));
+        return data.map(this.prepareData.bind(this));
     }
 
     private prepareData(original: VisitByDepartments): VisitByDepartmentsTableData {
