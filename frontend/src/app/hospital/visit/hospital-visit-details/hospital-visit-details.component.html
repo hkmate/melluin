@@ -26,7 +26,7 @@
                             {{ 'HospitalVisit.ContinueFilling' | translate }}
                         </button>
                     }
-                    @if (permissions.has(Permission.canModifyVisit)) {
+                    @if (this.canUserEditTheVisit()) {
                         <button mat-stroked-button
                                 color="primary"
                                 (click)="switchToEdit()">

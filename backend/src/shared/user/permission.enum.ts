@@ -29,6 +29,8 @@ export enum Permission {
     canCreateVisit = 'canCreateVisit', // Create only those where he/she is participant
     canReadVisit = 'canReadVisit',
     canModifyVisit = 'canModifyVisit', // Write only those where he/she is participant
+    canCreateAnyVisit = 'canCreateAnyVisit',
+    canModifyAnyVisit = 'canModifyAnyVisit',
     canForceSameTimeVisitWrite = 'canForceSameTimeVisitWrite',
 
     // Hospital visit/ Activity related

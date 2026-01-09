@@ -1,6 +1,7 @@
 import {
     Body,
-    Controller, DefaultValuePipe,
+    Controller,
+    DefaultValuePipe,
     Get,
     HttpCode,
     HttpStatus,
@@ -36,7 +37,7 @@ export class HospitalVisitController {
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    @PermissionGuard(Permission.canCreateVisit)
+    @PermissionGuard(Permission.canCreateVisit, Permission.canCreateAnyVisit)
     public save(@Query('forceSameTime', new DefaultValuePipe(false), ParseBoolPipe) sameTimeVisitForced: boolean,
                 @Body() hospitalVisitCreate: HospitalVisitCreate,
                 @CurrentUser() requester: User): Promise<HospitalVisit> {
@@ -69,7 +70,7 @@ export class HospitalVisitController {
     }
 
     @Put('/:id')
-    @PermissionGuard(Permission.canModifyVisit)
+    @PermissionGuard(Permission.canModifyVisit, Permission.canModifyAnyVisit)
     public update(@Param('id', ParseUUIDPipe) hospitalVisitId: string,
                   @Query('forceSameTime', new DefaultValuePipe(false), ParseBoolPipe) sameTimeVisitForced: boolean,
                   @Body() visitRewrite: HospitalVisitRewrite,

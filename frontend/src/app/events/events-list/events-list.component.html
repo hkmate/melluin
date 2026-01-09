@@ -3,7 +3,7 @@
         <span class="page-header">
             <h1>{{ 'Titles.EventsList' | translate }}</h1>
             <span>
-                <span *ngIf="permissions.has(Permission.canCreateVisit)">
+                <span *ngIf="permissions.has(Permission.canCreateVisit) || permissions.has(Permission.canCreateAnyVisit)">
                     <a mat-mini-fab
                        color="accent"
                        [routerLink]="['/hospital-visits', 'new']">

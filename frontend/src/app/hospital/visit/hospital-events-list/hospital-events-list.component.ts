@@ -1,7 +1,12 @@
-import {Component, input} from '@angular/core';
+import {Component, input, signal, inject} from '@angular/core';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {DateUtil} from '@shared/util/date-util';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {Store} from '@ngrx/store';
+import {Permission} from '@shared/user/permission.enum';
 
 @Component({
     selector: 'app-hospital-events-list',
@@ -12,14 +17,33 @@ export class HospitalEventsListComponent {
 
     protected readonly columns = ['status', 'date', 'department', 'participants', 'options'];
 
+    private readonly store = inject(Store);
+    private readonly permissions = inject(PermissionService);
+
     public readonly markRowByDate = input.required<boolean>();
-    public readonly eventsList = input.required< Array<HospitalVisit>>();
+    public readonly eventsList = input.required<Array<HospitalVisit>>();
 
     private todayDawn = DateUtil.truncateToDay(DateUtil.now()).toISOString();
     private tomorrowDawn = this.getTomorrowDawn();
 
+    private readonly userCanModifyVisit = signal(false);
+    private readonly userCanModifyAnyVisit = signal(false);
+
+    constructor() {
+        this.store.pipe(selectCurrentUser, takeUntilDestroyed()).subscribe(() => {
+                this.userCanModifyVisit.set(this.permissions.has(Permission.canModifyVisit));
+                this.userCanModifyAnyVisit.set(this.permissions.has(Permission.canModifyAnyVisit));
+            }
+        );
+    }
+
     protected isFillButtonNeeded(visit: HospitalVisit): boolean {
-        return [HospitalVisitStatus.SCHEDULED, HospitalVisitStatus.STARTED].includes(visit.status);
+        const userParticipant = visit.participants.some(p => p.id === this.permissions.personId);
+        const userHasPermissionToFill = this.userCanModifyAnyVisit() || (userParticipant && this.userCanModifyVisit());
+
+        const visitInRightStatus = [HospitalVisitStatus.SCHEDULED, HospitalVisitStatus.STARTED].includes(visit.status);
+
+        return userHasPermissionToFill && visitInRightStatus;
     }
 
     protected isBeforeToday(visit: HospitalVisit): boolean {

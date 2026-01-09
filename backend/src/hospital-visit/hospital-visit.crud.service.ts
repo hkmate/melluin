@@ -21,6 +21,8 @@ import {VisitIsNotInSameTimeAsOtherValidator} from '@be/hospital-visit/validator
 import {VisitCreateValidator, VisitRewriteValidator} from '@be/hospital-visit/validator/visit-validator';
 import {VicariousMomVisitCorrectValidator} from '@be/hospital-visit/validator/vicarious-mom-visit-correct.validator';
 import {ParticipantsIsInOneVisitAtSameTimeValidator} from '@be/hospital-visit/validator/participants-is-in-one-visit-at-same-time.validator';
+import {UserCanCreateVisitValidator} from '@be/hospital-visit/validator/user-can-create-visit.validator';
+import {UserCanModifyVisitValidator} from '@be/hospital-visit/validator/user-can-modify-visit.validator';
 
 @Injectable()
 export class HospitalVisitCrudService {
@@ -72,6 +74,7 @@ export class HospitalVisitCrudService {
 
     private createValidatorsForCreate(): VisitCreateValidator {
         return AsyncValidatorChain.of(
+            new UserCanCreateVisitValidator(),
             new VicariousMomVisitCorrectValidator(),
             this.notInSameTimeAsOtherValidator,
             this.participantsIsInOneVisitAtSameTimeValidator
@@ -80,6 +83,7 @@ export class HospitalVisitCrudService {
 
     private createValidatorsForUpdate(): VisitRewriteValidator {
         return AsyncValidatorChain.of(
+            new UserCanModifyVisitValidator(),
             new VicariousMomVisitCorrectValidator(),
             this.notInSameTimeAsOtherValidator,
             this.participantsIsInOneVisitAtSameTimeValidator

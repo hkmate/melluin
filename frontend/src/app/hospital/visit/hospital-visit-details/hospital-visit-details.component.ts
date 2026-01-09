@@ -91,6 +91,18 @@ export class HospitalVisitDetailsComponent {
         return isNotNil(this.visit)
             && this.visit.status === HospitalVisitStatus.SCHEDULED
             && this.permissions.has(Permission.canCreateActivity)
+            && this.canUserEditTheVisit();
+    }
+
+    protected canUserEditTheVisit(): boolean {
+        if (isNil(this.visit)) {
+            return false;
+        }
+        const userCanModify = this.permissions.has(Permission.canModifyVisit);
+        const userCanModifyAny = this.permissions.has(Permission.canModifyAnyVisit);
+        const userParticipant = this.visit.participants.some(p => p.id === this.permissions.personId);
+
+        return userCanModifyAny || (userParticipant && userCanModify);
     }
 
     protected isStartedAndUserCanContinueTheVisit(): boolean {
@@ -125,7 +137,9 @@ export class HospitalVisitDetailsComponent {
         }
     }
 
-    private createSaveRequest(data: HospitalVisitCreate | HospitalVisitRewrite, options: {forceSameTimeVisit: boolean}): Observable<HospitalVisit> {
+    private createSaveRequest(data: HospitalVisitCreate | HospitalVisitRewrite, options: {
+        forceSameTimeVisit: boolean
+    }): Observable<HospitalVisit> {
         if (data instanceof HospitalVisitRewrite) {
             return this.visitService.updateVisit(this.visit!.id, data, options);
         }

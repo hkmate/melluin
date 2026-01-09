@@ -514,6 +514,10 @@
     },
     "ApiError": {
         "VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED": "Egy időben nem lehet már több foglalkozás ezen az osztályon!",
-        "VOLUNTEER_COULD_PARTICIPANT_ONE_VISIT_AT_SAME_TIME": "Ugyan az az önkéntes egy időben csak egy foglalkozáson vehet részt!"
+        "VOLUNTEER_COULD_PARTICIPANT_ONE_VISIT_AT_SAME_TIME": "Ugyan az az önkéntes egy időben csak egy foglalkozáson vehet részt!",
+        "USER_CANNOT_CREATE_VISIT": "Nem rendelkezel jogosultsággal új foglalkozás létrehozásához",
+        "USER_CANNOT_CREATE_VISIT_FOR_OTHERS": "Nem rendelkezel jogosultsággal olyan foglalkozás létrehozásához amin nem veszel részt",
+        "USER_CANNOT_MODIFY_VISIT": "Nem rendelkezel jogosultsággal a foglalkozás módosításához",
+        "USER_CANNOT_MODIFY_VISIT_FOR_OTHERS": "Nem rendelkezel jogosultsággal olyan foglalkozás módosításához amin nem veszel részt"
     }
 }
