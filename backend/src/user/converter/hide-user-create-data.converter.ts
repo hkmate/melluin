@@ -34,7 +34,7 @@ export class HideUserCreateDataConverter implements Converter<User, User> {
     }
 
     private isUserHasReadPermission(): boolean {
-        return this.currentUser.permissions.includes(Permission.canReadPersonCreateData);
+        return this.currentUser.permissions.includes(Permission.canReadUserCreateData);
     }
 
     private hideCreateData(user: User): User {

@@ -1,33 +1,48 @@
 export enum Permission {
 
-    canWriteChild = 'canWriteChild',
-    canReadChild = 'canReadChild',
+    // Department related
     canWriteDepartment = 'canWriteDepartment',
     canReadDepartment = 'canReadDepartment',
     canSearchDepartment = 'canSearchDepartment',
     canWriteDepBox = 'canWriteDepBox',
     canReadDepBox = 'canReadDepBox',
-    canCreateVisit = 'canCreateVisit',
-    canReadVisit = 'canReadVisit',
-    canModifyVisit = 'canModifyVisit',
-    canCreateActivity = 'canCreateActivity',
-    canReadActivity = 'canReadActivity',
+
+    // Person/User related
+    canReadPerson = 'canReadPerson',
+    canSearchPerson = 'canSearchPerson',
+    canReadSensitivePersonData = 'canReadSensitivePersonData',
+    canReadPersonCreateData = 'canReadPersonCreateData',
+    canReadUserCreateData = 'canReadUserCreateData',
+    canReadUserLastLoginData = 'canReadUserLastLoginData',
+
     canCreatePerson = 'canCreatePerson',
+    canCreateUser = 'canCreateUser',
+
     canWriteVisitor = 'canWriteVisitor',
     canWriteCoordinator = 'canWriteCoordinator',
     canWriteAdmin = 'canWriteAdmin',
     canWriteSysAdmin = 'canWriteSysAdmin',
     canWriteSelf = 'canWriteSelf',
-    canCreateUser = 'canCreateUser',
-    canReadPerson = 'canReadPerson',
-    canSearchPerson = 'canSearchPerson',
     canModifyPersonCity = 'canModifyPersonCity',
-    canReadSensitivePersonData = 'canReadSensitivePersonData',
-    canReadPersonCreateData = 'canReadPersonCreateData',
-    canReadUserCreateData = 'canReadUserCreateData',
-    canReadUserLastLoginData = 'canReadUserLastLoginData',
-    canManagePermissions = 'canManagePermissions',
-    canReadStatistics = 'canReadStatistics',
+
+    // Hospital visit related
+    canCreateVisit = 'canCreateVisit', // Create only those where he/she is participant
+    canReadVisit = 'canReadVisit',
+    canModifyVisit = 'canModifyVisit', // Write only those where he/she is participant
     canForceSameTimeVisitWrite = 'canForceSameTimeVisitWrite',
+
+    // Hospital visit/ Activity related
+    canWriteChild = 'canWriteChild',
+    canReadChild = 'canReadChild',
+    canCreateActivity = 'canCreateActivity',
+    canReadActivity = 'canReadActivity',
+
+
+    // Administration related
+    canReadStatistics = 'canReadStatistics',
+
+    // Sysadmin related
+    canManagePermissions = 'canManagePermissions',
+
 
 }
