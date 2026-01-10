@@ -30,8 +30,9 @@ export class HospitalVisitCreationToEntityConverter
         const department = await this.departmentDao.getOne(dto.departmentId);
         const organizer = await this.personDao.getOne(dto.organizerId);
         const participants = await this.personDao.findByIds(dto.participantIds);
+        const id = randomUUID()
         return {
-            id: randomUUID(),
+            id,
             status: dto.status,
             department: department,
             organizer: organizer,
@@ -40,6 +41,7 @@ export class HospitalVisitCreationToEntityConverter
             dateTimeTo: new Date(dto.dateTimeTo),
             countedMinutes: dto.countedMinutes,
             vicariousMomVisit: dto.vicariousMomVisit,
+            connectionGroupId: id,
             participants,
         };
     }

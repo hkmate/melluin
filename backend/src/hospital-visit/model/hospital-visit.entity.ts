@@ -16,6 +16,9 @@ export class HospitalVisitEntity extends EventEntity {
     @Column({name: 'vicarious_mom_visit'})
     vicariousMomVisit: boolean;
 
+    @Column({name: 'group_id', type: 'uuid'})
+    connectionGroupId: string;
+
     @OneToOne(type => DepartmentEntity, {eager: true})
     @JoinColumn({name: 'department_id'})
     department: DepartmentEntity;

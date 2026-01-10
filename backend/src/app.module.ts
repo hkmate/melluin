@@ -10,6 +10,7 @@ import {ChildModule} from '@be/child/child.module';
 import {HospitalVisitActivityModule} from '@be/hospital-visit-activity/hospital-visit-activity.module';
 import {HealthCheckModule} from '@be/health-check/health-check.module';
 import {StatisticsModule} from '@be/statistics/statistics.module';
+import {HospitalVisitConnectionsModule} from '@be/hospital-visit-connections/hospital-visit-connections.module';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import {StatisticsModule} from '@be/statistics/statistics.module';
         DepartmentModule,
         HospitalVisitModule,
         HospitalVisitActivityModule,
+        HospitalVisitConnectionsModule,
         ChildModule,
         StatisticsModule
     ]

@@ -46,8 +46,12 @@ export class HospitalVisitDao extends PageCreator<HospitalVisitEntity> {
         });
     }
 
-    public save(department: HospitalVisitEntity): Promise<HospitalVisitEntity> {
-        return this.repository.save(department);
+    public save(visit: HospitalVisitEntity): Promise<HospitalVisitEntity> {
+        return this.repository.save(visit);
+    }
+
+    public saveMany(...visits: Array<HospitalVisitEntity>): Promise<void> {
+        return this.repository.save(visits).then();
     }
 
     public findOne(id: string): Promise<HospitalVisitEntity | undefined> {
@@ -56,13 +60,12 @@ export class HospitalVisitDao extends PageCreator<HospitalVisitEntity> {
         }).then(toOptional);
     }
 
-    public getOne(id: string): Promise<HospitalVisitEntity> {
-        return this.findOne(id).then(entity => {
-            if (isNil(entity)) {
-                throw new NotFoundException(`Event not found with id: ${id}`);
-            }
-            return entity;
-        });
+    public async getOne(id: string): Promise<HospitalVisitEntity> {
+        const entity = await this.findOne(id);
+        if (isNil(entity)) {
+            throw new NotFoundException(`Event not found with id: ${id}`);
+        }
+        return entity;
     }
 
     public countForSameTimeAndDepartment(params: SameTimeAndDepartmentVisitCountParams): Promise<number> {

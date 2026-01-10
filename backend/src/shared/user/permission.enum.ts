@@ -32,6 +32,8 @@ export enum Permission {
     canCreateAnyVisit = 'canCreateAnyVisit',
     canModifyAnyVisit = 'canModifyAnyVisit',
     canForceSameTimeVisitWrite = 'canForceSameTimeVisitWrite',
+    canReadVisitConnections = 'canReadVisitConnections',
+    canWriteVisitConnections = 'canWriteVisitConnections',
 
     // Hospital visit/ Activity related
     canWriteChild = 'canWriteChild',
@@ -39,12 +41,10 @@ export enum Permission {
     canCreateActivity = 'canCreateActivity',
     canReadActivity = 'canReadActivity',
 
-
     // Administration related
     canReadStatistics = 'canReadStatistics',
 
     // Sysadmin related
     canManagePermissions = 'canManagePermissions',
-
 
 }
