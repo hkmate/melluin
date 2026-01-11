@@ -1,0 +1,22 @@
+<div>
+    <mat-form-field>
+        <mat-label>{{ 'HospitalVisit.Connections.Create.ConnectionId' | translate }}</mat-label>
+        <input matInput [formControl]="idControl"/>
+    </mat-form-field>
+</div>
+
+@if (connectionCandidate) {
+    <div>
+        <app-hospital-visit-connected-visit [visit]="connectionCandidate" [removeEnable]="false"/>
+    </div>
+}
+
+<div class="button-row">
+    <button mat-flat-button
+            [disabled]="idControl.invalid"
+            color="accent"
+            (click)="submitVisit()"
+            type="button">
+        {{ 'SaveButton' | translate }}
+    </button>
+</div>

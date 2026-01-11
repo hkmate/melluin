@@ -17,11 +17,12 @@ export class CopierComponent {
     public readonly value = input.required<string>();
     public readonly icon = input('link');
     public readonly disableMsg = input(false);
+    public readonly infoMsg = input('LinkCopied');
 
     protected copyLink(): void {
         navigator.clipboard.writeText(this.value());
         if (!this.disableMsg()) {
-            this.msg.info('LinkCopied');
+            this.msg.info(this.infoMsg());
         }
     }
 

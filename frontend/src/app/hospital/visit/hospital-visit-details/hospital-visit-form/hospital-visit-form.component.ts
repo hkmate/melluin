@@ -1,6 +1,6 @@
 import {Component, computed, effect, inject, input, output, signal} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {isNil, parseTime, parseTimeWithDate} from '@shared/util/util';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {isNil, isNotNil, parseTime, parseTimeWithDate} from '@shared/util/util';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
@@ -31,7 +31,6 @@ export class HospitalVisitFormComponent {
     private static readonly defaultTimeFrom = '16:00';
     private static readonly defaultTimeTo = '18:00';
 
-    private readonly fb = inject(FormBuilder);
     private readonly platform = inject(Platform);
     private readonly store = inject(Store);
     private readonly departmentService = inject(DepartmentService);
@@ -94,18 +93,37 @@ export class HospitalVisitFormComponent {
         this.initCountedHours();
     }
 
+    // eslint-disable-next-line max-lines-per-function
     private buildFormGroup(): FormGroup {
-        return this.fb.group({
-            status: [this.visit()?.status ?? HospitalVisitStatus.SCHEDULED, [Validators.required]],
-            date: [this.getDate(this.visit()?.dateTimeFrom), [Validators.required]],
-            timeFrom: [this.getTime(this.visit()?.dateTimeFrom, HospitalVisitFormComponent.defaultTimeFrom),
-                [Validators.required]],
-            timeTo: [this.getTime(this.visit()?.dateTimeTo, HospitalVisitFormComponent.defaultTimeTo),
-                [Validators.required]],
-            departmentId: [this.visit()?.department?.id, [Validators.required]],
-            countedHours: [0, [Validators.max(HospitalVisitFormComponent.MAX_COUNTED_HOURS), Validators.min(0)]],
-            participantIds: [this.visit()?.participants.map(p => p.id), [Validators.required]],
-            vicariousMomVisit: [this.visit()?.vicariousMomVisit ?? false],
+        const visit = this.visit();
+        const hasConnection = isNotNil(visit) && visit.id !== visit.connectionGroupId;
+        return new FormGroup({
+            status: new FormControl(visit?.status ?? HospitalVisitStatus.SCHEDULED, [Validators.required]),
+            date: new FormControl({
+                value: this.getDate(visit?.dateTimeFrom),
+                disabled: hasConnection
+            }, [Validators.required]),
+            timeFrom: new FormControl({
+                value: this.getTime(visit?.dateTimeFrom, HospitalVisitFormComponent.defaultTimeFrom),
+                disabled: hasConnection
+            }, [Validators.required]),
+            timeTo: new FormControl({
+                value: this.getTime(visit?.dateTimeTo, HospitalVisitFormComponent.defaultTimeTo),
+                disabled: hasConnection
+            }, [Validators.required]),
+            departmentId: new FormControl({
+                value: visit?.department?.id,
+                disabled: hasConnection
+            }, [Validators.required]),
+            countedHours: new FormControl({
+                value: 0,
+                disabled: hasConnection
+            }, [Validators.max(HospitalVisitFormComponent.MAX_COUNTED_HOURS), Validators.min(0)]),
+            participantIds: new FormControl({
+                value: visit?.participants.map(p => p.id),
+                disabled: hasConnection
+            }, [Validators.required]),
+            vicariousMomVisit: new FormControl(visit?.vicariousMomVisit ?? false),
         });
     }
 

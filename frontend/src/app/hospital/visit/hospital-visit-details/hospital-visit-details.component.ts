@@ -18,6 +18,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ApiError} from '@shared/api-util/api-error';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
+import {HospitalVisitConnectionsService} from '@fe/app/hospital/visit/hospital-visit-details/hospital-visit-connections.service';
 
 @Component({
     selector: 'app-hospital-visit-details',
@@ -34,6 +35,7 @@ export class HospitalVisitDetailsComponent {
     private readonly confirm = inject(ConfirmationService);
     private readonly route = inject(RouteDataHandler);
     private readonly visitService = inject(HospitalVisitService);
+    private readonly visitConnectionsService = inject(HospitalVisitConnectionsService);
     private readonly reportPrepareService = inject(ReportPrepareService);
 
     Permission = Permission;
@@ -42,6 +44,7 @@ export class HospitalVisitDetailsComponent {
     protected isEdit = false;
     protected createNewAfterSave = false;
     protected visit?: HospitalVisit;
+    protected connectedVisits: Array<HospitalVisit> = [];
 
     constructor() {
         this.route.getData<HospitalVisit | CreateMarkerType>('visit').pipe(takeUntilDestroyed()).subscribe(
@@ -122,6 +125,11 @@ export class HospitalVisitDetailsComponent {
             && this.permissions.has(Permission.canReadActivity)
     }
 
+    protected shouldShowConnections(): boolean {
+        return isNotNil(this.connectedVisits)
+            && this.permissions.has(Permission.canReadVisitConnections)
+    }
+
     private setToPresent(): void {
         this.isEdit = false;
         this.isCreation = false;
@@ -131,9 +139,19 @@ export class HospitalVisitDetailsComponent {
     private setUp(visitInfo: HospitalVisit | CreateMarkerType): void {
         this.isEdit = this.route.getParam('edit') === 'true';
         if (visitInfo === CREATE_MARKER) {
+            this.connectedVisits = [];
             this.isCreation = true;
         } else {
             this.visit = visitInfo;
+            this.setUpConnections(visitInfo.id)
+        }
+    }
+
+    private setUpConnections(visitId: string): void {
+        if (this.shouldShowConnections()) {
+            this.visitConnectionsService.getConnections(visitId).subscribe(connectedVisits => {
+                this.connectedVisits = connectedVisits;
+            });
         }
     }
 

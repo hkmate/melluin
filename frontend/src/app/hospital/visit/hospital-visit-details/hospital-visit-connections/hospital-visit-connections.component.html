@@ -1,0 +1,36 @@
+<div class="title">
+    <h1>{{ 'HospitalVisit.Connections.Title' | translate }}</h1>
+    @if (permissions.has(Permission.canWriteVisitConnections)) {
+        <span class="add-btn">
+            <button mat-mini-fab color="accent" (click)="toggleCreation()">
+                @if (creationOpened()) {
+                    <mat-icon>close</mat-icon>
+                } @else {
+                    <mat-icon>add</mat-icon>
+                }
+            </button>
+        </span>
+    }
+</div>
+
+@if (creationOpened()) {
+    <mat-card>
+        <mat-card-content>
+            <app-hospital-visit-connection-create [visit]="visit()" (submitted)="addConnection($event)"/>
+        </mat-card-content>
+    </mat-card>
+}
+
+@if (connectionsToShow().length === 0) {
+    <div>{{ 'HospitalVisit.Connections.NoConnection' | translate }}</div>
+} @else {
+    @for (connected of connectionsToShow(); track connected.id) {
+        <mat-card>
+            <mat-card-content>
+                <app-hospital-visit-connected-visit [visit]="connected" (delete)="removeConnection(connected.id)"/>
+            </mat-card-content>
+        </mat-card>
+    }
+
+}
+

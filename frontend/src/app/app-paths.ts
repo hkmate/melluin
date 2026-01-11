@@ -1,8 +1,8 @@
 import {PathProvider} from './path-resolve/path-resolve.service';
 import {Injectable} from '@angular/core';
 
-export type CreateMarkerType = 'new';
-export const CREATE_MARKER: CreateMarkerType = 'new';
+export const CREATE_MARKER = 'new';
+export type CreateMarkerType = typeof CREATE_MARKER;
 
 export const PATHS: PathContainer = {
 

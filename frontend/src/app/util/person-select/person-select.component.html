@@ -4,14 +4,17 @@
         @for (person of people; track person.id) {
             <mat-chip-row (removed)="removePerson(person)">
                 {{ person | personName }}
-                <button matChipRemove>
-                    <mat-icon>cancel</mat-icon>
-                </button>
+                @if (!disabled()) {
+                    <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                }
             </mat-chip-row>
         }
     </mat-chip-listbox>
     <mat-select [ngModel]="people"
                 (ngModelChange)="selectChanged($event)"
+                [disabled]="disabled()"
                 multiple>
         <mat-option>
             <ngx-mat-select-search ngModel (ngModelChange)="filterChanged($event)"

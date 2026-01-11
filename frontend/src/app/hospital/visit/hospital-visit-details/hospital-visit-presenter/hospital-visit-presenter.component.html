@@ -1,7 +1,12 @@
 <h1>
+    <div>
     {{ 'HospitalVisit.Title' | translate }}
 
-    <app-copier [value]="selfLink()"></app-copier>
+    <app-copier [value]="selfLink()"/>
+    </div>
+    <div>
+        <app-copier [value]="visit().id" icon="flag" infoMsg="HospitalVisit.Present.IdCopied"/>
+    </div>
 </h1>
 
 <div class="hospital-visit-data-presenter">

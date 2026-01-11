@@ -1,4 +1,4 @@
-import {Component, forwardRef, inject, input} from '@angular/core';
+import {Component, forwardRef, inject, input, signal} from '@angular/core';
 import {Person, PersonIdentifier} from '@shared/person/person';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {isNil, NOOP, VoidFunc} from '@shared/util/util';
@@ -26,6 +26,7 @@ export class PersonSelectComponent implements ControlValueAccessor {
 
     protected filteredOptions: Array<PersonIdentifier>;
     protected people: Array<PersonIdentifier>
+    protected disabled = signal(false);
 
     private onChange: (x: Array<string>) => void = NOOP;
     private onTouch: VoidFunc = NOOP;
@@ -48,6 +49,10 @@ export class PersonSelectComponent implements ControlValueAccessor {
 
     public registerOnTouched(fn: VoidFunc): void {
         this.onTouch = fn;
+    }
+
+    public setDisabledState(isDisabled: boolean): void {
+        this.disabled.set(isDisabled);
     }
 
     protected selectChanged(people: Array<PersonIdentifier>): void {

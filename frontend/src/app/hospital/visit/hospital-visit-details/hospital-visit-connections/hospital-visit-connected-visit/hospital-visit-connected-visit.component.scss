@@ -1,0 +1,54 @@
+
+:host {
+    display: flex;
+    justify-content: space-between;
+}
+
+.visit-info {
+    margin-top: auto;
+    margin-bottom: auto;
+
+    .department {
+        padding-left: .5rem;
+    }
+
+    .participants {
+        margin-left: 1rem;
+
+        a {
+            font-style: italic;
+        }
+
+        &::before {
+            content: '(';
+        }
+
+        &::after {
+            content: ')';
+        }
+    }
+
+    .status {
+        width: 1rem;
+        padding: 0;
+
+        ::ng-deep mat-icon {
+            font-size: large;
+            text-align: center;
+            margin-bottom: -0.6rem;
+        }
+    }
+}
+
+.delete {
+    button {
+        width: 1.5rem;
+        height: 1.5rem;
+
+        mat-icon {
+            font-size: large;
+            text-align: center;
+            margin-bottom: -0.5rem;
+        }
+    }
+}

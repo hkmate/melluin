@@ -1,0 +1,9 @@
+.title {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+mat-card:not(:last-of-type) {
+    margin-bottom: .5rem;
+}

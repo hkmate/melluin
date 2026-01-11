@@ -1,0 +1,35 @@
+<div class="visit-info">
+    <span class="status">
+        <app-visit-status-icon [status]="visit().status" [tooltipDisabled]="false"/>
+    </span>
+
+    <span>
+        <a class="link" [routerLink]="['/hospital-visits', visit().id]">
+            <span>
+                {{ visit().dateTimeFrom | date : ('TimeFormat' | translate) }}
+                -
+                {{ visit().dateTimeTo | date : ('TimeFormat' | translate) }}
+            </span>
+            <span class="department">
+                {{ visit().department.name }}
+            </span>
+        </a>
+    </span>
+
+    <span class="participants">
+        @for (participant of visit().participants; track participant.id) {
+            <a class="link" [routerLink]="['/people', participant.id]">
+                {{ participant | personName }}
+            </a><span *ngIf="!$last">, </span>
+        }
+    </span>
+</div>
+<div>
+    @if (permissions.has(Permission.canWriteVisitConnections) && removeEnable()) {
+        <span class="delete">
+            <button mat-mini-fab color="accent" (click)="delete.emit()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </span>
+    }
+</div>

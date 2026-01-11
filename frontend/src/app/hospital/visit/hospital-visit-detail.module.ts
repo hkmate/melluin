@@ -22,6 +22,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {PersonSelectModule} from '@fe/app/util/person-select/person-select.module';
 import {CopierComponent} from '@fe/app/util/copier/copier.component';
+import {HospitalVisitConnectionsComponent} from '@fe/app/hospital/visit/hospital-visit-details/hospital-visit-connections/hospital-visit-connections.component';
+import {HospitalVisitConnectedVisitComponent} from '@fe/app/hospital/visit/hospital-visit-details/hospital-visit-connections/hospital-visit-connected-visit/hospital-visit-connected-visit.component';
+import {HospitalVisitConnectionCreateComponent} from '@fe/app/hospital/visit/hospital-visit-details/hospital-visit-connections/hospital-visit-connection-create/hospital-visit-connection-create.component';
 
 @NgModule({
     imports: [
@@ -48,12 +51,15 @@ import {CopierComponent} from '@fe/app/util/copier/copier.component';
         OptionalPipe,
         VisitActivityModule,
         PersonSelectModule,
-        CopierComponent
+        CopierComponent,
+        HospitalVisitConnectedVisitComponent,
+        HospitalVisitConnectionCreateComponent
     ],
     declarations: [
         HospitalVisitDetailsComponent,
         HospitalVisitPresenterComponent,
-        HospitalVisitFormComponent
+        HospitalVisitFormComponent,
+        HospitalVisitConnectionsComponent
     ]
 })
 export class HospitalVisitDetailModule {

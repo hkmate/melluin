@@ -1,5 +1,4 @@
 
-
 :host ::ng-deep .hospital-visit-data-presenter {
 
     .mat-mdc-card-header {
@@ -16,4 +15,9 @@
 .department-address {
     font-weight: normal;
     font-size: smaller;
+}
+
+h1 {
+    display: flex;
+    justify-content: space-between;
 }

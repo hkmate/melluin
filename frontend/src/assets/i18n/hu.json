@@ -407,7 +407,8 @@
             "Status": "Státusz",
             "Organizer": "Szervező",
             "CountedHours": "Elszámolandó órák",
-            "VicariousMomVisit": "Pótmami foglalkozás"
+            "VicariousMomVisit": "Pótmami foglalkozás",
+            "IdCopied": "A foglalkozás azonosítója a vágólapra másolva"
         },
         "Form": {
             "Add": "Új látogatás szervezése",
@@ -426,6 +427,15 @@
             "SameTimeErrorTitle": "Vigyázz!",
             "SameTimeErrorMessage": "Ezen az osztályon egyidőben nem lehet több foglalkozást tartani. Ha figyelmenen kívül hagynád ezt a beállítást kattintst a 'Csináld!' gombra.",
             "SameTimeErrorOkText": "Csináld!"
+        },
+        "Connections": {
+            "Title": "Összekapcsolt foglalkozások",
+            "NoConnection": "Nincs összekapcsolt foglalkozás",
+            "DeleteConfirm": "Biztosan törölni szeretnéd a kapcsolatat a foglalkozások között?",
+            "Create": {
+                "ConnectionId": "Összekapolandó foglalkozás azonosítója",
+                "ConnectionIdPlaceholder": "Összekapolandó foglalkozás azonosítója"
+            }
         },
         "Activities": {
             "Children": "Gyerekek",

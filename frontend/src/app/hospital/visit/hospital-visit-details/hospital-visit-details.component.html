@@ -3,7 +3,7 @@
 
         <div class="visit-part">
             @if (visit && !isEditMode()) {
-                <app-hospital-visit-presenter [visit]="visit!"></app-hospital-visit-presenter>
+                <app-hospital-visit-presenter [visit]="visit!"/>
                 <div class="button-row">
                     @if (isFilledAndUserIsParticipant()) {
                         <button mat-flat-button color="primary" (click)="prepareReport()">
@@ -44,10 +44,19 @@
             }
         </div>
 
-        @if (shouldShowActivities()) {
-            <div class="activities-part">
-                <app-visit-activities [visit]="visit!" [needWarnings]="true"/>
-            </div>
+        @if (visit) {
+            @if (shouldShowConnections() && connectedVisits.length === 0) {
+                <app-hospital-visit-connections [visit]="visit" [connections]="connectedVisits"/>
+            }
+
+            @if (shouldShowActivities()) {
+                <div class="activities-part">
+                    <app-visit-activities [visit]="visit" [needWarnings]="true"/>
+                </div>
+            }
+            @if (shouldShowConnections() && connectedVisits.length !== 0) {
+                <app-hospital-visit-connections [visit]="visit" [connections]="connectedVisits"/>
+            }
         }
     </div>
 </section>
