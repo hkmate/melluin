@@ -36,6 +36,7 @@ import {UserDataSaverEffect} from '@fe/app/state/effect/user-data-saver.effect';
 import {NavigatorComponent} from '@fe/app/navigator.component';
 import {MondayFirstDateAdapter} from '@fe/app/util/monday-first-date-adapter';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {MatProgressBar} from '@angular/material/progress-bar';
 
 registerLocaleData(localeHu);
 
@@ -67,6 +68,7 @@ export function appInitializeCredentialsFactory(credentialStoreService: Credenti
         StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
 
         MatSidenavModule,
+        MatProgressBar,
         MatIconModule,
         MatListModule,
         MatNativeDateModule,

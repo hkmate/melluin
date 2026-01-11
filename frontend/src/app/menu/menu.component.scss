@@ -18,10 +18,6 @@ mat-sidenav-container {
     height: 100%;
 }
 
-mat-sidenav-content {
-    margin: 1rem 0;
-}
-
 @media screen and (max-width: 400px) {
     mat-sidenav-content {
         margin-left: .5rem;
