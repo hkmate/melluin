@@ -1,6 +1,6 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository} from 'typeorm';
+import {Equal, Not, Repository} from 'typeorm';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {isNil} from '@shared/util/util';
 
@@ -17,7 +17,7 @@ export class HospitalVisitConnectionsDao {
 
     public async findAllConnections(visitId: string): Promise<Array<HospitalVisitEntity>> {
         const visit = await this.getOne(visitId);
-        return this.repository.findBy({connectionGroupId: visit.connectionGroupId});
+        return this.repository.findBy({connectionGroupId: visit.connectionGroupId, id: Not(Equal(visit.id))});
     }
 
     public getConnectionGroupSize(connectionGroupId: string): Promise<number> {

@@ -12,6 +12,7 @@ import {BothVisitInSameGroupValidator} from '@be/hospital-visit-connections/vali
 import {ConnectionCandidateHasNoConnectionYetValidator} from '@be/hospital-visit-connections/validator/connection-candidate-has-no-connection-yet.validator';
 import {VisitHaveSameDateValidator} from '@be/hospital-visit-connections/validator/visit-have-same-date.validator';
 import {VisitsHaveCommonParticipantsValidator} from '@be/hospital-visit-connections/validator/visits-have-common-participants.validator';
+import {VisitsAreNotSameValidator} from '@be/hospital-visit-connections/validator/visits-are-not-same.validator';
 
 @Injectable()
 export class HospitalVisitConnectionsService {
@@ -70,6 +71,7 @@ export class HospitalVisitConnectionsService {
 
     private createValidatorsForAdd(): VisitConnectionValidator {
         return AsyncValidatorChain.of(
+            new VisitsAreNotSameValidator(),
             new ConnectionCandidateHasNoConnectionYetValidator(),
             new VisitHaveSameDateValidator(),
             new VisitsHaveCommonParticipantsValidator()

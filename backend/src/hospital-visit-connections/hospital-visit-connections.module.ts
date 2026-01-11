@@ -6,7 +6,6 @@ import {HospitalVisitConnectionsController} from '@be/hospital-visit-connections
 import {HospitalVisitConnectionsService} from '@be/hospital-visit-connections/hospital-visit-connections.service';
 import {HospitalVisitModule} from '@be/hospital-visit/hospital-visit.module';
 import {HospitalVisitConnectionsDao} from '@be/hospital-visit-connections/hospital-visit-connections.dao';
-import {BothVisitInSameGroupValidator} from '@be/hospital-visit-connections/validator/both-visit-in-same-group.validator';
 import {HospitalVisitPersistenceModule} from '@be/hospital-visit/hospital-visit.persistence.module';
 
 @Module({
@@ -19,7 +18,7 @@ import {HospitalVisitPersistenceModule} from '@be/hospital-visit/hospital-visit.
         HospitalVisitPersistenceModule,
         HospitalVisitModule
     ],
-    providers: [HospitalVisitConnectionsService, HospitalVisitConnectionsDao, BothVisitInSameGroupValidator],
+    providers: [HospitalVisitConnectionsService, HospitalVisitConnectionsDao],
     exports: [],
     controllers: [HospitalVisitConnectionsController]
 })

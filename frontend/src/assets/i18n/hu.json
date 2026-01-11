@@ -518,6 +518,15 @@
         "USER_CANNOT_CREATE_VISIT": "Nem rendelkezel jogosultsággal új foglalkozás létrehozásához",
         "USER_CANNOT_CREATE_VISIT_FOR_OTHERS": "Nem rendelkezel jogosultsággal olyan foglalkozás létrehozásához amin nem veszel részt",
         "USER_CANNOT_MODIFY_VISIT": "Nem rendelkezel jogosultsággal a foglalkozás módosításához",
-        "USER_CANNOT_MODIFY_VISIT_FOR_OTHERS": "Nem rendelkezel jogosultsággal olyan foglalkozás módosításához amin nem veszel részt"
+        "USER_CANNOT_MODIFY_VISIT_FOR_OTHERS": "Nem rendelkezel jogosultsággal olyan foglalkozás módosításához amin nem veszel részt",
+        "VISITS_ARE_NOT_IN_SAME_CONNECTION_GROUP": "Nem törölhető a kapcsolat mert nincsenek is összekapcsolva az adott foglalkozások",
+        "CONNECT_CANDIDATE_ALREADY_IN_GROUP": "A kapcsolni kívánt foglalkozás már össze van kapcsolva",
+        "CONNECT_CANDIDATE_IS_MUCH_EARLIER_OR_LATER": "A kapcsolni kívánt foglalkozás jóval korábban/később van mint az eredeti",
+        "VISITS_HAS_NO_COMMON_PARTICIPANTS": "A kapcsolni kívánt foglalkozást más önkéntesek tartották",
+        "CANNOT_CONNECT_VISITS_TO_ITSELF": "Foglalkozás nem kapcsolható saját magához",
+        "CANNOT_MODIFY_DEPARTMENT_OF_CONNECTED_VISIT": "Kapcsolt foglalkozáson nem módosítható a kórházi osztály",
+        "CANNOT_MODIFY_PARTICIPANTS_OF_CONNECTED_VISIT": "Kapcsolt foglalkozáson nem módosítható a résztvevők listája",
+        "CANNOT_MODIFY_TIME_OF_CONNECTED_VISIT": "Kapcsolt foglalkozáson nem módosítható az időpont",
+        "CANNOT_MODIFY_COUNTED_MINUTES_OF_CONNECTED_VISIT": "Kapcsolt foglalkozáson nem módosítható az elszámolandó órák száma"
     }
 }
