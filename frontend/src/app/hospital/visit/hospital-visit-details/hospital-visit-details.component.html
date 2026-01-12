@@ -46,7 +46,8 @@
 
         @if (visit) {
             @if (shouldShowConnections() && connectedVisits.length === 0) {
-                <app-hospital-visit-connections [visit]="visit" [connections]="connectedVisits"/>
+                <app-hospital-visit-connections [visit]="visit" [connections]="connectedVisits"
+                                                (refreshConnections)="refreshConnections()"/>
             }
 
             @if (shouldShowActivities()) {
@@ -55,7 +56,8 @@
                 </div>
             }
             @if (shouldShowConnections() && connectedVisits.length !== 0) {
-                <app-hospital-visit-connections [visit]="visit" [connections]="connectedVisits"/>
+                <app-hospital-visit-connections [visit]="visit" [connections]="connectedVisits"
+                                                (refreshConnections)="refreshConnections()"/>
             }
         }
     </div>

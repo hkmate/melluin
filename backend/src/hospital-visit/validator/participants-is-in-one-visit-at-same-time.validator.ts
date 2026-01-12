@@ -1,13 +1,12 @@
 import {BadRequestException, Injectable} from '@nestjs/common';
-import {AsyncValidator} from '@shared/validator/validator';
-import {VisitValidationData} from '@be/hospital-visit/validator/visit-validator';
+import {VisitSaveValidator, VisitValidationData} from '@be/hospital-visit/validator/visit-validator';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
 import {ApiError} from '@shared/api-util/api-error';
 
 @Injectable()
-export class ParticipantsIsInOneVisitAtSameTimeValidator implements AsyncValidator<VisitValidationData> {
+export class ParticipantsIsInOneVisitAtSameTimeValidator implements VisitSaveValidator {
 
     constructor(private readonly visitDao: HospitalVisitDao) {
     }

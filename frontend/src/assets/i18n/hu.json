@@ -424,6 +424,7 @@
             "CreateOther": "Másik látogatás felvétle",
             "VicariousMomVisit": "Pótmami foglalkozás",
             "VicariousMomVisitError": "Pótmami foglalkozás csak olyan lehet amin egy résztvevő van",
+            "VicariousMomVisitConnectionError": "Pótmami foglalkozás csak olyan lehet ami nincs összekapcsolva másikkal",
             "SameTimeErrorTitle": "Vigyázz!",
             "SameTimeErrorMessage": "Ezen az osztályon egyidőben nem lehet több foglalkozást tartani. Ha figyelmenen kívül hagynád ezt a beállítást kattintst a 'Csináld!' gombra.",
             "SameTimeErrorOkText": "Csináld!"
@@ -431,7 +432,7 @@
         "Connections": {
             "Title": "Összekapcsolt foglalkozások",
             "NoConnection": "Nincs összekapcsolt foglalkozás",
-            "DeleteConfirm": "Biztosan törölni szeretnéd a kapcsolatat a foglalkozások között?",
+            "DeleteConfirm": "Biztosan törölni szeretnéd a kapcsolatot a foglalkozások között?",
             "Create": {
                 "ConnectionId": "Összekapolandó foglalkozás azonosítója",
                 "ConnectionIdPlaceholder": "Összekapolandó foglalkozás azonosítója"
@@ -537,6 +538,8 @@
         "CANNOT_MODIFY_DEPARTMENT_OF_CONNECTED_VISIT": "Kapcsolt foglalkozáson nem módosítható a kórházi osztály",
         "CANNOT_MODIFY_PARTICIPANTS_OF_CONNECTED_VISIT": "Kapcsolt foglalkozáson nem módosítható a résztvevők listája",
         "CANNOT_MODIFY_TIME_OF_CONNECTED_VISIT": "Kapcsolt foglalkozáson nem módosítható az időpont",
-        "CANNOT_MODIFY_COUNTED_MINUTES_OF_CONNECTED_VISIT": "Kapcsolt foglalkozáson nem módosítható az elszámolandó órák száma"
+        "CANNOT_MODIFY_COUNTED_MINUTES_OF_CONNECTED_VISIT": "Kapcsolt foglalkozáson nem módosítható az elszámolandó órák száma",
+        "VICARIOUS_MOM_VISIT_CANNOT_BE_CONNECTED": "Pótmami foglalkozás nem lehet összekapcsova másikkal",
+        "VICARIOUS_MOM_VISIT_CANNOT_BE_WITH_MORE_PARTICIPANT": "Pótmami foglalkozás nem lehet olyan amin több önkéntes vesz részt"
     }
 }

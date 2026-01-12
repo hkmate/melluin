@@ -23,3 +23,4 @@ export type VisitValidationData = HospitalVisitRewriteValidationData | HospitalV
 
 export type VisitRewriteValidator = AsyncValidator<HospitalVisitRewriteValidationData>;
 export type VisitCreateValidator = AsyncValidator<HospitalVisitCreateValidationData>;
+export type VisitSaveValidator = AsyncValidator<VisitValidationData>;

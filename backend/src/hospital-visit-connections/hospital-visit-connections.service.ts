@@ -13,6 +13,7 @@ import {ConnectionCandidateHasNoConnectionYetValidator} from '@be/hospital-visit
 import {VisitHaveSameDateValidator} from '@be/hospital-visit-connections/validator/visit-have-same-date.validator';
 import {VisitsHaveCommonParticipantsValidator} from '@be/hospital-visit-connections/validator/visits-have-common-participants.validator';
 import {VisitsAreNotSameValidator} from '@be/hospital-visit-connections/validator/visits-are-not-same.validator';
+import {ConnectedVisitIsNotVicariousMomVisitValidator} from '@be/hospital-visit-connections/validator/connected-visit-is-not-vicarious-mom-visit.validator';
 
 @Injectable()
 export class HospitalVisitConnectionsService {
@@ -28,8 +29,10 @@ export class HospitalVisitConnectionsService {
 
         await this.createValidatorsForAdd().validate({visit, connectCandidate: connectVisit, requester});
 
-        connectVisit.connectionGroupId = await this.getConnectionGroupIdFromVisit(visit);
-        await this.hospitalVisitDao.save(connectVisit);
+        const connectionGroupId = await this.getConnectionGroupIdFromVisits(visit, connectVisit);
+        visit.connectionGroupId = connectionGroupId;
+        connectVisit.connectionGroupId = connectionGroupId;
+        await this.hospitalVisitDao.saveMany(visit, connectVisit);
     }
 
     public async getConnections(visitId: string, requester: User): Promise<Array<HospitalVisit>> {
@@ -52,13 +55,14 @@ export class HospitalVisitConnectionsService {
         await this.hospitalVisitDao.saveMany(connectedVisit, visit);
     }
 
-    private async getConnectionGroupIdFromVisit(visit: HospitalVisitEntity): Promise<string> {
+    private async getConnectionGroupIdFromVisits(visit: HospitalVisitEntity, visit2: HospitalVisitEntity): Promise<string> {
         if (visit.id !== visit.connectionGroupId) {
             return visit.connectionGroupId;
         }
-        visit.connectionGroupId = await this.provideNewConnectionGroupId();
-        await this.hospitalVisitDao.save(visit);
-        return visit.connectionGroupId;
+        if (visit2.id !== visit2.connectionGroupId) {
+            return visit2.connectionGroupId;
+        }
+        return await this.provideNewConnectionGroupId();
     }
 
     private async provideNewConnectionGroupId(): Promise<string> {
@@ -72,6 +76,7 @@ export class HospitalVisitConnectionsService {
     private createValidatorsForAdd(): VisitConnectionValidator {
         return AsyncValidatorChain.of(
             new VisitsAreNotSameValidator(),
+            new ConnectedVisitIsNotVicariousMomVisitValidator(),
             new ConnectionCandidateHasNoConnectionYetValidator(),
             new VisitHaveSameDateValidator(),
             new VisitsHaveCommonParticipantsValidator()

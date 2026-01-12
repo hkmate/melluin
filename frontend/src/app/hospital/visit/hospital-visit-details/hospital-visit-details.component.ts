@@ -130,6 +130,16 @@ export class HospitalVisitDetailsComponent {
             && this.permissions.has(Permission.canReadVisitConnections)
     }
 
+    protected refreshConnections(): void {
+        if (isNil(this.visit)) {
+            return;
+        }
+        this.visitConnectionsService.getConnections(this.visit.id).subscribe(connectedVisits => {
+            this.connectedVisits = connectedVisits;
+            this.updateVisitInstanceAfterConnectionRefresh();
+        });
+    }
+
     private setToPresent(): void {
         this.isEdit = false;
         this.isCreation = false;
@@ -205,6 +215,20 @@ export class HospitalVisitDetailsComponent {
             this.isCreation = true;
             this.setIdInUrl(CREATE_MARKER);
         });
+    }
+
+    private updateVisitInstanceAfterConnectionRefresh(): void {
+        if (isNil(this.visit)) {
+            return;
+        }
+        const visitInGroup = this.visit.id !== this.visit.connectionGroupId;
+        const hasConnections = this.connectedVisits.length > 0;
+        if (!visitInGroup && hasConnections) {
+            this.visit = {...this.visit, connectionGroupId: this.connectedVisits[0].connectionGroupId};
+        }
+        if (visitInGroup && !hasConnections) {
+            this.visit = {...this.visit, connectionGroupId: this.visit.id};
+        }
     }
 
 }

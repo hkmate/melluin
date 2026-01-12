@@ -79,9 +79,14 @@
                 <mat-checkbox formControlName="vicariousMomVisit">
                     {{ 'HospitalVisit.Form.VicariousMomVisit' | translate }}
                 </mat-checkbox>
-                @if (needVicariousMomVisitWarning()) {
+                @if (needVicariousMomVisitParticipantWarning()) {
                     <div class="vicarious-mom-visit-error">
                         {{ 'HospitalVisit.Form.VicariousMomVisitError' | translate }}
+                    </div>
+                }
+                @if (needVicariousMomVisitConnectionWarning()) {
+                    <div class="vicarious-mom-visit-error">
+                        {{ 'HospitalVisit.Form.VicariousMomVisitConnectionError' | translate }}
                     </div>
                 }
             </mat-card-content>

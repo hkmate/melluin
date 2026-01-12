@@ -38,15 +38,19 @@ export class HospitalVisitFormComponent {
     public readonly createNewAfterSave = input.required<boolean>();
     public readonly visit = input<HospitalVisit>();
 
-    public createNewAfterSaveChange = output<boolean>();
-    public submitted = output<HospitalVisitCreate | HospitalVisitRewrite>();
-    public canceled = output<void>();
+    public readonly createNewAfterSaveChange = output<boolean>();
+    public readonly submitted = output<HospitalVisitCreate | HospitalVisitRewrite>();
+    public readonly canceled = output<void>();
 
-    protected createNewAfterOneSaved = signal(false);
+    protected readonly createNewAfterOneSaved = signal(false);
     protected statusOptions: Array<HospitalVisitStatus>;
     protected departmentOptions: Array<Department>;
     protected readonly form = computed(() => this.buildFormGroup());
     protected mobileScreen: boolean;
+    private readonly hasConnections = computed(() => {
+        const visit = this.visit();
+        return isNotNil(visit) && visit.id !== visit.connectionGroupId;
+    });
 
     private currentUser: User;
 
@@ -59,7 +63,9 @@ export class HospitalVisitFormComponent {
     }
 
     protected onSubmit(): void {
-        if (this.form().valid && !this.needVicariousMomVisitWarning()) {
+        if (this.form().valid
+            && !this.needVicariousMomVisitParticipantWarning()
+            && !this.needVicariousMomVisitConnectionWarning()) {
             this.submitted.emit(this.createDataForSubmit());
         }
     }
@@ -81,10 +87,15 @@ export class HospitalVisitFormComponent {
         this.createNewAfterSaveChange.emit(newValue);
     }
 
-    protected needVicariousMomVisitWarning(): boolean {
+    protected needVicariousMomVisitParticipantWarning(): boolean {
         const vicariousMomVisit = this.form().controls.vicariousMomVisit.value as boolean;
         const participantCount = this.form().controls.participantIds.value?.length ?? 0;
         return vicariousMomVisit && participantCount !== 1;
+    }
+
+    protected needVicariousMomVisitConnectionWarning(): boolean {
+        const vicariousMomVisit = this.form().controls.vicariousMomVisit.value as boolean;
+        return vicariousMomVisit && this.hasConnections();
     }
 
     private initFormOptions(): void {
@@ -96,7 +107,7 @@ export class HospitalVisitFormComponent {
     // eslint-disable-next-line max-lines-per-function
     private buildFormGroup(): FormGroup {
         const visit = this.visit();
-        const hasConnection = isNotNil(visit) && visit.id !== visit.connectionGroupId;
+        const hasConnection = this.hasConnections();
         return new FormGroup({
             status: new FormControl(visit?.status ?? HospitalVisitStatus.SCHEDULED, [Validators.required]),
             date: new FormControl({

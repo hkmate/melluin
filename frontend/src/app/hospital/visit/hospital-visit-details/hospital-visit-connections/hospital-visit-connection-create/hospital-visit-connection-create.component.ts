@@ -37,8 +37,8 @@ export class HospitalVisitConnectionCreateComponent {
     private readonly loaderService = inject(LoaderService);
     private readonly msgService = inject(MessageService);
 
-    public visit = input.required<HospitalVisit>();
-    public submitted = output<HospitalVisit>()
+    public readonly visit = input.required<HospitalVisit>();
+    public readonly submitted = output<HospitalVisit>()
 
     protected idControl = new FormControl('', {
         nonNullable: true,

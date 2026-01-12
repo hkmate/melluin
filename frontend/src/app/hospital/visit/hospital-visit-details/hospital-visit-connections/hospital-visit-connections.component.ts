@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, signal} from '@angular/core';
+import {Component, inject, input, signal, output } from '@angular/core';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitConnectionsService} from '@fe/app/hospital/visit/hospital-visit-details/hospital-visit-connections.service';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
@@ -18,17 +18,11 @@ export class HospitalVisitConnectionsComponent {
     private readonly visitConnectionsService = inject(HospitalVisitConnectionsService);
     protected readonly permissions = inject(PermissionService);
 
-    public visit = input.required<HospitalVisit>();
-    public connections = input.required<Array<HospitalVisit>>();
-    public connectionsToShow = signal<Array<HospitalVisit>>([]);
+    public readonly visit = input.required<HospitalVisit>();
+    public readonly connections = input.required<Array<HospitalVisit>>();
+    public readonly refreshConnections = output();
 
     protected creationOpened = signal(false);
-
-    constructor() {
-        effect(() => {
-            this.connectionsToShow.set(this.connections());
-        }, {allowSignalWrites: true});
-    }
 
     protected toggleCreation(): void {
         this.creationOpened.update(value => !value);
@@ -37,7 +31,7 @@ export class HospitalVisitConnectionsComponent {
     protected addConnection(connectVisit: HospitalVisit): void {
         this.visitConnectionsService.addConnection(this.visit().id, connectVisit.id).subscribe(() => {
             this.creationOpened.set(false);
-            this.connectionsToShow.update(prev => [...prev, connectVisit]);
+            this.refreshConnections.emit();
         });
     }
 
@@ -47,7 +41,7 @@ export class HospitalVisitConnectionsComponent {
             okBtnText: 'YesNo.true'
         }).then(() => {
             this.visitConnectionsService.deleteConnection(this.visit().id, connectedId).subscribe(() => {
-                this.connectionsToShow.update(prev => prev.filter(visit => visit.id !== connectedId));
+                this.refreshConnections.emit();
             });
         })
     }

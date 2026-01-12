@@ -21,13 +21,14 @@
     </mat-card>
 }
 
-@if (connectionsToShow().length === 0) {
+@if (connections().length === 0) {
     <div>{{ 'HospitalVisit.Connections.NoConnection' | translate }}</div>
 } @else {
-    @for (connected of connectionsToShow(); track connected.id) {
+    @for (connected of connections(); track connected.id) {
         <mat-card>
             <mat-card-content>
-                <app-hospital-visit-connected-visit [visit]="connected" (delete)="removeConnection(connected.id)"/>
+                <app-hospital-visit-connected-visit [visit]="connected"
+                                                    (delete)="removeConnection(connected.id)"/>
             </mat-card-content>
         </mat-card>
     }

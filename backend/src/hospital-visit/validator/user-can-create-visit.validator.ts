@@ -1,12 +1,11 @@
 import {User} from '@shared/user/user';
 import {ForbiddenException} from '@nestjs/common';
 import {Permission} from '@shared/user/permission.enum';
-import {AsyncValidator} from '@shared/validator/validator';
-import {HospitalVisitCreateValidationData} from '@be/hospital-visit/validator/visit-validator';
+import {HospitalVisitCreateValidationData, VisitCreateValidator} from '@be/hospital-visit/validator/visit-validator';
 import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
 import {ApiError} from '@shared/api-util/api-error';
 
-export class UserCanCreateVisitValidator implements AsyncValidator<HospitalVisitCreateValidationData> {
+export class UserCanCreateVisitValidator implements VisitCreateValidator {
 
     public validate({requester, item}: HospitalVisitCreateValidationData): Promise<void> {
         this.verifyUserHasPermission(requester);

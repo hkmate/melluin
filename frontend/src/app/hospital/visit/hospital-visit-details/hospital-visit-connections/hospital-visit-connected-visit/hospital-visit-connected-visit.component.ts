@@ -32,8 +32,8 @@ export class HospitalVisitConnectedVisitComponent {
 
     protected readonly permissions = inject(PermissionService);
 
-    public visit = input.required<HospitalVisit>();
-    public removeEnable = input(true);
-    public delete = output();
+    public readonly visit = input.required<HospitalVisit>();
+    public readonly removeEnable = input(true);
+    public readonly delete = output();
 
 }

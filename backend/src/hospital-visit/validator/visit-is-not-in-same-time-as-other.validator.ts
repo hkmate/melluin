@@ -1,8 +1,7 @@
 import {User} from '@shared/user/user';
 import {BadRequestException, Injectable} from '@nestjs/common';
 import {Permission} from '@shared/user/permission.enum';
-import {AsyncValidator} from '@shared/validator/validator';
-import {VisitValidationData} from '@be/hospital-visit/validator/visit-validator';
+import {VisitSaveValidator, VisitValidationData} from '@be/hospital-visit/validator/visit-validator';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {DepartmentDao} from '@be/department/department.dao';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
@@ -10,7 +9,7 @@ import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create'
 import {ApiError} from '@shared/api-util/api-error';
 
 @Injectable()
-export class VisitIsNotInSameTimeAsOtherValidator implements AsyncValidator<VisitValidationData> {
+export class VisitIsNotInSameTimeAsOtherValidator implements VisitSaveValidator {
 
     constructor(private readonly departmentDao: DepartmentDao,
                 private readonly visitDao: HospitalVisitDao) {

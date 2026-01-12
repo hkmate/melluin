@@ -19,11 +19,12 @@ import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/applier/hos
 import {AsyncValidatorChain} from '@shared/validator/validator-chain';
 import {VisitIsNotInSameTimeAsOtherValidator} from '@be/hospital-visit/validator/visit-is-not-in-same-time-as-other.validator';
 import {VisitCreateValidator, VisitRewriteValidator} from '@be/hospital-visit/validator/visit-validator';
-import {VicariousMomVisitCorrectValidator} from '@be/hospital-visit/validator/vicarious-mom-visit-correct.validator';
+import {VicariousMomVisitHasOnlyOneParticipantValidator} from '@be/hospital-visit/validator/vicarious-mom-visit-has-only-one-participant.validator';
 import {ParticipantsIsInOneVisitAtSameTimeValidator} from '@be/hospital-visit/validator/participants-is-in-one-visit-at-same-time.validator';
 import {UserCanCreateVisitValidator} from '@be/hospital-visit/validator/user-can-create-visit.validator';
 import {UserCanModifyVisitValidator} from '@be/hospital-visit/validator/user-can-modify-visit.validator';
 import {VisitIsNotConnectedWhenOtherThenStatusChangedValidator} from '@be/hospital-visit/validator/visit-is-not-connected-when-other-then-status-changed.validator';
+import {VicariousMomVisitHasNoConnectionsValidator} from '@be/hospital-visit/validator/vicarious-mom-visit-has-no-connections.validator';
 
 @Injectable()
 export class HospitalVisitCrudService {
@@ -76,7 +77,7 @@ export class HospitalVisitCrudService {
     private createValidatorsForCreate(): VisitCreateValidator {
         return AsyncValidatorChain.of(
             new UserCanCreateVisitValidator(),
-            new VicariousMomVisitCorrectValidator(),
+            new VicariousMomVisitHasOnlyOneParticipantValidator(),
             this.notInSameTimeAsOtherValidator,
             this.participantsIsInOneVisitAtSameTimeValidator
         );
@@ -86,7 +87,8 @@ export class HospitalVisitCrudService {
         return AsyncValidatorChain.of(
             new UserCanModifyVisitValidator(),
             new VisitIsNotConnectedWhenOtherThenStatusChangedValidator(),
-            new VicariousMomVisitCorrectValidator(),
+            new VicariousMomVisitHasOnlyOneParticipantValidator(),
+            new VicariousMomVisitHasNoConnectionsValidator(),
             this.notInSameTimeAsOtherValidator,
             this.participantsIsInOneVisitAtSameTimeValidator
         );
