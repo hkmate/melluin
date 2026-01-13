@@ -38,6 +38,7 @@ export class AuthenticationService {
     }
 
     public logout(): void {
+        sessionStorage.clear();
         this.credentialStoreService.clear();
         this.router.navigate([PATHS.login.main]);
     }

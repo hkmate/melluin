@@ -25,10 +25,10 @@ export class LoginComponent {
     private readonly msg = inject(MessageService);
     private readonly authenticationService = inject(AuthenticationService);
 
-    private returnUrl?: string;
     protected loading = false;
     protected userName?: string;
     protected password?: string;
+    private returnUrl?: string;
 
     constructor() {
         this.title.setTitleByI18n('Titles.Login')
@@ -58,7 +58,7 @@ export class LoginComponent {
             .subscribe({
                 next: (user: User) => {
                     this.loading = false;
-                    this.router.navigate([this.returnUrl ?? '']).then(NOOP).catch(NOOP);
+                    this.router.navigateByUrl(this.returnUrl ?? '/').catch(NOOP);
                 },
                 error: (error: HttpErrorResponse) => {
                     this.loading = false;

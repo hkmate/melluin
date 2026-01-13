@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {Route, Router, UrlSegment} from '@angular/router';
+import {Route, Router} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
 import {PATHS} from '../../app-paths';
 import {User} from '@shared/user/user';
@@ -14,8 +14,8 @@ interface RouteData {
     permissions?: Array<Permission>;
 }
 
-export const AuthGuardFn = (route: Route, segments: Array<UrlSegment>): boolean =>
-    inject(AuthGuard).canMatch(route.data as RouteData, segments);
+export const AuthGuardFn = (route: Route): boolean =>
+    inject(AuthGuard).canMatch(route.data as RouteData);
 
 @Injectable()
 export class AuthGuard {
@@ -36,9 +36,9 @@ export class AuthGuard {
         })
     }
 
-    public canMatch(data: RouteData = {}, segments: Array<UrlSegment> = []): boolean {
+    public canMatch(data: RouteData = {}): boolean {
         const permissions = data.permissions;
-        const returnUrl = segments.map(s => s.path).join('/');
+        const returnUrl = window.location.pathname + window.location.search;
 
         if (!this.authenticationService.hasAuthenticatedUser()) {
             this.router.navigate([PATHS.login.main], {queryParams: {returnUrl}})
