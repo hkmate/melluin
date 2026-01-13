@@ -74,8 +74,10 @@ export class HospitalVisitDetailsComponent {
         if (isNil(this.visit)) {
             return;
         }
-        const draftCreater = await this.reportPrepareService.draftCreater(this.visit.id)
-        draftCreater.openReportDraft();
+        const connectedVisitIds = this.connectedVisits.map(v => v.id);
+        const draftCreator = await this.reportPrepareService
+            .draftCreator([this.visit.id, ...connectedVisitIds]);
+        draftCreator.openReportDraft();
     }
 
     protected cancelEditing(): void {

@@ -37,3 +37,7 @@ export class PersonPreferences {
     }
 
 }
+
+export function getFullName(person: PersonIdentifier): string {
+    return `${person.lastName} ${person.firstName}`
+}
