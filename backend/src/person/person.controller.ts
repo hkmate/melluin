@@ -1,7 +1,20 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put} from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    DefaultValuePipe,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Param,
+    ParseBoolPipe,
+    ParseUUIDPipe,
+    Post,
+    Put,
+    Query
+} from '@nestjs/common';
 import {PersonCrudService} from '@be/person/person.crud.service';
 import {Pageable} from '@shared/api-util/pageable';
-import {Person} from '@shared/person/person';
+import {Person, PersonIdentifier} from '@shared/person/person';
 import {User} from '@shared/user/user';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PersonCreation} from '@shared/person/person-creation';
@@ -33,10 +46,16 @@ export class PersonController {
         return this.personCrudService.getOne(personId, requester);
     }
 
+    public find(pageRequest: PageRequest, onlyIdentifier: false, requester: User): Promise<Pageable<Person>>;
+    public find(pageRequest: PageRequest, onlyIdentifier: true, requester: User): Promise<Pageable<PersonIdentifier>>;
     @Get()
     @PermissionGuard(Permission.canReadPerson)
     public find(@PageReq() pageRequest: PageRequest,
-                @CurrentUser() requester: User): Promise<Pageable<Person>> {
+                @Query('onlyIdentifier', new DefaultValuePipe(false), ParseBoolPipe) onlyIdentifier: boolean,
+                @CurrentUser() requester: User): Promise<Pageable<Person> | Pageable<PersonIdentifier>> {
+        if (onlyIdentifier) {
+            return this.personCrudService.findIdentifiers(pageRequest, requester);
+        }
         return this.personCrudService.find(pageRequest, requester);
     }
 

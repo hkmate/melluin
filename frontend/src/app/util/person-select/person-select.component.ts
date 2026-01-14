@@ -1,5 +1,5 @@
 import {Component, forwardRef, inject, input, signal} from '@angular/core';
-import {Person, PersonIdentifier} from '@shared/person/person';
+import {PersonIdentifier} from '@shared/person/person';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {isNil, NOOP, VoidFunc} from '@shared/util/util';
 import {CachedPeopleService} from '@fe/app/people/cached-people.service';
@@ -82,7 +82,7 @@ export class PersonSelectComponent implements ControlValueAccessor {
 
     private initPersonOptions(): void {
         this.personService.loadAllPeople(this.getFilterOptions(), this.cacheName).subscribe(
-            (peopleOptions: Array<Person>) => {
+            (peopleOptions: Array<PersonIdentifier>) => {
                 this.peopleOptions = peopleOptions;
                 this.filteredOptions = [...this.peopleOptions];
                 this.setupPeople();

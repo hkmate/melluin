@@ -9,6 +9,8 @@ import {PageCreator} from '@be/crud/page-creator';
 import {PageRequest} from '@be/crud/page-request';
 import {FilterOptionsFieldsConverter} from '@be/crud/convert/filter-options-fields-converter';
 import {FilterOperation} from '@shared/api-util/filter-options';
+import {PersonIdentifier} from '@shared/person/person';
+import {paginate} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class PersonDao extends PageCreator<PersonEntity> {
@@ -79,6 +81,19 @@ export class PersonDao extends PageCreator<PersonEntity> {
     }
 
     public async findAll(pageRequest: PageRequest): Promise<Pageable<PersonEntity>> {
+        const request = await this.preparePageRequestWhereClosure(pageRequest);
+        return this.getPage(request, {relations: {user: true}});
+    }
+
+    public async findAllIdentifiers(pageRequest: PageRequest): Promise<Pageable<PersonIdentifier>> {
+        const request = await this.preparePageRequestWhereClosure(pageRequest);
+        return paginate(this.repository, request.pagination, {
+            ...this.createOptions(request),
+            select: ['id', 'firstName', 'lastName']
+        });
+    }
+
+    private async preparePageRequestWhereClosure(pageRequest: PageRequest): Promise<PageRequest> {
         const fieldConverter = FilterOptionsFieldsConverter.of({
             'user.roleNames': (values: FilterOperation<unknown>) => Promise.resolve({
                 key: 'user.roles.name',
@@ -90,7 +105,7 @@ export class PersonDao extends PageCreator<PersonEntity> {
             }),
         });
         pageRequest.where = await fieldConverter.convert(pageRequest.where);
-        return this.getPage(pageRequest, { relations: { user: true } });
+        return pageRequest
     }
 
     private verifyAllIdHadPerson(ids: Array<string>, people: Array<PersonEntity>): void {
