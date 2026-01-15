@@ -17,14 +17,8 @@ import {
 } from '@shared/hospital-visit/hospital-visit-filterable-fields';
 import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/applier/hospital-visit-rewrite-applier.factory';
 import {AsyncValidatorChain} from '@shared/validator/validator-chain';
-import {VisitIsNotInSameTimeAsOtherValidator} from '@be/hospital-visit/validator/visit-is-not-in-same-time-as-other.validator';
 import {VisitCreateValidator, VisitRewriteValidator} from '@be/hospital-visit/validator/visit-validator';
-import {VicariousMomVisitHasOnlyOneParticipantValidator} from '@be/hospital-visit/validator/vicarious-mom-visit-has-only-one-participant.validator';
-import {ParticipantsIsInOneVisitAtSameTimeValidator} from '@be/hospital-visit/validator/participants-is-in-one-visit-at-same-time.validator';
-import {UserCanCreateVisitValidator} from '@be/hospital-visit/validator/user-can-create-visit.validator';
-import {UserCanModifyVisitValidator} from '@be/hospital-visit/validator/user-can-modify-visit.validator';
-import {VisitIsNotConnectedWhenOtherThenStatusChangedValidator} from '@be/hospital-visit/validator/visit-is-not-connected-when-other-then-status-changed.validator';
-import {VicariousMomVisitHasNoConnectionsValidator} from '@be/hospital-visit/validator/vicarious-mom-visit-has-no-connections.validator';
+import {VisitSaveValidatorFactory} from '@be/hospital-visit/validator/visit-save-validator-factory';
 
 @Injectable()
 export class HospitalVisitCrudService {
@@ -32,8 +26,7 @@ export class HospitalVisitCrudService {
     constructor(private readonly hospitalVisitDao: HospitalVisitDao,
                 private readonly rewriteApplierFactory: HospitalVisitRewriteApplierFactory,
                 private readonly visitConverter: HospitalVisitEntityToDtoConverter,
-                private readonly notInSameTimeAsOtherValidator: VisitIsNotInSameTimeAsOtherValidator,
-                private readonly participantsIsInOneVisitAtSameTimeValidator: ParticipantsIsInOneVisitAtSameTimeValidator,
+                private readonly validatorFactory: VisitSaveValidatorFactory,
                 private readonly visitCreationToEntityConverter: HospitalVisitCreationToEntityConverter) {
     }
 
@@ -75,23 +68,11 @@ export class HospitalVisitCrudService {
     }
 
     private createValidatorsForCreate(): VisitCreateValidator {
-        return AsyncValidatorChain.of(
-            new UserCanCreateVisitValidator(),
-            new VicariousMomVisitHasOnlyOneParticipantValidator(),
-            this.notInSameTimeAsOtherValidator,
-            this.participantsIsInOneVisitAtSameTimeValidator
-        );
+        return AsyncValidatorChain.of(...this.validatorFactory.getValidatorsForCreate());
     }
 
     private createValidatorsForUpdate(): VisitRewriteValidator {
-        return AsyncValidatorChain.of(
-            new UserCanModifyVisitValidator(),
-            new VisitIsNotConnectedWhenOtherThenStatusChangedValidator(),
-            new VicariousMomVisitHasOnlyOneParticipantValidator(),
-            new VicariousMomVisitHasNoConnectionsValidator(),
-            this.notInSameTimeAsOtherValidator,
-            this.participantsIsInOneVisitAtSameTimeValidator
-        );
+        return AsyncValidatorChain.of(...this.validatorFactory.getValidatorsForUpdate());
     }
 
 }

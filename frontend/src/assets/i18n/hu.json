@@ -540,6 +540,9 @@
         "CANNOT_MODIFY_TIME_OF_CONNECTED_VISIT": "Kapcsolt foglalkozáson nem módosítható az időpont",
         "CANNOT_MODIFY_COUNTED_MINUTES_OF_CONNECTED_VISIT": "Kapcsolt foglalkozáson nem módosítható az elszámolandó órák száma",
         "VICARIOUS_MOM_VISIT_CANNOT_BE_CONNECTED": "Pótmami foglalkozás nem lehet összekapcsova másikkal",
-        "VICARIOUS_MOM_VISIT_CANNOT_BE_WITH_MORE_PARTICIPANT": "Pótmami foglalkozás nem lehet olyan amin több önkéntes vesz részt"
+        "VICARIOUS_MOM_VISIT_CANNOT_BE_WITH_MORE_PARTICIPANT": "Pótmami foglalkozás nem lehet olyan amin több önkéntes vesz részt",
+        "INVALID_DATE_TIME": "Hibás időpont lett megadva",
+        "DATE_TIME_NOT_FITS_FOR_ORIGINAL_VISIT": "A megadott időpont nem illeszkedik az eredeti foglalkozás idejéhez",
+        "ORIGINAL_VISIT_IS_NOT_IN_STARTED_STATUS_AT_CONTINUE": "Az eredeti fogolalkozás csak 'Megkezdett' státuszú lehet"
     }
 }

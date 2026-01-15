@@ -11,6 +11,7 @@ import {HospitalVisitActivityModule} from '@be/hospital-visit-activity/hospital-
 import {HealthCheckModule} from '@be/health-check/health-check.module';
 import {StatisticsModule} from '@be/statistics/statistics.module';
 import {HospitalVisitConnectionsModule} from '@be/hospital-visit-connections/hospital-visit-connections.module';
+import {HospitalVisitContinueModule} from '@be/hospital-visit-continue/hospital-visit-continue.module';
 
 @Module({
     imports: [
@@ -25,6 +26,7 @@ import {HospitalVisitConnectionsModule} from '@be/hospital-visit-connections/hos
         HospitalVisitModule,
         HospitalVisitActivityModule,
         HospitalVisitConnectionsModule,
+        HospitalVisitContinueModule,
         ChildModule,
         StatisticsModule
     ]

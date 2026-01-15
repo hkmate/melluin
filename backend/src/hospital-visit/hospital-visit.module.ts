@@ -11,6 +11,7 @@ import {DepartmentBoxModule} from '@be/department-box/department-box.module';
 import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/applier/hospital-visit-rewrite-applier.factory';
 import {VisitIsNotInSameTimeAsOtherValidator} from '@be/hospital-visit/validator/visit-is-not-in-same-time-as-other.validator';
 import {ParticipantsIsInOneVisitAtSameTimeValidator} from '@be/hospital-visit/validator/participants-is-in-one-visit-at-same-time.validator';
+import {VisitSaveValidatorFactory} from '@be/hospital-visit/validator/visit-save-validator-factory';
 
 @Module({
     imports: [
@@ -27,12 +28,14 @@ import {ParticipantsIsInOneVisitAtSameTimeValidator} from '@be/hospital-visit/va
         HospitalVisitEntityToDtoConverter,
         HospitalVisitRewriteApplierFactory,
         HospitalVisitCrudService,
+        VisitSaveValidatorFactory
     ],
     exports: [
         HospitalVisitCreationToEntityConverter,
         HospitalVisitEntityToDtoConverter,
         HospitalVisitRewriteApplierFactory,
-        HospitalVisitCrudService
+        HospitalVisitCrudService,
+        VisitSaveValidatorFactory
     ],
     controllers: [
         HospitalVisitController,

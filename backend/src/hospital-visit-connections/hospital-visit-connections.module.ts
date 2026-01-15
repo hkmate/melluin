@@ -19,7 +19,7 @@ import {HospitalVisitPersistenceModule} from '@be/hospital-visit/hospital-visit.
         HospitalVisitModule
     ],
     providers: [HospitalVisitConnectionsService, HospitalVisitConnectionsDao],
-    exports: [],
+    exports: [HospitalVisitConnectionsService],
     controllers: [HospitalVisitConnectionsController]
 })
 export class HospitalVisitConnectionsModule {
