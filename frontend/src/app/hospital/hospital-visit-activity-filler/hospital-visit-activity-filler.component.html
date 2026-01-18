@@ -43,7 +43,7 @@
                         <app-activities-information-filler [visitId]="visit.id"/>
                     </div>
                     <div class="box-info">
-                        <app-box-info-manager-by-visit [visitId]="visit.id" [departmentId]="visit.department.id" />
+                        <app-box-info-manager-by-visit [visitId]="visit.id" [departmentId]="visit.department.id"/>
                     </div>
                 </div>
             }
@@ -58,6 +58,18 @@
                         {{ 'HospitalVisit.Finalized' | translate }}
                     </button>
                 </div>
+
+                @if (childrenAdded) {
+                    <div class="continue-other-btn">
+                        <button mat-stroked-button
+                                color="secondary"
+                                type="button"
+                                [disabled]="!buttonsEnabled"
+                                (click)="openContinueOtherDialog()">
+                            {{ 'HospitalVisit.ContinueAnother' | translate }}
+                        </button>
+                    </div>
+                }
             }
 
             @if (canSetVisitToFailed()) {

@@ -33,7 +33,6 @@ export function getErrorHandler<T>(msg: MessageService): OperatorFunction<T, T> 
     });
 }
 
-
 export function isNotEmptyValidator(control: AbstractControl): ValidationErrors | null {
     return isNilOrEmpty(control.value)
         ? {empty: true}

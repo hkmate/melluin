@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>{{ 'HospitalVisit.Continue.DialogTitle' | translate }}</h1>
+<div mat-dialog-content>
+    <div class="description">
+        {{ 'HospitalVisit.Continue.DialogText' | translate }}
+    </div>
+    <form [formGroup]="form">
+        <div>
+            <mat-form-field>
+                <mat-label>{{ 'HospitalVisit.Continue.Department' | translate }}</mat-label>
+                <mat-select [formControl]="departmentIdControl">
+                    @for (option of departmentOptions; track option.id) {
+                        <mat-option [value]="option.id"> {{ option.name }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="time-field">
+            <mat-form-field>
+                <mat-label>{{ 'HospitalVisit.Continue.TimeFrom' | translate }}</mat-label>
+                <input matInput type="time" [formControl]="fromControl">
+                @if (fromControl.invalid) {
+                    <mat-error>{{ 'HospitalVisit.Continue.FromError' | translate }}</mat-error>
+                }
+            </mat-form-field>
+        </div>
+    </form>
+
+</div>
+
+<div mat-dialog-actions>
+    <button mat-flat-button color="accent" type="button"
+            (click)="submit()">
+        {{ 'HospitalVisit.Continue.Ok' | translate }}
+    </button>
+    <button mat-stroked-button color="primary" type="button"
+            (click)="close()">
+        {{ 'HospitalVisit.Continue.Cancel' | translate }}
+    </button>
+</div>

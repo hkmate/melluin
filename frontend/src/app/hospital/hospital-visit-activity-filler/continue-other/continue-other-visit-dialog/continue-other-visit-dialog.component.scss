@@ -1,0 +1,23 @@
+
+.description {
+    margin-bottom: 1rem;
+    font-size: small;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.mat-mdc-dialog-actions {
+
+    justify-content: flex-end;
+    margin: 0 0.5rem 0.5rem 0.5rem;
+
+    @media (max-width: 599px) {
+        button {
+            width: 100%;
+            margin: 0 0 .5rem;
+        }
+    }
+
+}

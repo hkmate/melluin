@@ -6,6 +6,7 @@ import {Permission} from '@shared/user/permission.enum';
 import {HospitalVisitContinueService} from '@be/hospital-visit-continue/hospital-visit-continue.service';
 import dayjs from 'dayjs';
 import {ApiError} from '@shared/api-util/api-error';
+import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 
 
 @Controller('hospital-visits')
@@ -20,10 +21,9 @@ export class HospitalVisitContinueController {
     public async addConnection(@Param('visitId', ParseUUIDPipe) visitId: string,
                                @Query('from') dateTimeFrom: string,
                                @Query('departmentId', ParseUUIDPipe) departmentId: string,
-                               @CurrentUser() requester: User): Promise<string> {
+                               @CurrentUser() requester: User): Promise<HospitalVisit> {
         this.verifyItIsValidDateTime(dateTimeFrom);
-        const visit = await this.continueService.createConnectedVisit(visitId, dateTimeFrom, departmentId, requester);
-        return visit.id;
+        return await this.continueService.createConnectedVisit(visitId, dateTimeFrom, departmentId, requester);
     }
 
     private verifyItIsValidDateTime(dateTime: string): void | never {

@@ -39,6 +39,9 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {TrimmedTextInputModule} from '@fe/app/util/trimmed-text-input/trimmed-text-input.module';
 import {ActivitiesInformationFillerComponent} from '@fe/app/hospital/hospital-visit-activity-filler/fillers/activities-information-filler/activities-information-filler.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {ContinueOtherVisitDialogComponent} from '@fe/app/hospital/hospital-visit-activity-filler/continue-other/continue-other-visit-dialog/continue-other-visit-dialog.component';
+import {ContinueOtherVisitDialogService} from '@fe/app/hospital/hospital-visit-activity-filler/continue-other/continue-other-visit-dialog.service';
 
 @NgModule({
     imports: [
@@ -56,6 +59,7 @@ import {ActivitiesInformationFillerComponent} from '@fe/app/hospital/hospital-vi
         MatOptionModule,
         MatSelectModule,
         MatCheckboxModule,
+        MatDialogModule,
         MatProgressSpinnerModule,
         ScrollingModule,
 
@@ -87,9 +91,11 @@ import {ActivitiesInformationFillerComponent} from '@fe/app/hospital/hospital-vi
         FillerActivityCardComponent,
         FillerActivityEditorComponent,
         ActivitiesInformationFillerComponent,
+        ContinueOtherVisitDialogComponent
     ],
     providers: [
-        HospitalVisitActivityFillerService
+        HospitalVisitActivityFillerService,
+        ContinueOtherVisitDialogService
     ]
 })
 export class HospitalVisitActivityFillerModule {

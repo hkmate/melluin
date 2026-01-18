@@ -8,6 +8,7 @@ import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
+import {ContinueVisitInfo} from '@fe/app/hospital/visit/model/continue-visit-info';
 
 @Injectable({providedIn: 'root'})
 export class HospitalVisitService {
@@ -29,6 +30,15 @@ export class HospitalVisitService {
 
     public getVisit(visitId: string): Observable<HospitalVisit> {
         return this.http.get<HospitalVisit>(`${this.hospitalVisitUrl}/${visitId}`);
+    }
+
+    public continueVisit(visitId: string, info: ContinueVisitInfo): Observable<HospitalVisit> {
+        const params = {
+            departmentId: info.departmentId,
+            from: info.dateTimeFrom,
+        };
+        return this.http.post<HospitalVisit>(`${this.hospitalVisitUrl}/${visitId}/continue`, {}, {params})
+            .pipe(getErrorHandler<HospitalVisit>(this.msg));
     }
 
     public updateVisit(visitId: string, data: HospitalVisitRewrite, options = {forceSameTimeVisit: false}): Observable<HospitalVisit> {

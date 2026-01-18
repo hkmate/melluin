@@ -25,18 +25,18 @@ export class HospitalVisitActivityFillerService {
 
     private visitDate: Date;
     private visit: HospitalVisit;
-    private children$: BehaviorSubject<Array<VisitedChild>>;
-    private lockedChildIds$: BehaviorSubject<Array<string>>;
-    private activities$: BehaviorSubject<Array<HospitalVisitActivity>>;
-    private visitStatus$: BehaviorSubject<HospitalVisitStatus>;
+    private readonly children$ = new BehaviorSubject<Array<VisitedChild>>([]);
+    private readonly lockedChildIds$ = new BehaviorSubject<Array<string>>([]);
+    private readonly activities$ = new BehaviorSubject<Array<HospitalVisitActivity>>([])
+    private readonly visitStatus$ = new BehaviorSubject<HospitalVisitStatus | null>(null);
 
     public startFilling(visit: HospitalVisit): void {
         this.visit = visit;
         this.visitDate = DateUtil.parse(visit.dateTimeFrom);
-        this.children$ = new BehaviorSubject<Array<VisitedChild>>([]);
-        this.lockedChildIds$ = new BehaviorSubject<Array<string>>([]);
-        this.activities$ = new BehaviorSubject<Array<HospitalVisitActivity>>([]);
-        this.visitStatus$ = new BehaviorSubject<HospitalVisitStatus>(this.visit.status);
+        this.children$.next([]);
+        this.lockedChildIds$.next([]);
+        this.activities$.next([]);
+        this.visitStatus$.next(this.visit.status);
         this.activityService.getActivities(this.visit.id).subscribe({
             next: wrappedVisit => {
                 this.children$.next(wrappedVisit.children);
@@ -161,7 +161,7 @@ export class HospitalVisitActivityFillerService {
             }));
     }
 
-    private isStarted(status: HospitalVisitStatus): boolean {
+    private isStarted(status: HospitalVisitStatus | null): boolean {
         return HospitalVisitStatus.STARTED === status;
     }
 

@@ -3,5 +3,5 @@ export const departmentSortableFields = [
 ];
 
 export const departmentFilterableFields = [
-    ...departmentSortableFields, 'id', 'address'
+    ...departmentSortableFields, 'id', 'address', 'city'
 ];

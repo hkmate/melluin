@@ -14,6 +14,7 @@ import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {isNilOrEmpty, NOOP} from '@shared/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {ContinueOtherVisitDialogService} from '@fe/app/hospital/hospital-visit-activity-filler/continue-other/continue-other-visit-dialog.service';
 
 @Component({
     selector: 'app-hospital-visit-activity-filler',
@@ -23,6 +24,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 })
 export class HospitalVisitActivityFillerComponent {
 
+    HospitalVisitStatus = HospitalVisitStatus;
+
     private readonly router = inject(Router);
     private readonly route = inject(RouteDataHandler);
     private readonly confirmDialog = inject(ConfirmationService);
@@ -30,7 +33,7 @@ export class HospitalVisitActivityFillerComponent {
     protected readonly permissions = inject(PermissionService);
     private readonly visitService = inject(HospitalVisitService);
     private readonly filler = inject(HospitalVisitActivityFillerService);
-    HospitalVisitStatus = HospitalVisitStatus;
+    private readonly continueOtherVisitDialogService = inject(ContinueOtherVisitDialogService);
 
     private static readonly CLOSED_STATUSES = [HospitalVisitStatus.SUCCESSFUL,
         HospitalVisitStatus.CANCELED, HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD, HospitalVisitStatus.FAILED_FOR_OTHER_REASON];
@@ -87,6 +90,16 @@ export class HospitalVisitActivityFillerComponent {
             okBtnText: 'YesNo.true'
         })
             .then(() => this.finalizeFilling(HospitalVisitStatus.ACTIVITIES_FILLED_OUT))
+            .catch(NOOP);
+    }
+
+    protected openContinueOtherDialog(): void {
+        if (!this.isVisitFilled()) {
+            this.msg.error('HospitalVisit.FillingIsNotCompleted');
+            return;
+        }
+        this.continueOtherVisitDialogService.askContinueInfo(this.visit)
+            .then(visit => this.setUp(visit))
             .catch(NOOP);
     }
 

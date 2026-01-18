@@ -459,12 +459,22 @@
         "OpenReportDraft": "Beszámoló előkészítése",
         "ContinueFilling": "Kitöltés folytatása",
         "Finalized": "Véglegesítés",
+        "ContinueAnother": "Folytatás másik osztályon",
         "NoChildFail": "Nincs gyerek akivel megtarthatnánk a foglalkozást.",
         "OtherFail": "Nem tudjuk megtartani a foglalkozást mások miatt.",
         "AreYouSureFinalize": "Bizotsan véglegesíted?",
         "AreYouSureFailBecauseNoChild": "Lezárod a foglalkozást gyerekek hiányában?",
         "AreYouSureFailBecauseOtherReason": "Lezárod a foglalkozást rajtunk kívül álló okból?",
-        "FillingIsNotCompleted": "Hiányos az adatlap!"
+        "FillingIsNotCompleted": "Hiányos az adatlap!",
+        "Continue": {
+            "DialogTitle": "Foglalkozás folytatása másik osztályon",
+            "DialogText": "Ha valami miatt át kellett mennetek egy másik osztályra, hogy ott fejezzétek be a foglalkozást akkor add meg, hogy hova és mikor mentetek át. Miután ezt megcsináltad már folytathatod is a kitöltést",
+            "Department": "Osztály",
+            "TimeFrom": "Kezdés az új osztályon",
+            "FromError": "Kezdés csak olyan időpont lehet ami az eredeti foglalkozás időkeretében van",
+            "Ok": "Folytatás másik osztályon",
+            "Cancel": "Mégse"
+        }
     },
     "VisitList": {
         "ListHeader": {
