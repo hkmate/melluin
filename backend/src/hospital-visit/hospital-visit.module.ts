@@ -12,6 +12,8 @@ import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/applier/hos
 import {VisitIsNotInSameTimeAsOtherValidator} from '@be/hospital-visit/validator/visit-is-not-in-same-time-as-other.validator';
 import {ParticipantsIsInOneVisitAtSameTimeValidator} from '@be/hospital-visit/validator/participants-is-in-one-visit-at-same-time.validator';
 import {VisitSaveValidatorFactory} from '@be/hospital-visit/validator/visit-save-validator-factory';
+import {ParticipantsAreWorkInCityAsDepartmentValidator} from '@be/hospital-visit/validator/participants-are-work-in-city-as-department.validator';
+import {VisitIsInActiveDepartmentsValidator} from '@be/hospital-visit/validator/visit-is-in-active-departments.validator';
 
 @Module({
     imports: [
@@ -25,6 +27,8 @@ import {VisitSaveValidatorFactory} from '@be/hospital-visit/validator/visit-save
         HospitalVisitCreationToEntityConverter,
         VisitIsNotInSameTimeAsOtherValidator,
         ParticipantsIsInOneVisitAtSameTimeValidator,
+        ParticipantsAreWorkInCityAsDepartmentValidator,
+        VisitIsInActiveDepartmentsValidator,
         HospitalVisitEntityToDtoConverter,
         HospitalVisitRewriteApplierFactory,
         HospitalVisitCrudService,

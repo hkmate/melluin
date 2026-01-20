@@ -30,7 +30,8 @@ export enum Permission {
     canReadVisit = 'canReadVisit',
     canModifyVisit = 'canModifyVisit', // Write only those where he/she is participant
     canCreateAnyVisit = 'canCreateAnyVisit',
-    canModifyAnyVisit = 'canModifyAnyVisit',
+    canModifyAnyVisit = 'canModifyAnyVisit', // Write any visit but can make logical changes (for coordinator)
+    canModifyAnyVisitUnrestricted = 'canModifyAnyVisitUnrestricted', // Write anything in any visit (for sysadmin)
     canForceSameTimeVisitWrite = 'canForceSameTimeVisitWrite',
     canReadVisitConnections = 'canReadVisitConnections',
     canWriteVisitConnections = 'canWriteVisitConnections',

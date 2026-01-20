@@ -553,6 +553,12 @@
         "VICARIOUS_MOM_VISIT_CANNOT_BE_WITH_MORE_PARTICIPANT": "Pótmami foglalkozás nem lehet olyan amin több önkéntes vesz részt",
         "INVALID_DATE_TIME": "Hibás időpont lett megadva",
         "DATE_TIME_NOT_FITS_FOR_ORIGINAL_VISIT": "A megadott időpont nem illeszkedik az eredeti foglalkozás idejéhez",
-        "ORIGINAL_VISIT_IS_NOT_IN_STARTED_STATUS_AT_CONTINUE": "Az eredeti fogolalkozás csak 'Megkezdett' státuszú lehet"
+        "ORIGINAL_VISIT_IS_NOT_IN_STARTED_STATUS_AT_CONTINUE": "Az eredeti fogolalkozás csak 'Megkezdett' státuszú lehet",
+        "DEPARTMENT_IS_IN_OTHER_CITY_THAN_PARTICIPANT": "Az osztály más városban van mint ahol résztvevők elérhetőek",
+        "VISIT_IS_IN_INACTIVE_DEPARTMENT": "Az osztály nem aktív a foglalkozás időpontjában",
+        "STATUS_CHANGE_DISABLED": "Ez a státusz változtatás nem engedélyezett számodra",
+        "VISIT_DATE_TIME_CHANGE_DISABLED": "Ez az időpont változtatás nem engedélyezett számodra",
+        "VISIT_PARTICIPANT_CHANGE_DISABLED": "Nem módosíthatod a résztvevőket",
+        "VICARIOUS_MOM_CHANGE_DISABLED": "Nem módosíthatod a a pótmami beállítást"
     }
 }

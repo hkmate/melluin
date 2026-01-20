@@ -37,7 +37,8 @@ export class UserCanModifyVisitValidator implements VisitRewriteValidator {
     }
 
     private canUserModifyAnyVisit(user: User): boolean {
-        return user.permissions.includes(Permission.canModifyAnyVisit);
+        return user.permissions.includes(Permission.canModifyAnyVisit)
+            || user.permissions.includes(Permission.canModifyAnyVisitUnrestricted);
     }
 
 }
