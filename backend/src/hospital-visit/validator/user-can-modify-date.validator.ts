@@ -29,9 +29,12 @@ export class UserCanModifyDateValidator implements VisitRewriteValidator {
     private verifyCoordinatorChangeIsValid({entity, item}: HospitalVisitRewriteValidationData): void | never {
         const inDraft = entity.status === HospitalVisitStatus.DRAFT;
         const isScheduled = entity.status === HospitalVisitStatus.SCHEDULED;
+        if (inDraft || isScheduled) {
+            return;
+        }
         const inStarted = entity.status === HospitalVisitStatus.STARTED;
         const inFilledOut = item.status === HospitalVisitStatus.ACTIVITIES_FILLED_OUT;
-        const statusEnabled = inDraft || isScheduled || inStarted || inFilledOut;
+        const statusEnabled = inStarted || inFilledOut;
 
         if (statusEnabled && this.isSameDayChange(entity, item)) {
             return;
@@ -40,7 +43,7 @@ export class UserCanModifyDateValidator implements VisitRewriteValidator {
     }
 
     private verifyVolunteerChangeIsValid({entity, item}: HospitalVisitRewriteValidationData): void | never {
-        if (this.isStatusChangeNormalForVolunteer(entity, item)) {
+        if (this.isChangeNormalForVolunteer(entity, item)) {
             return;
         }
         this.throwError();
@@ -63,12 +66,14 @@ export class UserCanModifyDateValidator implements VisitRewriteValidator {
 
     private isNoDateChange(entity: HospitalVisitEntity, item: HospitalVisitRewrite): boolean {
         return dayjs(entity.dateTimeFrom).isSame(item.dateTimeFrom)
-            && dayjs(entity.dateTimeTo).isSame(item.dateTimeTo);
+            && dayjs(entity.dateTimeTo).isSame(item.dateTimeTo)
+            && entity.countedMinutes === item.countedMinutes;
     }
 
-    private isStatusChangeNormalForVolunteer(entity: HospitalVisitEntity, item: HospitalVisitRewrite): boolean {
+    private isChangeNormalForVolunteer(entity: HospitalVisitEntity, item: HospitalVisitRewrite): boolean {
         const beforeStart = entity.status === HospitalVisitStatus.SCHEDULED;
-        return beforeStart && this.isSameDayChange(entity, item);
+        const inStarted = entity.status === HospitalVisitStatus.STARTED;
+        return (beforeStart || inStarted) && this.isSameDayChange(entity, item);
     }
 
     private isSameDayChange(entity: HospitalVisitEntity, item: HospitalVisitRewrite): boolean {

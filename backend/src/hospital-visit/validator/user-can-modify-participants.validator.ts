@@ -4,10 +4,17 @@ import {Permission} from '@shared/user/permission.enum';
 import {HospitalVisitRewriteValidationData, VisitRewriteValidator} from '@be/hospital-visit/validator/visit-validator';
 import {ApiError} from '@shared/api-util/api-error';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
+import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
+import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
+import {isEmpty} from '@shared/util/util';
+import * as _ from 'lodash';
 
 export class UserCanModifyParticipantsValidator implements VisitRewriteValidator {
 
     public validate(data: HospitalVisitRewriteValidationData): Promise<void> {
+        if (this.isNoParticipantChange(data.entity, data.item)) {
+            return Promise.resolve();
+        }
         if (this.canUserModifyAnyVisitUnrestricted(data.requester)) {
             return Promise.resolve();
         }
@@ -48,6 +55,11 @@ export class UserCanModifyParticipantsValidator implements VisitRewriteValidator
 
     private canUserModifyAnyVisitUnrestricted(user: User): boolean {
         return user.permissions.includes(Permission.canModifyAnyVisitUnrestricted);
+    }
+
+    private isNoParticipantChange(entity: HospitalVisitEntity, item: HospitalVisitRewrite): boolean {
+        const entityParticipantIds = entity.participants.map(p => p.id);
+        return isEmpty(_.xor(entityParticipantIds, item.participantIds));
     }
 
     private throwError(): never {

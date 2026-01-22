@@ -30,8 +30,10 @@ export class UserCanModifyStatusValidator implements VisitRewriteValidator {
             && item.status === HospitalVisitStatus.SCHEDULED;
         const fixing = entity.status === HospitalVisitStatus.ACTIVITIES_FILLED_OUT
             && item.status === HospitalVisitStatus.STARTED;
+        const finalize = entity.status === HospitalVisitStatus.ACTIVITIES_FILLED_OUT
+            && item.status === HospitalVisitStatus.ALL_FILLED_OUT;
 
-        if (this.isStatusChangeNormalForVolunteer(entity, item) || scheduling || fixing) {
+        if (this.isStatusChangeNormalForVolunteer(entity, item) || scheduling || fixing || finalize) {
             return;
         }
         this.throwError();

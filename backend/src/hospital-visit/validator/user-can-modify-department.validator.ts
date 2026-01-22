@@ -55,13 +55,13 @@ export class UserCanModifyDepartmentValidator implements VisitRewriteValidator {
     }
 
     private isNoDepartmentChange(entity: HospitalVisitEntity, item: HospitalVisitRewrite): boolean {
-        return entity.department.id === item.id;
+        return entity.department.id === item.departmentId;
     }
 
     private throwError(): never {
         throw new ForbiddenException({
             message: 'User cannot perform this department change',
-            code: ApiError.STATUS_CHANGE_DISABLED
+            code: ApiError.DEPARTMENT_CHANGE_DISABLED
         });
     }
 

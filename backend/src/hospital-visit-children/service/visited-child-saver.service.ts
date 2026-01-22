@@ -16,6 +16,7 @@ import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entit
 import {isNil} from '@shared/util/util';
 import {User} from '@shared/user/user';
 import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
+import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 
 @Injectable()
 export class VisitedChildSaverService {
@@ -29,6 +30,7 @@ export class VisitedChildSaverService {
 
     public async save(visitId: string, visitedChildInput: VisitedChildInput, requester: User): Promise<VisitedChild> {
         const visit = await this.getVisit(visitId);
+        this.verifyVisitIsStarted(visit);
 
         if (isNil(visitedChildInput.child)) {
             return this.saveVisitedChild(visit,
@@ -41,6 +43,8 @@ export class VisitedChildSaverService {
     // eslint-disable-next-line max-params-no-constructor/max-params-no-constructor
     public async update(visitId: string, visitedChildId: string,
                         visitedChildInput: VisitedChildEditInput, requester: User): Promise<VisitedChild> {
+        const visit = await this.getVisit(visitId);
+        this.verifyVisitIsStarted(visit);
         const visitedChild = await this.visitedChildrenDao.getOne(visitedChildId);
 
         this.verifyVisitIdIsCorrect(visitedChild, visitId);
@@ -89,6 +93,12 @@ export class VisitedChildSaverService {
     private verifyVisitChildIdIsCorrect(visitedChildInput: VisitedChildEditInput, visitedChildId: string): void {
         if (visitedChildInput.id !== visitedChildId) {
             throw new BadRequestException('VisitedChildId is not the same as one in the url.');
+        }
+    }
+
+    private verifyVisitIsStarted(visit: HospitalVisitEntity): void {
+        if (visit.status !== HospitalVisitStatus.STARTED) {
+            throw new BadRequestException('Manage activity is only acceptable when the visit is in status: STARTED');
         }
     }
 
