@@ -67,7 +67,9 @@
             <mat-label>{{ 'HospitalVisit.Form.Status' | translate }}</mat-label>
             <mat-select formControlName="status">
                 @for (option of statusOptions; track option) {
-                    <mat-option [value]="option"> {{ 'HospitalVisitStatus.' + option | translate }}</mat-option>
+                    <mat-option [value]="option.value" [disabled]="option.disabled">
+                        {{ 'HospitalVisitStatus.' + option.value | translate }}
+                    </mat-option>
                 }
             </mat-select>
         </mat-form-field>

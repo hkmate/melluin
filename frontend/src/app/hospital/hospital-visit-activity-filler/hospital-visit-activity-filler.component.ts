@@ -25,6 +25,15 @@ import {ContinueOtherVisitDialogService} from '@fe/app/hospital/hospital-visit-a
 export class HospitalVisitActivityFillerComponent {
 
     HospitalVisitStatus = HospitalVisitStatus;
+    private static readonly CLOSED_STATUSES = [
+        HospitalVisitStatus.DRAFT,
+        HospitalVisitStatus.ACTIVITIES_FILLED_OUT,
+        HospitalVisitStatus.ALL_FILLED_OUT,
+        HospitalVisitStatus.SUCCESSFUL,
+        HospitalVisitStatus.CANCELED,
+        HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD,
+        HospitalVisitStatus.FAILED_FOR_OTHER_REASON
+    ];
 
     private readonly router = inject(Router);
     private readonly route = inject(RouteDataHandler);
@@ -34,9 +43,6 @@ export class HospitalVisitActivityFillerComponent {
     private readonly visitService = inject(HospitalVisitService);
     private readonly filler = inject(HospitalVisitActivityFillerService);
     private readonly continueOtherVisitDialogService = inject(ContinueOtherVisitDialogService);
-
-    private static readonly CLOSED_STATUSES = [HospitalVisitStatus.SUCCESSFUL,
-        HospitalVisitStatus.CANCELED, HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD, HospitalVisitStatus.FAILED_FOR_OTHER_REASON];
 
     protected visit: HospitalVisit;
     protected buttonsEnabled = true;

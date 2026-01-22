@@ -15,6 +15,10 @@ import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import * as _ from 'lodash';
 import {Platform} from '@angular/cdk/platform';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {Permission} from '@shared/user/permission.enum';
+import {getAllStatusOptionsOnlyEnable, SelectOption} from '@fe/app/util/hospital-visit-status-option';
+
 
 // TODO refactor: Form components should be refactored to new forms when updated Angular to 21
 @Component({
@@ -33,6 +37,7 @@ export class HospitalVisitFormComponent {
 
     private readonly platform = inject(Platform);
     private readonly store = inject(Store);
+    private readonly permission = inject(PermissionService);
     private readonly departmentService = inject(DepartmentService);
 
     public readonly createNewAfterSave = input.required<boolean>();
@@ -43,7 +48,7 @@ export class HospitalVisitFormComponent {
     public readonly canceled = output<void>();
 
     protected readonly createNewAfterOneSaved = signal(false);
-    protected statusOptions: Array<HospitalVisitStatus>;
+    protected statusOptions: Array<SelectOption<HospitalVisitStatus>>;
     protected departmentOptions: Array<Department>;
     protected readonly form = computed(() => this.buildFormGroup());
     protected mobileScreen: boolean;
@@ -107,34 +112,38 @@ export class HospitalVisitFormComponent {
     // eslint-disable-next-line max-lines-per-function
     private buildFormGroup(): FormGroup {
         const visit = this.visit();
+        const timeChangeDisabled = this.isTimeChangeDisabled();
         const hasConnection = this.hasConnections();
         return new FormGroup({
             status: new FormControl(visit?.status ?? HospitalVisitStatus.SCHEDULED, [Validators.required]),
             date: new FormControl({
                 value: this.getDate(visit?.dateTimeFrom),
-                disabled: hasConnection
+                disabled: this.isDateChangeDisabled() || hasConnection
             }, [Validators.required]),
             timeFrom: new FormControl({
                 value: this.getTime(visit?.dateTimeFrom, HospitalVisitFormComponent.defaultTimeFrom),
-                disabled: hasConnection
+                disabled: timeChangeDisabled || hasConnection
             }, [Validators.required]),
             timeTo: new FormControl({
                 value: this.getTime(visit?.dateTimeTo, HospitalVisitFormComponent.defaultTimeTo),
-                disabled: hasConnection
+                disabled: timeChangeDisabled || hasConnection
             }, [Validators.required]),
             departmentId: new FormControl({
                 value: visit?.department?.id,
-                disabled: hasConnection
+                disabled: this.isDepartmentChangeDisabled() || hasConnection
             }, [Validators.required]),
             countedHours: new FormControl({
                 value: 0,
-                disabled: hasConnection
+                disabled: timeChangeDisabled || hasConnection
             }, [Validators.max(HospitalVisitFormComponent.MAX_COUNTED_HOURS), Validators.min(0)]),
             participantIds: new FormControl({
                 value: visit?.participants.map(p => p.id),
-                disabled: hasConnection
+                disabled: this.isParticipantChangeDisabled() || hasConnection
             }, [Validators.required]),
-            vicariousMomVisit: new FormControl(visit?.vicariousMomVisit ?? false),
+            vicariousMomVisit: new FormControl({
+                value: visit?.vicariousMomVisit ?? false,
+                disabled: this.isVicariousMomChangeDisabled()
+            })
         });
     }
 
@@ -146,9 +155,69 @@ export class HospitalVisitFormComponent {
     }
 
     private initStatusOptions(): void {
-        this.statusOptions = isNil(this.visit())
-            ? [HospitalVisitStatus.DRAFT, HospitalVisitStatus.SCHEDULED]
-            : Object.values(HospitalVisitStatus);
+        const visit = this.visit();
+        if (isNil(visit)) {
+            this.statusOptions = [
+                {value: HospitalVisitStatus.DRAFT, disabled: false},
+                {value: HospitalVisitStatus.SCHEDULED, disabled: false}
+            ];
+        } else {
+            this.statusOptions = this.calculateStatusOptions(visit);
+        }
+    }
+
+    private calculateStatusOptions(visit: HospitalVisit): Array<SelectOption<HospitalVisitStatus>> {
+        if (this.permission.has(Permission.canModifyAnyVisitUnrestricted)) {
+            return Object.values(HospitalVisitStatus)
+                .map(status => ({value: status, disabled: false}));
+        }
+        if (this.permission.has(Permission.canModifyAnyVisit)) {
+            return this.getStatusesCoordinatorChangeToFrom(visit.status);
+        }
+        return this.getStatusesVolunteerChangeToFrom(visit.status);
+    }
+
+    // eslint-disable-next-line max-lines-per-function
+    private getStatusesCoordinatorChangeToFrom(currentStatus: HospitalVisitStatus): Array<SelectOption<HospitalVisitStatus>> {
+        switch (currentStatus) {
+            case HospitalVisitStatus.DRAFT:
+                return getAllStatusOptionsOnlyEnable(HospitalVisitStatus.DRAFT, HospitalVisitStatus.SCHEDULED);
+            case HospitalVisitStatus.SCHEDULED:
+                return getAllStatusOptionsOnlyEnable(
+                    HospitalVisitStatus.SCHEDULED, HospitalVisitStatus.STARTED, HospitalVisitStatus.CANCELED);
+            case HospitalVisitStatus.STARTED:
+                return getAllStatusOptionsOnlyEnable(
+                    HospitalVisitStatus.STARTED,
+                    HospitalVisitStatus.ACTIVITIES_FILLED_OUT,
+                    HospitalVisitStatus.CANCELED,
+                    HospitalVisitStatus.FAILED_FOR_OTHER_REASON,
+                    HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD
+                );
+            case HospitalVisitStatus.ACTIVITIES_FILLED_OUT:
+                return getAllStatusOptionsOnlyEnable(HospitalVisitStatus.STARTED,
+                    HospitalVisitStatus.ACTIVITIES_FILLED_OUT, HospitalVisitStatus.ALL_FILLED_OUT);
+            default:
+                return getAllStatusOptionsOnlyEnable(currentStatus);
+        }
+    }
+
+    // eslint-disable-next-line max-lines-per-function
+    private getStatusesVolunteerChangeToFrom(currentStatus: HospitalVisitStatus): Array<SelectOption<HospitalVisitStatus>> {
+        switch (currentStatus) {
+            case HospitalVisitStatus.SCHEDULED:
+                return getAllStatusOptionsOnlyEnable(
+                    HospitalVisitStatus.SCHEDULED, HospitalVisitStatus.STARTED, HospitalVisitStatus.CANCELED);
+            case HospitalVisitStatus.STARTED:
+                return getAllStatusOptionsOnlyEnable(
+                    HospitalVisitStatus.STARTED,
+                    HospitalVisitStatus.ACTIVITIES_FILLED_OUT,
+                    HospitalVisitStatus.CANCELED,
+                    HospitalVisitStatus.FAILED_FOR_OTHER_REASON,
+                    HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD
+                );
+            default:
+                return getAllStatusOptionsOnlyEnable(currentStatus);
+        }
     }
 
     private initDepartmentOptions(): void {
@@ -157,6 +226,63 @@ export class HospitalVisitFormComponent {
                 this.departmentOptions = departmentPage.items;
             }
         );
+    }
+
+    private isDateChangeDisabled(): boolean {
+        if (isNil(this.visit()) || this.permission.has(Permission.canModifyAnyVisitUnrestricted)) {
+            return false;
+        }
+        if (this.permission.has(Permission.canModifyAnyVisit)) {
+            return ![HospitalVisitStatus.DRAFT, HospitalVisitStatus.SCHEDULED].includes(this.visit()!.status);
+        }
+        return true;
+    }
+
+    private isTimeChangeDisabled(): boolean {
+        const visit = this.visit();
+        if (isNil(visit) || this.permission.has(Permission.canModifyAnyVisitUnrestricted)) {
+            return false;
+        }
+        if (this.permission.has(Permission.canModifyAnyVisit)) {
+            return this.isVisitFinalized();
+        }
+        return visit.status !== HospitalVisitStatus.SCHEDULED && visit.status !== HospitalVisitStatus.STARTED;
+    }
+
+    private isDepartmentChangeDisabled(): boolean {
+        if (isNil(this.visit()) || this.permission.has(Permission.canModifyAnyVisitUnrestricted)) {
+            return false;
+        }
+        if (this.permission.has(Permission.canModifyAnyVisit)) {
+            return this.isVisitFinalized();
+        }
+        return this.visit()!.status !== HospitalVisitStatus.SCHEDULED;
+    }
+
+    private isVisitFinalized(): boolean {
+        if (isNil(this.visit())) {
+            return false;
+        }
+        return ![
+            HospitalVisitStatus.DRAFT,
+            HospitalVisitStatus.SCHEDULED,
+            HospitalVisitStatus.STARTED,
+            HospitalVisitStatus.ACTIVITIES_FILLED_OUT
+        ].includes(this.visit()!.status);
+    }
+
+    private isParticipantChangeDisabled(): boolean {
+        return this.isDepartmentChangeDisabled(); // Same rule applies
+    }
+
+    private isVicariousMomChangeDisabled(): boolean {
+        if (isNil(this.visit()) || this.permission.has(Permission.canModifyAnyVisitUnrestricted)) {
+            return false;
+        }
+        if (!this.permission.has(Permission.canModifyAnyVisit)) {
+            return true;
+        }
+        return this.isVisitFinalized();
     }
 
     private initCountedHours(): void {
