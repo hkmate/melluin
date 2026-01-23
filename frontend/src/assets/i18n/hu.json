@@ -96,6 +96,15 @@
         "LAST_TWO_WEEK": "Az elmúlt két hét",
         "LAST_MONTH": "Az elmúlt hónap"
     },
+    "WeekDays": {
+        "1": "Hétfő",
+        "2": "Kedd",
+        "3": "Szerda",
+        "4": "Csütörtök",
+        "5": "Péntek",
+        "6": "Szombat",
+        "7": "Vasárnap"
+    },
     "HomePageOption": {
         "DASHBOARD": "Infók oldal",
         "EVENT_LIST": "Események lista ",
@@ -330,6 +339,23 @@
             "ChildContact": "Gyerek kontakt",
             "Child": "Gyerekek száma",
             "ChildWithRelativePresent": "Hozzátartozó jelen volt"
+        },
+        "VisitsCount": {
+            "Title": "Foglalkozások",
+            "ExportedFileName": "foglalkozasok_szama.csv",
+            "VisitGroups": "Foglalkozások száma összesen",
+            "PureVisitGroups": "Több osztályt érintő foglalkozások",
+            "VicariousMomVisit": "Pótmami fogalalkozások",
+            "CountedMinutes": "Foglalkozások összesített időtartama (óra)"
+        },
+        "VisitsCountByWeekDay": {
+            "Title": "Foglalkozások a hét napjai szerint",
+            "ExportedFileName": "foglalkozasok_szama_a_het_napjai_szerint.csv",
+            "WeekDay": "Foglalkozások száma",
+            "VisitGroups": "Foglalkozások száma",
+            "PureVisitGroups": "Több osztályt érintő foglalkozások",
+            "VicariousMomVisit": "Pótmami fogalalkozások",
+            "CountedMinutes": "Foglalkozások összesített időtartama (óra)"
         },
         "VisitsByStatuses": {
             "Title": "Foglalkozások státuszonként",

@@ -8,11 +8,17 @@ import {ActivitiesCount} from '@shared/statistics/activities-count';
 import {VisitStatusCount} from '@shared/statistics/visit-status-count';
 import {ChildAgesByDepartments} from '@shared/statistics/child-ages-by-departments';
 import {camelizeKeys} from '@be/util/camelize-keys';
+import {VisitsCountByWeekDay} from '@shared/statistics/visits-count-by-week-day';
 
 @Injectable()
 export class StatisticsService {
 
     constructor(private readonly statisticsDao: StatisticsDao) {
+    }
+
+    public async getVisitsCountByWeekDay(from: string, to: string, city: OperationCity): Promise<Array<VisitsCountByWeekDay>> {
+        const rawArray = await this.statisticsDao.getVisitsByWeekDay(from, to, city);
+        return rawArray.map(camelizeKeys);
     }
 
     public async getVisitsByDepartments(from: string, to: string, city: OperationCity): Promise<Array<VisitByDepartments>> {
@@ -26,7 +32,7 @@ export class StatisticsService {
     }
 
     public getVisitsByStatuses(from: string, to: string, city: OperationCity): Promise<Array<VisitStatusCount>> {
-        return  this.statisticsDao.getVisitsByStatuses(from, to, city);
+        return this.statisticsDao.getVisitsByStatuses(from, to, city);
     }
 
     public async getVolunteersByDepartments(from: string, to: string, city: OperationCity): Promise<Array<VolunteerByDepartments>> {
@@ -35,7 +41,7 @@ export class StatisticsService {
     }
 
     public getActivities(from: string, to: string, city: OperationCity): Promise<Array<ActivitiesCount>> {
-        return  this.statisticsDao.getActivities(from, to, city);
+        return this.statisticsDao.getActivities(from, to, city);
     }
 
     public async getChildAgesByDepartments(from: string, to: string, city: OperationCity): Promise<Array<ChildAgesByDepartments>> {

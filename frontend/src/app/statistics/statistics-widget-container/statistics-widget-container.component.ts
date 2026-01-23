@@ -15,6 +15,9 @@ import {ChildrenStatController} from '@fe/app/statistics/controller/children-sta
 import {ChildrenByDepartmentsStatProviderService} from '@fe/app/statistics/service/children-by-departments-stat-provider';
 import {ChildAgesByDepartmentsStatProviderService} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
 import {VolunteersByDepartmentsStatProviderService} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
+import {VisitsCountStatController} from '@fe/app/statistics/controller/visits-count-stat-controller';
+import {VisitsCountByWeekDayStatController} from '@fe/app/statistics/controller/visits-count-by-week-day-stat-controller';
+import {VisitCountByWeekDayStatProviderService} from '@fe/app/statistics/service/visit-count-by-week-day-stat-provider';
 
 @Component({
     selector: 'app-statistics-widget-container',
@@ -29,6 +32,7 @@ export class StatisticsWidgetContainerComponent {
     private readonly childrenByDepartmentsStatProvider = inject(ChildrenByDepartmentsStatProviderService);
     private readonly childAgesByDepartmentsStatProvider = inject(ChildAgesByDepartmentsStatProviderService);
     private readonly volunteersByDepartmentsStatProvider = inject(VolunteersByDepartmentsStatProviderService);
+    private readonly visitCountByWeekDayStatProvider = inject(VisitCountByWeekDayStatProviderService);
 
     public readonly filter = input.required<StatFilter>();
 
@@ -43,8 +47,10 @@ export class StatisticsWidgetContainerComponent {
 
     private createControllers(): Array<StatisticWidgetController<unknown>> {
         return [
-            new VisitsByDepartmentsStatController(this.translateService, this.service),
+            new VisitsCountStatController(this.translateService, this.visitCountByWeekDayStatProvider),
             new ChildrenStatController(this.translateService, this.childrenByDepartmentsStatProvider),
+            new VisitsByDepartmentsStatController(this.translateService, this.service),
+            new VisitsCountByWeekDayStatController(this.translateService, this.visitCountByWeekDayStatProvider),
             new ChildrenByDepartmentsStatController(this.translateService, this.childrenByDepartmentsStatProvider),
             new ChildAgesStatController(this.translateService, this.childAgesByDepartmentsStatProvider),
             new ChildAgesByDepartmentsStatController(this.translateService, this.childAgesByDepartmentsStatProvider),

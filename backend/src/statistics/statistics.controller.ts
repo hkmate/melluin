@@ -10,12 +10,23 @@ import {VolunteerByDepartments} from '@shared/statistics/volunteer-by-department
 import {ActivitiesCount} from '@shared/statistics/activities-count';
 import {VisitStatusCount} from '@shared/statistics/visit-status-count';
 import {ChildAgesByDepartments} from '@shared/statistics/child-ages-by-departments';
+import {VisitsCountByWeekDay} from '@shared/statistics/visits-count-by-week-day';
 
 
 @Controller('statistics')
 export class StatisticsController {
 
     constructor(private readonly statisticsService: StatisticsService) {
+    }
+
+    @Get('/visits-count-by-week-day')
+    @PermissionGuard(Permission.canReadStatistics)
+    public getVisitsCountStat(@Query('from') fromDateTime: string,
+                              @Query('to') toDateTime: string,
+                              @Query('city') city: string): Promise<Array<VisitsCountByWeekDay>> {
+        this.verifyStatisticsParams(fromDateTime, toDateTime, city);
+
+        return this.statisticsService.getVisitsCountByWeekDay(fromDateTime, toDateTime, city);
     }
 
     @Get('/visits-by-departments')

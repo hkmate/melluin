@@ -51,6 +51,7 @@ import {ChildrenByDepartmentsStatProviderService} from '@fe/app/statistics/servi
 import {ChildAgesByDepartmentsStatProviderService} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
 import {VolunteersByDepartmentsStatProviderService} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
 import {MatSortModule} from '@angular/material/sort';
+import {VisitCountByWeekDayStatProviderService} from '@fe/app/statistics/service/visit-count-by-week-day-stat-provider';
 
 @NgModule({
     imports: [
@@ -111,7 +112,8 @@ import {MatSortModule} from '@angular/material/sort';
         StatisticsService,
         ChildrenByDepartmentsStatProviderService,
         ChildAgesByDepartmentsStatProviderService,
-        VolunteersByDepartmentsStatProviderService
+        VolunteersByDepartmentsStatProviderService,
+        VisitCountByWeekDayStatProviderService,
     ]
 })
 export class StatisticsModule {

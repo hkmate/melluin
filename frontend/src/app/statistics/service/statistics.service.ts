@@ -11,13 +11,19 @@ import {VisitStatusCount} from '@shared/statistics/visit-status-count';
 import {VolunteerByDepartments} from '@shared/statistics/volunteer-by-departments';
 import {ActivitiesCount} from '@shared/statistics/activities-count';
 import {ChildAgesByDepartments} from '@shared/statistics/child-ages-by-departments';
+import {VisitsCountByWeekDay} from '@shared/statistics/visits-count-by-week-day';
+import {VisitCountByWeekDayStatProvider} from '@fe/app/statistics/service/visit-count-by-week-day-stat-provider';
+import {ChildrenByDepartmentsStatProvider} from '@fe/app/statistics/service/children-by-departments-stat-provider';
+import {ChildAgesByDepartmentsStatProvider} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
+import {VolunteersByDepartmentsStatProvider} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
 
 const FROM_KEY = 'from';
 const TO_KEY = 'to';
 const CITY_KEY = 'city';
 
 type StatType =
-    'visits-by-departments'
+    'visits-count-by-week-day'
+    | 'visits-by-departments'
     | 'children-by-departments'
     | 'visits-by-statuses'
     | 'volunteer-by-departments'
@@ -25,10 +31,15 @@ type StatType =
     | 'child-ages-by-departments'
 
 @Injectable()
-export class StatisticsService {
+export class StatisticsService implements VisitCountByWeekDayStatProvider, ChildrenByDepartmentsStatProvider,
+    ChildAgesByDepartmentsStatProvider, VolunteersByDepartmentsStatProvider {
 
     private readonly http = inject(HttpClient);
     private readonly msg = inject(MessageService);
+
+    public getVisitsCountByWeekDayStat(from: string, to: string, city: OperationCity): Observable<Array<VisitsCountByWeekDay>> {
+        return this.getStat<VisitsCountByWeekDay>('visits-count-by-week-day', from, to, city);
+    }
 
     public getVisitsByDepartmentsStat(from: string, to: string, city: OperationCity): Observable<Array<VisitByDepartments>> {
         return this.getStat<VisitByDepartments>('visits-by-departments', from, to, city);
