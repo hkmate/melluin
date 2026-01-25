@@ -24,7 +24,7 @@ export class DefaultEventListSettingsInitializer implements EventListSettingsIni
     }
 
     public getFilters(): EventsFilter {
-        const dateInterval = dateIntervalGeneratorFactory(DateIntervalSpecifier.MONTH).generate();
+        const dateInterval = dateIntervalGeneratorFactory(DateIntervalSpecifier.WEEK).generate();
         const result = new EventsFilter();
         result.departmentIds = [];
         result.participantIds = [];

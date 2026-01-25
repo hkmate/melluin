@@ -41,10 +41,9 @@ export class NavigatorComponent {
         HospitalVisitStatus.STARTED,
     ];
 
-    private mobileScreen: boolean;
+    private readonly mobileScreen = this.platform.IOS || this.platform.ANDROID;
 
     constructor() {
-        this.mobileScreen = (this.platform.IOS || this.platform.ANDROID);
         this.store.pipe(selectUserHomePageSettings, takeUntilDestroyed()).subscribe((userSettings?: HomePageUserSettings) => {
             this.processHomePage(this.mobileScreen ? userSettings?.inMobile : userSettings?.inDesktop);
         });
@@ -54,17 +53,18 @@ export class NavigatorComponent {
         switch (option) {
             case HomePageOption.DASHBOARD:
                 return this.router.navigate([PATHS.dashboard.main]);
+            case HomePageOption.EVENT_LIST:
+                return this.router.navigate([PATHS.events.main]);
             case HomePageOption.ACTUAL_HOSPITAL_VISIT_DETAILS:
             case HomePageOption.ACTUAL_HOSPITAL_VISIT_FILLER:
                 return this.openVisitRelatedPage(option);
-            case HomePageOption.EVENT_LIST:
             default:
-                return this.router.navigate([PATHS.events.main]);
+                return this.openDefaultPage();
         }
     }
 
     private async openVisitRelatedPage(option: HomePageOption.ACTUAL_HOSPITAL_VISIT_DETAILS | HomePageOption.ACTUAL_HOSPITAL_VISIT_FILLER): Promise<boolean> {
-        const visits = await this.createVisitRequest();
+        const visits = await this.getMyTodayVisit();
         if (isNilOrEmpty(visits)) {
             return this.router.navigate([PATHS.events.main]);
         }
@@ -77,7 +77,11 @@ export class NavigatorComponent {
         return this.router.navigate([PATHS.hospitalVisit.main, visits[0].id]);
     }
 
-    private createVisitRequest(): Promise<Array<HospitalVisit>> {
+    private openDefaultPage(): Promise<boolean> {
+        return this.openVisitRelatedPage(HomePageOption.ACTUAL_HOSPITAL_VISIT_FILLER);
+    }
+
+    private getMyTodayVisit(): Promise<Array<HospitalVisit>> {
         return firstValueFrom(this.visitService.findVisit({
             page: 1, size: 5, where: {
                 dateTimeFrom: FilterOperationBuilder.lt(this.getTomorrowBegin()),
