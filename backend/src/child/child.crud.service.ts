@@ -23,21 +23,6 @@ export class ChildCrudService {
         return this.childConverter.convert(visitEntity);
     }
 
-    public getOne(id: string): Promise<Child> {
-        return this.childDao.getOne(id)
-            .then(entity => this.childConverter.convert(entity))
-    }
-
-
-    public async rewrite(childId: string,
-                         childInput: ChildInput,
-                         requester: User): Promise<Child> {
-        const childEntity = await this.childDao.getOne(childId);
-        const changedEntity = this.rewriteApplierFactory.createFor(childInput, childEntity).applyChanges();
-        const savedVisit = await this.childDao.save(changedEntity);
-        return this.childConverter.convert(savedVisit);
-    }
-
     public async rewriteEntity(childEntity: ChildEntity,
                          childInput: ChildInput): Promise<ChildEntity> {
         const changedEntity = this.rewriteApplierFactory.createFor(childInput, childEntity).applyChanges();

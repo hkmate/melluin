@@ -1,12 +1,12 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {VisitedChild} from '@shared/hospital-visit/visited-child';
 import {VisitedChildrenDao} from '@be/hospital-visit-children/persistence/visited-children.dao';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {VisitedChildEntityToDtoConverter} from '@be/hospital-visit-children/converer/visited-child-entity-to-dto.converter';
-import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
 import {ChildDao} from '@be/child/child.dao';
-import {VisitStatusForManageVisitedChildValidator} from '@be/hospital-visit-children/validator/visit-status-for-manage-visited-child.validator';
 import {ChildEntity} from '@be/child/model/child.entity';
+import {VisitedChildSaveValidatorFactory} from '@be/hospital-visit-children/validator/visited-child-save-validator-factory';
+import {User} from '@shared/user/user';
 
 @Injectable()
 export class VisitedChildrenService {
@@ -14,7 +14,8 @@ export class VisitedChildrenService {
     constructor(private readonly visitDao: HospitalVisitDao,
                 private readonly childDao: ChildDao,
                 private readonly visitedChildrenDao: VisitedChildrenDao,
-                private readonly entityToDtoConverter: VisitedChildEntityToDtoConverter) {
+                private readonly entityToDtoConverter: VisitedChildEntityToDtoConverter,
+                private readonly validatorFactory: VisitedChildSaveValidatorFactory) {
     }
 
     public async findAll(visitId: string): Promise<Array<VisitedChild>> {
@@ -22,24 +23,15 @@ export class VisitedChildrenService {
             .map(entity => this.entityToDtoConverter.convert(entity));
     }
 
-    public async remove(visitId: string, visitedChildId: string): Promise<void> {
+    public async remove(visitId: string, visitedChildId: string, requester: User): Promise<void> {
         const visit = await this.visitDao.getOne(visitId);
-        VisitStatusForManageVisitedChildValidator.of().validate(visit);
-        // TODO: validate that child is not on any activity of the visit!
+        const visitedChild = await this.visitedChildrenDao.getOne(visitedChildId);
 
-        const entity = await this.visitedChildrenDao.getOne(visitedChildId);
-        const child = entity.child;
-        this.verifyEntityHasThisVisitId(entity, visitId);
+        await this.validatorFactory.getValidatorForDelete()
+            .validate({visit, visitedChild, requester});
 
-        await this.visitedChildrenDao.remove(entity);
-        await this.removeChildObjectIfNotInOtherVisit(child);
-    }
-
-    private verifyEntityHasThisVisitId(entity: VisitedChildEntity, visitId: string): void {
-        if (entity.visitId !== visitId) {
-            throw new BadRequestException(
-                `VisitedChild object with id: ${entity.id} is not belongs to visit with id: ${visitId}`);
-        }
+        await this.visitedChildrenDao.remove(visitedChild);
+        await this.removeChildObjectIfNotInOtherVisit(visitedChild.child);
     }
 
     private async removeChildObjectIfNotInOtherVisit(child: ChildEntity): Promise<void> {

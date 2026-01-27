@@ -1,4 +1,4 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {
     VisitedChild,
     VisitedChildEditInput,
@@ -10,13 +10,11 @@ import {VisitedChildrenDao} from '@be/hospital-visit-children/persistence/visite
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {VisitedChildCreationToEntityConverter} from '@be/hospital-visit-children/converer/visited-child-creation-to-entity.converter';
 import {VisitedChildEntityToDtoConverter} from '@be/hospital-visit-children/converer/visited-child-entity-to-dto.converter';
-import {VisitStatusForManageVisitedChildValidator} from '@be/hospital-visit-children/validator/visit-status-for-manage-visited-child.validator';
 import {ChildCrudService} from '@be/child/child.crud.service';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {isNil} from '@shared/util/util';
 import {User} from '@shared/user/user';
-import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
+import {VisitedChildSaveValidatorFactory} from '@be/hospital-visit-children/validator/visited-child-save-validator-factory';
 
 @Injectable()
 export class VisitedChildSaverService {
@@ -25,12 +23,15 @@ export class VisitedChildSaverService {
                 private readonly childService: ChildCrudService,
                 private readonly visitedChildrenDao: VisitedChildrenDao,
                 private readonly creationToEntityConverter: VisitedChildCreationToEntityConverter,
-                private readonly entityToDtoConverter: VisitedChildEntityToDtoConverter) {
+                private readonly entityToDtoConverter: VisitedChildEntityToDtoConverter,
+                private readonly validatorFactory: VisitedChildSaveValidatorFactory) {
     }
 
     public async save(visitId: string, visitedChildInput: VisitedChildInput, requester: User): Promise<VisitedChild> {
-        const visit = await this.getVisit(visitId);
-        this.verifyVisitIsStarted(visit);
+        const visit = await this.visitDao.getOne(visitId);
+
+        await this.validatorFactory.getValidatorForCreate()
+            .validate({visit, requester});
 
         if (isNil(visitedChildInput.child)) {
             return this.saveVisitedChild(visit,
@@ -40,15 +41,13 @@ export class VisitedChildSaverService {
             {...visitedChildInput, child: visitedChildInput.child!}, requester);
     }
 
-    // eslint-disable-next-line max-params-no-constructor/max-params-no-constructor
-    public async update(visitId: string, visitedChildId: string,
-                        visitedChildInput: VisitedChildEditInput, requester: User): Promise<VisitedChild> {
-        const visit = await this.getVisit(visitId);
-        this.verifyVisitIsStarted(visit);
-        const visitedChild = await this.visitedChildrenDao.getOne(visitedChildId);
 
-        this.verifyVisitIdIsCorrect(visitedChild, visitId);
-        this.verifyVisitChildIdIsCorrect(visitedChildInput, visitedChildId);
+    public async update(visitId: string, visitedChildInput: VisitedChildEditInput, requester: User): Promise<VisitedChild> {
+        const visit = await this.visitDao.getOne(visitId);
+        const visitedChild = await this.visitedChildrenDao.getOne(visitedChildInput.id);
+
+        await this.validatorFactory.getValidatorForUpdate()
+            .validate({visit, visitedChild, requester});
 
         visitedChild.child = await this.childService.rewriteEntity(visitedChild.child, visitedChildInput.child);
         visitedChild.isParentThere = visitedChildInput.isParentThere;
@@ -57,14 +56,8 @@ export class VisitedChildSaverService {
         return this.entityToDtoConverter.convert(persisted);
     }
 
-    private async getVisit(visitId: string): Promise<HospitalVisitEntity> {
-        const visit = await this.visitDao.getOne(visitId);
-        VisitStatusForManageVisitedChildValidator.of().validate(visit);
-
-        return visit;
-    }
-
-    private async saveVisitedChild(visit: HospitalVisitEntity, visitedChildInput: VisitedChildWithChildIdInput): Promise<VisitedChild> {
+    private async saveVisitedChild(visit: HospitalVisitEntity,
+                                   visitedChildInput: VisitedChildWithChildIdInput): Promise<VisitedChild> {
         const createEntity = await this.creationToEntityConverter.convert({visitedChildInput, visit});
         const persisted = await this.visitedChildrenDao.save(createEntity);
 
@@ -81,24 +74,6 @@ export class VisitedChildSaverService {
         } catch (e) {
             await this.childService.remove(child.id);
             throw e;
-        }
-    }
-
-    private verifyVisitIdIsCorrect(visitedChild: VisitedChildEntity, visitId: string): void {
-        if (visitedChild.visitId !== visitId) {
-            throw new BadRequestException('VisitId is not the same as one in the url.');
-        }
-    }
-
-    private verifyVisitChildIdIsCorrect(visitedChildInput: VisitedChildEditInput, visitedChildId: string): void {
-        if (visitedChildInput.id !== visitedChildId) {
-            throw new BadRequestException('VisitedChildId is not the same as one in the url.');
-        }
-    }
-
-    private verifyVisitIsStarted(visit: HospitalVisitEntity): void {
-        if (visit.status !== HospitalVisitStatus.STARTED) {
-            throw new BadRequestException('Manage activity is only acceptable when the visit is in status: STARTED');
         }
     }
 

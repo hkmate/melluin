@@ -9,11 +9,15 @@ import {VisitedChildEntityToDtoConverter} from '@be/hospital-visit-children/conv
 import {VisitedChildVerifierService} from '@be/hospital-visit-children/service/visited-child-verifier.service';
 import {ChildModule} from '@be/child/child.module';
 import {VisitedChildSaverService} from '@be/hospital-visit-children/service/visited-child-saver.service';
+import {VisitedChildSaveValidatorFactory} from '@be/hospital-visit-children/validator/visited-child-save-validator-factory';
+import {HospitalVisitActivityPersistenceModule} from '@be/hospital-visit-activity/hospital-visit-activity.persistence.module';
+import {NoActivityWithVisitedChildValidator} from '@be/hospital-visit-children/validator/no-activity-with-visited-child.validator';
 
 @Module({
     imports: [
         VisitedChildrenPersistenceModule,
 
+        HospitalVisitActivityPersistenceModule,
         HospitalVisitPersistenceModule,
         ChildPersistenceModule,
         ChildModule,
@@ -23,7 +27,9 @@ import {VisitedChildSaverService} from '@be/hospital-visit-children/service/visi
         VisitedChildVerifierService,
         VisitedChildSaverService,
         VisitedChildCreationToEntityConverter,
-        VisitedChildEntityToDtoConverter
+        VisitedChildEntityToDtoConverter,
+        VisitedChildSaveValidatorFactory,
+        NoActivityWithVisitedChildValidator
     ],
     controllers: [
         VisitedChildrenController

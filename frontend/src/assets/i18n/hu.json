@@ -586,6 +586,11 @@
         "VISIT_DATE_TIME_CHANGE_DISABLED": "Ez az időpont változtatás nem engedélyezett számodra",
         "VISIT_PARTICIPANT_CHANGE_DISABLED": "Nem módosíthatod a résztvevőket",
         "VICARIOUS_MOM_CHANGE_DISABLED": "Nem módosíthatod a pótmami beállítást",
-        "DEPARTMENT_CHANGE_DISABLED": "Nem módosíthatod az osztályt"
+        "DEPARTMENT_CHANGE_DISABLED": "Nem módosíthatod az osztályt",
+        "CANNOT_CHANGE_CHILD_IN_VISIT_NOT_STARTED": "Csak megkezdett foglalkozáson lehet gyereket felvenni/módosítani",
+        "VISIT_ID_NOT_SAME_AS_IN_VISITED_CHILD": "Foglalkozás azonosító nem egyezik meg a látogatott gyerek adataiban lévő azonosítóval",
+        "VISITED_CHILD_REMOVE_DISABLED_CHILD_IS_IN_ACTIVITY": "Gyerek nem törölhető mert részt vesz tevékenységen",
+        "USER_CANNOT_WRITE_CHILD_IN_VISIT_FOR_OTHERS": "Nem rendelkezel jogosultsággal gyerek létrehozásához vagy módosításához olyan foglalkozáson amin nem veszel részt",
+        "USER_CANNOT_WRITE_CHILD": "Nem rendelkezel jogosultsággal gyerek létrehozásához vagy módosításához"
     }
 }

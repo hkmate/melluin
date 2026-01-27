@@ -4,8 +4,6 @@ import {ChildInputToEntityConverter} from '@be/child/converer/child-input-to-ent
 import {ChildEntityToDtoConverter} from '@be/child/converer/child-entity-to-dto.converter';
 import {ChildRewriteApplierFactory} from '@be/child/converer/child-rewrite-applier.factory';
 import {ChildCrudService} from '@be/child/child.crud.service';
-import {ChildController} from '@be/child/child.controller';
-
 
 @Module({
     imports: [
@@ -22,9 +20,6 @@ import {ChildController} from '@be/child/child.controller';
         ChildInputToEntityConverter,
         ChildEntityToDtoConverter,
         ChildRewriteApplierFactory
-    ],
-    controllers: [
-        ChildController
     ]
 })
 export class ChildModule {

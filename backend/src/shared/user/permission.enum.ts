@@ -36,10 +36,12 @@ export enum Permission {
     canReadVisitConnections = 'canReadVisitConnections',
     canWriteVisitConnections = 'canWriteVisitConnections',
 
-    // Hospital visit/ Activity related
+    // Hospital visit / Activity related
     canWriteChild = 'canWriteChild',
+    canWriteChildAtAnyVisit = 'canWriteChildAtAnyVisit',
     canReadChild = 'canReadChild',
     canCreateActivity = 'canCreateActivity',
+    canWriteActivityAtAnyVisit = 'canCreateActivityAtAnyVisit',
     canReadActivity = 'canReadActivity',
 
     // Administration related

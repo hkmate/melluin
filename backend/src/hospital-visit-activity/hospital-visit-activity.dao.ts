@@ -54,4 +54,12 @@ export class HospitalVisitActivityDao {
         });
     }
 
+    public findByVisitId(id: string): Promise<Array<HospitalVisitActivityEntity>> {
+        return this.repository.find({
+            where: {
+                hospitalVisit: {id}
+            }
+        });
+    }
+
 }
