@@ -22,7 +22,7 @@ export class HospitalVisitActivityInfoController {
     }
 
     @Put('/:visitId/activities-information')
-    @PermissionGuard(Permission.canCreateActivity)
+    @PermissionGuard(Permission.canCreateActivity, Permission.canWriteActivityAtAnyVisit)
     public setUpInformation(@Param('visitId', ParseUUIDPipe) visitId: string,
                             @Body() activityInput: HospitalVisitActivityInfoInput,
                             @CurrentUser() requester: User): Promise<HospitalVisitActivityInfoInput> {

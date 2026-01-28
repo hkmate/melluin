@@ -12,6 +12,7 @@ import {VisitedChildrenPersistenceModule} from '@be/hospital-visit-children/pers
 import {VisitedChildrenModule} from '@be/hospital-visit-children/visited-children.module';
 import {HospitalVisitActivityInfoPersistenceModule} from '@be/hospital-visit-activity-info/hospital-visit-activity-info.persistence.module';
 import {HospitalVisitActivityInfoModule} from '@be/hospital-visit-activity-info/hospital-visit-activity-info.module';
+import {VisitActivitySaveValidatorFactory} from '@be/hospital-visit-activity/validator/visit-activity-save-validator-factory.service';
 
 @Module({
     imports: [
@@ -29,6 +30,7 @@ import {HospitalVisitActivityInfoModule} from '@be/hospital-visit-activity-info/
         ActivityInputToEntityConverter,
         HospitalVisitActivityCrudService,
         ActivityRewriteApplierFactory,
+        VisitActivitySaveValidatorFactory
     ],
     controllers: [
         HospitalVisitActivityController

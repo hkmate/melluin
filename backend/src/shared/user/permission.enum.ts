@@ -41,7 +41,7 @@ export enum Permission {
     canWriteChildAtAnyVisit = 'canWriteChildAtAnyVisit',
     canReadChild = 'canReadChild',
     canCreateActivity = 'canCreateActivity',
-    canWriteActivityAtAnyVisit = 'canCreateActivityAtAnyVisit',
+    canWriteActivityAtAnyVisit = 'canWriteActivityAtAnyVisit',
     canReadActivity = 'canReadActivity',
 
     // Administration related

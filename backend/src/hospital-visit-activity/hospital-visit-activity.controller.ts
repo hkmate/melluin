@@ -35,7 +35,7 @@ export class HospitalVisitActivityController {
 
     @Post('/:id/activities')
     @HttpCode(HttpStatus.CREATED)
-    @PermissionGuard(Permission.canCreateActivity)
+    @PermissionGuard(Permission.canCreateActivity, Permission.canWriteActivityAtAnyVisit)
     public save(@Param('id', ParseUUIDPipe) hospitalVisitId: string,
                 @Body() activityInput: HospitalVisitActivityInput,
                 @CurrentUser() requester: User): Promise<HospitalVisitActivity> {
@@ -44,7 +44,7 @@ export class HospitalVisitActivityController {
     }
 
     @Put('/:visitId/activities/:id')
-    @PermissionGuard(Permission.canCreateActivity)
+    @PermissionGuard(Permission.canCreateActivity, Permission.canWriteActivityAtAnyVisit)
     public update(@Param('visitId', ParseUUIDPipe) visitId: string,
                   @Param('id', ParseUUIDPipe) activityId: string,
                   @Body() activityInput: HospitalVisitActivityEditInput,
@@ -59,7 +59,7 @@ export class HospitalVisitActivityController {
 
     @Delete('/:visitId/activities/:id')
     @HttpCode(HttpStatus.NO_CONTENT)
-    @PermissionGuard(Permission.canModifyVisit)
+    @PermissionGuard(Permission.canCreateActivity, Permission.canWriteActivityAtAnyVisit)
     public delete(@Param('visitId', ParseUUIDPipe) visitId: string,
                   @Param('id', ParseUUIDPipe) activityId: string,
                   @CurrentUser() requester: User): Promise<void> {

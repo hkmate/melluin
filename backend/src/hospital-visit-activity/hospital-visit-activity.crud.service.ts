@@ -1,4 +1,4 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {User} from '@shared/user/user';
 import {HospitalVisitActivityDao} from '@be/hospital-visit-activity/hospital-visit-activity.dao';
 import {
@@ -11,13 +11,11 @@ import {ActivityEntityToBasicDtoConverter} from '@be/hospital-visit-activity/con
 import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
 import {ActivityEntityToWrappedDtoConverter} from '@be/hospital-visit-activity/converter/activity-entity-to-wrapped-dto.converter';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {ActivityRewriteApplierFactory} from '@be/hospital-visit-activity/applier/activity-rewrite-applier.factory';
 import {DateUtil} from '@shared/util/date-util';
 import {VisitedChildrenDao} from '@be/hospital-visit-children/persistence/visited-children.dao';
-import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
 import {HospitalVisitActivityInfoDao} from '@be/hospital-visit-activity-info/hospital-visit-activity-info.dao';
+import {VisitActivitySaveValidatorFactory} from '@be/hospital-visit-activity/validator/visit-activity-save-validator-factory.service';
 
 @Injectable()
 export class HospitalVisitActivityCrudService {
@@ -29,12 +27,16 @@ export class HospitalVisitActivityCrudService {
                 private readonly activityInputToEntityConverter: ActivityInputToEntityConverter,
                 private readonly basicDtoConverter: ActivityEntityToBasicDtoConverter,
                 private readonly rewriteApplierFactory: ActivityRewriteApplierFactory,
+                private readonly validatorFactory: VisitActivitySaveValidatorFactory,
                 private readonly wrappedDtoConverter: ActivityEntityToWrappedDtoConverter) {
     }
 
     public async save(activityInput: HospitalVisitActivityInput, requester: User): Promise<HospitalVisitActivity> {
         const visit = await this.hospitalVisitDao.getOne(activityInput.visitId!);
-        this.verifyVisitIsStarted(visit);
+
+        await this.validatorFactory.getValidatorForCreate()
+            .validate({visit, requester});
+
         const creationEntity = await this.activityInputToEntityConverter.convert(activityInput);
         const entity = await this.hospitalVisitActivityDao.save(creationEntity);
         return this.basicDtoConverter.convert(entity);
@@ -43,8 +45,9 @@ export class HospitalVisitActivityCrudService {
     public async update(activityInput: HospitalVisitActivityEditInput, requester: User): Promise<HospitalVisitActivity> {
         const visit = await this.hospitalVisitDao.getOne(activityInput.visitId!);
         const persisted = await this.hospitalVisitActivityDao.getOne(activityInput.id);
-        this.verifyVisitIsStarted(visit);
-        this.verifyActivityIsInVisit(persisted, visit);
+
+        await this.validatorFactory.getValidatorForUpdate()
+            .validate({visit, requester, activity: persisted});
 
         await this.rewriteApplierFactory.createFor(activityInput)
             .applyOn(persisted);
@@ -56,8 +59,8 @@ export class HospitalVisitActivityCrudService {
         const visit = await this.hospitalVisitDao.getOne(visitId);
         const persisted = await this.hospitalVisitActivityDao.getOne(activityId);
 
-        this.verifyVisitIsStarted(visit);
-        this.verifyActivityIsInVisit(persisted, visit);
+        await this.validatorFactory.getValidatorForDelete()
+            .validate({visit, requester, activity: persisted});
 
         await this.hospitalVisitActivityDao.delete(persisted);
     }
@@ -76,18 +79,6 @@ export class HospitalVisitActivityCrudService {
         );
         wrappedVisits.sort(HospitalVisitActivityCrudService.compareWrappedByDateDesc);
         return wrappedVisits;
-    }
-
-    private verifyVisitIsStarted(visit: HospitalVisitEntity): void {
-        if (visit.status !== HospitalVisitStatus.STARTED) {
-            throw new BadRequestException('Manage activity is only acceptable when the visit is in status: STARTED');
-        }
-    }
-
-    private verifyActivityIsInVisit(activity: HospitalVisitActivityEntity, visit: HospitalVisitEntity): void {
-        if (activity.hospitalVisit.id !== visit.id) {
-            throw new BadRequestException(`Activity is not in visit with id: ${visit.id}`);
-        }
     }
 
     private static compareWrappedByDateDesc(v1: WrappedHospitalVisitActivity, v2: WrappedHospitalVisitActivity): number {

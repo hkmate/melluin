@@ -29,7 +29,7 @@ export class VisitedChildrenController {
 
     @Post('/:hospitalVisitId/children')
     @HttpCode(HttpStatus.CREATED)
-    @PermissionGuard(Permission.canModifyVisit, Permission.canWriteChild)
+    @PermissionGuard(Permission.canWriteChild, Permission.canWriteChildAtAnyVisit)
     public addVisitedChild(@Param('hospitalVisitId', ParseUUIDPipe) hospitalVisitId: string,
                            @Body() childInput: VisitedChildInput,
                            @CurrentUser() requester: User): Promise<VisitedChild> {
@@ -44,7 +44,7 @@ export class VisitedChildrenController {
     }
 
     @Put('/:hospitalVisitId/children/:visitedChildId')
-    @PermissionGuard(Permission.canModifyVisit, Permission.canWriteChild)
+    @PermissionGuard(Permission.canWriteChild, Permission.canWriteChildAtAnyVisit)
     public update(@Param('hospitalVisitId', ParseUUIDPipe) hospitalVisitId: string,
                   @Param('visitedChildId', ParseUUIDPipe) visitedChildId: string,
                   @Body() childInput: VisitedChildEditInput,
@@ -55,7 +55,7 @@ export class VisitedChildrenController {
 
     @Delete('/:hospitalVisitId/children/:visitedChildId')
     @HttpCode(HttpStatus.NO_CONTENT)
-    @PermissionGuard(Permission.canModifyVisit)
+    @PermissionGuard(Permission.canModifyVisit, Permission.canWriteChildAtAnyVisit)
     public delete(@Param('hospitalVisitId', ParseUUIDPipe) hospitalVisitId: string,
                   @Param('visitedChildId', ParseUUIDPipe) visitedChildId: string,
                   @CurrentUser() requester: User): Promise<void> {

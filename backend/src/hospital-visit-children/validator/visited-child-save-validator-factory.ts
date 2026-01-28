@@ -3,7 +3,7 @@ import {
     VisitedChildBasicValidator,
     VisitedChildUpdateValidator
 } from '@be/hospital-visit-children/validator/visited-child-validator';
-import {VisitIsInStartedStatusValidator} from '@be/hospital-visit-children/validator/visit-is-in-started-status.validator';
+import {VisitIsInStartedStatusValidator} from '@be/hospital-visit-activity/validator/visit-is-in-started-status.validator';
 import {AsyncValidatorChain} from '@shared/validator/validator-chain';
 import {VisitIdIsSameAsInVisitedChildValidator} from '@be/hospital-visit-children/validator/visit-id-is-same-as-in-visited-child.validator';
 import {NoActivityWithVisitedChildValidator} from '@be/hospital-visit-children/validator/no-activity-with-visited-child.validator';
