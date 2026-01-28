@@ -93,10 +93,17 @@ export class HospitalVisitDetailsComponent {
     }
 
     protected canUserStartTheVisit(): boolean {
-        return isNotNil(this.visit)
-            && this.visit.status === HospitalVisitStatus.SCHEDULED
-            && this.permissions.has(Permission.canCreateActivity)
-            && this.canUserEditTheVisit();
+        if (isNil(this.visit)) {
+            return false;
+        }
+
+        const visitStarted = this.visit.status === HospitalVisitStatus.SCHEDULED;
+        const userHasCreateActivity = this.permissions.has(Permission.canCreateActivity);
+        const userHasCreateActivityAny = this.permissions.has(Permission.canWriteActivityAtAnyVisit);
+        const userParticipant = this.isUserParticipant();
+        const userCanCreateActivity = userHasCreateActivityAny || (userHasCreateActivity && userParticipant)
+
+        return visitStarted && userCanCreateActivity && this.canUserEditTheVisit();
     }
 
     protected canUserEditTheVisit(): boolean {
@@ -105,21 +112,29 @@ export class HospitalVisitDetailsComponent {
         }
         const userCanModify = this.permissions.has(Permission.canModifyVisit);
         const userCanModifyAny = this.permissions.has(Permission.canModifyAnyVisit);
-        const userParticipant = this.visit.participants.some(p => p.id === this.permissions.personId);
+        const userParticipant = this.isUserParticipant();
 
         return userCanModifyAny || (userParticipant && userCanModify);
     }
 
     protected isStartedAndUserCanContinueTheVisit(): boolean {
-        return isNotNil(this.visit)
-            && this.visit.status === HospitalVisitStatus.STARTED
-            && this.permissions.has(Permission.canCreateActivity)
+        if (isNil(this.visit)) {
+            return false;
+        }
+
+        const visitStarted = this.visit.status === HospitalVisitStatus.STARTED;
+        const userHasCreateActivity = this.permissions.has(Permission.canCreateActivity);
+        const userHasCreateActivityAny = this.permissions.has(Permission.canWriteActivityAtAnyVisit);
+        const userParticipant = this.isUserParticipant();
+        const userCanCreateActivity = userHasCreateActivityAny || (userHasCreateActivity && userParticipant)
+
+        return visitStarted && userCanCreateActivity;
     }
 
     protected isFilledAndUserIsParticipant(): boolean {
         return isNotNil(this.visit)
             && this.visit.status === HospitalVisitStatus.ACTIVITIES_FILLED_OUT
-            && this.visit.participants.map(p => p.id).includes(this.permissions.personId!);
+            && this.isUserParticipant()
     }
 
     protected shouldShowActivities(): boolean {
@@ -140,6 +155,13 @@ export class HospitalVisitDetailsComponent {
             this.connectedVisits = connectedVisits;
             this.updateVisitInstanceAfterConnectionRefresh();
         });
+    }
+
+    private isUserParticipant(): boolean {
+        if (isNil(this.visit)) {
+            return false;
+        }
+        return this.visit.participants.map(p => p.id).includes(this.permissions.personId!);
     }
 
     private setToPresent(): void {

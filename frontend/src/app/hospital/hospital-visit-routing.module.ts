@@ -23,7 +23,7 @@ const routes: Routes = [
         path: `${PATHS.hospitalVisit.detail}/${PATHS.hospitalVisit.fillActivities}`,
         canMatch: [AuthGuardFn],
         data: {
-            permissions: [Permission.canCreateActivity]
+            permissions: [Permission.canCreateActivity, Permission.canWriteActivityAtAnyVisit]
         },
         resolve: {visit: HospitalVisitResolver},
         component: HospitalVisitActivityFillerComponent
