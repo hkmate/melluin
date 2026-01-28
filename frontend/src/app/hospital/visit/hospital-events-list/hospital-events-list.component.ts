@@ -23,16 +23,18 @@ export class HospitalEventsListComponent {
     public readonly markRowByDate = input.required<boolean>();
     public readonly eventsList = input.required<Array<HospitalVisit>>();
 
-    private todayDawn = DateUtil.truncateToDay(DateUtil.now()).toISOString();
-    private tomorrowDawn = this.getTomorrowDawn();
-
+    protected readonly userCanReadConnections = signal(false);
     private readonly userCanModifyVisit = signal(false);
     private readonly userCanModifyAnyVisit = signal(false);
+
+    private todayDawn = DateUtil.truncateToDay(DateUtil.now()).toISOString();
+    private tomorrowDawn = this.getTomorrowDawn();
 
     constructor() {
         this.store.pipe(selectCurrentUser, takeUntilDestroyed()).subscribe(() => {
                 this.userCanModifyVisit.set(this.permissions.has(Permission.canModifyVisit));
                 this.userCanModifyAnyVisit.set(this.permissions.has(Permission.canModifyAnyVisit));
+                this.userCanReadConnections.set(this.permissions.has(Permission.canReadVisitConnections));
             }
         );
     }

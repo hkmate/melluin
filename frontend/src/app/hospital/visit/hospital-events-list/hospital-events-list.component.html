@@ -35,14 +35,21 @@
         <th mat-header-cell *matHeaderCellDef>{{ 'VisitList.ListHeader.Participants' | translate }}</th>
         <td mat-cell *matCellDef="let visit">
             <span class="participants"
-                       *ngFor="let participant of visit.participants; let last = last">
+                  *ngFor="let participant of visit.participants; let last = last">
                   <a [routerLink]="['/people', participant.id]">
 <!--                      It is inline for purpose. The comma should right after the name of the person-->
                       {{ participant | personName }}</a><span *ngIf="!last">, </span>
             </span>
-                @if (visit.vicariousMomVisit) {
-                    <mat-icon [matTooltip]="'VisitList.VicariousMomVisit' | translate">escalator_warning</mat-icon>
-                }
+            @if (visit.vicariousMomVisit) {
+                <mat-icon class="vicarious-mom" [matTooltip]="'VisitList.VicariousMomVisit' | translate">
+                    escalator_warning
+                </mat-icon>
+            }
+            @if (this.userCanReadConnections() && visit.id !== visit.connectionGroupId) {
+                <mat-icon class="connected" [matTooltip]="'VisitList.ConnectedVisit' | translate">
+                    account_tree
+                </mat-icon>
+            }
         </td>
     </ng-container>
 

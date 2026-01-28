@@ -42,9 +42,16 @@ td, th {
 
         mat-icon {
             margin-left: .5rem;
-            color: #b29700;
             height: 1rem;
             font-size: 1rem;
+
+            &.vicarious-mom {
+                color: #b29700;
+            }
+
+            &.connected {
+                color: #b25000;
+            }
         }
     }
 }

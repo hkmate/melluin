@@ -508,7 +508,8 @@
             "Department": "Helyszín",
             "Participants": "Résztvevők"
         },
-        "VicariousMomVisit": "Pótmami foglalkozás"
+        "VicariousMomVisit": "Pótmami foglalkozás",
+        "ConnectedVisit": "Kapcsolt foglalkozás"
     },
     "ChildCard": {
         "Age": "{{years}} év, {{months}} hó",
