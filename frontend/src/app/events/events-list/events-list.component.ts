@@ -51,7 +51,9 @@ export class EventsListComponent {
     protected preferences: EventsListPreferences = {needHighlight: true};
     private sort: SortOptions = {
         dateTimeFrom: 'ASC',
-        'department.name': 'ASC'
+        'department.name': 'ASC',
+        'participants.lastName': 'ASC',
+        'participants.firstName': 'ASC'
     };
 
     constructor() {
