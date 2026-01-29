@@ -13,6 +13,7 @@ import {ConfigModule, ConfigService} from '@nestjs/config';
 import {Security} from '@be/config/model/security';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 import {JwtUserStorage} from '@be/auth/strategy/jwt-user-storage';
+import {PermissionsGuard} from '@be/auth/guard/permissions.guard';
 
 @Module({
     imports: [
@@ -44,6 +45,10 @@ import {JwtUserStorage} from '@be/auth/strategy/jwt-user-storage';
         {
             provide: APP_GUARD,
             useClass: JwtAuthGuard,
+        },
+        {
+            provide: APP_GUARD,
+            useClass: PermissionsGuard,
         },
         {
             provide: APP_GUARD,
