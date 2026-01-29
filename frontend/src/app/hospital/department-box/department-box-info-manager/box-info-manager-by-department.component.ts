@@ -4,6 +4,8 @@ import {MessageService} from '@fe/app/util/message.service';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
 import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
 import {BoxInfoListByDepartmentComponent} from '@fe/app/hospital/department-box/department-box-info-list/box-info-list-by-department.component';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {Permission} from '@shared/user/permission.enum';
 
 @Component({
     selector: 'app-box-info-manager-by-department',
@@ -14,6 +16,7 @@ export class BoxInfoManagerByDepartmentComponent extends DepartmentBoxInfoManage
 
     private readonly msg = inject(MessageService);
     private readonly boxStatusService = inject(DepartmentBoxService);
+    private readonly permissions = inject(PermissionService);
 
     public readonly departmentId = input.required<string>();
 
@@ -27,6 +30,10 @@ export class BoxInfoManagerByDepartmentComponent extends DepartmentBoxInfoManage
             this.msg.success('SaveSuccessful');
             this.itemAdded();
         });
+    }
+
+    protected canUserWriteBox(): boolean {
+        return this.permissions.has(Permission.canWriteDepBox);
     }
 
     private itemAdded(): void {

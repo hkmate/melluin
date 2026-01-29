@@ -1,14 +1,16 @@
 <div class="box-part-header">
     <h1>{{ 'DepartmentPage.BoxStatuses' | translate }}</h1>
-    <span class="add-btn">
-        <button mat-mini-fab color="accent" (click)="creatorToggled()">
-            @if (creatingInProcess) {
-                <mat-icon>close</mat-icon>
-            } @else {
-                <mat-icon>add</mat-icon>
-            }
-        </button>
-    </span>
+    @if (canUserWriteBox()) {
+        <span class="add-btn">
+            <button mat-mini-fab color="accent" (click)="creatorToggled()">
+                @if (creatingInProcess) {
+                    <mat-icon>close</mat-icon>
+                } @else {
+                    <mat-icon>add</mat-icon>
+                }
+            </button>
+        </span>
+    }
 </div>
 
 @if (creatingInProcess) {
