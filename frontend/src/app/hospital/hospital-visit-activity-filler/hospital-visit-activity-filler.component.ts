@@ -73,6 +73,10 @@ export class HospitalVisitActivityFillerComponent {
             && this.canActivitiesBeShowed();
     }
 
+    protected canContinueInOtherVisit(): boolean {
+        return this.canActivitiesBeFinalized() && this.permissions.has(Permission.canCreateVisit);
+    }
+
     protected canSetVisitToFailed(): boolean {
         return !this.childrenAdded && !HospitalVisitActivityFillerComponent.CLOSED_STATUSES.includes(this.visit.status);
     }

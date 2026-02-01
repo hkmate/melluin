@@ -58,7 +58,8 @@
                         {{ 'HospitalVisit.Finalized' | translate }}
                     </button>
                 </div>
-
+            }
+            @if (canContinueInOtherVisit()) {
                 @if (childrenAdded) {
                     <div class="continue-other-btn">
                         <button mat-stroked-button
