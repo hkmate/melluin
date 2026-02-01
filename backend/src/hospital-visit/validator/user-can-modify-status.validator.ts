@@ -69,7 +69,9 @@ export class UserCanModifyStatusValidator implements VisitRewriteValidator {
         const starting = entity.status === HospitalVisitStatus.SCHEDULED
             && item.status === HospitalVisitStatus.STARTED;
         const canceling = entity.status === HospitalVisitStatus.SCHEDULED
-            && item.status === HospitalVisitStatus.CANCELED;
+            && (item.status === HospitalVisitStatus.CANCELED
+                || item.status === HospitalVisitStatus.FAILED_FOR_OTHER_REASON
+                || item.status === HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD);
         const ending = entity.status === HospitalVisitStatus.STARTED
             && (item.status === HospitalVisitStatus.ACTIVITIES_FILLED_OUT
                 || item.status === HospitalVisitStatus.CANCELED

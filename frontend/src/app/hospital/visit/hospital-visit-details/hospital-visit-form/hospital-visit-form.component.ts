@@ -184,7 +184,12 @@ export class HospitalVisitFormComponent {
                 return getAllStatusOptionsOnlyEnable(HospitalVisitStatus.DRAFT, HospitalVisitStatus.SCHEDULED);
             case HospitalVisitStatus.SCHEDULED:
                 return getAllStatusOptionsOnlyEnable(
-                    HospitalVisitStatus.SCHEDULED, HospitalVisitStatus.STARTED, HospitalVisitStatus.CANCELED);
+                    HospitalVisitStatus.SCHEDULED,
+                    HospitalVisitStatus.STARTED,
+                    HospitalVisitStatus.CANCELED,
+                    HospitalVisitStatus.FAILED_FOR_OTHER_REASON,
+                    HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD
+                );
             case HospitalVisitStatus.STARTED:
                 return getAllStatusOptionsOnlyEnable(
                     HospitalVisitStatus.STARTED,
@@ -206,7 +211,12 @@ export class HospitalVisitFormComponent {
         switch (currentStatus) {
             case HospitalVisitStatus.SCHEDULED:
                 return getAllStatusOptionsOnlyEnable(
-                    HospitalVisitStatus.SCHEDULED, HospitalVisitStatus.STARTED, HospitalVisitStatus.CANCELED);
+                    HospitalVisitStatus.SCHEDULED,
+                    HospitalVisitStatus.STARTED,
+                    HospitalVisitStatus.CANCELED,
+                    HospitalVisitStatus.FAILED_FOR_OTHER_REASON,
+                    HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD
+                );
             case HospitalVisitStatus.STARTED:
                 return getAllStatusOptionsOnlyEnable(
                     HospitalVisitStatus.STARTED,
@@ -291,7 +301,8 @@ export class HospitalVisitFormComponent {
             this.setCountedHours();
             return;
         }
-        this.form().controls.countedHours.setValue(countedMinutes / HospitalVisitFormComponent.MIN_ON_HOUR);
+        const hourValue = countedMinutes / HospitalVisitFormComponent.MIN_ON_HOUR;
+        this.form().controls.countedHours.setValue(_.round(hourValue, HospitalVisitFormComponent.DECIMALS_IN_COUNTED_HOURS));
     }
 
     private getDate(dateTime: string | undefined): Date | undefined {
@@ -320,9 +331,10 @@ export class HospitalVisitFormComponent {
 
     private createCreation(): HospitalVisitCreate {
         const data = new HospitalVisitCreate();
+        const countedMinutesFromHour =this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
         data.departmentId = this.form().controls.departmentId.value;
         data.status = this.form().controls.status.value;
-        data.countedMinutes = this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
+        data.countedMinutes = _.round(countedMinutesFromHour);
         data.organizerId = this.currentUser.personId;
         data.visibility = EventVisibility.PUBLIC;
         data.vicariousMomVisit = this.form().controls.vicariousMomVisit.value;
@@ -335,10 +347,11 @@ export class HospitalVisitFormComponent {
 
     private createRewrite(): HospitalVisitRewrite {
         const data = new HospitalVisitRewrite();
+        const countedMinutesFromHour =this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
         data.id = this.visit()!.id;
         data.departmentId = this.form().controls.departmentId.value;
         data.status = this.form().controls.status.value;
-        data.countedMinutes = this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
+        data.countedMinutes = _.round(countedMinutesFromHour);
         data.visibility = EventVisibility.PUBLIC;
         data.vicariousMomVisit = this.form().controls.vicariousMomVisit.value;
         data.participantIds = this.form().controls.participantIds.value;
