@@ -1,22 +1,21 @@
 import {TranslateService} from '@ngx-translate/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
-import {VolunteerByDepartments} from '@shared/statistics/volunteer-by-departments';
 import {OperationCity} from '@shared/person/operation-city';
 import {firstValueFrom} from 'rxjs';
-import {isNil} from 'lodash';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
-import {VolunteersByDepartmentsStatProvider} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
+import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
+import {VolunteersVisitCount} from '@shared/statistics/volunteers-visit-count';
 
 
-export type VolunteersVisitsCleanData = Omit<VolunteerByDepartments, 'personId' | 'departmentId' | 'departmentName'>;
+export type VolunteersVisitsCleanData = Omit<VolunteersVisitCount, 'personId'>;
 export type VolunteersVisitsTableData = Omit<VolunteersVisitsCleanData, 'visitMinutes'> & { 'visitHours': number };
 
 export class VolunteersVisitsStatController extends AbstractStatisticWidgetController<VolunteersVisitsTableData> {
 
-    constructor(translate: TranslateService, private readonly statProvider: VolunteersByDepartmentsStatProvider) {
+    constructor(translate: TranslateService, private readonly statProvider: StatisticsService) {
         super(translate, 'StatisticsPage.VolunteersVisits');
     }
 
@@ -61,28 +60,14 @@ export class VolunteersVisitsStatController extends AbstractStatisticWidgetContr
     }
 
     protected async loadData(from: string, to: string, city: OperationCity): Promise<Array<VolunteersVisitsTableData>> {
-        const data = await firstValueFrom(this.statProvider.getVolunteersByDepartmentsStat(from, to, city));
+        const data = await firstValueFrom(this.statProvider.getVolunteersVisitCountStat(from, to, city));
         return this.prepareData(data);
     }
 
 
-    // eslint-disable-next-line max-lines-per-function
-    private prepareData(original: Array<VolunteerByDepartments>): Array<VolunteersVisitsTableData> {
-        const visitDataByPerson: Record<string, VolunteersVisitsCleanData> = {};
-        for (const raw of original) {
-            const personId = raw.personId;
-            if (isNil(visitDataByPerson[personId])) {
-                visitDataByPerson[personId] = {
-                    personName: raw.personName,
-                    visitCount: 0,
-                    visitMinutes: 0
-                };
-            }
-            visitDataByPerson[personId].visitCount += raw.visitCount;
-            visitDataByPerson[personId].visitMinutes += raw.visitMinutes;
-        }
-        const cleanData = Object.values(visitDataByPerson);
-        return cleanData.map(x => this.mapItem(x));
+
+    private prepareData(original: Array<VolunteersVisitCount>): Array<VolunteersVisitsTableData> {
+        return original.map(x => this.mapItem(x));
     }
 
     private mapItem(original: VolunteersVisitsCleanData): VolunteersVisitsTableData {

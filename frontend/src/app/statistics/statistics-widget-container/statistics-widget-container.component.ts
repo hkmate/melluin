@@ -54,7 +54,7 @@ export class StatisticsWidgetContainerComponent {
             new ChildrenByDepartmentsStatController(this.translateService, this.childrenByDepartmentsStatProvider),
             new ChildAgesStatController(this.translateService, this.childAgesByDepartmentsStatProvider),
             new ChildAgesByDepartmentsStatController(this.translateService, this.childAgesByDepartmentsStatProvider),
-            new VolunteersVisitsStatController(this.translateService, this.volunteersByDepartmentsStatProvider),
+            new VolunteersVisitsStatController(this.translateService, this.service),
             new VolunteersByDepartmentsStatController(this.translateService, this.volunteersByDepartmentsStatProvider),
             new VisitsByStatusesStatController(this.translateService, this.service),
             new ActivitiesStatController(this.translateService, this.service),

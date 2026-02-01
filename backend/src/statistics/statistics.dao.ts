@@ -10,6 +10,7 @@ import {VolunteerByDepartmentsRowItem} from '@be/statistics/model/volunteer-by-d
 import {ActivitiesCountRowItem} from '@be/statistics/model/activities-count-row-item';
 import {ChildAgesByDepartmentsRowItem} from '@be/statistics/model/child-ages-by-departments-row-item';
 import {VisitsCountByWeekDayRowItem} from '@be/statistics/model/visits-count-by-week-day-row-item';
+import {VolunteersVisitStatRowItem} from '@be/statistics/model/volunteers-visit-stat-row-item';
 
 /* eslint-disable max-lines-per-function */
 @Injectable()
@@ -140,6 +141,46 @@ export class StatisticsDao {
                                      ON (hv.id = hvp.event_id AND hv.department_id = hd.id)
             GROUP BY p.id, p.name, hd.id, hd.name
             ORDER BY p.name, hd.name
+        `, [from, to, city]);
+    }
+
+    public getVolunteersVisitCount(from: string, to: string, city: OperationCity): Promise<Array<VolunteersVisitStatRowItem>> {
+        return this.em.query(`
+            SELECT p.id                                 AS person_id,
+                   p.name                               AS person_name,
+                   count(distinct hv.group_id)          AS visit_count,
+                   COALESCE(sum(hv.counted_minutes), 0) AS visit_minutes
+            FROM (SELECT pp.id, concat_ws(' ', last_name, first_name) AS name, ua.*
+                  FROM (SELECT * FROM person WHERE cities ? $3) pp
+                           JOIN public."user" u ON u.person_id = pp.id
+                           JOIN (((SELECT user_id, count(action) FILTER ( WHERE action = 'ACTIVATE' ) AS activations
+                                   FROM user_activation
+                                   WHERE created_at < ($2)::timestamp
+                                     AND created_at > ($1)::timestamp
+                                   GROUP BY user_id, created_at
+                                   ORDER BY created_at DESC)
+                                  UNION
+                                  (SELECT user_id, count(action) FILTER ( WHERE action = 'ACTIVATE' ) AS activations
+                                   FROM user_activation
+                                   WHERE created_at < ($1)::timestamp
+                                      or created_at IS NULL
+                                   GROUP BY user_id, created_at
+                                   ORDER BY created_at DESC))) ua ON u.id = ua.user_id
+                  WHERE ua.activations > 0) p
+                     CROSS JOIN (SELECT *
+                                 FROM hospital_department
+                                 WHERE valid_from < ($2)::timestamp
+                                   AND valid_to > ($1)::timestamp
+                                   and city = $3) hd
+                     LEFT OUTER JOIN public.hospital_visit_participant hvp ON p.id = hvp.person_id
+                     LEFT OUTER JOIN (SELECT *
+                                      FROM hospital_visit
+                                      WHERE datetime_from < ($2)::timestamp
+                                        AND datetime_to > ($1)::timestamp
+                                        AND status IN ('ACTIVITIES_FILLED_OUT', 'ALL_FILLED_OUT', 'SUCCESSFUL')) hv
+                                     ON (hv.id = hvp.event_id AND hv.department_id = hd.id)
+            GROUP BY p.id, p.name
+            ORDER BY p.name
         `, [from, to, city]);
     }
 

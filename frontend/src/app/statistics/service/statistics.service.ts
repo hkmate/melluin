@@ -16,6 +16,7 @@ import {VisitCountByWeekDayStatProvider} from '@fe/app/statistics/service/visit-
 import {ChildrenByDepartmentsStatProvider} from '@fe/app/statistics/service/children-by-departments-stat-provider';
 import {ChildAgesByDepartmentsStatProvider} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
 import {VolunteersByDepartmentsStatProvider} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
+import {VolunteersVisitCount} from '@shared/statistics/volunteers-visit-count';
 
 const FROM_KEY = 'from';
 const TO_KEY = 'to';
@@ -27,6 +28,7 @@ type StatType =
     | 'children-by-departments'
     | 'visits-by-statuses'
     | 'volunteer-by-departments'
+    | 'volunteers-visit-count'
     | 'activities'
     | 'child-ages-by-departments'
 
@@ -55,6 +57,10 @@ export class StatisticsService implements VisitCountByWeekDayStatProvider, Child
 
     public getVolunteersByDepartmentsStat(from: string, to: string, city: OperationCity): Observable<Array<VolunteerByDepartments>> {
         return this.getStat<VolunteerByDepartments>('volunteer-by-departments', from, to, city);
+    }
+
+    public getVolunteersVisitCountStat(from: string, to: string, city: OperationCity): Observable<Array<VolunteersVisitCount>> {
+        return this.getStat<VolunteersVisitCount>('volunteers-visit-count', from, to, city);
     }
 
     public getActivitiesStat(from: string, to: string, city: OperationCity): Observable<Array<ActivitiesCount>> {

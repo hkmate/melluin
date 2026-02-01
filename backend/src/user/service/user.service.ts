@@ -38,6 +38,7 @@ export class UserService {
         await this.validateSaving(userCreation, requester);
         const creationEntity = await this.userCreationConverter.convert({newUser: userCreation, requester});
         const userEntity = await this.userDao.save(creationEntity);
+        await this.userActivationDao.saveBy(userEntity, UserActivation.ACTIVATE);
         return this.userConverterFactor.createFor(requester).convert(userEntity);
     }
 

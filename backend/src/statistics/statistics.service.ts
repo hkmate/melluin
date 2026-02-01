@@ -9,6 +9,7 @@ import {VisitStatusCount} from '@shared/statistics/visit-status-count';
 import {ChildAgesByDepartments} from '@shared/statistics/child-ages-by-departments';
 import {camelizeKeys} from '@be/util/camelize-keys';
 import {VisitsCountByWeekDay} from '@shared/statistics/visits-count-by-week-day';
+import {VolunteersVisitCount} from '@shared/statistics/volunteers-visit-count';
 
 @Injectable()
 export class StatisticsService {
@@ -37,6 +38,11 @@ export class StatisticsService {
 
     public async getVolunteersByDepartments(from: string, to: string, city: OperationCity): Promise<Array<VolunteerByDepartments>> {
         const rawArray = await this.statisticsDao.getVolunteersByDepartments(from, to, city);
+        return rawArray.map(camelizeKeys);
+    }
+
+    public async getVolunteersVisitCount(from: string, to: string, city: OperationCity): Promise<Array<VolunteersVisitCount>> {
+        const rawArray = await this.statisticsDao.getVolunteersVisitCount(from, to, city);
         return rawArray.map(camelizeKeys);
     }
 

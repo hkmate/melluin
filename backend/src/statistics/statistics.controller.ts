@@ -11,6 +11,7 @@ import {ActivitiesCount} from '@shared/statistics/activities-count';
 import {VisitStatusCount} from '@shared/statistics/visit-status-count';
 import {ChildAgesByDepartments} from '@shared/statistics/child-ages-by-departments';
 import {VisitsCountByWeekDay} from '@shared/statistics/visits-count-by-week-day';
+import {VolunteersVisitCount} from '@shared/statistics/volunteers-visit-count';
 
 
 @Controller('statistics')
@@ -67,6 +68,16 @@ export class StatisticsController {
         this.verifyStatisticsParams(fromDateTime, toDateTime, city);
 
         return this.statisticsService.getVolunteersByDepartments(fromDateTime, toDateTime, city);
+    }
+
+    @Get('/volunteers-visit-count')
+    @PermissionGuard(Permission.canReadStatistics)
+    public getVolunteersVisitCountStat(@Query('from') fromDateTime: string,
+                                          @Query('to') toDateTime: string,
+                                          @Query('city') city: string): Promise<Array<VolunteersVisitCount>> {
+        this.verifyStatisticsParams(fromDateTime, toDateTime, city);
+
+        return this.statisticsService.getVolunteersVisitCount(fromDateTime, toDateTime, city);
     }
 
     @Get('/activities')
