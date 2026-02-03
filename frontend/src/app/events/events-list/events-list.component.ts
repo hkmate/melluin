@@ -52,8 +52,6 @@ export class EventsListComponent {
     private sort: SortOptions = {
         dateTimeFrom: 'ASC',
         'department.name': 'ASC',
-        'participants.lastName': 'ASC',
-        'participants.firstName': 'ASC'
     };
 
     constructor() {

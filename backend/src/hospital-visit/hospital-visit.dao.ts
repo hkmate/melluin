@@ -10,6 +10,7 @@ import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entit
 import {FilterOptionsFieldsConverter} from '@be/crud/convert/filter-options-fields-converter';
 import {FilterOperation, FilterOperationBuilder} from '@shared/api-util/filter-options';
 import {FindOptionsWhere} from 'typeorm/find-options/FindOptionsWhere';
+import {getFullName} from '@shared/person/person';
 
 interface SameTimeAndDepartmentVisitCountParams {
     from: string;
@@ -96,7 +97,15 @@ export class HospitalVisitDao extends PageCreator<HospitalVisitEntity> {
 
     public async findAll(pageRequest: PageRequest): Promise<Pageable<HospitalVisitEntity>> {
         pageRequest.where = await this.filterFieldConverter.convert(pageRequest.where);
-        return this.getPage(pageRequest, {});
+        const page = await this.getPage(pageRequest, {});
+        page.items = this.sortParticipants(page.items);
+        return page;
+    }
+
+    private sortParticipants(items: Array<HospitalVisitEntity>): Array<HospitalVisitEntity> {
+        items.forEach(visit => visit.participants.sort(
+            (p1, p2) => getFullName(p1).localeCompare(getFullName(p2))));
+        return items;
     }
 
 }
