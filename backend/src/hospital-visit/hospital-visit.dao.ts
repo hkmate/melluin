@@ -11,6 +11,7 @@ import {FilterOptionsFieldsConverter} from '@be/crud/convert/filter-options-fiel
 import {FilterOperation, FilterOperationBuilder} from '@shared/api-util/filter-options';
 import {FindOptionsWhere} from 'typeorm/find-options/FindOptionsWhere';
 import {getFullName} from '@shared/person/person';
+import {getFailedStatuses} from '@shared/hospital-visit/hospital-visit-status';
 
 interface SameTimeAndDepartmentVisitCountParams {
     from: string;
@@ -73,7 +74,8 @@ export class HospitalVisitDao extends PageCreator<HospitalVisitEntity> {
         const query: FindOptionsWhere<HospitalVisitEntity> = {
             department: {id: params.departmentId},
             dateTimeFrom: LessThan(new Date(params.to)),
-            dateTimeTo: MoreThan(new Date(params.from))
+            dateTimeTo: MoreThan(new Date(params.from)),
+            status: Not(In(getFailedStatuses()))
         };
         if (!params.vicariousMomVisitIncluded) {
             query.vicariousMomVisit = Equal(false);
@@ -86,7 +88,8 @@ export class HospitalVisitDao extends PageCreator<HospitalVisitEntity> {
         const query: FindOptionsWhere<HospitalVisitEntity> = {
             participants: {id: In(params.participantsIds)},
             dateTimeFrom: LessThan(new Date(params.to)),
-            dateTimeTo: MoreThan(new Date(params.from))
+            dateTimeTo: MoreThan(new Date(params.from)),
+            status: Not(In(getFailedStatuses()))
         };
         if (isNotNil(params.id)) {
             query.id = Not(Equal(params.id));

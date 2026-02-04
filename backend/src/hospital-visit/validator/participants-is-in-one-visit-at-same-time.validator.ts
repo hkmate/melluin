@@ -1,9 +1,15 @@
 import {BadRequestException, Injectable} from '@nestjs/common';
-import {VisitSaveValidator, VisitValidationData} from '@be/hospital-visit/validator/visit-validator';
+import {
+    HospitalVisitRewriteValidationData,
+    VisitSaveValidator,
+    VisitValidationData
+} from '@be/hospital-visit/validator/visit-validator';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
 import {ApiError} from '@shared/api-util/api-error';
+import {isEmpty} from '@shared/util/util';
+import * as _ from 'lodash';
 
 @Injectable()
 export class ParticipantsIsInOneVisitAtSameTimeValidator implements VisitSaveValidator {
@@ -11,9 +17,12 @@ export class ParticipantsIsInOneVisitAtSameTimeValidator implements VisitSaveVal
     constructor(private readonly visitDao: HospitalVisitDao) {
     }
 
-    public async validate({item}: VisitValidationData): Promise<void> {
-        const visitCount = await this.getSameLikeVisitCount(item)
+    public async validate(data: VisitValidationData): Promise<void> {
+        if ('entity' in data && this.isNoParticipantChange(data)) {
+            return;
+        }
 
+        const visitCount = await this.getSameLikeVisitCount(data.item);
         if (visitCount === 0) {
             return;
         }
@@ -30,6 +39,11 @@ export class ParticipantsIsInOneVisitAtSameTimeValidator implements VisitSaveVal
             participantsIds: item.participantIds,
             id: ('id' in item) ? item.id : undefined,
         });
+    }
+
+    private isNoParticipantChange({entity, item}: HospitalVisitRewriteValidationData): boolean {
+        const entityParticipantIds = entity.participants.map(p => p.id);
+        return isEmpty(_.xor(entityParticipantIds, item.participantIds));
     }
 
 }

@@ -30,3 +30,11 @@ export function visitStatusOrders(): Record<HospitalVisitStatus, number> {
         [HospitalVisitStatus.FAILED_FOR_OTHER_REASON]: 32,
     };
 }
+
+export function getFailedStatuses(): Array<HospitalVisitStatus> {
+    return [
+        HospitalVisitStatus.CANCELED,
+        HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD,
+        HospitalVisitStatus.FAILED_FOR_OTHER_REASON
+    ];
+}
