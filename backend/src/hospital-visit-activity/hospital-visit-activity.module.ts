@@ -4,7 +4,7 @@ import {ActivityEntityToWrappedDtoConverter} from '@be/hospital-visit-activity/c
 import {ActivityEntityToBasicDtoConverter} from '@be/hospital-visit-activity/converter/activity-entity-to-basic-dto.converter';
 import {ActivityInputToEntityConverter} from '@be/hospital-visit-activity/converter/activity-input-to-entity.converter';
 import {HospitalVisitActivityCrudService} from '@be/hospital-visit-activity/hospital-visit-activity.crud.service';
-import {HospitalVisitActivityController} from '@be/hospital-visit-activity/hospital-visit-activity.controller';
+import {HospitalVisitActivityController} from '@be/hospital-visit-activity/api/hospital-visit-activity.controller';
 import {HospitalVisitPersistenceModule} from '@be/hospital-visit/hospital-visit.persistence.module';
 import {HospitalVisitModule} from '@be/hospital-visit/hospital-visit.module';
 import {ActivityRewriteApplierFactory} from '@be/hospital-visit-activity/applier/activity-rewrite-applier.factory';

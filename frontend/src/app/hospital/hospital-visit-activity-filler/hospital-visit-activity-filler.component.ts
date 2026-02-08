@@ -6,7 +6,7 @@ import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handl
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
 import {CREATE_MARKER, CreateMarkerType} from '@fe/app/app-paths';
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
+import {createVisitRewrite, HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
@@ -159,7 +159,7 @@ export class HospitalVisitActivityFillerComponent {
     }
 
     private createSaveRequest(newStatus: HospitalVisitStatus): HospitalVisitRewrite {
-        const rewrite = HospitalVisitRewrite.from(this.visit!);
+        const rewrite = createVisitRewrite(this.visit!);
         rewrite.status = newStatus;
         return rewrite;
     }

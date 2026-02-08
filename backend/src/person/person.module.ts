@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PersonEntity } from './model/person.entity';
-import { PersonController } from '@be/person/person.controller';
+import { PersonController } from '@be/person/api/person.controller';
 import { PersonCrudService } from '@be/person/person.crud.service';
 import { FindOptionConverterModule } from '@be/find-option-converter/find-option-converter.module';
 import { PersonDao } from '@be/person/person.dao';

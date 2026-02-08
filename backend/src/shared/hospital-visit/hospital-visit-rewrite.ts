@@ -1,37 +1,32 @@
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {IsBoolean, IsEnum, IsString, IsUUID} from 'class-validator';
-import {EventRewrite} from '@shared/event/event-rewrite';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
+import {EventVisibility} from '@shared/hospital-visit/event-visibility';
 
 
-export class HospitalVisitRewrite extends EventRewrite {
+export interface HospitalVisitRewrite {
 
-    @IsUUID()
     id: string;
-
-    @IsEnum(HospitalVisitStatus)
+    dateTimeFrom: string;
+    dateTimeTo: string;
+    countedMinutes?: number;
+    visibility: EventVisibility;
+    participantIds: Array<string>;
     status: HospitalVisitStatus;
-
-    @IsUUID()
-    @IsString()
     departmentId: string;
-
-    @IsBoolean()
     vicariousMomVisit: boolean;
 
+}
 
-    public static from(visit: HospitalVisit): HospitalVisitRewrite {
-        return {
-            id: visit.id,
-            departmentId: visit.department.id,
-            visibility: visit.visibility,
-            dateTimeFrom: visit.dateTimeFrom,
-            dateTimeTo: visit.dateTimeTo,
-            countedMinutes: visit.countedMinutes,
-            participantIds: visit.participants.map(p => p.id),
-            status: visit.status,
-            vicariousMomVisit: visit.vicariousMomVisit
-        };
-    }
-
+export function createVisitRewrite(visit: HospitalVisit): HospitalVisitRewrite {
+    return {
+        id: visit.id,
+        departmentId: visit.department.id,
+        visibility: visit.visibility,
+        dateTimeFrom: visit.dateTimeFrom,
+        dateTimeTo: visit.dateTimeTo,
+        countedMinutes: visit.countedMinutes,
+        participantIds: visit.participants.map(p => p.id),
+        status: visit.status,
+        vicariousMomVisit: visit.vicariousMomVisit
+    };
 }

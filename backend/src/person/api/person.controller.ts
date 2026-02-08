@@ -1,0 +1,71 @@
+import {
+    Body,
+    Controller,
+    DefaultValuePipe,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Param,
+    ParseBoolPipe,
+    ParseUUIDPipe,
+    Post,
+    Put,
+    Query
+} from '@nestjs/common';
+import {PersonCrudService} from '@be/person/person.crud.service';
+import {Pageable} from '@shared/api-util/pageable';
+import {Person, PersonIdentifier} from '@shared/person/person';
+import {User} from '@shared/user/user';
+import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
+import {PageReq} from '@be/crud/page-req';
+import {PageRequest} from '@be/crud/page-request';
+import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
+import {Permission} from '@shared/user/permission.enum';
+import {PersonCreationValidatedInput} from '@be/person/api/dto/person-creation';
+import {PersonRewriteValidatedInput} from '@be/person/api/dto/person-rewrite';
+
+
+@Controller('people')
+export class PersonController {
+
+    constructor(private readonly personCrudService: PersonCrudService) {
+    }
+
+    @Post()
+    @HttpCode(HttpStatus.CREATED)
+    @PermissionGuard(Permission.canCreatePerson)
+    public save(@Body() person: PersonCreationValidatedInput,
+                @CurrentUser() requester: User): Promise<Person> {
+        return this.personCrudService.save(person, requester);
+    }
+
+    @Get('/:id')
+    @PermissionGuard(Permission.canReadPerson)
+    public getOne(@Param('id', ParseUUIDPipe) personId: string,
+                  @CurrentUser() requester: User): Promise<Person> {
+        return this.personCrudService.getOne(personId, requester);
+    }
+
+    public find(pageRequest: PageRequest, onlyIdentifier: false, requester: User): Promise<Pageable<Person>>;
+    public find(pageRequest: PageRequest, onlyIdentifier: true, requester: User): Promise<Pageable<PersonIdentifier>>;
+    @Get()
+    @PermissionGuard(Permission.canReadPerson)
+    public find(@PageReq() pageRequest: PageRequest,
+                @Query('onlyIdentifier', new DefaultValuePipe(false), ParseBoolPipe) onlyIdentifier: boolean,
+                @CurrentUser() requester: User): Promise<Pageable<Person> | Pageable<PersonIdentifier>> {
+        if (onlyIdentifier) {
+            return this.personCrudService.findIdentifiers(pageRequest, requester);
+        }
+        return this.personCrudService.find(pageRequest, requester);
+    }
+
+    @Put('/:id')
+    @PermissionGuard(Permission.canWriteSelf, Permission.canWriteVisitor, Permission.canWriteCoordinator,
+        Permission.canWriteAdmin, Permission.canWriteSysAdmin)
+    public update(@Param('id', ParseUUIDPipe) personId: string,
+                  @Body() personRewrite: PersonRewriteValidatedInput,
+                  @CurrentUser() requester: User): Promise<Person> {
+        return this.personCrudService.update(personId, personRewrite, requester);
+    }
+
+}

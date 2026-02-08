@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {Observable, tap, throwError} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
@@ -192,16 +192,13 @@ export class HospitalVisitDetailsComponent {
     private createSaveRequest(data: HospitalVisitCreate | HospitalVisitRewrite, options: {
         forceSameTimeVisit: boolean
     }): Observable<HospitalVisit> {
-        if (data instanceof HospitalVisitRewrite) {
-            return this.visitService.updateVisit(this.visit!.id, data, options);
-        }
-        if (data instanceof HospitalVisitCreate) {
-            return this.visitService.addVisit(data, options).pipe(tap(visit => {
+        if (this.isCreation) {
+            return this.visitService.addVisit(data as HospitalVisitCreate, options).pipe(tap(visit => {
                 this.visit = visit;
                 this.setIdInUrl(visit.id);
             }));
         }
-        return throwError(() => new Error('Invalid data to save.'));
+        return this.visitService.updateVisit(this.visit!.id, data as HospitalVisitRewrite, options);
     }
 
     private handleSaveError(dataToSave: HospitalVisitRewrite | HospitalVisitCreate, error: HttpErrorResponse): void {
