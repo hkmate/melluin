@@ -1,5 +1,5 @@
 import {Component, computed, inject, signal} from '@angular/core';
-import {Observable, tap, throwError} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
@@ -96,13 +96,11 @@ export class DepartmentDetailComponent {
     }
 
     private createSaveRequest(data: DepartmentCreation | DepartmentUpdateChangeSet): Observable<Department> {
-        if (data instanceof DepartmentUpdateChangeSet) {
-            return this.departmentService.updateDepartment(this.department!.id, data);
+        if (this.isCreation()) {
+            return this.departmentService.addDepartment(data as DepartmentCreation)
+                .pipe(tap(department => this.setIdInUrl(department.id)));
         }
-        if (data instanceof DepartmentCreation) {
-            return this.departmentService.addDepartment(data).pipe(tap(department => this.setIdInUrl(department.id)));
-        }
-        return throwError(() => new Error('Invalid data to save.'));
+        return this.departmentService.updateDepartment(this.department!.id, data as DepartmentUpdateChangeSet);
     }
 
     private setIdInUrl(departmentId: string): void {

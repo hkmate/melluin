@@ -1,5 +1,4 @@
 import {Module} from '@nestjs/common';
-import {HospitalVisitController} from '@be/hospital-visit/hospital-visit.controller';
 import {HospitalVisitCrudService} from '@be/hospital-visit/hospital-visit.crud.service';
 import {HospitalVisitCreationToEntityConverter} from '@be/hospital-visit/converer/hospital-visit-creation-to-entity.converter';
 import {HospitalVisitEntityToDtoConverter} from '@be/hospital-visit/converer/hospital-visit-entity-to-dto.converter';
@@ -14,6 +13,7 @@ import {ParticipantsIsInOneVisitAtSameTimeValidator} from '@be/hospital-visit/va
 import {VisitSaveValidatorFactory} from '@be/hospital-visit/validator/visit-save-validator-factory';
 import {ParticipantsAreWorkInCityAsDepartmentValidator} from '@be/hospital-visit/validator/participants-are-work-in-city-as-department.validator';
 import {VisitIsInActiveDepartmentsValidator} from '@be/hospital-visit/validator/visit-is-in-active-departments.validator';
+import {HospitalVisitController} from '@be/hospital-visit/api/hospital-visit.controller';
 
 @Module({
     imports: [

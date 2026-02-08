@@ -8,7 +8,6 @@ import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status'
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {Department} from '@shared/department/department';
 import {Pageable} from '@shared/api-util/pageable';
-import {EventVisibility} from '@shared/event/event-visibility';
 import {User} from '@shared/user/user';
 import {Store} from '@ngrx/store';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
@@ -18,6 +17,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {Permission} from '@shared/user/permission.enum';
 import {getAllStatusOptionsOnlyEnable, SelectOption} from '@fe/app/util/hospital-visit-status-option';
+import {EventVisibility} from '@shared/hospital-visit/event-visibility';
 
 
 // TODO refactor: Form components should be refactored to new forms when updated Angular to 21
@@ -330,7 +330,7 @@ export class HospitalVisitFormComponent {
     }
 
     private createCreation(): HospitalVisitCreate {
-        const data = new HospitalVisitCreate();
+        const data = {} as HospitalVisitCreate;
         const countedMinutesFromHour =this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
         data.departmentId = this.form().controls.departmentId.value;
         data.status = this.form().controls.status.value;
@@ -346,7 +346,7 @@ export class HospitalVisitFormComponent {
     }
 
     private createRewrite(): HospitalVisitRewrite {
-        const data = new HospitalVisitRewrite();
+        const data = {} as HospitalVisitRewrite;
         const countedMinutesFromHour =this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
         data.id = this.visit()!.id;
         data.departmentId = this.form().controls.departmentId.value;

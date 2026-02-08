@@ -7,7 +7,7 @@ import {PeopleService} from '@fe/app/people/people.service';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {Router} from '@angular/router';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
-import {Observable, tap, throwError} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {isNil} from '@shared/util/util';
 import {Permission} from '@shared/user/permission.enum';
@@ -87,13 +87,10 @@ export class PersonDetailComponent {
     }
 
     private createSaveRequest(data: PersonCreation | PersonRewrite): Observable<Person> {
-        if (data instanceof PersonRewrite) {
-            return this.peopleService.updatePerson(this.person!.id, data);
-        }
-        if (data instanceof PersonCreation) {
+        if (this.isCreation) {
             return this.peopleService.addPerson(data).pipe(tap(person => this.setIdInUrl(person.id)));
         }
-        return throwError(() => new Error('Invalid data to save.'));
+        return this.peopleService.updatePerson(this.person!.id, data);
     }
 
     private setIdInUrl(personId: string): void {

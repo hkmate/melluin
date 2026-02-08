@@ -2,7 +2,7 @@ import {Module} from '@nestjs/common';
 import {VisitedChildCreationToEntityConverter} from '@be/hospital-visit-children/converer/visited-child-creation-to-entity.converter';
 import {VisitedChildrenPersistenceModule} from '@be/hospital-visit-children/persistence/visited-children.persistence.module';
 import {VisitedChildrenService} from '@be/hospital-visit-children/service/visited-children.service';
-import {VisitedChildrenController} from '@be/hospital-visit-children/controller/visited-children.controller';
+import {VisitedChildrenController} from '@be/hospital-visit-children/api/visited-children.controller';
 import {ChildPersistenceModule} from '@be/child/child-persistence.module';
 import {HospitalVisitPersistenceModule} from '@be/hospital-visit/hospital-visit.persistence.module';
 import {VisitedChildEntityToDtoConverter} from '@be/hospital-visit-children/converer/visited-child-entity-to-dto.converter';

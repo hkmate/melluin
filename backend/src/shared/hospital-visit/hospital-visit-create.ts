@@ -1,19 +1,16 @@
 import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {IsBoolean, IsEnum, IsIn, IsString, IsUUID} from 'class-validator';
-import {EventCreate} from '@shared/event/event-create';
+import {EventVisibility} from '@shared/hospital-visit/event-visibility';
 
+export interface HospitalVisitCreate {
 
-export class HospitalVisitCreate extends EventCreate {
-
-    @IsEnum(HospitalVisitStatus)
-    @IsIn([HospitalVisitStatus.DRAFT, HospitalVisitStatus.SCHEDULED])
+    dateTimeFrom: string;
+    dateTimeTo: string;
+    countedMinutes?: number;
+    visibility: EventVisibility;
+    organizerId: string;
+    participantIds: Array<string>;
     status: HospitalVisitStatus;
-
-    @IsUUID()
-    @IsString()
     departmentId: string;
-
-    @IsBoolean()
     vicariousMomVisit: boolean;
 
 }

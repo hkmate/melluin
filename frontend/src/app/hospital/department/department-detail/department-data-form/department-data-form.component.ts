@@ -58,7 +58,7 @@ export class DepartmentDataFormComponent {
     }
 
     private createDepartmentCreation(): DepartmentCreation {
-        const data = new DepartmentCreation();
+        const data = {} as DepartmentCreation;
         data.name = this.form().controls.name.value;
         data.address = this.form().controls.address.value;
         data.city = this.form().controls.city.value;
@@ -72,7 +72,7 @@ export class DepartmentDataFormComponent {
     }
 
     private createDepartmentUpdate(): DepartmentUpdateChangeSet {
-        const data = new DepartmentUpdateChangeSet();
+        const data = {} as DepartmentUpdateChangeSet;
         this.addFieldIfDifferentThenStored(data, 'name');
         this.addFieldIfDifferentThenStored(data, 'address');
         this.addFieldIfDifferentThenStored(data, 'city');

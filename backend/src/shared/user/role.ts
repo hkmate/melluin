@@ -1,6 +1,5 @@
 import {Permission} from '@shared/user/permission.enum';
 import {cast} from '@shared/util/test-util';
-import {IsEnum, IsString, IsUUID} from 'class-validator';
 
 export enum RoleType {
 
@@ -12,36 +11,24 @@ export enum RoleType {
 
 }
 
-export class RoleBrief {
+export interface RoleBrief {
 
-    @IsString()
     name: string;
-
-    @IsEnum(RoleType)
     type: RoleType;
 
 }
 
-export class Role extends RoleBrief {
+export interface Role extends RoleBrief {
 
-    @IsString()
-    @IsUUID()
     id: string;
-
-    @IsEnum(Permission, {each: true})
     permissions: Array<Permission>;
 
 }
 
-export class RoleCreation {
+export interface RoleCreation {
 
-    @IsString()
     name: string;
-
-    @IsEnum(RoleType)
     type: RoleType;
-
-    @IsEnum(Permission, {each: true})
     permissions: Array<Permission>;
 
 }

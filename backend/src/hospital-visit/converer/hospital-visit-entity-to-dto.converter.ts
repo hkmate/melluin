@@ -3,18 +3,14 @@ import {isNil} from '@shared/util/util';
 import {Converter} from '@shared/converter/converter';
 import {PersonEntityToIdentifierDtoConverter} from '@be/person/converer/person-entity-to-identifier-dto.converter';
 import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
-import {BaseEventEntityToDtoConverter} from '@be/event/converer/base-event-entity-to-dto.converter';
-import {MelluinEvent} from '@shared/event/event';
 import {DepartmentEntityToDtoConverter} from '@be/department/converer/department-entity-to-dto.converter';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 
 @Injectable()
-export class HospitalVisitEntityToDtoConverter extends BaseEventEntityToDtoConverter
-    implements Converter<HospitalVisitEntity, HospitalVisit> {
+export class HospitalVisitEntityToDtoConverter implements Converter<HospitalVisitEntity, HospitalVisit> {
 
-    constructor(personConverter: PersonEntityToIdentifierDtoConverter,
+    constructor(private readonly personConverter: PersonEntityToIdentifierDtoConverter,
                 private readonly departmentConverter: DepartmentEntityToDtoConverter) {
-        super(personConverter);
     }
 
     public convert(value: HospitalVisitEntity): HospitalVisit;
@@ -28,10 +24,13 @@ export class HospitalVisitEntityToDtoConverter extends BaseEventEntityToDtoConve
     }
 
     private convertNotNilEntity(entity: HospitalVisitEntity): HospitalVisit {
-        const base: MelluinEvent = this.convertEventBase(entity);
         return {
-            ...base,
             id: entity.id,
+            countedMinutes: entity.countedMinutes,
+            dateTimeFrom: entity.dateTimeFrom.toISOString(),
+            dateTimeTo: entity.dateTimeTo.toISOString(),
+            visibility: entity.visibility,
+            organizer: this.personConverter.convert(entity.organizer),
             department: this.departmentConverter.convert(entity.department),
             status: entity.status,
             participants: entity.participants.map(participant => this.personConverter.convert(participant)),

@@ -3,7 +3,7 @@ import {Person} from '@shared/person/person';
 import {PersonRewrite} from '@shared/person/person-rewrite';
 import {PersonCreation} from '@shared/person/person-creation';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {emptyToUndef, isNotNil} from '@shared/util/util';
+import {emptyToUndef} from '@shared/util/util';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {OperationCity} from '@shared/person/operation-city';
 import {Permission} from '@shared/user/permission.enum';
@@ -13,7 +13,6 @@ import {Permission} from '@shared/user/permission.enum';
     templateUrl: './person-data-form.component.html',
     styleUrls: ['./person-data-form.component.scss']
 })
-
 export class PersonDataFormComponent {
 
     protected readonly cityOptions = Object.keys(OperationCity);
@@ -64,8 +63,7 @@ export class PersonDataFormComponent {
     }
 
     private createDataForSubmit(): PersonRewrite | PersonCreation {
-        const data = this.createEmptySubmitObject();
-
+        const data = {} as PersonRewrite | PersonCreation;
         data.firstName = this.form().controls.firstName.value;
         data.lastName = this.form().controls.lastName.value;
         data.cities = this.form().controls.cities.value;
@@ -77,14 +75,6 @@ export class PersonDataFormComponent {
             canVolunteerSeeMyPhone: this.form().controls.canVolunteerSeeMyPhone.value,
         };
         return data;
-    }
-
-
-    private createEmptySubmitObject(): PersonRewrite | PersonCreation {
-        if (isNotNil(this.person())) {
-            return new PersonRewrite();
-        }
-        return new PersonCreation();
     }
 
 }

@@ -1,7 +1,7 @@
 import {Module} from '@nestjs/common';
 import {StatisticsService} from '@be/statistics/statistics.service';
 import {StatisticsDao} from '@be/statistics/statistics.dao';
-import {StatisticsController} from '@be/statistics/statistics.controller';
+import {StatisticsController} from '@be/statistics/api/statistics.controller';
 
 @Module({
     imports: [],

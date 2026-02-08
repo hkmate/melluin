@@ -1,10 +1,6 @@
-import {IsOptional, IsString} from 'class-validator';
 
+export interface HospitalVisitActivityInfoInput {
 
-export class HospitalVisitActivityInfoInput {
-
-    @IsString()
-    @IsOptional()
     content?: string;
 
 }

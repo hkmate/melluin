@@ -68,7 +68,7 @@ export class UserEditFormComponent {
     }
 
     private createUserUpdate(): UserRewrite {
-        const data = new UserRewrite();
+        const data = {} as UserRewrite;
         if (isNotNil(this.form().controls.password.value)) {
             data.password = this.form().controls.password.value
         }

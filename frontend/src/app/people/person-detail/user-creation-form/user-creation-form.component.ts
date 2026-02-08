@@ -57,7 +57,7 @@ export class UserCreationFormComponent {
     }
 
     private createUserCreation(): UserCreation {
-        const data = new UserCreation();
+        const data = {} as UserCreation;
         data.personId = this.personId();
         data.userName = this.form().controls.userName.value;
         data.password = this.form().controls.password.value;

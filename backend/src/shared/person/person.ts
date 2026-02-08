@@ -1,6 +1,6 @@
 import { BriefUser } from '@shared/user/user';
-import { IsBoolean, IsOptional } from 'class-validator';
 import {OperationCity} from '@shared/person/operation-city';
+import {PersonPreferences} from '@shared/person/person-preferences';
 
 
 export interface PersonIdentifier {
@@ -19,24 +19,6 @@ export interface Person extends PersonIdentifier {
     cities?: Array<OperationCity>;
 }
 
-export class PersonPreferences {
-
-    @IsBoolean()
-    @IsOptional()
-    canVolunteerSeeMyPhone?: boolean;
-
-    @IsBoolean()
-    @IsOptional()
-    canVolunteerSeeMyEmail?: boolean;
-
-    public static createDefault(): PersonPreferences {
-        const value = new PersonPreferences();
-        value.canVolunteerSeeMyEmail = false;
-        value.canVolunteerSeeMyPhone = false;
-        return value;
-    }
-
-}
 
 export function getFullName(person: PersonIdentifier): string {
     return `${person.lastName} ${person.firstName}`
