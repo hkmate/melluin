@@ -19,6 +19,9 @@ jobs:
           name: Install packages
           command: npm ci
       - run:
+          name: Run build
+          command: npm run build
+      - run:
           name: Run Lint
           command: npm run lint
       - run:
@@ -44,6 +47,9 @@ jobs:
       - run:
           name: Install packages
           command: npm ci
+      - run:
+            name: Run build
+            command: npm run build
       - run:
           name: Run Lint
           command: npm run lint
