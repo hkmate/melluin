@@ -29,40 +29,12 @@
                 formControlName="email"/>
     </div>
 
-    <div class="email-preference-card">
-        <mat-card class="form-card">
-            <mat-card-content class="preferences-card-content">
-                <mat-checkbox formControlName="canVolunteerSeeMyEmail"></mat-checkbox>
-                <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyEmail' | translate }}</span>
-                @if (selfEdit()) {
-                    <span class="preference-description">
-                        {{ 'PersonPage.Form.CanVolunteerSeeMyEmailDescription' | translate }}
-                    </span>
-                }
-            </mat-card-content>
-        </mat-card>
-    </div>
-
     <div>
         <app-trimmed-text-input
                 [label]=" 'PersonPage.Form.Phone' | translate"
                 [placeholder]="'PersonPage.Form.PhonePlaceholder' | translate"
                 formControlName="phone">
         </app-trimmed-text-input>
-    </div>
-
-    <div class="phone-preference-card">
-        <mat-card class="form-card">
-            <mat-card-content class="preferences-card-content">
-                <mat-checkbox formControlName="canVolunteerSeeMyPhone"></mat-checkbox>
-                <span class="preference-name">{{ 'PersonPage.Form.CanVolunteerSeeMyPhone' | translate }}</span>
-                @if (selfEdit()) {
-                    <span class="preference-description">
-                        {{ 'PersonPage.Form.CanVolunteerSeeMyPhoneDescription' | translate }}
-                    </span>
-                }
-            </mat-card-content>
-        </mat-card>
     </div>
 
     <div>

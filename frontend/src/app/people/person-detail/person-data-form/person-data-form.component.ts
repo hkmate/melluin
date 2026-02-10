@@ -25,7 +25,6 @@ export class PersonDataFormComponent {
     public readonly submitted = output<PersonRewrite | PersonCreation>();
     public readonly canceled = output<void>();
 
-    protected readonly selfEdit = computed(() => this.person()?.id === this.permissionService.personId);
     protected readonly form = computed(() => this.initForm());
 
     protected onSubmit(): void {
@@ -39,10 +38,9 @@ export class PersonDataFormComponent {
         this.canceled.emit();
     }
 
-    // eslint-disable-next-line max-lines-per-function
     private initForm(): FormGroup {
         const personToEdit = this.person();
-        const form = this.fb.group({
+        return this.fb.group({
             firstName: [personToEdit?.firstName, [Validators.required]],
             lastName: [personToEdit?.lastName, [Validators.required]],
             cities: new FormControl({
@@ -50,16 +48,8 @@ export class PersonDataFormComponent {
                 disabled: !this.permissionService.has(Permission.canModifyPersonCity)
             }, [Validators.required, Validators.minLength(1)]),
             email: [personToEdit?.email],
-            phone: [personToEdit?.phone],
-            canVolunteerSeeMyEmail: [personToEdit?.preferences?.canVolunteerSeeMyEmail ?? false],
-            canVolunteerSeeMyPhone: [personToEdit?.preferences?.canVolunteerSeeMyPhone ?? false],
+            phone: [personToEdit?.phone]
         });
-        if (!this.selfEdit()) {
-            form.controls.canVolunteerSeeMyEmail.disable();
-            form.controls.canVolunteerSeeMyPhone.disable();
-        }
-
-        return form;
     }
 
     private createDataForSubmit(): PersonRewrite | PersonCreation {
@@ -69,11 +59,7 @@ export class PersonDataFormComponent {
         data.cities = this.form().controls.cities.value;
         data.email = emptyToUndef(this.form().controls.email.value);
         data.phone = emptyToUndef(this.form().controls.phone.value);
-        data.preferences = {
-            ...this.person()?.preferences,
-            canVolunteerSeeMyEmail: this.form().controls.canVolunteerSeeMyEmail.value,
-            canVolunteerSeeMyPhone: this.form().controls.canVolunteerSeeMyPhone.value,
-        };
+        data.preferences = this.person()?.preferences;
         return data;
     }
 
