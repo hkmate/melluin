@@ -1,5 +1,5 @@
 {
-    "name": "melluin-fe",
+    "name": "@melluin/web",
     "version": "1.0.1",
     "scripts": {
         "ng": "ng",
@@ -37,7 +37,8 @@
         "ngx-toastr": "19.0.0",
         "rxjs": "7.8.1",
         "tslib": "2.6.3",
-        "zone.js": "0.14.10"
+        "zone.js": "0.14.10",
+        "reflect-metadata": "0.1.13"
     },
     "devDependencies": {
         "@angular-builders/jest": "18.0.0",

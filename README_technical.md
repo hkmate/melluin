@@ -1,5 +1,10 @@
 # Melluin
 
+## Warning!
+
+Lot of things here are obsolete and needed to be rewritten or refreshed.
+
+
 ## Install the project
 
 ### Setup with script

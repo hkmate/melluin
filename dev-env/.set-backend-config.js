@@ -3,7 +3,7 @@
 */
 
 const fs = require('fs');
-const CONFIG_FILE = 'backend/resources/server-config.json';
+const CONFIG_FILE = 'apps/api/resources/server-config.json';
 
 let rawData = fs.readFileSync(CONFIG_FILE);
 let config = JSON.parse(rawData);

@@ -1,5 +1,5 @@
 {
-    "name": "melluin_be",
+    "name": "@melluin/api",
     "version": "1.0.1",
     "description": "",
     "author": "",
@@ -76,7 +76,8 @@
         "ts-node": "^10.9.1",
         "tsconfig-paths": "^4.2.0",
         "webpack": "^5.89.0",
-        "typescript": "^5.2.2"
+        "typescript": "^5.2.2",
+        "tslib": "2.6.3"
     },
     "jest": {
         "moduleFileExtensions": [

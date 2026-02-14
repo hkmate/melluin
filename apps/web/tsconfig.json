@@ -1,6 +1,6 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-    "extends": "../tsconfig.json",
+    "extends": "../../tsconfig.json",
     "compileOnSave": false,
     "compilerOptions": {
         "baseUrl": "./",
@@ -13,7 +13,7 @@
             "dom"
         ],
         "paths": {
-            "@shared/*": ["../backend/src/shared/*"],
+            "@shared/*": ["../api/src/shared/*"],
             "@fe/*": ["src/*"],
             "class-validator": ["node_modules/class-validator"],
             "class-transformer": ["node_modules/class-transformer"],
