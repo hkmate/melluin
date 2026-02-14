@@ -9,31 +9,28 @@ executors:
       - image: cimg/node:20.9.0-browsers
 
 jobs:
-  backend-ci:
+  build-test-lint:
     executor: ci-executor
-    working_directory: ~/repo/backend
+    working_directory: ~/repo
     steps:
-      - checkout:
-          path: ~/repo
+      - checkout
+      - restore_cache:
+          name: Restore pnpm Package Cache
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
       - run:
-          name: Install packages
-          command: npm ci
+          name: Install pnpm package manager
+          command: |
+            npm install pnpm@10.29.3
+            pnpm config set store-dir .pnpm-store
       - run:
-          name: Run build
-          command: npm run build
-      - run:
-          name: Run Lint
-          command: npm run lint
-      - run:
-          name: Run Tests
-          command: npm run test
-
-  frontend-ci:
-    executor: ci-executor
-    working_directory: ~/repo/frontend
-    steps:
-      - checkout:
-          path: ~/repo
+          name: Install Dependencies
+          command: pnpm install
+      - save_cache:
+          name: Save pnpm Package Cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - .pnpm-store
       - run: sudo apt-get update
       - browser-tools/install-chrome
 #          chrome-version: 116.0.5845.96 # TODO: remove until: https://github.com/CircleCI-Public/browser-tools-orb/issues/75
@@ -45,20 +42,16 @@ jobs:
             google-chrome --version
             chromedriver --version
       - run:
-          name: Install packages
-          command: npm ci
+          name: Build
+          command: pnpm run build
       - run:
-            name: Run build
-            command: npm run build
+          name: Lint
+          command: pnpm run lint
       - run:
-          name: Run Lint
-          command: npm run lint
-      - run:
-          name: Run Tests
-          command: npm run test
+          name: Tests
+          command: pnpm run test
 
 workflows:
   check-melluin:
     jobs:
-      - backend-ci
-      - frontend-ci
+      - build-test-lint

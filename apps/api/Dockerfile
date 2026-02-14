@@ -26,14 +26,14 @@ RUN echo "Setup environment variables to config"
 RUN node dev-env/.set-backend-config.js
 
 RUN echo "Install node modules"
-RUN npm install --prefix backend
+RUN pnpm install
 
 RUN echo "Build the application"
-RUN npm run --prefix backend build
+RUN pnpm --filter api build
 
 RUN echo "Initialize database tables and data..."
-RUN npm run --prefix backend migrate
+RUN pnpm --filter api  migrate
 
-CMD npm run --prefix backend start:prod
+CMD pnpm --filter api start:prod
 
 EXPOSE 3000

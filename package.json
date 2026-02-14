@@ -1,11 +1,17 @@
 {
-    "name": "melluin",
-    "version": "1.0.1",
+    "name": "@melluin",
+    "version": "1.0.0",
+    "private": true,
+    "packageManager": "pnpm@10.29.3",
     "scripts": {
-        "setup": "dev-env/.auto-setup.sh",
-        "clear": "dev-env/.clear-all.sh",
-        "test": "dev-env/.test-all.sh",
-        "lint": "dev-env/.lint-all.sh"
+        "start:api": "pnpm --filter api start",
+        "start:web": "pnpm --filter web start",
+        "start": "pnpm run start:api & pnpm run start:web",
+        "build": "pnpm recursive run build",
+        "test": "pnpm recursive run test",
+        "lint": "pnpm recursive run lint"
     },
-    "private": true
+    "pnpm": {
+        "onlyBuiltDependencies": ["bcrypt"]
+    }
 }
