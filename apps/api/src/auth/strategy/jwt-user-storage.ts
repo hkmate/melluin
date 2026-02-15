@@ -1,7 +1,6 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
-import {isNil} from '@shared/util/util';
+import {isNil, User} from '@melluin/common';
 import {UserEntityToDtoConverter} from '@be/user/converter/user-entity-to-dto.converter';
-import {User} from '@shared/user/user';
 import {UserDao} from '@be/user/user.dao';
 
 @Injectable()

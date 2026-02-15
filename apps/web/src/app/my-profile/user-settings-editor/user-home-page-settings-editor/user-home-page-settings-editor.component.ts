@@ -1,5 +1,5 @@
 import {Component, computed, inject} from '@angular/core';
-import {UserSettings} from '@shared/user/user-settings';
+import {UserSettings} from '@melluin/common';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
 

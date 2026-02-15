@@ -1,7 +1,7 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {AuthGuardFn} from '@fe/app/auth/service/auth.guard';
-import {Permission} from '@shared/user/permission.enum';
+import {Permission} from '@melluin/common';
 import {StatisticsModule} from '@fe/app/statistics/statistics.module';
 import {StatisticsLayoutComponent} from '@fe/app/statistics/statistics-layout/statistics-layout.component';
 

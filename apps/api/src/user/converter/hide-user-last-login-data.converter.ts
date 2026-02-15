@@ -1,7 +1,4 @@
-import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter/converter';
-import {User} from '@shared/user/user';
-import {Permission} from '@shared/user/permission.enum';
+import {Converter, isNil, Permission, User} from '@melluin/common';
 
 export class HideUserLastLoginDataConverter implements Converter<User, User> {
 

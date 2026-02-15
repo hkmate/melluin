@@ -1,4 +1,4 @@
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
+import {HospitalVisitStatus} from '@melluin/common';
 
 export class EventsFilter {
 

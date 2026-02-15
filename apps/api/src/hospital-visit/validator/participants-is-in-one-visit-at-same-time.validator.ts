@@ -5,10 +5,7 @@ import {
     VisitValidationData
 } from '@be/hospital-visit/validator/visit-validator';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
-import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
-import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
-import {ApiError} from '@shared/api-util/api-error';
-import {isEmpty} from '@shared/util/util';
+import {ApiError, HospitalVisitCreate, HospitalVisitRewrite, isEmpty} from '@melluin/common';
 import * as _ from 'lodash';
 
 @Injectable()

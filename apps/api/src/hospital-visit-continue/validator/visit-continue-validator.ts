@@ -1,4 +1,4 @@
-import {AsyncValidator} from '@shared/validator/validator';
+import {AsyncValidator} from '@melluin/common';
 import {HospitalVisitCreateValidationData} from '@be/hospital-visit/validator/visit-validator';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 

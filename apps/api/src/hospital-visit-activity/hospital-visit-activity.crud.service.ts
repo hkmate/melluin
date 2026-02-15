@@ -1,18 +1,18 @@
 import {Injectable} from '@nestjs/common';
-import {User} from '@shared/user/user';
-import {HospitalVisitActivityDao} from '@be/hospital-visit-activity/hospital-visit-activity.dao';
 import {
+    DateUtil,
+    HospitalVisitActivity,
     HospitalVisitActivityEditInput,
-    HospitalVisitActivityInput
-} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
-import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
+    HospitalVisitActivityInput,
+    User,
+    WrappedHospitalVisitActivity
+} from '@melluin/common';
+import {HospitalVisitActivityDao} from '@be/hospital-visit-activity/hospital-visit-activity.dao';
 import {ActivityInputToEntityConverter} from '@be/hospital-visit-activity/converter/activity-input-to-entity.converter';
 import {ActivityEntityToBasicDtoConverter} from '@be/hospital-visit-activity/converter/activity-entity-to-basic-dto.converter';
-import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
 import {ActivityEntityToWrappedDtoConverter} from '@be/hospital-visit-activity/converter/activity-entity-to-wrapped-dto.converter';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {ActivityRewriteApplierFactory} from '@be/hospital-visit-activity/applier/activity-rewrite-applier.factory';
-import {DateUtil} from '@shared/util/date-util';
 import {VisitedChildrenDao} from '@be/hospital-visit-children/persistence/visited-children.dao';
 import {HospitalVisitActivityInfoDao} from '@be/hospital-visit-activity-info/hospital-visit-activity-info.dao';
 import {VisitActivitySaveValidatorFactory} from '@be/hospital-visit-activity/validator/visit-activity-save-validator-factory.service';

@@ -2,7 +2,7 @@ import {Component, inject, input, viewChild} from '@angular/core';
 import {DepartmentBoxInfoManagerComponent} from '@fe/app/hospital/department-box/department-box-info-manager/department-box-info-manager.component';
 import {MessageService} from '@fe/app/util/message.service';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
-import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
+import {DepartmentBoxStatusReport} from '@melluin/common';
 import {BoxInfoListByVisitComponent} from '@fe/app/hospital/department-box/department-box-info-list/box-info-list-by-visit.component';
 
 @Component({

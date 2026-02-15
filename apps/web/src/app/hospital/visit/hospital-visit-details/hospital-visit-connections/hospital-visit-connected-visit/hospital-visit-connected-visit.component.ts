@@ -5,8 +5,7 @@ import {MatMiniFabButton} from '@angular/material/button';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
 import {TranslateModule} from '@ngx-translate/core';
 import {VisitStatusIconComponent} from '@fe/app/hospital/visit/visit-status-icon/visit-status-icon.component';
-import {Permission} from '@shared/user/permission.enum';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
+import {HospitalVisit, Permission} from '@melluin/common';
 import {RouterLink} from '@angular/router';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 

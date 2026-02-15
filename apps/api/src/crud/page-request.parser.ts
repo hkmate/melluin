@@ -1,7 +1,6 @@
-import {isNil} from '@shared/util/util';
+import {isNil, PAGE_QUERY_KEY, PAGE_REQUEST_DEFAULT_SIZE, PAGE_SIZE_QUERY_KEY} from '@melluin/common';
 import {Base64} from '@be/util/base64';
 import {PageRequest} from '@be/crud/page-request';
-import {PAGE_QUERY_KEY, PAGE_REQUEST_DEFAULT_SIZE, PAGE_SIZE_QUERY_KEY} from '@shared/api-util/pageable';
 import {HttpRequestInfo} from '@be/util/http-request-info';
 
 

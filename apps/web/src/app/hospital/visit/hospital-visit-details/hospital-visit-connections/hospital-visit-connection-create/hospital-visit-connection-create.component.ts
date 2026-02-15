@@ -2,7 +2,7 @@ import {Component, inject, input, output} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {TranslateModule} from '@ngx-translate/core';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
+import {HospitalVisit, isNotNil} from '@melluin/common';
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
 import {MatButton} from '@angular/material/button';
 import {LoaderService} from '@fe/app/loader/loader.service';
@@ -11,7 +11,6 @@ import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {HospitalVisitConnectedVisitComponent} from '@fe/app/hospital/visit/hospital-visit-details/hospital-visit-connections/hospital-visit-connected-visit/hospital-visit-connected-visit.component';
 import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
-import {isNotNil} from '@shared/util/util';
 
 @Component({
     selector: 'app-hospital-visit-connection-create',

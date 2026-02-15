@@ -1,19 +1,19 @@
 import {Injectable} from '@nestjs/common';
 import {
+    isNil,
+    User,
     VisitedChild,
     VisitedChildEditInput,
     VisitedChildInput,
     VisitedChildWithChildIdInput,
     VisitedChildWithChildInput
-} from '@shared/hospital-visit/visited-child';
+} from '@melluin/common';
 import {VisitedChildrenDao} from '@be/hospital-visit-children/persistence/visited-children.dao';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {VisitedChildCreationToEntityConverter} from '@be/hospital-visit-children/converer/visited-child-creation-to-entity.converter';
 import {VisitedChildEntityToDtoConverter} from '@be/hospital-visit-children/converer/visited-child-entity-to-dto.converter';
 import {ChildCrudService} from '@be/child/child.crud.service';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
-import {isNil} from '@shared/util/util';
-import {User} from '@shared/user/user';
 import {VisitedChildSaveValidatorFactory} from '@be/hospital-visit-children/validator/visited-child-save-validator-factory';
 
 @Injectable()

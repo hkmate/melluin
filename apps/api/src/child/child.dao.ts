@@ -1,7 +1,7 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
-import {isNil} from '@shared/util/util';
+import {isNil} from '@melluin/common';
 import {ChildEntity} from '@be/child/model/child.entity';
 
 @Injectable()

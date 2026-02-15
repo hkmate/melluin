@@ -1,4 +1,4 @@
-import {PersonPreferences} from '@shared/person/person-preferences';
+import {PersonPreferences} from '@melluin/common';
 
 export class PersonPreferencesDo implements PersonPreferences {
 

@@ -1,22 +1,23 @@
 import {Injectable} from '@nestjs/common';
-import {Pageable} from '@shared/api-util/pageable';
+import {
+    BoxStatusWithDepartmentBrief,
+    Converter,
+    DepartmentBoxStatus,
+    departmentBoxStatusFilterableFields,
+    DepartmentBoxStatusReport,
+    departmentBoxStatusSortableFields,
+    Pageable,
+    User
+} from '@melluin/common';
 import {PageConverter} from '@be/crud/convert/page.converter';
-import {User} from '@shared/user/user';
 import {PageRequest} from '@be/crud/page-request';
 import {PageRequestFieldsValidator} from '@be/crud/validator/page-request-fields.validator';
 import {DepartmentBoxStatusDao} from '@be/department-box/department-box-status.dao';
-import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
 import {DepartmentBoxStatusEntity} from '@be/department-box/model/department-box-status.entity';
-import {BoxStatusWithDepartmentBrief, DepartmentBoxStatus} from '@shared/department/box/department-box-status';
 import {BoxStatusReportToEntityConverter} from '@be/department-box/converer/box-status-report-to-entity.converter';
 import {BoxStatusEntityToDtoConverter} from '@be/department-box/converer/box-status-entity-to-dto.converter';
-import {
-    departmentBoxStatusFilterableFields,
-    departmentBoxStatusSortableFields
-} from '@shared/department/box/department-box-status-filterable-fields';
 import {BoxStatusInfoParam} from '@be/department-box/constants/box-status-info-param';
 import {BoxStatusEntityToDtoWithDepartmentBriefConverter} from '@be/department-box/converer/box-status-entity-to-dto-with-department-brief.converter';
-import {Converter} from '@shared/converter/converter';
 
 @Injectable()
 export class DepartmentBoxStatusCrudService {

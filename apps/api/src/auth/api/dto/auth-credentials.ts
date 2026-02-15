@@ -1,5 +1,5 @@
-import {AuthCredentials} from '@shared/user/auth-credentials';
 import {IsString} from 'class-validator';
+import {AuthCredentials} from '@melluin/common';
 
 export class AuthCredentialsValidatedInput implements AuthCredentials {
 

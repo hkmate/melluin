@@ -1,15 +1,15 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
-import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
+import {
+    HospitalVisitActivity,
+    HospitalVisitActivityEditInput,
+    HospitalVisitActivityInput,
+    WrappedHospitalVisitActivity
+} from '@melluin/common';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
-import {
-    HospitalVisitActivityEditInput,
-    HospitalVisitActivityInput
-} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
 
 @Injectable({providedIn: 'root'})
 export class VisitActivityService {

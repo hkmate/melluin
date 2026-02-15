@@ -1,6 +1,5 @@
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
-import {User} from '@shared/user/user';
-import {AsyncValidator} from '@shared/validator/validator';
+import {AsyncValidator, User} from '@melluin/common';
 
 export interface HospitalVisitConnectionValidationData {
     visit: HospitalVisitEntity,

@@ -1,7 +1,6 @@
 import {inject, Pipe, PipeTransform} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {Person} from '@shared/person/person';
-import {isNil} from '@shared/util/util';
+import {isNil, Person} from '@melluin/common';
 import {AppLanguage} from '@fe/app/language/app-language';
 
 @Pipe({

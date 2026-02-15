@@ -1,10 +1,7 @@
-import {User} from '@shared/user/user';
+import {getPermissionsNeededToChangeRole, isNil, Permission, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {PersonEntity} from '@be/person/model/person.entity';
-import {Permission} from '@shared/user/permission.enum';
 import {PersonRewriteValidator, PersonRewriteWithEntity} from '@be/person/validator/person-rewrite.validator';
-import {isNil} from '@shared/util/util';
-import {getPermissionsNeededToChangeRole} from '@shared/user/role';
 
 
 export class CanUserUpdatePersonPrimitiveFieldsValidator implements PersonRewriteValidator {

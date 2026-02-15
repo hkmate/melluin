@@ -1,24 +1,24 @@
 import {Injectable} from '@nestjs/common';
-import {Pageable} from '@shared/api-util/pageable';
 import {PageConverter} from '@be/crud/convert/page.converter';
-import {User} from '@shared/user/user';
 import {PageRequest} from '@be/crud/page-request';
 import {PageRequestFieldsValidator} from '@be/crud/validator/page-request-fields.validator';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {HospitalVisitCreationToEntityConverter} from '@be/hospital-visit/converer/hospital-visit-creation-to-entity.converter';
-import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {HospitalVisitEntityToDtoConverter} from '@be/hospital-visit/converer/hospital-visit-entity-to-dto.converter';
-import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
-import {
-    hospitalVisitFilterableFields,
-    hospitalVisitSortableFields
-} from '@shared/hospital-visit/hospital-visit-filterable-fields';
 import {HospitalVisitRewriteApplierFactory} from '@be/hospital-visit/applier/hospital-visit-rewrite-applier.factory';
-import {AsyncValidatorChain} from '@shared/validator/validator-chain';
 import {VisitCreateValidator, VisitRewriteValidator} from '@be/hospital-visit/validator/visit-validator';
 import {VisitSaveValidatorFactory} from '@be/hospital-visit/validator/visit-save-validator-factory';
+import {
+    AsyncValidatorChain,
+    HospitalVisit,
+    HospitalVisitCreate,
+    hospitalVisitFilterableFields,
+    HospitalVisitRewrite,
+    hospitalVisitSortableFields,
+    Pageable,
+    User
+} from '@melluin/common';
 
 @Injectable()
 export class HospitalVisitCrudService {

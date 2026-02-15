@@ -1,8 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
+import {HospitalVisit, isNotNil} from '@melluin/common';
 import {ContinueOtherVisitDialogComponent} from './continue-other-visit-dialog/continue-other-visit-dialog.component';
-import {isNotNil} from '@shared/util/util';
 
 
 @Injectable()

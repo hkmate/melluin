@@ -1,18 +1,20 @@
 import {Component, inject} from '@angular/core';
 import {Location} from '@angular/common';
-import {Person} from '@shared/person/person';
-import {PersonRewrite} from '@shared/person/person-rewrite';
-import {PersonCreation} from '@shared/person/person-creation';
+import {
+    getPermissionsNeededToChangeRole,
+    isNil,
+    Permission,
+    Person,
+    PersonCreation,
+    PersonRewrite
+} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {Router} from '@angular/router';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {Observable, tap} from 'rxjs';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {isNil} from '@shared/util/util';
-import {Permission} from '@shared/user/permission.enum';
 import {MessageService} from '@fe/app/util/message.service';
-import {getPermissionsNeededToChangeRole} from '@shared/user/role';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({

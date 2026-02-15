@@ -1,8 +1,6 @@
 import {Injectable} from '@nestjs/common';
-import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter/converter';
+import {Converter, HospitalVisitCreate, isNil} from '@melluin/common';
 import {randomUUID} from 'crypto';
-import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {DepartmentDao} from '@be/department/department.dao';
 import {PersonDao} from '@be/person/person.dao';

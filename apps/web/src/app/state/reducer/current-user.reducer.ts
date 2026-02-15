@@ -1,7 +1,6 @@
 import {createReducer, on} from '@ngrx/store';
 import {AppActions} from '@fe/app/state/app-actions';
-import {User} from '@shared/user/user';
-import {cast} from '@shared/util/test-util';
+import {cast, User} from '@melluin/common';
 
 export const currentUserReducer = createReducer(
     cast<User>(undefined),

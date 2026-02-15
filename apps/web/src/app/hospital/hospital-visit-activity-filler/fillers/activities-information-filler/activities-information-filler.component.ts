@@ -1,7 +1,7 @@
 import {Component, effect, inject, input, signal} from '@angular/core';
 import {VisitActivityInformationService} from '@fe/app/hospital/visit-activity/visit-activity-information.service';
 import {FormControl} from '@angular/forms';
-import {Permission} from '@shared/user/permission.enum';
+import {Permission} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 @Component({

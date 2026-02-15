@@ -1,7 +1,5 @@
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
+import {EventVisibility, HospitalVisitRewrite, HospitalVisitStatus} from '@melluin/common';
 import {IsArray, IsBoolean, IsDateString, IsEnum, IsNumber, IsOptional, IsString, IsUUID, Min} from 'class-validator';
-import {EventVisibility} from '@shared/hospital-visit/event-visibility';
-import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 
 
 export class HospitalVisitRewriteValidatedInput implements HospitalVisitRewrite {

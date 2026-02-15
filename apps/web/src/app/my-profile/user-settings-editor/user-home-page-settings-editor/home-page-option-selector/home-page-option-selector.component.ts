@@ -1,7 +1,6 @@
 import {Component, forwardRef, input} from '@angular/core';
-import {HomePageOption} from '@shared/user/user-settings';
+import {HomePageOption, NOOP, VoidFunc} from '@melluin/common';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {NOOP, VoidFunc} from '@shared/util/util';
 
 @Component({
     selector: 'app-home-page-option-selector',

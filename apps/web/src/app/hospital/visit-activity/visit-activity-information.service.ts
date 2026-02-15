@@ -4,8 +4,7 @@ import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
 import {Observable} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
-import {HospitalVisitActivityInfo} from '@shared/hospital-visit-activity/hospital-visit-activity-info';
-import {HospitalVisitActivityInfoInput} from '@shared/hospital-visit-activity/hospital-visit-activity-info-input';
+import {HospitalVisitActivityInfo, HospitalVisitActivityInfoInput} from '@melluin/common';
 
 @Injectable({providedIn: 'root'})
 export class VisitActivityInformationService {

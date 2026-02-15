@@ -3,10 +3,9 @@ import {EventsListPreferences} from '@fe/app/events/events-list/service/events-l
 import {EventsFilter} from '@fe/app/events/events-list/service/events-filter';
 import {QueryParams, UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {EventListQueryParams} from '@fe/app/events/events-list/service/event-list-query-params';
-import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo} from '@shared/api-util/pageable';
+import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo, VoidNOOP} from '@melluin/common';
 import {filter, map, Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {VoidNOOP} from '@shared/util/util';
 
 
 @Injectable()

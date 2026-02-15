@@ -1,6 +1,4 @@
-import {Pageable} from '@shared/api-util/pageable';
-import {Converter} from '@shared/converter/converter';
-import {isNil} from '@shared/util/util';
+import {Converter, isNil, Pageable} from '@melluin/common';
 
 
 export class PageConverter<T, R> implements Converter<Pageable<T>, Pageable<R>> {

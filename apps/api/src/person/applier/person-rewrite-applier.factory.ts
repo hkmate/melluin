@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {PersonRewrite} from '@shared/person/person-rewrite';
+import {PersonRewrite} from '@melluin/common';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {PersonRewriteApplier} from '@be/person/applier/person-rewrite.applier';
 

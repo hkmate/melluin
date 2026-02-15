@@ -1,6 +1,6 @@
 import {BadRequestException} from '@nestjs/common';
 import {VisitSaveValidator, VisitValidationData} from '@be/hospital-visit/validator/visit-validator';
-import {ApiError} from '@shared/api-util/api-error';
+import {ApiError} from '@melluin/common';
 
 
 export class VicariousMomVisitHasOnlyOneParticipantValidator implements VisitSaveValidator {

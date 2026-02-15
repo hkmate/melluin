@@ -1,14 +1,10 @@
 import {Component, effect, inject, signal} from '@angular/core';
-import {Pageable, PageQuery} from '@shared/api-util/pageable';
-import {Person} from '@shared/person/person';
+import {FilterOptions, Pageable, PageQuery, Permission, Person, SortOptions} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 import {AppTitle} from '@fe/app/app-title.service';
 import {PageEvent} from '@angular/material/paginator';
-import {SortOptions} from '@shared/api-util/sort-options';
-import {FilterOptions} from '@shared/api-util/filter-options';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {PeopleListFilterService} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter.service';
-import {Permission} from '@shared/user/permission.enum';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {PeopleListQueryParamSettingsInitializer} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-param-settings-initializer';
 import {PeopleListQueryParamHandler} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-param-handler';

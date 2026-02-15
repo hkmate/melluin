@@ -1,7 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {Converter} from '@shared/converter/converter';
-import {User} from '@shared/user/user';
-import {ConverterChain} from '@shared/converter/converter-chain';
+import {Converter, ConverterChain, User} from '@melluin/common';
 import {UserEntityToDtoConverter} from '@be/user/converter/user-entity-to-dto.converter';
 import {UserEntity} from '@be/user/model/user.entity';
 import {HideUserCreateDataConverter} from '@be/user/converter/hide-user-create-data.converter';

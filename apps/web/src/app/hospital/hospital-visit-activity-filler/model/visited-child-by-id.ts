@@ -1,4 +1,4 @@
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
+import {VisitedChild} from '@melluin/common';
 
 export type VisitedChildById = Record<string, VisitedChild>;
 

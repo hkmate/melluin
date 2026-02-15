@@ -1,10 +1,7 @@
-import {User} from '@shared/user/user';
+import {ConjunctionFilterOptions, FilterOptions, isNil, Permission, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
-import {isNil} from '@shared/util/util';
-import {ConjunctionFilterOptions, FilterOptions} from '@shared/api-util/filter-options';
 import {PageRequest} from '@be/crud/page-request';
 import {PageRequestValidator} from '@be/crud/validator/page-request.validator';
-import {Permission} from '@shared/user/permission.enum';
 
 export class CanUserPerformFindValidator implements PageRequestValidator {
 

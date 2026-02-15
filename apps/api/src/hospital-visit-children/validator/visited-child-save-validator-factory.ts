@@ -4,7 +4,7 @@ import {
     VisitedChildUpdateValidator
 } from '@be/hospital-visit-children/validator/visited-child-validator';
 import {VisitIsInStartedStatusValidator} from '@be/hospital-visit-activity/validator/visit-is-in-started-status.validator';
-import {AsyncValidatorChain} from '@shared/validator/validator-chain';
+import {AsyncValidatorChain} from '@melluin/common';
 import {VisitIdIsSameAsInVisitedChildValidator} from '@be/hospital-visit-children/validator/visit-id-is-same-as-in-visited-child.validator';
 import {NoActivityWithVisitedChildValidator} from '@be/hospital-visit-children/validator/no-activity-with-visited-child.validator';
 import {UserCanWriteChildInVisitValidator} from '@be/hospital-visit-children/validator/user-can-write-child-in-visit.validator';

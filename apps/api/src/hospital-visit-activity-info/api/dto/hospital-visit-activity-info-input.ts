@@ -1,5 +1,5 @@
 import {IsOptional, IsString} from 'class-validator';
-import {HospitalVisitActivityInfoInput} from '@shared/hospital-visit-activity/hospital-visit-activity-info-input';
+import {HospitalVisitActivityInfoInput} from '@melluin/common';
 
 
 export class HospitalVisitActivityInfoValidatedInput implements HospitalVisitActivityInfoInput {

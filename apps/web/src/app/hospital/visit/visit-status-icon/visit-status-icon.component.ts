@@ -1,5 +1,5 @@
 import {Component, computed, input} from '@angular/core';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
+import {HospitalVisitStatus} from '@melluin/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {TranslateModule} from '@ngx-translate/core';

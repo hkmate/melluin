@@ -1,9 +1,7 @@
-import {User} from '@shared/user/user';
+import {getPermissionsNeededToChangeRole, Permission, RoleType, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
-import {Permission} from '@shared/user/permission.enum';
 import {UserRewriteValidator, UserRewriteWithEntity} from '@be/user/validator/user-rewrite.validator';
 import * as _ from 'lodash';
-import {getPermissionsNeededToChangeRole, RoleType} from '@shared/user/role';
 import {RoleDao} from '@be/user/role.dao';
 import {RoleEntity} from '@be/user/model/role.entity';
 

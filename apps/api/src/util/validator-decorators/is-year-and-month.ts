@@ -1,5 +1,5 @@
 import {registerDecorator, ValidationArguments, ValidationOptions} from 'class-validator';
-import {isNilOrEmpty} from '@shared/util/util';
+import {isNilOrEmpty} from '@melluin/common';
 
 
 // eslint-disable-next-line max-lines-per-function

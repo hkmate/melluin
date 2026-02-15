@@ -1,6 +1,5 @@
-import {Permission} from '@shared/user/permission.enum';
+import {Permission, Role, RoleCreation, RoleType} from '@melluin/common';
 import {IsEnum, IsString, IsUUID} from 'class-validator';
-import {Role, RoleCreation, RoleType} from '@shared/user/role';
 
 
 export class RoleEditValidatedInput implements Role {

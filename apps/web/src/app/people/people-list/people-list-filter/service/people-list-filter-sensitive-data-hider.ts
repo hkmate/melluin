@@ -1,9 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {PeopleFilter} from '@fe/app/people/people-list/people-list-filter/service/people-filter';
 import {Store} from '@ngrx/store';
-import {User} from '@shared/user/user';
+import {Permission, User} from '@melluin/common';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
-import {Permission} from '@shared/user/permission.enum';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 

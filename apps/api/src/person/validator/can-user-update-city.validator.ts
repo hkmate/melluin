@@ -1,9 +1,6 @@
-import {User} from '@shared/user/user';
+import {isNil, Permission, PersonRewrite, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
-import {PersonRewrite} from '@shared/person/person-rewrite';
 import {PersonEntity} from '@be/person/model/person.entity';
-import {Permission} from '@shared/user/permission.enum';
-import {isNil} from '@shared/util/util';
 import * as _ from 'lodash';
 import {PersonRewriteValidator, PersonRewriteWithEntity} from '@be/person/validator/person-rewrite.validator';
 

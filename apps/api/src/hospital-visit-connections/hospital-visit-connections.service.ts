@@ -1,12 +1,10 @@
 import {Injectable} from '@nestjs/common';
-import {User} from '@shared/user/user';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
+import {AsyncValidatorChain, HospitalVisit, User} from '@melluin/common';
 import {HospitalVisitConnectionsDao} from '@be/hospital-visit-connections/hospital-visit-connections.dao';
 import {HospitalVisitEntityToDtoConverter} from '@be/hospital-visit/converer/hospital-visit-entity-to-dto.converter';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {randomUUID} from 'crypto';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
-import {AsyncValidatorChain} from '@shared/validator/validator-chain';
 import {VisitConnectionValidator} from '@be/hospital-visit-connections/validator/visit-connection-validator';
 import {BothVisitInSameGroupValidator} from '@be/hospital-visit-connections/validator/both-visit-in-same-group.validator';
 import {ConnectionCandidateHasNoConnectionYetValidator} from '@be/hospital-visit-connections/validator/connection-candidate-has-no-connection-yet.validator';

@@ -1,6 +1,6 @@
 import {Component, forwardRef, input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {isNotNil} from '@shared/util/util';
+import {isNotNil} from '@melluin/common';
 
 @Component({
     selector: 'app-trimmed-text-input',

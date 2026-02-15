@@ -6,19 +6,14 @@ import * as crypto from 'crypto';
 import {RoleEntity} from '@be/user/model/role.entity';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {PersonDao} from '@be/person/person.dao';
-import {AuthInfo} from '@shared/user/auth-info';
-import {isNil} from '@shared/util/util';
+import {AuthCredentials, AuthInfo, isNil, OperationCity, User, UserSettings} from '@melluin/common';
 import {ConfigService} from '@nestjs/config';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoConverter} from '@be/user/converter/user-entity-to-dto.converter';
-import {AuthCredentials} from '@shared/user/auth-credentials';
 import {UserEntityToSettingsDtoConverter} from '@be/user/converter/user-entity-to-settings-dto.converter';
-import {User} from '@shared/user/user';
-import {UserSettings} from '@shared/user/user-settings';
 import {RoleDao} from '@be/user/role.dao';
 import {now} from '@be/util/util';
-import {OperationCity} from '@shared/person/operation-city';
 
 @Injectable()
 export class AuthService {

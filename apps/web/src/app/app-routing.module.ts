@@ -5,7 +5,7 @@ import {AuthGuardFn} from './auth/service/auth.guard';
 import {NotFoundComponent} from './not-found-component/not-found.component';
 import {PathResolveService} from './path-resolve/path-resolve.service';
 import {DashboardComponent} from './dashboard/dashboard.component';
-import {Permission} from '@shared/user/permission.enum';
+import {Permission} from '@melluin/common';
 import {NavigatorComponent} from '@fe/app/navigator.component';
 
 const routes: Routes = [

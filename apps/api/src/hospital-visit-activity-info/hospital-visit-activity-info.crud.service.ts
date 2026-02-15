@@ -1,11 +1,8 @@
 import {Injectable} from '@nestjs/common';
-import {User} from '@shared/user/user';
+import {AsyncValidatorChain, HospitalVisitActivityInfo, HospitalVisitActivityInfoInput, User} from '@melluin/common';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
-import {HospitalVisitActivityInfoInput} from '@shared/hospital-visit-activity/hospital-visit-activity-info-input';
-import {HospitalVisitActivityInfo} from '@shared/hospital-visit-activity/hospital-visit-activity-info';
 import {ActivityInfoEntityToDtoConverter} from '@be/hospital-visit-activity-info/converter/activity-info-entity-to-dto.converter';
 import {HospitalVisitActivityInfoDao} from '@be/hospital-visit-activity-info/hospital-visit-activity-info.dao';
-import {AsyncValidatorChain} from '@shared/validator/validator-chain';
 import {UserCanWriteActivityInVisitValidator} from '@be/hospital-visit-activity/validator/user-can-write-activity-in-visit.validator';
 import {VisitIsInStartedStatusValidator} from '@be/hospital-visit-activity/validator/visit-is-in-started-status.validator';
 import {VisitActivityInfoUpdateValidator} from '@be/hospital-visit-activity-info/validator/visit-activity-info-validator';

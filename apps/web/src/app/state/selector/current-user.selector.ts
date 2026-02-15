@@ -1,8 +1,7 @@
 import {createFeatureSelector, select} from '@ngrx/store';
 import {filter, pipe} from 'rxjs';
-import {isNotNilOrEmptyObj} from '@shared/util/util';
+import {isNotNilOrEmptyObj, User} from '@melluin/common';
 import {currentUserKey} from '@fe/app/state/app.state';
-import {User} from '@shared/user/user';
 
 
 export const selectNilableCurrentUserFeature = createFeatureSelector<User>(currentUserKey);

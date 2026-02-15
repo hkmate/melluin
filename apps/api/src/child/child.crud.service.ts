@@ -1,7 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {User} from '@shared/user/user';
-import {ChildInput} from '@shared/child/child-input';
-import {Child} from '@shared/child/child';
+import {Child, ChildInput, User} from '@melluin/common';
 import {ChildDao} from '@be/child/child.dao';
 import {ChildInputToEntityConverter} from '@be/child/converer/child-input-to-entity.converter';
 import {ChildEntityToDtoConverter} from '@be/child/converer/child-entity-to-dto.converter';

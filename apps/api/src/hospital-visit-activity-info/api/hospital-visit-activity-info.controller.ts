@@ -1,11 +1,8 @@
 import {Body, Controller, Get, Param, ParseUUIDPipe, Put} from '@nestjs/common';
-import {User} from '@shared/user/user';
+import {HospitalVisitActivityInfo, HospitalVisitActivityInfoInput, Permission, User} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {Permission} from '@shared/user/permission.enum';
-import {HospitalVisitActivityInfoInput} from '@shared/hospital-visit-activity/hospital-visit-activity-info-input';
 import {HospitalVisitActivityInfoCrudService} from '@be/hospital-visit-activity-info/hospital-visit-activity-info.crud.service';
-import {HospitalVisitActivityInfo} from '@shared/hospital-visit-activity/hospital-visit-activity-info';
 import {HospitalVisitActivityInfoValidatedInput} from '@be/hospital-visit-activity-info/api/dto/hospital-visit-activity-info-input';
 
 

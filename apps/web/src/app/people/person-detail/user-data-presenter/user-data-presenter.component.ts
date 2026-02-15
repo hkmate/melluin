@@ -1,8 +1,6 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
-import { User } from '@shared/user/user';
-import { PeopleService } from '@fe/app/people/people.service';
-import { Person } from '@shared/person/person';
-import { isNotNil } from '@shared/util/util';
+import {Component, effect, inject, input, signal} from '@angular/core';
+import {isNotNil, Person, User} from '@melluin/common';
+import {PeopleService} from '@fe/app/people/people.service';
 
 @Component({
     selector: 'app-user-data-presenter',

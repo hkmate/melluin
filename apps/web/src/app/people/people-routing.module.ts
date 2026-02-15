@@ -6,7 +6,7 @@ import {PeopleListComponent} from '@fe/app/people/people-list/people-list.compon
 import {PersonDetailComponent} from '@fe/app/people/person-detail/person-detail.component';
 import {PersonResolver} from '@fe/app/people/person.resolver';
 import {PATHS} from '@fe/app/app-paths';
-import {Permission} from '@shared/user/permission.enum';
+import {Permission} from '@melluin/common';
 
 const routes: Routes = [
     {

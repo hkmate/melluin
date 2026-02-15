@@ -1,6 +1,5 @@
 import {Component, computed, input} from '@angular/core';
-import {HospitalVisitActivityInfo} from '@shared/hospital-visit-activity/hospital-visit-activity-info';
-import {isNilOrEmpty} from '@shared/util/util';
+import {HospitalVisitActivityInfo, isNilOrEmpty} from '@melluin/common';
 
 @Component({
     selector: 'app-visit-activity-information',

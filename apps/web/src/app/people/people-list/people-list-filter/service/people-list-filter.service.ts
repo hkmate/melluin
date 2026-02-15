@@ -1,8 +1,13 @@
 import {inject, Injectable} from '@angular/core';
-import {ConjunctionFilterOptions, FilterOperationBuilder, FilterOptions} from '@shared/api-util/filter-options';
-import {isNil, isNilOrEmpty} from '@shared/util/util';
+import {
+    ConjunctionFilterOptions,
+    FilterOperationBuilder,
+    FilterOptions,
+    isNil,
+    isNilOrEmpty,
+    PageInfo
+} from '@melluin/common';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {PageInfo} from '@shared/api-util/pageable';
 import {PeopleListQueryParamHandler} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-param-handler';
 import {PeopleListQueryParamSettingsInitializer} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-param-settings-initializer';
 import {ListPageSettingChangeReason} from '@fe/app/util/list-page-settings-change-reason';

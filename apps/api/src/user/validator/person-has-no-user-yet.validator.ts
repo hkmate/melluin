@@ -1,7 +1,5 @@
-import {AsyncValidator} from '@shared/validator/validator';
-import {UserCreation} from '@shared/user/user-creation';
+import {AsyncValidator, isNotNil, UserCreation} from '@melluin/common';
 import {PersonDao} from '@be/person/person.dao';
-import {isNotNil} from '@shared/util/util';
 import {ConflictException, Injectable} from '@nestjs/common';
 
 @Injectable()

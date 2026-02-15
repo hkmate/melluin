@@ -1,13 +1,19 @@
 import {Component, inject, signal} from '@angular/core';
-import {Pageable, PageQuery} from '@shared/api-util/pageable';
+import {
+    ConjunctionFilterOptions,
+    Department,
+    FilterOptions,
+    isEmpty,
+    isNil,
+    isNilOrEmpty,
+    Pageable,
+    PageQuery,
+    Permission,
+    SortOptions
+} from '@melluin/common';
 import {AppTitle} from '@fe/app/app-title.service';
 import {PageEvent} from '@angular/material/paginator';
-import {SortOptions} from '@shared/api-util/sort-options';
-import {ConjunctionFilterOptions, FilterOptions} from '@shared/api-util/filter-options';
-import {isEmpty, isNil, isNilOrEmpty} from '@shared/util/util';
-import {Department} from '@shared/department/department';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
-import {Permission} from '@shared/user/permission.enum';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 

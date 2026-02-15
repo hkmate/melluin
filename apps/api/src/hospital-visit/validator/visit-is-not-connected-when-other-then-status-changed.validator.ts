@@ -1,10 +1,8 @@
 import {ForbiddenException} from '@nestjs/common';
 import {HospitalVisitRewriteValidationData, VisitRewriteValidator} from '@be/hospital-visit/validator/visit-validator';
-import {ApiError} from '@shared/api-util/api-error';
+import {ApiError, HospitalVisitRewrite, isNotEmpty} from '@melluin/common';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
-import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import * as _ from 'lodash';
-import {isNotEmpty} from '@shared/util/util';
 
 export class VisitIsNotConnectedWhenOtherThenStatusChangedValidator implements VisitRewriteValidator {
 

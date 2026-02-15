@@ -1,14 +1,11 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map, Observable} from 'rxjs';
-import {User} from '@shared/user/user';
-import {isNotNil} from '@shared/util/util';
-import {AuthInfo} from '@shared/user/auth-info';
+import {AuthCredentials, AuthInfo, isNotNil, User} from '@melluin/common';
 import {Router} from '@angular/router';
 import {PATHS} from '@fe/app/app-paths';
 import {AppConfig} from '@fe/app/config/app-config';
 import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
-import {AuthCredentials} from '@shared/user/auth-credentials';
 
 @Injectable()
 export class AuthenticationService {

@@ -12,17 +12,20 @@ import {
     Put,
     Query
 } from '@nestjs/common';
-import {Pageable} from '@shared/api-util/pageable';
-import {User} from '@shared/user/user';
+import {
+    BoxStatusWithDepartmentBrief,
+    DepartmentBoxStatus,
+    HospitalVisit,
+    Pageable,
+    Permission,
+    User
+} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PageReq} from '@be/crud/page-req';
 import {PageRequest} from '@be/crud/page-request';
 import {HospitalVisitCrudService} from '@be/hospital-visit/hospital-visit.crud.service';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {Permission} from '@shared/user/permission.enum';
 import {DepartmentBoxStatusCrudService} from '@be/department-box/department-box-status.crud.service';
-import {BoxStatusWithDepartmentBrief, DepartmentBoxStatus} from '@shared/department/box/department-box-status';
 import {BoxStatusInfoParam} from '@be/department-box/constants/box-status-info-param';
 import {HospitalVisitCreateValidatedInput} from '@be/hospital-visit/api/dto/hospital-visit-create';
 import {HospitalVisitRewriteValidatedInput} from '@be/hospital-visit/api/dto/hospital-visit-rewrite';

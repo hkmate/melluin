@@ -1,4 +1,4 @@
-import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
+import {VisitActivityType} from '@melluin/common';
 
 export interface ActivitiesCountRowItem {
     activity: VisitActivityType;

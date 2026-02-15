@@ -1,7 +1,5 @@
 import {Component, inject, output, signal} from '@angular/core';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
-import {HospitalVisitActivityInput} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
-import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
+import {HospitalVisitActivityInput, VisitActivityType, VisitedChild} from '@melluin/common';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {isNotEmptyValidator} from '@fe/app/util/util';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';

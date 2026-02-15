@@ -1,11 +1,9 @@
-import { UserEntity } from '@be/user/model/user.entity';
-import { User } from '@shared/user/user';
-import { Injectable } from '@nestjs/common';
-import { flatten, isNil } from '@shared/util/util';
-import { Converter } from '@shared/converter/converter';
+import {UserEntity} from '@be/user/model/user.entity';
+import {Converter, flatten, isNil, User} from '@melluin/common';
+import {Injectable} from '@nestjs/common';
 import * as _ from 'lodash';
-import { PermissionEntity } from '@be/user/model/permission.entity';
-import { RoleEntityToBriefDtoConverter } from '@be/user/converter/role-entity-to-brief-dto.converter';
+import {PermissionEntity} from '@be/user/model/permission.entity';
+import {RoleEntityToBriefDtoConverter} from '@be/user/converter/role-entity-to-brief-dto.converter';
 
 @Injectable()
 export class UserEntityToDtoConverter implements Converter<UserEntity, User> {

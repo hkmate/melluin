@@ -1,9 +1,6 @@
 import {Injectable} from '@nestjs/common';
-import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter/converter';
+import {Converter, DEFAULT_TO_DATE, Department, isNil} from '@melluin/common';
 import {DepartmentEntity} from '@be/department/model/department.entity';
-import {Department} from '@shared/department/department';
-import {DEFAULT_TO_DATE} from '@shared/api-util/default-to-date';
 
 @Injectable()
 export class DepartmentEntityToDtoConverter implements Converter<DepartmentEntity, Department> {

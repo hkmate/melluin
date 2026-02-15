@@ -1,8 +1,7 @@
 import {BadRequestException, Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {Permission} from '@shared/user/permission.enum';
+import {Permission, Role, RoleBrief} from '@melluin/common';
 import {RoleService} from '@be/user/service/role.service';
-import {Role, RoleBrief} from '@shared/user/role';
 import {RoleCreationValidatedInput, RoleEditValidatedInput} from '@be/user/api/dto/role';
 
 

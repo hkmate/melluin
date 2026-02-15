@@ -1,5 +1,5 @@
 import {BadRequestException} from '@nestjs/common';
-import {ApiError} from '@shared/api-util/api-error';
+import {ApiError} from '@melluin/common';
 import {
     VisitContinueValidationData,
     VisitContinueValidator

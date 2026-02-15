@@ -1,6 +1,5 @@
-import {HospitalVisitActivityInput} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
+import {AsyncApplier, HospitalVisitActivityInput} from '@melluin/common';
 import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
-import {AsyncApplier} from '@shared/applier';
 import {VisitedChildVerifierService} from '@be/hospital-visit-children/service/visited-child-verifier.service';
 import {VisitedChildrenDao} from '@be/hospital-visit-children/persistence/visited-children.dao';
 

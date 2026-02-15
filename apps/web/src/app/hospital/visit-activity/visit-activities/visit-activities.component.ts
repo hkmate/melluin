@@ -1,19 +1,22 @@
 import {Component, inject, input, OnInit} from '@angular/core';
 import {VisitActivityService} from '@fe/app/hospital/visit-activity/visit-activity.service';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
-import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
-import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
-import {isNil, isNilOrEmpty} from '@shared/util/util';
+import {
+    HospitalVisit,
+    HospitalVisitActivity,
+    HospitalVisitActivityInfo,
+    HospitalVisitStatus,
+    isNil,
+    isNilOrEmpty,
+    Permission,
+    VisitedChild,
+    WrappedHospitalVisitActivity
+} from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
-import {Permission} from '@shared/user/permission.enum';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
 import {
     convertToChildrenById,
     VisitedChildById
 } from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {HospitalVisitActivityInfo} from '@shared/hospital-visit-activity/hospital-visit-activity-info';
 
 @Component({
     selector: 'app-visit-activities',

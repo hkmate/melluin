@@ -1,8 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../auth/service/authentication.service';
-import {isNilOrEmpty, NOOP} from '@shared/util/util';
-import {User} from '@shared/user/user';
+import {isNilOrEmpty, NOOP, User} from '@melluin/common';
 import {AppTitle} from '@fe/app/app-title.service';
 import {MessageService} from '@fe/app/util/message.service';
 import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';

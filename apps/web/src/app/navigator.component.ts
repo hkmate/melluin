@@ -1,18 +1,22 @@
 import {Component, inject} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {selectUserHomePageSettings} from '@fe/app/state/selector/user-settings.selector';
-import {HomePageOption, HomePageUserSettings} from '@shared/user/user-settings';
+import {
+    DateUtil,
+    FilterOperationBuilder,
+    HomePageOption,
+    HomePageUserSettings,
+    HospitalVisit,
+    HospitalVisitStatus,
+    isNilOrEmpty,
+    isNotNil
+} from '@melluin/common';
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
 import {Platform} from '@angular/cdk/platform';
 import {Router} from '@angular/router';
 import {PATHS} from '@fe/app/app-paths';
-import {FilterOperationBuilder} from '@shared/api-util/filter-options';
-import {DateUtil} from '@shared/util/date-util';
 import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {firstValueFrom, map} from 'rxjs';
-import {isNilOrEmpty, isNotNil} from '@shared/util/util';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({

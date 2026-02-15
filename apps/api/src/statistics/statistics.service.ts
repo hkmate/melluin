@@ -1,15 +1,17 @@
 import {Injectable} from '@nestjs/common';
 import {StatisticsDao} from '@be/statistics/statistics.dao';
-import {OperationCity} from '@shared/person/operation-city';
-import {VisitByDepartments} from '@shared/statistics/visit-by-departments';
-import {ChildrenByDepartments} from '@shared/statistics/children-by-departments';
-import {VolunteerByDepartments} from '@shared/statistics/volunteer-by-departments';
-import {ActivitiesCount} from '@shared/statistics/activities-count';
-import {VisitStatusCount} from '@shared/statistics/visit-status-count';
-import {ChildAgesByDepartments} from '@shared/statistics/child-ages-by-departments';
+import {
+    ActivitiesCount,
+    ChildAgesByDepartments,
+    ChildrenByDepartments,
+    OperationCity,
+    VisitByDepartments,
+    VisitsCountByWeekDay,
+    VisitStatusCount,
+    VolunteerByDepartments,
+    VolunteersVisitCount
+} from '@melluin/common';
 import {camelizeKeys} from '@be/util/camelize-keys';
-import {VisitsCountByWeekDay} from '@shared/statistics/visits-count-by-week-day';
-import {VolunteersVisitCount} from '@shared/statistics/volunteers-visit-count';
 
 @Injectable()
 export class StatisticsService {

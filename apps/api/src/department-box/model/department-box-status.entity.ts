@@ -1,6 +1,6 @@
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryColumn} from 'typeorm';
 import {DepartmentEntity} from '@be/department/model/department.entity';
-import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
+import {BoxStatusChangeReason} from '@melluin/common';
 
 @Entity({name: 'hospital_box_status_report'})
 export class DepartmentBoxStatusEntity {

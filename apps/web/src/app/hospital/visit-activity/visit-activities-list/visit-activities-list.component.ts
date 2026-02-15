@@ -1,7 +1,5 @@
 import {Component, computed, input} from '@angular/core';
-import {isNilOrEmpty} from '@shared/util/util';
-import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
+import {HospitalVisitActivity, isNilOrEmpty, VisitedChild} from '@melluin/common';
 
 @Component({
     selector: 'app-visit-activities-list',

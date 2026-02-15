@@ -2,9 +2,8 @@ import {
     VisitContinueValidationData,
     VisitContinueValidator
 } from '@be/hospital-visit-continue/validator/visit-continue-validator';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
+import {ApiError, HospitalVisitStatus} from '@melluin/common';
 import {BadRequestException} from '@nestjs/common';
-import {ApiError} from '@shared/api-util/api-error';
 
 export class VisitIsInStartedStatusValidator implements VisitContinueValidator {
 

@@ -1,8 +1,7 @@
 import {Component, inject, signal} from '@angular/core';
 import dayjs from 'dayjs';
-import {Permission} from '@shared/user/permission.enum';
+import {OperationCity, Permission} from '@melluin/common';
 import {StatFilter} from '@fe/app/statistics/model/stat-filter';
-import {OperationCity} from '@shared/person/operation-city';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {AppTitle} from '@fe/app/app-title.service';
 

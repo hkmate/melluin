@@ -1,10 +1,14 @@
 import {Component, computed, inject, input, output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {allNil, isNil, isNotNil} from '@shared/util/util';
-import {DepartmentCreation} from '@shared/department/department-creation';
-import {DepartmentUpdateChangeSet} from '@shared/department/department-update-change-set';
-import {Department} from '@shared/department/department';
-import {OperationCity} from '@shared/person/operation-city';
+import {
+    allNil,
+    Department,
+    DepartmentCreation,
+    DepartmentUpdateChangeSet,
+    isNil,
+    isNotNil,
+    OperationCity
+} from '@melluin/common';
 
 @Component({
     selector: 'app-department-data-form',

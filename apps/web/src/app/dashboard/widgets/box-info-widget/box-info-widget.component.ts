@@ -1,10 +1,13 @@
 import {Component, effect, inject, input} from '@angular/core';
-import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
+import {
+    BoxStatusChangeReason,
+    BoxStatusWithDepartmentBrief,
+    dateIntervalGeneratorFactory,
+    DateIntervalSpecifier,
+    FilterOperationBuilder,
+    PageQuery
+} from '@melluin/common';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
-import {BoxStatusWithDepartmentBrief} from '@shared/department/box/department-box-status';
-import {dateIntervalGeneratorFactory, DateIntervalSpecifier} from '@shared/util/date-interval-generator';
-import {FilterOperationBuilder} from '@shared/api-util/filter-options';
-import {PageQuery} from '@shared/api-util/pageable';
 import _ from 'lodash';
 
 @Component({

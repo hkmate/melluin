@@ -1,5 +1,4 @@
-import {SortOptions} from '@shared/api-util/sort-options';
-import {FilterOptions} from '@shared/api-util/filter-options';
+import {FilterOptions, SortOptions} from '@melluin/common';
 import {IPaginationOptions} from 'nestjs-typeorm-paginate';
 
 export interface PageRequest {

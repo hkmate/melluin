@@ -1,15 +1,12 @@
 import {Component, inject} from '@angular/core';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
+import {HospitalVisitActivity, isNotNil, Permission, VisitedChild} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
-import {isNotNil} from '@shared/util/util';
-import {Permission} from '@shared/user/permission.enum';
 import {
     convertToChildrenById,
     VisitedChildById
 } from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
 import {Observable} from 'rxjs';
-import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({

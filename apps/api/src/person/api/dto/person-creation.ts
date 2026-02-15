@@ -1,10 +1,7 @@
 import {IsEmail, IsEnum, IsOptional, IsPhoneNumber, MinLength, ValidateNested} from 'class-validator';
-import {nameMinLength} from '@shared/constants';
+import {nameMinLength, OperationCity, PersonCreation, PersonPreferences} from '@melluin/common';
 import {Type} from 'class-transformer';
-import {OperationCity} from '@shared/person/operation-city';
-import {PersonCreation} from '@shared/person/person-creation';
 import {PersonPreferencesValidatedInput} from '@be/person/api/dto/person-preferences';
-import {PersonPreferences} from '@shared/person/person-preferences';
 
 export class PersonCreationValidatedInput implements PersonCreation {
 

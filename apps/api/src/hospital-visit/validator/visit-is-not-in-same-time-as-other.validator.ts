@@ -1,12 +1,8 @@
-import {User} from '@shared/user/user';
+import {ApiError, HospitalVisitCreate, HospitalVisitRewrite, Permission, User} from '@melluin/common';
 import {BadRequestException, Injectable} from '@nestjs/common';
-import {Permission} from '@shared/user/permission.enum';
 import {VisitSaveValidator, VisitValidationData} from '@be/hospital-visit/validator/visit-validator';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {DepartmentDao} from '@be/department/department.dao';
-import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
-import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
-import {ApiError} from '@shared/api-util/api-error';
 
 @Injectable()
 export class VisitIsNotInSameTimeAsOtherValidator implements VisitSaveValidator {

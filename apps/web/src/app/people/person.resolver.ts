@@ -1,14 +1,11 @@
 import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, Observable, of} from 'rxjs';
-import {Person} from '@shared/person/person';
+import {cast, isNilOrEmpty, Permission, Person} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
-import {isNilOrEmpty} from '@shared/util/util';
 import {isUUID} from 'class-validator';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
-import {cast} from '@shared/util/test-util';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {Permission} from '@shared/user/permission.enum';
 
 @Injectable({
     providedIn: 'root'

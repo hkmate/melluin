@@ -1,10 +1,17 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, Pageable, PageQuery, QUERY_QUERY_KEY} from '@shared/api-util/pageable';
+import {
+    BoxStatusWithDepartmentBrief,
+    DepartmentBoxStatus,
+    DepartmentBoxStatusReport,
+    PAGE_QUERY_KEY,
+    PAGE_SIZE_QUERY_KEY,
+    Pageable,
+    PageQuery,
+    QUERY_QUERY_KEY
+} from '@melluin/common';
 import {getErrorHandler, utf8ToBase64} from '@fe/app/util/util';
-import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
-import {BoxStatusWithDepartmentBrief, DepartmentBoxStatus} from '@shared/department/box/department-box-status';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
 

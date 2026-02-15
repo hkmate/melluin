@@ -1,5 +1,5 @@
 import {Component, input, output} from '@angular/core';
-import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
+import {HospitalVisitActivity} from '@melluin/common';
 import {VisitedChildById} from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
 
 @Component({

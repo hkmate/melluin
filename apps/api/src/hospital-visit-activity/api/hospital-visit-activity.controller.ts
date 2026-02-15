@@ -11,20 +11,22 @@ import {
     Post,
     Put
 } from '@nestjs/common';
-import {User} from '@shared/user/user';
+import {
+    HospitalVisitActivity,
+    HospitalVisitActivityEditInput,
+    isNil,
+    Permission,
+    User,
+    WrappedHospitalVisitActivity
+} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {HospitalVisitActivityCrudService} from '@be/hospital-visit-activity/hospital-visit-activity.crud.service';
-import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
-import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
 import {HospitalVisitRelationDao} from '@be/hospital-visit/hospital-visit-relation.dao';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {Permission} from '@shared/user/permission.enum';
-import {isNil} from '@shared/util/util';
 import {
     HospitalVisitActivityEditValidatedInput,
     HospitalVisitActivityValidatedInput
 } from '@be/hospital-visit-activity/api/dto/hospital-visit-activity-input';
-import {HospitalVisitActivityEditInput} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
 
 
 @Controller('hospital-visits')

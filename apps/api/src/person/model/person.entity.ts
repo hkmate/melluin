@@ -1,8 +1,7 @@
 import {Column, Entity, OneToOne, PrimaryColumn} from 'typeorm';
 import {UserEntity} from '@be/user/model/user.entity';
 import {plainToInstance} from 'class-transformer';
-import {OperationCity} from '@shared/person/operation-city';
-import {PersonPreferences} from '@shared/person/person-preferences';
+import {OperationCity, PersonPreferences} from '@melluin/common';
 import {PersonPreferencesDo} from '@be/person/model/person-preferences.do';
 
 @Entity({ name: 'person' })

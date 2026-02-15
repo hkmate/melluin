@@ -1,5 +1,5 @@
 import {Component, effect, inject, input, output} from '@angular/core';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
+import {VisitedChild} from '@melluin/common';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 import {Observable} from 'rxjs';
 

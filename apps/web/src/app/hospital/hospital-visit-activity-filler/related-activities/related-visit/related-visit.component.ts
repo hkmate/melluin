@@ -1,12 +1,14 @@
 import {Component, computed, effect, inject, input, signal} from '@angular/core';
-import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
-import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
+import {
+    HospitalVisitActivity,
+    HospitalVisitActivityInfo,
+    isNilOrEmpty,
+    Permission,
+    VisitedChild,
+    WrappedHospitalVisitActivity
+} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {Permission} from '@shared/user/permission.enum';
 import {convertToChildrenById} from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
-import {HospitalVisitActivityInfo} from '@shared/hospital-visit-activity/hospital-visit-activity-info';
-import {isNilOrEmpty} from '@shared/util/util';
 
 @Component({
     selector: 'app-related-visit',

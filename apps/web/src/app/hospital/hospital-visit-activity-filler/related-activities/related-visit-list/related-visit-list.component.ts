@@ -1,6 +1,5 @@
 import {Component, effect, inject, input, signal} from '@angular/core';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
-import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
+import {HospitalVisit, WrappedHospitalVisitActivity} from '@melluin/common';
 import {VisitActivityService} from '@fe/app/hospital/visit-activity/visit-activity.service';
 
 @Component({

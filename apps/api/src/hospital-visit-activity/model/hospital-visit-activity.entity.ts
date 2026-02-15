@@ -1,6 +1,6 @@
 import {Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn} from 'typeorm';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
-import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
+import {VisitActivityType} from '@melluin/common';
 import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
 
 @Entity({name: 'hospital_visit_activity'})

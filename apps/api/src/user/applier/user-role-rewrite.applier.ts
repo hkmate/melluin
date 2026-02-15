@@ -1,6 +1,5 @@
-import {UserRewrite} from '@shared/user/user-rewrite';
+import {Applier, UserRewrite} from '@melluin/common';
 import {UserEntity} from '@be/user/model/user.entity';
-import {Applier} from '@shared/applier';
 import {RoleEntity} from '@be/user/model/role.entity';
 import * as _ from 'lodash';
 import {RoleDao} from '@be/user/role.dao';

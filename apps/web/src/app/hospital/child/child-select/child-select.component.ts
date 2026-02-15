@@ -1,7 +1,6 @@
 import {Component, forwardRef, input, output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {NOOP, VoidFunc} from '@shared/util/util';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
+import {NOOP, VisitedChild, VoidFunc} from '@melluin/common';
 import * as _ from 'lodash';
 
 @Component({

@@ -1,8 +1,7 @@
 import {Body, Controller, ForbiddenException, Get, Param, ParseUUIDPipe, Put} from '@nestjs/common';
-import {User} from '@shared/user/user';
+import {User, UserSettings} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {UserSettingsService} from '@be/user/service/user-settings.service';
-import {UserSettings} from '@shared/user/user-settings';
 import {UserSettingsValidatedInput} from '@be/user/api/dto/user-settings';
 
 

@@ -1,6 +1,5 @@
 import {Component, inject, output} from '@angular/core';
-import {Role, RoleCreation, RoleType} from '@shared/user/role';
-import {Permission} from '@shared/user/permission.enum';
+import {Permission, Role, RoleCreation, RoleType} from '@melluin/common';
 import {RoleService} from '@fe/app/sysadmin/role-settings/role.service';
 import {MessageService} from '@fe/app/util/message.service';
 

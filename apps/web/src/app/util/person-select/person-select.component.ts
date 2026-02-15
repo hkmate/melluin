@@ -1,10 +1,7 @@
 import {Component, forwardRef, inject, input, signal} from '@angular/core';
-import {PersonIdentifier} from '@shared/person/person';
+import {FilteringInfo, isNil, NOOP, PersonIdentifier, RoleType, VoidFunc} from '@melluin/common';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {isNil, NOOP, VoidFunc} from '@shared/util/util';
 import {CachedPeopleService} from '@fe/app/people/cached-people.service';
-import {FilteringInfo} from '@shared/api-util/pageable';
-import {RoleType} from '@shared/user/role';
 
 @Component({
     selector: 'app-person-select',

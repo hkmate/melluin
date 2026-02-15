@@ -1,10 +1,17 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, Pageable, PageQuery, QUERY_QUERY_KEY} from '@shared/api-util/pageable';
+import {
+    PAGE_QUERY_KEY,
+    PAGE_SIZE_QUERY_KEY,
+    Pageable,
+    PageQuery,
+    Person,
+    PersonCreation,
+    PersonIdentifier,
+    PersonRewrite,
+    QUERY_QUERY_KEY
+} from '@melluin/common';
 import {Observable} from 'rxjs';
-import {Person, PersonIdentifier} from '@shared/person/person';
-import {PersonCreation} from '@shared/person/person-creation';
-import {PersonRewrite} from '@shared/person/person-rewrite';
 import {getErrorHandler, utf8ToBase64} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';

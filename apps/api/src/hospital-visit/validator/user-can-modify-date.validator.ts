@@ -1,11 +1,7 @@
-import {User} from '@shared/user/user';
+import {ApiError, HospitalVisitRewrite, HospitalVisitStatus, Permission, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
-import {Permission} from '@shared/user/permission.enum';
 import {HospitalVisitRewriteValidationData, VisitRewriteValidator} from '@be/hospital-visit/validator/visit-validator';
-import {ApiError} from '@shared/api-util/api-error';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
-import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import dayjs from 'dayjs';
 
 export class UserCanModifyDateValidator implements VisitRewriteValidator {

@@ -1,13 +1,9 @@
 import {Component, inject} from '@angular/core';
-import {SortOptions} from '@shared/api-util/sort-options';
+import {FilterOptions, HospitalVisit, Pageable, PageQuery, Permission, SortOptions} from '@melluin/common';
 import {AppTitle} from '@fe/app/app-title.service';
 import {PageEvent} from '@angular/material/paginator';
-import {Pageable, PageQuery} from '@shared/api-util/pageable';
-import {FilterOptions} from '@shared/api-util/filter-options';
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {Permission} from '@shared/user/permission.enum';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {HospitalEventsSettingsService} from '@fe/app/events/events-list/service/hospital-events-settings.service';
 import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';

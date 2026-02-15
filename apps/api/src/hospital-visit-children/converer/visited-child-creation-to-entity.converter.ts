@@ -1,6 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter/converter';
+import {Converter, isNil} from '@melluin/common';
 import {randomUUID} from 'crypto';
 import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
 import {VisitedChildCreation} from '@be/hospital-visit-children/converer/visited-child-creation';

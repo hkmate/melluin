@@ -1,9 +1,7 @@
 import {Component, computed, inject, input, output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UserCreation} from '@shared/user/user-creation';
+import {Permission, RoleBrief, UserCreation} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {Permission} from '@shared/user/permission.enum';
-import {RoleBrief} from '@shared/user/role';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
 
 @Component({

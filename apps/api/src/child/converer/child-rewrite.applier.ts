@@ -1,4 +1,4 @@
-import {ChildInput} from '@shared/child/child-input';
+import {ChildInput} from '@melluin/common';
 import {ChildEntity} from '@be/child/model/child.entity';
 
 

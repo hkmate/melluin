@@ -3,7 +3,7 @@ import {RoleDao} from '@be/user/role.dao';
 import {RoleEntityToDtoConverter} from '@be/user/converter/role-entity-to-dto.converter';
 import {RoleRewriteApplier} from '@be/user/applier/role-rewrite.applier';
 import {PermissionDao} from '@be/user/permission.dao';
-import {Role, RoleBrief, RoleCreation} from '@shared/user/role';
+import {Role, RoleBrief, RoleCreation} from '@melluin/common';
 import {RoleCreationToEntityConverter} from '@be/user/converter/role-creation-to-entity.converter';
 import {UserDao} from '@be/user/user.dao';
 import {RoleEntityToBriefDtoConverter} from '@be/user/converter/role-entity-to-brief-dto.converter';

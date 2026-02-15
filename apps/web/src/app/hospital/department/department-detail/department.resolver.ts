@@ -1,11 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, Observable, of} from 'rxjs';
-import {isNilOrEmpty} from '@shared/util/util';
+import {cast, Department, isNilOrEmpty} from '@melluin/common';
 import {isUUID} from 'class-validator';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
-import {cast} from '@shared/util/test-util';
-import {Department} from '@shared/department/department';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 
 @Injectable({

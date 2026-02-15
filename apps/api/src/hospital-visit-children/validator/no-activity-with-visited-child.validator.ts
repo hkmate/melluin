@@ -1,5 +1,5 @@
 import {BadRequestException, Injectable} from '@nestjs/common';
-import {ApiError} from '@shared/api-util/api-error';
+import {ApiError} from '@melluin/common';
 import {
     VisitedChildUpdateValidationData,
     VisitedChildUpdateValidator

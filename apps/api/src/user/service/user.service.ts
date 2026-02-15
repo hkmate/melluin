@@ -1,13 +1,10 @@
 import {Injectable} from '@nestjs/common';
 import {UserDao} from '@be/user/user.dao';
-import {User} from '@shared/user/user';
-import {UserCreation} from '@shared/user/user-creation';
+import {AsyncValidatorChain, isNotNil, User, UserCreation, UserRewrite} from '@melluin/common';
 import {UserCreationToEntityConverter} from '@be/user/converter/user-creation-to-entity.converter';
 import {PersonHasNoUserYetValidator} from '@be/user/validator/person-has-no-user-yet.validator';
 import {UsernameIsNotUsedValidator} from '@be/user/validator/username-is-not-used.validator';
-import {AsyncValidatorChain} from '@shared/validator/validator-chain';
 import {CanRequesterChangeUserValidator} from '@be/user/validator/can-requester-change-user.validator';
-import {UserRewrite} from '@shared/user/user-rewrite';
 import {UserRewriteApplierFactory} from '@be/user/applier/user-rewrite-applier.factory';
 import {UserRewriteValidator} from '@be/user/validator/user-rewrite.validator';
 import {CanRequesterChangeUsersRoleValidator} from '@be/user/validator/can-requester-change-users-role.validator';
@@ -19,7 +16,6 @@ import {UserEntityToDtoConverterFactory} from '@be/user/converter/user-entity-to
 import {UserActivation} from '@be/user/model/user-activation';
 import {UserEntity} from '@be/user/model/user.entity';
 import {UserActivationDao} from '@be/user/user-activation.dao';
-import {isNotNil} from '@shared/util/util';
 
 @Injectable()
 export class UserService {

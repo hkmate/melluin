@@ -1,7 +1,5 @@
-import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
+import {DepartmentBoxStatus, isNilOrEmpty, PageQuery} from '@melluin/common';
 import {PageEvent} from '@angular/material/paginator';
-import {PageQuery} from '@shared/api-util/pageable';
-import {isNilOrEmpty} from '@shared/util/util';
 
 
 export abstract class DepartmentBoxInfoListComponent {

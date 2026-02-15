@@ -6,7 +6,7 @@ import {DepartmentResolver} from '@fe/app/hospital/department/department-detail/
 import {DepartmentDetailComponent} from '@fe/app/hospital/department/department-detail/department-detail.component';
 import {HospitalDepartmentModule} from '@fe/app/hospital/department/hospital-department.module';
 import {DepartmentsListComponent} from '@fe/app/hospital/department/departments-list/departments-list.component';
-import {Permission} from '@shared/user/permission.enum';
+import {Permission} from '@melluin/common';
 
 const routes: Routes = [
     {

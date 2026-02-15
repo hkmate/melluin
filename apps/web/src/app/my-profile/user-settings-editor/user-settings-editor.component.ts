@@ -1,5 +1,5 @@
 import {Component, inject, input} from '@angular/core';
-import {UserSettings} from '@shared/user/user-settings';
+import {UserSettings} from '@melluin/common';
 import {AppActions} from '@fe/app/state/app-actions';
 import {Store} from '@ngrx/store';
 import {MessageService} from '@fe/app/util/message.service';

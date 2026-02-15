@@ -1,5 +1,5 @@
 import {Column, Entity, PrimaryColumn} from 'typeorm';
-import {Permission} from '@shared/user/permission.enum';
+import {Permission} from '@melluin/common';
 
 @Entity({name: 'permission'})
 export class PermissionEntity {

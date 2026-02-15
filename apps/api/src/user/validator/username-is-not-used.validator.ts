@@ -1,6 +1,4 @@
-import {AsyncValidator} from '@shared/validator/validator';
-import {UserCreation} from '@shared/user/user-creation';
-import {isNotNil} from '@shared/util/util';
+import {AsyncValidator, isNotNil, UserCreation} from '@melluin/common';
 import {ConflictException, Injectable} from '@nestjs/common';
 import {UserDao} from '@be/user/user.dao';
 import {UserRewriteWithEntity} from '@be/user/validator/user-rewrite.validator';

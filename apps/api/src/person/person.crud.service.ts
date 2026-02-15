@@ -1,20 +1,24 @@
 import {Injectable} from '@nestjs/common';
 import {PersonDao} from '@be/person/person.dao';
-import {Pageable} from '@shared/api-util/pageable';
-import {Person, PersonIdentifier} from '@shared/person/person';
+import {
+    Pageable,
+    Person,
+    PersonCreation,
+    personFilterableFields,
+    PersonIdentifier,
+    PersonRewrite,
+    personSortableFields,
+    User,
+    ValidatorChain
+} from '@melluin/common';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {PageConverter} from '@be/crud/convert/page.converter';
-import {User} from '@shared/user/user';
-import {PersonCreation} from '@shared/person/person-creation';
-import {PersonRewrite} from '@shared/person/person-rewrite';
 import {PersonCreationToEntityConverter} from '@be/person/converer/person-creation-to-entity.converter';
 import {CanUserUpdatePersonPrimitiveFieldsValidator,} from '@be/person/validator/can-user-update-person-primitive-fields.validator';
 import {PageRequest} from '@be/crud/page-request';
 import {PageRequestFieldsValidator} from '@be/crud/validator/page-request-fields.validator';
-import {personFilterableFields, personSortableFields} from '@shared/person/person-filterable-fields';
 import {PersonRewriteApplierFactory} from '@be/person/applier/person-rewrite-applier.factory';
 import {PersonRewriteValidator} from '@be/person/validator/person-rewrite.validator';
-import {ValidatorChain} from '@shared/validator/validator-chain';
 import {CanUserUpdatePersonPreferencesValidator,} from '@be/person/validator/can-user-update-person-preferences.validator';
 import {PersonEntityToDtoConverterFactory} from '@be/person/converer/person-entity-to-dto-converter.factory';
 import {CanUserPerformFindValidator} from '@be/person/validator/can-user-perform-find.validator';

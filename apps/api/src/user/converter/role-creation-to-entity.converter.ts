@@ -1,9 +1,7 @@
-import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter/converter';
+import {Converter, isNil, RoleCreation} from '@melluin/common';
 import {randomUUID} from 'crypto';
 import {Injectable} from '@nestjs/common';
 import {PermissionDao} from '@be/user/permission.dao';
-import {RoleCreation} from '@shared/user/role';
 import {RoleEntity} from '@be/user/model/role.entity';
 
 @Injectable()

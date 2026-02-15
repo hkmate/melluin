@@ -1,4 +1,3 @@
-
 export enum ListPageSettingChangeReason {
     ALL = 'ALL',
     PREFERENCES = 'PREFERENCES',

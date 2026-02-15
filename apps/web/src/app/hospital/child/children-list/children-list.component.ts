@@ -1,6 +1,5 @@
 import {Component, computed, input} from '@angular/core';
-import {isNilOrEmpty} from '@shared/util/util';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
+import {isNilOrEmpty, VisitedChild} from '@melluin/common';
 
 @Component({
     selector: 'app-children-list',

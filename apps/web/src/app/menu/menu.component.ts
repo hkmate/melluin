@@ -1,8 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {AuthenticationService} from '@fe/app/auth/service/authentication.service';
-import {User} from '@shared/user/user';
-import {includeAny, isNil, isNilOrEmpty} from '@shared/util/util';
-import {Permission} from '@shared/user/permission.enum';
+import {includeAny, isNil, isNilOrEmpty, Permission, User} from '@melluin/common';
 import {Platform} from '@angular/cdk/platform';
 import {Store} from '@ngrx/store';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';

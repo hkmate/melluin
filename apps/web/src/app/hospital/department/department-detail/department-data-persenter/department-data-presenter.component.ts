@@ -1,5 +1,5 @@
 import {Component, input} from '@angular/core';
-import {Department} from '@shared/department/department';
+import {Department} from '@melluin/common';
 
 @Component({
     selector: 'app-department-data-presenter',

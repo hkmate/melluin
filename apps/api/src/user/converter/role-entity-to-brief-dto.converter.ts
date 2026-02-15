@@ -1,8 +1,6 @@
 import {Injectable} from '@nestjs/common';
-import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter/converter';
+import {Converter, isNil, RoleBrief} from '@melluin/common';
 import {RoleEntity} from '@be/user/model/role.entity';
-import {RoleBrief} from '@shared/user/role';
 
 @Injectable()
 export class RoleEntityToBriefDtoConverter implements Converter<RoleEntity, RoleBrief> {

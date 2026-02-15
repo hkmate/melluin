@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {ChildRewriteApplier} from '@be/child/converer/child-rewrite.applier';
-import {ChildInput} from '@shared/child/child-input';
+import {ChildInput} from '@melluin/common';
 import {ChildEntity} from '@be/child/model/child.entity';
 
 @Injectable()

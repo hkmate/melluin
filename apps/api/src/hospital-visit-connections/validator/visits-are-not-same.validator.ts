@@ -3,7 +3,7 @@ import {
     HospitalVisitConnectionValidationData,
     VisitConnectionValidator
 } from '@be/hospital-visit-connections/validator/visit-connection-validator';
-import {ApiError} from '@shared/api-util/api-error';
+import {ApiError} from '@melluin/common';
 
 
 export class VisitsAreNotSameValidator implements VisitConnectionValidator {

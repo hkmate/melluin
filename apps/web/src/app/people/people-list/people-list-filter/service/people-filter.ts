@@ -1,4 +1,4 @@
-import {OperationCity} from '@shared/person/operation-city';
+import {OperationCity} from '@melluin/common';
 
 export class PeopleFilter {
 

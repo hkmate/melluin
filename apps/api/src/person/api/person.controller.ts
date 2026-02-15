@@ -13,14 +13,11 @@ import {
     Query
 } from '@nestjs/common';
 import {PersonCrudService} from '@be/person/person.crud.service';
-import {Pageable} from '@shared/api-util/pageable';
-import {Person, PersonIdentifier} from '@shared/person/person';
-import {User} from '@shared/user/user';
+import {Pageable, Permission, Person, PersonIdentifier, User} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PageReq} from '@be/crud/page-req';
 import {PageRequest} from '@be/crud/page-request';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {Permission} from '@shared/user/permission.enum';
 import {PersonCreationValidatedInput} from '@be/person/api/dto/person-creation';
 import {PersonRewriteValidatedInput} from '@be/person/api/dto/person-rewrite';
 

@@ -1,8 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {EntityManager} from 'typeorm';
-import {OperationCity} from '@shared/person/operation-city';
-import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
+import {HospitalVisitStatus, OperationCity, VisitActivityType} from '@melluin/common';
 import {VisitByDepartmentsRowItem} from '@be/statistics/model/visit-by-departments-row-item';
 import {ChildrenByDepartmentsRowItem} from '@be/statistics/model/children-by-departments-row-item';
 import {VisitStatusCountRowItem} from '@be/statistics/model/visit-status-count-row-item';

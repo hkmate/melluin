@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
-import {VisitedChild, VisitedChildEditInput, VisitedChildInput} from '@shared/hospital-visit/visited-child';
+import {VisitedChild, VisitedChildEditInput, VisitedChildInput} from '@melluin/common';
 
 @Injectable({providedIn: 'root'})
 export class VisitedChildService {

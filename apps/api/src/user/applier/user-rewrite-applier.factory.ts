@@ -1,8 +1,7 @@
 import {Injectable} from '@nestjs/common';
-import {UserRewrite} from '@shared/user/user-rewrite';
+import {AsyncApplier, AsyncApplierChain, UserRewrite} from '@melluin/common';
 import {UserEntity} from '@be/user/model/user.entity';
 import {UserPrimitivesRewriteApplier} from '@be/user/applier/user-primitives-rewrite.applier';
-import {AsyncApplier, AsyncApplierChain} from '@shared/applier';
 import {UserPasswordRewriteApplier} from '@be/user/applier/user-password-rewrite.applier';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserRoleRewriteApplier} from '@be/user/applier/user-role-rewrite.applier';

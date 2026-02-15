@@ -1,7 +1,5 @@
 import {BadRequestException} from '@nestjs/common';
-import {isNil} from '@shared/util/util';
-import {Validator} from '@shared/validator/validator';
-import {ConjunctionFilterOptions, FilterOptions} from '@shared/api-util/filter-options';
+import {ConjunctionFilterOptions, FilterOptions, isNil, Validator} from '@melluin/common';
 import {PageRequest} from '@be/crud/page-request';
 
 export class FilterOptionsValidator implements Validator<PageRequest> {

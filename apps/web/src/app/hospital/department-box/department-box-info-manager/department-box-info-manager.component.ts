@@ -1,4 +1,4 @@
-import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
+import {DepartmentBoxStatusReport} from '@melluin/common';
 
 
 export abstract class DepartmentBoxInfoManagerComponent {

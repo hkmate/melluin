@@ -1,5 +1,5 @@
 import {IsBoolean, IsOptional} from 'class-validator';
-import {PersonPreferences} from '@shared/person/person-preferences';
+import {PersonPreferences} from '@melluin/common';
 
 export class PersonPreferencesValidatedInput implements PersonPreferences {
 

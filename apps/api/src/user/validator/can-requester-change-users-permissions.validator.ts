@@ -1,9 +1,7 @@
-import {User} from '@shared/user/user';
+import {AsyncValidator, Permission, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
-import {Permission} from '@shared/user/permission.enum';
 import {UserRewriteWithEntity} from '@be/user/validator/user-rewrite.validator';
 import * as _ from 'lodash';
-import {AsyncValidator} from '@shared/validator/validator';
 
 
 export class CanRequesterChangeUsersPermissionsValidator implements AsyncValidator<UserRewriteWithEntity> {

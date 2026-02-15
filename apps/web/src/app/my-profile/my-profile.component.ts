@@ -1,14 +1,11 @@
 import {Component, inject} from '@angular/core';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {Permission} from '@shared/user/permission.enum';
+import {Permission, Person, User, UserSettings} from '@melluin/common';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {Store} from '@ngrx/store';
 import {PeopleService} from '@fe/app/people/people.service';
-import {User} from '@shared/user/user';
-import {Person} from '@shared/person/person';
 import {selectUserSettings} from '@fe/app/state/selector/user-settings.selector';
-import {UserSettings} from '@shared/user/user-settings';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNotNil} from '@shared/util/util';
+import {isNotNil} from '@melluin/common';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {filter, map, Observable} from 'rxjs';
 

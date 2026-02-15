@@ -1,21 +1,21 @@
 import {IsBoolean, IsEnum, IsIn, IsOptional, IsPositive, IsUUID, ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
-import {DateIntervalSpecifier} from '@shared/util/date-interval-generator';
 import {
+    BoxStatusChangeReason,
     DashboardUserSettings,
     DashboardWidgetSettings,
+    DateIntervalSpecifier,
     DepartmentBoxInfoSinceDateValues,
     DepartmentBoxWidgetSettings,
     EventListUserSettings,
     EventsDateFilterValues,
     HomePageOption,
     HomePageUserSettings,
+    HospitalVisitStatus,
     UserSettings,
     WidgetSetting,
     WidgetType
-} from '@shared/user/user-settings';
+} from '@melluin/common';
 
 export class EventListUserSettingsValidatedInput implements EventListUserSettings {
 

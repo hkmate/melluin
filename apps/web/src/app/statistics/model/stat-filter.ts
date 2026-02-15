@@ -1,4 +1,4 @@
-import {OperationCity} from '@shared/person/operation-city';
+import {OperationCity} from '@melluin/common';
 
 export interface StatFilter {
     from: string; // ISO date time string

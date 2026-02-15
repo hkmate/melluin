@@ -1,11 +1,10 @@
-import {VisitsCountByWeekDay} from '@shared/statistics/visits-count-by-week-day';
+import {OperationCity, VisitsCountByWeekDay} from '@melluin/common';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {TranslateService} from '@ngx-translate/core';
 import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 import {ChartConfiguration} from 'chart.js';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
-import {OperationCity} from '@shared/person/operation-city';
 import {firstValueFrom} from 'rxjs';
 import {VisitCountByWeekDayStatProvider} from '@fe/app/statistics/service/visit-count-by-week-day-stat-provider';
 

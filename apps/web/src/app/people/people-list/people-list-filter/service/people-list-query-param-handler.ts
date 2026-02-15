@@ -1,9 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {QueryParams, UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
-import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo} from '@shared/api-util/pageable';
+import {emptyToUndef, PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo, VoidNOOP} from '@melluin/common';
 import {filter, map, Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {emptyToUndef, VoidNOOP} from '@shared/util/util';
 import {PeopleFilter} from '@fe/app/people/people-list/people-list-filter/service/people-filter';
 import {PeopleListQueryParams} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-params';
 

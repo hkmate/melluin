@@ -1,6 +1,6 @@
 import {Column, Entity, JoinTable, ManyToMany, PrimaryColumn} from 'typeorm';
 import {PermissionEntity} from '@be/user/model/permission.entity';
-import {RoleType} from '@shared/user/role';
+import {RoleType} from '@melluin/common';
 
 @Entity({name: 'role'})
 export class RoleEntity {

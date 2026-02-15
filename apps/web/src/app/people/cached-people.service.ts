@@ -1,9 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {map, mergeMap, Observable, of, tap} from 'rxjs';
-import {PersonIdentifier} from '@shared/person/person';
+import {FilteringInfo, isNilOrEmpty, Pageable, PersonIdentifier} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
-import {FilteringInfo, Pageable} from '@shared/api-util/pageable';
-import {isNilOrEmpty} from '@shared/util/util';
 
 
 @Injectable({providedIn: 'root'})

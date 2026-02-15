@@ -2,14 +2,11 @@ import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {In, Not, Repository} from 'typeorm';
 import {PersonEntity} from './model/person.entity';
-import {Pageable} from '@shared/api-util/pageable';
+import {FilterOperation, isNil, isNilOrEmpty, isNotEmpty, Pageable, PersonIdentifier} from '@melluin/common';
 import {WhereClosureConverter} from '@be/find-option-converter/where-closure.converter';
-import {isNil, isNilOrEmpty, isNotEmpty} from '@shared/util/util';
 import {PageCreator} from '@be/crud/page-creator';
 import {PageRequest} from '@be/crud/page-request';
 import {FilterOptionsFieldsConverter} from '@be/crud/convert/filter-options-fields-converter';
-import {FilterOperation} from '@shared/api-util/filter-options';
-import {PersonIdentifier} from '@shared/person/person';
 import {paginate} from 'nestjs-typeorm-paginate';
 
 @Injectable()

@@ -1,7 +1,5 @@
-import {User} from '@shared/user/user';
+import {ApiError, Permission, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
-import {Permission} from '@shared/user/permission.enum';
-import {ApiError} from '@shared/api-util/api-error';
 import {
     VisitedChildBasicValidationData,
     VisitedChildBasicValidator

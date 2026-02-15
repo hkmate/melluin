@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
+import {HospitalVisit} from '@melluin/common';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
 import {getErrorHandler} from '@fe/app/util/util';

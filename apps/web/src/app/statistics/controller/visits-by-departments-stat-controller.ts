@@ -2,9 +2,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
-import {OperationCity} from '@shared/person/operation-city';
+import {OperationCity, VisitByDepartments} from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
-import {VisitByDepartments} from '@shared/statistics/visit-by-departments';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 

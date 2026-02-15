@@ -1,8 +1,7 @@
 import {Component, inject, input, signal} from '@angular/core';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
-import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
+import {HospitalVisitActivity, NOOP} from '@melluin/common';
 import {VisitedChildById} from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
-import {NOOP} from '@shared/util/util';
 import {ConfirmationDialogConfig} from '@fe/app/confirmation/confirmation-dialog-config';
 import {TranslateService} from '@ngx-translate/core';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';

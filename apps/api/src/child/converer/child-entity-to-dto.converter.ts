@@ -1,8 +1,6 @@
 import {Injectable} from '@nestjs/common';
-import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter/converter';
+import {Child, Converter, isNil} from '@melluin/common';
 import {ChildEntity} from '@be/child/model/child.entity';
-import {Child} from '@shared/child/child';
 
 @Injectable()
 export class ChildEntityToDtoConverter implements Converter<ChildEntity, Child> {

@@ -1,5 +1,4 @@
-import {isEmpty, isNotNil} from '@shared/util/util';
-import {randomString} from '@shared/util/test-util';
+import {isEmpty, isNotNil, randomString} from '@melluin/common';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 
 describe('PasswordCryptService', () => {

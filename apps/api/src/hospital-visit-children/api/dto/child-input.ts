@@ -1,8 +1,6 @@
 import {IsOptional, IsString, Matches, MinLength} from 'class-validator';
-import {childMinBirthYear, nameMinLength} from '@shared/constants';
+import {ChildInput, childMinBirthYear, nameMinLength} from '@melluin/common';
 import {IsYearAndMonth} from '@be/util/validator-decorators/is-year-and-month';
-import {ChildInput} from '@shared/child/child-input';
-
 
 
 export class ChildValidatedInput implements ChildInput {

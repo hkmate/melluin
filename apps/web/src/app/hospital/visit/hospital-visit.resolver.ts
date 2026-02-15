@@ -1,14 +1,11 @@
 import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, Observable, of} from 'rxjs';
-import {isNilOrEmpty} from '@shared/util/util';
+import {cast, HospitalVisit, isNilOrEmpty, Permission} from '@melluin/common';
 import {isUUID} from 'class-validator';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
-import {cast} from '@shared/util/test-util';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {Permission} from '@shared/user/permission.enum';
 
 @Injectable({
     providedIn: 'root'

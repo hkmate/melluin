@@ -1,5 +1,5 @@
 import {Component, input} from '@angular/core';
-import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
+import {DepartmentBoxStatus} from '@melluin/common';
 
 @Component({
     selector: 'app-department-box-info',

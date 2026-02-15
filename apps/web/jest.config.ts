@@ -9,11 +9,7 @@ const config: Config = {
     verbose: true,
     rootDir: '.',
     moduleNameMapper: {
-        '@shared/(.*)': '<rootDir>/../api/src/shared/$1',
         '@fe/(.*)': '<rootDir>/src/$1',
-        'class-validator': '<rootDir>/node_modules/class-validator/$1',
-        'class-transformer': '<rootDir>/node_modules/class-transformer/$1',
-        'tslib': '<rootDir>/node_modules/tslib/$1'
     },
 
     clearMocks: true,

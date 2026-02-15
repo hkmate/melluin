@@ -1,6 +1,5 @@
-import {UserRewrite} from '@shared/user/user-rewrite';
+import {AsyncApplier, UserRewrite} from '@melluin/common';
 import {UserEntity} from '@be/user/model/user.entity';
-import {AsyncApplier} from '@shared/applier';
 
 
 export class UserPrimitivesRewriteApplier implements AsyncApplier<UserEntity> {

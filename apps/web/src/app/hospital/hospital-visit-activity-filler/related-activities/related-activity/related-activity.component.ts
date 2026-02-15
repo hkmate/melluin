@@ -1,6 +1,5 @@
 import {Component, input} from '@angular/core';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
-import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
+import {HospitalVisitActivity, VisitedChild} from '@melluin/common';
 
 @Component({
     selector: 'app-related-activity',

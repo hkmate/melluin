@@ -2,8 +2,7 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import {In, Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import {RoleEntity} from './model/role.entity';
-import {isNil} from '@shared/util/util';
-import {RoleType} from '@shared/user/role';
+import {isNil, RoleType} from '@melluin/common';
 
 @Injectable()
 export class RoleDao {

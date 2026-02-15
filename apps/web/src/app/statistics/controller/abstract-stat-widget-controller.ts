@@ -3,7 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {WidgetExportingInfo, WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
 import {Signal, signal} from '@angular/core';
-import {OperationCity} from '@shared/person/operation-city';
+import {OperationCity} from '@melluin/common';
 import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 
 export abstract class AbstractStatisticWidgetController<T> implements StatisticWidgetController<T> {

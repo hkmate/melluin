@@ -3,7 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
 import {ConfirmationAnswer, ConfirmationDialogConfig} from '@fe/app/confirmation/confirmation-dialog-config';
 import {ConfirmationDialogComponent} from '@fe/app/confirmation/confirmation-dialog/confirmation-dialog.component';
-import {isNilOrEmpty} from '@shared/util/util';
+import {isNilOrEmpty} from '@melluin/common';
 
 
 @Injectable()

@@ -1,8 +1,6 @@
-import {UserRewrite} from '@shared/user/user-rewrite';
+import {AsyncApplier, isNil, UserRewrite} from '@melluin/common';
 import {UserEntity} from '@be/user/model/user.entity';
-import {AsyncApplier} from '@shared/applier';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
-import {isNil} from '@shared/util/util';
 
 
 export class UserPasswordRewriteApplier implements AsyncApplier<UserEntity> {

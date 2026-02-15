@@ -1,7 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {Child, ChildAge} from '@shared/child/child';
+import {Child, ChildAge, getChildAge} from '@melluin/common';
 import {TranslateService} from '@ngx-translate/core';
-import {getChildAge} from '@shared/child/child-age-calculator';
 
 @Pipe({
     name: 'childAge',

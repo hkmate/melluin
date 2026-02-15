@@ -5,12 +5,9 @@ import {PeopleFilter} from '@fe/app/people/people-list/people-list-filter/servic
 import {PeopleListFilterService} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter.service';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {Store} from '@ngrx/store';
-import {User} from '@shared/user/user';
-import {Permission} from '@shared/user/permission.enum';
+import {OperationCity, Permission, RoleBrief, User} from '@melluin/common';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
-import {RoleBrief} from '@shared/user/role';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {OperationCity} from '@shared/person/operation-city';
 
 @Component({
     selector: 'app-people-list-filter',

@@ -1,7 +1,5 @@
 import {IsBoolean, IsDateString, IsEnum, IsOptional, IsPositive, MinLength} from 'class-validator';
-import {nameMinLength} from '@shared/constants';
-import {OperationCity} from '@shared/person/operation-city';
-import {DepartmentCreation} from '@shared/department/department-creation';
+import {DepartmentCreation, nameMinLength, OperationCity} from '@melluin/common';
 
 export class DepartmentCreationValidatedInput implements DepartmentCreation {
 

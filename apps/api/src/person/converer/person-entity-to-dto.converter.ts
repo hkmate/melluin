@@ -1,9 +1,7 @@
-import { PersonEntity } from '@be/person/model/person.entity';
-import { Person } from '@shared/person/person';
-import { Injectable } from '@nestjs/common';
-import { isNil } from '@shared/util/util';
-import { Converter } from '@shared/converter/converter';
-import { UserEntityToBriefDtoConverter } from '@be/user/converter/user-entity-to-brief-dto.converter';
+import {PersonEntity} from '@be/person/model/person.entity';
+import {Converter, isNil, Person} from '@melluin/common';
+import {Injectable} from '@nestjs/common';
+import {UserEntityToBriefDtoConverter} from '@be/user/converter/user-entity-to-brief-dto.converter';
 
 @Injectable()
 export class PersonEntityToDtoConverter implements Converter<PersonEntity, Person> {

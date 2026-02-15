@@ -4,6 +4,7 @@ import {FindOptionConverterModule} from '@be/find-option-converter/find-option-c
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {HospitalVisitRelationDao} from '@be/hospital-visit/hospital-visit-relation.dao';
+
 @Module({
     imports: [
         TypeOrmModule.forFeature([

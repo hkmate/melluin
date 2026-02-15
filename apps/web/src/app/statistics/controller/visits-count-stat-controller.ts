@@ -1,13 +1,11 @@
 import {TranslateService} from '@ngx-translate/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
-import {isNilOrEmpty} from '@shared/util/util';
-import {OperationCity} from '@shared/person/operation-city';
+import {isNilOrEmpty, OperationCity, VisitsCountByWeekDay} from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
-import {VisitsCountByWeekDay} from '@shared/statistics/visits-count-by-week-day';
 import {VisitCountByWeekDayStatProvider} from '@fe/app/statistics/service/visit-count-by-week-day-stat-provider';
 
 export type VisitsCountTableData = Omit<VisitsCountByWeekDay, 'weekDay' | 'visits' | 'visitMinutes'>

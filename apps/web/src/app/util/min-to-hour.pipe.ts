@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {isNotNil} from '@shared/util/util';
+import {isNotNil} from '@melluin/common';
 import * as _ from 'lodash';
 
 @Pipe({

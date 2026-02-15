@@ -1,8 +1,8 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn } from 'typeorm';
-import { RoleEntity } from './role.entity';
-import { PersonEntity } from '../../person/model/person.entity';
-import { UserSettings } from '@shared/user/user-settings';
-import { PermissionEntity } from '@be/user/model/permission.entity';
+import {Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn} from 'typeorm';
+import {RoleEntity} from './role.entity';
+import {PersonEntity} from '../../person/model/person.entity';
+import {UserSettings} from '@melluin/common';
+import {PermissionEntity} from '@be/user/model/permission.entity';
 
 @Entity({ name: 'user' })
 export class UserEntity {

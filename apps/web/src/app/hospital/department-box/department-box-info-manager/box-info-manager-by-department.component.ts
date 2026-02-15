@@ -2,10 +2,9 @@ import {Component, inject, input, viewChild} from '@angular/core';
 import {DepartmentBoxInfoManagerComponent} from '@fe/app/hospital/department-box/department-box-info-manager/department-box-info-manager.component';
 import {MessageService} from '@fe/app/util/message.service';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
-import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
+import {DepartmentBoxStatusReport, Permission} from '@melluin/common';
 import {BoxInfoListByDepartmentComponent} from '@fe/app/hospital/department-box/department-box-info-list/box-info-list-by-department.component';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {Permission} from '@shared/user/permission.enum';
 
 @Component({
     selector: 'app-box-info-manager-by-department',

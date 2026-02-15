@@ -1,11 +1,9 @@
 import {TranslateService} from '@ngx-translate/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
-import {VolunteerByDepartments} from '@shared/statistics/volunteer-by-departments';
-import {OperationCity} from '@shared/person/operation-city';
+import {isNil, OperationCity, VolunteerByDepartments} from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
 import * as _ from 'lodash';
-import {isNil} from '@shared/util/util';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {VolunteersByDepartmentsStatProvider} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';

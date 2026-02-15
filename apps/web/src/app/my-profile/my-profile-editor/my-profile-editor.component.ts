@@ -1,15 +1,18 @@
 import {Component, computed, inject, input, output} from '@angular/core';
-import {User} from '@shared/user/user';
-import {Person} from '@shared/person/person';
+import {
+    isNilOrEmpty,
+    passwordMinLength,
+    passwordPattern,
+    Person,
+    PersonRewrite,
+    User,
+    UserRewrite,
+    UserSettings
+} from '@melluin/common';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MessageService} from '@fe/app/util/message.service';
-import {isNilOrEmpty} from '@shared/util/util';
-import {passwordMinLength, passwordPattern} from '@shared/constants';
 import {PeopleService} from '@fe/app/people/people.service';
 import {UserService} from '@fe/app/people/user.service';
-import {PersonRewrite} from '@shared/person/person-rewrite';
-import {UserRewrite} from '@shared/user/user-rewrite';
-import {UserSettings} from '@shared/user/user-settings';
 import {AppActions} from '@fe/app/state/app-actions';
 import {Store} from '@ngrx/store';
 

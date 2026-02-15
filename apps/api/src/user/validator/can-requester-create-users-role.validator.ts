@@ -1,11 +1,14 @@
-import {User} from '@shared/user/user';
+import {
+    AsyncValidator,
+    getPermissionsNeededToChangeRole,
+    Permission,
+    RoleType,
+    User,
+    UserCreation
+} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
-import {Permission} from '@shared/user/permission.enum';
-import {getPermissionsNeededToChangeRole, RoleType} from '@shared/user/role';
 import {RoleDao} from '@be/user/role.dao';
 import {RoleEntity} from '@be/user/model/role.entity';
-import {AsyncValidator} from '@shared/validator/validator';
-import {UserCreation} from '@shared/user/user-creation';
 
 export class CanRequesterCreateUsersRoleValidator implements AsyncValidator<UserCreation> {
 

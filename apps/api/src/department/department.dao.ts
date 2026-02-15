@@ -1,12 +1,11 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
-import {Pageable} from '@shared/api-util/pageable';
+import {isNil, Pageable} from '@melluin/common';
 import {WhereClosureConverter} from '@be/find-option-converter/where-closure.converter';
 import {PageCreator} from '@be/crud/page-creator';
 import {PageRequest} from '@be/crud/page-request';
 import {DepartmentEntity} from '@be/department/model/department.entity';
-import {isNil} from '@shared/util/util';
 
 @Injectable()
 export class DepartmentDao extends PageCreator<DepartmentEntity> {

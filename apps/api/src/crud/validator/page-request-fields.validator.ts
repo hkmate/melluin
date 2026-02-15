@@ -1,8 +1,7 @@
 import {PageRequestValidator} from '@be/crud/validator/page-request.validator';
 import {SortOptionsValidator} from '@be/crud/validator/sort-options.validator';
-import {Validator} from '@shared/validator/validator';
+import {Validator, ValidatorChain} from '@melluin/common';
 import {FilterOptionsValidator} from '@be/crud/validator/filter-options.validator';
-import {ValidatorChain} from '@shared/validator/validator-chain';
 import {PageRequest} from '@be/crud/page-request';
 
 

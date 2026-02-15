@@ -1,10 +1,6 @@
 import {Component, effect, inject, input} from '@angular/core';
-import {User} from '@shared/user/user';
-import {isNil, isNotNil} from '@shared/util/util';
-import {UserCreation} from '@shared/user/user-creation';
+import {isNil, isNotNil, Permission, User, UserCreation, UserRewrite} from '@melluin/common';
 import {UserService} from '@fe/app/people/user.service';
-import {UserRewrite} from '@shared/user/user-rewrite';
-import {Permission} from '@shared/user/permission.enum';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {MessageService} from '@fe/app/util/message.service';
 

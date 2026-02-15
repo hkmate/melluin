@@ -1,11 +1,17 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, Pageable, PageQuery, QUERY_QUERY_KEY} from '@shared/api-util/pageable';
+import {
+    HospitalVisit,
+    HospitalVisitCreate,
+    HospitalVisitRewrite,
+    PAGE_QUERY_KEY,
+    PAGE_SIZE_QUERY_KEY,
+    Pageable,
+    PageQuery,
+    QUERY_QUERY_KEY
+} from '@melluin/common';
 import {getErrorHandler, utf8ToBase64} from '@fe/app/util/util';
-import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
-import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
 import {ContinueVisitInfo} from '@fe/app/hospital/visit/model/continue-visit-info';

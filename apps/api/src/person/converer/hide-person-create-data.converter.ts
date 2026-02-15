@@ -1,8 +1,4 @@
-import {Person} from '@shared/person/person';
-import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter/converter';
-import {User} from '@shared/user/user';
-import {Permission} from '@shared/user/permission.enum';
+import {Converter, isNil, Permission, Person, User} from '@melluin/common';
 
 export class HidePersonCreateDataConverter implements Converter<Person, Person> {
 

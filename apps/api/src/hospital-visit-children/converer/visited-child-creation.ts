@@ -1,4 +1,4 @@
-import {VisitedChildWithChildIdInput} from '@shared/hospital-visit/visited-child';
+import {VisitedChildWithChildIdInput} from '@melluin/common';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 
 

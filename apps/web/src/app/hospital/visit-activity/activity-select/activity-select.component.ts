@@ -1,7 +1,6 @@
 import {Component, forwardRef, input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {NOOP, VoidFunc} from '@shared/util/util';
-import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
+import {NOOP, VisitActivityType, VoidFunc} from '@melluin/common';
 
 @Component({
     selector: 'app-activity-select',

@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, UrlSegment} from '@angular/router';
 import {LevenshteinCalculator} from './levenshtein-calculator';
-import {isNotNil} from '@shared/util/util';
+import {isNotNil} from '@melluin/common';
 
 @Injectable()
 export abstract class PathProvider {

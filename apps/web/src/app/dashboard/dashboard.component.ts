@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import {AppTitle} from '@fe/app/app-title.service';
 import {selectUserWidgetsSettings} from '@fe/app/state/selector/user-settings.selector';
 import {Store} from '@ngrx/store';
-import {isNil} from '@shared/util/util';
+import {isNil} from '@melluin/common';
 import {WidgetComponentInfo, widgetToComponent} from '@fe/app/dashboard/widget-settings-to-component-mapper';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 

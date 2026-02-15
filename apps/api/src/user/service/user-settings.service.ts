@@ -1,8 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {UserDao} from '@be/user/user.dao';
-import {User} from '@shared/user/user';
+import {User, UserSettings} from '@melluin/common';
 import {UserEntityToSettingsDtoConverter} from '@be/user/converter/user-entity-to-settings-dto.converter';
-import {UserSettings} from '@shared/user/user-settings';
 
 @Injectable()
 export class UserSettingsService {

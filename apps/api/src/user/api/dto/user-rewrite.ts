@@ -1,7 +1,5 @@
 import {IsBoolean, IsEnum, IsOptional, IsString, Matches, MinLength} from 'class-validator';
-import {nameMinLength, passwordMinLength, passwordPattern} from '@shared/constants';
-import {Permission} from '@shared/user/permission.enum';
-import {UserRewrite} from '@shared/user/user-rewrite';
+import {nameMinLength, passwordMinLength, passwordPattern, Permission, UserRewrite} from '@melluin/common';
 
 export class UserRewriteValidatedInput implements UserRewrite {
 

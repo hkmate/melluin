@@ -1,6 +1,5 @@
 import {Component, input} from '@angular/core';
-import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
+import {HospitalVisitActivity, VisitedChild} from '@melluin/common';
 
 @Component({
     selector: 'app-visit-activity-card',

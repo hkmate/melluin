@@ -1,15 +1,18 @@
 import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, Query} from '@nestjs/common';
-import {Pageable} from '@shared/api-util/pageable';
-import {User} from '@shared/user/user';
+import {
+    BoxStatusWithDepartmentBrief,
+    Department,
+    DepartmentBoxStatus,
+    Pageable,
+    Permission,
+    User
+} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PageReq} from '@be/crud/page-req';
 import {PageRequest} from '@be/crud/page-request';
 import {DepartmentCrudService} from '@be/department/department.crud.service';
-import {Department} from '@shared/department/department';
-import {BoxStatusWithDepartmentBrief, DepartmentBoxStatus} from '@shared/department/box/department-box-status';
 import {DepartmentBoxStatusCrudService} from '@be/department-box/department-box-status.crud.service';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {Permission} from '@shared/user/permission.enum';
 import {BoxStatusInfoParam} from '@be/department-box/constants/box-status-info-param';
 import {DepartmentBoxStatusReportValidatedInput} from '@be/department/api/dto/department-box-status-report';
 import {DepartmentCreationValidatedInput} from '@be/department/api/dto/department-creation';

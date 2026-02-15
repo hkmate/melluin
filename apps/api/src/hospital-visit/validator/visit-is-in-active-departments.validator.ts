@@ -3,7 +3,7 @@ import {DepartmentDao} from '@be/department/department.dao';
 import {BadRequestException, Injectable} from '@nestjs/common';
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import dayjs from 'dayjs';
-import {ApiError} from '@shared/api-util/api-error';
+import {ApiError} from '@melluin/common';
 
 @Injectable()
 export class VisitIsInActiveDepartmentsValidator implements VisitSaveValidator {

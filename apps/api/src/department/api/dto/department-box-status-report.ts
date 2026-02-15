@@ -1,6 +1,5 @@
-import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
+import {BoxStatusChangeReason, DepartmentBoxStatusReport} from '@melluin/common';
 import {IsEnum, IsOptional, IsString, IsUUID} from 'class-validator';
-import {DepartmentBoxStatusReport} from '@shared/department/box/department-box-status-report';
 
 
 export class DepartmentBoxStatusReportValidatedInput implements DepartmentBoxStatusReport {

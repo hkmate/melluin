@@ -1,12 +1,7 @@
 import {Component, computed, inject, input, output} from '@angular/core';
-import {User} from '@shared/user/user';
-import {isNotNil} from '@shared/util/util';
-import {UserRewrite} from '@shared/user/user-rewrite';
+import {isNotNil, passwordMinLength, passwordPattern, Permission, RoleBrief, User, UserRewrite} from '@melluin/common';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {passwordMinLength, passwordPattern} from '@shared/constants';
-import {Permission} from '@shared/user/permission.enum';
-import {RoleBrief} from '@shared/user/role';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
 
 @Component({

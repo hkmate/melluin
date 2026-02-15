@@ -1,12 +1,9 @@
-import {Component, input, signal, inject} from '@angular/core';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {DateUtil} from '@shared/util/date-util';
+import {Component, inject, input, signal} from '@angular/core';
+import {DateUtil, HospitalVisit, HospitalVisitStatus, Permission} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {Store} from '@ngrx/store';
-import {Permission} from '@shared/user/permission.enum';
 
 @Component({
     selector: 'app-hospital-events-list',

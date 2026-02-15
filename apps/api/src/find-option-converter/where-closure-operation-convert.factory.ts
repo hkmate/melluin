@@ -1,4 +1,4 @@
-import {FilterOperator} from '@shared/api-util/filter-options';
+import {FilterOperator} from '@melluin/common';
 import {
     Between,
     Equal,

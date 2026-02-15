@@ -1,8 +1,7 @@
 import {Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn} from 'typeorm';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import {PersonEntity} from '@be/person/model/person.entity';
-import {EventVisibility} from '@shared/hospital-visit/event-visibility';
+import {EventVisibility, HospitalVisitStatus} from '@melluin/common';
 
 @Entity({name: 'hospital_visit'})
 export class HospitalVisitEntity {

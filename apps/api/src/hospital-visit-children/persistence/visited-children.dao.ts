@@ -2,7 +2,7 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {In, Repository} from 'typeorm';
 import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
-import {isNil, toOptional} from '@shared/util/util';
+import {isNil, toOptional} from '@melluin/common';
 
 @Injectable()
 export class VisitedChildrenDao {

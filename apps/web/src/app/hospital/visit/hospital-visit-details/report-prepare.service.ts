@@ -1,20 +1,23 @@
 import {inject, Injectable} from '@angular/core';
 import {VisitActivityService} from '../../visit-activity/visit-activity.service';
 import {firstValueFrom} from 'rxjs';
-import {WrappedHospitalVisitActivity} from '@shared/hospital-visit-activity/wrapped-hospital-visit-activity';
+import {
+    Child,
+    getFullName,
+    getMonthsSince,
+    HospitalVisitActivity,
+    isNotEmpty,
+    PersonIdentifier,
+    VisitActivityType,
+    VisitedChild,
+    WrappedHospitalVisitActivity
+} from '@melluin/common';
 import dayjs from 'dayjs'
 import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
-import {getFullName, PersonIdentifier} from '@shared/person/person';
 import _, {isNil, round} from 'lodash';
-import {getMonthsSince} from '@shared/child/child-age-calculator';
 import {AppConfig} from '@fe/app/config/app-config';
-import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
 import {TranslateService} from '@ngx-translate/core';
 import {PATHS} from '@fe/app/app-paths';
-import {Child} from '@shared/child/child';
-import {isNotEmpty} from '@shared/util/util';
-import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
 
 
 @Injectable()

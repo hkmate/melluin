@@ -4,8 +4,7 @@ import {BadRequestException, Injectable} from '@nestjs/common';
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import {PersonDao} from '@be/person/person.dao';
 import {PersonEntity} from '@be/person/model/person.entity';
-import {OperationCity} from '@shared/person/operation-city';
-import {ApiError} from '@shared/api-util/api-error';
+import {ApiError, OperationCity} from '@melluin/common';
 
 @Injectable()
 export class ParticipantsAreWorkInCityAsDepartmentValidator implements VisitSaveValidator {

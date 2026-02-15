@@ -2,7 +2,7 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import {Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import {UserEntity} from './model/user.entity';
-import {isNil, toOptional} from '@shared/util/util';
+import {isNil, toOptional} from '@melluin/common';
 import {FindOneOptions} from 'typeorm/find-options/FindOneOptions';
 
 @Injectable()

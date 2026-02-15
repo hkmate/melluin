@@ -5,20 +5,16 @@ import {JwtService} from '@nestjs/jwt';
 import {UserDao} from '@be/user/user.dao';
 import {PersonDao} from '@be/person/person.dao';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
-import {cast, randomString} from '@shared/util/test-util';
+import {AuthInfo, cast, OperationCity, randomString, RoleBrief, RoleType, User} from '@melluin/common';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {UserEntity} from '@be/user/model/user.entity';
 import crypto, {randomUUID} from 'crypto';
-import {User} from '@shared/user/user';
-import {AuthInfo} from '@shared/user/auth-info';
 import {when} from 'jest-when';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 import {BadRequestException} from '@nestjs/common';
 import {RoleDao} from '@be/user/role.dao';
-import {RoleBrief, RoleType} from '@shared/user/role';
 import * as Utils from '@be/util/util';
-import {OperationCity} from '@shared/person/operation-city';
 import Mock = jest.Mock;
 
 describe('AuthService', () => {

@@ -1,5 +1,5 @@
 import {Column, Entity, PrimaryColumn} from 'typeorm';
-import {OperationCity} from '@shared/person/operation-city';
+import {OperationCity} from '@melluin/common';
 
 @Entity({name: 'hospital_department'})
 export class DepartmentEntity {

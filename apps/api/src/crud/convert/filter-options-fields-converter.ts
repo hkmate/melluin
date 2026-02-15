@@ -1,6 +1,4 @@
-import {isNil, isNotNil} from '@shared/util/util';
-import {ConjunctionFilterOptions, FilterOperation, FilterOptions} from '@shared/api-util/filter-options';
-import {Converter} from '@shared/converter/converter';
+import {ConjunctionFilterOptions, Converter, FilterOperation, FilterOptions, isNil, isNotNil} from '@melluin/common';
 
 export type  FilterConverter = (value: FilterOperation<unknown>) => Promise<{
     key: string,

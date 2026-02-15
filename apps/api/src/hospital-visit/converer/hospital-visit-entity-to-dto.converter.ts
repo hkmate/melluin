@@ -1,8 +1,6 @@
 import {Injectable} from '@nestjs/common';
-import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter/converter';
+import {Converter, HospitalVisit, isNil} from '@melluin/common';
 import {PersonEntityToIdentifierDtoConverter} from '@be/person/converer/person-entity-to-identifier-dto.converter';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {DepartmentEntityToDtoConverter} from '@be/department/converer/department-entity-to-dto.converter';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 

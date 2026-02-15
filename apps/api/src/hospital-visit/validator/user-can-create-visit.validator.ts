@@ -1,9 +1,6 @@
-import {User} from '@shared/user/user';
+import {ApiError, HospitalVisitCreate, Permission, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
-import {Permission} from '@shared/user/permission.enum';
 import {HospitalVisitCreateValidationData, VisitCreateValidator} from '@be/hospital-visit/validator/visit-validator';
-import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
-import {ApiError} from '@shared/api-util/api-error';
 
 export class UserCanCreateVisitValidator implements VisitCreateValidator {
 

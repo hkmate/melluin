@@ -1,9 +1,5 @@
 import {IsEnum, IsOptional, IsString, IsUUID} from 'class-validator';
-import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
-import {
-    HospitalVisitActivityEditInput,
-    HospitalVisitActivityInput
-} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
+import {HospitalVisitActivityEditInput, HospitalVisitActivityInput, VisitActivityType} from '@melluin/common';
 
 
 export class HospitalVisitActivityValidatedInput implements HospitalVisitActivityInput {

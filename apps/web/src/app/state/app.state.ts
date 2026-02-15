@@ -1,5 +1,4 @@
-import {User} from '@shared/user/user';
-import {UserSettings} from '@shared/user/user-settings';
+import {User, UserSettings} from '@melluin/common';
 
 
 export const currentUserKey = 'currentUser'

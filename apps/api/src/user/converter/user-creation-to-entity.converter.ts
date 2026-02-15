@@ -1,15 +1,12 @@
-import { isNil } from '@shared/util/util';
-import { Converter } from '@shared/converter/converter';
-import { randomUUID } from 'crypto';
-import { UserCreation } from '@shared/user/user-creation';
-import { UserEntity } from '@be/user/model/user.entity';
-import { Injectable } from '@nestjs/common';
-import { PersonDao } from '@be/person/person.dao';
-import { PasswordCryptService } from '@be/user/service/password-crypt.service';
-import { RoleDao } from '@be/user/role.dao';
-import { PermissionDao } from '@be/user/permission.dao';
-import { now } from '@be/util/util';
-import { User } from '@shared/user/user';
+import {Converter, isNil, User, UserCreation} from '@melluin/common';
+import {randomUUID} from 'crypto';
+import {UserEntity} from '@be/user/model/user.entity';
+import {Injectable} from '@nestjs/common';
+import {PersonDao} from '@be/person/person.dao';
+import {PasswordCryptService} from '@be/user/service/password-crypt.service';
+import {RoleDao} from '@be/user/role.dao';
+import {PermissionDao} from '@be/user/permission.dao';
+import {now} from '@be/util/util';
 
 interface UserCreationRequest {
     newUser: UserCreation,

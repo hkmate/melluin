@@ -1,8 +1,6 @@
 import {Injectable} from '@nestjs/common';
-import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter/converter';
+import {Converter, DepartmentBoxStatus, isNil} from '@melluin/common';
 import {DepartmentBoxStatusEntity} from '@be/department-box/model/department-box-status.entity';
-import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
 
 @Injectable()
 export class BoxStatusEntityToDtoConverter implements Converter<DepartmentBoxStatusEntity, DepartmentBoxStatus> {

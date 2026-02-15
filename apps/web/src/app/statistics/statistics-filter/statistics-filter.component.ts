@@ -1,7 +1,7 @@
 import {Component, effect, inject, input, output, signal} from '@angular/core';
 import {Platform} from '@angular/cdk/platform';
 import {FormControl, FormGroup} from '@angular/forms';
-import {OperationCity} from '@shared/person/operation-city';
+import {OperationCity} from '@melluin/common';
 import {StatFilter} from '@fe/app/statistics/model/stat-filter';
 
 @Component({

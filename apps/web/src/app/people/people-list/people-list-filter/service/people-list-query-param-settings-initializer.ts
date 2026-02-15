@@ -1,10 +1,8 @@
 import {inject, Injectable} from '@angular/core';
-import {isNil, isNilOrEmpty} from '@shared/util/util';
+import {isNil, isNilOrEmpty, OperationCity, PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo} from '@melluin/common';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
-import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo} from '@shared/api-util/pageable';
 import {PeopleFilter} from '@fe/app/people/people-list/people-list-filter/service/people-filter';
 import {PeopleListQueryParams} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-params';
-import {OperationCity} from '@shared/person/operation-city';
 
 
 @Injectable()

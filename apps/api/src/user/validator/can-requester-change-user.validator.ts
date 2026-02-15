@@ -1,9 +1,7 @@
-import {User} from '@shared/user/user';
+import {getPermissionsNeededToChangeRole, Permission, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {UserEntity} from '@be/user/model/user.entity';
-import {Permission} from '@shared/user/permission.enum';
 import {UserRewriteValidator, UserRewriteWithEntity} from '@be/user/validator/user-rewrite.validator';
-import {getPermissionsNeededToChangeRole} from '@shared/user/role';
 
 
 export class CanRequesterChangeUserValidator implements UserRewriteValidator {

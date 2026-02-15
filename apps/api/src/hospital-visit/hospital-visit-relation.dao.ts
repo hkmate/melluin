@@ -1,10 +1,9 @@
 import {Injectable} from '@nestjs/common';
-import {User} from '@shared/user/user';
+import {HospitalVisitStatus, User} from '@melluin/common';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 
 @Injectable()
 export class HospitalVisitRelationDao {

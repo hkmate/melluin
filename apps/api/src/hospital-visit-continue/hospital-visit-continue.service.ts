@@ -1,19 +1,21 @@
 import {Injectable} from '@nestjs/common';
-import {User} from '@shared/user/user';
+import {
+    AsyncValidatorChain,
+    EventVisibility,
+    HospitalVisit,
+    HospitalVisitCreate,
+    HospitalVisitStatus,
+    User
+} from '@melluin/common';
 import {HospitalVisitConnectionsService} from '@be/hospital-visit-connections/hospital-visit-connections.service';
 import {HospitalVisitCrudService} from '@be/hospital-visit/hospital-visit.crud.service';
 import dayjs from 'dayjs';
 import {HospitalVisitDao} from '@be/hospital-visit/hospital-visit.dao';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
-import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {AsyncValidatorChain} from '@shared/validator/validator-chain';
 import {VisitContinueValidator} from '@be/hospital-visit-continue/validator/visit-continue-validator';
 import {DateTimeIsInOriginalVisitsTimeValidator} from '@be/hospital-visit-continue/validator/date-time-is-in-original-visits-time.validator';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {VisitIsInStartedStatusValidator} from '@be/hospital-visit-continue/validator/visit-is-in-started-status.validator';
 import {VisitSaveValidatorFactory} from '@be/hospital-visit/validator/visit-save-validator-factory';
-import {EventVisibility} from '@shared/hospital-visit/event-visibility';
 
 /* eslint-disable max-params-no-constructor/max-params-no-constructor */
 

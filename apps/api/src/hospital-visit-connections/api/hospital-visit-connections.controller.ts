@@ -1,9 +1,7 @@
 import {Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post} from '@nestjs/common';
-import {User} from '@shared/user/user';
+import {HospitalVisit, Permission, User} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {Permission} from '@shared/user/permission.enum';
 import {HospitalVisitConnectionsService} from '@be/hospital-visit-connections/hospital-visit-connections.service';
 
 

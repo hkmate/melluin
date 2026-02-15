@@ -1,5 +1,5 @@
 import {Component, input} from '@angular/core';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
+import {HospitalVisit} from '@melluin/common';
 
 @Component({
     selector: 'app-hospital-visit-presenter',

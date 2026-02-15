@@ -1,10 +1,8 @@
-import {Applier} from '@shared/applier';
+import {Applier, Permission, Role} from '@melluin/common';
 import {RoleEntity} from '@be/user/model/role.entity';
 import * as _ from 'lodash';
 import {PermissionDao} from '@be/user/permission.dao';
 import {PermissionEntity} from '@be/user/model/permission.entity';
-import {Permission} from '@shared/user/permission.enum';
-import {Role} from '@shared/user/role';
 
 
 export class RoleRewriteApplier implements Applier<RoleEntity> {

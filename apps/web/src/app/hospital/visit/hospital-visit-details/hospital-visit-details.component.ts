@@ -4,19 +4,22 @@ import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
+import {
+    ApiError,
+    HospitalVisit,
+    HospitalVisitCreate,
+    HospitalVisitRewrite,
+    HospitalVisitStatus,
+    isNil,
+    isNotNil,
+    Permission
+} from '@melluin/common';
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
-import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
-import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {Permission} from '@shared/user/permission.enum';
 import {MessageService} from '@fe/app/util/message.service';
-import {isNil, isNotNil} from '@shared/util/util';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 import {ReportPrepareService} from './report-prepare.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {HttpErrorResponse} from '@angular/common/http';
-import {ApiError} from '@shared/api-util/api-error';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {HospitalVisitConnectionsService} from '@fe/app/hospital/visit/hospital-visit-details/hospital-visit-connections.service';
 

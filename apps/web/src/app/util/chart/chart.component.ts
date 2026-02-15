@@ -1,5 +1,5 @@
 import {Component, effect, ElementRef, input, viewChild} from '@angular/core';
-import {isNil, isNotNil} from '@shared/util/util';
+import {isNil, isNotNil} from '@melluin/common';
 import {Chart, Plugin} from 'chart.js';
 import {ChartConfiguration} from 'chart.js/dist/types';
 import * as _ from 'lodash';

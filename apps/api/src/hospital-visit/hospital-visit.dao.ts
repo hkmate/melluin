@@ -1,17 +1,22 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Equal, In, LessThan, MoreThan, Not, Repository} from 'typeorm';
-import {Pageable} from '@shared/api-util/pageable';
+import {
+    FilterOperation,
+    FilterOperationBuilder,
+    getFailedStatuses,
+    getFullName,
+    isNil,
+    isNotNil,
+    Pageable,
+    toOptional
+} from '@melluin/common';
 import {WhereClosureConverter} from '@be/find-option-converter/where-closure.converter';
 import {PageCreator} from '@be/crud/page-creator';
 import {PageRequest} from '@be/crud/page-request';
-import {isNil, isNotNil, toOptional} from '@shared/util/util';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 import {FilterOptionsFieldsConverter} from '@be/crud/convert/filter-options-fields-converter';
-import {FilterOperation, FilterOperationBuilder} from '@shared/api-util/filter-options';
 import {FindOptionsWhere} from 'typeorm/find-options/FindOptionsWhere';
-import {getFullName} from '@shared/person/person';
-import {getFailedStatuses} from '@shared/hospital-visit/hospital-visit-status';
 
 interface SameTimeAndDepartmentVisitCountParams {
     from: string;

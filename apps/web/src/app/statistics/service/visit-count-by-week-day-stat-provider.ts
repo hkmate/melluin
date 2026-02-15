@@ -1,9 +1,8 @@
-import {OperationCity} from '@shared/person/operation-city';
+import {OperationCity, VisitsCountByWeekDay} from '@melluin/common';
 import {Observable, shareReplay} from 'rxjs';
 import {inject, Injectable} from '@angular/core';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
 import * as _ from 'lodash';
-import {VisitsCountByWeekDay} from '@shared/statistics/visits-count-by-week-day';
 
 export interface VisitCountByWeekDayStatProvider {
     getVisitsCountByWeekDayStat(from: string, to: string, city: OperationCity): Observable<Array<VisitsCountByWeekDay>>;

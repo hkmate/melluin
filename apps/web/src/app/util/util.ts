@@ -1,7 +1,7 @@
 import {catchError, OperatorFunction} from 'rxjs';
 import {MessageService} from '@fe/app/util/message.service';
 import {AbstractControl, ValidationErrors} from '@angular/forms';
-import {isNilOrEmpty} from '@shared/util/util';
+import {isNilOrEmpty} from '@melluin/common';
 import {HttpErrorResponse} from '@angular/common/http';
 
 export function utf8ToBase64(str: string): string {

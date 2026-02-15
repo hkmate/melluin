@@ -1,12 +1,9 @@
 import {BadRequestException, Controller, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Query} from '@nestjs/common';
-import {User} from '@shared/user/user';
+import {ApiError, HospitalVisit, Permission, User} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {Permission} from '@shared/user/permission.enum';
 import {HospitalVisitContinueService} from '@be/hospital-visit-continue/hospital-visit-continue.service';
 import dayjs from 'dayjs';
-import {ApiError} from '@shared/api-util/api-error';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
 
 
 @Controller('hospital-visits')

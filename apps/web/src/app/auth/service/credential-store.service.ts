@@ -1,12 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {JwtService} from './jwt.service';
-import {User} from '@shared/user/user';
-import {isNilOrEmpty} from '@shared/util/util';
-import {AuthInfo} from '@shared/user/auth-info';
+import {AuthInfo, DateUtil, isNilOrEmpty, User, UserSettings} from '@melluin/common';
 import {Store} from '@ngrx/store';
 import {AppActions} from '@fe/app/state/app-actions';
-import {DateUtil} from '@shared/util/date-util';
-import {UserSettings} from '@shared/user/user-settings';
 
 @Injectable()
 export class CredentialStoreService {

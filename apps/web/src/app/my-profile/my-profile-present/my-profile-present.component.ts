@@ -1,7 +1,5 @@
 import {Component, input} from '@angular/core';
-import {User} from '@shared/user/user';
-import {Person} from '@shared/person/person';
-import {UserSettings} from '@shared/user/user-settings';
+import {Person, User, UserSettings} from '@melluin/common';
 
 @Component({
     selector: 'app-my-profile-present',

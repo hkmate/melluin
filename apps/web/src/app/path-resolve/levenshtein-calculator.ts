@@ -1,4 +1,4 @@
-import {isEmpty} from '@shared/util/util';
+import {isEmpty} from '@melluin/common';
 
 export class LevenshteinCalculator {
 

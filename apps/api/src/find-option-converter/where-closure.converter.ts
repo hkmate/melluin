@@ -1,4 +1,4 @@
-import {FilterOperation, FilterOptions} from '@shared/api-util/filter-options';
+import {FilterOperation, FilterOptions} from '@melluin/common';
 import {FindOptionsWhere} from 'typeorm/find-options/FindOptionsWhere';
 import {FindOperator} from 'typeorm/find-options/FindOperator';
 import {Injectable} from '@nestjs/common';

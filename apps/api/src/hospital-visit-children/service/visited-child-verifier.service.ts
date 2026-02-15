@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import {isNotEmpty} from '@shared/util/util';
+import {isNotEmpty} from '@melluin/common';
 import {BadRequestException, Injectable} from '@nestjs/common';
 import {VisitedChildrenDao} from '@be/hospital-visit-children/persistence/visited-children.dao';
 

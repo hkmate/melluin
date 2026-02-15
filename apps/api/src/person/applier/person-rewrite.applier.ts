@@ -1,5 +1,5 @@
-import { PersonEntity } from '@be/person/model/person.entity';
-import { PersonRewrite } from '@shared/person/person-rewrite';
+import {PersonEntity} from '@be/person/model/person.entity';
+import {PersonRewrite} from '@melluin/common';
 
 
 export class PersonRewriteApplier {

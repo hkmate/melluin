@@ -1,9 +1,6 @@
-import {User} from '@shared/user/user';
+import {ApiError, HospitalVisitStatus, Permission, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
-import {Permission} from '@shared/user/permission.enum';
 import {HospitalVisitRewriteValidationData, VisitRewriteValidator} from '@be/hospital-visit/validator/visit-validator';
-import {ApiError} from '@shared/api-util/api-error';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 
 export class UserCanModifyVicariousMomFlagValidator implements VisitRewriteValidator {
 

@@ -1,23 +1,28 @@
 import {Component, computed, effect, inject, input, output, signal} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {isNil, isNotNil, parseTime, parseTimeWithDate} from '@shared/util/util';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
-import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
-import {HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
+import {
+    Department,
+    EventVisibility,
+    HospitalVisit,
+    HospitalVisitCreate,
+    HospitalVisitRewrite,
+    HospitalVisitStatus,
+    isNil,
+    isNotNil,
+    Pageable,
+    parseTime,
+    parseTimeWithDate,
+    Permission,
+    User
+} from '@melluin/common';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
-import {Department} from '@shared/department/department';
-import {Pageable} from '@shared/api-util/pageable';
-import {User} from '@shared/user/user';
 import {Store} from '@ngrx/store';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import * as _ from 'lodash';
 import {Platform} from '@angular/cdk/platform';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {Permission} from '@shared/user/permission.enum';
 import {getAllStatusOptionsOnlyEnable, SelectOption} from '@fe/app/util/hospital-visit-status-option';
-import {EventVisibility} from '@shared/hospital-visit/event-visibility';
 
 
 // TODO refactor: Form components should be refactored to new forms when updated Angular to 21
@@ -331,7 +336,7 @@ export class HospitalVisitFormComponent {
 
     private createCreation(): HospitalVisitCreate {
         const data = {} as HospitalVisitCreate;
-        const countedMinutesFromHour =this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
+        const countedMinutesFromHour = this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
         data.departmentId = this.form().controls.departmentId.value;
         data.status = this.form().controls.status.value;
         data.countedMinutes = _.round(countedMinutesFromHour);
@@ -347,7 +352,7 @@ export class HospitalVisitFormComponent {
 
     private createRewrite(): HospitalVisitRewrite {
         const data = {} as HospitalVisitRewrite;
-        const countedMinutesFromHour =this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
+        const countedMinutesFromHour = this.form().controls.countedHours.value * HospitalVisitFormComponent.MIN_ON_HOUR;
         data.id = this.visit()!.id;
         data.departmentId = this.form().controls.departmentId.value;
         data.status = this.form().controls.status.value;

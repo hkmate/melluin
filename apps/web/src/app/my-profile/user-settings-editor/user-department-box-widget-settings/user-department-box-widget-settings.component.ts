@@ -1,11 +1,15 @@
 import {Component, computed, inject} from '@angular/core';
 import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {DateIntervalSpecifier} from '@shared/util/date-interval-generator';
-import {DepartmentBoxInfoSinceDateValues, DepartmentBoxWidgetSettings, UserSettings} from '@shared/user/user-settings';
-import {BoxStatusChangeReason} from '@shared/department/box/box-status-change-reason';
+import {
+    BoxStatusChangeReason,
+    DateIntervalSpecifier,
+    DepartmentBoxInfoSinceDateValues,
+    DepartmentBoxWidgetSettings,
+    isNotEmpty,
+    UserSettings
+} from '@melluin/common';
 import * as _ from 'lodash';
-import {isNotEmpty} from '@shared/util/util';
 
 @Component({
     selector: 'app-user-department-box-widget-settings',

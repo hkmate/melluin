@@ -1,17 +1,19 @@
 import {BadRequestException, Controller, Get, Query} from '@nestjs/common';
 import {StatisticsService} from '@be/statistics/statistics.service';
-import {isNotNil} from '@shared/util/util';
-import {OperationCity} from '@shared/person/operation-city';
-import {VisitByDepartments} from '@shared/statistics/visit-by-departments';
+import {
+    ActivitiesCount,
+    ChildAgesByDepartments,
+    ChildrenByDepartments,
+    isNotNil,
+    OperationCity,
+    Permission,
+    VisitByDepartments,
+    VisitsCountByWeekDay,
+    VisitStatusCount,
+    VolunteerByDepartments,
+    VolunteersVisitCount
+} from '@melluin/common';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {Permission} from '@shared/user/permission.enum';
-import {ChildrenByDepartments} from '@shared/statistics/children-by-departments';
-import {VolunteerByDepartments} from '@shared/statistics/volunteer-by-departments';
-import {ActivitiesCount} from '@shared/statistics/activities-count';
-import {VisitStatusCount} from '@shared/statistics/visit-status-count';
-import {ChildAgesByDepartments} from '@shared/statistics/child-ages-by-departments';
-import {VisitsCountByWeekDay} from '@shared/statistics/visits-count-by-week-day';
-import {VolunteersVisitCount} from '@shared/statistics/volunteers-visit-count';
 
 
 @Controller('statistics')

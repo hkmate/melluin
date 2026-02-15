@@ -1,7 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {Pageable} from '@shared/api-util/pageable';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {Department} from '@shared/department/department';
+import {Department, HospitalVisitStatus, Pageable} from '@melluin/common';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {EventsListPreferences} from '../service/events-list-preferences';
 import {EventsFilter} from '../service/events-filter';

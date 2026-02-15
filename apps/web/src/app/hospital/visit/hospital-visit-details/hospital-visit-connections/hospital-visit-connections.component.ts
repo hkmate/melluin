@@ -1,8 +1,7 @@
-import {Component, inject, input, signal, output } from '@angular/core';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
+import {Component, inject, input, output, signal} from '@angular/core';
+import {HospitalVisit, Permission} from '@melluin/common';
 import {HospitalVisitConnectionsService} from '@fe/app/hospital/visit/hospital-visit-details/hospital-visit-connections.service';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
-import {Permission} from '@shared/user/permission.enum';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 @Component({

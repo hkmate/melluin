@@ -1,9 +1,5 @@
-import {User} from '@shared/user/user';
+import {AsyncValidator, isNilOrEmpty, Permission, User, UserCreation} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
-import {Permission} from '@shared/user/permission.enum';
-import {AsyncValidator} from '@shared/validator/validator';
-import {UserCreation} from '@shared/user/user-creation';
-import {isNilOrEmpty} from '@shared/util/util';
 
 
 export class CanRequesterCreateUsersPermissionsValidator implements AsyncValidator<UserCreation> {

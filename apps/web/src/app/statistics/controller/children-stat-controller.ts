@@ -1,10 +1,8 @@
 import {TranslateService} from '@ngx-translate/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
-import {isNilOrEmpty} from '@shared/util/util';
-import {OperationCity} from '@shared/person/operation-city';
+import {ChildrenByDepartments, isNilOrEmpty, OperationCity} from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
-import {ChildrenByDepartments} from '@shared/statistics/children-by-departments';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';

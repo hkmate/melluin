@@ -1,10 +1,8 @@
 import {Component, inject} from '@angular/core';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 import {Observable} from 'rxjs';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
-import {Permission} from '@shared/user/permission.enum';
+import {isNotNil, Permission, VisitedChild} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {isNotNil} from '@shared/util/util';
 
 @Component({
     selector: 'app-child-filler-list',

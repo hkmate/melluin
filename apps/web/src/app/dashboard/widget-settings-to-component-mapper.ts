@@ -1,5 +1,5 @@
 import {Type} from '@angular/core';
-import {DepartmentBoxWidgetSettings, WidgetSetting, WidgetType} from '@shared/user/user-settings';
+import {DepartmentBoxWidgetSettings, WidgetSetting, WidgetType} from '@melluin/common';
 import {BoxInfoWidgetComponent} from '@fe/app/dashboard/widgets/box-info-widget/box-info-widget.component';
 
 

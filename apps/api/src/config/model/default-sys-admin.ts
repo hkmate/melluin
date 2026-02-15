@@ -1,4 +1,3 @@
-
 export interface DefaultSysAdmin {
     needToInit: boolean;
     username: string;

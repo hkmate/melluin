@@ -1,7 +1,5 @@
 import {BadRequestException} from '@nestjs/common';
-import {ApiError} from '@shared/api-util/api-error';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {AsyncValidator} from '@shared/validator/validator';
+import {ApiError, AsyncValidator, HospitalVisitStatus} from '@melluin/common';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
 
 export class VisitIsInStartedStatusValidator implements AsyncValidator<{ visit: HospitalVisitEntity }> {

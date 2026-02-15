@@ -1,9 +1,7 @@
 import {Component, inject, signal} from '@angular/core';
 import {AppTitle} from '@fe/app/app-title.service';
 import {RoleService} from '@fe/app/sysadmin/role-settings/role.service';
-import {Permission} from '@shared/user/permission.enum';
-import {isNil, isNotNil, NOOP} from '@shared/util/util';
-import {Role, RoleType} from '@shared/user/role';
+import {isNil, isNotNil, NOOP, Permission, Role, RoleType} from '@melluin/common';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {TranslateService} from '@ngx-translate/core';
 

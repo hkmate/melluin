@@ -2,11 +2,9 @@ import {inject, Injectable} from '@angular/core';
 import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';
 import {EventsFilter} from '@fe/app/events/events-list/service/events-filter';
 import {DefaultEventListSettingsInitializer} from '@fe/app/events/events-list/service/event-list-settings-initializer';
-import {isNil, isNilOrEmpty} from '@shared/util/util';
+import {HospitalVisitStatus, isNil, isNilOrEmpty, PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo} from '@melluin/common';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {EventListQueryParams} from '@fe/app/events/events-list/service/event-list-query-params';
-import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo} from '@shared/api-util/pageable';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
 
 
 @Injectable()

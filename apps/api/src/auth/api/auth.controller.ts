@@ -1,7 +1,7 @@
 import {Body, Controller, HttpCode, HttpStatus, Post} from '@nestjs/common';
 import {AuthService} from '../service/auth.service';
 import {Public} from '../decorator/public.decorator';
-import {AuthInfo} from '@shared/user/auth-info';
+import {AuthInfo} from '@melluin/common';
 import {AuthCredentialsValidatedInput} from '@be/auth/api/dto/auth-credentials';
 
 @Controller('auth')

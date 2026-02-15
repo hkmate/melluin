@@ -1,9 +1,8 @@
 import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put} from '@nestjs/common';
-import {User} from '@shared/user/user';
+import {Permission, User} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {UserService} from '@be/user/service/user.service';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {Permission} from '@shared/user/permission.enum';
 import {UserCreationValidatedInput} from '@be/user/api/dto/user-creation';
 import {UserRewriteValidatedInput} from '@be/user/api/dto/user-rewrite';
 

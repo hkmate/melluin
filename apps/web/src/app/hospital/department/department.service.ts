@@ -1,10 +1,16 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, Pageable, PageQuery, QUERY_QUERY_KEY} from '@shared/api-util/pageable';
-import {Department} from '@shared/department/department';
-import {DepartmentCreation} from '@shared/department/department-creation';
-import {DepartmentUpdateChangeSet} from '@shared/department/department-update-change-set';
+import {
+    Department,
+    DepartmentCreation,
+    DepartmentUpdateChangeSet,
+    PAGE_QUERY_KEY,
+    PAGE_SIZE_QUERY_KEY,
+    Pageable,
+    PageQuery,
+    QUERY_QUERY_KEY
+} from '@melluin/common';
 import {getErrorHandler, utf8ToBase64} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';

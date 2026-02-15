@@ -1,6 +1,5 @@
 import {DepartmentEntity} from '@be/department/model/department.entity';
-import {DepartmentUpdateChangeSet} from '@shared/department/department-update-change-set';
-import {Applier} from '@shared/applier';
+import {Applier, DepartmentUpdateChangeSet} from '@melluin/common';
 
 
 export class DepartmentStringFieldChangeApplier implements Applier<DepartmentEntity> {

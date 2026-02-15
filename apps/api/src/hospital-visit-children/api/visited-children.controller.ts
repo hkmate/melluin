@@ -12,12 +12,10 @@ import {
     Put
 } from '@nestjs/common';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {Permission} from '@shared/user/permission.enum';
+import {Permission, User, VisitedChild} from '@melluin/common';
 import {VisitedChildrenService} from '@be/hospital-visit-children/service/visited-children.service';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
-import {User} from '@shared/user/user';
 import {VisitedChildSaverService} from '@be/hospital-visit-children/service/visited-child-saver.service';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
 import {
     VisitedChildEditValidatedInput,
     VisitedChildValidatedInput

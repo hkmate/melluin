@@ -1,7 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {isNotNil} from '@shared/util/util';
-import {DateUtil} from '@shared/util/date-util';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
+import {DateUtil, isNotNil, VisitedChild} from '@melluin/common';
 
 @Component({
     selector: 'app-child-card',

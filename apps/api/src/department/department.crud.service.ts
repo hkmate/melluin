@@ -1,17 +1,20 @@
 import {Injectable} from '@nestjs/common';
-import {Pageable} from '@shared/api-util/pageable';
+import {
+    Department,
+    DepartmentCreation,
+    departmentFilterableFields,
+    departmentSortableFields,
+    DepartmentUpdateChangeSet,
+    Pageable,
+    User
+} from '@melluin/common';
 import {PageConverter} from '@be/crud/convert/page.converter';
-import {User} from '@shared/user/user';
 import {PageRequest} from '@be/crud/page-request';
 import {DepartmentDao} from '@be/department/department.dao';
-import {Department} from '@shared/department/department';
-import {DepartmentUpdateChangeSet} from '@shared/department/department-update-change-set';
-import {DepartmentCreation} from '@shared/department/department-creation';
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import {DepartmentEntityToDtoConverter} from '@be/department/converer/department-entity-to-dto.converter';
 import {DepartmentCreationToEntityConverter} from '@be/department/converer/department-creation-to-entity.converter';
 import {PageRequestFieldsValidator} from '@be/crud/validator/page-request-fields.validator';
-import {departmentFilterableFields, departmentSortableFields} from '@shared/department/department-filterable-fields';
 import {DepartmentChangeApplierFactory} from '@be/department/applier/department-change-applier.factory';
 
 @Injectable()

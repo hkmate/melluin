@@ -1,11 +1,8 @@
 import {Component, computed, inject, input, output} from '@angular/core';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
-import {VisitActivityType} from '@shared/hospital-visit-activity/visit-activity-type';
+import {HospitalVisitActivity, HospitalVisitActivityEditInput, VisitActivityType, VisitedChild} from '@melluin/common';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 import {isNotEmptyValidator} from '@fe/app/util/util';
-import {HospitalVisitActivityEditInput} from '@shared/hospital-visit-activity/hospital-visit-activity-input';
-import {HospitalVisitActivity} from '@shared/hospital-visit-activity/hospital-visit-activity';
 import {VisitedChildById} from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
 import {Observable} from 'rxjs';
 

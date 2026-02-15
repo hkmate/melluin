@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {dateIntervalGeneratorFactory, DateIntervalSpecifier} from '@shared/util/date-interval-generator';
+import {dateIntervalGeneratorFactory, DateIntervalSpecifier, PageInfo} from '@melluin/common';
 import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';
 import {EventsFilter} from '@fe/app/events/events-list/service/events-filter';
-import {PageInfo} from '@shared/api-util/pageable';
 
 
 export interface EventListSettingsInitializer {

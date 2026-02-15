@@ -1,6 +1,5 @@
-import {OperationCity} from '@shared/person/operation-city';
+import {OperationCity, VolunteerByDepartments} from '@melluin/common';
 import {Observable, shareReplay} from 'rxjs';
-import {VolunteerByDepartments} from '@shared/statistics/volunteer-by-departments';
 import {inject, Injectable} from '@angular/core';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
 import * as _ from 'lodash';

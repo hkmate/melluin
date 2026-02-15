@@ -1,6 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {ConjunctionFilterOptions, FilterOperationBuilder} from '@shared/api-util/filter-options';
-import {isNil, isNilOrEmpty} from '@shared/util/util';
+import {ConjunctionFilterOptions, FilterOperationBuilder, isNil, isNilOrEmpty, PageInfo} from '@melluin/common';
 import {EventsFilter} from './events-filter';
 import {EventsListPreferences} from './events-list-preferences';
 import {EventListQueryParamSettingsInitializer} from '@fe/app/events/events-list/service/event-list-query-param-settings-initializer';
@@ -8,7 +7,6 @@ import {EventListUserSettingsInitializer} from '@fe/app/events/events-list/servi
 import {EventListSettingsInitializer} from '@fe/app/events/events-list/service/event-list-settings-initializer';
 import {EventListQueryParamHandler} from '@fe/app/events/events-list/service/event-list-query-param-handler';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {PageInfo} from '@shared/api-util/pageable';
 import {ListPageSettingChangeReason} from '@fe/app/util/list-page-settings-change-reason';
 
 

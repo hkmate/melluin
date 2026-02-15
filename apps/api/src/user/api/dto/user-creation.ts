@@ -1,7 +1,5 @@
 import {IsEnum, IsString, IsUUID, Matches, MinLength} from 'class-validator';
-import {nameMinLength, passwordMinLength, passwordPattern} from '@shared/constants';
-import {Permission} from '@shared/user/permission.enum';
-import {UserCreation} from '@shared/user/user-creation';
+import {nameMinLength, passwordMinLength, passwordPattern, Permission, UserCreation} from '@melluin/common';
 
 export class UserCreationValidatedInput implements UserCreation {
 

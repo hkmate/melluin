@@ -1,11 +1,7 @@
 import {Component, effect, inject, input} from '@angular/core';
-import {UserSettings} from '@shared/user/user-settings';
+import {Department, FilterOperationBuilder, isNil, isNilOrEmpty, Person, UserSettings} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
-import {Person} from '@shared/person/person';
-import {Department} from '@shared/department/department';
-import {FilterOperationBuilder} from '@shared/api-util/filter-options';
-import {isNil, isNilOrEmpty} from '@shared/util/util';
 
 @Component({
     selector: 'app-user-settings-presenter',

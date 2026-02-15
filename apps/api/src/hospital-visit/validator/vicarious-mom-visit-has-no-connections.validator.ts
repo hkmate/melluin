@@ -1,6 +1,6 @@
 import {BadRequestException} from '@nestjs/common';
 import {HospitalVisitRewriteValidationData, VisitRewriteValidator} from '@be/hospital-visit/validator/visit-validator';
-import {ApiError} from '@shared/api-util/api-error';
+import {ApiError} from '@melluin/common';
 
 
 export class VicariousMomVisitHasNoConnectionsValidator implements VisitRewriteValidator {

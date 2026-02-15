@@ -1,17 +1,21 @@
 import {Component, inject} from '@angular/core';
-import {HospitalVisit} from '@shared/hospital-visit/hospital-visit';
+import {
+    createVisitRewrite,
+    HospitalVisit,
+    HospitalVisitRewrite,
+    HospitalVisitStatus,
+    isNilOrEmpty,
+    NOOP,
+    Permission
+} from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
 import {Router} from '@angular/router';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
 import {CREATE_MARKER, CreateMarkerType} from '@fe/app/app-paths';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {createVisitRewrite, HospitalVisitRewrite} from '@shared/hospital-visit/hospital-visit-rewrite';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {Permission} from '@shared/user/permission.enum';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
-import {isNilOrEmpty, NOOP} from '@shared/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ContinueOtherVisitDialogService} from '@fe/app/hospital/hospital-visit-activity-filler/continue-other/continue-other-visit-dialog.service';

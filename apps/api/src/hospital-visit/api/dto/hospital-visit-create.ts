@@ -1,4 +1,4 @@
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
+import {EventVisibility, HospitalVisitCreate, HospitalVisitStatus} from '@melluin/common';
 import {
     IsArray,
     IsBoolean,
@@ -11,11 +11,9 @@ import {
     IsUUID,
     Min
 } from 'class-validator';
-import {HospitalVisitCreate} from '@shared/hospital-visit/hospital-visit-create';
-import {EventVisibility} from '@shared/hospital-visit/event-visibility';
 
 
-export class HospitalVisitCreateValidatedInput  implements HospitalVisitCreate {
+export class HospitalVisitCreateValidatedInput implements HospitalVisitCreate {
 
     @IsDateString()
     dateTimeFrom: string;

@@ -1,8 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {isNil} from '@shared/util/util';
+import {BriefUser, isNil, Person} from '@melluin/common';
 import dayjs from 'dayjs';
-import {Person} from '@shared/person/person';
-import {BriefUser} from '@shared/user/user';
 
 @Pipe({
     name: 'lastLoginStyle',

@@ -1,8 +1,6 @@
 import {UserEntity} from '@be/user/model/user.entity';
-import {BriefUser} from '@shared/user/user';
+import {BriefUser, Converter, isNil} from '@melluin/common';
 import {Injectable} from '@nestjs/common';
-import {isNil} from '@shared/util/util';
-import {Converter} from '@shared/converter/converter';
 import {RoleEntityToBriefDtoConverter} from '@be/user/converter/role-entity-to-brief-dto.converter';
 
 @Injectable()

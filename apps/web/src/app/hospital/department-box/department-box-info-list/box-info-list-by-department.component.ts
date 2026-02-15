@@ -1,6 +1,5 @@
 import {Component, effect, inject, input} from '@angular/core';
-import {DepartmentBoxStatus} from '@shared/department/box/department-box-status';
-import {Pageable} from '@shared/api-util/pageable';
+import {DepartmentBoxStatus, Pageable} from '@melluin/common';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
 import {DepartmentBoxInfoListComponent} from '@fe/app/hospital/department-box/department-box-info-list/department-box-info-list.component';
 

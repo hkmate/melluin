@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
-import {Role, RoleCreation} from '@shared/user/role';
+import {Role, RoleCreation} from '@melluin/common';
 
 @Injectable({providedIn: 'root'})
 export class RoleService {

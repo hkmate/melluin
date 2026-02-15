@@ -1,13 +1,12 @@
 import {TranslateService} from '@ngx-translate/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
-import {OperationCity} from '@shared/person/operation-city';
+import {OperationCity, VolunteersVisitCount} from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
-import {VolunteersVisitCount} from '@shared/statistics/volunteers-visit-count';
 
 
 export type VolunteersVisitsCleanData = Omit<VolunteersVisitCount, 'personId'>;

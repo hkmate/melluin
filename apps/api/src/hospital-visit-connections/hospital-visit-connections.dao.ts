@@ -2,7 +2,7 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Equal, Not, Repository} from 'typeorm';
 import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
-import {isNil} from '@shared/util/util';
+import {isNil} from '@melluin/common';
 
 
 @Injectable()

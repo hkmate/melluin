@@ -1,7 +1,5 @@
 import {IsBoolean, IsDateString, IsEnum, IsOptional, IsPositive, MinLength} from 'class-validator';
-import {nameMinLength} from '@shared/constants';
-import {OperationCity} from '@shared/person/operation-city';
-import {DepartmentUpdateChangeSet} from '@shared/department/department-update-change-set';
+import {DepartmentUpdateChangeSet, nameMinLength, OperationCity} from '@melluin/common';
 
 export class DepartmentUpdateChangeSetValidatedInput implements DepartmentUpdateChangeSet {
 

@@ -1,13 +1,9 @@
 import {inject, Injectable} from '@angular/core';
-import {User} from '@shared/user/user';
-import {isNotNil} from '@shared/util/util';
-import {Permission} from '@shared/user/permission.enum';
-import {cast} from '@shared/util/test-util';
+import {cast, isNotNil, Permission, RoleType, User} from '@melluin/common';
 import {Store} from '@ngrx/store';
 import {Actions, ofType} from '@ngrx/effects';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {AppActions} from '@fe/app/state/app-actions';
-import {RoleType} from '@shared/user/role';
 
 @Injectable()
 export class PermissionService {

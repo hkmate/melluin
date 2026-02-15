@@ -1,10 +1,9 @@
 import {Component, inject, input} from '@angular/core';
-import {VisitedChild} from '@shared/hospital-visit/visited-child';
+import {NOOP, VisitedChild} from '@melluin/common';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ConfirmationDialogConfig} from '@fe/app/confirmation/confirmation-dialog-config';
-import {NOOP} from '@shared/util/util';
 
 @Component({
     selector: 'app-filler-child-item',

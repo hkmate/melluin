@@ -1,4 +1,4 @@
-import {isEmpty, isNil} from '@shared/util/util';
+import {isEmpty, isNil} from '@melluin/common';
 
 export enum HttpMethod {
     GET = 'GET', POST = 'POST', DELETE = 'DELETE', PUT = 'PUT', PATCH = 'PATCH'

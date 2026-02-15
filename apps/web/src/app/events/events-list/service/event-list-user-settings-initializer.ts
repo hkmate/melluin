@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {EventListUserSettings, UserSettings} from '@shared/user/user-settings';
+import {dateIntervalGeneratorFactory, EventListUserSettings, isNil, PageInfo, UserSettings} from '@melluin/common';
 import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';
 import {EventsFilter} from '@fe/app/events/events-list/service/events-filter';
 import {
@@ -8,9 +8,6 @@ import {
 } from '@fe/app/events/events-list/service/event-list-settings-initializer';
 import {Store} from '@ngrx/store';
 import {selectUserSettings} from '@fe/app/state/selector/user-settings.selector';
-import {isNil} from '@shared/util/util';
-import {dateIntervalGeneratorFactory} from '@shared/util/date-interval-generator';
-import {PageInfo} from '@shared/api-util/pageable';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 

@@ -1,7 +1,6 @@
 import {Component, inject, output, signal} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {getGuessedBirthFromYears} from '@shared/child/child-age-calculator';
-import {VisitedChildInput} from '@shared/hospital-visit/visited-child';
+import {getGuessedBirthFromYears, VisitedChildInput} from '@melluin/common';
 import {HospitalVisitActivityFillerService} from '@fe/app/hospital/hospital-visit-activity-filler/hospital-visit-activity-filler.service';
 
 @Component({

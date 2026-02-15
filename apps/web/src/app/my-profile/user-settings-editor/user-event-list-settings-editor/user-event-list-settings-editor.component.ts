@@ -1,12 +1,15 @@
 import {Component, computed, inject} from '@angular/core';
-import {EventsDateFilterValues, UserSettings} from '@shared/user/user-settings';
+import {
+    DateIntervalSpecifier,
+    Department,
+    EventsDateFilterValues,
+    HospitalVisitStatus,
+    Pageable,
+    UserSettings
+} from '@melluin/common';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {HospitalVisitStatus} from '@shared/hospital-visit/hospital-visit-status';
-import {Department} from '@shared/department/department';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
-import {Pageable} from '@shared/api-util/pageable';
 import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
-import {DateIntervalSpecifier} from '@shared/util/date-interval-generator';
 
 @Component({
     selector: 'app-user-event-list-settings-editor',

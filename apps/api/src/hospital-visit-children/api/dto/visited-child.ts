@@ -1,12 +1,7 @@
 import {IsBoolean, IsString, IsUUID, ValidateIf, ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
-import {ChildInput} from '@shared/child/child-input';
-import {isNil} from '@shared/util/util';
+import {ChildInput, isNil, VisitedChildEditInput, VisitedChildInput} from '@melluin/common';
 import {ChildValidatedInput} from '@be/hospital-visit-children/api/dto/child-input';
-import {
-    VisitedChildEditInput,
-    VisitedChildInput,
-} from '@shared/hospital-visit/visited-child';
 
 
 // Note: If both 'child' and 'childId' presented the property 'child' will be processed.
