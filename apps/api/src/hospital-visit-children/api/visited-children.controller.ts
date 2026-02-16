@@ -17,11 +17,12 @@ import {VisitedChildrenService} from '@be/hospital-visit-children/service/visite
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {VisitedChildSaverService} from '@be/hospital-visit-children/service/visited-child-saver.service';
 import {
-    VisitedChildEditValidatedInput,
-    VisitedChildValidatedInput
-} from '@be/hospital-visit-children/api/dto/visited-child';
+    VisitedChildEditInputDto,
+    VisitedChildInputDto
+} from '@be/hospital-visit-children/api/dto/visited-child.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
-
+@ApiBearerAuth()
 @Controller('hospital-visits')
 export class VisitedChildrenController {
 
@@ -33,7 +34,7 @@ export class VisitedChildrenController {
     @HttpCode(HttpStatus.CREATED)
     @PermissionGuard(Permission.canWriteChild, Permission.canWriteChildAtAnyVisit)
     public addVisitedChild(@Param('hospitalVisitId', ParseUUIDPipe) hospitalVisitId: string,
-                           @Body() childInput: VisitedChildValidatedInput,
+                           @Body() childInput: VisitedChildInputDto,
                            @CurrentUser() requester: User): Promise<VisitedChild> {
         return this.visitedChildSaverService.save(hospitalVisitId, childInput, requester);
     }
@@ -49,7 +50,7 @@ export class VisitedChildrenController {
     @PermissionGuard(Permission.canWriteChild, Permission.canWriteChildAtAnyVisit)
     public update(@Param('hospitalVisitId', ParseUUIDPipe) hospitalVisitId: string,
                   @Param('visitedChildId', ParseUUIDPipe) visitedChildId: string,
-                  @Body() childInput: VisitedChildEditValidatedInput,
+                  @Body() childInput: VisitedChildEditInputDto,
                   @CurrentUser() requester: User): Promise<VisitedChild> {
         this.verifyVisitChildIdIsCorrect(childInput, visitedChildId);
         return this.visitedChildSaverService.update(hospitalVisitId, childInput, requester);
@@ -64,7 +65,7 @@ export class VisitedChildrenController {
         return this.visitedChildrenService.remove(hospitalVisitId, visitedChildId, requester);
     }
 
-    private verifyVisitChildIdIsCorrect(visitedChildInput: VisitedChildEditValidatedInput, visitedChildId: string): void {
+    private verifyVisitChildIdIsCorrect(visitedChildInput: VisitedChildEditInputDto, visitedChildId: string): void {
         if (visitedChildInput.id !== visitedChildId) {
             throw new BadRequestException('VisitedChildId is not the same as one in the url.');
         }

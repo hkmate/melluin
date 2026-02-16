@@ -16,112 +16,131 @@ import {
     WidgetSetting,
     WidgetType
 } from '@melluin/common';
+import {ApiProperty} from '@nestjs/swagger';
 
-export class EventListUserSettingsValidatedInput implements EventListUserSettings {
+export class EventListUserSettingsDto implements EventListUserSettings {
 
+    @ApiProperty({enum: EventsDateFilterValues, required: false})
     @IsOptional()
     @IsIn(EventsDateFilterValues)
     dateFilter?: DateIntervalSpecifier;
 
+    @ApiProperty({type: [String], required: false})
     @IsOptional()
     @IsUUID('all', {each: true})
     departmentIds?: Array<string>;
 
+    @ApiProperty({enum: HospitalVisitStatus, isArray: true, required: false})
     @IsOptional()
     @IsEnum(HospitalVisitStatus, {each: true})
     statuses?: Array<HospitalVisitStatus>;
 
+    @ApiProperty({type: [String], required: false})
     @IsOptional()
     @IsUUID('all', {each: true})
     participantIds?: Array<string>;
 
+    @ApiProperty({required: false})
     @IsOptional()
     @IsBoolean()
     needHighlight?: boolean;
 
 }
 
-export class HomePageUserSettingsValidatedInput implements HomePageUserSettings {
+export class HomePageUserSettingsDto implements HomePageUserSettings {
 
+    @ApiProperty({enum: HomePageOption, required: false})
     @IsOptional()
     @IsEnum(HomePageOption)
     inMobile?: HomePageOption;
 
+    @ApiProperty({enum: HomePageOption, required: false})
     @IsOptional()
     @IsEnum(HomePageOption)
     inDesktop?: HomePageOption;
 
 }
 
-export class WidgetSettingValidatedInput implements WidgetSetting {
+export class WidgetSettingDto implements WidgetSetting {
 
+    @ApiProperty()
     @IsOptional()
     @IsBoolean()
     needed: boolean;
 
+    @ApiProperty()
     @IsOptional()
     @IsPositive()
     index: number;
 
+    @ApiProperty({enum: WidgetType})
     @IsOptional()
     @IsEnum(WidgetType)
     type: WidgetType;
 
 }
 
-export class DepartmentBoxWidgetSettingsValidatedInput
-    extends WidgetSettingValidatedInput
+export class DepartmentBoxWidgetSettingsDto
+    extends WidgetSettingDto
     implements DepartmentBoxWidgetSettings {
 
     override readonly type = WidgetType.DEPARTMENT_BOX;
 
+    @ApiProperty({enum: DepartmentBoxInfoSinceDateValues, required: false})
     @IsOptional()
     @IsIn(DepartmentBoxInfoSinceDateValues)
     dateInterval?: DateIntervalSpecifier;
 
+    @ApiProperty({enum: BoxStatusChangeReason, isArray: true, required: false})
     @IsOptional()
     @IsEnum(BoxStatusChangeReason, {each: true})
     reasons?: Array<BoxStatusChangeReason>;
 
+    @ApiProperty({required: false})
     @IsOptional()
     @IsPositive()
     limit?: number;
 
 }
 
-export class DashboardWidgetSettingsValidatedInput implements DashboardWidgetSettings {
+export class DashboardWidgetSettingsDto implements DashboardWidgetSettings {
 
+    @ApiProperty({type: () => DepartmentBoxWidgetSettingsDto, required: false})
     @IsOptional()
     @ValidateNested()
-    @Type(() => DepartmentBoxWidgetSettingsValidatedInput)
+    @Type(() => DepartmentBoxWidgetSettingsDto)
     departmentBox?: DepartmentBoxWidgetSettings;
 
 }
 
-export class DashboardUserSettingsValidatedInput implements DashboardUserSettings {
+export class DashboardUserSettingsDto implements DashboardUserSettings {
 
+    @ApiProperty({type: () => DashboardWidgetSettingsDto, required: false})
     @IsOptional()
     @ValidateNested()
-    @Type(() => DashboardWidgetSettingsValidatedInput)
+    @Type(() => DashboardWidgetSettingsDto)
     widgets?: DashboardWidgetSettings;
 
 }
 
-export class UserSettingsValidatedInput implements UserSettings {
+export class UserSettingsDto implements UserSettings {
 
+    @ApiProperty({type: () => EventListUserSettingsDto, required: false})
     @IsOptional()
     @ValidateNested()
-    @Type(() => EventListUserSettingsValidatedInput)
+    @Type(() => EventListUserSettingsDto)
     eventList?: EventListUserSettings;
 
+    @ApiProperty({type: () => HomePageUserSettingsDto, required: false})
     @IsOptional()
     @ValidateNested()
-    @Type(() => HomePageUserSettingsValidatedInput)
+    @Type(() => HomePageUserSettingsDto)
     homePage?: HomePageUserSettings;
 
+    @ApiProperty({type: () => DashboardUserSettingsDto, required: false})
     @IsOptional()
     @ValidateNested()
-    @Type(() => DashboardUserSettingsValidatedInput)
+    @Type(() => DashboardUserSettingsDto)
     dashboard?: DashboardUserSettings;
 
 }

@@ -9,6 +9,9 @@
     },
     "server": {
         "port": 3000,
+        "openApi": {
+            "generate": true
+        },
         "defaultSysAdmin": {
             "needToInit": true,
             "username": "admin",

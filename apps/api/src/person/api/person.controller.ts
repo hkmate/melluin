@@ -18,10 +18,11 @@ import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PageReq} from '@be/crud/page-req';
 import {PageRequest} from '@be/crud/page-request';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {PersonCreationValidatedInput} from '@be/person/api/dto/person-creation';
-import {PersonRewriteValidatedInput} from '@be/person/api/dto/person-rewrite';
+import {PersonCreationDto} from '@be/person/api/dto/person-creation.dto';
+import {PersonRewriteDto} from '@be/person/api/dto/person-rewrite.dto';
+import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 
-
+@ApiBearerAuth()
 @Controller('people')
 export class PersonController {
 
@@ -31,7 +32,7 @@ export class PersonController {
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @PermissionGuard(Permission.canCreatePerson)
-    public save(@Body() person: PersonCreationValidatedInput,
+    public save(@Body() person: PersonCreationDto,
                 @CurrentUser() requester: User): Promise<Person> {
         return this.personCrudService.save(person, requester);
     }
@@ -47,6 +48,7 @@ export class PersonController {
     public find(pageRequest: PageRequest, onlyIdentifier: true, requester: User): Promise<Pageable<PersonIdentifier>>;
     @Get()
     @PermissionGuard(Permission.canReadPerson)
+    @ApiQuery({name: 'onlyIdentifier', required: false, default: false})
     public find(@PageReq() pageRequest: PageRequest,
                 @Query('onlyIdentifier', new DefaultValuePipe(false), ParseBoolPipe) onlyIdentifier: boolean,
                 @CurrentUser() requester: User): Promise<Pageable<Person> | Pageable<PersonIdentifier>> {
@@ -60,7 +62,7 @@ export class PersonController {
     @PermissionGuard(Permission.canWriteSelf, Permission.canWriteVisitor, Permission.canWriteCoordinator,
         Permission.canWriteAdmin, Permission.canWriteSysAdmin)
     public update(@Param('id', ParseUUIDPipe) personId: string,
-                  @Body() personRewrite: PersonRewriteValidatedInput,
+                  @Body() personRewrite: PersonRewriteDto,
                   @CurrentUser() requester: User): Promise<Person> {
         return this.personCrudService.update(personId, personRewrite, requester);
     }

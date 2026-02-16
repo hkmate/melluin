@@ -24,11 +24,13 @@ import {HospitalVisitActivityCrudService} from '@be/hospital-visit-activity/hosp
 import {HospitalVisitRelationDao} from '@be/hospital-visit/hospital-visit-relation.dao';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {
-    HospitalVisitActivityEditValidatedInput,
-    HospitalVisitActivityValidatedInput
-} from '@be/hospital-visit-activity/api/dto/hospital-visit-activity-input';
+    HospitalVisitActivityEditDto,
+    HospitalVisitActivityDto
+} from '@be/hospital-visit-activity/api/dto/hospital-visit-activity-input.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 
+@ApiBearerAuth()
 @Controller('hospital-visits')
 export class HospitalVisitActivityController {
 
@@ -40,7 +42,7 @@ export class HospitalVisitActivityController {
     @HttpCode(HttpStatus.CREATED)
     @PermissionGuard(Permission.canCreateActivity, Permission.canWriteActivityAtAnyVisit)
     public save(@Param('id', ParseUUIDPipe) hospitalVisitId: string,
-                @Body() activityInput: HospitalVisitActivityValidatedInput,
+                @Body() activityInput: HospitalVisitActivityDto,
                 @CurrentUser() requester: User): Promise<HospitalVisitActivity> {
         activityInput.visitId = hospitalVisitId;
         return this.activityCrudService.save(activityInput, requester);
@@ -50,7 +52,7 @@ export class HospitalVisitActivityController {
     @PermissionGuard(Permission.canCreateActivity, Permission.canWriteActivityAtAnyVisit)
     public update(@Param('visitId', ParseUUIDPipe) visitId: string,
                   @Param('id', ParseUUIDPipe) activityId: string,
-                  @Body() activityInput: HospitalVisitActivityEditValidatedInput,
+                  @Body() activityInput: HospitalVisitActivityEditDto,
                   @CurrentUser() requester: User): Promise<HospitalVisitActivity> {
         if (isNil(activityInput.visitId)) {
             activityInput.visitId = visitId;

@@ -27,10 +27,12 @@ import {HospitalVisitCrudService} from '@be/hospital-visit/hospital-visit.crud.s
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {DepartmentBoxStatusCrudService} from '@be/department-box/department-box-status.crud.service';
 import {BoxStatusInfoParam} from '@be/department-box/constants/box-status-info-param';
-import {HospitalVisitCreateValidatedInput} from '@be/hospital-visit/api/dto/hospital-visit-create';
-import {HospitalVisitRewriteValidatedInput} from '@be/hospital-visit/api/dto/hospital-visit-rewrite';
+import {HospitalVisitCreateDto} from '@be/hospital-visit/api/dto/hospital-visit-create.dto';
+import {HospitalVisitRewriteDto} from '@be/hospital-visit/api/dto/hospital-visit-rewrite.dto';
+import {ApiBearerAuth, ApiQuery} from '@nestjs/swagger';
 
 
+@ApiBearerAuth()
 @Controller('hospital-visits')
 export class HospitalVisitController {
 
@@ -41,8 +43,9 @@ export class HospitalVisitController {
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @PermissionGuard(Permission.canCreateVisit, Permission.canCreateAnyVisit)
+    @ApiQuery({name: 'forceSameTime', required: false, default: false})
     public save(@Query('forceSameTime', new DefaultValuePipe(false), ParseBoolPipe) sameTimeVisitForced: boolean,
-                @Body() hospitalVisitCreate: HospitalVisitCreateValidatedInput,
+                @Body() hospitalVisitCreate: HospitalVisitCreateDto,
                 @CurrentUser() requester: User): Promise<HospitalVisit> {
         return this.visitCrudService.save(hospitalVisitCreate, sameTimeVisitForced, requester);
     }
@@ -74,9 +77,10 @@ export class HospitalVisitController {
 
     @Put('/:id')
     @PermissionGuard(Permission.canModifyVisit, Permission.canModifyAnyVisit)
+    @ApiQuery({name: 'forceSameTime', required: false, default: false})
     public update(@Param('id', ParseUUIDPipe) hospitalVisitId: string,
                   @Query('forceSameTime', new DefaultValuePipe(false), ParseBoolPipe) sameTimeVisitForced: boolean,
-                  @Body() visitRewrite: HospitalVisitRewriteValidatedInput,
+                  @Body() visitRewrite: HospitalVisitRewriteDto,
                   @CurrentUser() requester: User): Promise<HospitalVisit> {
         return this.visitCrudService.rewrite(hospitalVisitId, visitRewrite, sameTimeVisitForced, requester);
     }

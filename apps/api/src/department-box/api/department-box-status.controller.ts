@@ -5,8 +5,10 @@ import {PageRequest} from '@be/crud/page-request';
 import {DepartmentBoxStatusCrudService} from '@be/department-box/department-box-status.crud.service';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {BoxStatusInfoParam} from '@be/department-box/constants/box-status-info-param';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 
+@ApiBearerAuth()
 @Controller('departments-box-status')
 export class DepartmentBoxStatusController {
 

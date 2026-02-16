@@ -4,8 +4,10 @@ import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {HospitalVisitContinueService} from '@be/hospital-visit-continue/hospital-visit-continue.service';
 import dayjs from 'dayjs';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 
+@ApiBearerAuth()
 @Controller('hospital-visits')
 export class HospitalVisitContinueController {
 

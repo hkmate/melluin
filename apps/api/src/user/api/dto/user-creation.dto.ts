@@ -1,21 +1,27 @@
 import {IsEnum, IsString, IsUUID, Matches, MinLength} from 'class-validator';
 import {nameMinLength, passwordMinLength, passwordPattern, Permission, UserCreation} from '@melluin/common';
+import {ApiProperty} from '@nestjs/swagger';
 
-export class UserCreationValidatedInput implements UserCreation {
+export class UserCreationDto implements UserCreation {
 
+    @ApiProperty()
     @MinLength(nameMinLength)
     userName: string;
 
+    @ApiProperty()
     @MinLength(passwordMinLength)
     @Matches(passwordPattern)
     password: string;
 
+    @ApiProperty()
     @IsUUID()
     personId: string;
 
+    @ApiProperty({type: [String]})
     @IsString({each: true})
     roleNames: Array<string>;
 
+    @ApiProperty({enum: Permission, isArray: true})
     @IsEnum(Permission, {each: true})
     customPermissions: Array<Permission>;
 

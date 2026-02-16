@@ -14,11 +14,13 @@ import {DepartmentCrudService} from '@be/department/department.crud.service';
 import {DepartmentBoxStatusCrudService} from '@be/department-box/department-box-status.crud.service';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {BoxStatusInfoParam} from '@be/department-box/constants/box-status-info-param';
-import {DepartmentBoxStatusReportValidatedInput} from '@be/department/api/dto/department-box-status-report';
-import {DepartmentCreationValidatedInput} from '@be/department/api/dto/department-creation';
-import {DepartmentUpdateChangeSetValidatedInput} from '@be/department/api/dto/department-update-change-set';
+import {DepartmentBoxStatusReportDto} from '@be/department/api/dto/department-box-status-report.dto';
+import {DepartmentCreationDto} from '@be/department/api/dto/department-creation.dto';
+import {DepartmentUpdateChangeSetDto} from '@be/department/api/dto/department-update-change-set.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 
+@ApiBearerAuth()
 @Controller('departments')
 export class DepartmentController {
 
@@ -29,7 +31,7 @@ export class DepartmentController {
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @PermissionGuard(Permission.canWriteDepartment)
-    public save(@Body() department: DepartmentCreationValidatedInput,
+    public save(@Body() department: DepartmentCreationDto,
                 @CurrentUser() requester: User): Promise<Department> {
         return this.departmentCrudService.save(department, requester);
     }
@@ -37,7 +39,7 @@ export class DepartmentController {
     @Post('/:id/box-status')
     @PermissionGuard(Permission.canWriteDepBox)
     public saveDepartmentBoxStatus(@Param('id', ParseUUIDPipe) departmentId: string,
-                                   @Body() boxStatusReport: DepartmentBoxStatusReportValidatedInput,
+                                   @Body() boxStatusReport: DepartmentBoxStatusReportDto,
                                    @CurrentUser() currentUser: User): Promise<DepartmentBoxStatus> {
         return this.boxStatusCrudService.save(departmentId, boxStatusReport, currentUser);
     }
@@ -67,7 +69,7 @@ export class DepartmentController {
     @Patch('/:id')
     @PermissionGuard(Permission.canWriteDepartment)
     public update(@Param('id', ParseUUIDPipe) departmentId: string,
-                  @Body() updateChangeSet: DepartmentUpdateChangeSetValidatedInput,
+                  @Body() updateChangeSet: DepartmentUpdateChangeSetDto,
                   @CurrentUser() requester: User): Promise<Department> {
         return this.departmentCrudService.update(departmentId, updateChangeSet, requester);
     }

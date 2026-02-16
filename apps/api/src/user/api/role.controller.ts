@@ -2,9 +2,10 @@ import {BadRequestException, Body, Controller, Delete, Get, Param, Post, Put} fr
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {Permission, Role, RoleBrief} from '@melluin/common';
 import {RoleService} from '@be/user/service/role.service';
-import {RoleCreationValidatedInput, RoleEditValidatedInput} from '@be/user/api/dto/role';
+import {RoleCreationDto, RoleEditDto} from '@be/user/api/dto/role.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
-
+@ApiBearerAuth()
 @Controller('roles')
 export class RoleController {
 
@@ -24,14 +25,14 @@ export class RoleController {
 
     @Post()
     @PermissionGuard(Permission.canManagePermissions)
-    public create(@Body() roleCreation: RoleCreationValidatedInput): Promise<Role> {
+    public create(@Body() roleCreation: RoleCreationDto): Promise<Role> {
         return this.roleService.create(roleCreation);
     }
 
     @Put('/:id')
     @PermissionGuard(Permission.canManagePermissions)
     public update(@Param('id') roleId: string,
-                  @Body() roleRewrite: RoleEditValidatedInput): Promise<Role> {
+                  @Body() roleRewrite: RoleEditDto): Promise<Role> {
         if (roleId !== roleRewrite.id) {
             throw new BadRequestException(`Referenced role id (${roleId}) is not same as one to rewrite (${roleRewrite.id})`);
         }

@@ -3,10 +3,11 @@ import {Permission, User} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {UserService} from '@be/user/service/user.service';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {UserCreationValidatedInput} from '@be/user/api/dto/user-creation';
-import {UserRewriteValidatedInput} from '@be/user/api/dto/user-rewrite';
+import {UserCreationDto} from '@be/user/api/dto/user-creation.dto';
+import {UserRewriteDto} from '@be/user/api/dto/user-rewrite.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
-
+@ApiBearerAuth()
 @Controller('users')
 export class UserController {
 
@@ -16,7 +17,7 @@ export class UserController {
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @PermissionGuard(Permission.canCreateUser)
-    public save(@Body() userCreation: UserCreationValidatedInput,
+    public save(@Body() userCreation: UserCreationDto,
                 @CurrentUser() requester: User): Promise<User> {
         return this.userService.save(userCreation, requester);
     }
@@ -32,7 +33,7 @@ export class UserController {
     @PermissionGuard(Permission.canWriteVisitor, Permission.canWriteCoordinator,
         Permission.canWriteAdmin, Permission.canWriteSysAdmin)
     public update(@Param('id', ParseUUIDPipe) userId: string,
-                  @Body() userRewrite: UserRewriteValidatedInput,
+                  @Body() userRewrite: UserRewriteDto,
                   @CurrentUser() requester: User): Promise<User> {
         return this.userService.update(userId, userRewrite, requester);
     }

@@ -1,34 +1,44 @@
 import {IsBoolean, IsDateString, IsEnum, IsOptional, IsPositive, MinLength} from 'class-validator';
 import {DepartmentCreation, nameMinLength, OperationCity} from '@melluin/common';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class DepartmentCreationValidatedInput implements DepartmentCreation {
+export class DepartmentCreationDto implements DepartmentCreation {
 
+    @ApiProperty()
     @MinLength(nameMinLength)
     name: string;
 
+    @ApiProperty()
     @IsDateString()
     validFrom: Date;
 
+    @ApiProperty({required: false})
     @IsOptional()
     @IsDateString()
         // TODO Add validator to minDate
     validTo?: Date;
 
+    @ApiProperty()
     @MinLength(nameMinLength)
     address: string;
 
+    @ApiProperty({ enum: OperationCity, enumName: 'OperationCity' })
     @IsEnum(OperationCity)
     city: OperationCity;
 
+    @ApiProperty()
     @IsPositive()
     limitOfVisits: number;
 
+    @ApiProperty()
     @IsBoolean()
     vicariousMomIncludedInLimit: boolean;
 
+    @ApiProperty({required: false})
     @IsOptional()
     diseasesInfo?: string;
 
+    @ApiProperty({required: false})
     @IsOptional()
     note?: string;
 

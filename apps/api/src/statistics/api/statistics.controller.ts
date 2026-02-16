@@ -14,8 +14,10 @@ import {
     VolunteersVisitCount
 } from '@melluin/common';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
+import {ApiBearerAuth} from '@nestjs/swagger';
 
 
+@ApiBearerAuth()
 @Controller('statistics')
 export class StatisticsController {
 
@@ -75,8 +77,8 @@ export class StatisticsController {
     @Get('/volunteers-visit-count')
     @PermissionGuard(Permission.canReadStatistics)
     public getVolunteersVisitCountStat(@Query('from') fromDateTime: string,
-                                          @Query('to') toDateTime: string,
-                                          @Query('city') city: string): Promise<Array<VolunteersVisitCount>> {
+                                       @Query('to') toDateTime: string,
+                                       @Query('city') city: string): Promise<Array<VolunteersVisitCount>> {
         this.verifyStatisticsParams(fromDateTime, toDateTime, city);
 
         return this.statisticsService.getVolunteersVisitCount(fromDateTime, toDateTime, city);

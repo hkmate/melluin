@@ -3,8 +3,10 @@ import {HospitalVisit, Permission, User} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {HospitalVisitConnectionsService} from '@be/hospital-visit-connections/hospital-visit-connections.service';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 
+@ApiBearerAuth()
 @Controller('hospital-visits')
 export class HospitalVisitConnectionsController {
 

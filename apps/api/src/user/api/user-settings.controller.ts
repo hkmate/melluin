@@ -2,9 +2,10 @@ import {Body, Controller, ForbiddenException, Get, Param, ParseUUIDPipe, Put} fr
 import {User, UserSettings} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {UserSettingsService} from '@be/user/service/user-settings.service';
-import {UserSettingsValidatedInput} from '@be/user/api/dto/user-settings';
+import {UserSettingsDto} from '@be/user/api/dto/user-settings.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
-
+@ApiBearerAuth()
 @Controller('users')
 export class UserSettingsController {
 
@@ -22,7 +23,7 @@ export class UserSettingsController {
 
     @Put('/:id/settings')
     public update(@Param('id', ParseUUIDPipe) userId: string,
-                  @Body() newSettings: UserSettingsValidatedInput,
+                  @Body() newSettings: UserSettingsDto,
                   @CurrentUser() requester: User): Promise<UserSettings> {
         if (userId !== requester.id) {
             throw new ForbiddenException('You can change only your own settings!');
