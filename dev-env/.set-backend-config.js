@@ -29,5 +29,8 @@ config.database.password = process.env.ENV_DB_PASSWORD;
 console.log(`Set secretKey: **********`);
 config.server.security.secretKey = process.env.ENV_SECRET_KEY;
 
+
+config.server.openApi.generate = false;
+
 let data = JSON.stringify(config, null, '    ');
 fs.writeFileSync(CONFIG_FILE, data);
