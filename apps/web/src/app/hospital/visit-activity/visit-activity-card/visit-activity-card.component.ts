@@ -1,5 +1,5 @@
 import {Component, input} from '@angular/core';
-import {HospitalVisitActivity, VisitedChild} from '@melluin/common';
+import {VisitActivity, VisitedChild} from '@melluin/common';
 
 @Component({
     selector: 'app-visit-activity-card',
@@ -8,6 +8,6 @@ import {HospitalVisitActivity, VisitedChild} from '@melluin/common';
 export class VisitActivityCardComponent {
 
     public readonly childrenById = input.required<Record<string, VisitedChild>>();
-    public readonly activity = input.required<HospitalVisitActivity>();
+    public readonly activity = input.required<VisitActivity>();
 
 }

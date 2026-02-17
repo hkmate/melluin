@@ -1,9 +1,9 @@
 import {Component, inject} from '@angular/core';
-import {Department, HospitalVisitStatus, Pageable} from '@melluin/common';
+import {Department, VisitStatus, Pageable} from '@melluin/common';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {EventsListPreferences} from '../service/events-list-preferences';
 import {EventsFilter} from '../service/events-filter';
-import {HospitalEventsSettingsService} from '@fe/app/events/events-list/service/hospital-events-settings.service';
+import {EventsSettingsService} from '@fe/app/events/events-list/service/events-settings.service';
 import {filter} from 'rxjs';
 import {Platform} from '@angular/cdk/platform';
 import {reasonIsNotPageData} from '@fe/app/util/list-page-settings-change-reason';
@@ -17,14 +17,14 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 export class EventListFilterComponent {
 
     private readonly platform = inject(Platform);
-    private readonly filterService = inject(HospitalEventsSettingsService);
+    private readonly filterService = inject(EventsSettingsService);
     private readonly departmentService = inject(DepartmentService);
 
 
     protected filters: EventsFilter;
     protected preferences: EventsListPreferences;
     protected departmentOptions: Array<Department>;
-    protected statusOptions: Array<HospitalVisitStatus> = Object.values(HospitalVisitStatus);
+    protected statusOptions: Array<VisitStatus> = Object.values(VisitStatus);
     protected mobileScreen: boolean;
 
 

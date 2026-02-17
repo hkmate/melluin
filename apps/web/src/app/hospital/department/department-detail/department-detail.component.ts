@@ -99,7 +99,7 @@ export class DepartmentDetailComponent {
     }
 
     private setIdInUrl(departmentId: string): void {
-        this.location.replaceState(`${PATHS.hospitalDepartments.main}/${departmentId}`);
+        this.location.replaceState(`${PATHS.departments.main}/${departmentId}`);
     }
 
 

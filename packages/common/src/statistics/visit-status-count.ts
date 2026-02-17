@@ -1,6 +1,6 @@
-import {HospitalVisitStatus} from '../hospital-visit/hospital-visit-status';
+import {VisitStatus} from '../visit/visit-status';
 
 export interface VisitStatusCount {
-    status: HospitalVisitStatus;
+    status: VisitStatus;
     count: number;
 }

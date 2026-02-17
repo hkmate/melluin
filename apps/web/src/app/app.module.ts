@@ -9,7 +9,7 @@ import {DashboardModule} from './dashboard/dashboard.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NotFoundPageModule} from './not-found-component/not-found.module';
 import {AuthModule} from './auth/auth.module';
-import {MelluinPathProvider, PathContainer, PATHS} from './app-paths';
+import {MelluinPathProvider} from './app-paths';
 import {PathProvider} from './path-resolve/path-resolve.service';
 import {MenuComponent} from './menu/menu.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -96,7 +96,6 @@ export function appInitializeCredentialsFactory(credentialStoreService: Credenti
             deps: [AppConfig]
         },
         {provide: PathProvider, useClass: MelluinPathProvider},
-        {provide: PathContainer, useValue: PATHS},
         {provide: MatPaginatorIntl, useClass: I18nPaginatorIntl},
         {
             provide: APP_INITIALIZER,

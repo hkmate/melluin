@@ -1,5 +1,5 @@
 import {Component, computed, input} from '@angular/core';
-import {HospitalVisitActivityInfo, isNilOrEmpty} from '@melluin/common';
+import {VisitActivityInfo, isNilOrEmpty} from '@melluin/common';
 
 @Component({
     selector: 'app-visit-activity-information',
@@ -7,7 +7,7 @@ import {HospitalVisitActivityInfo, isNilOrEmpty} from '@melluin/common';
 })
 export class VisitActivityInformationComponent {
 
-    public info = input<HospitalVisitActivityInfo>();
+    public info = input<VisitActivityInfo>();
 
     protected empty = computed(() => isNilOrEmpty(this.info()?.content));
 

@@ -32,12 +32,12 @@ const routes: Routes = [
         loadChildren: () => import('./my-profile/my-profile-routing.module')
     },
     {
-        path: PATHS.hospitalDepartments.main,
+        path: PATHS.departments.main,
         canMatch: [AuthGuardFn],
         data: {
             permissions: [Permission.canSearchDepartment]
         },
-        loadChildren: () => import('./hospital/department/hospital-department-routing.module')
+        loadChildren: () => import('./hospital/department/department-routing.module')
     },
     {
         path: PATHS.events.main,
@@ -48,12 +48,12 @@ const routes: Routes = [
         loadChildren: () => import('./events/events-routing.module')
     },
     {
-        path: PATHS.hospitalVisit.main,
+        path: PATHS.visit.main,
         canMatch: [AuthGuardFn],
         data: {
             permissions: [Permission.canReadVisit]
         },
-        loadChildren: () => import('./hospital/hospital-visit-routing.module')
+        loadChildren: () => import('./hospital/visit-routing.module')
     },
     {
         path: PATHS.statistics.main,

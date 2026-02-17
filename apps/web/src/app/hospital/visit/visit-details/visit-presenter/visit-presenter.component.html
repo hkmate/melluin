@@ -1,0 +1,94 @@
+<h1>
+    <div>
+        {{ 'Visit.Title' | translate }}
+
+        <app-copier [value]="selfLink()"/>
+    </div>
+    <div>
+        <app-copier [value]="visit().id" icon="flag" infoMsg="HospitalVisit.Present.IdCopied"/>
+    </div>
+</h1>
+
+<div class="visit-data-presenter">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'Visit.Present.Date' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                {{ visit().dateTimeFrom | date : ('EventDateFormat' | translate) }}
+                {{ visit().dateTimeFrom | date : ('TimeFormat' | translate) }}
+                -
+                {{ visit().dateTimeTo | date : ('TimeFormat' | translate) }}
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'Visit.Present.Place' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                <a class="link"
+                   [routerLink]="['/departments', visit().department.id]">
+                    {{ visit().department.name }}
+                </a>
+                <span class="department-address">
+                    ({{ visit().department.address }})
+                </span>
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'Visit.Present.Participants' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                <mat-chip-listbox>
+                    @for (participant of visit().participants; track participant.id) {
+                        <mat-chip-row [routerLink]="['/people', participant.id]">
+                            {{ participant | personName }}
+                        </mat-chip-row>
+                    }
+                </mat-chip-listbox>
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'Visit.Present.Status' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                <span [class]="'visit-status-' + visit().status">
+                    {{ 'VisitStatus.' + visit().status | translate }}
+                </span>
+                <span class="status-icon">
+                    <app-visit-status-icon [status]="visit().status"/>
+                </span>
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'Visit.Present.Organizer' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                {{ visit().organizer | personName }}
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'Visit.Present.CountedHours' | translate }}</mat-card-subtitle>
+            <mat-card-title>
+                {{ visit().countedMinutes | minToHour | optional }}
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'Visit.Present.VicariousMomVisit' | translate }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>{{ 'YesNo.' + visit().vicariousMomVisit | translate }}</mat-card-content>
+    </mat-card>
+
+</div>

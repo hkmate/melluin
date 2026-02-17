@@ -3,7 +3,7 @@ import {
     DateIntervalSpecifier,
     Department,
     EventsDateFilterValues,
-    HospitalVisitStatus,
+    VisitStatus,
     Pageable,
     UserSettings
 } from '@melluin/common';
@@ -22,7 +22,7 @@ export class UserEventListSettingsEditorComponent extends CustomUserSettingsEdit
     private readonly departmentService = inject(DepartmentService);
 
     protected form = computed(() => this.initForm());
-    protected statusOptions: Array<HospitalVisitStatus> = Object.values(HospitalVisitStatus);
+    protected statusOptions: Array<VisitStatus> = Object.values(VisitStatus);
     protected departmentOptions: Array<Department>;
     protected dateOptions: Array<DateIntervalSpecifier> = EventsDateFilterValues;
 

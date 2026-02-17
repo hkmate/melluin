@@ -1,0 +1,123 @@
+<h1>
+    @if (visit()) {
+        {{ 'Visit.Form.Edit' | translate }}
+    } @else {
+        {{ 'Visit.Form.Add' | translate }}
+    }
+</h1>
+
+<form [formGroup]="form()">
+    <div>
+        <mat-form-field>
+            <mat-label>{{ 'Visit.Form.Department' | translate }}</mat-label>
+            <mat-select formControlName="departmentId">
+                @for (option of departmentOptions; track option.id) {
+                    <mat-option [value]="option.id"> {{ option.name }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="participant-selector">
+        <app-person-select [label]="'Visit.Form.Participants' | translate"
+                           formControlName="participantIds"></app-person-select>
+    </div>
+
+    <div>
+        <mat-form-field>
+            <mat-label>{{ 'Visit.Form.Date' | translate }}</mat-label>
+            <input matInput
+                   [matDatepicker]="validFromPicker"
+                   (click)="validFromPicker.open()"
+                   formControlName="date">
+            <mat-datepicker-toggle matIconSuffix [for]="validFromPicker"/>
+            <mat-datepicker #validFromPicker [touchUi]="mobileScreen"/>
+        </mat-form-field>
+    </div>
+
+    <div class="time-field">
+        <mat-form-field>
+            <mat-label>{{ 'Visit.Form.TimeFrom' | translate }}</mat-label>
+            <input matInput
+                   type="time"
+                   formControlName="timeFrom"
+                   (ngModelChange)="setCountedHours()">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'Visit.Form.TimeTo' | translate }}</mat-label>
+            <input matInput
+                   type="time"
+                   formControlName="timeTo"
+                   (ngModelChange)="setCountedHours()">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field>
+            <mat-label>{{ 'Visit.Form.CountedHours' | translate }}</mat-label>
+            <input matInput
+                   type="number"
+                   [placeholder]="'appearance.Form.CountedHoursPlaceholder' | translate"
+                   formControlName="countedHours">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field>
+            <mat-label>{{ 'Visit.Form.Status' | translate }}</mat-label>
+            <mat-select formControlName="status">
+                @for (option of statusOptions; track option) {
+                    <mat-option [value]="option.value" [disabled]="option.disabled">
+                        {{ 'VisitStatus.' + option.value | translate }}
+                    </mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-card>
+            <mat-card-content>
+                <mat-checkbox formControlName="vicariousMomVisit">
+                    {{ 'Visit.Form.VicariousMomVisit' | translate }}
+                </mat-checkbox>
+                @if (needVicariousMomVisitParticipantWarning()) {
+                    <div class="vicarious-mom-visit-error">
+                        {{ 'Visit.Form.VicariousMomVisitError' | translate }}
+                    </div>
+                }
+                @if (needVicariousMomVisitConnectionWarning()) {
+                    <div class="vicarious-mom-visit-error">
+                        {{ 'Visit.Form.VicariousMomVisitConnectionError' | translate }}
+                    </div>
+                }
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="button-row">
+
+        @if (!visit()) {
+            <mat-checkbox [ngModel]="createNewAfterOneSaved()"
+                          (ngModelChange)="setCreateOther($event)"
+                          [ngModelOptions]="{standalone: true}">
+                {{ 'Visit.Form.CreateOther' | translate }}
+            </mat-checkbox>
+        }
+
+        <button mat-flat-button
+                color="accent"
+                type="button"
+                [disabled]="form().invalid"
+                (click)="onSubmit()">
+            {{ 'SaveButton' | translate }}
+        </button>
+        <button mat-stroked-button
+                color="primary"
+                type="button"
+                (click)="cancelEditing()">
+            {{ 'CancelButton' | translate }}
+        </button>
+    </div>
+
+</form>

@@ -1,5 +1,5 @@
 import {Component, computed, input} from '@angular/core';
-import {HospitalVisitActivity, isNilOrEmpty, VisitedChild} from '@melluin/common';
+import {VisitActivity, isNilOrEmpty, VisitedChild} from '@melluin/common';
 
 @Component({
     selector: 'app-visit-activities-list',
@@ -9,7 +9,7 @@ import {HospitalVisitActivity, isNilOrEmpty, VisitedChild} from '@melluin/common
 export class VisitActivitiesListComponent {
 
     public readonly childrenById = input.required<Record<string, VisitedChild>>();
-    public readonly activities = input.required<Array<HospitalVisitActivity>>();
+    public readonly activities = input.required<Array<VisitActivity>>();
 
     protected readonly isEmpty = computed(() => isNilOrEmpty(this.activities()));
 

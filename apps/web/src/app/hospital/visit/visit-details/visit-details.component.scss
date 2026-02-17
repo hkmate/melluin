@@ -1,0 +1,14 @@
+.button-row {
+    display: flex;
+    justify-content: flex-end;
+    margin: .5rem 0 .5rem 0;
+
+    button:not(:last-of-type) {
+        margin-right: 1rem;
+    }
+}
+
+app-visit-connections {
+    display: block;
+    margin-top: 2rem;
+}

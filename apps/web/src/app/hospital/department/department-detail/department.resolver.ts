@@ -21,7 +21,7 @@ export class DepartmentResolver implements Resolve<Department | CreateMarkerType
             return this.getDepartmentOrMarker(departmentId);
         } catch (e) {
             console.debug(cast<Error>(e).message);
-            this.router.navigate([PATHS.hospitalDepartments.main])
+            this.router.navigate([PATHS.departments.main])
             return of(undefined);
         }
     }

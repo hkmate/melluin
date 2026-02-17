@@ -35,7 +35,7 @@
                         <mat-card-subtitle>{{ 'PersonPage.EventListSettings.Statuses' | translate }}</mat-card-subtitle>
                         <mat-card-title>
                             @for (status of settings.eventList?.statuses; track status) {
-                                <mat-chip>{{ 'HospitalVisitStatus.' + status | translate }}</mat-chip>
+                                <mat-chip>{{ 'VisitStatus.' + status | translate }}</mat-chip>
                             } @empty {
                                 {{ 'NoData' | translate }}
                             }

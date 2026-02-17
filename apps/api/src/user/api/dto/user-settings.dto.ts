@@ -11,7 +11,7 @@ import {
     EventsDateFilterValues,
     HomePageOption,
     HomePageUserSettings,
-    HospitalVisitStatus,
+    VisitStatus,
     UserSettings,
     WidgetSetting,
     WidgetType
@@ -30,10 +30,10 @@ export class EventListUserSettingsDto implements EventListUserSettings {
     @IsUUID('all', {each: true})
     departmentIds?: Array<string>;
 
-    @ApiProperty({enum: HospitalVisitStatus, isArray: true, required: false})
+    @ApiProperty({enum: VisitStatus, isArray: true, required: false})
     @IsOptional()
-    @IsEnum(HospitalVisitStatus, {each: true})
-    statuses?: Array<HospitalVisitStatus>;
+    @IsEnum(VisitStatus, {each: true})
+    statuses?: Array<VisitStatus>;
 
     @ApiProperty({type: [String], required: false})
     @IsOptional()

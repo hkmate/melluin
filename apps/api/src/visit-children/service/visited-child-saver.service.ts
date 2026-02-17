@@ -1,0 +1,80 @@
+import {Injectable} from '@nestjs/common';
+import {
+    isNil,
+    User,
+    VisitedChild,
+    VisitedChildEditInput,
+    VisitedChildInput,
+    VisitedChildWithChildIdInput,
+    VisitedChildWithChildInput
+} from '@melluin/common';
+import {VisitedChildrenDao} from '@be/visit-children/persistence/visited-children.dao';
+import {VisitDao} from '@be/visit/visit.dao';
+import {VisitedChildCreationToEntityConverter} from '@be/visit-children/converer/visited-child-creation-to-entity.converter';
+import {VisitedChildEntityToDtoConverter} from '@be/visit-children/converer/visited-child-entity-to-dto.converter';
+import {ChildCrudService} from '@be/child/child.crud.service';
+import {VisitEntity} from '@be/visit/model/visit.entity';
+import {VisitedChildSaveValidatorFactory} from '@be/visit-children/validator/visited-child-save-validator-factory';
+
+@Injectable()
+export class VisitedChildSaverService {
+
+    constructor(private readonly visitDao: VisitDao,
+                private readonly childService: ChildCrudService,
+                private readonly visitedChildrenDao: VisitedChildrenDao,
+                private readonly creationToEntityConverter: VisitedChildCreationToEntityConverter,
+                private readonly entityToDtoConverter: VisitedChildEntityToDtoConverter,
+                private readonly validatorFactory: VisitedChildSaveValidatorFactory) {
+    }
+
+    public async save(visitId: string, visitedChildInput: VisitedChildInput, requester: User): Promise<VisitedChild> {
+        const visit = await this.visitDao.getOne(visitId);
+
+        await this.validatorFactory.getValidatorForCreate()
+            .validate({visit, requester});
+
+        if (isNil(visitedChildInput.child)) {
+            return this.saveVisitedChild(visit,
+                {...visitedChildInput, childId: visitedChildInput.childId!});
+        }
+        return this.saveChildThenVisitedChild(visit,
+            {...visitedChildInput, child: visitedChildInput.child!}, requester);
+    }
+
+
+    public async update(visitId: string, visitedChildInput: VisitedChildEditInput, requester: User): Promise<VisitedChild> {
+        const visit = await this.visitDao.getOne(visitId);
+        const visitedChild = await this.visitedChildrenDao.getOne(visitedChildInput.id);
+
+        await this.validatorFactory.getValidatorForUpdate()
+            .validate({visit, visitedChild, requester});
+
+        visitedChild.child = await this.childService.rewriteEntity(visitedChild.child, visitedChildInput.child);
+        visitedChild.isParentThere = visitedChildInput.isParentThere;
+
+        const persisted = await this.visitedChildrenDao.save(visitedChild);
+        return this.entityToDtoConverter.convert(persisted);
+    }
+
+    private async saveVisitedChild(visit: VisitEntity,
+                                   visitedChildInput: VisitedChildWithChildIdInput): Promise<VisitedChild> {
+        const createEntity = await this.creationToEntityConverter.convert({visitedChildInput, visit});
+        const persisted = await this.visitedChildrenDao.save(createEntity);
+
+        return this.entityToDtoConverter.convert(persisted);
+    }
+
+    private async saveChildThenVisitedChild(visit: VisitEntity,
+                                            visitedChildInput: VisitedChildWithChildInput,
+                                            requester: User): Promise<VisitedChild> {
+        const child = await this.childService.save(visitedChildInput.child!, requester);
+        const visitedChildInput2 = {...visitedChildInput, child: undefined, childId: child.id};
+        try {
+            return this.saveVisitedChild(visit, visitedChildInput2);
+        } catch (e) {
+            await this.childService.remove(child.id);
+            throw e;
+        }
+    }
+
+}

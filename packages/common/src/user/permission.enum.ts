@@ -25,7 +25,7 @@ export enum Permission {
     canWriteSelf = 'canWriteSelf',
     canModifyPersonCity = 'canModifyPersonCity',
 
-    // Hospital visit related
+    // Visit related
     canCreateVisit = 'canCreateVisit', // Create only those where he/she is participant
     canReadVisit = 'canReadVisit',
     canModifyVisit = 'canModifyVisit', // Write only those where he/she is participant
@@ -36,7 +36,7 @@ export enum Permission {
     canReadVisitConnections = 'canReadVisitConnections',
     canWriteVisitConnections = 'canWriteVisitConnections',
 
-    // Hospital visit / Activity related
+    // Visit activity related
     canWriteChild = 'canWriteChild',
     canWriteChildAtAnyVisit = 'canWriteChildAtAnyVisit',
     canReadChild = 'canReadChild',

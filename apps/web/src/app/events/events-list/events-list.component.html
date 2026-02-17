@@ -6,7 +6,7 @@
                 <span *ngIf="permissions.has(Permission.canCreateVisit) || permissions.has(Permission.canCreateAnyVisit)">
                     <a mat-mini-fab
                        color="accent"
-                       [routerLink]="['/hospital-visits', 'new']">
+                       [routerLink]="['/visits', 'new']">
                         <mat-icon>add</mat-icon>
                     </a>
                 </span>
@@ -28,7 +28,7 @@
         </div>
 
         <div class="events-list">
-            <app-hospital-events-list [eventsList]="eventsList"
+            <app-visit-list [eventsList]="eventsList"
                                       [markRowByDate]="preferences.needHighlight"/>
 
             @if (!eventsList.length) {

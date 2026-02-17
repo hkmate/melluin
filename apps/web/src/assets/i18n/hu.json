@@ -59,7 +59,7 @@
         "CORRECTED": "Javítva",
         "COMMENT": "Megjegyzés"
     },
-    "HospitalVisitStatus": {
+    "VisitStatus": {
         "DRAFT": "Piszkozat",
         "SCHEDULED": "Betervezve",
         "STARTED": "Megkezdett",
@@ -424,7 +424,7 @@
         "Settings": "Szűrők",
         "NoEventsFound": "Nem található esemény a keresési feltételekkel"
     },
-    "HospitalVisit": {
+    "Visit": {
         "Title": "Kórházi látogatás",
         "Present": {
             "Date": "Időpont",

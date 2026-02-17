@@ -1,6 +1,6 @@
-import {HospitalVisitStatus} from '@melluin/common';
+import {VisitStatus} from '@melluin/common';
 
 export interface VisitStatusCountRowItem {
-    status: HospitalVisitStatus;
+    status: VisitStatus;
     count: number;
 }

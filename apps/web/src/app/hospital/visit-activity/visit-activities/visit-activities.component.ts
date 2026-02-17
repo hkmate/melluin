@@ -1,22 +1,22 @@
 import {Component, inject, input, OnInit} from '@angular/core';
 import {VisitActivityService} from '@fe/app/hospital/visit-activity/visit-activity.service';
 import {
-    HospitalVisit,
-    HospitalVisitActivity,
-    HospitalVisitActivityInfo,
-    HospitalVisitStatus,
+    Visit,
+    VisitActivity,
+    VisitActivityInfo,
+    VisitStatus,
     isNil,
     isNilOrEmpty,
     Permission,
     VisitedChild,
-    WrappedHospitalVisitActivity
+    WrappedVisitActivity
 } from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {
     convertToChildrenById,
     VisitedChildById
-} from '@fe/app/hospital/hospital-visit-activity-filler/model/visited-child-by-id';
+} from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
 
 @Component({
     selector: 'app-visit-activities',
@@ -29,29 +29,28 @@ export class VisitActivitiesComponent implements OnInit {
     private readonly activityService = inject(VisitActivityService);
 
     Permission = Permission;
-    HospitalVisitStatus = HospitalVisitStatus;
 
     private readonly statusesWhenActivitiesMeansFail = [
-        HospitalVisitStatus.DRAFT,
-        HospitalVisitStatus.SCHEDULED,
-        HospitalVisitStatus.CANCELED,
-        HospitalVisitStatus.FAILED_BECAUSE_NO_CHILD,
-        HospitalVisitStatus.FAILED_FOR_OTHER_REASON
+        VisitStatus.DRAFT,
+        VisitStatus.SCHEDULED,
+        VisitStatus.CANCELED,
+        VisitStatus.FAILED_BECAUSE_NO_CHILD,
+        VisitStatus.FAILED_FOR_OTHER_REASON
     ];
 
     private readonly statusesWhenActivitiesShouldBeShowed = [
-        HospitalVisitStatus.STARTED,
-        HospitalVisitStatus.ACTIVITIES_FILLED_OUT,
-        HospitalVisitStatus.ALL_FILLED_OUT,
-        HospitalVisitStatus.SUCCESSFUL
+        VisitStatus.STARTED,
+        VisitStatus.ACTIVITIES_FILLED_OUT,
+        VisitStatus.ALL_FILLED_OUT,
+        VisitStatus.SUCCESSFUL
     ];
 
-    public readonly visit = input.required<HospitalVisit>();
+    public readonly visit = input.required<Visit>();
     public readonly needWarnings = input.required<boolean>();
 
     protected children: Array<VisitedChild> = [];
-    protected activities: Array<HospitalVisitActivity> = [];
-    protected information?: HospitalVisitActivityInfo = undefined;
+    protected activities: Array<VisitActivity> = [];
+    protected information?: VisitActivityInfo = undefined;
     protected visitDate: Date;
     protected childrenById: VisitedChildById;
 
@@ -62,7 +61,7 @@ export class VisitActivitiesComponent implements OnInit {
 
     protected needWarningOnActivitiesWhenStarted(): boolean {
         return this.needWarnings()
-            && this.visit().status === HospitalVisitStatus.STARTED;
+            && this.visit().status === VisitStatus.STARTED;
     }
 
     protected needWarningOnActivitiesWhenFailed(): boolean {
@@ -97,7 +96,7 @@ export class VisitActivitiesComponent implements OnInit {
         this.information = wrapped.info;
     }
 
-    private getWrappedActivities(): Promise<WrappedHospitalVisitActivity> {
+    private getWrappedActivities(): Promise<WrappedVisitActivity> {
         return firstValueFrom(this.activityService.getActivities(this.visit().id));
     }
 

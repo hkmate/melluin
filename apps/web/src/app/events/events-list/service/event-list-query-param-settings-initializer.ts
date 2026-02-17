@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';
 import {EventsFilter} from '@fe/app/events/events-list/service/events-filter';
 import {DefaultEventListSettingsInitializer} from '@fe/app/events/events-list/service/event-list-settings-initializer';
-import {HospitalVisitStatus, isNil, isNilOrEmpty, PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo} from '@melluin/common';
+import {VisitStatus, isNil, isNilOrEmpty, PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo} from '@melluin/common';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {EventListQueryParams} from '@fe/app/events/events-list/service/event-list-query-params';
 
@@ -100,7 +100,7 @@ export class EventListQueryParamSettingsInitializer extends DefaultEventListSett
         if (isNilOrEmpty(statuses)) {
             return;
         }
-        filter.statuses = statuses! as Array<HospitalVisitStatus>;
+        filter.statuses = statuses! as Array<VisitStatus>;
     }
 
     private decorateHighLight(preferences: EventsListPreferences): void {

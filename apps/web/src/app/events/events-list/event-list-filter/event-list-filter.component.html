@@ -33,7 +33,7 @@
             <mat-label>{{ 'PersonPage.EventListSettings.Statuses' | translate }}</mat-label>
             <mat-select [(ngModel)]="filters.statuses" (ngModelChange)="filterSet()" multiple>
                 @for (option of statusOptions;track option) {
-                    <mat-option [value]="option">{{ 'HospitalVisitStatus.' + option | translate }}</mat-option>
+                    <mat-option [value]="option">{{ 'VisitStatus.' + option | translate }}</mat-option>
                 }
             </mat-select>
         </mat-form-field>

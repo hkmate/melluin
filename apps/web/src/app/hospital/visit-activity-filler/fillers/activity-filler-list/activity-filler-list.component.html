@@ -1,0 +1,35 @@
+<div class="activities-header">
+    <h1>{{ 'Visit.Activities.Activities' | translate }}</h1>
+    @if (permissions.has(Permission.canCreateActivity)) {
+        <span class="add-btn">
+            <button mat-mini-fab color="accent" (click)="toggleCreator()">
+                @if (creatingInProcess) {
+                    <mat-icon>close</mat-icon>
+                } @else {
+                    <mat-icon>add</mat-icon>
+                }
+            </button>
+        </span>
+    }
+</div>
+
+@if (creatingInProcess) {
+    <div class="activity-create">
+        <app-filler-activity-create (creationEnded)="toggleCreator(false)"/>
+    </div>
+}
+
+<div class="activity-list">
+    @if (activities$ | async; as activities) {
+        @for (activity of activities; track activity.id) {
+            <div class="activity-item">
+                <app-filler-activity-item [activity]="activity"
+                                          [childrenById]="childrenById"/>
+            </div>
+        } @empty {
+            <div class="empty-list">
+                {{ 'Visit.Activities.NoActivityYet' | translate }}
+            </div>
+        }
+    }
+</div>

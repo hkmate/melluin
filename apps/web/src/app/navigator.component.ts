@@ -6,12 +6,12 @@ import {
     FilterOperationBuilder,
     HomePageOption,
     HomePageUserSettings,
-    HospitalVisit,
-    HospitalVisitStatus,
+    Visit,
+    VisitStatus,
     isNilOrEmpty,
     isNotNil
 } from '@melluin/common';
-import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
+import {VisitService} from '@fe/app/hospital/visit/visit.service';
 import {Platform} from '@angular/cdk/platform';
 import {Router} from '@angular/router';
 import {PATHS} from '@fe/app/app-paths';
@@ -29,20 +29,20 @@ export class NavigatorComponent {
     private readonly platform = inject(Platform);
     private readonly store = inject(Store);
     private readonly credentialStoreService = inject(CredentialStoreService);
-    private readonly visitService = inject(HospitalVisitService);
+    private readonly visitService = inject(VisitService);
 
 
     private readonly availableVisitStatuses = [
-        HospitalVisitStatus.SCHEDULED,
-        HospitalVisitStatus.STARTED,
-        HospitalVisitStatus.ACTIVITIES_FILLED_OUT,
-        HospitalVisitStatus.ALL_FILLED_OUT,
-        HospitalVisitStatus.SUCCESSFUL,
+        VisitStatus.SCHEDULED,
+        VisitStatus.STARTED,
+        VisitStatus.ACTIVITIES_FILLED_OUT,
+        VisitStatus.ALL_FILLED_OUT,
+        VisitStatus.SUCCESSFUL,
     ];
 
     private readonly visitStatusesWhenFillingEnabled = [
-        HospitalVisitStatus.SCHEDULED,
-        HospitalVisitStatus.STARTED,
+        VisitStatus.SCHEDULED,
+        VisitStatus.STARTED,
     ];
 
     private readonly mobileScreen = this.platform.IOS || this.platform.ANDROID;
@@ -75,17 +75,17 @@ export class NavigatorComponent {
 
         const fillableVisit = visits.find(visit => this.visitStatusesWhenFillingEnabled.includes(visit.status));
         if (option === HomePageOption.ACTUAL_HOSPITAL_VISIT_FILLER && isNotNil(fillableVisit)) {
-            return this.router.navigate([PATHS.hospitalVisit.main, fillableVisit.id, PATHS.hospitalVisit.fillActivities]);
+            return this.router.navigate([PATHS.visit.main, fillableVisit.id, PATHS.visit.fillActivities]);
         }
 
-        return this.router.navigate([PATHS.hospitalVisit.main, visits[0].id]);
+        return this.router.navigate([PATHS.visit.main, visits[0].id]);
     }
 
     private openDefaultPage(): Promise<boolean> {
         return this.openVisitRelatedPage(HomePageOption.ACTUAL_HOSPITAL_VISIT_FILLER);
     }
 
-    private getMyTodayVisit(): Promise<Array<HospitalVisit>> {
+    private getMyTodayVisit(): Promise<Array<Visit>> {
         return firstValueFrom(this.visitService.findVisit({
             page: 1, size: 5, where: {
                 dateTimeFrom: FilterOperationBuilder.lt(this.getTomorrowBegin()),

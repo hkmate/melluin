@@ -13,7 +13,7 @@ export class VisitedChildService {
     private readonly msg = inject(MessageService);
 
     private getChildrenUrl(visitId: string): string {
-        return `${AppConfig.get('baseURL')}/hospital-visits/${visitId}/children`;
+        return `${AppConfig.get('baseURL')}/visits/${visitId}/children`;
     }
 
     public add(visitId: string, data: VisitedChildInput): Observable<VisitedChild> {

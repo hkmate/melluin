@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
 export const CREATE_MARKER = 'new';
 export type CreateMarkerType = typeof CREATE_MARKER;
 
-export const PATHS: PathContainer = {
+export const PATHS = {
 
     dashboard: {
         main: 'dashboard',
@@ -24,8 +24,8 @@ export const PATHS: PathContainer = {
         main: 'my-profile'
     },
 
-    hospitalDepartments: {
-        main: 'hospital-departments',
+    departments: {
+        main: 'departments',
         detail: ':id',
         new: CREATE_MARKER
     },
@@ -34,8 +34,8 @@ export const PATHS: PathContainer = {
         main: 'events'
     },
 
-    hospitalVisit: {
-        main: 'hospital-visits',
+    visit: {
+        main: 'visits',
         detail: ':id',
         fillActivities: 'fill-activities'
     },
@@ -53,7 +53,7 @@ export const PATHS: PathContainer = {
         main: 'questionnaire'
     }
 
-};
+} as const;
 
 export interface PathDescriptor {
     main: string;
@@ -61,18 +61,8 @@ export interface PathDescriptor {
     [subKeys: string]: string;
 }
 
-export class PathContainer {
-
-    [moduleName: string]: PathDescriptor;
-
-}
-
 @Injectable()
 export class MelluinPathProvider extends PathProvider {
-
-    constructor(private pathContainer: PathContainer) {
-        super();
-    }
 
     public override isId(str: string): boolean {
         return str === ':id';
@@ -80,8 +70,8 @@ export class MelluinPathProvider extends PathProvider {
 
     public override allPaths(): Array<Array<string>> {
         const result: Array<Array<string>> = [];
-        for (const key of Object.keys(this.pathContainer)) {
-            result.push(...this.convertPathDescriptorToArray(this.pathContainer[key]));
+        for (const path of Object.values(PATHS)) {
+            result.push(...this.convertPathDescriptorToArray(path));
         }
         return result;
     }

@@ -22,7 +22,7 @@
                    (click)="navigateHappen()">{{ 'Menu.Events' | translate }}</a>
                 <a *ngIf="canUserSee?.departments"
                    mat-list-item
-                   routerLink="/hospital-departments" (click)="navigateHappen()">
+                   routerLink="/departments" (click)="navigateHappen()">
                     {{ 'Menu.Departments' | translate }}
                 </a>
                 <a *ngIf="canUserSee?.statistics" mat-list-item routerLink="/statistics"

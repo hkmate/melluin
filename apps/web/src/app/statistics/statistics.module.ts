@@ -21,7 +21,7 @@ import {
     MatExpansionPanelHeader,
     MatExpansionPanelTitle
 } from '@angular/material/expansion';
-import {HospitalEventsListModule} from '@fe/app/hospital/visit/hospital-events-list/hospital-events-list.module';
+import {VisitListModule} from '@fe/app/hospital/visit/visit-list/visit-list.module';
 import {MatIcon} from '@angular/material/icon';
 import {MatPaginator} from '@angular/material/paginator';
 import {StatisticsWidgetComponent} from '@fe/app/statistics/statistics-widget/statistics-widget.component';
@@ -74,7 +74,7 @@ import {VisitCountByWeekDayStatProviderService} from '@fe/app/statistics/service
         MatExpansionPanel,
         MatExpansionPanelHeader,
         MatExpansionPanelTitle,
-        HospitalEventsListModule,
+        VisitListModule,
         MatIcon,
         MatMiniFabAnchor,
         MatPaginator,

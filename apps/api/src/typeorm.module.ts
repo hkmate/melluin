@@ -5,12 +5,12 @@ import {PersonEntity} from './person/model/person.entity';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import {DepartmentBoxStatusEntity} from '@be/department-box/model/department-box-status.entity';
-import {HospitalVisitEntity} from '@be/hospital-visit/model/hospital-visit.entity';
+import {VisitEntity} from '@be/visit/model/visit.entity';
 import {ChildEntity} from '@be/child/model/child.entity';
-import {HospitalVisitActivityEntity} from '@be/hospital-visit-activity/model/hospital-visit-activity.entity';
+import {VisitActivityEntity} from '@be/visit-activity/model/visit-activity.entity';
 import {PermissionEntity} from '@be/user/model/permission.entity';
-import {VisitedChildEntity} from '@be/hospital-visit-children/persistence/model/visited-child.entity';
-import {HospitalVisitActivityInfoEntity} from '@be/hospital-visit-activity-info/model/hospital-visit-activity-info.entity';
+import {VisitedChildEntity} from '@be/visit-children/persistence/model/visited-child.entity';
+import {VisitActivityInfoEntity} from '@be/visit-activity-info/model/visit-activity-info.entity';
 import {UserActivationEntity} from '@be/user/model/user-activation.entity';
 
 export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
@@ -35,10 +35,10 @@ export const TypeOrmModuleDefinition = TypeOrmModule.forRootAsync({
             PersonEntity,
             DepartmentEntity,
             DepartmentBoxStatusEntity,
-            HospitalVisitEntity,
+            VisitEntity,
             VisitedChildEntity,
-            HospitalVisitActivityEntity,
-            HospitalVisitActivityInfoEntity,
+            VisitActivityEntity,
+            VisitActivityInfoEntity,
             ChildEntity,
             UserActivationEntity
         ],

@@ -1,11 +1,11 @@
 import {Component, inject} from '@angular/core';
-import {FilterOptions, HospitalVisit, Pageable, PageQuery, Permission, SortOptions} from '@melluin/common';
+import {FilterOptions, Visit, Pageable, PageQuery, Permission, SortOptions} from '@melluin/common';
 import {AppTitle} from '@fe/app/app-title.service';
 import {PageEvent} from '@angular/material/paginator';
-import {HospitalVisitService} from '@fe/app/hospital/visit/hospital-visit.service';
+import {VisitService} from '@fe/app/hospital/visit/visit.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
-import {HospitalEventsSettingsService} from '@fe/app/events/events-list/service/hospital-events-settings.service';
+import {EventsSettingsService} from '@fe/app/events/events-list/service/events-settings.service';
 import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';
 import {EventListUserSettingsInitializer} from '@fe/app/events/events-list/service/event-list-user-settings-initializer';
 import {DefaultEventListSettingsInitializer} from '@fe/app/events/events-list/service/event-list-settings-initializer';
@@ -25,7 +25,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         DefaultEventListSettingsInitializer,
         EventListUserSettingsInitializer,
         EventListQueryParamSettingsInitializer,
-        HospitalEventsSettingsService
+        EventsSettingsService
     ]
 })
 export class EventsListComponent {
@@ -34,13 +34,13 @@ export class EventsListComponent {
 
     private readonly title = inject(AppTitle);
     protected readonly permissions = inject(PermissionService,);
-    private readonly eventsService = inject(HospitalVisitService,);
-    private readonly filterService = inject(HospitalEventsSettingsService);
+    private readonly eventsService = inject(VisitService,);
+    private readonly filterService = inject(EventsSettingsService);
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [10, 20, 50, 100];
 
-    protected eventsList: Array<HospitalVisit> = [];
+    protected eventsList: Array<Visit> = [];
     protected page: number;
     protected size: number;
     protected countOfAll: number;
@@ -73,7 +73,7 @@ export class EventsListComponent {
 
     private loadData(): void {
         this.eventsService.findVisit(this.createPageRequest()).subscribe(
-            (page: Pageable<HospitalVisit>) => {
+            (page: Pageable<Visit>) => {
                 this.eventsList = page.items;
                 this.page = page.meta.currentPage;
                 this.countOfAll = page.meta.totalItems!;

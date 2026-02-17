@@ -1,4 +1,4 @@
-import {HospitalVisitStatus} from '../hospital-visit/hospital-visit-status';
+import {VisitStatus} from '../visit/visit-status';
 import {BoxStatusChangeReason} from '../department/box/box-status-change-reason';
 import {DateIntervalSpecifier} from '../util/date-interval-generator';
 
@@ -13,7 +13,7 @@ export interface EventListUserSettings {
 
     dateFilter?: DateIntervalSpecifier;
     departmentIds?: Array<string>;
-    statuses?: Array<HospitalVisitStatus>;
+    statuses?: Array<VisitStatus>;
     participantIds?: Array<string>;
     needHighlight?: boolean;
 

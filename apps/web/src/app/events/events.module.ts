@@ -15,7 +15,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatOptionModule} from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
-import {HospitalEventsListModule} from '@fe/app/hospital/visit/hospital-events-list/hospital-events-list.module';
+import {VisitListModule} from '@fe/app/hospital/visit/visit-list/visit-list.module';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {PersonSelectModule} from '@fe/app/util/person-select/person-select.module';
@@ -46,7 +46,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 
         PersonNamePipe,
         LazyInputModule,
-        HospitalEventsListModule,
+        VisitListModule,
         PersonSelectModule,
     ],
     declarations: [

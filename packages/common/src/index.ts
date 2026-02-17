@@ -21,20 +21,20 @@ export * from './department/box/department-box-status-report';
 export * from './department/box/department-box-status';
 export * from './department/box/department-box-status-filterable-fields';
 
-export * from './hospital-visit/hospital-visit';
-export * from './hospital-visit/hospital-visit-create';
-export * from './hospital-visit/hospital-visit-rewrite';
-export * from './hospital-visit/hospital-visit-status';
-export * from './hospital-visit/visited-child';
-export * from './hospital-visit/event-visibility';
-export * from './hospital-visit/hospital-visit-filterable-fields';
+export * from './visit/visit';
+export * from './visit/visit-create';
+export * from './visit/visit-rewrite';
+export * from './visit/visit-status';
+export * from './visit/visited-child';
+export * from './visit/event-visibility';
+export * from './visit/visit-filterable-fields';
 
-export * from './hospital-visit-activity/hospital-visit-activity';
-export * from './hospital-visit-activity/visit-activity-type';
-export * from './hospital-visit-activity/hospital-visit-activity-info-input';
-export * from './hospital-visit-activity/hospital-visit-activity-info';
-export * from './hospital-visit-activity/hospital-visit-activity-input';
-export * from './hospital-visit-activity/wrapped-hospital-visit-activity';
+export * from './visit-activity/visit-activity';
+export * from './visit-activity/visit-activity-type';
+export * from './visit-activity/visit-activity-info-input';
+export * from './visit-activity/visit-activity-info';
+export * from './visit-activity/visit-activity-input';
+export * from './visit-activity/wrapped-visit-activity';
 
 export * from './person/person';
 export * from './person/person-creation';

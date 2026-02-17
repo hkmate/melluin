@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {EntityManager} from 'typeorm';
-import {HospitalVisitStatus, OperationCity, VisitActivityType} from '@melluin/common';
+import {VisitStatus, OperationCity, VisitActivityType} from '@melluin/common';
 import {VisitByDepartmentsRowItem} from '@be/statistics/model/visit-by-departments-row-item';
 import {ChildrenByDepartmentsRowItem} from '@be/statistics/model/children-by-departments-row-item';
 import {VisitStatusCountRowItem} from '@be/statistics/model/visit-status-count-row-item';
@@ -87,7 +87,7 @@ export class StatisticsDao {
         return this.em.query(`
             SELECT s.status, count(hv.id)
             FROM (SELECT status
-                  FROM (${this.getStaticValuesFromEnum(HospitalVisitStatus)}) x(status)) s
+                  FROM (${this.getStaticValuesFromEnum(VisitStatus)}) x(status)) s
                      LEFT OUTER JOIN (SELECT hv.status, hv.id
                                       FROM hospital_visit hv
                                                JOIN hospital_department hd ON hv.department_id = hd.id

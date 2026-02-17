@@ -1,0 +1,38 @@
+import {Injectable} from '@nestjs/common';
+import {VisitStatus, User} from '@melluin/common';
+import {VisitEntity} from '@be/visit/model/visit.entity';
+import {InjectRepository} from '@nestjs/typeorm';
+import {Repository} from 'typeorm';
+import {VisitDao} from '@be/visit/visit.dao';
+
+@Injectable()
+export class VisitRelationDao {
+
+    private static readonly RELATED_VISITS_SIZE = 10;
+    private static readonly FINALIZED_STATUSES = [
+        VisitStatus.ACTIVITIES_FILLED_OUT,
+        VisitStatus.ALL_FILLED_OUT,
+        VisitStatus.SUCCESSFUL
+    ];
+
+    constructor(@InjectRepository(VisitEntity)
+                private readonly repository: Repository<VisitEntity>,
+                private readonly crudDao: VisitDao) {
+    }
+
+    public async findRelationIds(visitId: string, requester: User): Promise<Array<string>> {
+        const currentVisit = await this.crudDao.getOne(visitId);
+        return (await this.repository.createQueryBuilder()
+            .from(VisitEntity, 'visit')
+            .leftJoin('visit.department', 'department')
+            .where(`department.id = '${currentVisit.department.id}'`)
+            .andWhere(`visit.id <> '${currentVisit.id}'`)
+            .andWhere('visit.status in (:...statuses)', {statuses: VisitRelationDao.FINALIZED_STATUSES})
+            .orderBy('visit.dateTimeFrom', 'DESC')
+            .take(VisitRelationDao.RELATED_VISITS_SIZE)
+            .select('visit.id')
+            .addSelect('visit.dateTimeFrom')
+            .getMany()).map(e => e.id);
+    }
+
+}

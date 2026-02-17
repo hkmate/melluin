@@ -26,7 +26,7 @@ export class DepartmentBoxService {
     }
 
     private getDepartmentBoxByVisitUrl(visitId: string): string {
-        return `${AppConfig.get('baseURL')}/hospital-visits/${visitId}/box-status`;
+        return `${AppConfig.get('baseURL')}/visits/${visitId}/box-status`;
     }
 
     private getDepartmentBoxUrl(): string {
