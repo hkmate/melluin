@@ -8,11 +8,10 @@ import {
     Person,
     PersonCreation,
     PersonIdentifier,
-    PersonRewrite,
-    QUERY_QUERY_KEY
+    PersonRewrite
 } from '@melluin/common';
 import {Observable} from 'rxjs';
-import {getErrorHandler, utf8ToBase64} from '@fe/app/util/util';
+import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
 
@@ -43,34 +42,28 @@ export class PeopleService {
     }
 
     public findPeopleIdentifiers(filters: PageQuery): Observable<Pageable<PersonIdentifier>> {
-        // TODO: remove debug when we'll use query expressions instead of base64 encoded json.
-        console.debug('PageRequest to send: ', filters);
-        return this.http.get<Pageable<PersonIdentifier>>(this.peopleUrl, {
-            params: {
-                'onlyIdentifier': true,
-                [PAGE_QUERY_KEY]: filters.page,
-                [PAGE_SIZE_QUERY_KEY]: filters.size,
-                [QUERY_QUERY_KEY]: this.preparePageRequest({sort: filters.sort, where: filters.where})
-            }
-        })
+        return this.http.post<Pageable<PersonIdentifier>>(`${this.peopleUrl}/:list`,
+            {sort: filters.sort, where: filters.where},
+            {
+                params: {
+                    'onlyIdentifier': true,
+                    [PAGE_QUERY_KEY]: filters.page,
+                    [PAGE_SIZE_QUERY_KEY]: filters.size
+                }
+            })
             .pipe(getErrorHandler<Pageable<PersonIdentifier>>(this.msg));
     }
 
     public findPeople(filters: PageQuery): Observable<Pageable<Person>> {
-        // TODO: remove debug when we'll use query expressions instead of base64 encoded json.
-        console.debug('PageRequest to send: ', filters);
-        return this.http.get<Pageable<Person>>(this.peopleUrl, {
-            params: {
-                [PAGE_QUERY_KEY]: filters.page,
-                [PAGE_SIZE_QUERY_KEY]: filters.size,
-                [QUERY_QUERY_KEY]: this.preparePageRequest({sort: filters.sort, where: filters.where})
-            }
-        })
+        return this.http.post<Pageable<Person>>(`${this.peopleUrl}/:list`,
+            {sort: filters.sort, where: filters.where},
+            {
+                params: {
+                    [PAGE_QUERY_KEY]: filters.page,
+                    [PAGE_SIZE_QUERY_KEY]: filters.size
+                }
+            })
             .pipe(getErrorHandler<Pageable<Person>>(this.msg));
-    }
-
-    private preparePageRequest(pageRequest: Partial<PageQuery>): string {
-        return utf8ToBase64(JSON.stringify(pageRequest));
     }
 
 }

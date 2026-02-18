@@ -8,10 +8,9 @@ import {
     PAGE_QUERY_KEY,
     PAGE_SIZE_QUERY_KEY,
     Pageable,
-    PageQuery,
-    QUERY_QUERY_KEY
+    PageQuery
 } from '@melluin/common';
-import {getErrorHandler, utf8ToBase64} from '@fe/app/util/util';
+import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
 
@@ -41,20 +40,15 @@ export class DepartmentService {
     }
 
     public findDepartments(filters: PageQuery): Observable<Pageable<Department>> {
-        // TODO: remove debug when we'll use query expressions instead of base64 encoded json.
-        console.debug('PageRequest to send: ', filters);
-        return this.http.get<Pageable<Department>>(this.departmentUrl, {
-            params: {
-                [PAGE_QUERY_KEY]: filters.page,
-                [PAGE_SIZE_QUERY_KEY]: filters.size,
-                [QUERY_QUERY_KEY]: this.preparePageRequest({sort: filters.sort, where: filters.where})
-            }
-        })
+        return this.http.post<Pageable<Department>>(`${this.departmentUrl}/:list`,
+            {sort: filters.sort, where: filters.where},
+            {
+                params: {
+                    [PAGE_QUERY_KEY]: filters.page,
+                    [PAGE_SIZE_QUERY_KEY]: filters.size
+                }
+            })
             .pipe(getErrorHandler<Pageable<Department>>(this.msg));
-    }
-
-    private preparePageRequest(pageRequest: Partial<PageQuery>): string {
-        return utf8ToBase64(JSON.stringify(pageRequest));
     }
 
 }

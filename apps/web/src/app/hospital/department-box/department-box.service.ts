@@ -8,10 +8,9 @@ import {
     PAGE_QUERY_KEY,
     PAGE_SIZE_QUERY_KEY,
     Pageable,
-    PageQuery,
-    QUERY_QUERY_KEY
+    PageQuery
 } from '@melluin/common';
-import {getErrorHandler, utf8ToBase64} from '@fe/app/util/util';
+import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
 
@@ -25,12 +24,16 @@ export class DepartmentBoxService {
         return `${AppConfig.get('baseURL')}/departments/${departmentId}/box-status`;
     }
 
+    private getDepartmentBoxListByDepartmentUrl(departmentId: string): string {
+        return `${AppConfig.get('baseURL')}/departments/${departmentId}/box-status/:list`;
+    }
+
     private getDepartmentBoxByVisitUrl(visitId: string): string {
         return `${AppConfig.get('baseURL')}/visits/${visitId}/box-status`;
     }
 
     private getDepartmentBoxUrl(): string {
-        return `${AppConfig.get('baseURL')}/departments-box-status`;
+        return `${AppConfig.get('baseURL')}/departments-box-status/:list`;
     }
 
     public addBoxStatus(departmentId: string, data: DepartmentBoxStatusReport): Observable<DepartmentBoxStatus> {
@@ -39,39 +42,36 @@ export class DepartmentBoxService {
     }
 
     public findBoxStatusesByDepartment(departmentId: string, filters: PageQuery): Observable<Pageable<DepartmentBoxStatus>> {
-        // TODO: remove debug when we'll use query expressions instead of base64 encoded json.
-        console.debug('PageRequest to send: ', filters);
-        return this.http.get<Pageable<DepartmentBoxStatus>>(this.getDepartmentBoxByDepartmentUrl(departmentId), {
+        return this.http.post<Pageable<DepartmentBoxStatus>>(this.getDepartmentBoxListByDepartmentUrl(departmentId), {
+            sort: filters.sort,
+            where: filters.where
+        }, {
             params: {
                 [PAGE_QUERY_KEY]: filters.page,
                 [PAGE_SIZE_QUERY_KEY]: filters.size,
-                [QUERY_QUERY_KEY]: this.preparePageRequest({sort: filters.sort, where: filters.where})
             }
         })
             .pipe(getErrorHandler<Pageable<DepartmentBoxStatus>>(this.msg));
     }
 
     public findBoxStatuses(filters: PageQuery): Observable<Pageable<BoxStatusWithDepartmentBrief>> {
-        // TODO: remove debug when we'll use query expressions instead of base64 encoded json.
-        console.debug('PageRequest to send: ', filters);
-        return this.http.get<Pageable<BoxStatusWithDepartmentBrief>>(this.getDepartmentBoxUrl(), {
-            params: {
-                withDepartmentBrief: true,
-                [PAGE_QUERY_KEY]: filters.page,
-                [PAGE_SIZE_QUERY_KEY]: filters.size,
-                [QUERY_QUERY_KEY]: this.preparePageRequest({sort: filters.sort, where: filters.where})
-            }
-        })
+        return this.http.post<Pageable<BoxStatusWithDepartmentBrief>>(this.getDepartmentBoxUrl(), {
+                sort: filters.sort,
+                where: filters.where
+            },
+            {
+                params: {
+                    withDepartmentBrief: true,
+                    [PAGE_QUERY_KEY]: filters.page,
+                    [PAGE_SIZE_QUERY_KEY]: filters.size,
+                }
+            })
             .pipe(getErrorHandler<Pageable<BoxStatusWithDepartmentBrief>>(this.msg));
     }
 
     public findBoxStatusesByVisit(visitId: string): Observable<Array<DepartmentBoxStatus>> {
         return this.http.get<Array<DepartmentBoxStatus>>(this.getDepartmentBoxByVisitUrl(visitId))
             .pipe(getErrorHandler<Array<DepartmentBoxStatus>>(this.msg));
-    }
-
-    private preparePageRequest(pageRequest: Partial<PageQuery>): string {
-        return utf8ToBase64(JSON.stringify(pageRequest));
     }
 
 }

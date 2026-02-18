@@ -50,14 +50,16 @@ export class DepartmentController {
         return this.departmentCrudService.getOne(departmentId);
     }
 
-    @Get()
+    @Post('[:]list')
+    @HttpCode(HttpStatus.OK)
     @PermissionGuard(Permission.canSearchDepartment)
     public find(@PageReq() pageRequest: PageRequest,
                 @CurrentUser() requester: User): Promise<Pageable<Department>> {
         return this.departmentCrudService.find(pageRequest, requester);
     }
 
-    @Get('/:id/box-status')
+    @Post('/:id/box-status/[:]list')
+    @HttpCode(HttpStatus.OK)
     @PermissionGuard(Permission.canReadDepBox)
     public findBoxStatuses(@Param('id', ParseUUIDPipe) departmentId: string,
                            @Query('withDepartmentBrief') withDepartmentBrief: boolean,

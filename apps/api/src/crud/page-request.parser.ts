@@ -1,5 +1,4 @@
 import {isNil, PAGE_QUERY_KEY, PAGE_REQUEST_DEFAULT_SIZE, PAGE_SIZE_QUERY_KEY} from '@melluin/common';
-import {Base64} from '@be/util/base64';
 import {PageRequest} from '@be/crud/page-request';
 import {HttpRequestInfo} from '@be/util/http-request-info';
 
@@ -15,7 +14,7 @@ export class PageRequestParser {
             httpReq.query[PAGE_QUERY_KEY], httpReq.query[PAGE_SIZE_QUERY_KEY]);
         return {
             ...request,
-            ...this.parseQuery(httpReq.query.query)
+            ...this.parseQuery(httpReq.body as object)
         };
     }
 
@@ -35,14 +34,11 @@ export class PageRequestParser {
         };
     }
 
-    // Now the query is a base64 encoded PageRequest<T> object. In the future I want to change it to a proper
-    // query string where the user (or the frontend) could specify filtering, soring, paging.
-    private parseQuery(query: string): Partial<PageRequest> {
+    private parseQuery(query: object): Partial<PageRequest> {
         if (isNil(query)) {
             return {};
         }
-        const rawJson = Base64.decode(query);
-        return JSON.parse(rawJson);
+        return query
     }
 
 }

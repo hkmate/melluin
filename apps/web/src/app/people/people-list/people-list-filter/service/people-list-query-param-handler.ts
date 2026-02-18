@@ -38,9 +38,6 @@ export class PeopleListQueryParamHandler {
         const params: QueryParams = {
             [PAGE_QUERY_KEY]: pageInfo?.page + '',
             [PAGE_SIZE_QUERY_KEY]: pageInfo?.size + '',
-            [PeopleListQueryParams.name]: emptyToUndef(filter?.name),
-            [PeopleListQueryParams.email]: emptyToUndef(filter?.email),
-            [PeopleListQueryParams.phone]: emptyToUndef(filter?.phone),
             [PeopleListQueryParams.onlyActive]: (filter?.onlyActive ? 'true' : undefined),
             [PeopleListQueryParams.role]: emptyToUndef(filter?.roleNames),
             [PeopleListQueryParams.city]: emptyToUndef(filter?.cities),

@@ -68,7 +68,8 @@ export class VisitController {
      * @param pageRequest In where closure on participants.id the only available operator is the 'in'
      * @param requester
      */
-    @Get()
+    @Post('[:]list')
+    @HttpCode(HttpStatus.OK)
     @PermissionGuard(Permission.canReadVisit)
     public find(@PageReq() pageRequest: PageRequest,
                 @CurrentUser() requester: User): Promise<Pageable<Visit>> {

@@ -5,7 +5,6 @@ export const PAGE_REQUEST_DEFAULT_SIZE = 20;
 
 export const PAGE_QUERY_KEY = 'page';
 export const PAGE_SIZE_QUERY_KEY = 'size';
-export const QUERY_QUERY_KEY = 'query';
 
 export interface PageInfo {
     page: number;

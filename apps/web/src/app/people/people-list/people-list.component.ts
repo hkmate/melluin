@@ -1,5 +1,5 @@
 import {Component, effect, inject, signal} from '@angular/core';
-import {FilterOptions, Pageable, PageQuery, Permission, Person, SortOptions} from '@melluin/common';
+import {FilterOptions, isEmpty, isNotNil, Pageable, PageQuery, Permission, Person, SortOptions} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 import {AppTitle} from '@fe/app/app-title.service';
 import {PageEvent} from '@angular/material/paginator';
@@ -91,8 +91,12 @@ export class PeopleListComponent {
     }
 
     private setUpCreators(): void {
-        const creatorIds = this.items().map(person => person.createdByPersonId);
+        const creatorIds = this.items().map(person => person.createdByPersonId).filter(isNotNil);
         const uniqueCreatorIds = _.uniq(creatorIds);
+        if (isEmpty(uniqueCreatorIds)) {
+            this.creators.set({});
+            return;
+        }
         this.peopleService.findPeople({
             page: 1,
             size: 100,

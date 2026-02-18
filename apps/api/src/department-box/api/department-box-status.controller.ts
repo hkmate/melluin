@@ -1,4 +1,4 @@
-import {Controller, Get, Query} from '@nestjs/common';
+import {Controller, HttpCode, HttpStatus, Post, Query} from '@nestjs/common';
 import {BoxStatusWithDepartmentBrief, DepartmentBoxStatus, Pageable, Permission} from '@melluin/common';
 import {PageReq} from '@be/crud/page-req';
 import {PageRequest} from '@be/crud/page-request';
@@ -15,7 +15,8 @@ export class DepartmentBoxStatusController {
     constructor(private readonly boxStatusCrudService: DepartmentBoxStatusCrudService) {
     }
 
-    @Get('')
+    @Post('[:]list')
+    @HttpCode(HttpStatus.OK)
     @PermissionGuard(Permission.canReadDepBox)
     public findBoxStatuses(@PageReq() pageRequest: PageRequest,
                            @Query('withDepartmentBrief') withDepartmentBrief: boolean): Promise<Pageable<DepartmentBoxStatus> | Pageable<BoxStatusWithDepartmentBrief>> {

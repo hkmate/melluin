@@ -2,16 +2,15 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {
-    Visit,
-    VisitCreate,
-    VisitRewrite,
     PAGE_QUERY_KEY,
     PAGE_SIZE_QUERY_KEY,
     Pageable,
     PageQuery,
-    QUERY_QUERY_KEY
+    Visit,
+    VisitCreate,
+    VisitRewrite
 } from '@melluin/common';
-import {getErrorHandler, utf8ToBase64} from '@fe/app/util/util';
+import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
 import {AppConfig} from '@fe/app/config/app-config';
 import {ContinueVisitInfo} from '@fe/app/hospital/visit/model/continue-visit-info';
@@ -56,19 +55,14 @@ export class VisitService {
     }
 
     public findVisit(filters: PageQuery): Observable<Pageable<Visit>> {
-        // TODO: remove debug when we'll use query expressions instead of base64 encoded json.
-        console.debug('PageRequest to send: ', filters);
-        return this.http.get<Pageable<Visit>>(this.visitUrl, {
-            params: {
-                [PAGE_QUERY_KEY]: filters.page,
-                [PAGE_SIZE_QUERY_KEY]: filters.size,
-                [QUERY_QUERY_KEY]: this.preparePageRequest({sort: filters.sort, where: filters.where})
-            }
-        }).pipe(getErrorHandler<Pageable<Visit>>(this.msg));
-    }
-
-    private preparePageRequest(pageRequest: Partial<PageQuery>): string {
-        return utf8ToBase64(JSON.stringify(pageRequest));
+        return this.http.post<Pageable<Visit>>(`${this.visitUrl}/:list`,
+            {sort: filters.sort, where: filters.where},
+            {
+                params: {
+                    [PAGE_QUERY_KEY]: filters.page,
+                    [PAGE_SIZE_QUERY_KEY]: filters.size,
+                }
+            }).pipe(getErrorHandler<Pageable<Visit>>(this.msg));
     }
 
 }
