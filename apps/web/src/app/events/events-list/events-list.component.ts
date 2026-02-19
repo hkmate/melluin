@@ -12,7 +12,7 @@ import {DefaultEventListSettingsInitializer} from '@fe/app/events/events-list/se
 import {EventListQueryParamSettingsInitializer} from '@fe/app/events/events-list/service/event-list-query-param-settings-initializer';
 import {EventListQueryParamHandler} from '@fe/app/events/events-list/service/event-list-query-param-handler';
 import {filter} from 'rxjs';
-import {reasonIsNotPreferences, reasonIsPreferences} from '@fe/app/util/list-page-settings-change-reason';
+import {reasonIsPreferences} from '@fe/app/util/list-page-settings-change-reason';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
@@ -55,7 +55,8 @@ export class EventsListComponent {
         this.filterService.onChange().pipe(takeUntilDestroyed(), filter(reasonIsPreferences)).subscribe(() => {
             this.preferences = this.filterService.getPreferences();
         });
-        this.filterService.onChange().pipe(takeUntilDestroyed(), filter(reasonIsNotPreferences)).subscribe(() => {
+        this.filterService.onChange().pipe(takeUntilDestroyed()).subscribe(() => {
+            this.preferences = this.filterService.getPreferences();
             this.setUpPageInfo();
             this.loadData();
         });

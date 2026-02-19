@@ -29,7 +29,7 @@
 
         <div class="events-list">
             <app-visit-list [eventsList]="eventsList"
-                                      [markRowByDate]="preferences.needHighlight"/>
+                            [markRowByDate]="preferences.needHighlight"/>
 
             @if (!eventsList.length) {
                 {{ 'EventsList.NoEventsFound' | translate }}

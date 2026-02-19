@@ -1,6 +1,6 @@
 <table mat-table recycleRows
        [dataSource]="eventsList()"
-       [ngClass]="{'need-row-mark': markRowByDate}">
+       [ngClass]="{'need-row-mark': markRowByDate()}">
 
     <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef class="status-column"></th>

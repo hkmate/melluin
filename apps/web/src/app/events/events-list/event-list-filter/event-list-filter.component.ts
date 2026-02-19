@@ -20,13 +20,11 @@ export class EventListFilterComponent {
     private readonly filterService = inject(EventsSettingsService);
     private readonly departmentService = inject(DepartmentService);
 
-
     protected filters: EventsFilter;
     protected preferences: EventsListPreferences;
     protected departmentOptions: Array<Department>;
     protected statusOptions: Array<VisitStatus> = Object.values(VisitStatus);
     protected mobileScreen: boolean;
-
 
     constructor() {
         this.mobileScreen = (this.platform.IOS || this.platform.ANDROID);
