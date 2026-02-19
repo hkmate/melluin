@@ -21,7 +21,7 @@ export class ChildAgesByDepartmentsStatController extends AbstractStatisticWidge
     public getTableData(): WidgetTableData<ChildAgesByDepartmentsTableData> {
         return {
             headers: {
-                departmentName: this.translate.instant('StatisticsPage.ChildAgesByDepartments.departmentName'),
+                departmentName: this.translate.instant('StatisticsPage.ChildAgesByDepartments.DepartmentName'),
                 sum: this.translate.instant('StatisticsPage.ChildAgesByDepartments.Sum'),
                 ...this.getHeadersForAges()
             },

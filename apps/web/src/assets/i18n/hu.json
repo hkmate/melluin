@@ -20,10 +20,6 @@
     "Comment": "Megjegyzés",
     "SaveSuccessful": "Sikeres mentés",
     "DeleteSuccessful": "Sikeres törlés",
-    "Language": {
-        "en": "Angol",
-        "hu": "Magyar"
-    },
     "DateTimeFormat": "yyyy.MM.dd. HH:mm",
     "DateFormat": "yyyy.MM.dd.",
     "EventDateFormat": "MM.dd. EEEE",
@@ -39,17 +35,6 @@
         "false": "Nem"
     },
     "NoBackendError": "Valószínüleg nem elérhető a server. (Ismeretlen hiba)",
-    "Role": {
-        "INTERN_HOSPITAL_VISITOR": "Hospitáló",
-        "BEGINNER_HOSPITAL_VISITOR": "Kórházlátogató (kezdő)",
-        "HOSPITAL_VISITOR": "Kórházlátogató",
-        "MENTOR_HOSPITAL_VISITOR": "Mentor",
-        "HOSPITAL_VISIT_COORDINATOR": "Kórházi koordinátor",
-        "FAIRY_PAINTING_COORDINATOR": "Mesefalfestő koordinátor",
-        "TOY_MAKING_COORDINATOR": "Játékkészítő koordinátor",
-        "ADMINISTRATOR": "Adminisztrátor",
-        "SYSADMIN": "Rendszer admin"
-    },
     "BoxStatusChangeReason": {
         "MISSING": "Hiányzik",
         "BROKEN": "Törött",
@@ -114,8 +99,6 @@
     "Menu": {
         "People": "Emberek",
         "Events": "Események",
-        "Reports": "Beszámolók",
-        "Notifications": "Értesítések",
         "Departments": "Kórházi osztályok",
         "Statistics": "Statisztika",
         "System": "Rendszer",
@@ -147,7 +130,6 @@
         "NoPerson": "Nem létező személy"
     },
     "PeopleListPage": {
-        "AddPerson": "Új felvétele",
         "ListHeader": {
             "Name": "Név",
             "Email": "Email",
@@ -259,7 +241,6 @@
         }
     },
     "DepartmentListPage": {
-        "Add": "Új felvétele",
         "ListHeader": {
             "Name": "Név",
             "Address": "Cím",
@@ -294,7 +275,7 @@
         "ChildAgesByDepartments": {
             "Title": "Gyerekek száma korosztály szerint osztályonként",
             "ExportedFileName": "gyerekek_korosztaly_szerint_osztalyonkent.csv",
-            "departmentName": "Osztály",
+            "DepartmentName": "Osztály",
             "Sum": "Összes",
             "ZeroToHalf": "0-fél év",
             "HalfToOne": "fél-1 év",
@@ -420,7 +401,6 @@
         "ReasonIsRequired": "Nincs kiválasztva ok"
     },
     "EventsList": {
-        "MarkRowByDate": "Jelöld meg a sorokat",
         "Settings": "Szűrők",
         "NoEventsFound": "Nem található esemény a keresési feltételekkel"
     },
@@ -460,8 +440,7 @@
             "NoConnection": "Nincs összekapcsolt foglalkozás",
             "DeleteConfirm": "Biztosan törölni szeretnéd a kapcsolatot a foglalkozások között?",
             "Create": {
-                "ConnectionId": "Összekapolandó foglalkozás azonosítója",
-                "ConnectionIdPlaceholder": "Összekapolandó foglalkozás azonosítója"
+                "ConnectionId": "Összekapolandó foglalkozás azonosítója"
             }
         },
         "Activities": {
