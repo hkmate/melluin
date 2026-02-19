@@ -27,7 +27,6 @@ export class VisitEntityToDtoConverter implements Converter<VisitEntity, Visit> 
             countedMinutes: entity.countedMinutes,
             dateTimeFrom: entity.dateTimeFrom.toISOString(),
             dateTimeTo: entity.dateTimeTo.toISOString(),
-            visibility: entity.visibility,
             organizer: this.personConverter.convert(entity.organizer),
             department: this.departmentConverter.convert(entity.department),
             status: entity.status,

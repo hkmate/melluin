@@ -26,7 +26,6 @@ export * from './visit/visit-create';
 export * from './visit/visit-rewrite';
 export * from './visit/visit-status';
 export * from './visit/visited-child';
-export * from './visit/event-visibility';
 export * from './visit/visit-filterable-fields';
 
 export * from './visit-activity/visit-activity';

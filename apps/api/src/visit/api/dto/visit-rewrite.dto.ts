@@ -1,4 +1,4 @@
-import {EventVisibility, VisitRewrite, VisitStatus} from '@melluin/common';
+import {VisitRewrite, VisitStatus} from '@melluin/common';
 import { ApiProperty } from '@nestjs/swagger';
 import {IsArray, IsBoolean, IsDateString, IsEnum, IsNumber, IsOptional, IsString, IsUUID, Min} from 'class-validator';
 
@@ -22,10 +22,6 @@ export class VisitRewriteDto implements VisitRewrite {
     @Min(0)
     @IsOptional()
     countedMinutes?: number;
-
-    @ApiProperty()
-    @IsEnum(EventVisibility)
-    visibility: EventVisibility;
 
     @ApiProperty()
     @IsUUID('all', {each: true})

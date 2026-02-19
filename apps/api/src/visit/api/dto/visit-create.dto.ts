@@ -1,4 +1,4 @@
-import {EventVisibility, VisitCreate, VisitStatus} from '@melluin/common';
+import {VisitCreate, VisitStatus} from '@melluin/common';
 import {ApiProperty} from '@nestjs/swagger';
 import {
     IsArray,
@@ -29,10 +29,6 @@ export class VisitCreateDto implements VisitCreate {
     @Min(0)
     @IsOptional()
     countedMinutes?: number;
-
-    @ApiProperty()
-    @IsEnum(EventVisibility)
-    visibility: EventVisibility;
 
     @ApiProperty()
     @IsUUID()

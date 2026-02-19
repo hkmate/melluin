@@ -34,7 +34,6 @@ export class VisitCreationToEntityConverter
             status: dto.status,
             department: department,
             organizer: organizer,
-            visibility: dto.visibility,
             dateTimeFrom: new Date(dto.dateTimeFrom),
             dateTimeTo: new Date(dto.dateTimeTo),
             countedMinutes: dto.countedMinutes,

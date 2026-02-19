@@ -2,7 +2,6 @@ import {Component, computed, effect, inject, input, output, signal} from '@angul
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {
     Department,
-    EventVisibility,
     Visit,
     VisitCreate,
     VisitRewrite,
@@ -341,7 +340,6 @@ export class VisitFormComponent {
         data.status = this.form().controls.status.value;
         data.countedMinutes = _.round(countedMinutesFromHour);
         data.organizerId = this.currentUser.personId;
-        data.visibility = EventVisibility.PUBLIC;
         data.vicariousMomVisit = this.form().controls.vicariousMomVisit.value;
         data.participantIds = this.form().controls.participantIds.value;
         data.dateTimeFrom = parseTimeWithDate(this.form().controls.timeFrom.value, this.form().controls.date.value).toISOString();
@@ -357,7 +355,6 @@ export class VisitFormComponent {
         data.departmentId = this.form().controls.departmentId.value;
         data.status = this.form().controls.status.value;
         data.countedMinutes = _.round(countedMinutesFromHour);
-        data.visibility = EventVisibility.PUBLIC;
         data.vicariousMomVisit = this.form().controls.vicariousMomVisit.value;
         data.participantIds = this.form().controls.participantIds.value;
         data.dateTimeFrom = parseTimeWithDate(this.form().controls.timeFrom.value, this.form().controls.date.value).toISOString();

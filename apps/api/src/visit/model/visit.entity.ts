@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn} from 'typeorm';
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import {PersonEntity} from '@be/person/model/person.entity';
-import {EventVisibility, VisitStatus} from '@melluin/common';
+import {VisitStatus} from '@melluin/common';
 
 @Entity({name: 'hospital_visit'})
 export class VisitEntity {
@@ -17,9 +17,6 @@ export class VisitEntity {
 
     @Column({name: 'counted_minutes'})
     countedMinutes?: number;
-
-    @Column()
-    visibility: EventVisibility;
 
     @OneToOne(type => PersonEntity, {eager: true})
     @JoinColumn({name: 'organizer_id'})

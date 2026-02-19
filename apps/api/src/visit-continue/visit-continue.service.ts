@@ -1,7 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {
     AsyncValidatorChain,
-    EventVisibility,
     Visit,
     VisitCreate,
     VisitStatus,
@@ -49,8 +48,7 @@ export class VisitContinueService {
             countedMinutes: dayjs(visit.dateTimeTo).diff(dateTimeFrom, 'minutes'),
             vicariousMomVisit: false,
             organizerId: requester.personId,
-            participantIds: visit.participants.map(participant => participant.id),
-            visibility: EventVisibility.PUBLIC
+            participantIds: visit.participants.map(participant => participant.id)
         } satisfies VisitCreate;
     }
 

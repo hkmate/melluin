@@ -34,7 +34,6 @@ export class VisitRewriteApplier {
         this.persisted.countedMinutes = this.rewrite.countedMinutes;
         this.persisted.dateTimeFrom = new Date(this.rewrite.dateTimeFrom);
         this.persisted.dateTimeTo = new Date(this.rewrite.dateTimeTo);
-        this.persisted.visibility = this.rewrite.visibility;
         this.persisted.vicariousMomVisit = this.rewrite.vicariousMomVisit;
     }
 

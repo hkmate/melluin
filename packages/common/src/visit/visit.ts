@@ -1,7 +1,6 @@
 import {VisitStatus} from './visit-status';
 import {Department} from '../department/department';
 import {PersonIdentifier} from '../person/person';
-import {EventVisibility} from './event-visibility';
 
 
 export interface Visit {
@@ -10,7 +9,6 @@ export interface Visit {
     dateTimeFrom: string;
     dateTimeTo: string;
     countedMinutes?: number;
-    visibility: EventVisibility;
     organizer: PersonIdentifier;
     status: VisitStatus;
     department: Department;

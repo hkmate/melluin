@@ -1,6 +1,5 @@
 import {VisitStatus} from './visit-status';
 import {Visit} from './visit';
-import {EventVisibility} from './event-visibility';
 
 
 export interface VisitRewrite {
@@ -9,7 +8,6 @@ export interface VisitRewrite {
     dateTimeFrom: string;
     dateTimeTo: string;
     countedMinutes?: number;
-    visibility: EventVisibility;
     participantIds: Array<string>;
     status: VisitStatus;
     departmentId: string;
@@ -21,7 +19,6 @@ export function createVisitRewrite(visit: Visit): VisitRewrite {
     return {
         id: visit.id,
         departmentId: visit.department.id,
-        visibility: visit.visibility,
         dateTimeFrom: visit.dateTimeFrom,
         dateTimeTo: visit.dateTimeTo,
         countedMinutes: visit.countedMinutes,
