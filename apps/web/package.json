@@ -3,6 +3,7 @@
     "version": "1.0.1",
     "scripts": {
         "ng": "ng",
+        "clean": "rimraf dist node_modules coverage .angular",
         "start": "ng serve",
         "build": "ng build",
         "lint": "ng lint",

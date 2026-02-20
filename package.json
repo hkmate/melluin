@@ -8,10 +8,14 @@
         "start:web": "pnpm --filter web start",
         "start": "pnpm run start:api & pnpm run start:web",
         "build": "pnpm recursive run build",
+        "clean": "pnpm recursive run clean; rimraf node_modules",
         "test": "pnpm recursive run test",
         "lint": "pnpm recursive run lint"
     },
     "pnpm": {
         "onlyBuiltDependencies": ["bcrypt"]
+    },
+    "dependencies": {
+        "rimraf": "6.1.3"
     }
 }
