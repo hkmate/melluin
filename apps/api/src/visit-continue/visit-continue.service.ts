@@ -16,9 +16,6 @@ import {DateTimeIsInOriginalVisitsTimeValidator} from '@be/visit-continue/valida
 import {VisitIsInStartedStatusValidator} from '@be/visit-continue/validator/visit-is-in-started-status.validator';
 import {VisitSaveValidatorFactory} from '@be/visit/validator/visit-save-validator-factory';
 
-/* eslint-disable max-params-no-constructor/max-params-no-constructor */
-
-
 @Injectable()
 export class VisitContinueService {
 

@@ -50,7 +50,7 @@ export class DepartmentController {
         return this.departmentCrudService.getOne(departmentId);
     }
 
-    @Post('[:]list')
+    @Post('\\:list')
     @HttpCode(HttpStatus.OK)
     @PermissionGuard(Permission.canSearchDepartment)
     public find(@PageReq() pageRequest: PageRequest,
@@ -58,7 +58,7 @@ export class DepartmentController {
         return this.departmentCrudService.find(pageRequest, requester);
     }
 
-    @Post('/:id/box-status/[:]list')
+    @Post('/:id/box-status/\\:list')
     @HttpCode(HttpStatus.OK)
     @PermissionGuard(Permission.canReadDepBox)
     public findBoxStatuses(@Param('id', ParseUUIDPipe) departmentId: string,

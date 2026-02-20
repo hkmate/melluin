@@ -1,4 +1,6 @@
+import {JwtModuleOptions} from '@nestjs/jwt/dist/interfaces/jwt-module-options.interface';
+
 export interface Security {
-    expiration: string;
+    expiration: Required<JwtModuleOptions>['signOptions']['expiresIn'];
     secretKey: string;
 }

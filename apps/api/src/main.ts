@@ -4,7 +4,7 @@ import {ConfigService} from '@nestjs/config';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {DocumentBuilder, OpenAPIObject, SwaggerModule} from '@nestjs/swagger';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const types = require('pg').types
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 types.setTypeParser(20, val => parseInt(val, 10));

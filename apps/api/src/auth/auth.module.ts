@@ -14,6 +14,7 @@ import {Security} from '@be/config/model/security';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 import {JwtUserStorage} from '@be/auth/strategy/jwt-user-storage';
 import {PermissionsGuard} from '@be/auth/guard/permissions.guard';
+import {JwtModuleOptions} from '@nestjs/jwt/dist/interfaces/jwt-module-options.interface';
 
 @Module({
     imports: [
@@ -21,7 +22,8 @@ import {PermissionsGuard} from '@be/auth/guard/permissions.guard';
         PassportModule,
         JwtModule.registerAsync({
             imports: [ConfigModule],
-            useFactory: (config: ConfigService) => {
+            inject: [ConfigService],
+            useFactory: (config: ConfigService): JwtModuleOptions => {
                 const securityConfig = config.get<Security>('server.security');
                 return {
                     secretOrPrivateKey: securityConfig?.secretKey,
@@ -29,8 +31,7 @@ import {PermissionsGuard} from '@be/auth/guard/permissions.guard';
                         expiresIn: securityConfig?.expiration,
                     },
                 };
-            },
-            inject: [ConfigService],
+            }
         }),
 
         PersonModule,

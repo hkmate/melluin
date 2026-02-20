@@ -18,7 +18,7 @@ export class RoleController {
         return this.roleService.getAll();
     }
 
-    @Get('/[:]brief')
+    @Get('/\\:brief')
     public getBriefs(): Promise<Array<RoleBrief>> {
         return this.roleService.getAllBrief();
     }

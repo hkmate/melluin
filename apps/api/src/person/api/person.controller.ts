@@ -46,7 +46,7 @@ export class PersonController {
 
     public find(pageRequest: PageRequest, onlyIdentifier: false, requester: User): Promise<Pageable<Person>>;
     public find(pageRequest: PageRequest, onlyIdentifier: true, requester: User): Promise<Pageable<PersonIdentifier>>;
-    @Post('[:]list')
+    @Post('\\:list')
     @HttpCode(HttpStatus.OK)
     @PermissionGuard(Permission.canReadPerson)
     @ApiQuery({name: 'onlyIdentifier', required: false, default: false})

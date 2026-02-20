@@ -15,7 +15,7 @@ export class DepartmentBoxStatusController {
     constructor(private readonly boxStatusCrudService: DepartmentBoxStatusCrudService) {
     }
 
-    @Post('[:]list')
+    @Post('\\:list')
     @HttpCode(HttpStatus.OK)
     @PermissionGuard(Permission.canReadDepBox)
     public findBoxStatuses(@PageReq() pageRequest: PageRequest,

@@ -52,9 +52,9 @@ describe('AuthService', () => {
         });
 
         it('Then Person-, UserService not called', () => {
-            expect(roleDao.findAll).not.toBeCalled();
-            expect(userService.save).not.toBeCalled();
-            expect(personService.save).not.toBeCalled();
+            expect(roleDao.findAll).not.toHaveBeenCalled();
+            expect(userService.save).not.toHaveBeenCalled();
+            expect(personService.save).not.toHaveBeenCalled();
         });
     });
 
@@ -154,10 +154,10 @@ describe('AuthService', () => {
                 createdByPersonId: null,
             };
 
-            expect(userService.findOneByName).toBeCalledWith(defaultUser.username);
-            expect(roleDao.findAll).toBeCalled();
-            expect(personService.save).toBeCalledWith(expectedPerson);
-            expect(userService.save).toBeCalledWith(expectedUser);
+            expect(userService.findOneByName).toHaveBeenCalledWith(defaultUser.username);
+            expect(roleDao.findAll).toHaveBeenCalled();
+            expect(personService.save).toHaveBeenCalledWith(expectedPerson);
+            expect(userService.save).toHaveBeenCalledWith(expectedUser);
         });
     });
 
@@ -210,10 +210,10 @@ describe('AuthService', () => {
         });
 
         it('Then Person-, UserService not called except UserService.findOne', () => {
-            expect(userService.findOneByName).toBeCalledWith(defaultUser.username);
-            expect(roleDao.findAll).not.toBeCalled();
-            expect(personService.save).not.toBeCalled();
-            expect(userService.save).not.toBeCalled();
+            expect(userService.findOneByName).toHaveBeenCalledWith(defaultUser.username);
+            expect(roleDao.findAll).not.toHaveBeenCalled();
+            expect(personService.save).not.toHaveBeenCalled();
+            expect(userService.save).not.toHaveBeenCalled();
         });
     });
 
@@ -288,10 +288,10 @@ describe('AuthService', () => {
             const result: AuthInfo = await authService.getTokenFor({ username, password });
 
             expect(result).toEqual(expectedToken);
-            expect(jwtService.sign).toBeCalledWith({ userId: user.id });
-            expect(userDao.findOneWithCache).toBeCalledWith(username);
-            expect(userDao.save).toBeCalledWith(expectedRefreshedUser);
-            expect(configService.get).toBeCalledWith('server.defaultSysAdmin.needToInit', false);
+            expect(jwtService.sign).toHaveBeenCalledWith({ userId: user.id });
+            expect(userDao.findOneWithCache).toHaveBeenCalledWith(username);
+            expect(userDao.save).toHaveBeenCalledWith(expectedRefreshedUser);
+            expect(configService.get).toHaveBeenCalledWith('server.defaultSysAdmin.needToInit', false);
         });
     });
 

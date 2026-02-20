@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const backendConfig = require('../server-config.json');
 
 module.exports = function() {

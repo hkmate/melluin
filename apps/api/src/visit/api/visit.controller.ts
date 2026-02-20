@@ -68,7 +68,7 @@ export class VisitController {
      * @param pageRequest In where closure on participants.id the only available operator is the 'in'
      * @param requester
      */
-    @Post('[:]list')
+    @Post('\\:list')
     @HttpCode(HttpStatus.OK)
     @PermissionGuard(Permission.canReadVisit)
     public find(@PageReq() pageRequest: PageRequest,
