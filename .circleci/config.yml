@@ -6,7 +6,8 @@ orbs:
 executors:
   ci-executor:
     docker:
-      - image: cimg/node:20.9.0-browsers
+      - image: cimg/node:24.13.1-browsers
+
 
 jobs:
   build-test-lint:
@@ -21,8 +22,8 @@ jobs:
       - run:
           name: Install pnpm package manager
           command: |
-            npm install pnpm@10.29.3
-            pnpm config set store-dir .pnpm-store
+              curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=10.29.3 ENV="$HOME/.shrc" SHELL="$(which sh)" sh -
+              pnpm config set store-dir .pnpm-store
       - run:
           name: Install Dependencies
           command: pnpm install

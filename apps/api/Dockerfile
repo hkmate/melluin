@@ -1,4 +1,4 @@
-FROM node:20.9.0
+FROM node:24.13.1
 LABEL authors="mate"
 
 WORKDIR ../
