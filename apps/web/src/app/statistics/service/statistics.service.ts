@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
-import {AppConfig} from '@fe/app/config/app-config';
 import {
     ActivitiesCount,
     ChildAgesByDepartments,
@@ -19,6 +18,7 @@ import {VisitCountByWeekDayStatProvider} from '@fe/app/statistics/service/visit-
 import {ChildrenByDepartmentsStatProvider} from '@fe/app/statistics/service/children-by-departments-stat-provider';
 import {ChildAgesByDepartmentsStatProvider} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
 import {VolunteersByDepartmentsStatProvider} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
+import {environment} from '@fe/environment';
 
 const FROM_KEY = 'from';
 const TO_KEY = 'to';
@@ -86,7 +86,7 @@ export class StatisticsService implements VisitCountByWeekDayStatProvider, Child
     }
 
     private statUrl(subPath: string): string {
-        return `${AppConfig.get('baseURL')}/statistics/${subPath}`;
+        return `${environment.baseURL}/statistics/${subPath}`;
     }
 
 }

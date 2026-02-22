@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {User, UserCreation, UserRewrite, UserSettings} from '@melluin/common';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
-import {AppConfig} from '@fe/app/config/app-config';
+import {environment} from '@fe/environment';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -13,7 +13,7 @@ export class UserService {
     private readonly msg = inject(MessageService);
 
     private get userUrl(): string {
-        return `${AppConfig.get('baseURL')}/users`;
+        return `${environment.baseURL}/users`;
     }
 
     public addUser(data: UserCreation): Observable<User> {

@@ -3,8 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
-import {AppConfig} from '@fe/app/config/app-config';
 import {Role, RoleCreation} from '@melluin/common';
+import {environment} from '@fe/environment';
 
 @Injectable({providedIn: 'root'})
 export class RoleService {
@@ -13,7 +13,7 @@ export class RoleService {
     private readonly msg = inject(MessageService);
 
     private get rolesUrl(): string {
-        return `${AppConfig.get('baseURL')}/roles`;
+        return `${environment.baseURL}/roles`;
     }
 
     public getAll(): Observable<Array<Role>> {

@@ -9,7 +9,7 @@ import {
 } from '@melluin/common';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
-import {AppConfig} from '@fe/app/config/app-config';
+import {environment} from '@fe/environment';
 
 @Injectable({providedIn: 'root'})
 export class VisitActivityService {
@@ -18,11 +18,11 @@ export class VisitActivityService {
     private readonly msg = inject(MessageService);
 
     private getActivitiesUrl(visitId: string): string {
-        return `${AppConfig.get('baseURL')}/visits/${visitId}/activities`;
+        return `${environment.baseURL}/visits/${visitId}/activities`;
     }
 
     private getRelatedActivitiesUrl(visitId: string): string {
-        return `${AppConfig.get('baseURL')}/visits/${visitId}/related/activities`;
+        return `${environment.baseURL}/visits/${visitId}/related/activities`;
     }
 
     public add(visitId: string, activity: VisitActivityInput): Observable<VisitActivity> {

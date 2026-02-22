@@ -12,8 +12,8 @@ import {
 } from '@melluin/common';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
-import {AppConfig} from '@fe/app/config/app-config';
 import {ContinueVisitInfo} from '@fe/app/hospital/visit/model/continue-visit-info';
+import {environment} from '@fe/environment';
 
 @Injectable({providedIn: 'root'})
 export class VisitService {
@@ -22,7 +22,7 @@ export class VisitService {
     private readonly msg = inject(MessageService);
 
     private get visitUrl(): string {
-        return `${AppConfig.get('baseURL')}/visits`;
+        return `${environment.baseURL}/visits`;
     }
 
     public addVisit(data: VisitCreate, options = {forceSameTimeVisit: false}): Observable<Visit> {

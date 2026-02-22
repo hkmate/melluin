@@ -12,7 +12,7 @@ import {
 } from '@melluin/common';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
-import {AppConfig} from '@fe/app/config/app-config';
+import {environment} from '@fe/environment';
 
 @Injectable({providedIn: 'root'})
 export class DepartmentService {
@@ -21,7 +21,7 @@ export class DepartmentService {
     private readonly msg = inject(MessageService);
 
     private get departmentUrl(): string {
-        return `${AppConfig.get('baseURL')}/departments`;
+        return `${environment.baseURL}/departments`;
     }
 
     public addDepartment(data: DepartmentCreation): Observable<Department> {

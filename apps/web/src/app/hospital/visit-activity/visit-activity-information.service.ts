@@ -1,10 +1,10 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MessageService} from '@fe/app/util/message.service';
-import {AppConfig} from '@fe/app/config/app-config';
 import {Observable} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
 import {VisitActivityInfo, VisitActivityInfoInput} from '@melluin/common';
+import {environment} from '@fe/environment';
 
 @Injectable({providedIn: 'root'})
 export class VisitActivityInformationService {
@@ -13,7 +13,7 @@ export class VisitActivityInformationService {
     private readonly msg = inject(MessageService);
 
     private getActivitiesInformationUrl(visitId: string): string {
-        return `${AppConfig.get('baseURL')}/visits/${visitId}/activities-information`;
+        return `${environment.baseURL}/visits/${visitId}/activities-information`;
     }
 
     public set(visitId: string, activityInfo: VisitActivityInfoInput): Observable<VisitActivityInfo> {

@@ -3,8 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
-import {AppConfig} from '@fe/app/config/app-config';
 import {VisitedChild, VisitedChildEditInput, VisitedChildInput} from '@melluin/common';
+import {environment} from '@fe/environment';
 
 @Injectable({providedIn: 'root'})
 export class VisitedChildService {
@@ -13,7 +13,7 @@ export class VisitedChildService {
     private readonly msg = inject(MessageService);
 
     private getChildrenUrl(visitId: string): string {
-        return `${AppConfig.get('baseURL')}/visits/${visitId}/children`;
+        return `${environment.baseURL}/visits/${visitId}/children`;
     }
 
     public add(visitId: string, data: VisitedChildInput): Observable<VisitedChild> {

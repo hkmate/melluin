@@ -12,7 +12,7 @@ import {
 } from '@melluin/common';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
-import {AppConfig} from '@fe/app/config/app-config';
+import {environment} from '@fe/environment';
 
 @Injectable({providedIn: 'root'})
 export class DepartmentBoxService {
@@ -21,19 +21,19 @@ export class DepartmentBoxService {
     private readonly msg = inject(MessageService);
 
     private getDepartmentBoxByDepartmentUrl(departmentId: string): string {
-        return `${AppConfig.get('baseURL')}/departments/${departmentId}/box-status`;
+        return `${environment.baseURL}/departments/${departmentId}/box-status`;
     }
 
     private getDepartmentBoxListByDepartmentUrl(departmentId: string): string {
-        return `${AppConfig.get('baseURL')}/departments/${departmentId}/box-status/:list`;
+        return `${environment.baseURL}/departments/${departmentId}/box-status/:list`;
     }
 
     private getDepartmentBoxByVisitUrl(visitId: string): string {
-        return `${AppConfig.get('baseURL')}/visits/${visitId}/box-status`;
+        return `${environment.baseURL}/visits/${visitId}/box-status`;
     }
 
     private getDepartmentBoxUrl(): string {
-        return `${AppConfig.get('baseURL')}/departments-box-status/:list`;
+        return `${environment.baseURL}/departments-box-status/:list`;
     }
 
     public addBoxStatus(departmentId: string, data: DepartmentBoxStatusReport): Observable<DepartmentBoxStatus> {

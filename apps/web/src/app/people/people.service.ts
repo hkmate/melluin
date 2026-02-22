@@ -13,7 +13,7 @@ import {
 import {Observable} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
-import {AppConfig} from '@fe/app/config/app-config';
+import {environment} from '@fe/environment';
 
 
 @Injectable({providedIn: 'root'})
@@ -23,7 +23,7 @@ export class PeopleService {
     private readonly msg = inject(MessageService);
 
     private get peopleUrl(): string {
-        return `${AppConfig.get('baseURL')}/people`;
+        return `${environment.baseURL}/people`;
     }
 
     public addPerson(data: PersonCreation): Observable<Person> {

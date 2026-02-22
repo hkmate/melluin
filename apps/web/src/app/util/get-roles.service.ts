@@ -3,8 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, of, tap} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
-import {AppConfig} from '@fe/app/config/app-config';
 import {isNil, RoleBrief} from '@melluin/common';
+import {environment} from '@fe/environment';
 
 @Injectable({providedIn: 'root'})
 export class GetRolesService {
@@ -15,7 +15,7 @@ export class GetRolesService {
     private cache?: Array<RoleBrief> = undefined;
 
     private get rolesUrl(): string {
-        return `${AppConfig.get('baseURL')}/roles/:brief`;
+        return `${environment.baseURL}/roles/:brief`;
     }
 
     public getAll(): Observable<Array<RoleBrief>> {

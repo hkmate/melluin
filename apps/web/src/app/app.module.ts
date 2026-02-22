@@ -23,7 +23,6 @@ import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/materi
 import {registerLocaleData} from '@angular/common';
 import localeHu from '@angular/common/locales/hu';
 import {ToastrModule} from 'ngx-toastr';
-import {AppConfig, appConfigInitializerFn} from '@fe/app/config/app-config';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
@@ -88,13 +87,6 @@ export function appInitializeCredentialsFactory(credentialStoreService: Credenti
         AppRoutingModule,
     ],
     providers: [
-        AppConfig,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: appConfigInitializerFn,
-            multi: true,
-            deps: [AppConfig]
-        },
         {provide: PathProvider, useClass: MelluinPathProvider},
         {provide: MatPaginatorIntl, useClass: I18nPaginatorIntl},
         {

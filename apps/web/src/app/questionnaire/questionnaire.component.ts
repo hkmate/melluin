@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
-import {AppConfig} from '@fe/app/config/app-config';
+import {environment} from '@fe/environment';
 
 @Component({
     selector: 'app-questionnaire',
@@ -8,14 +8,9 @@ import {AppConfig} from '@fe/app/config/app-config';
     styleUrls: ['./questionnaire.component.scss'],
     providers: [RouteDataHandler]
 })
-export class QuestionnaireComponent implements OnInit {
+export class QuestionnaireComponent {
 
-    protected linkForChild?: string;
-    protected linkForParent?: string;
-
-    public ngOnInit(): void {
-        this.linkForChild = AppConfig.get('questionnaireForChild');
-        this.linkForParent = AppConfig.get('questionnaireForParent');
-    }
+    protected linkForChild = environment.questionnaireForChild;
+    protected linkForParent = environment.questionnaireForParent;
 
 }

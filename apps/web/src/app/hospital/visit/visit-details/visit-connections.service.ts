@@ -3,8 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Visit} from '@melluin/common';
 import {MessageService} from '@fe/app/util/message.service';
-import {AppConfig} from '@fe/app/config/app-config';
 import {getErrorHandler} from '@fe/app/util/util';
+import {environment} from '@fe/environment';
 
 @Injectable({providedIn: 'root'})
 export class VisitConnectionsService {
@@ -13,7 +13,7 @@ export class VisitConnectionsService {
     private readonly msg = inject(MessageService);
 
     private get visitUrl(): string {
-        return `${AppConfig.get('baseURL')}/visits`;
+        return `${environment.baseURL}/visits`;
     }
 
     public addConnection(visitId: string, connectId: string): Observable<void> {

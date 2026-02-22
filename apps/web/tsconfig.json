@@ -8,6 +8,7 @@
         "declaration": false,
         "target": "ES2022",
         "module": "ES2022",
+        "resolveJsonModule": true,
         "lib": [
             "ES2022",
             "dom"

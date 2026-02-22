@@ -4,8 +4,8 @@ import {map, Observable} from 'rxjs';
 import {AuthCredentials, AuthInfo, isNotNil, User} from '@melluin/common';
 import {Router} from '@angular/router';
 import {PATHS} from '@fe/app/app-paths';
-import {AppConfig} from '@fe/app/config/app-config';
 import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
+import {environment} from '@fe/environment';
 
 @Injectable()
 export class AuthenticationService {
@@ -25,7 +25,7 @@ export class AuthenticationService {
     public login(username: string, password: string): Observable<User> {
         const authBody: AuthCredentials = {username, password};
 
-        return this.http.post<AuthInfo>(`${AppConfig.get('baseURL')}/auth/login`, authBody)
+        return this.http.post<AuthInfo>(`${environment.baseURL}/auth/login`, authBody)
             .pipe(map(
                 (token: AuthInfo): User => {
                     this.credentialStoreService.useToken(token);

@@ -5,9 +5,9 @@ import {
     Child,
     getFullName,
     getMonthsSince,
-    VisitActivity,
     isNotEmpty,
     PersonIdentifier,
+    VisitActivity,
     VisitActivityType,
     VisitedChild,
     WrappedVisitActivity
@@ -15,9 +15,9 @@ import {
 import dayjs from 'dayjs'
 import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
 import _, {isNil, round} from 'lodash';
-import {AppConfig} from '@fe/app/config/app-config';
 import {TranslateService} from '@ngx-translate/core';
 import {PATHS} from '@fe/app/app-paths';
+import {environment} from '@fe/environment';
 
 
 @Injectable()
@@ -114,7 +114,7 @@ export class ReportPrepareCreator {
     }
 
     private createSendHint(): string {
-        return `Ide küldd majd a levelet miután megírtad: ${AppConfig.get('reportMailAddress')}\n`
+        return `Ide küldd majd a levelet miután megírtad: ${environment.reportMailAddress}\n`
     }
 
     private createMessageHint(): string {

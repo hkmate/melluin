@@ -6,8 +6,8 @@ import {Store} from '@ngrx/store';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {Actions, ofType} from '@ngrx/effects';
 import {AppActions} from '@fe/app/state/app-actions';
-import {AppConfig} from '@fe/app/config/app-config';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {environment} from '@fe/environment';
 
 @Component({
     selector: 'app-menu',
@@ -58,8 +58,8 @@ export class MenuComponent {
     }
 
     protected isThereQuestionnaire(): boolean {
-        return !isNilOrEmpty(AppConfig.get('questionnaireForChild'))
-            || !isNilOrEmpty(AppConfig.get('questionnaireForParent'));
+        return !isNilOrEmpty(environment.questionnaireForChild)
+            || !isNilOrEmpty(environment.questionnaireForParent);
     }
 
     private initializeVisibilityOfMenuItems(): void {
