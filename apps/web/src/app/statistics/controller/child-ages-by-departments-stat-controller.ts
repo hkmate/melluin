@@ -1,9 +1,8 @@
 import {TranslateService} from '@ngx-translate/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
-import {ChartConfiguration} from 'chart.js';
+import {ChartConfiguration, ChartDataset} from 'chart.js';
 import {ChildAgesByDepartments, OperationCity} from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
-import {ChartDataset} from 'chart.js/dist/types';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {ChildAgesByDepartmentsStatProvider} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';

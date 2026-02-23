@@ -1,6 +1,5 @@
 import {Component, computed, inject} from '@angular/core';
-import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {
     BoxStatusChangeReason,
     DateIntervalSpecifier,
@@ -10,10 +9,30 @@ import {
     UserSettings
 } from '@melluin/common';
 import * as _ from 'lodash';
+import {MatCard, MatCardSubtitle} from '@angular/material/card';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatButton} from '@angular/material/button';
+import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/custom-user-settings-editor.base.component';
 
 @Component({
     selector: 'app-user-department-box-widget-settings',
     templateUrl: './user-department-box-widget-settings.component.html',
+    imports: [
+        ReactiveFormsModule,
+        MatCard,
+        MatCardSubtitle,
+        MatCheckbox,
+        TranslatePipe,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        MatOption,
+        MatInput,
+        MatButton
+    ],
     styleUrl: './user-department-box-widget-settings.component.scss'
 })
 export class UserDepartmentBoxWidgetSettingsComponent extends CustomUserSettingsEditorBaseComponent {

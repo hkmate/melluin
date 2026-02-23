@@ -1,5 +1,4 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Routes} from '@angular/router';
 import {PATHS} from './app-paths';
 import {AuthGuardFn} from './auth/service/auth.guard';
 import {NotFoundComponent} from './not-found-component/not-found.component';
@@ -8,7 +7,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {Permission} from '@melluin/common';
 import {NavigatorComponent} from '@fe/app/navigator.component';
 
-const routes: Routes = [
+export const routes: Routes = [
     {
         path: PATHS.login.main,
         loadChildren: () => import('./login/login-routing.module')
@@ -74,10 +73,3 @@ const routes: Routes = [
     },
     {path: '**', resolve: {path: PathResolveService}, component: NotFoundComponent}
 ];
-
-@NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
-})
-export class AppRoutingModule {
-}

@@ -1,11 +1,21 @@
 import {Component, inject} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators} from '@angular/forms';
+import {
+    MAT_DIALOG_DATA,
+    MatDialogActions,
+    MatDialogContent,
+    MatDialogRef,
+    MatDialogTitle
+} from '@angular/material/dialog';
 import {ContinueVisitInfo} from '@fe/app/hospital/visit/model/continue-visit-info';
 import {Department, Visit, Pageable} from '@melluin/common';
 import dayjs from 'dayjs';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatButton} from '@angular/material/button';
 
 
 type ContinueVisitInfoForm = {
@@ -15,6 +25,20 @@ type ContinueVisitInfoForm = {
 @Component({
     selector: 'app-continue-other-visit-dialog',
     templateUrl: './continue-other-visit-dialog.component.html',
+    imports: [
+        MatDialogTitle,
+        MatDialogContent,
+        TranslatePipe,
+        ReactiveFormsModule,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        MatError,
+        MatOption,
+        MatInput,
+        MatDialogActions,
+        MatButton
+    ],
     styleUrl: './continue-other-visit-dialog.component.scss'
 })
 export class ContinueOtherVisitDialogComponent {

@@ -65,7 +65,7 @@
                             </mat-select>
                         </div>
                     } @else {
-                        @for (permission of role.permissions; track permission; let last = $last) {
+                        @for (permission of $any(role.permissions); track permission; let last = $last) {
                             <span class="permission">
                               {{ permission }}<span *ngIf="!last">, </span>
                             </span>

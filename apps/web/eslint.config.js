@@ -1,7 +1,6 @@
 const eslint = require('@eslint/js');
 const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
-const maxParamsNoConstr = require('eslint-plugin-max-params-no-constructor');
 
 module.exports = tseslint.config(
     {
@@ -14,9 +13,6 @@ module.exports = tseslint.config(
             // TODO: check rules and setup what it needed
             // ...angular.configs.tsRecommended,
         ],
-        plugins: {
-            'max-params-no-constructor': maxParamsNoConstr
-        },
         languageOptions: {
             parserOptions: {
                 project: './tsconfig.json',
@@ -138,7 +134,6 @@ module.exports = tseslint.config(
             "max-lines": ["warn", 300],
             "max-lines-per-function": ["warn", 15],
             "max-params": "off",
-            "max-params-no-constructor/max-params-no-constructor": ["warn", 3],
             "no-bitwise": ["error"],
             "no-caller": ["error"],
             "no-confusing-arrow": [

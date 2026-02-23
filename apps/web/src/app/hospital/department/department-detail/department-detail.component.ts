@@ -9,11 +9,23 @@ import {DepartmentService} from '@fe/app/hospital/department/department.service'
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {MessageService} from '@fe/app/util/message.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {DepartmentDataPresenterComponent} from '@fe/app/hospital/department/department-detail/department-data-persenter/department-data-presenter.component';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatButton} from '@angular/material/button';
+import {DepartmentDataFormComponent} from '@fe/app/hospital/department/department-detail/department-data-form/department-data-form.component';
+import {BoxInfoManagerByDepartmentComponent} from '@fe/app/hospital/department-box/department-box-info-manager/box-info-manager-by-department.component';
 
 @Component({
     selector: 'app-department-detail',
     templateUrl: './department-detail.component.html',
     styleUrls: ['./department-detail.component.scss'],
+    imports: [
+        DepartmentDataPresenterComponent,
+        TranslatePipe,
+        MatButton,
+        DepartmentDataFormComponent,
+        BoxInfoManagerByDepartmentComponent
+    ],
     providers: [RouteDataHandler]
 })
 export class DepartmentDetailComponent {
@@ -101,6 +113,5 @@ export class DepartmentDetailComponent {
     private setIdInUrl(departmentId: string): void {
         this.location.replaceState(`${PATHS.departments.main}/${departmentId}`);
     }
-
 
 }

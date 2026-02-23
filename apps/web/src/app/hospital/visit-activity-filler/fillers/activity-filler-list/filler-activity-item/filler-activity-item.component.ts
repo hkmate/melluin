@@ -5,9 +5,15 @@ import {VisitedChildById} from '@fe/app/hospital/visit-activity-filler/model/vis
 import {ConfirmationDialogConfig} from '@fe/app/confirmation/confirmation-dialog-config';
 import {TranslateService} from '@ngx-translate/core';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
+import {FillerActivityEditorComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-filler-list/filler-activity-editor/filler-activity-editor.component';
+import {FillerActivityCardComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-filler-list/filler-activity-card/filler-activity-card.component';
 
 @Component({
     selector: 'app-filler-activity-item',
+    imports: [
+        FillerActivityEditorComponent,
+        FillerActivityCardComponent
+    ],
     templateUrl: './filler-activity-item.component.html'
 })
 export class FillerActivityItemComponent {

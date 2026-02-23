@@ -5,10 +5,21 @@ import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-b
 import {DepartmentBoxStatusReport, Permission} from '@melluin/common';
 import {BoxInfoListByDepartmentComponent} from '@fe/app/hospital/department-box/department-box-info-list/box-info-list-by-department.component';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatMiniFabButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {DepartmentBoxInfoCreateComponent} from '@fe/app/hospital/department-box/department-box-info-create/department-box-info-create.component';
 
 @Component({
     selector: 'app-box-info-manager-by-department',
     templateUrl: './box-info-manager-by-department.component.html',
+    imports: [
+        TranslatePipe,
+        MatMiniFabButton,
+        MatIcon,
+        DepartmentBoxInfoCreateComponent,
+        BoxInfoListByDepartmentComponent
+    ],
     styleUrls: ['./department-box-info-manager.component.scss']
 })
 export class BoxInfoManagerByDepartmentComponent extends DepartmentBoxInfoManagerComponent {

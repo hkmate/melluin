@@ -1,10 +1,22 @@
 import {Component, effect, inject, input, signal} from '@angular/core';
 import {isNotNil, Person, User} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-user-data-presenter',
     templateUrl: './user-data-presenter.component.html',
+    imports: [
+        TranslatePipe,
+        MatCard,
+        MatCardHeader,
+        MatCardSubtitle,
+        MatCardTitle,
+        DatePipe,
+        MatCardContent
+    ],
     styleUrls: ['./user-data-presenter.component.scss']
 })
 export class UserDataPresenterComponent {

@@ -3,9 +3,9 @@ import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@ang
 import {catchError, Observable, of} from 'rxjs';
 import {cast, isNilOrEmpty, Permission, Person} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
-import {isUUID} from 'class-validator';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {isUUID} from '@fe/app/util/util';
 
 @Injectable({
     providedIn: 'root'

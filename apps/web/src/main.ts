@@ -1,7 +1,6 @@
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import 'reflect-metadata';
-import {AppModule} from './app/app.module';
-
+import {appConfig} from './app/app.config';
+import {bootstrapApplication} from '@angular/platform-browser';
+import {AppComponent} from '@fe/app/app.component';
 import {
     BarController,
     BarElement,
@@ -15,5 +14,5 @@ import {
 
 Chart.register(BarController, LinearScale, CategoryScale, BarElement, Legend, Tooltip, LogarithmicScale);
 
-platformBrowserDynamic().bootstrapModule(AppModule)
+bootstrapApplication(AppComponent, appConfig)
     .catch(err => console.error(err));

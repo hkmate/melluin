@@ -2,10 +2,31 @@ import {Component, effect, inject, input} from '@angular/core';
 import {Department, FilterOperationBuilder, isNil, isNilOrEmpty, Person, UserSettings} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
+import {MatTab, MatTabGroup} from '@angular/material/tabs';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
+import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
+import {MatChip} from '@angular/material/chips';
+import {OptionalPipe} from '@fe/app/util/optional.pipe';
+import {NgIf} from '@angular/common';
 
 @Component({
     selector: 'app-user-settings-presenter',
     templateUrl: './user-settings-presenter.component.html',
+    imports: [
+        MatTabGroup,
+        TranslatePipe,
+        MatTab,
+        MatCard,
+        MatCardHeader,
+        MatCardSubtitle,
+        MatCardTitle,
+        PersonNamePipe,
+        MatChip,
+        MatCardContent,
+        OptionalPipe,
+        NgIf
+    ],
     styleUrls: ['./user-settings-presenter.component.scss']
 })
 export class UserSettingsPresenterComponent {

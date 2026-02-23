@@ -1,11 +1,29 @@
 import {Component, inject, output, signal} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {getGuessedBirthFromYears, VisitedChildInput} from '@melluin/common';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {MatButton} from '@angular/material/button';
 
 @Component({
     selector: 'app-filler-child-create',
     templateUrl: './filler-child-create.component.html',
+    imports: [
+        MatCard,
+        MatCardContent,
+        ReactiveFormsModule,
+        TrimmedTextInputComponent,
+        MatFormField,
+        MatLabel,
+        TranslatePipe,
+        MatInput,
+        MatCheckbox,
+        MatButton
+    ],
     styleUrls: ['./filler-child-create.component.scss']
 })
 export class FillerChildCreateComponent {

@@ -4,9 +4,15 @@ import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ConfirmationDialogConfig} from '@fe/app/confirmation/confirmation-dialog-config';
+import {FillerChildEditorComponent} from '@fe/app/hospital/visit-activity-filler/fillers/child-filler-list/filler-child-editor/filler-child-editor.component';
+import {FillerChildCardComponent} from '@fe/app/hospital/visit-activity-filler/fillers/child-filler-list/filler-child-card/filler-child-card.component';
 
 @Component({
     selector: 'app-filler-child-item',
+    imports: [
+        FillerChildEditorComponent,
+        FillerChildCardComponent
+    ],
     templateUrl: './filler-child-item.component.html'
 })
 export class FillerChildItemComponent {

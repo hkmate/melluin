@@ -8,10 +8,45 @@ import {filter} from 'rxjs';
 import {Platform} from '@angular/cdk/platform';
 import {reasonIsNotPageData} from '@fe/app/util/list-page-settings-change-reason';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {MatCard, MatCardContent, MatCardSubtitle} from '@angular/material/card';
+import {
+    MatDatepickerToggle,
+    MatDateRangeInput,
+    MatDateRangePicker,
+    MatEndDate,
+    MatStartDate
+} from '@angular/material/datepicker';
+import {DatePipe} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatFormField, MatLabel, MatSuffix} from '@angular/material/input';
+import {PersonSelectComponent} from '@fe/app/util/person-select/person-select.component';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatCheckbox} from '@angular/material/checkbox';
 
 @Component({
     selector: 'app-event-list-filter',
     templateUrl: './event-list-filter.component.html',
+    imports: [
+        MatCard,
+        MatCardContent,
+        MatDateRangeInput,
+        MatDatepickerToggle,
+        MatStartDate,
+        MatEndDate,
+        MatDateRangePicker,
+        DatePipe,
+        FormsModule,
+        TranslatePipe,
+        MatSuffix,
+        PersonSelectComponent,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        MatOption,
+        MatCheckbox,
+        MatCardSubtitle
+    ],
     styleUrls: ['./event-list-filter.component.scss']
 })
 export class EventListFilterComponent {

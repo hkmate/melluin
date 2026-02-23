@@ -1,12 +1,27 @@
 import {Component, computed, inject, input, output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Permission, RoleBrief, UserCreation} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
+import {TranslatePipe} from '@ngx-translate/core';
+import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {MatFormField, MatLabel} from '@angular/material/input';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatButton} from '@angular/material/button';
 
 @Component({
     selector: 'app-user-creation-form',
     templateUrl: './user-creation-form.component.html',
+    imports: [
+        TranslatePipe,
+        ReactiveFormsModule,
+        TrimmedTextInputComponent,
+        MatLabel,
+        MatFormField,
+        MatSelect,
+        MatOption,
+        MatButton
+    ],
     styleUrls: ['./user-creation-form.component.scss']
 })
 export class UserCreationFormComponent {

@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {Observable, tap} from 'rxjs';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {Location} from '@angular/common';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
@@ -22,11 +22,28 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {VisitConnectionsService} from '@fe/app/hospital/visit/visit-details/visit-connections.service';
+import {VisitPresenterComponent} from '@fe/app/hospital/visit/visit-details/visit-presenter/visit-presenter.component';
+import {MatButton} from '@angular/material/button';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatIcon} from '@angular/material/icon';
+import {VisitFormComponent} from '@fe/app/hospital/visit/visit-details/visit-form/visit-form.component';
+import {VisitConnectionsComponent} from '@fe/app/hospital/visit/visit-details/visit-connections/visit-connections.component';
+import {VisitActivitiesComponent} from '@fe/app/hospital/visit-activity/visit-activities/visit-activities.component';
 
 @Component({
     selector: 'app-visit-details',
     templateUrl: './visit-details.component.html',
     styleUrls: ['./visit-details.component.scss'],
+    imports: [
+        VisitPresenterComponent,
+        MatButton,
+        TranslatePipe,
+        RouterLink,
+        MatIcon,
+        VisitFormComponent,
+        VisitConnectionsComponent,
+        VisitActivitiesComponent
+    ],
     providers: [RouteDataHandler, ReportPrepareService]
 })
 export class VisitDetailsComponent {

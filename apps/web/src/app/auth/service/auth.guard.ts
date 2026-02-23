@@ -15,7 +15,7 @@ interface RouteData {
 export const AuthGuardFn = (route: Route): boolean =>
     inject(AuthGuard).canMatch(route.data as RouteData);
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthGuard {
 
     private readonly router = inject(Router);

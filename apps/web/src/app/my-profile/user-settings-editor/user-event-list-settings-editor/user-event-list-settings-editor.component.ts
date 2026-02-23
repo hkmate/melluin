@@ -7,13 +7,33 @@ import {
     Pageable,
     UserSettings
 } from '@melluin/common';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
-import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
+import {MatFormField, MatLabel} from '@angular/material/input';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {TranslatePipe} from '@ngx-translate/core';
+import {PersonSelectComponent} from '@fe/app/util/person-select/person-select.component';
+import {MatCard, MatCardSubtitle} from '@angular/material/card';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {MatButton} from '@angular/material/button';
+import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/custom-user-settings-editor.base.component';
 
 @Component({
     selector: 'app-user-event-list-settings-editor',
     templateUrl: './user-event-list-settings-editor.component.html',
+    imports: [
+        ReactiveFormsModule,
+        MatLabel,
+        MatFormField,
+        MatSelect,
+        TranslatePipe,
+        MatOption,
+        PersonSelectComponent,
+        MatCard,
+        MatCardSubtitle,
+        MatCheckbox,
+        MatButton
+    ],
     styleUrls: ['./user-event-list-settings-editor.component.scss']
 })
 export class UserEventListSettingsEditorComponent extends CustomUserSettingsEditorBaseComponent {

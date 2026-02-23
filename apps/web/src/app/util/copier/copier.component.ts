@@ -1,12 +1,11 @@
 import {Component, inject, input} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MessageService} from '@fe/app/util/message.service';
 
 @Component({
     selector: 'app-copier',
     standalone: true,
-    imports: [CommonModule, MatIconModule],
+    imports: [MatIconModule],
     templateUrl: './copier.component.html',
     styleUrl: './copier.component.scss'
 })

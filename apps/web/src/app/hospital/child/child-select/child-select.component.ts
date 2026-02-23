@@ -1,12 +1,28 @@
 import {Component, forwardRef, input, output} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {NOOP, VisitedChild, VoidFunc} from '@melluin/common';
 import * as _ from 'lodash';
+import {MatFormField, MatLabel} from '@angular/material/input';
+import {MatChipListbox, MatChipRow} from '@angular/material/chips';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatIcon} from '@angular/material/icon';
+import {ChildAgePipe} from '@fe/app/hospital/child/child-age/child-age.pipe';
 
 @Component({
     selector: 'app-child-select',
     templateUrl: './child-select.component.html',
     styleUrls: ['./child-select.component.scss'],
+    imports: [
+        MatFormField,
+        MatLabel,
+        MatChipListbox,
+        MatChipRow,
+        MatSelect,
+        FormsModule,
+        MatIcon,
+        MatOption,
+        ChildAgePipe
+    ],
     providers: [{
         provide: NG_VALUE_ACCESSOR,
         useExisting: forwardRef(() => ChildSelectComponent),

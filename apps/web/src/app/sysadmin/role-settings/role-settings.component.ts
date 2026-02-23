@@ -3,7 +3,23 @@ import {AppTitle} from '@fe/app/app-title.service';
 import {RoleService} from '@fe/app/sysadmin/role-settings/role.service';
 import {isNil, isNotNil, NOOP, Permission, Role, RoleType} from '@melluin/common';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
-import {TranslateService} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {RoleCreateComponent} from '@fe/app/sysadmin/role-settings/role-create/role-create.component';
+import {
+    MatCell,
+    MatCellDef,
+    MatColumnDef,
+    MatHeaderCell,
+    MatHeaderCellDef,
+    MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+    MatTable
+} from '@angular/material/table';
+import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {FormsModule} from '@angular/forms';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {NgIf} from '@angular/common';
 
 type RoleEdit = Role & {
     loading: boolean;
@@ -12,6 +28,28 @@ type RoleEdit = Role & {
 @Component({
     selector: 'app-role-settings',
     templateUrl: './role-settings.component.html',
+    imports: [
+        TranslatePipe,
+        MatMiniFabButton,
+        MatIcon,
+        RoleCreateComponent,
+        MatTable,
+        MatColumnDef,
+        MatHeaderCell,
+        MatHeaderCellDef,
+        MatCellDef,
+        MatCell,
+        TrimmedTextInputComponent,
+        FormsModule,
+        MatSelect,
+        MatOption,
+        NgIf,
+        MatIconButton,
+        MatHeaderRow,
+        MatRow,
+        MatRowDef,
+        MatHeaderRowDef
+    ],
     styleUrls: ['./role-settings.component.scss']
 })
 export class RoleSettingsComponent {

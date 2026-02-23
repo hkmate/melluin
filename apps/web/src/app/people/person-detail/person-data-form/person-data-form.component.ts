@@ -1,11 +1,26 @@
 import {Component, computed, inject, input, output} from '@angular/core';
 import {emptyToUndef, OperationCity, Permission, Person, PersonCreation, PersonRewrite} from '@melluin/common';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {TranslatePipe} from '@ngx-translate/core';
+import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {MatFormField, MatLabel} from '@angular/material/input';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatButton} from '@angular/material/button';
 
 @Component({
     selector: 'app-person-data-form',
     templateUrl: './person-data-form.component.html',
+    imports: [
+        TranslatePipe,
+        ReactiveFormsModule,
+        TrimmedTextInputComponent,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        MatOption,
+        MatButton
+    ],
     styleUrls: ['./person-data-form.component.scss']
 })
 export class PersonDataFormComponent {

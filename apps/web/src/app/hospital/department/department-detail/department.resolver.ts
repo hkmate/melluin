@@ -2,9 +2,9 @@ import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, Observable, of} from 'rxjs';
 import {cast, Department, isNilOrEmpty} from '@melluin/common';
-import {isUUID} from 'class-validator';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
+import {isUUID} from '@fe/app/util/util';
 
 @Injectable({
     providedIn: 'root'

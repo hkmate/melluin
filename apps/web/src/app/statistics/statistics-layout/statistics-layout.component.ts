@@ -4,6 +4,14 @@ import {OperationCity, Permission} from '@melluin/common';
 import {StatFilter} from '@fe/app/statistics/model/stat-filter';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {AppTitle} from '@fe/app/app-title.service';
+import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
+import {ChildrenByDepartmentsStatProviderService} from '@fe/app/statistics/service/children-by-departments-stat-provider';
+import {ChildAgesByDepartmentsStatProviderService} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
+import {VolunteersByDepartmentsStatProviderService} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
+import {VisitCountByWeekDayStatProviderService} from '@fe/app/statistics/service/visit-count-by-week-day-stat-provider';
+import {TranslatePipe} from '@ngx-translate/core';
+import {StatisticsFilterComponent} from '@fe/app/statistics/statistics-filter/statistics-filter.component';
+import {StatisticsWidgetContainerComponent} from '@fe/app/statistics/statistics-widget-container/statistics-widget-container.component';
 
 function getDefaultFilter(): StatFilter {
     const now = dayjs().toISOString();
@@ -15,8 +23,18 @@ function getDefaultFilter(): StatFilter {
     selector: 'app-statistics-layout',
     templateUrl: './statistics-layout.component.html',
     styleUrl: './statistics-layout.component.scss',
+    imports: [
+        TranslatePipe,
+        StatisticsFilterComponent,
+        StatisticsWidgetContainerComponent
+    ],
     providers: [
         UrlParamHandler,
+        StatisticsService,
+        ChildrenByDepartmentsStatProviderService,
+        ChildAgesByDepartmentsStatProviderService,
+        VolunteersByDepartmentsStatProviderService,
+        VisitCountByWeekDayStatProviderService,
     ]
 })
 export class StatisticsLayoutComponent {

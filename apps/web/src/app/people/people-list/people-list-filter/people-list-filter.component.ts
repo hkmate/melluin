@@ -8,10 +8,29 @@ import {Store} from '@ngrx/store';
 import {OperationCity, Permission, RoleBrief, User} from '@melluin/common';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {LazyInputComponent} from '@fe/app/util/lazy-input/lazy-input.component';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatFormField, MatLabel} from '@angular/material/input';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {FormsModule} from '@angular/forms';
+import {MatCard, MatCardSubtitle} from '@angular/material/card';
+import {MatCheckbox} from '@angular/material/checkbox';
 
 @Component({
     selector: 'app-people-list-filter',
     templateUrl: './people-list-filter.component.html',
+    imports: [
+        LazyInputComponent,
+        TranslatePipe,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        FormsModule,
+        MatOption,
+        MatCardSubtitle,
+        MatCard,
+        MatCheckbox
+    ],
     styleUrl: './people-list-filter.component.scss'
 })
 export class PeopleListFilterComponent {

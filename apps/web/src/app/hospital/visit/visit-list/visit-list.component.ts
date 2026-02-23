@@ -4,10 +4,46 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {Store} from '@ngrx/store';
+import {
+    MatCell,
+    MatCellDef,
+    MatColumnDef,
+    MatHeaderCell,
+    MatHeaderCellDef,
+    MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+    MatTable
+} from '@angular/material/table';
+import {VisitStatusIconComponent} from '@fe/app/hospital/visit/visit-status-icon/visit-status-icon.component';
+import {DatePipe, NgIf} from '@angular/common';
+import {TranslatePipe} from '@ngx-translate/core';
+import {RouterLink} from '@angular/router';
+import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
+import {MatIcon} from '@angular/material/icon';
+import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-visit-list',
     templateUrl: './visit-list.component.html',
+    imports: [
+        MatTable,
+        MatColumnDef,
+        MatHeaderCell,
+        MatCell,
+        MatCellDef,
+        MatHeaderCellDef,
+        VisitStatusIconComponent,
+        DatePipe,
+        TranslatePipe,
+        RouterLink,
+        PersonNamePipe,
+        MatIcon,
+        MatTooltip,
+        MatHeaderRow,
+        MatHeaderRowDef,
+        MatRow,
+        MatRowDef,
+        NgIf
+    ],
     styleUrls: ['./visit-list.component.scss']
 })
 export class VisitListComponent {

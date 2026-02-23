@@ -57,23 +57,23 @@
                 <ng-container matColumnDef="email">
                     <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Email' | translate }}</th>
                     <td mat-cell *matCellDef="let person">
-                        <span [ngClass]="{'no-data': !person.email}">{{ person.email | optional }}</span>
+                        <span [class]="{'no-data': !person.email}">{{ person.email | optional }}</span>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="phone">
                     <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Phone' | translate }}</th>
                     <td mat-cell *matCellDef="let person">
-                        <span [ngClass]="{'no-data': !person.phone}">{{ person.phone | optional }}</span>
+                        <span [class]="{'no-data': !person.phone}">{{ person.phone | optional }}</span>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="lastLogin">
                     <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.LastLogin' | translate }}</th>
                     <td mat-cell *matCellDef="let person">
-                    <span [ngClass]="person | lastLoginStyle">
+                    <span [class]="person | lastLoginStyle">
                         @if (person.user?.lastLogin) {
-                            {{ person.user?.lastLogin | date :'YYYY.MM.dd HH:mm:ss' }}
+                            {{ person.user?.lastLogin | date :'yyyy.MM.dd HH:mm:ss' }}
                         } @else {
                             {{ 'NoData' | translate }}
                         }
@@ -84,9 +84,9 @@
                 <ng-container matColumnDef="created">
                     <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.Created' | translate }}</th>
                     <td mat-cell *matCellDef="let person">
-                    <span [ngClass]="{'no-data': !person.created}">
+                    <span [class]="{'no-data': !person.created}">
                         @if (person.created) {
-                            {{ person.created | date :'YYYY.MM.dd HH:mm:ss' }}
+                            {{ person.created | date :'yyyy.MM.dd HH:mm:ss' }}
                         } @else {
                             {{ 'NoData' | translate }}
                         }
@@ -98,7 +98,7 @@
                     <th mat-header-cell *matHeaderCellDef>{{ 'PeopleListPage.ListHeader.CreatedBy' | translate }}</th>
                     <td mat-cell *matCellDef="let person">
                         @let createdBy = person.createdByPersonId ? creators()[person.createdByPersonId] : undefined;
-                        <span [ngClass]="{'no-data': !createdBy}">
+                        <span [class]="{'no-data': !createdBy}">
                         @if (createdBy) {
                             <a class="link" [routerLink]="[createdBy.id]">{{ createdBy | personName }}</a>
                         } @else {

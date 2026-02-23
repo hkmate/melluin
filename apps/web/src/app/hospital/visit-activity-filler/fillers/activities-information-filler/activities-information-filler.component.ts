@@ -1,12 +1,28 @@
 import {Component, effect, inject, input, signal} from '@angular/core';
 import {VisitActivityInformationService} from '@fe/app/hospital/visit-activity/visit-activity-information.service';
-import {FormControl} from '@angular/forms';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {Permission} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatButton, MatMiniFabButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatFormField, MatInput} from '@angular/material/input';
+import {MatCard, MatCardContent} from '@angular/material/card';
 
 @Component({
     selector: 'app-activities-information-filler',
     templateUrl: './activities-information-filler.component.html',
+    imports: [
+        TranslatePipe,
+        MatMiniFabButton,
+        MatIcon,
+        MatFormField,
+        MatInput,
+        ReactiveFormsModule,
+        MatButton,
+        MatCardContent,
+        MatCard
+    ],
     styleUrl: './activities-information-filler.component.scss'
 })
 export class ActivitiesInformationFillerComponent {

@@ -8,10 +8,29 @@ import {Actions, ofType} from '@ngrx/effects';
 import {AppActions} from '@fe/app/state/app-actions';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {environment} from '@fe/environment';
+import {NgIf, NgTemplateOutlet} from '@angular/common';
+import {MatIcon} from '@angular/material/icon';
+import {MatSidenav, MatSidenavContainer, MatSidenavContent} from '@angular/material/sidenav';
+import {MatDivider, MatListItem, MatNavList} from '@angular/material/list';
+import {TranslatePipe} from '@ngx-translate/core';
+import {RouterLink} from '@angular/router';
 
 @Component({
     selector: 'app-menu',
     templateUrl: './menu.component.html',
+    imports: [
+        NgIf,
+        MatIcon,
+        MatSidenavContainer,
+        MatSidenav,
+        MatNavList,
+        TranslatePipe,
+        MatDivider,
+        MatSidenavContent,
+        NgTemplateOutlet,
+        MatListItem,
+        RouterLink
+    ],
     styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent {

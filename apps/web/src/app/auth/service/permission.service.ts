@@ -5,7 +5,7 @@ import {Actions, ofType} from '@ngrx/effects';
 import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import {AppActions} from '@fe/app/state/app-actions';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class PermissionService {
 
     private readonly store = inject(Store);

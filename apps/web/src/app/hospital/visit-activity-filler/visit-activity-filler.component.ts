@@ -19,12 +19,44 @@ import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {MessageService} from '@fe/app/util/message.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ContinueOtherVisitDialogService} from '@fe/app/hospital/visit-activity-filler/continue-other/continue-other-visit-dialog.service';
+import {VisitCardComponent} from '@fe/app/hospital/visit/visit-card/visit-card.component';
+import {MatButton} from '@angular/material/button';
+import {
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle
+} from '@angular/material/expansion';
+import {TranslatePipe} from '@ngx-translate/core';
+import {RelatedVisitListComponent} from '@fe/app/hospital/visit-activity-filler/related-activities/related-visit-list/related-visit-list.component';
+import {ChildFillerListComponent} from '@fe/app/hospital/visit-activity-filler/fillers/child-filler-list/child-filler-list.component';
+import {ActivityFillerListComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-filler-list/activity-filler-list.component';
+import {ActivitiesInformationFillerComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activities-information-filler/activities-information-filler.component';
+import {BoxInfoManagerByVisitComponent} from '@fe/app/hospital/department-box/department-box-info-manager/box-info-manager-by-visit.component';
 
 @Component({
     selector: 'app-visit-activity-filler',
     templateUrl: './visit-activity-filler.component.html',
     styleUrls: ['./visit-activity-filler.component.scss'],
-    providers: [RouteDataHandler]
+    imports: [
+        VisitCardComponent,
+        MatButton,
+        MatAccordion,
+        TranslatePipe,
+        MatExpansionPanel,
+        MatExpansionPanelTitle,
+        MatExpansionPanelHeader,
+        RelatedVisitListComponent,
+        ChildFillerListComponent,
+        ActivityFillerListComponent,
+        ActivitiesInformationFillerComponent,
+        BoxInfoManagerByVisitComponent
+    ],
+    providers: [
+        RouteDataHandler,
+        VisitActivityFillerService,
+        ContinueOtherVisitDialogService
+    ]
 })
 export class VisitActivityFillerComponent {
 

@@ -1,12 +1,50 @@
 import {Component, effect, inject, input, output, signal} from '@angular/core';
 import {Platform} from '@angular/cdk/platform';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {OperationCity} from '@melluin/common';
 import {StatFilter} from '@fe/app/statistics/model/stat-filter';
+import {
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle
+} from '@angular/material/expansion';
+import {TranslatePipe} from '@ngx-translate/core';
+import {DatePipe} from '@angular/common';
+import {
+    MatDatepickerToggle,
+    MatDateRangeInput,
+    MatDateRangePicker,
+    MatEndDate,
+    MatStartDate
+} from '@angular/material/datepicker';
+import {MatFormField, MatLabel, MatSuffix} from '@angular/material/input';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatButton} from '@angular/material/button';
 
 @Component({
     selector: 'app-statistics-filter',
     templateUrl: './statistics-filter.component.html',
+    imports: [
+        MatAccordion,
+        MatExpansionPanel,
+        MatExpansionPanelHeader,
+        MatExpansionPanelTitle,
+        TranslatePipe,
+        DatePipe,
+        ReactiveFormsModule,
+        MatDateRangeInput,
+        MatStartDate,
+        MatEndDate,
+        MatDatepickerToggle,
+        MatDateRangePicker,
+        MatSuffix,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        MatOption,
+        MatButton
+    ],
     styleUrl: './statistics-filter.component.scss'
 })
 export class StatisticsFilterComponent {

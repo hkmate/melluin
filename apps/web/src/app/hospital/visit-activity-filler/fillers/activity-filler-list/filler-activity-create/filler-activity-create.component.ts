@@ -1,13 +1,33 @@
 import {Component, inject, output, signal} from '@angular/core';
 import {VisitActivityInput, VisitActivityType, VisitedChild} from '@melluin/common';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {isNotEmptyValidator} from '@fe/app/util/util';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
 import {Observable} from 'rxjs';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {ChildSelectComponent} from '@fe/app/hospital/child/child-select/child-select.component';
+import {AsyncPipe} from '@angular/common';
+import {TranslatePipe} from '@ngx-translate/core';
+import {ActivitySelectComponent} from '@fe/app/hospital/visit-activity/activity-select/activity-select.component';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatButton} from '@angular/material/button';
 
 @Component({
     selector: 'app-filler-activity-create',
     templateUrl: './filler-activity-create.component.html',
+    imports: [
+        MatCard,
+        MatCardContent,
+        ReactiveFormsModule,
+        ChildSelectComponent,
+        AsyncPipe,
+        TranslatePipe,
+        ActivitySelectComponent,
+        MatLabel,
+        MatFormField,
+        MatInput,
+        MatButton
+    ],
     styleUrls: ['./filler-activity-create.component.scss']
 })
 export class FillerActivityCreateComponent {

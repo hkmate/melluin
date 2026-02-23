@@ -3,10 +3,25 @@ import {Visit, Permission} from '@melluin/common';
 import {VisitConnectionsService} from '@fe/app/hospital/visit/visit-details/visit-connections.service';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatMiniFabButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {VisitConnectionCreateComponent} from '@fe/app/hospital/visit/visit-details/visit-connections/visit-connection-create/visit-connection-create.component';
+import {VisitConnectedVisitComponent} from '@fe/app/hospital/visit/visit-details/visit-connections/visit-connected-visit/visit-connected-visit.component';
 
 @Component({
     selector: 'app-visit-connections',
     templateUrl: './visit-connections.component.html',
+    imports: [
+        TranslatePipe,
+        MatMiniFabButton,
+        MatIcon,
+        MatCard,
+        MatCardContent,
+        VisitConnectionCreateComponent,
+        VisitConnectedVisitComponent
+    ],
     styleUrl: './visit-connections.component.scss'
 })
 export class VisitConnectionsComponent {

@@ -4,7 +4,7 @@ import {AuthInfo, DateUtil, isNilOrEmpty, User, UserSettings} from '@melluin/com
 import {Store} from '@ngrx/store';
 import {AppActions} from '@fe/app/state/app-actions';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CredentialStoreService {
 
     private static readonly AUTH_TOKEN_KEY = 'authToken';

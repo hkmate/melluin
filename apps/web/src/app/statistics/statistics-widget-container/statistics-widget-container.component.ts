@@ -18,11 +18,15 @@ import {VolunteersByDepartmentsStatProviderService} from '@fe/app/statistics/ser
 import {VisitsCountStatController} from '@fe/app/statistics/controller/visits-count-stat-controller';
 import {VisitsCountByWeekDayStatController} from '@fe/app/statistics/controller/visits-count-by-week-day-stat-controller';
 import {VisitCountByWeekDayStatProviderService} from '@fe/app/statistics/service/visit-count-by-week-day-stat-provider';
+import {StatisticsWidgetComponent} from '@fe/app/statistics/statistics-widget/statistics-widget.component';
 
 @Component({
     selector: 'app-statistics-widget-container',
     templateUrl: './statistics-widget-container.component.html',
     styleUrl: './statistics-widget-container.component.scss',
+    imports: [
+        StatisticsWidgetComponent
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StatisticsWidgetContainerComponent {

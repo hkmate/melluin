@@ -9,6 +9,7 @@
         "target": "ES2022",
         "module": "ES2022",
         "resolveJsonModule": true,
+        "moduleResolution": "bundler",
         "lib": [
             "ES2022",
             "dom"

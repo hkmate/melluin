@@ -8,10 +8,9 @@ import {MatInputModule} from '@angular/material/input';
     imports: [
         CommonModule,
         FormsModule,
-
-        MatInputModule
+        MatInputModule,
+        TrimmedTextInputComponent
     ],
-    declarations: [TrimmedTextInputComponent],
     exports: [TrimmedTextInputComponent]
 })
 export class TrimmedTextInputModule {

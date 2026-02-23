@@ -3,10 +3,22 @@ import {isNil, isNotNil, Permission, User, UserCreation, UserRewrite} from '@mel
 import {UserService} from '@fe/app/people/user.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {MessageService} from '@fe/app/util/message.service';
+import {UserDataPresenterComponent} from '@fe/app/people/person-detail/user-data-presenter/user-data-presenter.component';
+import {MatButton} from '@angular/material/button';
+import {TranslatePipe} from '@ngx-translate/core';
+import {UserCreationFormComponent} from '@fe/app/people/person-detail/user-creation-form/user-creation-form.component';
+import {UserEditFormComponent} from '@fe/app/people/person-detail/user-edit-form/user-edit-form.component';
 
 @Component({
     selector: 'app-user-detail',
     templateUrl: './user-detail.component.html',
+    imports: [
+        UserDataPresenterComponent,
+        MatButton,
+        TranslatePipe,
+        UserCreationFormComponent,
+        UserEditFormComponent
+    ],
     styleUrls: ['./user-detail.component.scss']
 })
 export class UserDetailComponent {

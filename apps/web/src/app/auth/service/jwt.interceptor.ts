@@ -12,7 +12,7 @@ import {AuthenticationService} from './authentication.service';
 import {EndpointMap, HttpMethod} from '../model/endpoint';
 import {environment} from '@fe/environment';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class JwtInterceptor implements HttpInterceptor {
 
     private readonly authService = inject(AuthenticationService);

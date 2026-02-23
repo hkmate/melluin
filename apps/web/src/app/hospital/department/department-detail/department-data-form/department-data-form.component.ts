@@ -1,5 +1,5 @@
 import {Component, computed, inject, input, output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {
     allNil,
     Department,
@@ -9,10 +9,34 @@ import {
     isNotNil,
     OperationCity
 } from '@melluin/common';
+import {TranslatePipe} from '@ngx-translate/core';
+import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
+import {MatCard} from '@angular/material/card';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {MatButton} from '@angular/material/button';
 
 @Component({
     selector: 'app-department-data-form',
     templateUrl: './department-data-form.component.html',
+    imports: [
+        TranslatePipe,
+        ReactiveFormsModule,
+        TrimmedTextInputComponent,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        MatOption,
+        MatInput,
+        MatDatepickerInput,
+        MatDatepickerToggle,
+        MatDatepicker,
+        MatCard,
+        MatCheckbox,
+        MatButton
+    ],
     styleUrls: ['./department-data-form.component.scss']
 })
 export class DepartmentDataFormComponent {

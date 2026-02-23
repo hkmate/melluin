@@ -7,10 +7,20 @@ import {Store} from '@ngrx/store';
 import {PeopleService} from '@fe/app/people/people.service';
 import {selectUserSettings} from '@fe/app/state/selector/user-settings.selector';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {MyProfileEditorComponent} from '@fe/app/my-profile/my-profile-editor/my-profile-editor.component';
+import {MyProfilePresentComponent} from '@fe/app/my-profile/my-profile-present/my-profile-present.component';
+import {MatButton} from '@angular/material/button';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-my-profile',
     templateUrl: './my-profile.component.html',
+    imports: [
+        MyProfileEditorComponent,
+        MyProfilePresentComponent,
+        MatButton,
+        TranslatePipe
+    ],
     providers: [RouteDataHandler]
 })
 export class MyProfileComponent {

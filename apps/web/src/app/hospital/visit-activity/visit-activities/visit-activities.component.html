@@ -5,7 +5,7 @@
     @if (needWarningOnActivitiesWhenFailed()) {
         <div class="fail-message">{{ 'Visit.WarningOnActivityPresenterWhileActivitiesShouldNotBeThere' | translate }}</div>
     }
-    <div [ngClass]="getStyleNgClasses()">
+    <div [class]="getStyleNgClasses()">
         <div class="children">
             <h1>{{ 'Visit.Activities.Children' | translate }}</h1>
             <app-children-list [children]="children" [visitDate]="visitDate"/>

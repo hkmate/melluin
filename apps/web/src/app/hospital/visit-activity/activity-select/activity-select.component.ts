@@ -1,11 +1,27 @@
 import {Component, forwardRef, input} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {NOOP, VisitActivityType, VoidFunc} from '@melluin/common';
+import {MatFormField, MatLabel} from '@angular/material/input';
+import {MatChipListbox, MatChipRow} from '@angular/material/chips';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatIcon} from '@angular/material/icon';
+import {MatOption, MatSelect} from '@angular/material/select';
 
 @Component({
     selector: 'app-activity-select',
     templateUrl: './activity-select.component.html',
     styleUrls: ['./activity-select.component.scss'],
+    imports: [
+        MatFormField,
+        MatLabel,
+        MatChipListbox,
+        MatChipRow,
+        TranslatePipe,
+        MatIcon,
+        MatSelect,
+        FormsModule,
+        MatOption
+    ],
     providers: [{
         provide: NG_VALUE_ACCESSOR,
         useExisting: forwardRef(() => ActivitySelectComponent),

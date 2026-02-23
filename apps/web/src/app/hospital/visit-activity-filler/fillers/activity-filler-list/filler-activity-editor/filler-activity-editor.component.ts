@@ -1,14 +1,34 @@
 import {Component, computed, inject, input, output} from '@angular/core';
 import {VisitActivity, VisitActivityEditInput, VisitActivityType, VisitedChild} from '@melluin/common';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
 import {isNotEmptyValidator} from '@fe/app/util/util';
 import {VisitedChildById} from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
 import {Observable} from 'rxjs';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {AsyncPipe} from '@angular/common';
+import {ChildSelectComponent} from '@fe/app/hospital/child/child-select/child-select.component';
+import {TranslatePipe} from '@ngx-translate/core';
+import {ActivitySelectComponent} from '@fe/app/hospital/visit-activity/activity-select/activity-select.component';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatButton} from '@angular/material/button';
 
 @Component({
     selector: 'app-filler-activity-editor',
     templateUrl: './filler-activity-editor.component.html',
+    imports: [
+        MatCard,
+        MatCardContent,
+        ReactiveFormsModule,
+        AsyncPipe,
+        ChildSelectComponent,
+        TranslatePipe,
+        ActivitySelectComponent,
+        MatFormField,
+        MatLabel,
+        MatInput,
+        MatButton
+    ],
     styleUrls: ['./filler-activity-editor.component.scss']
 })
 export class FillerActivityEditorComponent {

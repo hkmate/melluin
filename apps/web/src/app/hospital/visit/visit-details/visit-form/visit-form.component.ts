@@ -1,5 +1,5 @@
 import {Component, computed, effect, inject, input, output, signal} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {
     Department,
     Visit,
@@ -22,12 +22,38 @@ import {Platform} from '@angular/cdk/platform';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {getAllStatusOptionsOnlyEnable, SelectOption} from '@fe/app/util/hospital-visit-status-option';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {PersonSelectComponent} from '@fe/app/util/person-select/person-select.component';
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {MatButton} from '@angular/material/button';
 
 
 // TODO refactor: Form components should be refactored to new forms when updated Angular to 21
 @Component({
     selector: 'app-visit-form',
     templateUrl: './visit-form.component.html',
+    imports: [
+        TranslatePipe,
+        ReactiveFormsModule,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        MatOption,
+        PersonSelectComponent,
+        MatInput,
+        MatDatepickerToggle,
+        MatDatepicker,
+        MatDatepickerInput,
+        MatCardContent,
+        MatCard,
+        MatCheckbox,
+        FormsModule,
+        MatButton
+    ],
     styleUrls: ['./visit-form.component.scss']
 })
 export class VisitFormComponent {

@@ -16,10 +16,22 @@ import {Observable, tap} from 'rxjs';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {MessageService} from '@fe/app/util/message.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {PersonDataFormComponent} from '@fe/app/people/person-detail/person-data-form/person-data-form.component';
+import {PersonDataPresenterComponent} from '@fe/app/people/person-detail/person-data-persenter/person-data-presenter.component';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatButton} from '@angular/material/button';
+import {UserDetailComponent} from '@fe/app/people/person-detail/user-detail/user-detail.component';
 
 @Component({
     selector: 'app-person-detail',
     templateUrl: './person-detail.component.html',
+    imports: [
+        PersonDataFormComponent,
+        PersonDataPresenterComponent,
+        TranslatePipe,
+        MatButton,
+        UserDetailComponent
+    ],
     providers: [RouteDataHandler]
 })
 export class PersonDetailComponent {

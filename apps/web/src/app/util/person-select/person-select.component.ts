@@ -1,12 +1,32 @@
 import {Component, forwardRef, inject, input, signal} from '@angular/core';
 import {FilteringInfo, isNil, NOOP, PersonIdentifier, RoleType, VoidFunc} from '@melluin/common';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CachedPeopleService} from '@fe/app/people/cached-people.service';
+import {MatFormField, MatLabel} from '@angular/material/input';
+import {MatChipListbox, MatChipRow} from '@angular/material/chips';
+import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
+import {MatIcon} from '@angular/material/icon';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatSelectSearchComponent} from 'ngx-mat-select-search';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-person-select',
     templateUrl: './person-select.component.html',
     styleUrls: ['./person-select.component.scss'],
+    imports: [
+        MatFormField,
+        MatLabel,
+        MatChipListbox,
+        MatChipRow,
+        PersonNamePipe,
+        MatIcon,
+        MatSelect,
+        FormsModule,
+        MatOption,
+        MatSelectSearchComponent,
+        TranslatePipe
+    ],
     providers: [{
         provide: NG_VALUE_ACCESSOR,
         useExisting: forwardRef(() => PersonSelectComponent),

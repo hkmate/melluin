@@ -3,11 +3,31 @@ import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-co
 import {exportCSV} from '@fe/app/util/csv-export';
 import {ChartComponent} from '@fe/app/util/chart/chart.component';
 import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
+import {MatCard, MatCardContent, MatCardHeader} from '@angular/material/card';
+import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {FormsModule} from '@angular/forms';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {StatisticWidgetTableComponent} from '@fe/app/statistics/statistics-widget/statistic-widget-table/statistic-widget-table.component';
 
 @Component({
     selector: 'app-statistics-widget',
     templateUrl: './statistics-widget.component.html',
     styleUrl: './statistics-widget.component.scss',
+    imports: [
+        MatCard,
+        MatCardHeader,
+        MatButtonToggleGroup,
+        MatButtonToggle,
+        FormsModule,
+        TranslatePipe,
+        MatButton,
+        MatIcon,
+        MatCardContent,
+        ChartComponent,
+        StatisticWidgetTableComponent
+    ],
     host: {style: 'display: block'}
 })
 export class StatisticsWidgetComponent<T> {

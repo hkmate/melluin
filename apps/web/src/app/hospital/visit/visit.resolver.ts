@@ -2,10 +2,10 @@ import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, Observable, of} from 'rxjs';
 import {cast, Visit, isNilOrEmpty, Permission} from '@melluin/common';
-import {isUUID} from 'class-validator';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {isUUID} from '@fe/app/util/util';
 
 @Injectable({
     providedIn: 'root'

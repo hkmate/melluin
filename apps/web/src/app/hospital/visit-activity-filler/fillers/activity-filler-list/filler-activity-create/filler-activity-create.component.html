@@ -5,7 +5,7 @@
             @if (children$ | async; as children) {
                 <app-child-select [options]="children"
                                   formControlName="children"
-                                  [label]="'Visit.Activities.Children' | translate "
+                                  [label]="'Visit.Activities.Children' | translate"
                                   [date]="visitDate"
                                   (childrenSelected)="lockChildren($event)"
                                   (childrenUnselected)="unlockChildren($event)"/>

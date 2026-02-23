@@ -9,10 +9,23 @@ import {
 } from '@melluin/common';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
 import _ from 'lodash';
+import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle} from '@angular/material/card';
+import {TranslatePipe} from '@ngx-translate/core';
+import {RouterLink} from '@angular/router';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-box-info-widget',
     templateUrl: './box-info-widget.component.html',
+    imports: [
+        MatCard,
+        MatCardHeader,
+        MatCardSubtitle,
+        MatCardContent,
+        TranslatePipe,
+        RouterLink,
+        DatePipe
+    ],
     styleUrl: './box-info-widget.component.scss'
 })
 export class BoxInfoWidgetComponent {

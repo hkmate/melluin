@@ -2,9 +2,17 @@ import {Component, effect, inject, input} from '@angular/core';
 import {DepartmentBoxStatus} from '@melluin/common';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
 import {DepartmentBoxInfoListComponent} from '@fe/app/hospital/department-box/department-box-info-list/department-box-info-list.component';
+import {DepartmentBoxInfoComponent} from '@fe/app/hospital/department-box/department-box-info/department-box-info.component';
+import {MatPaginator} from '@angular/material/paginator';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-box-info-list-by-visit',
+    imports: [
+        DepartmentBoxInfoComponent,
+        MatPaginator,
+        TranslatePipe
+    ],
     templateUrl: './department-box-info-list.component.html',
     styleUrls: ['./department-box-info-list.component.scss']
 })

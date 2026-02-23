@@ -2,7 +2,7 @@ import {Component, effect, inject, signal} from '@angular/core';
 import {FilterOptions, isEmpty, isNotNil, Pageable, PageQuery, Permission, Person, SortOptions} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 import {AppTitle} from '@fe/app/app-title.service';
-import {PageEvent} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {PeopleListFilterService} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
@@ -11,11 +11,64 @@ import {PeopleListQueryParamHandler} from '@fe/app/people/people-list/people-lis
 import {PeopleListFilterSensitiveDataHider} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter-sensitive-data-hider';
 import _ from 'lodash';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
+import {RouterLink} from '@angular/router';
+import {MatIcon} from '@angular/material/icon';
+import {
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle
+} from '@angular/material/expansion';
+import {PeopleListFilterComponent} from '@fe/app/people/people-list/people-list-filter/people-list-filter.component';
+import {
+    MatCell,
+    MatCellDef,
+    MatColumnDef,
+    MatHeaderCell,
+    MatHeaderCellDef,
+    MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+    MatTable
+} from '@angular/material/table';
+import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
+import {MatTooltip} from '@angular/material/tooltip';
+import {OptionalPipe} from '@fe/app/util/optional.pipe';
+import {PeopleLastLoginStylePipe} from '@fe/app/people/people-list/people-last-login-style.pipe';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-people-list',
     templateUrl: './people-list.component.html',
     styleUrls: ['./people-list.component.scss'],
+    imports: [
+        TranslatePipe,
+        MatMiniFabButton,
+        RouterLink,
+        MatIcon,
+        MatExpansionPanel,
+        MatAccordion,
+        MatExpansionPanelHeader,
+        MatExpansionPanelTitle,
+        PeopleListFilterComponent,
+        MatTable,
+        MatColumnDef,
+        MatCellDef,
+        MatHeaderCell,
+        MatHeaderCellDef,
+        MatCell,
+        PersonNamePipe,
+        MatTooltip,
+        OptionalPipe,
+        PeopleLastLoginStylePipe,
+        DatePipe,
+        MatIconButton,
+        MatHeaderRow,
+        MatHeaderRowDef,
+        MatRow,
+        MatRowDef,
+        MatPaginator
+    ],
     providers: [
         UrlParamHandler,
         PeopleListFilterService,

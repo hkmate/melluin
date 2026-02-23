@@ -48,7 +48,7 @@
                 <mat-card-subtitle>{{ 'PersonPage.Present.Created' | translate }}</mat-card-subtitle>
                 <mat-card-title>
                     @if (personValue.created) {
-                        {{ personValue.created | date :'YYYY.MM.dd HH:mm:ss' }}
+                        {{ personValue.created | date :'yyyy.MM.dd HH:mm:ss' }}
                     } @else {
                         {{ '-' }}
                     }

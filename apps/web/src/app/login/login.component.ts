@@ -5,10 +5,19 @@ import {isNilOrEmpty, NOOP, User} from '@melluin/common';
 import {AppTitle} from '@fe/app/app-title.service';
 import {MessageService} from '@fe/app/util/message.service';
 import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
-import {TranslateService} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {FormsModule} from '@angular/forms';
+import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {MatButton} from '@angular/material/button';
 
 @Component({
     templateUrl: './login.component.html',
+    imports: [
+        FormsModule,
+        TrimmedTextInputComponent,
+        TranslatePipe,
+        MatButton
+    ],
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {

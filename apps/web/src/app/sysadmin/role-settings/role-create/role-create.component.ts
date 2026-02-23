@@ -2,10 +2,27 @@ import {Component, inject, output} from '@angular/core';
 import {Permission, Role, RoleCreation, RoleType} from '@melluin/common';
 import {RoleService} from '@fe/app/sysadmin/role-settings/role.service';
 import {MessageService} from '@fe/app/util/message.service';
+import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {FormsModule} from '@angular/forms';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatFormField} from '@angular/material/input';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
     selector: 'app-role-create',
     templateUrl: './role-create.component.html',
+    imports: [
+        TrimmedTextInputComponent,
+        FormsModule,
+        TranslatePipe,
+        MatFormField,
+        MatSelect,
+        MatOption,
+        MatIconButton,
+        MatIcon
+    ],
     styleUrl: './role-create.component.scss'
 })
 export class RoleCreateComponent {

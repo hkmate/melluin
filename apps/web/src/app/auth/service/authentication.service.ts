@@ -7,7 +7,7 @@ import {PATHS} from '@fe/app/app-paths';
 import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
 import {environment} from '@fe/environment';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthenticationService {
 
     private readonly http = inject(HttpClient);

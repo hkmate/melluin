@@ -1,10 +1,22 @@
 import {Component, effect, input, output, signal} from '@angular/core';
 import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {FormsModule} from '@angular/forms';
+import {MatIcon} from '@angular/material/icon';
+import {MatIconButton} from '@angular/material/button';
 
 @Component({
     selector: 'app-lazy-input',
     templateUrl: './lazy-input.component.html',
+    imports: [
+        MatFormField,
+        MatLabel,
+        MatInput,
+        FormsModule,
+        MatIcon,
+        MatIconButton
+    ],
     styleUrl: './lazy-input.component.scss'
 })
 export class LazyInputComponent {

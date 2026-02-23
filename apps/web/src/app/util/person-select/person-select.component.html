@@ -19,8 +19,8 @@
         <mat-option>
             <ngx-mat-select-search ngModel (ngModelChange)="filterChanged($event)"
                                    [placeholderLabel]="'Search' | translate"
-                                   [noEntriesFoundLabel]="'NoItemFound' | translate"
-            ></ngx-mat-select-search>
+                                   [noEntriesFoundLabel]="'NoItemFound' | translate">
+            </ngx-mat-select-search>
         </mat-option>
         @for (option of filteredOptions; track option.id) {
             <mat-option [value]="option">{{ option | personName }}</mat-option>

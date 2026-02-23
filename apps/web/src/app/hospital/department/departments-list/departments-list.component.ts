@@ -12,15 +12,58 @@ import {
     SortOptions
 } from '@melluin/common';
 import {AppTitle} from '@fe/app/app-title.service';
-import {PageEvent} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
+import {TranslatePipe} from '@ngx-translate/core';
+import {LazyInputComponent} from '@fe/app/util/lazy-input/lazy-input.component';
+import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {RouterLink} from '@angular/router';
+import {
+    MatCell,
+    MatCellDef,
+    MatColumnDef,
+    MatFooterCell, MatFooterCellDef, MatFooterRow, MatFooterRowDef,
+    MatHeaderCell,
+    MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+    MatTable
+} from '@angular/material/table';
+import {DatePipe} from '@angular/common';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {FormsModule} from '@angular/forms';
 
 @Component({
     selector: 'app-department-list',
     templateUrl: './departments-list.component.html',
     styleUrls: ['./departments-list.component.scss'],
+    imports: [
+        TranslatePipe,
+        LazyInputComponent,
+        MatMiniFabButton,
+        MatIcon,
+        RouterLink,
+        MatTable,
+        MatColumnDef,
+        MatHeaderCell,
+        MatCell,
+        MatCellDef,
+        MatHeaderCellDef,
+        DatePipe,
+        MatIconButton,
+        MatFooterCell,
+        MatFooterCellDef,
+        MatSlideToggle,
+        FormsModule,
+        MatHeaderRow,
+        MatRow,
+        MatFooterRow,
+        MatPaginator,
+        MatFooterRowDef,
+        MatHeaderRowDef,
+        MatRowDef
+    ],
     providers: [UrlParamHandler]
 })
 export class DepartmentsListComponent {

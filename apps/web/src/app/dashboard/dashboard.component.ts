@@ -5,11 +5,20 @@ import {Store} from '@ngrx/store';
 import {isNil} from '@melluin/common';
 import {WidgetComponentInfo, widgetToComponent} from '@fe/app/dashboard/widget-settings-to-component-mapper';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {NgComponentOutlet, NgTemplateOutlet} from '@angular/common';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatIcon} from '@angular/material/icon';
 
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
+    imports: [
+        NgComponentOutlet,
+        NgTemplateOutlet,
+        TranslatePipe,
+        MatIcon
+    ],
     styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {

@@ -73,7 +73,6 @@ export class StatisticsService implements VisitCountByWeekDayStatProvider, Child
         return this.getStat<ChildAgesByDepartments>('child-ages-by-departments', from, to, city);
     }
 
-    // eslint-disable-next-line max-params-no-constructor/max-params-no-constructor
     private getStat<T>(type: StatType, from: string, to: string, city: OperationCity): Observable<Array<T>> {
         return this.http.get<Array<T>>(this.statUrl(type), {
             params: {

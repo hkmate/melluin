@@ -4,7 +4,6 @@ import {AuthGuardFn} from '@fe/app/auth/service/auth.guard';
 import {PATHS} from '@fe/app/app-paths';
 import {DepartmentResolver} from '@fe/app/hospital/department/department-detail/department.resolver';
 import {DepartmentDetailComponent} from '@fe/app/hospital/department/department-detail/department-detail.component';
-import {DepartmentModule} from '@fe/app/hospital/department/department.module';
 import {DepartmentsListComponent} from '@fe/app/hospital/department/departments-list/departments-list.component';
 import {Permission} from '@melluin/common';
 
@@ -30,8 +29,6 @@ const routes: Routes = [
 @NgModule({
     imports: [
         RouterModule.forChild(routes),
-
-        DepartmentModule
     ],
     exports: [RouterModule]
 })

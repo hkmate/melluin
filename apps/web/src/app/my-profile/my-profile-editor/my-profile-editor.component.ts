@@ -9,16 +9,37 @@ import {
     UserRewrite,
     UserSettings
 } from '@melluin/common';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MessageService} from '@fe/app/util/message.service';
 import {PeopleService} from '@fe/app/people/people.service';
 import {UserService} from '@fe/app/people/user.service';
 import {AppActions} from '@fe/app/state/app-actions';
 import {Store} from '@ngrx/store';
+import {TranslatePipe} from '@ngx-translate/core';
+import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {MatButton} from '@angular/material/button';
+import {MatFormField, MatHint, MatInput, MatLabel} from '@angular/material/input';
+import {UserSettingsEditorComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
 
 @Component({
     selector: 'app-my-profile-editor',
     templateUrl: './my-profile-editor.component.html',
+    imports: [
+        TranslatePipe,
+        ReactiveFormsModule,
+        TrimmedTextInputComponent,
+        MatCardContent,
+        MatCard,
+        MatCheckbox,
+        MatButton,
+        MatLabel,
+        MatFormField,
+        MatInput,
+        MatHint,
+        UserSettingsEditorComponent
+    ],
     styleUrls: ['./my-profile-editor.component.scss']
 })
 export class MyProfileEditorComponent {

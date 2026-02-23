@@ -17,10 +17,22 @@ import {
     convertToChildrenById,
     VisitedChildById
 } from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
+import {TranslatePipe} from '@ngx-translate/core';
+import {ChildrenListComponent} from '@fe/app/hospital/child/children-list/children-list.component';
+import {VisitActivitiesListComponent} from '@fe/app/hospital/visit-activity/visit-activities-list/visit-activities-list.component';
+import {VisitActivityInformationComponent} from '@fe/app/hospital/visit-activity/visit-activity-information/visit-activity-information.component';
+import {BoxInfoListByVisitComponent} from '@fe/app/hospital/department-box/department-box-info-list/box-info-list-by-visit.component';
 
 @Component({
     selector: 'app-visit-activities',
     templateUrl: './visit-activities.component.html',
+    imports: [
+        TranslatePipe,
+        ChildrenListComponent,
+        VisitActivitiesListComponent,
+        VisitActivityInformationComponent,
+        BoxInfoListByVisitComponent
+    ],
     styleUrls: ['./visit-activities.component.scss']
 })
 export class VisitActivitiesComponent implements OnInit {

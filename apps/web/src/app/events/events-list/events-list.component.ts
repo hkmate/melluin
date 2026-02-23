@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {FilterOptions, Visit, Pageable, PageQuery, Permission, SortOptions} from '@melluin/common';
 import {AppTitle} from '@fe/app/app-title.service';
-import {PageEvent} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
@@ -14,11 +14,36 @@ import {EventListQueryParamHandler} from '@fe/app/events/events-list/service/eve
 import {filter} from 'rxjs';
 import {reasonIsPreferences} from '@fe/app/util/list-page-settings-change-reason';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatMiniFabButton} from '@angular/material/button';
+import {RouterLink} from '@angular/router';
+import {MatIcon} from '@angular/material/icon';
+import {
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle
+} from '@angular/material/expansion';
+import {EventListFilterComponent} from '@fe/app/events/events-list/event-list-filter/event-list-filter.component';
+import {VisitListComponent} from '@fe/app/hospital/visit/visit-list/visit-list.component';
 
 @Component({
     selector: 'app-events-list',
     templateUrl: './events-list.component.html',
     styleUrls: ['./events-list.component.scss'],
+    imports: [
+        TranslatePipe,
+        MatMiniFabButton,
+        RouterLink,
+        MatIcon,
+        MatAccordion,
+        MatExpansionPanel,
+        MatExpansionPanelHeader,
+        MatExpansionPanelTitle,
+        EventListFilterComponent,
+        VisitListComponent,
+        MatPaginator
+    ],
     providers: [
         UrlParamHandler,
         EventListQueryParamHandler,

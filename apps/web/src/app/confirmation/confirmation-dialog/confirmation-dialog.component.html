@@ -2,7 +2,7 @@
 <div mat-dialog-content>
     {{ config.message }}
 </div>
-<div mat-dialog-actions [ngClass]="{'mobile': mobilScreen}">
+<div mat-dialog-actions [class]="{'mobile': mobilScreen}">
     <button mat-flat-button color="accent" type="button"
             (click)="close(ConfirmationAnswer.OK)">
         {{ config.okBtnText }}

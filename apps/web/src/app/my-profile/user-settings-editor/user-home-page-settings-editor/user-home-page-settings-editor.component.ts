@@ -1,11 +1,20 @@
 import {Component, computed, inject} from '@angular/core';
 import {UserSettings} from '@melluin/common';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {HomePageOptionSelectorComponent} from '@fe/app/my-profile/user-settings-editor/user-home-page-settings-editor/home-page-option-selector/home-page-option-selector.component';
+import {MatButton} from '@angular/material/button';
+import {TranslatePipe} from '@ngx-translate/core';
+import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/custom-user-settings-editor.base.component';
 
 @Component({
     selector: 'app-user-home-page-settings-editor',
     templateUrl: './user-home-page-settings-editor.component.html',
+    imports: [
+        ReactiveFormsModule,
+        HomePageOptionSelectorComponent,
+        MatButton,
+        TranslatePipe
+    ],
     styleUrls: ['./user-home-page-settings-editor.component.scss']
 })
 export class UserHomePageSettingsEditorComponent extends CustomUserSettingsEditorBaseComponent {

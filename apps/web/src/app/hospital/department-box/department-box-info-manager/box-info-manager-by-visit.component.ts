@@ -4,10 +4,21 @@ import {MessageService} from '@fe/app/util/message.service';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
 import {DepartmentBoxStatusReport} from '@melluin/common';
 import {BoxInfoListByVisitComponent} from '@fe/app/hospital/department-box/department-box-info-list/box-info-list-by-visit.component';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatMiniFabButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {DepartmentBoxInfoCreateComponent} from '@fe/app/hospital/department-box/department-box-info-create/department-box-info-create.component';
 
 @Component({
     selector: 'app-box-info-manager-by-visit',
     templateUrl: './box-info-manager-by-visit.component.html',
+    imports: [
+        TranslatePipe,
+        MatMiniFabButton,
+        MatIcon,
+        DepartmentBoxInfoCreateComponent,
+        BoxInfoListByVisitComponent
+    ],
     styleUrls: ['./department-box-info-manager.component.scss']
 })
 export class BoxInfoManagerByVisitComponent extends DepartmentBoxInfoManagerComponent {
