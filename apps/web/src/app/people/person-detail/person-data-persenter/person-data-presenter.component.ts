@@ -42,7 +42,7 @@ export class PersonDataPresenterComponent {
                     this.creator.set(person);
                 });
             }
-        }, {allowSignalWrites: true});
+        });
     }
 
 }

@@ -79,12 +79,12 @@ import {DatePipe} from '@angular/common';
 })
 export class PeopleListComponent {
 
+    protected readonly Permission = Permission;
+
     private readonly title = inject(AppTitle);
     protected readonly permissions = inject(PermissionService);
     private readonly peopleService = inject(PeopleService);
     private readonly filterService = inject(PeopleListFilterService);
-
-    Permission = Permission;
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [20, 50, 100];
@@ -106,7 +106,7 @@ export class PeopleListComponent {
             this.setUpPageInfo();
             this.loadData();
         });
-        effect(() => this.setUpCreators(), {allowSignalWrites: true});
+        effect(() => this.setUpCreators());
     }
 
     protected paginateHappened(event: PageEvent): void {

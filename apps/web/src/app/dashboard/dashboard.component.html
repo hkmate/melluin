@@ -1,7 +1,8 @@
 <section class="dashboard">
     <div class="page-content">
-        @if (widgets) {
-            @for (widget of widgets;track $index) {
+        @let widgetsValue = widgets();
+        @if (widgetsValue) {
+            @for (widget of widgetsValue; track $index) {
                 <ng-container *ngComponentOutlet="widget.component; inputs: widget.inputs;"/>
             } @empty {
                 <ng-container [ngTemplateOutlet]="defaultWelcome"/>

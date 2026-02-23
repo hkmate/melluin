@@ -26,8 +26,6 @@ type RoleEdit = Role & {
 }
 
 @Component({
-    selector: 'app-role-settings',
-    templateUrl: './role-settings.component.html',
     imports: [
         TranslatePipe,
         MatMiniFabButton,
@@ -50,6 +48,8 @@ type RoleEdit = Role & {
         MatRowDef,
         MatHeaderRowDef
     ],
+    selector: 'app-role-settings',
+    templateUrl: './role-settings.component.html',
     styleUrls: ['./role-settings.component.scss']
 })
 export class RoleSettingsComponent {

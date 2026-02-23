@@ -28,9 +28,9 @@ import {RelatedActivityComponent} from '@fe/app/hospital/visit-activity-filler/r
 })
 export class RelatedVisitComponent {
 
-    protected readonly permissions = inject(PermissionService);
+    protected readonly Permission = Permission;
 
-    Permission = Permission;
+    protected readonly permissions = inject(PermissionService);
 
     public readonly wrappedActivity = input.required<WrappedVisitActivity>();
 
@@ -45,7 +45,7 @@ export class RelatedVisitComponent {
         effect(() => {
             this.visitDate = new Date(this.wrappedActivity().visit.dateTimeFrom);
             this.setupActivities();
-        }, {allowSignalWrites: true});
+        });
     }
 
     private setupActivities(): void {

@@ -11,8 +11,6 @@ import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 
 @Component({
-    selector: 'app-role-create',
-    templateUrl: './role-create.component.html',
     imports: [
         TrimmedTextInputComponent,
         FormsModule,
@@ -23,6 +21,8 @@ import {MatIcon} from '@angular/material/icon';
         MatIconButton,
         MatIcon
     ],
+    selector: 'app-role-create',
+    templateUrl: './role-create.component.html',
     styleUrl: './role-create.component.scss'
 })
 export class RoleCreateComponent {

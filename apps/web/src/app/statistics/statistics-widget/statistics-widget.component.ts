@@ -37,7 +37,7 @@ export class StatisticsWidgetComponent<T> {
     public readonly widgetId = input.required<string>();
     public readonly controller = input.required<StatisticWidgetController<T>>();
 
-    protected readonly mode = signal<WidgetMode>(WidgetMode.CHART);
+    protected readonly mode = computed<WidgetMode>(() => this.controller().defaultMode());
     protected readonly dataReady = computed(() => this.controller().hasData()());
     protected readonly title = computed(() => this.controller().getName());
 
@@ -49,10 +49,7 @@ export class StatisticsWidgetComponent<T> {
             if (this.dataReady()) {
                 this.chartData.set(this.controller().getChartData());
             }
-        }, {allowSignalWrites: true});
-        effect(() => {
-            this.mode.set(this.controller().defaultMode());
-        }, {allowSignalWrites: true});
+        });
     }
 
     protected exportData(): void {

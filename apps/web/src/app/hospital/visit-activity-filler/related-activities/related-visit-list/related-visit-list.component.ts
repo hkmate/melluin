@@ -45,7 +45,7 @@ export class RelatedVisitListComponent {
                     this.loading.set(false);
                 }
             });
-        }, {allowSignalWrites: true});
+        });
     }
 
 }

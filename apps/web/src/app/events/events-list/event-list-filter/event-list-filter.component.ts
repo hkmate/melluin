@@ -25,8 +25,6 @@ import {MatOption, MatSelect} from '@angular/material/select';
 import {MatCheckbox} from '@angular/material/checkbox';
 
 @Component({
-    selector: 'app-event-list-filter',
-    templateUrl: './event-list-filter.component.html',
     imports: [
         MatCard,
         MatCardContent,
@@ -47,6 +45,8 @@ import {MatCheckbox} from '@angular/material/checkbox';
         MatCheckbox,
         MatCardSubtitle
     ],
+    selector: 'app-event-list-filter',
+    templateUrl: './event-list-filter.component.html',
     styleUrls: ['./event-list-filter.component.scss']
 })
 export class EventListFilterComponent {

@@ -35,7 +35,7 @@ export class UserDataPresenterComponent {
                     this.creator.set(person);
                 });
             }
-        }, {allowSignalWrites: true});
+        });
     }
 
 }

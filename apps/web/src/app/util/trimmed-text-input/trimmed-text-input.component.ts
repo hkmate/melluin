@@ -4,15 +4,15 @@ import {isNotNil} from '@melluin/common';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 
 @Component({
-    selector: 'app-trimmed-text-input',
-    templateUrl: './trimmed-text-input.component.html',
-    styleUrls: ['./trimmed-text-input.component.scss'],
     imports: [
         MatFormField,
         MatLabel,
         MatInput,
         FormsModule
     ],
+    selector: 'app-trimmed-text-input',
+    templateUrl: './trimmed-text-input.component.html',
+    styleUrls: ['./trimmed-text-input.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

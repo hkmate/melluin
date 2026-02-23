@@ -1,18 +1,18 @@
-import {Component, computed, effect, inject, input, output, signal} from '@angular/core';
+import {Component, computed, effect, inject, input, linkedSignal, output} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {
     Department,
-    Visit,
-    VisitCreate,
-    VisitRewrite,
-    VisitStatus,
     isNil,
     isNotNil,
     Pageable,
     parseTime,
     parseTimeWithDate,
     Permission,
-    User
+    User,
+    Visit,
+    VisitCreate,
+    VisitRewrite,
+    VisitStatus
 } from '@melluin/common';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {Store} from '@ngrx/store';
@@ -77,7 +77,7 @@ export class VisitFormComponent {
     public readonly submitted = output<VisitCreate | VisitRewrite>();
     public readonly canceled = output<void>();
 
-    protected readonly createNewAfterOneSaved = signal(false);
+    protected readonly createNewAfterOneSaved = linkedSignal(() => this.createNewAfterSave());
     protected statusOptions: Array<SelectOption<VisitStatus>>;
     protected departmentOptions: Array<Department>;
     protected readonly form = computed(() => this.buildFormGroup());
@@ -92,8 +92,6 @@ export class VisitFormComponent {
     constructor() {
         this.mobileScreen = (this.platform.IOS || this.platform.ANDROID);
         this.initCurrentUser();
-        // TODO: change it to linkedSignal after upgraded to angular 19+
-        effect(() => this.createNewAfterOneSaved.set(this.createNewAfterSave()), {allowSignalWrites: true});
         effect(() => this.initFormOptions());
     }
 

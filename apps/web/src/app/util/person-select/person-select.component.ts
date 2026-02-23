@@ -11,9 +11,6 @@ import {MatSelectSearchComponent} from 'ngx-mat-select-search';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-person-select',
-    templateUrl: './person-select.component.html',
-    styleUrls: ['./person-select.component.scss'],
     imports: [
         MatFormField,
         MatLabel,
@@ -27,6 +24,9 @@ import {TranslatePipe} from '@ngx-translate/core';
         MatSelectSearchComponent,
         TranslatePipe
     ],
+    selector: 'app-person-select',
+    templateUrl: './person-select.component.html',
+    styleUrls: ['./person-select.component.scss'],
     providers: [{
         provide: NG_VALUE_ACCESSOR,
         useExisting: forwardRef(() => PersonSelectComponent),

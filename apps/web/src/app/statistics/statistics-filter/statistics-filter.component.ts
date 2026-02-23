@@ -74,7 +74,7 @@ export class StatisticsFilterComponent {
             this.fromControl.setValue(new Date(this.filter().from), {emitEvent: false});
             this.toControl.setValue(new Date(this.filter().to), {emitEvent: false});
             this.cityControl.setValue(this.filter().city, {emitEvent: false});
-        }, {allowSignalWrites: true});
+        });
     }
 
     protected submitForm(): void {
