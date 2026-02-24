@@ -1,16 +1,22 @@
 {
     "name": "@melluin/common",
     "version": "1.0.1",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
     "private": true,
     "scripts": {
-        "build": "tsc",
+        "build": "tsc --project tsconfig.esm.json && tsc --project tsconfig.cjs.json",
         "clean": "rimraf dist node_modules",
+        "clean:only-dist": "rimraf dist",
         "prepare": "pnpm run build",
-        "dev": "tsc --watch",
+        "dev": "tsc --watch --project tsconfig.esm.json & tsc --watch --project tsconfig.cjs.json",
         "test": "jest",
         "lint": "eslint"
+    },
+    "main": "./dist/esm/index.js",
+    "types": "dist/types/index.d.ts",
+    "exports": {
+        "require": "./dist/cjs/index.js",
+        "import": "./dist/esm/index.js",
+        "types": "./dist/types/index.d.ts"
     },
     "dependencies": {
         "dayjs": "1.11.19",

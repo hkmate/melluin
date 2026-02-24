@@ -24,8 +24,8 @@
                             "zone.js"
                         ],
                         "allowedCommonJsDependencies": [
-                            "validator",
-                            "lodash"
+                            "lodash",
+                            "dayjs"
                         ],
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
