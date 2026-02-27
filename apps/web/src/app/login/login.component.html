@@ -1,25 +1,20 @@
 <section>
     <div class="page-content">
-        <img src="./assets/logo.svg">
+        <img src="./assets/logo.svg" alt="Logo image">
 
         <form (ngSubmit)="onSubmit()">
-            <app-trimmed-text-input [(ngModel)]="userName"
-                                    [ngModelOptions]="{standalone: true}"
+            <app-trimmed-text-input [formField]="loginForm.username"
                                     [label]="'LoginPage.Form.UserName' | translate"
                                     [placeholder]="'LoginPage.Form.UserNamePlaceholder' | translate"
                                     autocomplete="username"/>
 
-            <app-trimmed-text-input [(ngModel)]="password"
-                                    [ngModelOptions]="{standalone: true}"
+            <app-trimmed-text-input [formField]="loginForm.password"
                                     [label]="'LoginPage.Form.Password' | translate"
                                     [placeholder]="'LoginPage.Form.PasswordPlaceholder' | translate"
                                     autocomplete="current-password"
                                     type="password"/>
-
             <div>
-                <button mat-flat-button
-                        color="accent"
-                        [disabled]="isSubmitButtonDisabled()">
+                <button mat-flat-button color="accent" [disabled]="loading()">
                     {{ 'LoginPage.Form.LoginButton' | translate }}
                 </button>
             </div>

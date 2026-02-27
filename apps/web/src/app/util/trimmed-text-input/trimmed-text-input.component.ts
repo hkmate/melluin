@@ -1,8 +1,56 @@
-import {Component, forwardRef, input} from '@angular/core';
+import {Component, effect, forwardRef, input, model, signal} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {form, FormField, FormValueControl, required, ValidationError} from '@angular/forms/signals';
 import {isNotNil} from '@melluin/common';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 
+
+@Component({
+    imports: [
+        MatFormField,
+        MatLabel,
+        MatInput,
+        MatError,
+        FormField,
+    ],
+    selector: 'app-trimmed-text-input',
+    templateUrl: './trimmed-text-input.component.html',
+    styleUrls: ['./trimmed-text-input.component.scss'],
+})
+export class TrimmedTextInputComponent2 implements FormValueControl<string> {
+
+    public readonly value = model<string>('')
+
+    public readonly required = input<boolean>(false);
+    public readonly invalid = input<boolean>(false);
+    public readonly touched = model<boolean>(false);
+    public readonly errors = input<ReadonlyArray<ValidationError>>([]);
+
+    public readonly placeholder = input.required<string>();
+    public readonly label = input.required<string>();
+    public readonly type = input<'text' | 'password'>('text');
+    public readonly autocomplete = input<AutoFill>();
+
+    protected readonly innerForm = form(signal({innerValue: ''}), schema => {
+        required(schema.innerValue, {when: () => this.required()})
+    });
+
+    constructor() {
+        effect(() => {
+            this.touched.set(this.innerForm().touched());
+        })
+    }
+
+    protected focusLost(): void {
+        this.value.set(this.innerForm().value().innerValue.trim());
+    }
+
+}
+
+
+/**
+ * @deprecated Will be removed when every component got refactored to signal based forms
+ */
 @Component({
     imports: [
         MatFormField,
@@ -11,7 +59,19 @@ import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
         FormsModule
     ],
     selector: 'app-trimmed-text-input',
-    templateUrl: './trimmed-text-input.component.html',
+    template: `
+        <mat-form-field>
+            <mat-label>{{ label() }}</mat-label>
+            <input matInput
+                   [attr.type]="type()"
+                   [attr.autocomplete]="autocomplete()"
+                   [placeholder]="placeholder()"
+                   [ngModel]="value"
+                   (ngModelChange)="valueChanged($event)"
+                   [ngModelOptions]="{standalone: true}"
+                   (blur)="focusLost()">
+        </mat-form-field>
+    `,
     styleUrls: ['./trimmed-text-input.component.scss'],
     providers: [
         {

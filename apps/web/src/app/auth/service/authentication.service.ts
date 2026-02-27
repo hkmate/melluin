@@ -22,10 +22,8 @@ export class AuthenticationService {
         return isNotNil(this.credentialStoreService.getUser());
     }
 
-    public login(username: string, password: string): Observable<User> {
-        const authBody: AuthCredentials = {username, password};
-
-        return this.http.post<AuthInfo>(`${environment.baseURL}/auth/login`, authBody)
+    public login(data: AuthCredentials): Observable<User> {
+        return this.http.post<AuthInfo>(`${environment.baseURL}/auth/login`, data)
             .pipe(map(
                 (token: AuthInfo): User => {
                     this.credentialStoreService.useToken(token);

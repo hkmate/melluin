@@ -115,9 +115,8 @@
         "PageOfLabel": "{{first}}-{{last}} / {{total}}  (Oldal: {{page}}/{{totalPages}})"
     },
     "LoginPage": {
-        "FieldsRequired": "Felhasználónév és a jelszó megadása is kötelező",
-        "BadCredentials": "Hibás felhasználónév vagy jelszó",
-        "ServerNotWork": "Valami probléma van a serverrel. Próbáld újra később",
+        "UsernameRequired": "Felhasználónév megadása kötelező",
+        "PasswordRequired": "Jelszó megadása kötelező",
         "Form": {
             "UserName": "Felhasználónév",
             "UserNamePlaceholder": "Adja meg a felhasználónevét",

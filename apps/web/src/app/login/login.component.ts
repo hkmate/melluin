@@ -1,30 +1,28 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../auth/service/authentication.service';
-import {isNilOrEmpty, NOOP, User} from '@melluin/common';
+import {AuthCredentials, NOOP, User} from '@melluin/common';
 import {AppTitle} from '@fe/app/app-title.service';
 import {MessageService} from '@fe/app/util/message.service';
-import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {FormsModule} from '@angular/forms';
-import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {MatButton} from '@angular/material/button';
+import {form, FormField, required} from '@angular/forms/signals';
+import {finalize} from 'rxjs';
+import {getErrorHandler} from '@fe/app/util/util';
 
 @Component({
-    templateUrl: './login.component.html',
     imports: [
         FormsModule,
-        TrimmedTextInputComponent,
+        TrimmedTextInputComponent2,
         TranslatePipe,
-        MatButton
+        MatButton, FormField,
     ],
+    templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-
-    private static readonly BAD_CREDENTIALS = 'LoginPage.BadCredentials';
-    private static readonly SERVER_NOT_WORK = 'LoginPage.ServerNotWork';
-    private static readonly FIELDS_REQUIRED = 'LoginPage.FieldsRequired';
 
     private readonly title = inject(AppTitle);
     private readonly route = inject(ActivatedRoute);
@@ -33,10 +31,17 @@ export class LoginComponent {
     private readonly msg = inject(MessageService);
     private readonly authenticationService = inject(AuthenticationService);
 
-    protected loading = false;
-    protected userName?: string;
-    protected password?: string;
-    private returnUrl?: string;
+    protected readonly loading = signal(false);
+    private readonly returnUrl = signal<string | null>(null);
+    private readonly loginModel = signal<AuthCredentials>({
+        username: '',
+        password: '',
+    });
+
+    protected readonly loginForm = form(this.loginModel, schema => {
+        required(schema.username, {message: this.translate.instant('LoginPage.UsernameRequired')});
+        required(schema.password, {message: this.translate.instant('LoginPage.PasswordRequired')});
+    });
 
     constructor() {
         this.title.setTitleByI18n('Titles.Login')
@@ -45,45 +50,26 @@ export class LoginComponent {
                 .then(NOOP)
                 .catch(NOOP);
         }
-        this.returnUrl = this.route.snapshot.queryParams.returnUrl ?? '/';
-    }
-
-    protected isSubmitButtonDisabled(): boolean {
-        return this.loading || isNilOrEmpty(this.userName) || isNilOrEmpty(this.password);
+        this.returnUrl.set(this.route.snapshot.queryParams.returnUrl ?? '/');
     }
 
     protected onSubmit(): void {
-        if (isNilOrEmpty(this.userName) || isNilOrEmpty(this.password)) {
-            this.msg.error(LoginComponent.FIELDS_REQUIRED);
+        if (this.loginForm().invalid()) {
             return;
         }
         this.doLogin();
     }
 
     private doLogin(): void {
-        this.loading = true;
-        this.authenticationService.login(this.userName!, this.password!)
-            .subscribe({
-                next: (user: User) => {
-                    this.loading = false;
-                    this.router.navigateByUrl(this.returnUrl ?? '/').catch(NOOP);
-                },
-                error: (error: HttpErrorResponse) => {
-                    this.loading = false;
-                    this.msg.errorRaw(this.resolveErrorMsg(error));
-                }
+        this.loading.set(true);
+        this.authenticationService.login(this.loginModel())
+            .pipe(
+                finalize(() => this.loading.set(false)),
+                getErrorHandler(this.msg)
+            )
+            .subscribe((user: User) => {
+                this.router.navigateByUrl(this.returnUrl() ?? '/').catch(NOOP);
             });
-    }
-
-    private resolveErrorMsg(error: HttpErrorResponse): string {
-        switch (error.status) {
-            case 0:
-                return this.translate.instant(LoginComponent.SERVER_NOT_WORK);
-            case HttpStatusCode.BadRequest:
-                return this.translate.instant(LoginComponent.BAD_CREDENTIALS);
-            default:
-                return error.message;
-        }
     }
 
 }

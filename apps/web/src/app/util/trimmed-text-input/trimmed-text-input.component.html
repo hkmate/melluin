@@ -4,8 +4,13 @@
            [attr.type]="type()"
            [attr.autocomplete]="autocomplete()"
            [placeholder]="placeholder()"
-           [ngModel]="value"
-           (ngModelChange)="valueChanged($event)"
-           [ngModelOptions]="{standalone: true}"
+           [formField]="innerForm.innerValue"
            (blur)="focusLost()">
+    @if (invalid() && touched()) {
+        <mat-error>
+            @for (error of errors(); track error.message) {
+                <span>{{ error.message }}</span>
+            }
+        </mat-error>
+    }
 </mat-form-field>
