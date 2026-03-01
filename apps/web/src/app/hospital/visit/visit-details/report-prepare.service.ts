@@ -13,22 +13,23 @@ import {
     WrappedVisitActivity
 } from '@melluin/common';
 import dayjs from 'dayjs'
-import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
 import _, {isNil, round} from 'lodash';
 import {TranslateService} from '@ngx-translate/core';
 import {PATHS} from '@fe/app/app-paths';
 import {environment} from '@fe/environment';
+import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
 
 
 @Injectable()
 export class ReportPrepareService {
 
     private readonly activityService = inject(VisitActivityService);
-    private readonly currentUserService = inject(CredentialStoreService);
     private readonly translate = inject(TranslateService);
 
+    private readonly currentUser = inject(CurrentUserService).currentUser;
+
     public async draftCreator(visitIds: Array<string>): Promise<ReportPrepareCreator> {
-        const currentUser = this.currentUserService.getUser();
+        const currentUser = this.currentUser();
         if (isNil(currentUser)) {
             throw new Error('Draft could be prepared with logged in user!');
         }

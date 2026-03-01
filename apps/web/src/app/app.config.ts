@@ -1,10 +1,10 @@
 import {
     ApplicationConfig,
     inject,
-    isDevMode,
     LOCALE_ID,
     provideAppInitializer,
-    provideBrowserGlobalErrorListeners, provideZoneChangeDetection
+    provideBrowserGlobalErrorListeners,
+    provideZoneChangeDetection
 } from '@angular/core';
 import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -17,14 +17,7 @@ import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
 import {registerLocaleData} from '@angular/common';
 import localeHu from '@angular/common/locales/hu';
 import {provideToastr} from 'ngx-toastr';
-import {provideStore} from '@ngrx/store';
-import {provideEffects} from '@ngrx/effects';
-import {provideStoreDevtools} from '@ngrx/store-devtools';
-import {currentUserKey, userSettingsKey} from '@fe/app/state/app.state';
 import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
-import {userSettingsReducer} from '@fe/app/state/reducer/user-settings.reducer';
-import {currentUserReducer} from '@fe/app/state/reducer/current-user.reducer';
-import {UserDataSaverEffect} from '@fe/app/state/effect/user-data-saver.effect';
 import {MondayFirstDateAdapter} from '@fe/app/util/monday-first-date-adapter';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {JwtInterceptor} from '@fe/app/auth/service/jwt.interceptor';
@@ -57,13 +50,6 @@ export const appConfig: ApplicationConfig = {
         }),
 
         provideToastr(),
-
-        provideStore({
-            [currentUserKey]: currentUserReducer,
-            [userSettingsKey]: userSettingsReducer
-        }),
-        provideEffects(UserDataSaverEffect),
-        provideStoreDevtools({maxAge: 25, logOnly: !isDevMode()}),
 
         {provide: PathProvider, useClass: MelluinPathProvider},
 

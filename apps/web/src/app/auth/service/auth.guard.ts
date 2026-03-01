@@ -1,12 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {Route, Router} from '@angular/router';
-import {AuthenticationService} from './authentication.service';
 import {PATHS} from '../../app-paths';
-import {isNilOrEmpty, NOOP, Permission, User} from '@melluin/common';
-import {Store} from '@ngrx/store';
-import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
-import {Actions, ofType} from '@ngrx/effects';
-import {AppActions} from '@fe/app/state/app-actions';
+import {isNil, isNilOrEmpty, NOOP, Permission} from '@melluin/common';
+import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 interface RouteData {
     permissions?: Array<Permission>;
@@ -19,26 +16,15 @@ export const AuthGuardFn = (route: Route): boolean =>
 export class AuthGuard {
 
     private readonly router = inject(Router);
-    private readonly store = inject(Store);
-    private readonly actions$ = inject(Actions);
-    private readonly authenticationService = inject(AuthenticationService);
+    private readonly permission = inject(PermissionService);
 
-    private currentUser?: User = undefined;
-
-    constructor() {
-        this.store.pipe(selectCurrentUser).subscribe(cu => {
-            this.currentUser = cu;
-        });
-        this.actions$.pipe(ofType(AppActions.userLogout)).subscribe(() => {
-            this.currentUser = undefined;
-        })
-    }
+    private readonly currentUser = inject(CurrentUserService).currentUser;
 
     public canMatch(data: RouteData = {}): boolean {
         const permissions = data.permissions;
         const returnUrl = window.location.pathname + window.location.search;
 
-        if (!this.authenticationService.hasAuthenticatedUser()) {
+        if (isNil(this.currentUser())) {
             this.router.navigate([PATHS.login.main], {queryParams: {returnUrl}})
                 .then(NOOP).catch(NOOP);
             return false;
@@ -50,7 +36,7 @@ export class AuthGuard {
     }
 
     private checkUserHasAtLeastOneOfNeededPermissions(permissions: Array<Permission>): boolean {
-        return permissions.some((neededPerm: Permission) => this.currentUser!.permissions.includes(neededPerm));
+        return permissions.some((neededPerm: Permission) => this.permission.has(neededPerm));
     }
 
 }

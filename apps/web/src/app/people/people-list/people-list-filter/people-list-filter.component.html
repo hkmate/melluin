@@ -6,7 +6,7 @@
                         (valueChange)="filterSet()"/>
     </div>
 
-    @if (needEmailFilter) {
+    @if (needEmailFilter()) {
         <div class="email-filter">
             <app-lazy-input [label]="'PeopleListPage.Filter.Email' | translate"
                             [(value)]="filters.email"
@@ -14,7 +14,7 @@
         </div>
     }
 
-    @if (needPhoneFilter) {
+    @if (needPhoneFilter()) {
         <div class="phone-filter">
             <app-lazy-input [label]="'PeopleListPage.Filter.Phone' | translate"
                             [(value)]="filters.phone"

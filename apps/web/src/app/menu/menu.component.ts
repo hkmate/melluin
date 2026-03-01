@@ -1,12 +1,7 @@
-import {Component, inject} from '@angular/core';
+import {Component, computed, effect, inject, signal} from '@angular/core';
 import {AuthenticationService} from '@fe/app/auth/service/authentication.service';
-import {includeAny, isNil, isNilOrEmpty, Permission, User} from '@melluin/common';
+import {isNil, isNilOrEmpty, Permission} from '@melluin/common';
 import {Platform} from '@angular/cdk/platform';
-import {Store} from '@ngrx/store';
-import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
-import {Actions, ofType} from '@ngrx/effects';
-import {AppActions} from '@fe/app/state/app-actions';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {environment} from '@fe/environment';
 import {NgIf, NgTemplateOutlet} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
@@ -14,10 +9,10 @@ import {MatSidenav, MatSidenavContainer, MatSidenavContent} from '@angular/mater
 import {MatDivider, MatListItem, MatNavList} from '@angular/material/list';
 import {TranslatePipe} from '@ngx-translate/core';
 import {RouterLink} from '@angular/router';
+import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 @Component({
-    selector: 'app-menu',
-    templateUrl: './menu.component.html',
     imports: [
         NgIf,
         MatIcon,
@@ -27,48 +22,49 @@ import {RouterLink} from '@angular/router';
         TranslatePipe,
         MatDivider,
         MatSidenavContent,
-        NgTemplateOutlet,
         MatListItem,
-        RouterLink
+        RouterLink,
+        NgTemplateOutlet
     ],
+    selector: 'app-menu',
+    templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent {
 
-    private readonly store = inject(Store);
-    private readonly actions$ = inject(Actions);
     private readonly platform = inject(Platform);
+    private readonly currentUserService = inject(CurrentUserService);
+    private readonly permissions = inject(PermissionService);
     private readonly authService = inject(AuthenticationService);
 
-    protected canUserSee?: Record<string, boolean>;
+    private readonly mobileScreen = this.platform.IOS || this.platform.ANDROID;
+    protected readonly menuMode: 'side' | 'over' = this.mobileScreen ? 'over' : 'side';
 
-    protected readonly menuMode: 'side' | 'over' = (this.platform.IOS || this.platform.ANDROID) ? 'over' : 'side';
-    protected menuOpened = false;
-    protected currentUser?: User;
+    protected readonly menuOpened = signal(false);
+    protected readonly currentUser = this.currentUserService.currentUser;
+    protected readonly canUserSee = computed(() => this.initializeVisibilityOfMenuItems());
 
     constructor() {
-        this.store.pipe(selectCurrentUser, takeUntilDestroyed()).subscribe(cu => {
-            this.currentUser = cu;
-            this.menuOpened = !(this.platform.IOS || this.platform.ANDROID);
-            this.initializeVisibilityOfMenuItems();
-        });
-        this.actions$.pipe(ofType(AppActions.userLogout), takeUntilDestroyed()).subscribe(() => {
-            this.currentUser = undefined;
-            this.initializeVisibilityOfMenuItems();
+        effect(() => {
+            // On login (current user get valid not null value) the menu should open when device is not mobile
+            if (isNil(this.currentUser())) {
+                return;
+            }
+            this.menuOpened.set(!this.mobileScreen);
         });
     }
 
     protected openMenu(): void {
-        this.menuOpened = true;
+        this.menuOpened.set(true);
     }
 
     protected closeMenu(): void {
-        this.menuOpened = false;
+        this.menuOpened.set(false);
     }
 
     protected navigateHappen(): void {
         if (this.menuMode === 'over') {
-            this.menuOpened = false;
+            this.menuOpened.set(false);
         }
     }
 
@@ -81,19 +77,17 @@ export class MenuComponent {
             || !isNilOrEmpty(environment.questionnaireForParent);
     }
 
-    private initializeVisibilityOfMenuItems(): void {
-        if (isNil(this.currentUser) || isNilOrEmpty(this.currentUser.permissions)) {
-            this.canUserSee = {};
-            return;
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    private initializeVisibilityOfMenuItems() {
+        if (isNil(this.currentUser())) {
+            return {};
         }
-
-        const permissions: Array<Permission> = this.currentUser.permissions;
-        this.canUserSee = {
-            'people': includeAny(permissions, Permission.canSearchPerson),
-            'events': includeAny(permissions, Permission.canReadVisit),
+        return {
+            'people': this.permissions.has(Permission.canSearchPerson),
+            'events': this.permissions.has(Permission.canReadVisit),
             'departments': true,
-            'statistics': includeAny(permissions, Permission.canReadStatistics),
-            'admin': includeAny(permissions, Permission.canManagePermissions),
+            'statistics': this.permissions.has(Permission.canReadStatistics),
+            'admin': this.permissions.has(Permission.canManagePermissions),
         }
     }
 

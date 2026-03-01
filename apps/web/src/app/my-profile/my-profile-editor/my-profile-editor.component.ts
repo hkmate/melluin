@@ -13,8 +13,6 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {MessageService} from '@fe/app/util/message.service';
 import {PeopleService} from '@fe/app/people/people.service';
 import {UserService} from '@fe/app/people/user.service';
-import {AppActions} from '@fe/app/state/app-actions';
-import {Store} from '@ngrx/store';
 import {TranslatePipe} from '@ngx-translate/core';
 import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {MatCard, MatCardContent} from '@angular/material/card';
@@ -22,6 +20,7 @@ import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
 import {MatFormField, MatHint, MatInput, MatLabel} from '@angular/material/input';
 import {UserSettingsEditorComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
+import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
 
 @Component({
     selector: 'app-my-profile-editor',
@@ -44,13 +43,13 @@ import {UserSettingsEditorComponent} from '@fe/app/my-profile/user-settings-edit
 })
 export class MyProfileEditorComponent {
 
+    protected readonly passwordMinLength = passwordMinLength;
+
     private readonly fb = inject(FormBuilder);
-    private readonly store = inject(Store);
     private readonly msg = inject(MessageService);
     private readonly peopleService = inject(PeopleService);
     private readonly userService = inject(UserService);
-
-    protected readonly passwordMinLength = passwordMinLength;
+    private readonly credentialStoreService = inject(CredentialStoreService);
 
     public readonly user = input.required<User>();
     public readonly person = input.required<Person>();
@@ -86,7 +85,7 @@ export class MyProfileEditorComponent {
             next: (user: User) => {
                 this.userSaveInProcess = false;
                 this.msg.success('SaveSuccessful');
-                this.store.dispatch(AppActions.currentUserLoaded({user}))
+                this.credentialStoreService.setupUser(user);
             },
             error: () => {
                 this.userSaveInProcess = false;

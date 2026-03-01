@@ -8,18 +8,14 @@ import {
     parseTime,
     parseTimeWithDate,
     Permission,
-    User,
     Visit,
     VisitCreate,
     VisitRewrite,
     VisitStatus
 } from '@melluin/common';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
-import {Store} from '@ngrx/store';
-import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
 import * as _ from 'lodash';
 import {Platform} from '@angular/cdk/platform';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {getAllStatusOptionsOnlyEnable, SelectOption} from '@fe/app/util/hospital-visit-status-option';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -30,12 +26,11 @@ import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/m
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
+import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
 
 
 // TODO refactor: Form components should be refactored to new forms when updated Angular to 21
 @Component({
-    selector: 'app-visit-form',
-    templateUrl: './visit-form.component.html',
     imports: [
         TranslatePipe,
         ReactiveFormsModule,
@@ -54,6 +49,8 @@ import {MatButton} from '@angular/material/button';
         FormsModule,
         MatButton
     ],
+    selector: 'app-visit-form',
+    templateUrl: './visit-form.component.html',
     styleUrls: ['./visit-form.component.scss']
 })
 export class VisitFormComponent {
@@ -66,7 +63,6 @@ export class VisitFormComponent {
     private static readonly defaultTimeTo = '18:00';
 
     private readonly platform = inject(Platform);
-    private readonly store = inject(Store);
     private readonly permission = inject(PermissionService);
     private readonly departmentService = inject(DepartmentService);
 
@@ -87,11 +83,10 @@ export class VisitFormComponent {
         return isNotNil(visit) && visit.id !== visit.connectionGroupId;
     });
 
-    private currentUser: User;
+    private readonly currentUser = inject(CurrentUserService).currentUser;
 
     constructor() {
         this.mobileScreen = (this.platform.IOS || this.platform.ANDROID);
-        this.initCurrentUser();
         effect(() => this.initFormOptions());
     }
 
@@ -173,13 +168,6 @@ export class VisitFormComponent {
                 disabled: this.isVicariousMomChangeDisabled()
             })
         });
-    }
-
-    private initCurrentUser(): void {
-        this.store.pipe(selectCurrentUser, takeUntilDestroyed()).subscribe(cu => {
-                this.currentUser = cu;
-            }
-        );
     }
 
     private initStatusOptions(): void {
@@ -363,7 +351,7 @@ export class VisitFormComponent {
         data.departmentId = this.form().controls.departmentId.value;
         data.status = this.form().controls.status.value;
         data.countedMinutes = _.round(countedMinutesFromHour);
-        data.organizerId = this.currentUser.personId;
+        data.organizerId = this.currentUser()!.personId;
         data.vicariousMomVisit = this.form().controls.vicariousMomVisit.value;
         data.participantIds = this.form().controls.participantIds.value;
         data.dateTimeFrom = parseTimeWithDate(this.form().controls.timeFrom.value, this.form().controls.date.value).toISOString();

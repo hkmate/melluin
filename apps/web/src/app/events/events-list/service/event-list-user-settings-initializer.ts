@@ -1,29 +1,21 @@
-import {inject, Injectable} from '@angular/core';
-import {dateIntervalGeneratorFactory, EventListUserSettings, isNil, PageInfo, UserSettings} from '@melluin/common';
+import {computed, inject, Injectable} from '@angular/core';
+import {dateIntervalGeneratorFactory, isNil, PageInfo} from '@melluin/common';
 import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';
 import {EventsFilter} from '@fe/app/events/events-list/service/events-filter';
 import {
     DefaultEventListSettingsInitializer,
     EventListSettingsInitializer
 } from '@fe/app/events/events-list/service/event-list-settings-initializer';
-import {Store} from '@ngrx/store';
-import {selectUserSettings} from '@fe/app/state/selector/user-settings.selector';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
 
 
 @Injectable()
 export class EventListUserSettingsInitializer implements EventListSettingsInitializer {
 
-    private readonly store = inject(Store);
+    private readonly currentUserService = inject(CurrentUserService);
     private readonly defaultInitializer = inject(DefaultEventListSettingsInitializer);
 
-    private userSettings: EventListUserSettings;
-
-    constructor() {
-        this.store.pipe(selectUserSettings, takeUntilDestroyed()).subscribe((userSettings: UserSettings) => {
-            this.userSettings = userSettings.eventList ?? {};
-        });
-    }
+    private readonly userSettings = computed(() => this.currentUserService.userSettings()?.eventList ?? {});
 
     public available(): boolean {
         return true;
@@ -37,8 +29,9 @@ export class EventListUserSettingsInitializer implements EventListSettingsInitia
 
     public getPreferences(): EventsListPreferences {
         const result = this.defaultInitializer.getPreferences();
-        if (!isNil(this.userSettings.needHighlight)) {
-            result.needHighlight = this.userSettings.needHighlight;
+        const needHighlight = this.userSettings().needHighlight;
+        if (!isNil(needHighlight)) {
+            result.needHighlight = needHighlight;
         }
         return result;
     }
@@ -55,34 +48,38 @@ export class EventListUserSettingsInitializer implements EventListSettingsInitia
     }
 
     private decorateDateFilter(filter: EventsFilter): void {
-        if (isNil(this.userSettings.dateFilter)) {
+        const dateFilter = this.userSettings().dateFilter;
+        if (isNil(dateFilter)) {
             return;
         }
-        const filterGenerator = dateIntervalGeneratorFactory(this.userSettings.dateFilter);
+        const filterGenerator = dateIntervalGeneratorFactory(dateFilter);
         const interval = filterGenerator.generate();
         filter.dateFrom = interval.dateFrom;
         filter.dateTo = interval.dateTo;
     }
 
     private decorateParticipantFilter(filter: EventsFilter): void {
-        if (isNil(this.userSettings.participantIds)) {
+        const participantIds = this.userSettings().participantIds;
+        if (isNil(participantIds)) {
             return;
         }
-        filter.participantIds = this.userSettings.participantIds;
+        filter.participantIds = participantIds;
     }
 
     private decorateDepartmentFilter(filter: EventsFilter): void {
-        if (isNil(this.userSettings.departmentIds)) {
+        const departmentIds = this.userSettings().departmentIds;
+        if (isNil(departmentIds)) {
             return;
         }
-        filter.departmentIds = this.userSettings.departmentIds;
+        filter.departmentIds = departmentIds;
     }
 
     private decorateStatusesFilter(filter: EventsFilter): void {
-        if (isNil(this.userSettings.statuses)) {
+        const statuses = this.userSettings().statuses;
+        if (isNil(statuses)) {
             return;
         }
-        filter.statuses = this.userSettings.statuses;
+        filter.statuses = statuses;
     }
 
 }

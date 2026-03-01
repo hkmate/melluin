@@ -1,26 +1,16 @@
 import {inject, Injectable} from '@angular/core';
 import {PeopleFilter} from '@fe/app/people/people-list/people-list-filter/service/people-filter';
-import {Store} from '@ngrx/store';
-import {Permission, User} from '@melluin/common';
-import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {Permission} from '@melluin/common';
+import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 
 @Injectable()
 export class PeopleListFilterSensitiveDataHider {
 
-    private readonly store = inject(Store);
-
-    private currentUser: User;
-
-    constructor() {
-        this.store.pipe(selectCurrentUser, takeUntilDestroyed()).subscribe(cu => {
-            this.currentUser = cu;
-        });
-    }
+    private readonly permissions = inject(PermissionService);
 
     public hideData(parsedFilters: PeopleFilter): PeopleFilter {
-        const canUserFilterSensitiveData = this.currentUser.permissions.includes(Permission.canReadSensitivePersonData);
+        const canUserFilterSensitiveData = this.permissions.has(Permission.canReadSensitivePersonData);
         if (canUserFilterSensitiveData) {
             return parsedFilters;
         }

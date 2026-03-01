@@ -1,12 +1,17 @@
-<ng-template [ngIf]="!!currentUser" [ngIfElse]="justNgContentTemplate">
+<ng-template #ngContentTemplate>
+    <ng-content/>
+</ng-template>
+
+@let currentUserValue = currentUser();
+@if (currentUserValue) {
     <div class="menu-toggler"
-         [class]="{'display-none': menuOpened}"
+         [class]="{'display-none': menuOpened()}"
          (click)="openMenu()">
         <mat-icon>arrow_forward_ios</mat-icon>
     </div>
 
     <mat-sidenav-container>
-        <mat-sidenav [opened]="menuOpened" [mode]='menuMode' (closedStart)="closeMenu()">
+        <mat-sidenav [opened]="menuOpened()" [mode]='menuMode' (closedStart)="closeMenu()">
             <div class="menu-closer" (click)="closeMenu()">
                 <div>
                     <mat-icon>arrow_back_ios</mat-icon>
@@ -16,18 +21,18 @@
                 <a mat-list-item routerLink="." class="dashboard-menu-item">
                     <img class="logo-nav" src="assets/logo.svg">
                 </a>
-                <a *ngIf="canUserSee?.people" mat-list-item routerLink="/people"
+                <a *ngIf="canUserSee().people" mat-list-item routerLink="/people"
                    (click)="navigateHappen()">{{ 'Menu.People' | translate }}</a>
-                <a *ngIf="canUserSee?.events" mat-list-item routerLink="/events"
+                <a *ngIf="canUserSee().events" mat-list-item routerLink="/events"
                    (click)="navigateHappen()">{{ 'Menu.Events' | translate }}</a>
-                <a *ngIf="canUserSee?.departments"
+                <a *ngIf="canUserSee().departments"
                    mat-list-item
                    routerLink="/departments" (click)="navigateHappen()">
                     {{ 'Menu.Departments' | translate }}
                 </a>
-                <a *ngIf="canUserSee?.statistics" mat-list-item routerLink="/statistics"
+                <a *ngIf="canUserSee().statistics" mat-list-item routerLink="/statistics"
                    (click)="navigateHappen()">{{ 'Menu.Statistics' | translate }}</a>
-                <a *ngIf="canUserSee?.admin" mat-list-item routerLink="/admin"
+                <a *ngIf="canUserSee().admin" mat-list-item routerLink="/admin"
                    (click)="navigateHappen()">{{ 'Menu.System' | translate }}</a>
                 <a *ngIf="isThereQuestionnaire()" mat-list-item routerLink="/questionnaire"
                    (click)="navigateHappen()">{{ 'Menu.Questionnaire' | translate }}</a>
@@ -36,7 +41,7 @@
                    (click)="navigateHappen()">{{ 'Menu.Dashboard' | translate }}</a>
                 <mat-divider/>
                 <a class="grey" mat-list-item routerLink="/my-profile"
-                   (click)="navigateHappen()">{{ currentUser.userName }}</a>
+                   (click)="navigateHappen()">{{ currentUserValue.userName }}</a>
                 <a class="grey"
                    mat-list-item
                    routerLink="."
@@ -47,11 +52,9 @@
         </mat-sidenav>
 
         <mat-sidenav-content>
-            <ng-container [ngTemplateOutlet]="justNgContentTemplate"/>
+            <ng-container [ngTemplateOutlet]="ngContentTemplate"/>
         </mat-sidenav-content>
     </mat-sidenav-container>
-</ng-template>
-
-<ng-template #justNgContentTemplate>
-    <ng-content/>
-</ng-template>
+} @else {
+    <ng-container [ngTemplateOutlet]="ngContentTemplate"/>
+}

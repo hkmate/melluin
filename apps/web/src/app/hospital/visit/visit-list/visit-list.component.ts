@@ -1,16 +1,16 @@
-import {Component, inject, input, signal} from '@angular/core';
-import {DateUtil, Visit, VisitStatus, Permission} from '@melluin/common';
+import {Component, computed, inject, input} from '@angular/core';
+import {DateUtil, Permission, Visit, VisitStatus} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {Store} from '@ngrx/store';
 import {
     MatCell,
     MatCellDef,
     MatColumnDef,
     MatHeaderCell,
     MatHeaderCellDef,
-    MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRow,
+    MatRowDef,
     MatTable
 } from '@angular/material/table';
 import {VisitStatusIconComponent} from '@fe/app/hospital/visit/visit-status-icon/visit-status-icon.component';
@@ -22,8 +22,6 @@ import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
-    selector: 'app-visit-list',
-    templateUrl: './visit-list.component.html',
     imports: [
         MatTable,
         MatColumnDef,
@@ -44,33 +42,25 @@ import {MatTooltip} from '@angular/material/tooltip';
         MatRowDef,
         NgIf
     ],
+    selector: 'app-visit-list',
+    templateUrl: './visit-list.component.html',
     styleUrls: ['./visit-list.component.scss']
 })
 export class VisitListComponent {
 
     protected readonly columns = ['status', 'date', 'department', 'participants', 'options'];
 
-    private readonly store = inject(Store);
     private readonly permissions = inject(PermissionService);
 
     public readonly markRowByDate = input.required<boolean>();
     public readonly eventsList = input.required<Array<Visit>>();
 
-    protected readonly userCanReadConnections = signal(false);
-    private readonly userCanModifyVisit = signal(false);
-    private readonly userCanModifyAnyVisit = signal(false);
+    protected readonly userCanReadConnections = computed(() => this.permissions.has(Permission.canReadVisitConnections));
+    private readonly userCanModifyVisit = computed(() => this.permissions.has(Permission.canModifyVisit));
+    private readonly userCanModifyAnyVisit = computed(() => this.permissions.has(Permission.canModifyAnyVisit));
 
     private todayDawn = DateUtil.truncateToDay(DateUtil.now()).toISOString();
     private tomorrowDawn = this.getTomorrowDawn();
-
-    constructor() {
-        this.store.pipe(selectCurrentUser, takeUntilDestroyed()).subscribe(() => {
-                this.userCanModifyVisit.set(this.permissions.has(Permission.canModifyVisit));
-                this.userCanModifyAnyVisit.set(this.permissions.has(Permission.canModifyAnyVisit));
-                this.userCanReadConnections.set(this.permissions.has(Permission.canReadVisitConnections));
-            }
-        );
-    }
 
     protected isFillButtonNeeded(visit: Visit): boolean {
         const userParticipant = visit.participants.some(p => p.id === this.permissions.personId);

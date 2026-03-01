@@ -1,13 +1,11 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {AppTitle} from '@fe/app/app-title.service';
-import {selectUserWidgetsSettings} from '@fe/app/state/selector/user-settings.selector';
-import {Store} from '@ngrx/store';
-import {isNil} from '@melluin/common';
+import {DashboardWidgetSettings, isNil, WidgetSetting} from '@melluin/common';
 import {WidgetComponentInfo, widgetToComponent} from '@fe/app/dashboard/widget-settings-to-component-mapper';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {NgComponentOutlet, NgTemplateOutlet} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatIcon} from '@angular/material/icon';
+import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
 
 
 @Component({
@@ -23,23 +21,24 @@ import {MatIcon} from '@angular/material/icon';
 })
 export class DashboardComponent {
 
-    private readonly store = inject(Store);
     private readonly title = inject(AppTitle);
+    private readonly currentUserService = inject(CurrentUserService);
 
-    protected readonly widgets = signal<Array<WidgetComponentInfo>>([]);
+    protected readonly widgets = computed(() =>
+        this.calculateWidgets(this.currentUserService.userSettings()?.dashboard?.widgets));
 
     constructor() {
         this.title.setTitleByI18n('Titles.Dashboard');
-        this.store.pipe(selectUserWidgetsSettings, takeUntilDestroyed()).subscribe({
-            next: widgets => {
-                if (isNil(widgets)) {
-                    return;
-                }
-                const widgetList = Object.values(widgets);
-                widgetList.sort((a, b) => a.index - b.index);
-                this.widgets.set(widgetList.filter((value): boolean => value.needed).map(widgetToComponent));
-            }
-        });
+    }
+
+    private calculateWidgets(setting: DashboardWidgetSettings | undefined): Array<WidgetComponentInfo> {
+        if (isNil(setting)) {
+            return [];
+        }
+
+        const widgetList = Object.values(setting) as Array<WidgetSetting>;
+        widgetList.sort((a, b) => a.index - b.index);
+        return widgetList.filter((value): boolean => value.needed).map(widgetToComponent);
     }
 
 }

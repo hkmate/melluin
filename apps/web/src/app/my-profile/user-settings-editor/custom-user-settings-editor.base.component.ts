@@ -1,16 +1,15 @@
 import {Component, inject, input} from '@angular/core';
-import {Store} from '@ngrx/store';
 import {MessageService} from '@fe/app/util/message.service';
 import {UserService} from '@fe/app/people/user.service';
 import {UserSettings} from '@melluin/common';
-import {AppActions} from '@fe/app/state/app-actions';
+import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
 
 
 @Component({template: ''})
 export abstract class CustomUserSettingsEditorBaseComponent {
 
-    protected readonly store = inject(Store);
     protected readonly msg = inject(MessageService);
+    protected readonly credentialStoreService = inject(CredentialStoreService);
     protected readonly userService = inject(UserService);
 
     public userId = input.required<string>();
@@ -28,7 +27,7 @@ export abstract class CustomUserSettingsEditorBaseComponent {
             next: (userSettings: UserSettings) => {
                 this.savingInProcess = false;
                 this.msg.success('SaveSuccessful');
-                this.store.dispatch(AppActions.userSettingsLoaded({userSettings}))
+                this.credentialStoreService.setupUserSettings(userSettings);
             },
             error: () => {
                 this.savingInProcess = false;

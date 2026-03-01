@@ -1,23 +1,19 @@
-import {Component, inject} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {selectUserHomePageSettings} from '@fe/app/state/selector/user-settings.selector';
+import {Component, computed, effect, inject} from '@angular/core';
 import {
     DateUtil,
     FilterOperationBuilder,
     HomePageOption,
-    HomePageUserSettings,
-    Visit,
-    VisitStatus,
     isNilOrEmpty,
-    isNotNil
+    isNotNil,
+    Visit,
+    VisitStatus
 } from '@melluin/common';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
 import {Platform} from '@angular/cdk/platform';
 import {Router} from '@angular/router';
 import {PATHS} from '@fe/app/app-paths';
-import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
 import {firstValueFrom, map} from 'rxjs';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
 
 @Component({
     selector: 'app-navigator',
@@ -27,8 +23,7 @@ export class NavigatorComponent {
 
     private readonly router = inject(Router);
     private readonly platform = inject(Platform);
-    private readonly store = inject(Store);
-    private readonly credentialStoreService = inject(CredentialStoreService);
+    private readonly currentUserService = inject(CurrentUserService);
     private readonly visitService = inject(VisitService);
 
 
@@ -45,11 +40,12 @@ export class NavigatorComponent {
         VisitStatus.STARTED,
     ];
 
-    private readonly mobileScreen = this.platform.IOS || this.platform.ANDROID;
+    private readonly homePageSettings = computed(() => this.currentUserService.userSettings()?.homePage);
 
     constructor() {
-        this.store.pipe(selectUserHomePageSettings, takeUntilDestroyed()).subscribe((userSettings?: HomePageUserSettings) => {
-            this.processHomePage(this.mobileScreen ? userSettings?.inMobile : userSettings?.inDesktop);
+        effect(() => {
+            const mobileScreen = this.platform.IOS || this.platform.ANDROID;
+            this.processHomePage(mobileScreen ? this.homePageSettings()?.inMobile : this.homePageSettings()?.inDesktop)
         });
     }
 
@@ -90,7 +86,7 @@ export class NavigatorComponent {
             page: 1, size: 5, where: {
                 dateTimeFrom: FilterOperationBuilder.lt(this.getTomorrowBegin()),
                 dateTimeTo: FilterOperationBuilder.gte(DateUtil.truncateToDay(DateUtil.now())),
-                'participants.id': FilterOperationBuilder.in([this.credentialStoreService.getUser()?.personId]),
+                'participants.id': FilterOperationBuilder.in([this.currentUserService.currentUser()?.personId]),
                 status: FilterOperationBuilder.in(this.availableVisitStatuses),
             }
         }).pipe(map(pageable => pageable.items)));

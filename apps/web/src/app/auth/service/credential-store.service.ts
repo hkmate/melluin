@@ -1,8 +1,6 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Injectable, Signal, signal} from '@angular/core';
 import {JwtService} from './jwt.service';
 import {AuthInfo, DateUtil, isNilOrEmpty, User, UserSettings} from '@melluin/common';
-import {Store} from '@ngrx/store';
-import {AppActions} from '@fe/app/state/app-actions';
 
 @Injectable({providedIn: 'root'})
 export class CredentialStoreService {
@@ -12,59 +10,55 @@ export class CredentialStoreService {
     private static readonly USER_SETTINGS_KEY = 'userSettings';
     private static readonly EXPIRATION_KEY_IN_TOKEN = 'exp';
 
-    private readonly store = inject(Store);
-    private readonly jwtService= inject(JwtService);
+    private readonly jwtService = inject(JwtService);
 
-    private currentUser?: User;
-    private authToken?: string;
+    private readonly currentUser = signal<User | undefined>(undefined);
+    private readonly authToken = signal<string | undefined>(undefined);
+    private readonly userSettings = signal<UserSettings | undefined>(undefined);
 
     public init(): void {
         this.initCurrentUserFromStorage();
     }
 
-    public getToken(): string | undefined {
-        return this.authToken;
+    public getToken(): Signal<string | undefined> {
+        return this.authToken.asReadonly();
     }
 
-    public getUser(): User | undefined {
-        return this.currentUser;
+    public getUser(): Signal<User | undefined> {
+        return this.currentUser.asReadonly();
+    }
+
+    public getUserSettings(): Signal<UserSettings | undefined> {
+        return this.userSettings.asReadonly();
     }
 
     public clear(): void {
-        this.currentUser = undefined;
-        this.authToken = undefined;
+        this.authToken.set(undefined);
+        this.currentUser.set(undefined);
+        this.userSettings.set(undefined);
         localStorage.clear();
-        this.store.dispatch(AppActions.userLogout());
     }
 
-    public useToken(token: AuthInfo): void {
+    public useToken(authInfo: AuthInfo): void {
         this.clear();
-        this.storeToken(token.accessToken);
-        this.setupUser(token.user);
-        this.setupUserSettings(token.userSettings);
+        this.storeToken(authInfo.accessToken);
+        this.setupUser(authInfo.user);
+        this.setupUserSettings(authInfo.userSettings);
     }
 
-    public storeUser(user: User): void {
-        this.currentUser = user;
+    public setupUser(user: User): void {
+        this.currentUser.set(user);
         localStorage.setItem(CredentialStoreService.USER_KEY, JSON.stringify(user));
     }
 
-    public storeUserSettings(userSettings: UserSettings): void {
+    public setupUserSettings(userSettings: UserSettings): void {
+        this.userSettings.set(userSettings);
         localStorage.setItem(CredentialStoreService.USER_SETTINGS_KEY, JSON.stringify(userSettings));
     }
 
     private storeToken(accessToken: string): void {
-        this.authToken = accessToken;
+        this.authToken.set(accessToken);
         localStorage.setItem(CredentialStoreService.AUTH_TOKEN_KEY, accessToken);
-    }
-
-    private setupUser(user: User): void {
-        this.currentUser = user;
-        this.store.dispatch(AppActions.currentUserLoaded({user}));
-    }
-
-    private setupUserSettings(userSettings: UserSettings): void {
-        this.store.dispatch(AppActions.userSettingsLoaded({userSettings}));
     }
 
     private initCurrentUserFromStorage(): void {
@@ -76,9 +70,9 @@ export class CredentialStoreService {
             localStorage.clear();
             return;
         }
-        this.setupUser(this.getUserFromStorage());
-        this.setupUserSettings(this.getUserSettingsFromStorage());
-        this.storeToken(tokenRaw!);
+        this.currentUser.set(this.getUserFromStorage());
+        this.authToken.set(tokenRaw!);
+        this.userSettings.set(this.getUserSettingsFromStorage());
     }
 
     private getUserFromStorage(): User {

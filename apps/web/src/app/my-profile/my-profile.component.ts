@@ -1,43 +1,42 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {Permission, Person, User, UserSettings} from '@melluin/common';
-import {selectCurrentUser} from '@fe/app/state/selector/current-user.selector';
-import {Store} from '@ngrx/store';
+import {Permission, Person} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
-import {selectUserSettings} from '@fe/app/state/selector/user-settings.selector';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {MyProfileEditorComponent} from '@fe/app/my-profile/my-profile-editor/my-profile-editor.component';
 import {MyProfilePresentComponent} from '@fe/app/my-profile/my-profile-present/my-profile-present.component';
 import {MatButton} from '@angular/material/button';
 import {TranslatePipe} from '@ngx-translate/core';
+import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
+import {isNil} from 'lodash';
 
 @Component({
-    selector: 'app-my-profile',
-    templateUrl: './my-profile.component.html',
     imports: [
         MyProfileEditorComponent,
         MyProfilePresentComponent,
         MatButton,
         TranslatePipe
     ],
+    selector: 'app-my-profile',
+    templateUrl: './my-profile.component.html',
     providers: [RouteDataHandler]
 })
 export class MyProfileComponent {
 
-    private readonly store = inject(Store);
     private readonly route = inject(RouteDataHandler);
     private readonly permission = inject(PermissionService);
+    private readonly currentUserService = inject(CurrentUserService);
     private readonly peopleService = inject(PeopleService);
 
-    protected editMode: boolean;
-    protected user?: User;
-    protected userSettings?: UserSettings;
-    protected person?: Person;
+    protected readonly editMode = signal(false);
+    protected readonly user = this.currentUserService.currentUser;
+    protected readonly userSettings = this.currentUserService.userSettings;
+    protected readonly person = signal<Person | undefined>(undefined);
 
     constructor() {
         this.setupEditMode();
-        this.setupUserInfo();
+        this.setupPerson();
     }
 
     protected canWriteSelf(): boolean {
@@ -45,34 +44,33 @@ export class MyProfileComponent {
     }
 
     protected switchToEdit(): void {
-        this.editMode = true;
+        this.editMode.set(true);
         this.route.setParam('edit', true);
     }
 
     protected cancelEdit(): void {
-        this.editMode = false;
+        this.editMode.set(false);
         this.route.removeParam('edit');
     }
 
     private setupEditMode(): void {
         this.route.subscribeToParam('edit').pipe(takeUntilDestroyed()).subscribe((edit?: string) => {
-            this.editMode = Boolean(edit);
+            this.editMode.set(Boolean(edit));
             if (!this.canWriteSelf()) {
-                this.editMode = false;
+                this.editMode.set(false);
                 this.route.removeParam('edit');
             }
         });
     }
 
-    private setupUserInfo(): void {
-        this.store.pipe(selectCurrentUser, takeUntilDestroyed()).subscribe(cu => {
-            this.user = cu;
-            this.peopleService.getPerson(this.user.personId).subscribe(person => {
-                this.person = person;
-            });
-        });
-        this.store.pipe(selectUserSettings, takeUntilDestroyed()).subscribe(us => {
-            this.userSettings = us;
+    private setupPerson(): void {
+        const currentUser = this.user();
+        if (isNil(currentUser)) {
+            this.person.set(undefined);
+            return;
+        }
+        this.peopleService.getPerson(currentUser.personId).subscribe(person => {
+            this.person.set(person);
         });
     }
 

@@ -1,12 +1,15 @@
 <section>
     <div class="page-content">
-        @if (user && person && userSettings) {
-            @if (editMode) {
-                <app-my-profile-editor [user]="user" [person]="person" [userSettings]="userSettings"
+        @let userValue = user();
+        @let personValue = person();
+        @let userSettingsValue = userSettings();
+        @if (userValue && personValue && userSettingsValue) {
+            @if (editMode()) {
+                <app-my-profile-editor [user]="userValue" [person]="personValue" [userSettings]="userSettingsValue"
                                        (editEnded)="cancelEdit()"/>
             } @else {
                 <div>
-                    <app-my-profile-present [person]="person" [user]="user" [userSettings]="userSettings"/>
+                    <app-my-profile-present [person]="personValue" [user]="userValue" [userSettings]="userSettingsValue"/>
                 </div>
                 @if (canWriteSelf()) {
                     <div class="button-row">

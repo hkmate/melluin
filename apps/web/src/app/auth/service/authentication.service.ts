@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Injectable, Signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map, Observable} from 'rxjs';
 import {AuthCredentials, AuthInfo, isNotNil, User} from '@melluin/common';
@@ -14,7 +14,7 @@ export class AuthenticationService {
     private readonly router = inject(Router);
     private readonly credentialStoreService = inject(CredentialStoreService);
 
-    public get token(): string | undefined {
+    public get token(): Signal<string | undefined> {
         return this.credentialStoreService.getToken();
     }
 
@@ -27,7 +27,7 @@ export class AuthenticationService {
             .pipe(map(
                 (token: AuthInfo): User => {
                     this.credentialStoreService.useToken(token);
-                    return this.credentialStoreService.getUser()!;
+                    return this.credentialStoreService.getUser()()!;
                 }
             ));
     }

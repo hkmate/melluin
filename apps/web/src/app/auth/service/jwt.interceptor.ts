@@ -39,7 +39,7 @@ export class JwtInterceptor implements HttpInterceptor {
         if (this.authService.hasAuthenticatedUser()) {
             request = request.clone({
                 setHeaders: {
-                    Authorization: `Bearer ${this.authService.token}`,
+                    Authorization: `Bearer ${this.authService.token()}`,
                 }
             });
         }
