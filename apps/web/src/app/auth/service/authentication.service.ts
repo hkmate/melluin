@@ -19,7 +19,7 @@ export class AuthenticationService {
     }
 
     public hasAuthenticatedUser(): boolean {
-        return isNotNil(this.credentialStoreService.getUser());
+        return isNotNil(this.credentialStoreService.getUser()());
     }
 
     public login(data: AuthCredentials): Observable<User> {

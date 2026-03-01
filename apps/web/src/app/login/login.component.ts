@@ -1,23 +1,22 @@
 import {Component, inject, signal} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../auth/service/authentication.service';
-import {AuthCredentials, NOOP, User} from '@melluin/common';
+import {AuthCredentials, NOOP} from '@melluin/common';
 import {AppTitle} from '@fe/app/app-title.service';
 import {MessageService} from '@fe/app/util/message.service';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {FormsModule} from '@angular/forms';
 import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {MatButton} from '@angular/material/button';
-import {form, FormField, required} from '@angular/forms/signals';
-import {finalize} from 'rxjs';
+import {form, FormField, required, submit} from '@angular/forms/signals';
+import {finalize, firstValueFrom} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
+import {AppSubmit} from '@fe/app/util/submit/app-submit';
 
 @Component({
     imports: [
-        FormsModule,
         TrimmedTextInputComponent2,
         TranslatePipe,
-        MatButton, FormField,
+        MatButton, FormField, AppSubmit,
     ],
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
@@ -54,22 +53,18 @@ export class LoginComponent {
     }
 
     protected onSubmit(): void {
-        if (this.loginForm().invalid()) {
-            return;
-        }
-        this.doLogin();
+        submit(this.loginForm, () => this.doLogin());
     }
 
-    private doLogin(): void {
+    private async doLogin(): Promise<void> {
         this.loading.set(true);
-        this.authenticationService.login(this.loginModel())
-            .pipe(
-                finalize(() => this.loading.set(false)),
-                getErrorHandler(this.msg)
-            )
-            .subscribe((user: User) => {
-                this.router.navigateByUrl(this.returnUrl() ?? '/').catch(NOOP);
-            });
+        await firstValueFrom(
+            this.authenticationService.login(this.loginModel())
+                .pipe(
+                    finalize(() => this.loading.set(false)),
+                    getErrorHandler(this.msg)
+                ));
+        this.router.navigateByUrl(this.returnUrl() ?? '/').catch(NOOP);
     }
 
 }

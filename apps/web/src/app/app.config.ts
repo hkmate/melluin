@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';
-import {provideTranslateService} from '@ngx-translate/core';
+import {provideTranslateService, TranslateService} from '@ngx-translate/core';
 import {MelluinPathProvider} from './app-paths';
 import {PathProvider} from './path-resolve/path-resolve.service';
 import {MatPaginatorIntl} from '@angular/material/paginator';
@@ -36,6 +36,7 @@ export const appConfig: ApplicationConfig = {
         provideBrowserGlobalErrorListeners(),
         provideRouter(routes),
         provideAppInitializer(() => inject(CredentialStoreService).init()),
+        provideAppInitializer(() => inject(TranslateService).use(AppLanguage.HU)),
 
         provideHttpClient(withInterceptorsFromDi()),
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

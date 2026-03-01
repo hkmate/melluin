@@ -2,7 +2,7 @@
     <div class="page-content">
         <img src="./assets/logo.svg" alt="Logo image">
 
-        <form (ngSubmit)="onSubmit()">
+        <form (appSubmit)="onSubmit()">
             <app-trimmed-text-input [formField]="loginForm.username"
                                     [label]="'LoginPage.Form.UserName' | translate"
                                     [placeholder]="'LoginPage.Form.UserNamePlaceholder' | translate"
