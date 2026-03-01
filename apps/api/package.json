@@ -30,7 +30,7 @@
         "@nestjs/typeorm": "11.0.0",
         "bcrypt": "6.0.0",
         "class-transformer": "0.5.1",
-        "class-validator": "0.14.3",
+        "class-validator": "0.15.1",
         "dayjs": "1.11.19",
         "jest-when": "3.7.0",
         "lodash": "4.17.23",
@@ -38,7 +38,7 @@
         "passport": "0.7.0",
         "passport-jwt": "4.0.1",
         "passport-local": "1.0.0",
-        "pg": "8.18.0",
+        "pg": "8.19.0",
         "reflect-metadata": "0.2.2",
         "rxjs": "7.8.2",
         "typeorm": "0.3.28"
@@ -51,14 +51,14 @@
         "@types/express": "5.0.6",
         "@types/jest": "30.0.0",
         "@types/jest-when": "3.5.5",
-        "@types/lodash": "4.17.23",
-        "@types/node": "20.9.0",
+        "@types/lodash": "4.17.24",
+        "@types/node": "25.3.3",
         "@types/passport-jwt": "4.0.1",
         "@types/passport-local": "1.0.38",
-        "@types/supertest": "6.0.3",
-        "@typescript-eslint/eslint-plugin": "8.56.0",
-        "@typescript-eslint/parser": "8.56.0",
-        "eslint": "10.0.1",
+        "@types/supertest": "7.2.0",
+        "@typescript-eslint/eslint-plugin": "8.56.1",
+        "@typescript-eslint/parser": "8.56.1",
+        "eslint": "10.0.2",
         "eslint-import-resolver-typescript": "4.4.4",
         "eslint-plugin-max-params-no-constructor": "0.0.4",
         "jest": "30.2.0",
@@ -71,7 +71,7 @@
         "tsconfig-paths": "4.2.0",
         "tslib": "2.8.1",
         "typescript": "5.9.3",
-        "webpack": "5.105.2"
+        "webpack": "5.105.3"
     },
     "jest": {
         "moduleFileExtensions": [
@@ -82,7 +82,12 @@
         "rootDir": "src",
         "testRegex": ".*\\.spec\\.ts$",
         "transform": {
-            "^.+\\.(t|j)s$": ["ts-jest", {"tsconfig": "./tsconfig.spec.json"}]
+            "^.+\\.(t|j)s$": [
+                "ts-jest",
+                {
+                    "tsconfig": "./tsconfig.spec.json"
+                }
+            ]
         },
         "collectCoverageFrom": [
             "**/*.(t|j)s"
