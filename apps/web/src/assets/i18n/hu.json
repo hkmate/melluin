@@ -164,8 +164,8 @@
             "Preferences": "Egyéb",
             "Created": "Felvéve",
             "CreatedBy": "Felvevő",
-            "CanVolunteerSeeMyEmail": "Látható az email cím más önkétesek számára",
-            "CanVolunteerSeeMyPhone": "Látható az telefonszám más önkétesek számára"
+            "CanVolunteerSeeMyEmail": "Látható az email cím más önkéntesek számára",
+            "CanVolunteerSeeMyPhone": "Látható az telefonszám más önkéntesek számára"
         },
         "Form": {
             "FirstName": "Keresztnév",
@@ -173,14 +173,14 @@
             "LastName": "Vezetéknév",
             "LastNamePlaceholder": "Nevettető",
             "Email": "Email",
-            "EmailPlaceholder": "julcsi@nevetnikek.hu",
+            "EmailPlaceholder": "nevettetojulcsi@nevetnikek.hu",
             "Phone": "Telefonszám",
             "PhonePlaceholder": "+36 30 123 4567",
             "OperationCities": "Város",
-            "CanVolunteerSeeMyEmail": "Látható az email cím más önkétesek számára",
-            "CanVolunteerSeeMyEmailDescription": "Ha ezt elfogadod akkor nem csak a koorddinátor, hanem a többi önkéntes is láthatja az email címedet.",
-            "CanVolunteerSeeMyPhone": "Látható az telefonszám más önkétesek számára",
-            "CanVolunteerSeeMyPhoneDescription": "Ha ezt elfogadod akkor nem csak a koorddinátor, hanem a többi önkéntes is láthatja a telefonszámod."
+            "CanVolunteerSeeMyEmail": "Látható az email cím más önkéntesek számára",
+            "CanVolunteerSeeMyEmailDescription": "Ha ezt elfogadod akkor nem csak a koordinátor, hanem a többi önkéntes is láthatja az email címedet.",
+            "CanVolunteerSeeMyPhone": "Látható az telefonszám más önkéntesek számára",
+            "CanVolunteerSeeMyPhoneDescription": "Ha ezt elfogadod akkor nem csak a koordinátor, hanem a többi önkéntes is láthatja a telefonszámod."
         },
         "User": {
             "NewUser": "Felhasználó létrehozása",
@@ -227,7 +227,7 @@
                 "DASHBOARD": "",
                 "EVENT_LIST": "",
                 "ACTUAL_HOSPITAL_VISIT_DETAILS": "Ha nincs aznapra foglalkozás amin részt vennél akkor az események oldal nyílik meg.",
-                "ACTUAL_HOSPITAL_VISIT_FILLER": "Ha már ki lett költve a foglalkozás akkor a részletei oldal nyílik meg. Ha nincs aznap foglalkozás akkor pedig az események oldal."
+                "ACTUAL_HOSPITAL_VISIT_FILLER": "Ha már ki lett töltve a foglalkozás akkor a részletei oldal nyílik meg. Ha nincs aznap foglalkozás akkor pedig az események oldal."
             }
         },
         "DepartmentBoxesWidgetSettings": {
@@ -331,7 +331,7 @@
         "VisitsCountByWeekDay": {
             "Title": "Foglalkozások a hét napjai szerint",
             "ExportedFileName": "foglalkozasok_szama_a_het_napjai_szerint.csv",
-            "WeekDay": "Foglalkozások száma",
+            "WeekDay": "Nap",
             "VisitGroups": "Foglalkozások száma",
             "PureVisitGroups": "Több osztályt érintő foglalkozások",
             "VicariousMomVisit": "Pótmami fogalalkozások",
@@ -439,7 +439,7 @@
             "NoConnection": "Nincs összekapcsolt foglalkozás",
             "DeleteConfirm": "Biztosan törölni szeretnéd a kapcsolatot a foglalkozások között?",
             "Create": {
-                "ConnectionId": "Összekapolandó foglalkozás azonosítója"
+                "ConnectionId": "Összekapcsolandó foglalkozás azonosítója"
             }
         },
         "Activities": {
@@ -457,7 +457,7 @@
         "NoRelatedActivities": "Nem elérhető korábbi foglalkozásról információ",
         "ConfirmChildRemove": "Biztosan el szeretnéd távolítani {{name}}-t?",
         "ConfirmActivityRemove": "Biztosan el szeretnéd távolítani a tevékenységet?",
-        "WarningOnActivityPresenterWhileStarted": "A megjelenő gyerekek/tevékenységek még nem véglelgesek!",
+        "WarningOnActivityPresenterWhileStarted": "A megjelenő gyerekek/tevékenységek még nem véglegesek!",
         "WarningOnActivityPresenterWhileActivitiesShouldNotBeThere": "A foglalkozás jelen állapotában nem lenne szabad, hogy legyenek felvéve gyerekek/tevékenységek. Valaki rosszul adminisztrált valamit. Vedd fel a kapcsolatot a koordinátorral vagy a rendszer adminnal.",
         "Start": "Kezdés",
         "OpenReportDraft": "Beszámoló előkészítése",
@@ -559,7 +559,7 @@
         "INVALID_DATE_TIME": "Hibás időpont lett megadva",
         "DATE_TIME_NOT_FITS_FOR_ORIGINAL_VISIT": "A megadott időpont nem illeszkedik az eredeti foglalkozás idejéhez",
         "ORIGINAL_VISIT_IS_NOT_IN_STARTED_STATUS_AT_CONTINUE": "Az eredeti fogolalkozás csak 'Megkezdett' státuszú lehet",
-        "DEPARTMENT_IS_IN_OTHER_CITY_THAN_PARTICIPANT": "Az osztály más városban van mint ahol résztvevők elérhetőek",
+        "DEPARTMENT_IS_IN_OTHER_CITY_THAN_PARTICIPANT": "Az osztály más városban van mint ahol a résztvevők elérhetőek",
         "VISIT_IS_IN_INACTIVE_DEPARTMENT": "Az osztály nem aktív a foglalkozás időpontjában",
         "STATUS_CHANGE_DISABLED": "Ez a státusz változtatás nem engedélyezett számodra",
         "VISIT_DATE_TIME_CHANGE_DISABLED": "Ez az időpont változtatás nem engedélyezett számodra",
