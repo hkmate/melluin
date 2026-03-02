@@ -1,4 +1,5 @@
 import {
+    BadRequestException,
     Body,
     Controller,
     DefaultValuePipe,
@@ -83,7 +84,14 @@ export class VisitController {
                   @Query('forceSameTime', new DefaultValuePipe(false), ParseBoolPipe) sameTimeVisitForced: boolean,
                   @Body() visitRewrite: VisitRewriteDto,
                   @CurrentUser() requester: User): Promise<Visit> {
+        this.verifyIsCorrect(visitId, visitRewrite);
         return this.visitCrudService.rewrite(visitId, visitRewrite, sameTimeVisitForced, requester);
+    }
+
+    private verifyIsCorrect(id: string, dto: {id: string}): void {
+        if (id !== dto.id) {
+            throw new BadRequestException('Path id is not the same in the object as in the URL');
+        }
     }
 
 }

@@ -6,6 +6,7 @@ import {DepartmentPersistenceModule} from '@be/department/department.persistence
 import {DepartmentBoxModule} from '@be/department-box/department-box.module';
 import {DepartmentChangeApplierFactory} from '@be/department/applier/department-change-applier.factory';
 import {DepartmentController} from '@be/department/api/department.controller';
+import {DepartmentRewriteApplierFactory} from '@be/department/applier/department-rewrite-applier.factory';
 
 @Module({
     imports: [
@@ -19,7 +20,8 @@ import {DepartmentController} from '@be/department/api/department.controller';
         DepartmentCrudService,
         DepartmentEntityToDtoConverter,
         DepartmentCreationToEntityConverter,
-        DepartmentChangeApplierFactory
+        DepartmentChangeApplierFactory,
+        DepartmentRewriteApplierFactory
     ],
     exports: [
         DepartmentCrudService,

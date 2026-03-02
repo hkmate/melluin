@@ -1,4 +1,17 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, Query} from '@nestjs/common';
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Param,
+    ParseUUIDPipe,
+    Patch,
+    Post,
+    Put,
+    Query
+} from '@nestjs/common';
 import {
     BoxStatusWithDepartmentBrief,
     Department,
@@ -17,7 +30,8 @@ import {BoxStatusInfoParam} from '@be/department-box/constants/box-status-info-p
 import {DepartmentBoxStatusReportDto} from '@be/department/api/dto/department-box-status-report.dto';
 import {DepartmentCreationDto} from '@be/department/api/dto/department-creation.dto';
 import {DepartmentUpdateChangeSetDto} from '@be/department/api/dto/department-update-change-set.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import {ApiBearerAuth} from '@nestjs/swagger';
+import {DepartmentRewriteDto} from '@be/department/api/dto/department-rewrite.dto';
 
 
 @ApiBearerAuth()
@@ -68,12 +82,28 @@ export class DepartmentController {
         return this.boxStatusCrudService.findByDepartment(departmentId, pageRequest, infoParam);
     }
 
+    /** @deprecated Will be removed when frontend use PUT */
     @Patch('/:id')
     @PermissionGuard(Permission.canWriteDepartment)
-    public update(@Param('id', ParseUUIDPipe) departmentId: string,
+    public change(@Param('id', ParseUUIDPipe) departmentId: string,
                   @Body() updateChangeSet: DepartmentUpdateChangeSetDto,
                   @CurrentUser() requester: User): Promise<Department> {
-        return this.departmentCrudService.update(departmentId, updateChangeSet, requester);
+        return this.departmentCrudService.change(departmentId, updateChangeSet, requester);
+    }
+
+    @Put('/:id')
+    @PermissionGuard(Permission.canWriteDepartment)
+    public update(@Param('id', ParseUUIDPipe) departmentId: string,
+                  @Body() departmentUpdate: DepartmentRewriteDto,
+                  @CurrentUser() requester: User): Promise<Department> {
+        this.verifyIsCorrect(departmentId, departmentUpdate);
+        return this.departmentCrudService.update(departmentUpdate, requester);
+    }
+
+    private verifyIsCorrect(id: string, dto: { id: string }): void {
+        if (id !== dto.id) {
+            throw new BadRequestException('Path id is not the same in the object as in the URL');
+        }
     }
 
 }

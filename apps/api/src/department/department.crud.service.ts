@@ -16,6 +16,8 @@ import {DepartmentEntityToDtoConverter} from '@be/department/converer/department
 import {DepartmentCreationToEntityConverter} from '@be/department/converer/department-creation-to-entity.converter';
 import {PageRequestFieldsValidator} from '@be/crud/validator/page-request-fields.validator';
 import {DepartmentChangeApplierFactory} from '@be/department/applier/department-change-applier.factory';
+import {DepartmentRewriteDto} from '@be/department/api/dto/department-rewrite.dto';
+import {DepartmentRewriteApplierFactory} from '@be/department/applier/department-rewrite-applier.factory';
 
 @Injectable()
 export class DepartmentCrudService {
@@ -23,7 +25,8 @@ export class DepartmentCrudService {
     constructor(private readonly departmentDao: DepartmentDao,
                 private readonly departmentConverter: DepartmentEntityToDtoConverter,
                 private readonly departmentCreationConverter: DepartmentCreationToEntityConverter,
-                private readonly changeApplierFactory: DepartmentChangeApplierFactory) {
+                private readonly changeApplierFactory: DepartmentChangeApplierFactory,
+                private readonly rewriteApplierFactory: DepartmentRewriteApplierFactory) {
     }
 
     public async save(departmentCreation: DepartmentCreation, requester: User): Promise<Department> {
@@ -47,10 +50,18 @@ export class DepartmentCrudService {
         return pageConverter.convert(pageOfEntities);
     }
 
-    public async update(departmentId: string, changeSet: DepartmentUpdateChangeSet, requester: User): Promise<Department> {
-        const person = await this.departmentDao.getOne(departmentId);
-        this.applyChangesToEntity(person, changeSet);
-        const savedDepartment = await this.departmentDao.save(person);
+    /** @deprecated Will be removed when frontend use PUT */
+    public async change(departmentId: string, changeSet: DepartmentUpdateChangeSet, requester: User): Promise<Department> {
+        const entity = await this.departmentDao.getOne(departmentId);
+        this.applyChangesToEntity(entity, changeSet);
+        const savedDepartment = await this.departmentDao.save(entity);
+        return this.departmentConverter.convert(savedDepartment);
+    }
+
+    public async update(rewrite: DepartmentRewriteDto, requester: User): Promise<Department> {
+        const entity = await this.departmentDao.getOne(rewrite.id);
+        const applier = this.rewriteApplierFactory.createFor(rewrite, entity);
+        const savedDepartment = await this.departmentDao.save(applier.applyChanges());
         return this.departmentConverter.convert(savedDepartment);
     }
 
