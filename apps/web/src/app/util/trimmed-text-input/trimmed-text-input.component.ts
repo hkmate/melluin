@@ -38,7 +38,10 @@ export class TrimmedTextInputComponent2 implements FormValueControl<string> {
     constructor() {
         effect(() => {
             this.touched.set(this.innerForm().touched());
-        })
+        });
+        effect(() => {
+            this.innerForm.innerValue().value.set(this.value());
+        });
     }
 
     protected focusLost(): void {

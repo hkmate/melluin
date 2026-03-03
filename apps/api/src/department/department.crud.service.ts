@@ -1,10 +1,10 @@
 import {Injectable} from '@nestjs/common';
 import {
+    AsyncValidatorChain,
     Department,
     DepartmentCreation,
     departmentFilterableFields,
     departmentSortableFields,
-    DepartmentUpdateChangeSet,
     Pageable,
     User
 } from '@melluin/common';
@@ -15,9 +15,10 @@ import {DepartmentEntity} from '@be/department/model/department.entity';
 import {DepartmentEntityToDtoConverter} from '@be/department/converer/department-entity-to-dto.converter';
 import {DepartmentCreationToEntityConverter} from '@be/department/converer/department-creation-to-entity.converter';
 import {PageRequestFieldsValidator} from '@be/crud/validator/page-request-fields.validator';
-import {DepartmentChangeApplierFactory} from '@be/department/applier/department-change-applier.factory';
 import {DepartmentRewriteDto} from '@be/department/api/dto/department-rewrite.dto';
 import {DepartmentRewriteApplierFactory} from '@be/department/applier/department-rewrite-applier.factory';
+import {DepartmentSaveValidatorFactory} from '@be/department/validator/department-save-validator-factory';
+import {DepartmentCreateValidator, DepartmentRewriteValidator} from '@be/department/validator/department-validator';
 
 @Injectable()
 export class DepartmentCrudService {
@@ -25,12 +26,15 @@ export class DepartmentCrudService {
     constructor(private readonly departmentDao: DepartmentDao,
                 private readonly departmentConverter: DepartmentEntityToDtoConverter,
                 private readonly departmentCreationConverter: DepartmentCreationToEntityConverter,
-                private readonly changeApplierFactory: DepartmentChangeApplierFactory,
+                private readonly validatorFactory: DepartmentSaveValidatorFactory,
                 private readonly rewriteApplierFactory: DepartmentRewriteApplierFactory) {
     }
 
-    public async save(departmentCreation: DepartmentCreation, requester: User): Promise<Department> {
-        const creationEntity = this.departmentCreationConverter.convert(departmentCreation);
+    public async save(item: DepartmentCreation, requester: User): Promise<Department> {
+        const creationEntity = this.departmentCreationConverter.convert(item);
+
+        await this.createValidatorsForCreate().validate({item, requester});
+
         const departmentEntity = await this.departmentDao.save(creationEntity);
         return this.departmentConverter.convert(departmentEntity);
     }
@@ -50,25 +54,22 @@ export class DepartmentCrudService {
         return pageConverter.convert(pageOfEntities);
     }
 
-    /** @deprecated Will be removed when frontend use PUT */
-    public async change(departmentId: string, changeSet: DepartmentUpdateChangeSet, requester: User): Promise<Department> {
-        const entity = await this.departmentDao.getOne(departmentId);
-        this.applyChangesToEntity(entity, changeSet);
-        const savedDepartment = await this.departmentDao.save(entity);
-        return this.departmentConverter.convert(savedDepartment);
-    }
+    public async update(item: DepartmentRewriteDto, requester: User): Promise<Department> {
+        const entity = await this.departmentDao.getOne(item.id);
 
-    public async update(rewrite: DepartmentRewriteDto, requester: User): Promise<Department> {
-        const entity = await this.departmentDao.getOne(rewrite.id);
-        const applier = this.rewriteApplierFactory.createFor(rewrite, entity);
+        await this.createValidatorsForUpdate().validate({item, entity, requester});
+
+        const applier = this.rewriteApplierFactory.createFor(item, entity);
         const savedDepartment = await this.departmentDao.save(applier.applyChanges());
         return this.departmentConverter.convert(savedDepartment);
     }
 
-    private applyChangesToEntity(entity: DepartmentEntity, changeSet: DepartmentUpdateChangeSet): void {
-        this.changeApplierFactory
-            .createApplierFor(changeSet)
-            .applyOn(entity);
+    private createValidatorsForCreate(): DepartmentCreateValidator {
+        return AsyncValidatorChain.of(...this.validatorFactory.getValidatorsForCreate());
+    }
+
+    private createValidatorsForUpdate(): DepartmentRewriteValidator {
+        return AsyncValidatorChain.of(...this.validatorFactory.getValidatorsForUpdate());
     }
 
 }

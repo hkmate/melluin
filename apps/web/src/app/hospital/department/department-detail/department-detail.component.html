@@ -1,9 +1,10 @@
 <section>
     <div class="page-content">
+        @let departmentValue = department();
         <div class="department-part">
 
             @if (!isEditMode()) {
-                <app-department-data-presenter [department]="department"/>
+                <app-department-data-presenter [department]="departmentValue"/>
                 @if (isEditEnabled()) {
                     <div class="button-row">
                         <button mat-stroked-button color="primary" (click)="switchToEdit()">
@@ -14,15 +15,15 @@
             }
 
             @if (isEditMode()) {
-                <app-department-data-form [department]="department"
-                                          (submitted)="saveDepartment($event)"
+                <app-department-data-form [department]="departmentValue"
+                                          (submitted)="setDepartment($event)"
                                           (canceled)="cancelEditing()"/>
             }
         </div>
 
-        @if (department) {
+        @if (departmentValue) {
             <div class="divider"></div>
-            <app-box-info-manager-by-department [departmentId]="department.id"/>
+            <app-box-info-manager-by-department [departmentId]="departmentValue.id"/>
         }
     </div>
 </section>

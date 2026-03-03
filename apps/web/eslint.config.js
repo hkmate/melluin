@@ -88,7 +88,9 @@ module.exports = tseslint.config(
             "@typescript-eslint/no-invalid-void-type": "off",
             "@typescript-eslint/no-unused-vars": [
                 "error", {
-                    "args": "none"
+                    "args": "none",
+                    "ignoreRestSiblings": true
+
                 }
             ],
             "@typescript-eslint/no-magic-numbers": [

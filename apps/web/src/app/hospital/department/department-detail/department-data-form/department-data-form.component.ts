@@ -1,127 +1,157 @@
-import {Component, computed, inject, input, output} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Component, computed, effect, inject, input, output, signal} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
 import {
-    allNil,
+    DEFAULT_TO_DATE,
     Department,
     DepartmentCreation,
-    DepartmentUpdateChangeSet,
     isNil,
     isNotNil,
-    OperationCity
+    Nullable,
+    OperationCity,
+    orElse
 } from '@melluin/common';
-import {TranslatePipe} from '@ngx-translate/core';
-import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
-import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
 import {MatCard} from '@angular/material/card';
+import {disabled, form, FormField, min, required, submit, validate} from '@angular/forms/signals';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
+import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
+import {AppSubmit} from '@fe/app/util/submit/app-submit';
+import {DepartmentService} from '@fe/app/hospital/department/department.service';
+import {firstValueFrom} from 'rxjs';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import {NgxsmkDatepickerComponent} from 'ngxsmk-datepicker';
 
 @Component({
-    selector: 'app-department-data-form',
-    templateUrl: './department-data-form.component.html',
     imports: [
         TranslatePipe,
         ReactiveFormsModule,
-        TrimmedTextInputComponent,
+        TrimmedTextInputComponent2,
         MatFormField,
         MatLabel,
         MatSelect,
         MatOption,
         MatInput,
-        MatDatepickerInput,
-        MatDatepickerToggle,
-        MatDatepicker,
         MatCard,
         MatCheckbox,
-        MatButton
+        MatButton,
+        FormField,
+        MatError,
+        MelluinMatErrorComponent,
+        AppSubmit,
+        NgxsmkDatepickerComponent
     ],
+    providers: [provideNativeDateAdapter()],
+    selector: 'app-department-data-form',
+    templateUrl: './department-data-form.component.html',
     styleUrls: ['./department-data-form.component.scss']
 })
 export class DepartmentDataFormComponent {
 
-    protected readonly cityOptions = Object.keys(OperationCity);
-
-    private readonly fb = inject(FormBuilder);
+    protected readonly cityOptions = Object.keys(OperationCity) as Array<OperationCity>;
+    private readonly translate = inject(TranslateService);
+    private readonly departmentService = inject(DepartmentService);
 
     public readonly department = input<Department>();
 
-    public readonly submitted = output<DepartmentCreation | DepartmentUpdateChangeSet>();
+    public readonly submitted = output<Department>();
     public readonly canceled = output<void>();
 
-    protected readonly form = computed(() => this.initForm());
+    private readonly formModel = signal(this.getDefaultFormModel());
+    protected readonly form = form(this.formModel, schema => {
+        required(schema.name, {message: this.translate.instant('Form.Required')});
+        required(schema.address, {message: this.translate.instant('Form.Required')});
+        required(schema.city, {message: this.translate.instant('Form.Required')});
+        required(schema.validFrom, {message: this.translate.instant('Form.Required')});
+        required(schema.limitOfVisits, {message: this.translate.instant('Form.Required')});
+        min(schema.limitOfVisits, 1, {message: this.translate.instant('Form.Min', {min: 1})});
+        validate(schema.validFrom, ({value, valueOf}) => {
+            const currentValue = value();
+            const currentToValue = valueOf(schema.validTo);
+            if (isNil(currentValue) || isNil(currentToValue)) {
+                return null;
+            }
+            if (currentValue >= currentToValue) {
+                return {
+                    kind: 'formDateBeforeTo',
+                    message: this.translate.instant('Form.FromDateShouldBeforeThanTo')
+                };
+            }
+            return null;
+        });
 
-    protected onSubmit(): void {
-        this.submitted.emit(this.createDataForSubmit());
+        disabled(schema.validFrom, () => isNotNil(this.department()));
+    });
+
+    protected readonly minDate = computed(() => orElse(this.formModel().validFrom, new Date()));
+    protected readonly maxDate = computed(() => orElse(this.formModel().validTo, DEFAULT_TO_DATE));
+
+    constructor() {
+        effect(() => this.setupFormInput());
+    }
+
+    protected submitForm(): void {
+        submit(this.form, async () => {
+            const saved = await this.saveDepartment();
+            this.submitted.emit(saved);
+        });
     }
 
     protected cancelEditing(): void {
         this.canceled.emit();
     }
 
-    private initForm(): FormGroup {
-        const dep = this.department();
-        return this.fb.group({
-            name: [dep?.name, [Validators.required]],
-            address: [dep?.address, [Validators.required]],
-            city: [dep?.city, [Validators.required]],
-            validFrom: [
-                {value: dep?.validFrom, disabled: isNotNil(this.department())},
-                [Validators.required]
-            ],
-            validTo: [dep?.validTo, []],
-            diseasesInfo: [dep?.diseasesInfo, []],
-            note: [dep?.note, []],
-            limitOfVisits: [dep?.limitOfVisits, [Validators.required, Validators.min(1)]],
-            vicariousMomIncludedInLimit: [dep?.vicariousMomIncludedInLimit, [Validators.required]],
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    private getDefaultFormModel() {
+        return {
+            name: '',
+            address: '',
+            city: OperationCity.PECS,
+            validFrom: null as Nullable<Date>,
+            validTo: null as Nullable<Date>,
+            diseasesInfo: '',
+            note: '',
+            limitOfVisits: 1,
+            vicariousMomIncludedInLimit: false
+        };
+    }
+
+    private setupFormInput(): void {
+        const department = this.department();
+        if (isNil(department)) {
+            this.formModel.set(this.getDefaultFormModel());
+            return;
+        }
+        const {id, ...values} = department
+        this.formModel.set({
+            ...values,
+            validFrom: new Date(values.validFrom),
+            validTo: isNil(values.validTo) ? null : new Date(values.validTo),
+            diseasesInfo: values.diseasesInfo ?? '',
+            note: values.note ?? '',
         });
     }
 
-    private createDataForSubmit(): DepartmentCreation | DepartmentUpdateChangeSet {
-        if (isNil(this.department())) {
-            return this.createDepartmentCreation();
-        }
-        return this.createDepartmentUpdate();
+    private saveDepartment(): Promise<Department> {
+        return firstValueFrom(this.departmentService.saveDepartment(this.generateDto()))
     }
 
-    private createDepartmentCreation(): DepartmentCreation {
-        const data = {} as DepartmentCreation;
-        data.name = this.form().controls.name.value;
-        data.address = this.form().controls.address.value;
-        data.city = this.form().controls.city.value;
-        data.validFrom = this.form().controls.validFrom.value;
-        data.validTo = this.form().controls.validTo.value;
-        data.diseasesInfo = this.form().controls.diseasesInfo.value;
-        data.note = this.form().controls.note.value;
-        data.limitOfVisits = this.form().controls.limitOfVisits.value;
-        data.vicariousMomIncludedInLimit = this.form().controls.vicariousMomIncludedInLimit.value;
-        return data;
-    }
+    private generateDto(): DepartmentCreation | Department {
+        const existingDepartment = this.department();
+        const formValue = this.form().value();
+        const obj = {
+            ...formValue,
+            validFrom: formValue.validFrom!.toISOString(),
+            validTo: formValue.validTo?.toISOString()
+        } satisfies DepartmentCreation
 
-    private createDepartmentUpdate(): DepartmentUpdateChangeSet {
-        const data = {} as DepartmentUpdateChangeSet;
-        this.addFieldIfDifferentThenStored(data, 'name');
-        this.addFieldIfDifferentThenStored(data, 'address');
-        this.addFieldIfDifferentThenStored(data, 'city');
-        this.addFieldIfDifferentThenStored(data, 'validTo');
-        this.addFieldIfDifferentThenStored(data, 'diseasesInfo');
-        this.addFieldIfDifferentThenStored(data, 'note');
-        this.addFieldIfDifferentThenStored(data, 'limitOfVisits');
-        this.addFieldIfDifferentThenStored(data, 'vicariousMomIncludedInLimit');
-        return data;
-    }
-
-    private addFieldIfDifferentThenStored(data: DepartmentUpdateChangeSet, field: keyof DepartmentUpdateChangeSet): void {
-        const newField = this.form().controls[field].value;
-        const storedField = this.department()?.[field];
-        if (allNil(newField, storedField)) {
-            return;
+        if (isNil(existingDepartment)) {
+            return obj;
         }
-        if (newField === storedField) {
-            return;
-        }
-        data[field] = newField;
+        return {...obj, id: existingDepartment.id};
     }
 
 }

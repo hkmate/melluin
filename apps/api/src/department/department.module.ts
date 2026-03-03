@@ -4,9 +4,9 @@ import {DepartmentEntityToDtoConverter} from '@be/department/converer/department
 import {DepartmentCreationToEntityConverter} from '@be/department/converer/department-creation-to-entity.converter';
 import {DepartmentPersistenceModule} from '@be/department/department.persistence.module';
 import {DepartmentBoxModule} from '@be/department-box/department-box.module';
-import {DepartmentChangeApplierFactory} from '@be/department/applier/department-change-applier.factory';
 import {DepartmentController} from '@be/department/api/department.controller';
 import {DepartmentRewriteApplierFactory} from '@be/department/applier/department-rewrite-applier.factory';
+import {DepartmentSaveValidatorFactory} from '@be/department/validator/department-save-validator-factory';
 
 @Module({
     imports: [
@@ -20,8 +20,8 @@ import {DepartmentRewriteApplierFactory} from '@be/department/applier/department
         DepartmentCrudService,
         DepartmentEntityToDtoConverter,
         DepartmentCreationToEntityConverter,
-        DepartmentChangeApplierFactory,
-        DepartmentRewriteApplierFactory
+        DepartmentRewriteApplierFactory,
+        DepartmentSaveValidatorFactory
     ],
     exports: [
         DepartmentCrudService,

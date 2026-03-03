@@ -26,4 +26,8 @@ body {
     .ngxsmk-month-year-selects {
         flex-direction: row-reverse;
     }
+
+    ngxsmk-datepicker.invalid .ngxsmk-input-group {
+        border-color: var(--mat-form-field-outlined-error-caret-color);
+    }
 }

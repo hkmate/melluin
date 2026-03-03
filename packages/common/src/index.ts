@@ -13,7 +13,6 @@ export * from './converter/converter-chain';
 
 export * from './department/department';
 export * from './department/department-creation';
-export * from './department/department-update-change-set';
 export * from './department/department-filterable-fields';
 
 export * from './department/box/box-status-change-reason';

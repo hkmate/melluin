@@ -7,7 +7,6 @@ import {
     HttpStatus,
     Param,
     ParseUUIDPipe,
-    Patch,
     Post,
     Put,
     Query
@@ -29,7 +28,6 @@ import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {BoxStatusInfoParam} from '@be/department-box/constants/box-status-info-param';
 import {DepartmentBoxStatusReportDto} from '@be/department/api/dto/department-box-status-report.dto';
 import {DepartmentCreationDto} from '@be/department/api/dto/department-creation.dto';
-import {DepartmentUpdateChangeSetDto} from '@be/department/api/dto/department-update-change-set.dto';
 import {ApiBearerAuth} from '@nestjs/swagger';
 import {DepartmentRewriteDto} from '@be/department/api/dto/department-rewrite.dto';
 
@@ -80,15 +78,6 @@ export class DepartmentController {
                            @PageReq() pageRequest: PageRequest): Promise<Pageable<DepartmentBoxStatus> | Pageable<BoxStatusWithDepartmentBrief>> {
         const infoParam = withDepartmentBrief ? BoxStatusInfoParam.WITH_DEPARTMENT_BRIEF : BoxStatusInfoParam.PURE_BOX_STATUS;
         return this.boxStatusCrudService.findByDepartment(departmentId, pageRequest, infoParam);
-    }
-
-    /** @deprecated Will be removed when frontend use PUT */
-    @Patch('/:id')
-    @PermissionGuard(Permission.canWriteDepartment)
-    public change(@Param('id', ParseUUIDPipe) departmentId: string,
-                  @Body() updateChangeSet: DepartmentUpdateChangeSetDto,
-                  @CurrentUser() requester: User): Promise<Department> {
-        return this.departmentCrudService.change(departmentId, updateChangeSet, requester);
     }
 
     @Put('/:id')

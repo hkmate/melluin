@@ -6,8 +6,6 @@ import {DatePipe} from '@angular/common';
 import {OptionalPipe} from '@fe/app/util/optional.pipe';
 
 @Component({
-    selector: 'app-department-data-presenter',
-    templateUrl: './department-data-presenter.component.html',
     imports: [
         TranslatePipe,
         MatCard,
@@ -18,6 +16,8 @@ import {OptionalPipe} from '@fe/app/util/optional.pipe';
         OptionalPipe,
         MatCardContent
     ],
+    selector: 'app-department-data-presenter',
+    templateUrl: './department-data-presenter.component.html',
     styleUrls: ['./department-data-presenter.component.scss']
 })
 export class DepartmentDataPresenterComponent {

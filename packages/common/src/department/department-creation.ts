@@ -1,15 +1,3 @@
-import {OperationCity} from '../person/operation-city';
+import {Department} from './department';
 
-export interface DepartmentCreation {
-
-    name: string;
-    validFrom: Date;
-    validTo?: Date;
-    address: string;
-    city: OperationCity;
-    limitOfVisits: number;
-    vicariousMomIncludedInLimit: boolean;
-    diseasesInfo?: string;
-    note?: string;
-
-}
+export type DepartmentCreation = Omit<Department, 'id'>;

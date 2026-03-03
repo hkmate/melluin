@@ -1,0 +1,6 @@
+@let field = fField()();
+@if (field.invalid() && field.touched()) {
+    @for (error of field.errors(); track error.message) {
+        <span>{{ error.message }}</span>
+    }
+}

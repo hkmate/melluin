@@ -34,6 +34,14 @@
         "true": "Igen",
         "false": "Nem"
     },
+    "Form": {
+        "Required": "Kötelező mező",
+        "Min": "Minimum: {{min}}",
+        "FromDateShouldBeforeThanTo": "A kezdő dátum korábbi kell, hogy legyen mint a vége"
+    },
+    "Datepicker": {
+        "DatePlaceholder": "Válassz dátumot"
+    },
     "NoBackendError": "Valószínüleg nem elérhető a server. (Ismeretlen hiba)",
     "BoxStatusChangeReason": {
         "MISSING": "Hiányzik",
@@ -574,6 +582,8 @@
         "CANNOT_CHANGE_ACTIVITY_IN_VISIT_NOT_STARTED": "Csak megkezdett foglalkozáson lehet tevékenységet felvenni/módosítani",
         "VISIT_ID_NOT_SAME_AS_IN_ACTIVITY": "Foglalkozás azonosító nem egyezik meg a tevékenység adataiban lévő azonosítóval",
         "USER_CANNOT_WRITE_ACTIVITY": "Nem rendelkezel jogosultsággal tevékenység létrehozásához vagy módosításához",
-        "USER_CANNOT_WRITE_ACTIVITY_IN_VISIT_FOR_OTHERS": "Nem rendelkezel jogosultsággal tevékenység létrehozásához vagy módosításához olyan foglalkozáson amin nem veszel részt"
+        "USER_CANNOT_WRITE_ACTIVITY_IN_VISIT_FOR_OTHERS": "Nem rendelkezel jogosultsággal tevékenység létrehozásához vagy módosításához olyan foglalkozáson amin nem veszel részt",
+        "DEPARTMENT_IS_NOT_ACTIVE": "Az osztály jelenleg nem aktív",
+        "DEPARTMENT_VALID_FROM_CANNOT_BE_AFTER_VALID_TO": "Az osztály érvényességi idejének az eleje nem lehet később mint a vége"
     }
 }

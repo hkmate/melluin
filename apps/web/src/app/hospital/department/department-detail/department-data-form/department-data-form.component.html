@@ -6,62 +6,59 @@
     }
 </h1>
 
-<form [formGroup]="form()">
+<form (appSubmit)="submitForm()">
 
     <div>
-        <app-trimmed-text-input
-                [label]=" 'DepartmentPage.Form.Name' | translate"
-                [placeholder]="'DepartmentPage.Form.NamePlaceholder' | translate"
-                formControlName="name"/>
+        <app-trimmed-text-input [formField]="form.name"
+                                [label]=" 'DepartmentPage.Form.Name' | translate"
+                                [placeholder]="'DepartmentPage.Form.NamePlaceholder' | translate"/>
     </div>
 
     <div>
-        <app-trimmed-text-input
-                [label]=" 'DepartmentPage.Form.Address' | translate"
-                [placeholder]="'DepartmentPage.Form.AddressPlaceholder' | translate"
-                formControlName="address"/>
+        <app-trimmed-text-input [formField]="form.address"
+                                [label]=" 'DepartmentPage.Form.Address' | translate"
+                                [placeholder]="'DepartmentPage.Form.AddressPlaceholder' | translate"/>
     </div>
 
     <div>
         <mat-form-field>
             <mat-label>{{ 'DepartmentPage.Form.City' | translate }}</mat-label>
-            <mat-select formControlName="city">
+            <mat-select [formField]="form.city">
                 @for (city of cityOptions; track city) {
                     <mat-option [value]="city">{{ 'OperationCity.' + city | translate }}</mat-option>
                 }
             </mat-select>
+            <mat-error [fField]="form.city"/>
         </mat-form-field>
     </div>
 
     <div>
-        <mat-form-field>
-            <mat-label>{{ 'DepartmentPage.Form.ValidFrom' | translate }}</mat-label>
-            <input matInput
-                   [matDatepicker]="validFromPicker"
-                   formControlName="validFrom">
-            <mat-datepicker-toggle matIconSuffix [for]="validFromPicker"/>
-            <mat-datepicker #validFromPicker/>
-        </mat-form-field>
+        <mat-label>{{ 'DepartmentPage.Form.ValidFrom' | translate }}*</mat-label>
+        <ngxsmk-datepicker [formField]="form.validFrom"
+                           [class.invalid]="form.validFrom().invalid() && form.validFrom().touched()"
+                           [maxDate]="maxDate()"
+                           locale="hu"
+                           [placeholder]="'Datepicker.DatePlaceholder' | translate"/>
+        <mat-error [fField]="form.validFrom"/>
     </div>
 
     <div>
-        <mat-form-field>
-            <mat-label>{{ 'DepartmentPage.Form.ValidTo' | translate }}</mat-label>
-            <input matInput
-                   [matDatepicker]="validToPicker"
-                   formControlName="validTo">
-            <mat-datepicker-toggle matIconSuffix [for]="validToPicker"/>
-            <mat-datepicker #validToPicker/>
-        </mat-form-field>
+        <mat-label>{{ 'DepartmentPage.Form.ValidTo' | translate }}</mat-label>
+        <ngxsmk-datepicker [formField]="form.validTo"
+                           [minDate]="minDate()"
+                           locale="hu"
+                           [placeholder]="'Datepicker.DatePlaceholder' | translate"/>
+        <mat-error [fField]="form.validTo"/>
     </div>
 
     <div>
         <mat-form-field>
             <mat-label>{{ 'DepartmentPage.Form.DiseasesInfo' | translate }}</mat-label>
             <textarea matInput
-                      [placeholder]="'DepartmentPage.Form.DiseasesInfoPlaceholder' | translate"
-                      formControlName="diseasesInfo">
+                      [formField]="form.diseasesInfo"
+                      [placeholder]="'DepartmentPage.Form.DiseasesInfoPlaceholder' | translate">
             </textarea>
+            <mat-error [fField]="form.diseasesInfo"/>
         </mat-form-field>
     </div>
 
@@ -69,31 +66,23 @@
         <mat-form-field>
             <mat-label>{{ 'DepartmentPage.Form.Note' | translate }}</mat-label>
             <textarea matInput
-                      [placeholder]="'DepartmentPage.Form.NotePlaceholder' | translate"
-                      formControlName="note">
+                      [formField]="form.note"
+                      [placeholder]="'DepartmentPage.Form.NotePlaceholder' | translate">
             </textarea>
-        </mat-form-field>
-    </div>
-
-    <div>
-        <mat-form-field>
-            <mat-label>{{ 'DepartmentPage.Form.Note' | translate }}</mat-label>
-            <textarea matInput
-                      [placeholder]="'DepartmentPage.Form.NotePlaceholder' | translate"
-                      formControlName="note">
-            </textarea>
+            <mat-error [fField]="form.note"/>
         </mat-form-field>
     </div>
 
     <div>
         <mat-form-field>
             <mat-label>{{ 'DepartmentPage.Form.LimitOfVisits' | translate }}</mat-label>
-            <input matInput [min]="1" type="number" formControlName="limitOfVisits"/>
+            <input matInput [formField]="form.limitOfVisits" type="number"/>
+            <mat-error [fField]="form.limitOfVisits"/>
         </mat-form-field>
     </div>
 
     <mat-card>
-        <mat-checkbox formControlName="vicariousMomIncludedInLimit">
+        <mat-checkbox [formField]="form.vicariousMomIncludedInLimit">
             {{ 'DepartmentPage.Form.VicariousMomIncludedInLimit' | translate }}
         </mat-checkbox>
     </mat-card>
@@ -101,13 +90,15 @@
     <div class="button-row">
         <button mat-flat-button
                 color="accent"
-                (click)="onSubmit()"
+                (click)="submitForm()"
+                [disabled]="form().submitting()"
                 type="button">
             {{ 'SaveButton' | translate }}
         </button>
         <button mat-stroked-button
                 color="primary"
                 type="button"
+                [disabled]="form().submitting()"
                 (click)="cancelEditing()">
             {{ 'CancelButton' | translate }}
         </button>

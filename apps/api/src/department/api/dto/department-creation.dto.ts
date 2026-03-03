@@ -10,13 +10,12 @@ export class DepartmentCreationDto implements DepartmentCreation {
 
     @ApiProperty()
     @IsDateString()
-    validFrom: Date;
+    validFrom: string;
 
     @ApiProperty({required: false})
     @IsOptional()
     @IsDateString()
-        // TODO Add validator to minDate
-    validTo?: Date;
+    validTo?: string;
 
     @ApiProperty()
     @MinLength(nameMinLength)

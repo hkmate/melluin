@@ -6,6 +6,8 @@ export const VoidNOOP = (): void => {
 
 export type Nil = null | undefined;
 
+export type Nullable<T> = T | null;
+
 // Note: if a function returns with nullable this could convert it to optional value. (We do not use null in the system)
 export function toOptional<T>(value: T | null | undefined): T | undefined {
     return value ?? undefined;
@@ -58,6 +60,13 @@ export function includeAny<T>(arr: Array<T>, ...values: Array<T>): boolean {
 
 export function optionalArrayToArray<T>(element: T | Array<T>): Array<T> {
     return (element instanceof Array) ? element : [element];
+}
+
+export function orElse<T>(optionalValue: T | null | undefined, defaultValue: T): T {
+    if (isNil(optionalValue)) {
+        return defaultValue;
+    }
+    return optionalValue;
 }
 
 export function parseTime(time: string): Date {

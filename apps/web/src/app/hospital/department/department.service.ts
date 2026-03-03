@@ -4,7 +4,6 @@ import {Observable} from 'rxjs';
 import {
     Department,
     DepartmentCreation,
-    DepartmentUpdateChangeSet,
     PAGE_QUERY_KEY,
     PAGE_SIZE_QUERY_KEY,
     Pageable,
@@ -24,6 +23,13 @@ export class DepartmentService {
         return `${environment.baseURL}/departments`;
     }
 
+    public saveDepartment(data: DepartmentCreation | Department): Observable<Department> {
+        if ('id' in data) {
+            return this.updateDepartment(data.id, data);
+        }
+        return this.addDepartment(data);
+    }
+
     public addDepartment(data: DepartmentCreation): Observable<Department> {
         return this.http.post<Department>(this.departmentUrl, data)
             .pipe(getErrorHandler<Department>(this.msg));
@@ -34,8 +40,8 @@ export class DepartmentService {
             .pipe(getErrorHandler<Department>(this.msg));
     }
 
-    public updateDepartment(departmentId: string, data: DepartmentUpdateChangeSet): Observable<Department> {
-        return this.http.patch<Department>(`${this.departmentUrl}/${departmentId}`, data)
+    public updateDepartment(departmentId: string, data: Department): Observable<Department> {
+        return this.http.put<Department>(`${this.departmentUrl}/${departmentId}`, data)
             .pipe(getErrorHandler<Department>(this.msg));
     }
 
