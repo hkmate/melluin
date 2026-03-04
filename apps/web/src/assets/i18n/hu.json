@@ -36,8 +36,7 @@
     },
     "Form": {
         "Required": "Kötelező mező",
-        "Min": "Minimum: {{min}}",
-        "FromDateShouldBeforeThanTo": "A kezdő dátum korábbi kell, hogy legyen mint a vége"
+        "Min": "Minimum: {{min}}"
     },
     "Datepicker": {
         "DatePlaceholder": "Válassz dátumot"

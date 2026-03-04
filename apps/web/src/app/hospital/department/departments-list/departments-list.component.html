@@ -3,9 +3,7 @@
         <h1>{{ 'Titles.DepartmentList' | translate }}</h1>
 
         <div class="option-row">
-            <app-lazy-input [label]="'Search' | translate"
-                            [value]="filterWord"
-                            (valueChange)="filterChanged($event)"></app-lazy-input>
+            <app-lazy-input [label]="'Search' | translate" [(value)]="filterWord"/>
 
             @if (permissions.has(Permission.canWriteDepartment)) {
                 <button mat-mini-fab color="accent" [routerLink]="['new']">
@@ -66,7 +64,7 @@
 
             <ng-container matColumnDef="tableOptions">
                 <td mat-footer-cell *matFooterCellDef colspan="5">
-                    <mat-slide-toggle [(ngModel)]="onlyValid" (ngModelChange)="optionChanged()">
+                    <mat-slide-toggle [(ngModel)]="onlyValid">
                         {{ 'DepartmentListPage.OnlyValid' | translate }}
                     </mat-slide-toggle>
                 </td>
@@ -77,9 +75,9 @@
             <tr mat-footer-row *matFooterRowDef="['tableOptions']"></tr>
         </table>
 
-        <mat-paginator [length]="countOfAll"
-                       [pageIndex]="page - 1"
-                       [pageSize]="size"
+        <mat-paginator [length]="countOfAll()"
+                       [pageIndex]="page() - 1"
+                       [pageSize]="size()"
                        [pageSizeOptions]="sizeOptions"
                        (page)="paginateHappened($event)">
         </mat-paginator>

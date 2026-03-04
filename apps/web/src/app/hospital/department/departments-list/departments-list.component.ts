@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, effect, inject, signal} from '@angular/core';
 import {
     ConjunctionFilterOptions,
     Department,
@@ -6,6 +6,8 @@ import {
     isEmpty,
     isNil,
     isNilOrEmpty,
+    PAGE_QUERY_KEY,
+    PAGE_SIZE_QUERY_KEY,
     Pageable,
     PageQuery,
     Permission,
@@ -17,7 +19,7 @@ import {DepartmentService} from '@fe/app/hospital/department/department.service'
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {TranslatePipe} from '@ngx-translate/core';
-import {LazyInputComponent} from '@fe/app/util/lazy-input/lazy-input.component';
+import {LazyInputComponent2} from '@fe/app/util/lazy-input/lazy-input.component';
 import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
@@ -25,22 +27,30 @@ import {
     MatCell,
     MatCellDef,
     MatColumnDef,
-    MatFooterCell, MatFooterCellDef, MatFooterRow, MatFooterRowDef,
+    MatFooterCell,
+    MatFooterCellDef,
+    MatFooterRow,
+    MatFooterRowDef,
     MatHeaderCell,
-    MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+    MatHeaderCellDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRow,
+    MatRowDef,
     MatTable
 } from '@angular/material/table';
 import {DatePipe} from '@angular/common';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
 import {FormsModule} from '@angular/forms';
 
+const FIRST_PAGE = 1;
+const FILTER_PARAM_KEY = 'filter';
+const ONLY_VALID_PARAM_KEY = 'only-valid';
+
 @Component({
-    selector: 'app-department-list',
-    templateUrl: './departments-list.component.html',
-    styleUrls: ['./departments-list.component.scss'],
     imports: [
         TranslatePipe,
-        LazyInputComponent,
+        LazyInputComponent2,
         MatMiniFabButton,
         MatIcon,
         RouterLink,
@@ -64,16 +74,14 @@ import {FormsModule} from '@angular/forms';
         MatHeaderRowDef,
         MatRowDef
     ],
+    selector: 'app-department-list',
+    templateUrl: './departments-list.component.html',
+    styleUrls: ['./departments-list.component.scss'],
     providers: [UrlParamHandler]
 })
 export class DepartmentsListComponent {
 
     Permission = Permission;
-    private static readonly FIRST_PAGE = 1;
-    private static readonly PAGE_PARAM_KEY = 'page';
-    private static readonly SIZE_PARAM_KEY = 'size';
-    private static readonly FILTER_PARAM_KEY = 'filter';
-    private static readonly ONLY_VALID_PARAM_KEY = 'only-valid';
 
     private readonly title = inject(AppTitle);
     protected readonly permissions = inject(PermissionService);
@@ -85,23 +93,24 @@ export class DepartmentsListComponent {
     protected readonly columns = ['name', 'address', 'city', 'validFrom', 'validTo', 'options'];
 
     protected readonly items = signal<Array<Department>>([]);
-    protected page: number;
-    protected size: number;
-    protected countOfAll: number;
-    protected filterWord?: string;
-    protected onlyValid = true;
-    private now = new Date().toISOString();
-    private sort: SortOptions = {
+    protected readonly filterWord = signal(this.urlParam.getParam(FILTER_PARAM_KEY) ?? '');
+    protected readonly onlyValid = signal(this.urlParam.getParam(ONLY_VALID_PARAM_KEY) !== 'false');
+    protected readonly page = signal(this.urlParam.getNumberParam(PAGE_QUERY_KEY) ?? FIRST_PAGE);
+    protected readonly size = signal(this.urlParam.getNumberParam(PAGE_SIZE_QUERY_KEY) ?? this.sizeOptions[2]);
+    protected readonly countOfAll = signal(0);
+
+    private readonly now = new Date().toISOString();
+    private readonly sort: SortOptions = {
         name: 'ASC'
     };
 
     constructor() {
         this.title.setTitleByI18n('Titles.DepartmentList')
-        this.page = this.urlParam.getNumberParam(DepartmentsListComponent.PAGE_PARAM_KEY) ?? DepartmentsListComponent.FIRST_PAGE;
-        this.size = this.urlParam.getNumberParam(DepartmentsListComponent.SIZE_PARAM_KEY) ?? this.sizeOptions[2];
-        this.filterWord = this.urlParam.getParam(DepartmentsListComponent.FILTER_PARAM_KEY);
-        this.onlyValid = this.urlParam.getParam(DepartmentsListComponent.ONLY_VALID_PARAM_KEY) !== 'false';
-        this.loadData();
+        effect(() => {
+            this.urlParam.setParam(FILTER_PARAM_KEY, this.filterWord());
+            this.urlParam.setParam(ONLY_VALID_PARAM_KEY, this.onlyValid());
+            this.loadData();
+        });
     }
 
     protected isEditEnabled(department: Department): boolean {
@@ -110,23 +119,12 @@ export class DepartmentsListComponent {
     }
 
     protected paginateHappened(event: PageEvent): void {
-        this.page = event.pageIndex + 1;
-        this.size = event.pageSize;
+        this.page.set(event.pageIndex + 1);
+        this.size.set(event.pageSize);
         this.urlParam.setParams({
-            [DepartmentsListComponent.PAGE_PARAM_KEY]: this.page + '',
-            [DepartmentsListComponent.SIZE_PARAM_KEY]: this.size + ''
+            [PAGE_QUERY_KEY]: this.page() + '',
+            [PAGE_SIZE_QUERY_KEY]: this.size() + ''
         });
-        this.loadData();
-    }
-
-    protected filterChanged(newFilterWord: string): void {
-        this.filterWord = newFilterWord;
-        this.urlParam.setParam(DepartmentsListComponent.FILTER_PARAM_KEY, this.filterWord);
-        this.loadData();
-    }
-
-    protected optionChanged(): void {
-        this.urlParam.setParam(DepartmentsListComponent.ONLY_VALID_PARAM_KEY, this.onlyValid);
         this.loadData();
     }
 
@@ -141,17 +139,17 @@ export class DepartmentsListComponent {
         this.departmentService.findDepartments(this.createPageRequest(page, size)).subscribe(
             (page: Pageable<Department>) => {
                 this.items.set(page.items);
-                this.page = page.meta.currentPage;
-                this.countOfAll = page.meta.totalItems!;
-                this.size = page.meta.itemsPerPage;
+                this.page.set(page.meta.currentPage);
+                this.countOfAll.set(page.meta.totalItems!);
+                this.size.set(page.meta.itemsPerPage);
             }
         );
     }
 
     private createPageRequest(pageIndex?: number, pageSize?: number): PageQuery {
         return {
-            page: pageIndex ?? this.page,
-            size: pageSize ?? this.size,
+            page: pageIndex ?? this.page(),
+            size: pageSize ?? this.size(),
             sort: this.sort,
             where: this.createWhereClosure()
         };
@@ -165,10 +163,10 @@ export class DepartmentsListComponent {
 
 
     private createTextFilter(): Array<ConjunctionFilterOptions> {
-        if (isNilOrEmpty(this.filterWord)) {
+        if (isNilOrEmpty(this.filterWord())) {
             return [];
         }
-        const likeExpr = `%${this.filterWord}%`;
+        const likeExpr = `%${this.filterWord()}%`;
         return [
             {name: {operator: 'ilike', operand: likeExpr}},
             {address: {operator: 'ilike', operand: likeExpr}}
@@ -176,7 +174,7 @@ export class DepartmentsListComponent {
     }
 
     private addValidityFilters(previousFilters: Array<ConjunctionFilterOptions>): Array<ConjunctionFilterOptions> {
-        if (!this.onlyValid) {
+        if (!this.onlyValid()) {
             return previousFilters;
         }
         const prev = isEmpty(previousFilters) ? [{}] : previousFilters;

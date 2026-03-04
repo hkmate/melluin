@@ -5,14 +5,14 @@
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.Name' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ departmentValue?.name }}</mat-card-title>
+            <mat-card-title>{{ departmentValue.name }}</mat-card-title>
         </mat-card-header>
     </mat-card>
 
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.ValidFrom' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ departmentValue?.validFrom | date : ('DateFormat' | translate) }}</mat-card-title>
+            <mat-card-title>{{ departmentValue.validFrom | date : ('DateFormat' | translate) }}</mat-card-title>
         </mat-card-header>
     </mat-card>
 
@@ -20,8 +20,8 @@
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.ValidTo' | translate }}</mat-card-subtitle>
             <mat-card-title>
-                @if (departmentValue?.validTo) {
-                    {{ departmentValue?.validTo | date : ('DateFormat' | translate) }}
+                @if (departmentValue.validTo) {
+                    {{ departmentValue.validTo | date : ('DateFormat' | translate) }}
                 } @else {
                     {{ 'NoData' | translate }}
                 }
@@ -32,14 +32,14 @@
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.Address' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ departmentValue?.address }}</mat-card-title>
+            <mat-card-title>{{ departmentValue.address }}</mat-card-title>
         </mat-card-header>
     </mat-card>
 
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.City' | translate }}</mat-card-subtitle>
-            <mat-card-title>{{ 'OperationCity.'+ departmentValue?.city | translate }}</mat-card-title>
+            <mat-card-title>{{ 'OperationCity.'+ departmentValue.city | translate }}</mat-card-title>
         </mat-card-header>
     </mat-card>
 
@@ -47,28 +47,28 @@
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.DiseasesInfo' | translate }}</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>{{ departmentValue?.diseasesInfo | optional }}</mat-card-content>
+        <mat-card-content>{{ departmentValue.diseasesInfo | optional }}</mat-card-content>
     </mat-card>
 
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.Note' | translate }}</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>{{ departmentValue?.note | optional }}</mat-card-content>
+        <mat-card-content>{{ departmentValue.note | optional }}</mat-card-content>
     </mat-card>
 
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.LimitOfVisits' | translate }}</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>{{ departmentValue?.limitOfVisits }}</mat-card-content>
+        <mat-card-content>{{ departmentValue.limitOfVisits }}</mat-card-content>
     </mat-card>
 
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>{{ 'DepartmentPage.Present.VicariousMomIncludedInLimit' | translate }}</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>{{ 'YesNo.' + departmentValue?.vicariousMomIncludedInLimit | translate }}</mat-card-content>
+        <mat-card-content>{{ 'YesNo.' + departmentValue.vicariousMomIncludedInLimit | translate }}</mat-card-content>
     </mat-card>
 
 </div>

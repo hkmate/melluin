@@ -22,6 +22,6 @@ import {OptionalPipe} from '@fe/app/util/optional.pipe';
 })
 export class DepartmentDataPresenterComponent {
 
-    public readonly department = input<Department>();
+    public readonly department = input.required<Department>();
 
 }

@@ -24,14 +24,15 @@ import {JwtInterceptor} from '@fe/app/auth/service/jwt.interceptor';
 import {provideRouter} from '@angular/router';
 import {routes} from '@fe/app/app-routes';
 import {AppLanguage} from '@fe/app/language/app-language';
+import {provideDatepickerConfig} from 'ngxsmk-datepicker';
 
 registerLocaleData(localeHu);
 
 export const appConfig: ApplicationConfig = {
     providers: [
-
         // Temporarily use zone until signals is used everywhere
         provideZoneChangeDetection({eventCoalescing: true}),
+        // provideZonelessChangeDetection(),
 
         provideBrowserGlobalErrorListeners(),
         provideRouter(routes),
@@ -56,6 +57,10 @@ export const appConfig: ApplicationConfig = {
 
         {provide: LOCALE_ID, useValue: AppLanguage.HU},
         provideNativeDateAdapter(),
+        provideDatepickerConfig({
+            locale: 'hu',
+            weekStart: 1,
+        }),
         {provide: DateAdapter, useClass: MondayFirstDateAdapter},
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
         {provide: MatPaginatorIntl, useClass: I18nPaginatorIntl}

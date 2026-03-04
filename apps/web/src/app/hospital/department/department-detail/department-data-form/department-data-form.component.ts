@@ -15,15 +15,15 @@ import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimme
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatCard} from '@angular/material/card';
-import {disabled, form, FormField, min, required, submit, validate} from '@angular/forms/signals';
+import {disabled, form, FormField, min, required, submit} from '@angular/forms/signals';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
 import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {firstValueFrom} from 'rxjs';
-import {provideNativeDateAdapter} from '@angular/material/core';
 import {NgxsmkDatepickerComponent} from 'ngxsmk-datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
     imports: [
@@ -41,10 +41,10 @@ import {NgxsmkDatepickerComponent} from 'ngxsmk-datepicker';
         FormField,
         MatError,
         MelluinMatErrorComponent,
+        MatFormFieldModule,
         AppSubmit,
         NgxsmkDatepickerComponent
     ],
-    providers: [provideNativeDateAdapter()],
     selector: 'app-department-data-form',
     templateUrl: './department-data-form.component.html',
     styleUrls: ['./department-data-form.component.scss']
@@ -68,20 +68,6 @@ export class DepartmentDataFormComponent {
         required(schema.validFrom, {message: this.translate.instant('Form.Required')});
         required(schema.limitOfVisits, {message: this.translate.instant('Form.Required')});
         min(schema.limitOfVisits, 1, {message: this.translate.instant('Form.Min', {min: 1})});
-        validate(schema.validFrom, ({value, valueOf}) => {
-            const currentValue = value();
-            const currentToValue = valueOf(schema.validTo);
-            if (isNil(currentValue) || isNil(currentToValue)) {
-                return null;
-            }
-            if (currentValue >= currentToValue) {
-                return {
-                    kind: 'formDateBeforeTo',
-                    message: this.translate.instant('Form.FromDateShouldBeforeThanTo')
-                };
-            }
-            return null;
-        });
 
         disabled(schema.validFrom, () => isNotNil(this.department()));
     });

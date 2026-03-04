@@ -2,8 +2,11 @@
     <div class="page-content">
         @let departmentValue = department();
         <div class="department-part">
-
-            @if (!isEditMode()) {
+            @if (isEditMode()) {
+                <app-department-data-form [department]="departmentValue"
+                                          (submitted)="setDepartment($event)"
+                                          (canceled)="cancelEditing()"/>
+            } @else if (departmentValue) {
                 <app-department-data-presenter [department]="departmentValue"/>
                 @if (isEditEnabled()) {
                     <div class="button-row">
@@ -12,12 +15,6 @@
                         </button>
                     </div>
                 }
-            }
-
-            @if (isEditMode()) {
-                <app-department-data-form [department]="departmentValue"
-                                          (submitted)="setDepartment($event)"
-                                          (canceled)="cancelEditing()"/>
             }
         </div>
 

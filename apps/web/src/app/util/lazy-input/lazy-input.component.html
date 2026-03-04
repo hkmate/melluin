@@ -1,12 +1,17 @@
 <mat-form-field>
     <mat-label>{{ label() }}</mat-label>
-    <input matInput type="text"
-           [ngModel]="inputText()"
-           (ngModelChange)="handleInputChange($event)"
-           [ngModelOptions]="{standalone: true}">
-    @if (inputText() && needClearButton()) {
+    <input matInput type="text" [formField]="innerForm.innerValue">
+    @if (innerForm.innerValue().value() && needClearButton()) {
         <button matSuffix mat-icon-button (click)="clear()">
             <mat-icon>close</mat-icon>
         </button>
+    }
+
+    @if (invalid() && touched()) {
+        <mat-error>
+            @for (error of errors(); track error.message) {
+                <span>{{ error.message }}</span>
+            }
+        </mat-error>
     }
 </mat-form-field>
