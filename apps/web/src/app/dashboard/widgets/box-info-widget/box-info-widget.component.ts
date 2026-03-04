@@ -1,4 +1,4 @@
-import {Component, effect, inject, input} from '@angular/core';
+import {Component, effect, inject, input, signal} from '@angular/core';
 import {
     BoxStatusChangeReason,
     BoxStatusWithDepartmentBrief,
@@ -15,8 +15,6 @@ import {RouterLink} from '@angular/router';
 import {DatePipe} from '@angular/common';
 
 @Component({
-    selector: 'app-box-info-widget',
-    templateUrl: './box-info-widget.component.html',
     imports: [
         MatCard,
         MatCardHeader,
@@ -26,6 +24,8 @@ import {DatePipe} from '@angular/common';
         RouterLink,
         DatePipe
     ],
+    selector: 'app-box-info-widget',
+    templateUrl: './box-info-widget.component.html',
     styleUrl: './box-info-widget.component.scss'
 })
 export class BoxInfoWidgetComponent {
@@ -40,7 +40,7 @@ export class BoxInfoWidgetComponent {
     public readonly reasons = input<Array<BoxStatusChangeReason>>();
     public readonly limit = input<number>();
 
-    protected boxInfo: Array<BoxStatusWithDepartmentBrief>;
+    protected readonly boxInfo = signal<Array<BoxStatusWithDepartmentBrief>>([]);
 
     constructor() {
         effect(() => this.loadBoxInfo());
@@ -48,7 +48,7 @@ export class BoxInfoWidgetComponent {
 
     private loadBoxInfo(): void {
         this.boxService.findBoxStatuses(this.generatePageQuery()).subscribe(statusPage => {
-            this.boxInfo = statusPage.items;
+            this.boxInfo.set(statusPage.items);
         });
     }
 

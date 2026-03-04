@@ -7,12 +7,12 @@ import {MatPaginator} from '@angular/material/paginator';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-box-info-list-by-visit',
     imports: [
         DepartmentBoxInfoComponent,
         MatPaginator,
         TranslatePipe
     ],
+    selector: 'app-box-info-list-by-visit',
     templateUrl: './department-box-info-list.component.html',
     styleUrls: ['./department-box-info-list.component.scss']
 })
@@ -24,14 +24,14 @@ export class BoxInfoListByVisitComponent extends DepartmentBoxInfoListComponent 
 
     constructor() {
         super();
-        this.paginatorNeeded = false;
+        this.paginatorNeeded.set(false);
         effect(() => this.loadData());
     }
 
     protected override loadData(): void {
         this.boxStatusService.findBoxStatusesByVisit(this.visitId()).subscribe(
             (items: Array<DepartmentBoxStatus>) => {
-                this.boxInfoList = items;
+                this.boxInfoList.set(items);
             }
         );
     }

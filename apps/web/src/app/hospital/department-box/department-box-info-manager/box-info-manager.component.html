@@ -1,0 +1,31 @@
+<div class="box-part-header">
+    <h1>{{ 'DepartmentPage.BoxStatuses' | translate }}</h1>
+
+    @if (canUserWriteBox()) {
+        <span class="add-btn">
+            <button mat-mini-fab color="accent" (click)="creatorToggled()">
+                @if (creatingInProcess()) {
+                    <mat-icon>close</mat-icon>
+                } @else {
+                    <mat-icon>add</mat-icon>
+                }
+            </button>
+        </span>
+    }
+</div>
+
+@if (creatingInProcess()) {
+    <app-department-box-info-create [departmentId]="departmentId()"
+                                    [visitId]="visitId()"
+                                    (submitted)="handleNewItem($event)"
+                                    (canceled)="closeCreation()"/>
+}
+
+<div class="department-boxes-part">
+    @let visitIdValue = visitId();
+    @if (visitIdValue) {
+        <app-box-info-list-by-visit [visitId]="visitIdValue"/>
+    } @else {
+        <app-box-info-list-by-department [departmentId]="departmentId()"/>
+    }
+</div>

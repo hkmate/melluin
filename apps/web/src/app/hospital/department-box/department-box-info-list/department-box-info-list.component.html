@@ -1,18 +1,17 @@
-@if (!isEmpty()) {
+@if (!isListEmpty()) {
     <div class="box-info-list">
-        @for (boxInfo of boxInfoList; track boxInfo.id) {
+        @for (boxInfo of boxInfoList(); track boxInfo.id) {
             <div class="box-info">
                 <app-department-box-info [boxStatus]="boxInfo"/>
             </div>
         }
 
-        @if (paginatorNeeded) {
-            <mat-paginator [length]="countOfAll"
-                           [pageIndex]="page - 1"
-                           [pageSize]="size"
+        @if (paginatorNeeded()) {
+            <mat-paginator [length]="countOfAll()"
+                           [pageIndex]="page() - 1"
+                           [pageSize]="size()"
                            [pageSizeOptions]="sizeOptions"
-                           (page)="paginateHappened($event)">
-            </mat-paginator>
+                           (page)="paginateHappened($event)"/>
         }
     </div>
 } @else {

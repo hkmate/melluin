@@ -1,73 +1,91 @@
 import {Component, inject, input, output, signal} from '@angular/core';
-import {BoxStatusChangeReason, DepartmentBoxStatusReport} from '@melluin/common';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+    BoxStatusChangeReason,
+    DepartmentBoxStatus,
+    DepartmentBoxStatusReport,
+    isNotNil,
+    Nullable
+} from '@melluin/common';
 import {affectedObjectsList} from '@fe/app/hospital/department-box/affected-objects-list';
 import {MessageService} from '@fe/app/util/message.service';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
-import {TranslatePipe} from '@ngx-translate/core';
-import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {MatButton} from '@angular/material/button';
+import {form, FormField, required, submit} from '@angular/forms/signals';
+import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {firstValueFrom} from 'rxjs';
+import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
+import {AppSubmit} from '@fe/app/util/submit/app-submit';
+import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
 
 @Component({
-    selector: 'app-department-box-info-create',
-    templateUrl: './department-box-info-create.component.html',
     imports: [
         MatCardContent,
         MatFormField,
         MatCard,
         MatLabel,
         MatSelect,
-        ReactiveFormsModule,
         TranslatePipe,
         MatOption,
-        TrimmedTextInputComponent,
-        MatButton
+        TrimmedTextInputComponent2,
+        MatButton,
+        AppSubmit,
+        FormField,
+        MelluinMatErrorComponent
     ],
+    selector: 'app-department-box-info-create',
+    templateUrl: './department-box-info-create.component.html',
     styleUrls: ['./department-box-info-create.component.scss']
 })
 export class DepartmentBoxInfoCreateComponent {
 
-    private readonly formBuilder = inject(FormBuilder);
+    protected readonly reasonOptions: Array<BoxStatusChangeReason> = Object.values(BoxStatusChangeReason);
+    protected readonly affectedObjectsOptions = affectedObjectsList;
+
+    private readonly translate = inject(TranslateService);
+    private readonly boxStatusService = inject(DepartmentBoxService);
     private readonly msg = inject(MessageService);
 
+    public readonly departmentId = input.required<string>();
+    public readonly visitId = input<string | undefined>(undefined);
 
-    public readonly buttonsDisabled = input<boolean>(false);
-
-    public readonly submitted = output<DepartmentBoxStatusReport>();
+    public readonly submitted = output<DepartmentBoxStatus>();
     public readonly canceled = output<void>();
 
-    protected reasonOptions: Array<BoxStatusChangeReason> = Object.values(BoxStatusChangeReason);
-    protected affectedObjectsOptions = affectedObjectsList;
-    protected readonly form = signal(this.initForm());
+    protected readonly formModel = signal({
+        reason: null as Nullable<BoxStatusChangeReason>,
+        affectedObject: null as Nullable<string>,
+        comment: ''
+    })
 
-    protected onFormSubmit(): void {
-        if (this.form().invalid) {
-            this.msg.error('BoxStatus.ReasonIsRequired');
-            return;
-        }
-        this.submitted.emit(this.createObjectFromForm());
+    protected readonly form = form(this.formModel, schema => {
+        required(schema.reason, {message: this.translate.instant('BoxStatus.ReasonIsRequired')});
+    });
+
+    protected submitForm(): void {
+        submit(this.form, async () => {
+            const saved = await this.saveReport();
+            this.msg.success('SaveSuccessful');
+            this.submitted.emit(saved);
+        });
     }
 
     protected cancelEditing(): void {
         this.canceled.emit();
     }
 
-    private initForm(): FormGroup {
-        return this.formBuilder.group({
-            reason: [null, [Validators.required]],
-            affectedObject: [],
-            comment: []
-        })
-    }
-
-    private createObjectFromForm(): DepartmentBoxStatusReport {
-        return {
-            reason: this.form().controls.reason.value,
-            affectedObject: this.form().controls.affectedObject.value,
-            comment: this.form().controls.comment.value,
+    private saveReport(): Promise<DepartmentBoxStatus> {
+        const objectToSave: DepartmentBoxStatusReport = {
+            reason: this.formModel().reason!,
+            affectedObject: this.formModel().affectedObject ?? undefined,
+            comment: this.formModel().comment ?? undefined
+        } satisfies DepartmentBoxStatusReport;
+        if (isNotNil(this.visitId())) {
+            objectToSave.visitId = this.visitId();
         }
+        return firstValueFrom(this.boxStatusService.addBoxStatus(this.departmentId(), objectToSave));
     }
 
 }

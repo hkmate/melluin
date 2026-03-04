@@ -32,7 +32,7 @@ import {RelatedVisitListComponent} from '@fe/app/hospital/visit-activity-filler/
 import {ChildFillerListComponent} from '@fe/app/hospital/visit-activity-filler/fillers/child-filler-list/child-filler-list.component';
 import {ActivityFillerListComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-filler-list/activity-filler-list.component';
 import {ActivitiesInformationFillerComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activities-information-filler/activities-information-filler.component';
-import {BoxInfoManagerByVisitComponent} from '@fe/app/hospital/department-box/department-box-info-manager/box-info-manager-by-visit.component';
+import {BoxInfoManagerComponent} from '@fe/app/hospital/department-box/department-box-info-manager/box-info-manager.component';
 
 @Component({
     selector: 'app-visit-activity-filler',
@@ -50,7 +50,7 @@ import {BoxInfoManagerByVisitComponent} from '@fe/app/hospital/department-box/de
         ChildFillerListComponent,
         ActivityFillerListComponent,
         ActivitiesInformationFillerComponent,
-        BoxInfoManagerByVisitComponent
+        BoxInfoManagerComponent
     ],
     providers: [
         RouteDataHandler,

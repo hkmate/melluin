@@ -5,8 +5,6 @@ import {DatePipe} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-department-box-info',
-    templateUrl: './department-box-info.component.html',
     imports: [
         MatCard,
         MatCardHeader,
@@ -15,6 +13,8 @@ import {TranslatePipe} from '@ngx-translate/core';
         TranslatePipe,
         MatCardContent
     ],
+    selector: 'app-department-box-info',
+    templateUrl: './department-box-info.component.html',
     styleUrls: ['./department-box-info.component.scss']
 })
 export class DepartmentBoxInfoComponent {

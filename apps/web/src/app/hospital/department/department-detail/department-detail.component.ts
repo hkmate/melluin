@@ -10,7 +10,7 @@ import {DepartmentDataPresenterComponent} from '@fe/app/hospital/department/depa
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatButton} from '@angular/material/button';
 import {DepartmentDataFormComponent} from '@fe/app/hospital/department/department-detail/department-data-form/department-data-form.component';
-import {BoxInfoManagerByDepartmentComponent} from '@fe/app/hospital/department-box/department-box-info-manager/box-info-manager-by-department.component';
+import {BoxInfoManagerComponent} from '@fe/app/hospital/department-box/department-box-info-manager/box-info-manager.component';
 
 @Component({
     selector: 'app-department-detail',
@@ -21,7 +21,7 @@ import {BoxInfoManagerByDepartmentComponent} from '@fe/app/hospital/department-b
         TranslatePipe,
         MatButton,
         DepartmentDataFormComponent,
-        BoxInfoManagerByDepartmentComponent
+        BoxInfoManagerComponent
     ],
     providers: [RouteDataHandler]
 })

@@ -7,13 +7,13 @@ import {MatPaginator} from '@angular/material/paginator';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-box-info-list-by-department',
-    templateUrl: './department-box-info-list.component.html',
     imports: [
         DepartmentBoxInfoComponent,
         MatPaginator,
         TranslatePipe
     ],
+    selector: 'app-box-info-list-by-department',
+    templateUrl: './department-box-info-list.component.html',
     styleUrls: ['./department-box-info-list.component.scss']
 })
 export class BoxInfoListByDepartmentComponent extends DepartmentBoxInfoListComponent {
@@ -28,12 +28,12 @@ export class BoxInfoListByDepartmentComponent extends DepartmentBoxInfoListCompo
     }
 
     protected override loadData(): void {
-        this.boxStatusService.findBoxStatusesByDepartment(this.departmentId(), this.createPageRequest(this.page, this.size)).subscribe(
+        this.boxStatusService.findBoxStatusesByDepartment(this.departmentId(), this.createPageRequest()).subscribe(
             (page: Pageable<DepartmentBoxStatus>) => {
-                this.boxInfoList = page.items;
-                this.page = page.meta.currentPage;
-                this.countOfAll = page.meta.totalItems!;
-                this.size = page.meta.itemsPerPage;
+                this.boxInfoList.set(page.items);
+                this.page.set(page.meta.currentPage);
+                this.countOfAll.set(page.meta.totalItems!);
+                this.size.set(page.meta.itemsPerPage);
             }
         );
     }
