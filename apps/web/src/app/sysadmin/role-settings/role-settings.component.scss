@@ -5,20 +5,10 @@
 }
 
 
-.permission-selector, role-type-selector {
-    display: flex;
-    align-items: center;
+.permission {
+    padding-right: .5rem;
 
-    ::ng-deep {
-        .mat-mdc-select-value, .mat-mdc-select-value-text {
-            width: unset;
-            overflow: unset;
-            text-overflow: unset;
-            white-space: unset;
-        }
+    &:not(:last-of-type)::after {
+        content: ', ';
     }
-}
-
-.settings-icon {
-    opacity: .7;
 }

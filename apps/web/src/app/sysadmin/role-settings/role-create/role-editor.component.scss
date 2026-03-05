@@ -1,0 +1,23 @@
+.role-create {
+    display: flex;
+
+    .form-inputs {
+        width: 90%;
+    }
+
+    .btns {
+        width: 10%;
+        opacity: .7;
+    }
+}
+
+:host ::ng-deep {
+    .role-permission .mat-mdc-select-value,
+    .mat-mdc-select-value-text {
+
+        width: unset;
+        overflow: unset;
+        text-overflow: unset;
+        white-space: unset;
+    }
+}

@@ -1,20 +1,24 @@
+@let editedItemValue = editedItem();
 <section>
     <div class="page-content">
         <span class="page-header">
         <h1>{{ 'Sysadmin.RoleSettings.Title' | translate }}</h1>
             <span>
-                @if (!creation) {
-                    <button mat-mini-fab
-                            color="accent"
-                            (click)="openCreation()">
+                @if (!creation()) {
+                    <button mat-mini-fab color="accent" (click)="openCreation()">
                         <mat-icon>add</mat-icon>
                     </button>
                 }
             </span>
         </span>
 
-        @if (creation) {
-            <app-role-create (done)="closeCreation($event)"/>
+        @if (creation()) {
+            <app-role-edit (submitted)="addNewRole($event)" (canceled)="closeCreation()"/>
+        }
+
+        @if (editedItemValue) {
+            <app-role-edit [role]="editedItemValue"
+                           (submitted)="handleSuccessfulEdit($event)" (canceled)="closeEditor()"/>
         }
 
         <table mat-table [dataSource]="items()">
@@ -22,32 +26,14 @@
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>{{ 'Sysadmin.RoleSettings.NameColHeader' | translate }}</th>
                 <td mat-cell *matCellDef="let role">
-                    @if (editions[role.id]; as edition) {
-                        <div class="role-name-selector">
-                            <app-trimmed-text-input [(ngModel)]="edition.name"
-                                                    [label]="'Sysadmin.RoleSettings.NameLabel' | translate"
-                                                    [placeholder]="'Sysadmin.RoleSettings.NamePlaceholder' | translate"/>
-                        </div>
-                    } @else {
-                        {{ role.name }}
-                    }
+                    {{ role.name }}
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="type">
                 <th mat-header-cell *matHeaderCellDef>{{ 'Sysadmin.RoleSettings.TypeColHeader' | translate }}</th>
                 <td mat-cell *matCellDef="let role">
-                    @if (editions[role.id]; as edition) {
-                        <div class="role-type-selector">
-                            <mat-select [(ngModel)]="edition.type">
-                                @for (option of roleTypeOptions; track option) {
-                                    <mat-option [value]="option">{{ option }}</mat-option>
-                                }
-                            </mat-select>
-                        </div>
-                    } @else {
-                        {{ role.type | translate }}
-                    }
+                    {{ role.type | translate }}
                 </td>
             </ng-container>
 
@@ -56,20 +42,8 @@
                     *matHeaderCellDef>{{ 'Sysadmin.RoleSettings.PermissionsColHeader' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let role">
-                    @if (editions[role.id]; as edition) {
-                        <div class="permission-selector">
-                            <mat-select [(ngModel)]="edition.permissions" multiple>
-                                @for (option of permissionOptions; track option) {
-                                    <mat-option [value]="option">{{ option }}</mat-option>
-                                }
-                            </mat-select>
-                        </div>
-                    } @else {
-                        @for (permission of $any(role.permissions); track permission; let last = $last) {
-                            <span class="permission">
-                              {{ permission }}<span *ngIf="!last">, </span>
-                            </span>
-                        }
+                    @for (permission of $any(role.permissions); track permission; let last = $last) {
+                        <span class="permission">{{ permission }}</span>
                     }
                 </td>
             </ng-container>
@@ -77,24 +51,16 @@
             <ng-container matColumnDef="options">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let role">
-                    @if (editions[role.id]; as edition) {
-                        <button mat-icon-button
-                                type="button"
-                                [disabled]="edition.loading"
-                                (click)="save(role, edition)">
-                            <mat-icon class="material-icons-outlined settings-icon">save</mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="cancelEditing(role)">
-                            <mat-icon class="material-icons-outlined settings-icon">cancel</mat-icon>
-                        </button>
-                    } @else {
-                        <button mat-icon-button type="button" (click)="changeToEdit(role)">
-                            <mat-icon class="material-icons-outlined settings-icon">settings</mat-icon>
-                        </button>
-                        <button mat-icon-button type="button" (click)="deleteRole(role)">
-                            <mat-icon class="material-icons-outlined settings-icon">delete</mat-icon>
-                        </button>
-                    }
+                    <button mat-icon-button type="button"
+                            [disabled]="editedItemValue?.id === role.id"
+                            (click)="openEditor(role)">
+                        <mat-icon class="material-icons-outlined">settings</mat-icon>
+                    </button>
+                    <button mat-icon-button type="button"
+                            [disabled]="editedItemValue?.id === role.id"
+                            (click)="deleteRole(role)">
+                        <mat-icon class="material-icons-outlined">delete</mat-icon>
+                    </button>
                 </td>
             </ng-container>
 

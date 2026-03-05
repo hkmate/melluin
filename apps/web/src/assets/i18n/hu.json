@@ -530,6 +530,7 @@
             "Title": "Szerepkör beállítások",
             "NameLabel": "Szerepkör név",
             "NamePlaceholder": "Admin",
+            "PermissionsPlaceholder": "Jogosultságok",
             "NameColHeader": "Szerepkör",
             "TypeColHeader": "Role típus",
             "PermissionsColHeader": "Jogosultságok",

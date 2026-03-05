@@ -6,7 +6,7 @@ import {MessageService} from '@fe/app/util/message.service';
 import {Role, RoleCreation} from '@melluin/common';
 import {environment} from '@fe/environment';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class RoleService {
 
     private readonly http = inject(HttpClient);
