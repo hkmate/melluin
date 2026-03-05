@@ -14,8 +14,7 @@ import {isNotNil} from '@melluin/common';
         FormField,
     ],
     selector: 'app-trimmed-text-input',
-    templateUrl: './trimmed-text-input.component.html',
-    styleUrls: ['./trimmed-text-input.component.scss'],
+    templateUrl: './trimmed-text-input.component.html'
 })
 export class TrimmedTextInputComponent2 implements FormValueControl<string> {
 
@@ -75,7 +74,6 @@ export class TrimmedTextInputComponent2 implements FormValueControl<string> {
                    (blur)="focusLost()">
         </mat-form-field>
     `,
-    styleUrls: ['./trimmed-text-input.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

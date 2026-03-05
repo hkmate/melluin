@@ -19,8 +19,7 @@ import {form, FormField, FormValueControl, required, ValidationError} from '@ang
         MatError
     ],
     selector: 'app-lazy-input',
-    templateUrl: './lazy-input.component.html',
-    styleUrl: './lazy-input.component.scss'
+    templateUrl: './lazy-input.component.html'
 })
 export class LazyInputComponent2 implements FormValueControl<string> {
 
@@ -91,8 +90,7 @@ export class LazyInputComponent2 implements FormValueControl<string> {
                 </button>
             }
         </mat-form-field>
-    `,
-    styleUrl: './lazy-input.component.scss'
+    `
 })
 export class LazyInputComponent {
 

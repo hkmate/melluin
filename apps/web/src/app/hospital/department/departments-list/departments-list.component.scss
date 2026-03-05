@@ -15,24 +15,13 @@
             flex: auto;
             padding-right: .5rem;
 
-            .mat-mdc-form-field {
-                width: 100%;
-            }
-
             .mat-mdc-form-field-subscript-wrapper {
                 display: none
             }
         }
     }
 
-    ::ng-deep .is-user-icon {
-        opacity: 0.7;
-        font-size: large;
-        vertical-align: middle;
-        margin-left: 0.5rem;
-    }
-
-    ::ng-deep .settings-icon {
+    .settings-icon {
         opacity: .7;
     }
 
