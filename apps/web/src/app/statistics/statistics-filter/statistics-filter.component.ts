@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, output, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input, output, signal} from '@angular/core';
 import {Platform} from '@angular/cdk/platform';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {OperationCity} from '@melluin/common';
@@ -23,8 +23,6 @@ import {MatOption, MatSelect} from '@angular/material/select';
 import {MatButton} from '@angular/material/button';
 
 @Component({
-    selector: 'app-statistics-filter',
-    templateUrl: './statistics-filter.component.html',
     imports: [
         MatAccordion,
         MatExpansionPanel,
@@ -45,7 +43,10 @@ import {MatButton} from '@angular/material/button';
         MatOption,
         MatButton
     ],
-    styleUrl: './statistics-filter.component.scss'
+    selector: 'app-statistics-filter',
+    templateUrl: './statistics-filter.component.html',
+    styleUrl: './statistics-filter.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StatisticsFilterComponent {
 

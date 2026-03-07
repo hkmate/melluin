@@ -14,7 +14,6 @@ import {
     VisitStatus
 } from '@melluin/common';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
-import * as _ from 'lodash';
 import {Platform} from '@angular/cdk/platform';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {getAllStatusOptionsOnlyEnable, SelectOption} from '@fe/app/util/hospital-visit-status-option';
@@ -27,6 +26,7 @@ import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
 import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
+import {round} from 'lodash-es';
 
 
 // TODO refactor: Form components should be refactored to new forms when updated Angular to 21
@@ -107,7 +107,7 @@ export class VisitFormComponent {
         const to = parseTime(this.form().controls.timeTo.value);
         const diff = to.getTime() - from.getTime();
         const hourValue = diff / VisitFormComponent.MS_ON_HOUR;
-        this.form().controls.countedHours.setValue(_.round(hourValue, VisitFormComponent.DECIMALS_IN_COUNTED_HOURS));
+        this.form().controls.countedHours.setValue(round(hourValue, VisitFormComponent.DECIMALS_IN_COUNTED_HOURS));
     }
 
     protected setCreateOther(newValue: boolean): void {
@@ -318,7 +318,7 @@ export class VisitFormComponent {
             return;
         }
         const hourValue = countedMinutes / VisitFormComponent.MIN_ON_HOUR;
-        this.form().controls.countedHours.setValue(_.round(hourValue, VisitFormComponent.DECIMALS_IN_COUNTED_HOURS));
+        this.form().controls.countedHours.setValue(round(hourValue, VisitFormComponent.DECIMALS_IN_COUNTED_HOURS));
     }
 
     private getDate(dateTime: string | undefined): Date | undefined {
@@ -350,7 +350,7 @@ export class VisitFormComponent {
         const countedMinutesFromHour = this.form().controls.countedHours.value * VisitFormComponent.MIN_ON_HOUR;
         data.departmentId = this.form().controls.departmentId.value;
         data.status = this.form().controls.status.value;
-        data.countedMinutes = _.round(countedMinutesFromHour);
+        data.countedMinutes = round(countedMinutesFromHour);
         data.organizerId = this.currentUser()!.personId;
         data.vicariousMomVisit = this.form().controls.vicariousMomVisit.value;
         data.participantIds = this.form().controls.participantIds.value;
@@ -366,7 +366,7 @@ export class VisitFormComponent {
         data.id = this.visit()!.id;
         data.departmentId = this.form().controls.departmentId.value;
         data.status = this.form().controls.status.value;
-        data.countedMinutes = _.round(countedMinutesFromHour);
+        data.countedMinutes = round(countedMinutesFromHour);
         data.vicariousMomVisit = this.form().controls.vicariousMomVisit.value;
         data.participantIds = this.form().controls.participantIds.value;
         data.dateTimeFrom = parseTimeWithDate(this.form().controls.timeFrom.value, this.form().controls.date.value).toISOString();

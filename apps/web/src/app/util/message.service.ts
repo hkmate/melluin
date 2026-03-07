@@ -10,7 +10,6 @@ export class MessageService {
     private readonly toastr = inject(ToastrService);
     private readonly i18n = inject(TranslateService);
 
-
     public success(msgKey: string): void {
         this.successRaw(this.i18n.instant(msgKey));
     }

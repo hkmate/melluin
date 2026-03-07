@@ -4,9 +4,6 @@ import {AbstractControl, ValidationErrors} from '@angular/forms';
 import {isNilOrEmpty} from '@melluin/common';
 import {HttpErrorResponse} from '@angular/common/http';
 
-export function utf8ToBase64(str: string): string {
-    return window.btoa(unescape(encodeURIComponent(str)));
-}
 
 // eslint-disable-next-line max-lines-per-function
 function logErrorToUser(error: HttpErrorResponse, msg: MessageService): void {

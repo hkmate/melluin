@@ -1,4 +1,4 @@
-import {Component, computed, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject} from '@angular/core';
 import {AppTitle} from '@fe/app/app-title.service';
 import {DashboardWidgetSettings, isNil, WidgetSetting} from '@melluin/common';
 import {WidgetComponentInfo, widgetToComponent} from '@fe/app/dashboard/widget-settings-to-component-mapper';
@@ -17,7 +17,8 @@ import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
     ],
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.scss']
+    styleUrls: ['./dashboard.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent {
 

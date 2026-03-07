@@ -6,7 +6,7 @@ export class LoaderService {
     private loadingValue = signal(false);
 
     public get loading(): Signal<boolean> {
-        return this.loadingValue;
+        return this.loadingValue.asReadonly();
     }
 
     public startLoader(): void {

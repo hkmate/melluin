@@ -17,7 +17,7 @@ import {BehaviorSubject, map, Observable, switchMap, tap} from 'rxjs';
 import {MessageService} from '@fe/app/util/message.service';
 import {VisitedChildService} from '@fe/app/hospital/child/visited-child.service';
 import {VisitActivityService} from '@fe/app/hospital/visit-activity/visit-activity.service';
-import * as _ from 'lodash';
+import {difference} from 'lodash-es';
 
 @Injectable()
 export class VisitActivityFillerService {
@@ -73,7 +73,7 @@ export class VisitActivityFillerService {
     }
 
     public unlockVisitedChildId(...visitedChildIds: Array<string>): void {
-        this.lockedChildIds$.next(_.difference(this.lockedChildIds$.getValue(), visitedChildIds));
+        this.lockedChildIds$.next(difference(this.lockedChildIds$.getValue(), visitedChildIds));
     }
 
     public isChildCopyableToActualVisit(childId: string): Observable<boolean> {

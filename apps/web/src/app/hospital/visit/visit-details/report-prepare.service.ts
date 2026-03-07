@@ -4,7 +4,7 @@ import {firstValueFrom} from 'rxjs';
 import {
     Child,
     getFullName,
-    getMonthsSince,
+    getMonthsSince, isNil,
     isNotEmpty,
     PersonIdentifier,
     VisitActivity,
@@ -13,11 +13,11 @@ import {
     WrappedVisitActivity
 } from '@melluin/common';
 import dayjs from 'dayjs'
-import _, {isNil, round} from 'lodash';
 import {TranslateService} from '@ngx-translate/core';
 import {PATHS} from '@fe/app/app-paths';
 import {environment} from '@fe/environment';
 import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
+import {flatten, round, uniqBy} from 'lodash-es';
 
 
 @Injectable()
@@ -168,13 +168,13 @@ export class ReportPrepareCreator {
     }
 
     private getEveryParticipant(): Array<PersonIdentifier> {
-        const summed = _.flatten(this.wrappedActivities.map(w => w.visit.participants));
-        const everyPerson = _.uniqBy(summed, person => person.id);
+        const summed = flatten(this.wrappedActivities.map(w => w.visit.participants));
+        const everyPerson = uniqBy(summed, person => person.id);
         return everyPerson.sort((a, b) => getFullName(a).localeCompare(getFullName(b)));
     }
 
     private getEveryChild(): Array<Child> {
-        return _.flatten(this.wrappedActivities.map(w => w.children)).map(visitedChild => visitedChild.child);
+        return flatten(this.wrappedActivities.map(w => w.children)).map(visitedChild => visitedChild.child);
     }
 
     private getLinks(): string {

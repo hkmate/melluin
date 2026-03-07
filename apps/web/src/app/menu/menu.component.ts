@@ -1,9 +1,9 @@
-import {Component, computed, effect, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, signal} from '@angular/core';
 import {AuthenticationService} from '@fe/app/auth/service/authentication.service';
 import {isNil, isNilOrEmpty, Permission} from '@melluin/common';
 import {Platform} from '@angular/cdk/platform';
 import {environment} from '@fe/environment';
-import {NgIf, NgTemplateOutlet} from '@angular/common';
+import {NgTemplateOutlet} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
 import {MatSidenav, MatSidenavContainer, MatSidenavContent} from '@angular/material/sidenav';
 import {MatDivider, MatListItem, MatNavList} from '@angular/material/list';
@@ -14,7 +14,6 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 @Component({
     imports: [
-        NgIf,
         MatIcon,
         MatSidenavContainer,
         MatSidenav,
@@ -28,7 +27,8 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
     ],
     selector: 'app-menu',
     templateUrl: './menu.component.html',
-    styleUrls: ['./menu.component.scss']
+    styleUrls: ['./menu.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MenuComponent {
 

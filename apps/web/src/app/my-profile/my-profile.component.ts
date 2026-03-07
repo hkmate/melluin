@@ -1,7 +1,7 @@
 import {Component, inject, signal} from '@angular/core';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {Permission, Person} from '@melluin/common';
+import {isNil, Permission, Person} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {MyProfileEditorComponent} from '@fe/app/my-profile/my-profile-editor/my-profile-editor.component';
@@ -9,7 +9,6 @@ import {MyProfilePresentComponent} from '@fe/app/my-profile/my-profile-present/m
 import {MatButton} from '@angular/material/button';
 import {TranslatePipe} from '@ngx-translate/core';
 import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
-import {isNil} from 'lodash';
 
 @Component({
     imports: [

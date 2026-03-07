@@ -9,7 +9,6 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {PeopleListQueryParamSettingsInitializer} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-param-settings-initializer';
 import {PeopleListQueryParamHandler} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-param-handler';
 import {PeopleListFilterSensitiveDataHider} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter-sensitive-data-hider';
-import _ from 'lodash';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
@@ -36,6 +35,7 @@ import {MatTooltip} from '@angular/material/tooltip';
 import {OptionalPipe} from '@fe/app/util/optional.pipe';
 import {PeopleLastLoginStylePipe} from '@fe/app/people/people-list/people-last-login-style.pipe';
 import {DatePipe} from '@angular/common';
+import {keyBy, uniq} from 'lodash-es';
 
 @Component({
     selector: 'app-people-list',
@@ -145,7 +145,7 @@ export class PeopleListComponent {
 
     private setUpCreators(): void {
         const creatorIds = this.items().map(person => person.createdByPersonId).filter(isNotNil);
-        const uniqueCreatorIds = _.uniq(creatorIds);
+        const uniqueCreatorIds = uniq(creatorIds);
         if (isEmpty(uniqueCreatorIds)) {
             this.creators.set({});
             return;
@@ -155,7 +155,7 @@ export class PeopleListComponent {
             size: 100,
             where: [{'id': {operator: 'in', operand: uniqueCreatorIds}}]
         }).subscribe(people => {
-            this.creators.set(_.keyBy(people.items, 'id'));
+            this.creators.set(keyBy(people.items, 'id'));
         });
     }
 

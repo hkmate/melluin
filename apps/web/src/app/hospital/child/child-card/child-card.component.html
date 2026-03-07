@@ -1,13 +1,11 @@
+@let patientInfo = child();
 @if (patientInfo) {
     <mat-card>
         <mat-card-header>
             <mat-card-subtitle>
                 {{ patientInfo.child.name }}
-                <span>({{ patientInfo.child | childAge : visitDate }})</span>
-
-                @if (needParentInfo()) {
-                    <app-parent-info-icon [isParentThere]="patientInfo.isParentThere"/>
-                }
+                <span>({{ patientInfo.child | childAge : date() }})</span>
+                <app-parent-info-icon [isParentThere]="patientInfo.isParentThere"/>
             </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>

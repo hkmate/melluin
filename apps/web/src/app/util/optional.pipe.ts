@@ -3,8 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {isNotNil} from '@melluin/common';
 
 @Pipe({
-    name: 'optional',
-    standalone: true
+    name: 'optional'
 })
 export class OptionalPipe implements PipeTransform {
 

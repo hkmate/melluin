@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input, signal} from '@angular/core';
 import {
     BoxStatusChangeReason,
     BoxStatusWithDepartmentBrief,
@@ -8,11 +8,11 @@ import {
     PageQuery
 } from '@melluin/common';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
-import _ from 'lodash';
 import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle} from '@angular/material/card';
 import {TranslatePipe} from '@ngx-translate/core';
 import {RouterLink} from '@angular/router';
 import {DatePipe} from '@angular/common';
+import {defaultTo} from 'lodash-es';
 
 @Component({
     imports: [
@@ -26,7 +26,8 @@ import {DatePipe} from '@angular/common';
     ],
     selector: 'app-box-info-widget',
     templateUrl: './box-info-widget.component.html',
-    styleUrl: './box-info-widget.component.scss'
+    styleUrl: './box-info-widget.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoxInfoWidgetComponent {
 
@@ -54,13 +55,13 @@ export class BoxInfoWidgetComponent {
 
     private generatePageQuery(): PageQuery {
         const startDate = dateIntervalGeneratorFactory(
-            _.defaultTo(this.dateInterval(), BoxInfoWidgetComponent.defaultDateInterval)).generate().dateFrom;
+            defaultTo(this.dateInterval(), BoxInfoWidgetComponent.defaultDateInterval)).generate().dateFrom;
         return {
             page: 1,
-            size: _.defaultTo(this.limit(), BoxInfoWidgetComponent.defaultLimit),
+            size: defaultTo(this.limit(), BoxInfoWidgetComponent.defaultLimit),
             where: {
                 'dateTime': FilterOperationBuilder.gte(startDate),
-                'reason': FilterOperationBuilder.in(_.defaultTo(this.reasons(), BoxInfoWidgetComponent.defaultReasons))
+                'reason': FilterOperationBuilder.in(defaultTo(this.reasons(), BoxInfoWidgetComponent.defaultReasons))
             },
             sort: {dateTime: 'DESC'}
         };

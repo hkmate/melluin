@@ -1,21 +1,20 @@
-import {Component, effect, ElementRef, input, viewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, ElementRef, input, viewChild} from '@angular/core';
 import {isNil, isNotNil} from '@melluin/common';
 import {Chart, ChartConfiguration, Plugin} from 'chart.js';
-import * as _ from 'lodash';
+import {merge} from 'lodash-es';
 
 @Component({
-    selector: 'app-chart',
-    standalone: true,
     imports: [],
-    template: `
-        <canvas #chartCanvas width="100%"></canvas>`,
+    selector: 'app-chart',
+    template: '<canvas #chartCanvas width="100%"></canvas>',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         style: `
             display: block;
             width: 100%;
             height: 500px;
             max-height: 70dvh;
-    `
+        `
     }
 })
 export class ChartComponent {
@@ -61,7 +60,7 @@ export class ChartComponent {
             },
             plugins: [this.chartPlugin]
         };
-        return _.merge({}, defaultConfig, this.data())
+        return merge({}, defaultConfig, this.data())
     }
 
 }

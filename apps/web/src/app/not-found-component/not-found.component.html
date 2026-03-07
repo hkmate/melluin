@@ -2,10 +2,11 @@
     <div class="container">
         <div class="col-8 offset-2">
             <h1>{{ 'PageNotFound.PageNotFound404' | translate }}</h1>
-            @if (path) {
+            @let pathValue = path();
+            @if (pathValue) {
                 <div>
                     {{ 'PageNotFound.WantToGo' | translate }}
-                    <a [routerLink]="path">{{ path }}</a>
+                    <a [routerLink]="pathValue">{{ pathValue }}</a>
                     {{ 'PageNotFound.Page' | translate }}
                 </div>
             }

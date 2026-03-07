@@ -1,4 +1,4 @@
-import {afterNextRender, Component, computed, input, viewChild} from '@angular/core';
+import {afterNextRender, ChangeDetectionStrategy, Component, computed, input, viewChild} from '@angular/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {
@@ -16,10 +16,6 @@ import {
 } from '@angular/material/table';
 
 @Component({
-    selector: 'app-statistic-widget-table',
-    templateUrl: './statistic-widget-table.component.html',
-    styleUrl: './statistic-widget-table.component.scss',
-    host: {style: 'display: block; overflow-x: auto; max-height: 80dvh'},
     imports: [
         MatTable,
         MatSort,
@@ -33,7 +29,12 @@ import {
         MatRow,
         MatRowDef,
         MatHeaderRowDef
-    ]
+    ],
+    selector: 'app-statistic-widget-table',
+    templateUrl: './statistic-widget-table.component.html',
+    styleUrl: './statistic-widget-table.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {style: 'display: block; overflow-x: auto; max-height: 80dvh'}
 })
 export class StatisticWidgetTableComponent<T> {
 

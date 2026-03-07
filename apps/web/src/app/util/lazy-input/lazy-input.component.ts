@@ -1,4 +1,4 @@
-import {Component, effect, input, linkedSignal, model, output, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, input, linkedSignal, model, output, signal} from '@angular/core';
 import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {MatError, MatFormField, MatInput, MatLabel, MatSuffix} from '@angular/material/input';
@@ -19,7 +19,8 @@ import {form, FormField, FormValueControl, required, ValidationError} from '@ang
         MatError
     ],
     selector: 'app-lazy-input',
-    templateUrl: './lazy-input.component.html'
+    templateUrl: './lazy-input.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LazyInputComponent2 implements FormValueControl<string> {
 

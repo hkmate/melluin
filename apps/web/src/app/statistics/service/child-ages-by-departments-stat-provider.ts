@@ -2,7 +2,7 @@ import {ChildAgesByDepartments, OperationCity} from '@melluin/common';
 import {Observable, shareReplay} from 'rxjs';
 import {inject, Injectable} from '@angular/core';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
-import * as _ from 'lodash';
+import {isEqual} from 'lodash-es';
 
 export interface ChildAgesByDepartmentsStatProvider {
     getChildAgesByDepartmentsStat(from: string, to: string, city: OperationCity): Observable<Array<ChildAgesByDepartments>>;
@@ -19,7 +19,7 @@ export class ChildAgesByDepartmentsStatProviderService implements ChildAgesByDep
 
     public getChildAgesByDepartmentsStat(from: string, to: string, city: OperationCity): Observable<Array<ChildAgesByDepartments>> {
         const newFilter = [from, to, city];
-        if (_.isEqual(this.activeFilter, newFilter)) {
+        if (isEqual(this.activeFilter, newFilter)) {
             return this.request!
         }
 

@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {AppTitle} from '@fe/app/app-title.service';
 import {RoleService} from '@fe/app/sysadmin/role-settings/role.service';
 import {isNil, NOOP, Role} from '@melluin/common';
@@ -41,7 +41,8 @@ import {
     providers: [RoleService],
     selector: 'app-role-settings',
     templateUrl: './role-settings.component.html',
-    styleUrls: ['./role-settings.component.scss']
+    styleUrls: ['./role-settings.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RoleSettingsComponent {
 

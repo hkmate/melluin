@@ -1,10 +1,9 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {isNotNil} from '@melluin/common';
-import * as _ from 'lodash';
+import {round} from 'lodash-es';
 
 @Pipe({
-    name: 'minToHour',
-    standalone: true
+    name: 'minToHour'
 })
 export class MinToHourPipe implements PipeTransform {
 
@@ -13,7 +12,7 @@ export class MinToHourPipe implements PipeTransform {
 
     public transform(value?: number): number | undefined {
         return isNotNil(value)
-            ? _.round((value / MinToHourPipe.MIN_ON_HOUR), MinToHourPipe.DECIMALS)
+            ? round((value / MinToHourPipe.MIN_ON_HOUR), MinToHourPipe.DECIMALS)
             : undefined
     }
 

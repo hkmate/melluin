@@ -2,7 +2,7 @@ import {OperationCity, VisitsCountByWeekDay} from '@melluin/common';
 import {Observable, shareReplay} from 'rxjs';
 import {inject, Injectable} from '@angular/core';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
-import * as _ from 'lodash';
+import {isEqual} from 'lodash-es';
 
 export interface VisitCountByWeekDayStatProvider {
     getVisitsCountByWeekDayStat(from: string, to: string, city: OperationCity): Observable<Array<VisitsCountByWeekDay>>;
@@ -18,7 +18,7 @@ export class VisitCountByWeekDayStatProviderService implements VisitCountByWeekD
 
     public getVisitsCountByWeekDayStat(from: string, to: string, city: OperationCity): Observable<Array<VisitsCountByWeekDay>> {
         const newFilter = [from, to, city];
-        if (_.isEqual(this.activeFilter, newFilter)) {
+        if (isEqual(this.activeFilter, newFilter)) {
             return this.request!
         }
 

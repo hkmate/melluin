@@ -1,4 +1,4 @@
-import {Component, effect, forwardRef, input, model, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, forwardRef, input, model, signal} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {form, FormField, FormValueControl, required, ValidationError} from '@angular/forms/signals';
@@ -14,7 +14,8 @@ import {isNotNil} from '@melluin/common';
         FormField,
     ],
     selector: 'app-trimmed-text-input',
-    templateUrl: './trimmed-text-input.component.html'
+    templateUrl: './trimmed-text-input.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TrimmedTextInputComponent2 implements FormValueControl<string> {
 

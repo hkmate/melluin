@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import dayjs from 'dayjs';
 import {OperationCity, Permission} from '@melluin/common';
 import {StatFilter} from '@fe/app/statistics/model/stat-filter';
@@ -20,9 +20,6 @@ function getDefaultFilter(): StatFilter {
 }
 
 @Component({
-    selector: 'app-statistics-layout',
-    templateUrl: './statistics-layout.component.html',
-    styleUrl: './statistics-layout.component.scss',
     imports: [
         TranslatePipe,
         StatisticsFilterComponent,
@@ -35,7 +32,11 @@ function getDefaultFilter(): StatFilter {
         ChildAgesByDepartmentsStatProviderService,
         VolunteersByDepartmentsStatProviderService,
         VisitCountByWeekDayStatProviderService,
-    ]
+    ],
+    selector: 'app-statistics-layout',
+    templateUrl: './statistics-layout.component.html',
+    styleUrl: './statistics-layout.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatisticsLayoutComponent {
 

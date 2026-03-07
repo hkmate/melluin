@@ -1,7 +1,7 @@
 import {QueryParams, UrlParamHandler} from './url-param-handler';
 import {ActivatedRoute, ActivatedRouteSnapshot, NavigationExtras, Params, Router} from '@angular/router';
-import {of} from 'rxjs';
 import {randomString} from '@melluin/common';
+import {TestBed} from '@angular/core/testing';
 
 describe('UrlParamHandler', () => {
     let mockRouter: Router;
@@ -10,11 +10,18 @@ describe('UrlParamHandler', () => {
 
     beforeEach(() => {
         mockRouter = {
-            navigate: jest.fn(() => of({}).toPromise())
+            navigate: jest.fn(() => Promise.resolve({}))
         } as unknown as Router;
         mockActivatedRoute = {} as ActivatedRoute;
 
-        handler = new UrlParamHandler(mockActivatedRoute, mockRouter);
+        TestBed.configureTestingModule({
+            providers: [
+                {provide: Router, useValue: mockRouter},
+                {provide: ActivatedRoute, useValue: mockActivatedRoute},
+                UrlParamHandler
+            ],
+        });
+        handler = TestBed.inject(UrlParamHandler);
     });
 
     describe('hasParam', () => {

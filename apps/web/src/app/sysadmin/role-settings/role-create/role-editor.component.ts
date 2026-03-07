@@ -1,4 +1,4 @@
-import {Component, computed, inject, input, linkedSignal, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal, output} from '@angular/core';
 import {isNil, Permission, Role, RoleCreation, RoleType} from '@melluin/common';
 import {RoleService} from '@fe/app/sysadmin/role-settings/role.service';
 import {MessageService} from '@fe/app/util/message.service';
@@ -26,7 +26,8 @@ import {AppSubmit} from '@fe/app/util/submit/app-submit';
     ],
     selector: 'app-role-edit',
     templateUrl: './role-editor.component.html',
-    styleUrl: './role-editor.component.scss'
+    styleUrl: './role-editor.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RoleEditorComponent {
 

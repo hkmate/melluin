@@ -3,10 +3,10 @@ import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
 import {isNil, OperationCity, VolunteerByDepartments} from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
-import * as _ from 'lodash';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {VolunteersByDepartmentsStatProvider} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
+import {uniq} from 'lodash-es';
 
 export type VolunteerByDepartmentsTableData =
     Omit<VolunteerByDepartments, 'personId' | 'departmentId' | 'visitMinutes'>
@@ -23,8 +23,8 @@ export class VolunteersByDepartmentsStatController extends AbstractStatisticWidg
     // eslint-disable-next-line max-lines-per-function
     public getChartData(): ChartConfiguration {
         const colors = Object.values(ChartColor);
-        const people = _.uniq(this.data().map(x => x.personName));
-        const departmentNames = _.uniq(this.data().map(x => x.departmentName));
+        const people = uniq(this.data().map(x => x.personName));
+        const departmentNames = uniq(this.data().map(x => x.departmentName));
         const dataByPeople = this.getDataByPeople();
 
         return {

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNil, NOOP, optionalArrayToArray} from '@melluin/common';
 import {map, Observable} from 'rxjs';
@@ -8,8 +8,8 @@ export type QueryParams = Record<string, string | Array<string> | undefined>;
 @Injectable()
 export class UrlParamHandler {
 
-    constructor(protected route: ActivatedRoute, protected router: Router) {
-    }
+    protected readonly route = inject(ActivatedRoute);
+    protected readonly router = inject(Router);
 
     public hasParam(paramName: string): boolean {
         return Object.hasOwn(this.route.snapshot.queryParams, paramName);

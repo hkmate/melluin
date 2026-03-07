@@ -1,7 +1,7 @@
 <mat-form-field class="chip-selector">
     <mat-label>{{ label() }}</mat-label>
     <mat-chip-listbox>
-        @for (patientInfo of children; track patientInfo.id) {
+        @for (patientInfo of children(); track patientInfo.id) {
             <mat-chip-row (removed)="removeChild(patientInfo)">
                 {{ patientInfo.child.name }}
                 <button matChipRemove>
@@ -10,7 +10,7 @@
             </mat-chip-row>
         }
     </mat-chip-listbox>
-    <mat-select [ngModel]="children" (ngModelChange)="childrenChanged($event)" multiple>
+    <mat-select [ngModel]="children()" (ngModelChange)="childrenChanged($event)" multiple>
         @for (option of options(); track option.id) {
             <mat-option class="child-select-option" [value]="option">
                 <span class="child-info">

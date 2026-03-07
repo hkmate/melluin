@@ -1,13 +1,13 @@
-import {Component, inject, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MessageService} from '@fe/app/util/message.service';
 
 @Component({
-    selector: 'app-copier',
-    standalone: true,
     imports: [MatIconModule],
+    selector: 'app-copier',
     templateUrl: './copier.component.html',
-    styleUrl: './copier.component.scss'
+    styleUrl: './copier.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CopierComponent {
 
