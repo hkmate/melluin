@@ -3,14 +3,14 @@
         <mat-card-subtitle>{{ label() }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <mat-radio-group [ngModel]="selected" (ngModelChange)="changed($event)">
+        <mat-radio-group [(ngModel)]="value">
             @for (option of options; track option) {
                 <div>
                     <mat-radio-button [value]="option">
                         {{ 'HomePageOption.' + option | translate }}
                     </mat-radio-button>
                     <div class="description">
-                        {{ 'PersonPage.HomePageSettings.Description.' + option | translate }}
+                        {{ `PersonPage.HomePageSettings.Description.${option}` | translate }}
                     </div>
                 </div>
             }

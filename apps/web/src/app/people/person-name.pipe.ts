@@ -4,8 +4,7 @@ import {isNil, Person} from '@melluin/common';
 import {AppLanguage} from '@fe/app/language/app-language';
 
 @Pipe({
-    name: 'personName',
-    standalone: true
+    name: 'personName'
 })
 export class PersonNamePipe implements PipeTransform {
 

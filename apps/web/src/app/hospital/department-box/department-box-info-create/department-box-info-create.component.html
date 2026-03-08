@@ -8,8 +8,8 @@
                     @for (reason of reasonOptions; track reason) {
                         <mat-option [value]="reason">{{ `BoxStatusChangeReason.${reason}` | translate }}</mat-option>
                     }
-                    <mat-error [fField]="form.reason"/>
                 </mat-select>
+                <mat-error [fField]="form.reason"/>
             </mat-form-field>
 
             <mat-form-field>

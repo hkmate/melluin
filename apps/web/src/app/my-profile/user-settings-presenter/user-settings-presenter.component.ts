@@ -1,5 +1,5 @@
-import {Component, effect, inject, input} from '@angular/core';
-import {Department, FilterOperationBuilder, isNil, isNilOrEmpty, Person, UserSettings} from '@melluin/common';
+import {ChangeDetectionStrategy, Component, effect, inject, input, signal} from '@angular/core';
+import {Department, FilterOperationBuilder, isNilOrEmpty, Person, UserSettings} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
@@ -8,11 +8,9 @@ import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} f
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
 import {MatChip} from '@angular/material/chips';
 import {OptionalPipe} from '@fe/app/util/optional.pipe';
-import {NgIf} from '@angular/common';
+import {IsNilPipe} from '@fe/app/util/is-nil/is-nil.pipe';
 
 @Component({
-    selector: 'app-user-settings-presenter',
-    templateUrl: './user-settings-presenter.component.html',
     imports: [
         MatTabGroup,
         TranslatePipe,
@@ -25,21 +23,22 @@ import {NgIf} from '@angular/common';
         MatChip,
         MatCardContent,
         OptionalPipe,
-        NgIf
+        IsNilPipe
     ],
-    styleUrls: ['./user-settings-presenter.component.scss']
+    selector: 'app-user-settings-presenter',
+    templateUrl: './user-settings-presenter.component.html',
+    styleUrls: ['./user-settings-presenter.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserSettingsPresenterComponent {
 
     private readonly peopleService = inject(PeopleService);
     private readonly departmentService = inject(DepartmentService);
 
-    protected isNil = isNil;
-
     public readonly userSettings = input.required<UserSettings>();
 
-    protected participants: Array<Person>;
-    protected departments: Array<Department>;
+    protected readonly participants = signal<Array<Person>>([]);
+    protected readonly departments = signal<Array<Department>>([]);
 
     constructor() {
         effect(() => this.init());
@@ -60,7 +59,7 @@ export class UserSettingsPresenterComponent {
             sort: {'lastName': 'ASC'},
             page: 1, size: 50
         }).subscribe(people => {
-            this.participants = people.items;
+            this.participants.set(people.items);
         });
     }
 
@@ -74,7 +73,7 @@ export class UserSettingsPresenterComponent {
             sort: {'name': 'ASC'},
             page: 1, size: 50
         }).subscribe(departments => {
-            this.departments = departments.items;
+            this.departments.set(departments.items);
         });
     }
 

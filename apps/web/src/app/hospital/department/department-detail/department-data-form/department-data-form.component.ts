@@ -1,5 +1,4 @@
-import {Component, computed, effect, inject, input, output, signal} from '@angular/core';
-import {ReactiveFormsModule} from '@angular/forms';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, input, output, signal} from '@angular/core';
 import {
     DEFAULT_TO_DATE,
     Department,
@@ -23,12 +22,10 @@ import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {firstValueFrom} from 'rxjs';
 import {NgxsmkDatepickerComponent} from 'ngxsmk-datepicker';
-import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
     imports: [
         TranslatePipe,
-        ReactiveFormsModule,
         TrimmedTextInputComponent2,
         MatFormField,
         MatLabel,
@@ -41,13 +38,13 @@ import {MatFormFieldModule} from '@angular/material/form-field';
         FormField,
         MatError,
         MelluinMatErrorComponent,
-        MatFormFieldModule,
         AppSubmit,
         NgxsmkDatepickerComponent
     ],
     selector: 'app-department-data-form',
     templateUrl: './department-data-form.component.html',
-    styleUrls: ['./department-data-form.component.scss']
+    styleUrls: ['./department-data-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DepartmentDataFormComponent {
 
@@ -111,7 +108,7 @@ export class DepartmentDataFormComponent {
             this.formModel.set(this.getDefaultFormModel());
             return;
         }
-        const {id, ...values} = department
+        const {id, ...values} = department;
         this.formModel.set({
             ...values,
             validFrom: new Date(values.validFrom),

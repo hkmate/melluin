@@ -1,4 +1,4 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
@@ -13,9 +13,6 @@ import {DepartmentDataFormComponent} from '@fe/app/hospital/department/departmen
 import {BoxInfoManagerComponent} from '@fe/app/hospital/department-box/department-box-info-manager/box-info-manager.component';
 
 @Component({
-    selector: 'app-department-detail',
-    templateUrl: './department-detail.component.html',
-    styleUrls: ['./department-detail.component.scss'],
     imports: [
         DepartmentDataPresenterComponent,
         TranslatePipe,
@@ -23,7 +20,11 @@ import {BoxInfoManagerComponent} from '@fe/app/hospital/department-box/departmen
         DepartmentDataFormComponent,
         BoxInfoManagerComponent
     ],
-    providers: [RouteDataHandler]
+    providers: [RouteDataHandler],
+    selector: 'app-department-detail',
+    templateUrl: './department-detail.component.html',
+    styleUrls: ['./department-detail.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DepartmentDetailComponent {
 

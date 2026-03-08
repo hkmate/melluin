@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {isNil, Permission, Person} from '@melluin/common';
@@ -17,9 +17,10 @@ import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
         MatButton,
         TranslatePipe
     ],
+    providers: [RouteDataHandler],
     selector: 'app-my-profile',
     templateUrl: './my-profile.component.html',
-    providers: [RouteDataHandler]
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MyProfileComponent {
 

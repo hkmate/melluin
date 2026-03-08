@@ -42,8 +42,8 @@
                     *matHeaderCellDef>{{ 'Sysadmin.RoleSettings.PermissionsColHeader' | translate }}
                 </th>
                 <td mat-cell *matCellDef="let role">
-                    @for (permission of $any(role.permissions); track permission; let last = $last) {
-                        <span class="permission">{{ permission }}</span>
+                    @for (permission of $any(role.permissions); track permission) {
+                        <span class="inline-list-item">{{ permission }}</span>
                     }
                 </td>
             </ng-container>

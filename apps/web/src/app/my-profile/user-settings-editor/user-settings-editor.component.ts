@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {UserSettings} from '@melluin/common';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
@@ -7,8 +7,6 @@ import {UserHomePageSettingsEditorComponent} from '@fe/app/my-profile/user-setti
 import {UserDepartmentBoxWidgetSettingsComponent} from '@fe/app/my-profile/user-settings-editor/user-department-box-widget-settings/user-department-box-widget-settings.component';
 
 @Component({
-    selector: 'app-user-settings-editor',
-    templateUrl: './user-settings-editor.component.html',
     imports: [
         TranslatePipe,
         MatTabGroup,
@@ -17,7 +15,10 @@ import {UserDepartmentBoxWidgetSettingsComponent} from '@fe/app/my-profile/user-
         UserHomePageSettingsEditorComponent,
         UserDepartmentBoxWidgetSettingsComponent
     ],
-    styleUrls: ['./user-settings-editor.component.scss']
+    selector: 'app-user-settings-editor',
+    templateUrl: './user-settings-editor.component.html',
+    styleUrls: ['./user-settings-editor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserSettingsEditorComponent {
 

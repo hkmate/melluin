@@ -1,26 +1,14 @@
-<div class="home-page-settings">
-    @if (form()) {
-        <form [formGroup]="form()">
+<form (appSubmit)="submitSettings()">
+    <app-home-page-option-selector [label]="'PersonPage.HomePageSettings.InMobile' | translate"
+                                   [formField]="form.inMobile"/>
 
-            <div class="in-mobile-card">
-                <app-home-page-option-selector [label]="'PersonPage.HomePageSettings.InMobile' | translate"
-                                               formControlName="inMobile"/>
-            </div>
+    <app-home-page-option-selector [label]="'PersonPage.HomePageSettings.InDesktop' | translate"
+                                   [formField]="form.inDesktop"/>
 
-            <div class="in-desktop-card">
-                <app-home-page-option-selector [label]="'PersonPage.HomePageSettings.InDesktop' | translate"
-                                               formControlName="inDesktop"/>
-            </div>
-
-            <div class="button-row">
-                <button mat-flat-button
-                        color="accent"
-                        [disabled]="isSaveBtnDisabled()"
-                        (click)="submit()"
-                        type="button">
-                    {{ 'SaveButton' | translate }}
-                </button>
-            </div>
-        </form>
-    }
-</div>
+    <div class="button-row">
+        <button mat-flat-button color="accent"
+                [disabled]="isSaveBtnDisabled()">
+            {{ 'SaveButton' | translate }}
+        </button>
+    </div>
+</form>

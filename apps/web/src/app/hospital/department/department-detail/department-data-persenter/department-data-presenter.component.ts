@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {Department} from '@melluin/common';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
@@ -18,7 +18,8 @@ import {OptionalPipe} from '@fe/app/util/optional.pipe';
     ],
     selector: 'app-department-data-presenter',
     templateUrl: './department-data-presenter.component.html',
-    styleUrls: ['./department-data-presenter.component.scss']
+    styleUrls: ['./department-data-presenter.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DepartmentDataPresenterComponent {
 

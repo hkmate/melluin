@@ -11,7 +11,6 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 @Component({
     selector: 'app-visit-connected-visit',
-    standalone: true,
     imports: [
         DatePipe,
         MatIcon,

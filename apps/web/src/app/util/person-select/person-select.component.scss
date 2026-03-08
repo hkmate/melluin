@@ -1,5 +1,4 @@
 
-mat-select {
-    visibility: hidden;
-    width: 0;
+:host ::ng-deep .mat-mdc-select-value-text {
+    display: none;
 }

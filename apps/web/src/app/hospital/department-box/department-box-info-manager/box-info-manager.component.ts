@@ -1,4 +1,4 @@
-import {Component, computed, inject, input, signal, viewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input, signal, viewChild} from '@angular/core';
 import {DepartmentBoxStatus, isNotNil, Permission} from '@melluin/common';
 import {BoxInfoListByVisitComponent} from '@fe/app/hospital/department-box/department-box-info-list/box-info-list-by-visit.component';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -22,7 +22,8 @@ import {DepartmentBoxInfoListComponent} from '@fe/app/hospital/department-box/de
     providers: [DepartmentBoxService],
     selector: 'app-box-info-manager',
     templateUrl: './box-info-manager.component.html',
-    styleUrls: ['./box-info-manager.component.scss']
+    styleUrls: ['./box-info-manager.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoxInfoManagerComponent {
 

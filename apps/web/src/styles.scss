@@ -84,9 +84,9 @@ form .button-row {
 }
 
 .button-row {
-     display: flex;
-     justify-content: flex-end
- }
+    display: flex;
+    justify-content: flex-end
+}
 
 .divider {
     margin: 2rem 0 2rem 0;
@@ -99,4 +99,8 @@ form .button-row {
 
 mat-form-field {
     width: 100%;
+}
+
+.inline-list-item:not(:last-of-type)::after {
+    content: ', ';
 }

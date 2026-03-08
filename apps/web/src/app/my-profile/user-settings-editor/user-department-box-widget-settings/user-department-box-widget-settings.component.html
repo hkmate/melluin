@@ -1,64 +1,50 @@
-<div class="department-box-widget-settings">
-    @if (form()) {
-        <form [formGroup]="form()">
+<form (appSubmit)="submitSettings()">
 
-            <div class="needed-card">
-                <mat-card class="form-card">
-                    <mat-card-subtitle>
-                        <mat-checkbox formControlName="needed">
-                            {{ 'PersonPage.DepartmentBoxesWidgetSettings.Needed' | translate }}
-                        </mat-checkbox>
-                    </mat-card-subtitle>
-                </mat-card>
-            </div>
+    <mat-card class="form-card">
+        <mat-card-subtitle>
+            <mat-checkbox [formField]="form.needed">
+                {{ 'PersonPage.DepartmentBoxesWidgetSettings.Needed' | translate }}
+            </mat-checkbox>
+        </mat-card-subtitle>
+    </mat-card>
 
-            <div class="index-input">
-                <mat-form-field>
-                    <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Index' | translate }}</mat-label>
-                    <input matInput type="number" formControlName="index">
-                </mat-form-field>
-            </div>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Index' | translate }}</mat-label>
+        <input matInput type="number" [formField]="form.index">
+        <mat-error [fField]="form.index"/>
+    </mat-form-field>
 
-            <div class="limit-input">
-                <mat-form-field>
-                    <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Limit' | translate }}</mat-label>
-                    <input matInput type="number" formControlName="limit">
-                </mat-form-field>
-            </div>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Limit' | translate }}</mat-label>
+        <input matInput type="number" [formField]="form.limit">
+        <mat-error [fField]="form.limit"/>
+    </mat-form-field>
 
-            <div class="date-interval-selector">
-                <mat-form-field>
-                    <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Date' | translate }}</mat-label>
-                    <mat-select formControlName="dateInterval">
-                        <mat-option [value]="undefined">-</mat-option>
-                        @for (option of dateOptions; track option) {
-                            <mat-option [value]="option">{{ 'DateIntervalSpecifier.' + option | translate }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Date' | translate }}</mat-label>
+        <mat-select [formField]="form.dateInterval">
+            <mat-option [value]="null">-</mat-option>
+            @for (option of dateOptions; track option) {
+                <mat-option [value]="option">{{ 'DateIntervalSpecifier.' + option | translate }}</mat-option>
+            }
+        </mat-select>
+        <mat-error [fField]="form.dateInterval"/>
+    </mat-form-field>
 
-            <div class="date-interval-selector">
-                <mat-form-field>
-                    <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Reason' | translate }}</mat-label>
-                    <mat-select formControlName="reasons" multiple>
-                        @for (option of reasonOptions; track option) {
-                            <mat-option [value]="option">{{ 'BoxStatusChangeReason.' + option | translate }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Reason' | translate }}</mat-label>
+        <mat-select [formField]="form.reasons" multiple>
+            @for (option of reasonOptions; track option) {
+                <mat-option [value]="option">{{ 'BoxStatusChangeReason.' + option | translate }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
 
-            <div class="button-row">
-                <button mat-flat-button
-                        color="accent"
-                        [disabled]="isSaveBtnDisabled()"
-                        (click)="submit()"
-                        type="button">
-                    {{ 'SaveButton' | translate }}
-                </button>
-            </div>
+    <div class="button-row">
+        <button mat-flat-button color="accent"
+                [disabled]="isSaveBtnDisabled()">
+            {{ 'SaveButton' | translate }}
+        </button>
+    </div>
 
-        </form>
-    }
-</div>
+</form>

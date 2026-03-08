@@ -1,4 +1,4 @@
-import {Component, inject, input, output, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input, output, signal} from '@angular/core';
 import {
     BoxStatusChangeReason,
     DepartmentBoxStatus,
@@ -9,7 +9,7 @@ import {
 import {affectedObjectsList} from '@fe/app/hospital/department-box/affected-objects-list';
 import {MessageService} from '@fe/app/util/message.service';
 import {MatCard, MatCardContent} from '@angular/material/card';
-import {MatFormField, MatLabel} from '@angular/material/input';
+import {MatError, MatFormField, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {MatButton} from '@angular/material/button';
@@ -33,11 +33,13 @@ import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-m
         MatButton,
         AppSubmit,
         FormField,
+        MatError,
         MelluinMatErrorComponent
     ],
     selector: 'app-department-box-info-create',
     templateUrl: './department-box-info-create.component.html',
-    styleUrls: ['./department-box-info-create.component.scss']
+    styleUrls: ['./department-box-info-create.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DepartmentBoxInfoCreateComponent {
 

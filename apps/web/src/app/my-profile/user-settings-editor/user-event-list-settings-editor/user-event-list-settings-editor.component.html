@@ -1,68 +1,47 @@
-<div class="event-list-settings">
-    @if (form()) {
-        <form [formGroup]="form()">
+<form (appSubmit)="submitSettings()">
 
-            <div class="date-interval-selector">
-                <mat-form-field>
-                    <mat-label>{{ 'PersonPage.EventListSettings.Date' | translate }}</mat-label>
-                    <mat-select formControlName="dateFilter">
-                        <mat-option [value]="undefined">-</mat-option>
-                        @for (option of dateOptions; track option) {
-                            <mat-option [value]="option">
-                                {{ 'DateIntervalSpecifier.' + option | translate }}
-                            </mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.EventListSettings.Date' | translate }}</mat-label>
+        <mat-select [formField]="form.dateFilter">
+            <mat-option [value]="undefined">-</mat-option>
+            @for (option of dateOptions; track option) {
+                <mat-option [value]="option">{{ `DateIntervalSpecifier.${option}` | translate }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
 
-            <div class="participant-selector">
-                <app-person-select [label]="'PersonPage.EventListSettings.Participants' | translate"
-                                   formControlName="participantIds"/>
-            </div>
+    <app-person-select [label]="'PersonPage.EventListSettings.Participants' | translate"
+                       [formField]="form.participantIds"/>
 
-            <div>
-                <mat-form-field>
-                    <mat-label>{{ 'PersonPage.EventListSettings.Statuses' | translate }}</mat-label>
-                    <mat-select formControlName="statuses" multiple>
-                        @for (option of statusOptions; track option) {
-                            <mat-option [value]="option">{{ 'VisitStatus.' + option | translate }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.EventListSettings.Statuses' | translate }}</mat-label>
+        <mat-select [formField]="form.statuses" multiple>
+            @for (option of statusOptions; track option) {
+                <mat-option [value]="option">{{ `VisitStatus.${option}` | translate }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.EventListSettings.Departments' | translate }}</mat-label>
+        <mat-select [formField]="form.departmentIds" multiple>
+            @for (option of departmentOptions(); track option) {
+                <mat-option [value]="option.id">{{ option.name }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
 
-            <div>
-                <mat-form-field>
-                    <mat-label>{{ 'PersonPage.EventListSettings.Departments' | translate }}</mat-label>
-                    <mat-select formControlName="departmentIds" multiple>
-                        @for (option of departmentOptions; track option) {
-                            <mat-option [value]="option.id">{{ option.name }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div>
+    <mat-card>
+        <mat-card-subtitle>
+            <mat-checkbox [formField]="form.needHighlight">
+                {{ 'PersonPage.EventListSettings.NeedHighlight' | translate }}
+            </mat-checkbox>
+        </mat-card-subtitle>
+    </mat-card>
 
-            <div class="need-highlight-card">
-                <mat-card>
-                    <mat-card-subtitle>
-                        <mat-checkbox formControlName="needHighlight">
-                            {{ 'PersonPage.EventListSettings.NeedHighlight' | translate }}
-                        </mat-checkbox>
-                    </mat-card-subtitle>
-                </mat-card>
-            </div>
-
-            <div class="button-row">
-                <button mat-flat-button
-                        color="accent"
-                        [disabled]="isSaveBtnDisabled()"
-                        (click)="submit()"
-                        type="button">
-                    {{ 'SaveButton' | translate }}
-                </button>
-            </div>
-
-        </form>
-    }
-</div>
+    <div class="button-row">
+        <button mat-flat-button color="accent"
+                [disabled]="isSaveBtnDisabled()">
+            {{ 'SaveButton' | translate }}
+        </button>
+    </div>
+</form>

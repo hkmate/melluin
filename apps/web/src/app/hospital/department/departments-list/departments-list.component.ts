@@ -1,4 +1,4 @@
-import {Component, effect, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, signal} from '@angular/core';
 import {
     ConjunctionFilterOptions,
     Department,
@@ -77,7 +77,8 @@ const ONLY_VALID_PARAM_KEY = 'only-valid';
     selector: 'app-department-list',
     templateUrl: './departments-list.component.html',
     styleUrls: ['./departments-list.component.scss'],
-    providers: [UrlParamHandler]
+    providers: [UrlParamHandler],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DepartmentsListComponent {
 

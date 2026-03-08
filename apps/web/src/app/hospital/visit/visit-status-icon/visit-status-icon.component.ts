@@ -13,7 +13,6 @@ import {TranslateModule} from '@ngx-translate/core';
         MatTooltipModule,
         TranslateModule
     ],
-    standalone: true
 })
 export class VisitStatusIconComponent {
 

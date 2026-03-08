@@ -3,9 +3,7 @@ import {BriefUser, isNil, Person} from '@melluin/common';
 import dayjs from 'dayjs';
 
 @Pipe({
-    name: 'lastLoginStyle',
-    standalone: true,
-    pure: true
+    name: 'lastLoginStyle'
 })
 export class PeopleLastLoginStylePipe implements PipeTransform {
 

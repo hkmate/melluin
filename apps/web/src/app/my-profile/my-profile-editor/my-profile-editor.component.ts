@@ -1,5 +1,6 @@
-import {Component, computed, inject, input, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, input, output, signal} from '@angular/core';
 import {
+    isNil,
     isNilOrEmpty,
     passwordMinLength,
     passwordPattern,
@@ -9,26 +10,26 @@ import {
     UserRewrite,
     UserSettings
 } from '@melluin/common';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MessageService} from '@fe/app/util/message.service';
 import {PeopleService} from '@fe/app/people/people.service';
 import {UserService} from '@fe/app/people/user.service';
-import {TranslatePipe} from '@ngx-translate/core';
-import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
-import {MatFormField, MatHint, MatInput, MatLabel} from '@angular/material/input';
+import {MatError, MatFormField, MatHint, MatInput, MatLabel} from '@angular/material/input';
 import {UserSettingsEditorComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
 import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
+import {AppSubmit} from '@fe/app/util/submit/app-submit';
+import {form, FormField, pattern, required, submit} from '@angular/forms/signals';
+import {firstValueFrom} from 'rxjs';
+import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
 
 @Component({
-    selector: 'app-my-profile-editor',
-    templateUrl: './my-profile-editor.component.html',
     imports: [
         TranslatePipe,
-        ReactiveFormsModule,
-        TrimmedTextInputComponent,
+        TrimmedTextInputComponent2,
         MatCardContent,
         MatCard,
         MatCheckbox,
@@ -37,115 +38,146 @@ import {CredentialStoreService} from '@fe/app/auth/service/credential-store.serv
         MatFormField,
         MatInput,
         MatHint,
-        UserSettingsEditorComponent
+        UserSettingsEditorComponent,
+        AppSubmit,
+        FormField,
+        MatError,
+        MelluinMatErrorComponent
     ],
-    styleUrls: ['./my-profile-editor.component.scss']
+    selector: 'app-my-profile-editor',
+    templateUrl: './my-profile-editor.component.html',
+    styleUrls: ['./my-profile-editor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MyProfileEditorComponent {
 
-    protected readonly passwordMinLength = passwordMinLength;
-
-    private readonly fb = inject(FormBuilder);
     private readonly msg = inject(MessageService);
     private readonly peopleService = inject(PeopleService);
     private readonly userService = inject(UserService);
+    private readonly translate = inject(TranslateService);
     private readonly credentialStoreService = inject(CredentialStoreService);
 
-    public readonly user = input.required<User>();
     public readonly person = input.required<Person>();
+    public readonly user = input.required<User>();
     public readonly userSettings = input.required<UserSettings>();
 
-    public editEnded = output<void>();
+    public readonly editEnded = output<void>();
 
-    protected personForm = computed(() => this.setupPersonForm());
-    protected userForm = computed(() => this.setupUserForm());
-    private personSaveInProcess: boolean;
-    private userSaveInProcess: boolean;
+    protected readonly personModel = signal(this.getDefaultPersonFormModel());
+    protected readonly personForm = form(this.personModel, schema => {
+        required(schema.firstName, {message: this.translate.instant('Form.Required')});
+        required(schema.lastName, {message: this.translate.instant('Form.Required')});
+    });
+
+    protected readonly userModel = signal(this.getDefaultUserFormModel());
+    protected readonly userForm = form(this.userModel, schema => {
+        required(schema.userName, {message: this.translate.instant('Form.Required')});
+        pattern(schema.password, new RegExp(passwordPattern),
+            {message: this.translate.instant('PersonPage.User.Form.PasswordPatternHint', {passwordMinLength})}
+        );
+    });
+
+    protected readonly isPersonFormBtnDisabled = computed(() => this.personForm().invalid() || this.personForm().submitting());
+    protected readonly isUserFormBtnDisabled = computed(() => this.userForm().invalid() || this.userForm().submitting());
+    protected readonly isBackBtnDisabled = computed(() => this.isPersonFormBtnDisabled() || this.isUserFormBtnDisabled());
+
+    constructor() {
+        effect(() => this.setupPersonFormValues());
+        effect(() => this.setupUserFormValues());
+    }
 
     protected cancelEditing(): void {
         this.editEnded.emit();
     }
 
     protected submitPersonForm(): void {
-        this.personSaveInProcess = true;
-        this.peopleService.updatePerson(this.person().id, this.parsePersonForm()).subscribe({
-            next: () => {
-                this.personSaveInProcess = false;
-                this.msg.success('SaveSuccessful');
-            },
-            error: () => {
-                this.personSaveInProcess = false;
-            }
-        });
+        submit(this.personForm, async () => {
+            await firstValueFrom(this.peopleService.updatePerson(this.person().id, this.generatePersonRewriteDto()));
+            this.msg.success('SaveSuccessful');
+        })
     }
 
     protected submitUserForm(): void {
-        this.userSaveInProcess = true;
-        this.userService.updateUser(this.user().id, this.parseUserForm()).subscribe({
-            next: (user: User) => {
-                this.userSaveInProcess = false;
-                this.msg.success('SaveSuccessful');
-                this.credentialStoreService.setupUser(user);
-            },
-            error: () => {
-                this.userSaveInProcess = false;
-            }
+        submit(this.userForm, async () => {
+            const user = await firstValueFrom(
+                this.userService.updateUser(this.user().id, this.generateUserRewriteDto()));
+            this.msg.success('SaveSuccessful');
+            this.credentialStoreService.setupUser(user);
         });
     }
 
-    protected isPersonFormBtnDisabled(): boolean {
-        return this.personForm().invalid || this.personSaveInProcess;
-    }
-
-    protected isUserFormBtnDisabled(): boolean {
-        return this.userForm().invalid || this.userSaveInProcess;
-    }
-
-    protected isBackBtnDisabled(): boolean {
-        return this.personSaveInProcess || this.userSaveInProcess;
-    }
-
-    private setupUserForm(): FormGroup {
-        return this.fb.group({
-            userName: [this.user().userName],
-            password: [undefined, [Validators.pattern(passwordPattern)]]
-        });
-    }
-
-    private setupPersonForm(): FormGroup {
-        return this.fb.group({
-            firstName: [this.person().firstName, [Validators.required]],
-            lastName: [this.person().lastName, [Validators.required]],
-            email: [this.person().email],
-            phone: [this.person().phone],
-            canVolunteerSeeMyEmail: [this.person().preferences?.canVolunteerSeeMyEmail ?? false],
-            canVolunteerSeeMyPhone: [this.person().preferences?.canVolunteerSeeMyPhone ?? false]
-        });
-    }
-
-    private parsePersonForm(): PersonRewrite {
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    private getDefaultPersonFormModel() {
         return {
-            firstName: this.personForm().controls.firstName.value,
-            lastName: this.personForm().controls.lastName.value,
-            email: this.personForm().controls.email.value,
-            phone: this.personForm().controls.phone.value,
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            canVolunteerSeeMyEmail: false,
+            canVolunteerSeeMyPhone: false
+        };
+    }
+
+    private setupPersonFormValues(): void {
+        const person = this.person();
+        if (isNil(person)) {
+            this.personModel.set(this.getDefaultPersonFormModel());
+            return;
+        }
+        this.personModel.set({
+            firstName: person.firstName,
+            lastName: person.lastName,
+            email: person.email ?? '',
+            phone: person.phone ?? '',
+            canVolunteerSeeMyEmail: person.preferences?.canVolunteerSeeMyEmail ?? false,
+            canVolunteerSeeMyPhone: person.preferences?.canVolunteerSeeMyPhone ?? false
+        });
+    }
+
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    private getDefaultUserFormModel() {
+        return {
+            userName: '',
+            password: ''
+        };
+    }
+
+    private setupUserFormValues(): void {
+        const user = this.user();
+        if (isNil(user)) {
+            this.userModel.set(this.getDefaultUserFormModel());
+            return;
+        }
+        this.userModel.set({
+            userName: user.userName,
+            password: '',
+        });
+    }
+
+    private generatePersonRewriteDto(): PersonRewrite {
+        const model = this.personModel();
+        return {
+            firstName: model.firstName,
+            lastName: model.lastName,
+            email: model.email,
+            phone: model.phone,
+            cities: this.person().cities!,
             preferences: {
-                canVolunteerSeeMyEmail: this.personForm().controls.canVolunteerSeeMyEmail.value,
-                canVolunteerSeeMyPhone: this.personForm().controls.canVolunteerSeeMyPhone.value
-            },
-            cities: this.person().cities!
+                canVolunteerSeeMyEmail: model.canVolunteerSeeMyEmail,
+                canVolunteerSeeMyPhone: model.canVolunteerSeeMyPhone
+            }
         }
     }
 
-    private parseUserForm(): UserRewrite {
-        const newPassword = this.userForm().controls.password.value;
+    private generateUserRewriteDto(): UserRewrite {
+        const model = this.userModel();
         return {
-            userName: this.userForm().controls.userName.value,
-            password: isNilOrEmpty(newPassword) ? undefined : newPassword,
+            userName: model.userName,
+            password: isNilOrEmpty(model.password) ? undefined : model.password,
             isActive: this.user().isActive,
             roleNames: this.user().roles.map(role => role.name),
             customPermissions: this.user().customPermissions
-        };
+        }
     }
 
 }

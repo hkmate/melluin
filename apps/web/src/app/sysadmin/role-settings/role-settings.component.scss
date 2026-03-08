@@ -3,12 +3,3 @@
     display: flex;
     justify-content: space-between;
 }
-
-
-.permission {
-    padding-right: .5rem;
-
-    &:not(:last-of-type)::after {
-        content: ', ';
-    }
-}

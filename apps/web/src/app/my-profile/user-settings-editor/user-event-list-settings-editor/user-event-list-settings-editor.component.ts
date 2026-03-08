@@ -1,88 +1,127 @@
-import {Component, computed, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, input, signal} from '@angular/core';
 import {
     DateIntervalSpecifier,
     Department,
     EventsDateFilterValues,
-    VisitStatus,
+    isNil,
+    Nullable,
     Pageable,
-    UserSettings
+    UserSettings,
+    VisitStatus
 } from '@melluin/common';
-import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {TranslatePipe} from '@ngx-translate/core';
-import {PersonSelectComponent} from '@fe/app/util/person-select/person-select.component';
+import {PersonSelectComponent2} from '@fe/app/util/person-select/person-select.component';
 import {MatCard, MatCardSubtitle} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
-import {CustomUserSettingsEditorBaseComponent} from '@fe/app/my-profile/user-settings-editor/custom-user-settings-editor.base.component';
+import {MessageService} from '@fe/app/util/message.service';
+import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
+import {UserService} from '@fe/app/people/user.service';
+import {form, FormField, submit} from '@angular/forms/signals';
+import {firstValueFrom} from 'rxjs';
+import {AppSubmit} from '@fe/app/util/submit/app-submit';
 
 @Component({
-    selector: 'app-user-event-list-settings-editor',
-    templateUrl: './user-event-list-settings-editor.component.html',
     imports: [
-        ReactiveFormsModule,
         MatLabel,
         MatFormField,
         MatSelect,
         TranslatePipe,
         MatOption,
-        PersonSelectComponent,
+        PersonSelectComponent2,
         MatCard,
         MatCardSubtitle,
         MatCheckbox,
-        MatButton
+        MatButton,
+        AppSubmit,
+        FormField
     ],
-    styleUrls: ['./user-event-list-settings-editor.component.scss']
+    selector: 'app-user-event-list-settings-editor',
+    templateUrl: './user-event-list-settings-editor.component.html',
+    styleUrls: ['./user-event-list-settings-editor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserEventListSettingsEditorComponent extends CustomUserSettingsEditorBaseComponent {
+export class UserEventListSettingsEditorComponent {
 
-    private readonly fb = inject(FormBuilder);
+    protected readonly statusOptions: Array<VisitStatus> = Object.values(VisitStatus);
+    protected readonly dateOptions: Array<DateIntervalSpecifier> = EventsDateFilterValues;
+
+    private readonly msg = inject(MessageService);
+    private readonly credentialStoreService = inject(CredentialStoreService);
     private readonly departmentService = inject(DepartmentService);
+    private readonly userService = inject(UserService);
 
-    protected form = computed(() => this.initForm());
-    protected statusOptions: Array<VisitStatus> = Object.values(VisitStatus);
-    protected departmentOptions: Array<Department>;
-    protected dateOptions: Array<DateIntervalSpecifier> = EventsDateFilterValues;
+    public readonly userId = input.required<string>();
+    public readonly settings = input.required<UserSettings>();
+
+    private readonly formModel = signal(this.getDefaultFormModel());
+    protected readonly form = form(this.formModel);
+
+    protected readonly isSaveBtnDisabled = computed(() => this.form().invalid() || this.form().submitting());
+
+    protected readonly departmentOptions = signal<Array<Department>>([]);
 
     constructor() {
-        super();
         this.initDepartmentOptions();
+        effect(() => this.setupFormValues());
     }
 
-    protected override isSaveBtnDisabled(): boolean {
-        return this.form().invalid || super.isSaveBtnDisabled();
+    protected submitSettings(): void {
+        submit(this.form, async () => {
+            const userSettings = await firstValueFrom(
+                this.userService.updateUserSettings(this.userId(), this.generateDto())
+            );
+            this.credentialStoreService.setupUserSettings(userSettings);
+            this.msg.success('SaveSuccessful');
+        });
     }
 
-    protected override generateNewSettings(): UserSettings {
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    private getDefaultFormModel() {
+        return {
+            dateFilter: null as Nullable<DateIntervalSpecifier>,
+            statuses: [] as Array<VisitStatus>,
+            departmentIds: [] as Array<string>,
+            participantIds: [] as Array<string>,
+            needHighlight: false
+        };
+    }
+
+    private setupFormValues(): void {
+        const settings = this.settings().eventList;
+        if (isNil(settings)) {
+            this.formModel.set(this.getDefaultFormModel());
+            return;
+        }
+        this.formModel.set({
+            dateFilter: settings.dateFilter ?? null,
+            statuses: settings.statuses ?? [],
+            departmentIds: settings.departmentIds ?? [],
+            participantIds: settings.participantIds ?? [],
+            needHighlight: settings.needHighlight ?? false,
+        });
+    }
+
+    private generateDto(): UserSettings {
         return {
             ...this.settings(),
             eventList: {
-                dateFilter: this.form().controls.dateFilter.value,
-                statuses: this.form().controls.statuses.value,
-                departmentIds: this.form().controls.departmentIds.value,
-                participantIds: this.form().controls.participantIds.value,
-                needHighlight: this.form().controls.needHighlight.value,
+                dateFilter: this.formModel().dateFilter ?? undefined,
+                statuses: this.formModel().statuses,
+                departmentIds: this.formModel().departmentIds,
+                participantIds: this.formModel().participantIds,
+                needHighlight: this.formModel().needHighlight,
             }
         }
-    }
-
-    private initForm(): FormGroup {
-        const eventList = this.settings().eventList;
-        return this.fb.group({
-            dateFilter: [eventList?.dateFilter],
-            participantIds: [eventList?.participantIds],
-            statuses: [eventList?.statuses],
-            departmentIds: [eventList?.departmentIds],
-            needHighlight: [eventList?.needHighlight],
-        });
     }
 
     private initDepartmentOptions(): void {
         this.departmentService.findDepartments({page: 1, size: 100}).subscribe(
             (departmentPage: Pageable<Department>) => {
-                this.departmentOptions = departmentPage.items;
+                this.departmentOptions.set(departmentPage.items);
             }
         );
     }

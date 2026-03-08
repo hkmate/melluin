@@ -14,7 +14,6 @@ import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
 
 @Component({
     selector: 'app-visit-connection-create',
-    standalone: true,
     imports: [
         FormsModule,
         MatFormField,
