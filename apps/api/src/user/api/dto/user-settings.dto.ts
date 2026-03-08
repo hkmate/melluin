@@ -1,4 +1,4 @@
-import {IsBoolean, IsEnum, IsIn, IsOptional, IsPositive, IsUUID, ValidateNested} from 'class-validator';
+import {IsBoolean, IsEnum, IsIn, IsOptional, IsPositive, IsUUID, Min, ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
 import {
     BoxStatusChangeReason,
@@ -11,8 +11,8 @@ import {
     EventsDateFilterValues,
     HomePageOption,
     HomePageUserSettings,
-    VisitStatus,
     UserSettings,
+    VisitStatus,
     WidgetSetting,
     WidgetType
 } from '@melluin/common';
@@ -70,7 +70,7 @@ export class WidgetSettingDto implements WidgetSetting {
 
     @ApiProperty()
     @IsOptional()
-    @IsPositive()
+    @Min(0)
     index: number;
 
     @ApiProperty({enum: WidgetType})
