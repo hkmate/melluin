@@ -1,4 +1,4 @@
-import {Component, effect, forwardRef, inject, input, model, signal} from '@angular/core';
+import {Component, forwardRef, inject, input, linkedSignal, model, signal} from '@angular/core';
 import {FilteringInfo, isNil, NOOP, PersonIdentifier, RoleType, VoidFunc} from '@melluin/common';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CachedPeopleService} from '@fe/app/people/cached-people.service';
@@ -10,6 +10,7 @@ import {MatOption, MatSelect} from '@angular/material/select';
 import {MatSelectSearchComponent} from 'ngx-mat-select-search';
 import {TranslatePipe} from '@ngx-translate/core';
 import {FormValueControl} from '@angular/forms/signals';
+import {from} from 'rxjs';
 
 @Component({
     imports: [
@@ -40,48 +41,34 @@ export class PersonSelectComponent2 implements FormValueControl<Array<string>> {
     public readonly value = model<Array<string>>([]);
     public readonly disabled = input<boolean>(false);
 
-    protected readonly filteredOptions = signal<Array<PersonIdentifier>>([]);
-    protected readonly selectedPeople = signal<Array<PersonIdentifier>>([]);
     protected readonly filterText = signal<''>('');
+    protected readonly filteredOptions = linkedSignal(() => this.filterOptions());
+    protected readonly selectedPeople = linkedSignal(() => this.getSelectedPeople());
 
     private peopleOptions: Array<PersonIdentifier> = [];
 
     constructor() {
         this.initPersonOptions();
-        effect(() => this.setupPeople());
-        effect(() => this.writeNewSelected());
-        effect(() => this.filterOptions());
     }
 
-    protected writeNewSelected(): void {
-        this.value.set(this.selectedPeople().map(p => p.id));
-    }
-
-    protected filterOptions(): void {
+    protected filterOptions(): Array<PersonIdentifier> {
         const regex = new RegExp(this.filterText(), 'i');
-        this.filteredOptions.set(this.peopleOptions.filter(
-            person => person.lastName.match(regex) || person.firstName.match(regex))
-        );
+        return this.peopleOptions.filter(person => person.lastName.match(regex) || person.firstName.match(regex));
     }
 
-    protected removePerson(removedPerson: PersonIdentifier): void {
-        const newSelectedPeople = this.selectedPeople().filter(person => person.id !== removedPerson.id);
-        this.selectedPeople.set(newSelectedPeople);
-        this.value.set(newSelectedPeople.map(p => p.id));
+    protected removePerson(removedPersonId: string): void {
+        this.value.update(old => old.filter(personId => personId !== removedPersonId));
     }
 
-    private setupPeople(): void {
-        this.selectedPeople.set(this.peopleOptions.filter(p => this.value().includes(p.id)));
+    private getSelectedPeople(): Array<PersonIdentifier> {
+        const selectedIds = this.value();
+        return this.peopleOptions.filter(p => selectedIds.includes(p.id));
     }
 
-    private initPersonOptions(): void {
-        this.personService.loadAllPeople(this.getFilterOptions(), this.cacheName).subscribe(
-            (peopleOptions: Array<PersonIdentifier>) => {
-                this.peopleOptions = peopleOptions;
-                this.filteredOptions.set([...this.peopleOptions]);
-                this.setupPeople();
-            }
-        );
+    private async initPersonOptions(): Promise<void> {
+        this.peopleOptions = await this.personService.loadAllPeople(this.getFilterOptions(), this.cacheName);
+        this.filteredOptions.set([...this.peopleOptions]);
+        this.selectedPeople.set(this.getSelectedPeople());
     }
 
     private getFilterOptions(): FilteringInfo {
@@ -221,7 +208,7 @@ export class PersonSelectComponent implements ControlValueAccessor {
     }
 
     private initPersonOptions(): void {
-        this.personService.loadAllPeople(this.getFilterOptions(), this.cacheName).subscribe(
+        from(this.personService.loadAllPeople(this.getFilterOptions(), this.cacheName)).subscribe(
             (peopleOptions: Array<PersonIdentifier>) => {
                 this.peopleOptions = peopleOptions;
                 this.filteredOptions = [...this.peopleOptions];

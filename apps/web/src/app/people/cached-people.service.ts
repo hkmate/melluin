@@ -1,40 +1,46 @@
 import {inject, Injectable} from '@angular/core';
-import {map, mergeMap, Observable, of, tap} from 'rxjs';
-import {FilteringInfo, isNilOrEmpty, Pageable, PersonIdentifier} from '@melluin/common';
+import {firstValueFrom} from 'rxjs';
+import {FilteringInfo, isNil, isNotNil, Pageable, PersonIdentifier} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 
+const MAX_PAGE_SIZE = 100;
 
 @Injectable({providedIn: 'root'})
 export class CachedPeopleService {
 
-    private static readonly MAX_SIZE_OF_DATA = 100;
-
     private readonly personService = inject(PeopleService);
 
-    public loadAllPeople(query: FilteringInfo, cacheName: string): Observable<Array<PersonIdentifier>> {
-        const cached = this.getFromCache(cacheName);
-        if (!isNilOrEmpty(cached)) {
-            return of(cached);
+    public async loadAllPeople(query: FilteringInfo, cacheName: string): Promise<Array<PersonIdentifier>> {
+        const storedList = this.getFromCache(cacheName);
+        if (isNotNil(storedList)) {
+            return storedList;
         }
-        return this.loadPeopleToStorage(query, cacheName).pipe(map(() => this.getFromCache(cacheName)));
+        const loadedPeople = await this.loadAllPeopleListFromPage(query);
+        sessionStorage.setItem(cacheName, JSON.stringify(loadedPeople));
+        return loadedPeople;
     }
 
-    private loadPeopleToStorage(query: FilteringInfo, cacheName: string, page: number = 1): Observable<unknown> {
-        return this.personService.findPeopleIdentifiers({page, size: CachedPeopleService.MAX_SIZE_OF_DATA, ...query})
-            .pipe(
-                tap((pageable: Pageable<PersonIdentifier>) => this.addToCache(cacheName, pageable.items)),
-                mergeMap((pageable: Pageable<PersonIdentifier>) =>
-                    (this.isLastPage(pageable) ? of({}) : this.loadPeopleToStorage(query, cacheName, page + 1)))
-            );
+    private async loadAllPeopleListFromPage(query: FilteringInfo, pageNumber = 1): Promise<Array<PersonIdentifier>> {
+        const page = await this.loadPeoplePage(query, pageNumber);
+        if (this.isLastPage(page)) {
+            return page.items;
+        }
+        const peopleFromOtherPages = await this.loadAllPeopleListFromPage(query, pageNumber + 1);
+        return [...page.items, ...peopleFromOtherPages];
     }
 
-    private addToCache(cacheName: string, value: Array<PersonIdentifier>): void {
-        const alreadyPersisted = this.getFromCache(cacheName);
-        sessionStorage.setItem(cacheName, JSON.stringify([...alreadyPersisted, ...value]));
+    private loadPeoplePage(query: FilteringInfo, page: number): Promise<Pageable<PersonIdentifier>> {
+        return firstValueFrom(
+            this.personService.findPeopleIdentifiers({page, size: MAX_PAGE_SIZE, ...query})
+        );
     }
 
-    private getFromCache(cacheName: string): Array<PersonIdentifier> {
-        return JSON.parse(sessionStorage.getItem(cacheName) ?? '[]');
+    private getFromCache(cacheName: string): Array<PersonIdentifier> | undefined {
+        const storedData = sessionStorage.getItem(cacheName);
+        if (isNil(storedData)) {
+            return undefined;
+        }
+        return JSON.parse(storedData);
     }
 
     private isLastPage<T>(pageable: Pageable<T>): boolean {

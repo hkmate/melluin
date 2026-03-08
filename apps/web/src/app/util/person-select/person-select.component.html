@@ -2,7 +2,7 @@
     <mat-label>{{ label() }}</mat-label>
     <mat-chip-listbox>
         @for (person of selectedPeople(); track person.id) {
-            <mat-chip-row (removed)="removePerson(person)">
+            <mat-chip-row (removed)="removePerson(person.id)">
                 {{ person | personName }}
                 @if (!disabled()) {
                     <button matChipRemove>
@@ -12,14 +12,14 @@
             </mat-chip-row>
         }
     </mat-chip-listbox>
-    <mat-select [(ngModel)]="selectedPeople" [disabled]="disabled()" multiple>
+    <mat-select [(ngModel)]="value" [disabled]="disabled()" multiple>
         <mat-option>
             <ngx-mat-select-search [(ngModel)]="filterText"
                                    [placeholderLabel]="'Search' | translate"
                                    [noEntriesFoundLabel]="'NoItemFound' | translate"/>
         </mat-option>
         @for (option of filteredOptions(); track option.id) {
-            <mat-option [value]="option">{{ option | personName }}</mat-option>
+            <mat-option [value]="option.id">{{ option | personName }}</mat-option>
         }
     </mat-select>
 </mat-form-field>
