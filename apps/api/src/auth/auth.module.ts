@@ -26,7 +26,7 @@ import {JwtModuleOptions} from '@nestjs/jwt/dist/interfaces/jwt-module-options.i
             useFactory: (config: ConfigService): JwtModuleOptions => {
                 const securityConfig = config.get<Security>('server.security');
                 return {
-                    secretOrPrivateKey: securityConfig?.secretKey,
+                    secret: securityConfig?.secretKey,
                     signOptions: {
                         expiresIn: securityConfig?.expiration,
                     },

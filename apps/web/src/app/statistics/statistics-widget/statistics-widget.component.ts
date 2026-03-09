@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, effect, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, input, linkedSignal, signal} from '@angular/core';
 import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
 import {exportCSV} from '@fe/app/util/csv-export';
 import {ChartComponent} from '@fe/app/util/chart/chart.component';
@@ -38,7 +38,7 @@ export class StatisticsWidgetComponent<T> {
     public readonly widgetId = input.required<string>();
     public readonly controller = input.required<StatisticWidgetController<T>>();
 
-    protected readonly mode = computed<WidgetMode>(() => this.controller().defaultMode());
+    protected readonly mode = linkedSignal<WidgetMode>(() => this.controller().defaultMode());
     protected readonly dataReady = computed(() => this.controller().hasData()());
     protected readonly title = computed(() => this.controller().getName());
 
