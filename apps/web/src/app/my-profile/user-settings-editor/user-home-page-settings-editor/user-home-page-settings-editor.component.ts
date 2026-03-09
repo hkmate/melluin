@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, computed, effect, inject, input, signal} from '@angular/core';
 import {form, FormField, submit} from '@angular/forms/signals';
-import {HomePageOption, isNil, Nullable, UserSettings} from '@melluin/common';
+import {HomePageOption, isNil, Nullable, UserSettings, UUID} from '@melluin/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HomePageOptionSelectorComponent} from '@fe/app/my-profile/user-settings-editor/user-home-page-settings-editor/home-page-option-selector/home-page-option-selector.component';
 import {MatButton} from '@angular/material/button';
@@ -31,7 +31,7 @@ export class UserHomePageSettingsEditorComponent {
     private readonly credentialStoreService = inject(CredentialStoreService);
     private readonly userService = inject(UserService);
 
-    public readonly userId = input.required<string>();
+    public readonly userId = input.required<UUID>();
     public readonly settings = input.required<UserSettings>();
 
     private readonly formModel = signal(this.getDefaultFormModel());

@@ -1,5 +1,5 @@
 import {Component, effect, inject, input} from '@angular/core';
-import {isNil, isNotNil, Permission, User, UserCreation, UserRewrite} from '@melluin/common';
+import {isNil, isNotNil, Permission, User, UserCreation, UserRewrite, UUID} from '@melluin/common';
 import {UserService} from '@fe/app/people/user.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {MessageService} from '@fe/app/util/message.service';
@@ -29,9 +29,9 @@ export class UserDetailComponent {
 
     Permission = Permission;
 
-    public readonly personId = input.required<string>();
+    public readonly personId = input.required<UUID>();
     public readonly editEnabled = input.required<boolean>();
-    public readonly userId = input<string>();
+    public readonly userId = input<UUID>();
 
     protected editModeOn = false;
     protected createModeOn = false;

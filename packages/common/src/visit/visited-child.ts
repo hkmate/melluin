@@ -1,11 +1,12 @@
 import {Child} from '../child/child';
 import {ChildInput} from '../child/child-input';
+import {UUID} from '../util/type/uuid.type';
 
 
 // Note: If both 'child' and 'childId' presented the property 'child' will be processed.
 export interface VisitedChildInput {
 
-    childId?: string;
+    childId?: UUID;
     child?: ChildInput;
     isParentThere: boolean;
 
@@ -20,14 +21,14 @@ export interface VisitedChildWithChildInput {
 
 export interface VisitedChildWithChildIdInput {
 
-    childId: string;
+    childId: UUID;
     isParentThere: boolean;
 
 }
 
 export interface VisitedChildEditInput {
 
-    id: string;
+    id: UUID;
     child: ChildInput;
     isParentThere: boolean;
 
@@ -35,8 +36,8 @@ export interface VisitedChildEditInput {
 
 export interface VisitedChild {
 
-    id: string;
-    visitId: string;
+    id: UUID;
+    visitId: UUID;
     child: Child;
     isParentThere: boolean;
 

@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {PassportStrategy} from '@nestjs/passport';
 import {ExtractJwt, Strategy} from 'passport-jwt';
-import {User} from '@melluin/common';
+import {User, UUID} from '@melluin/common';
 import {ConfigService} from '@nestjs/config';
 import {JwtUserStorage} from '@be/auth/strategy/jwt-user-storage';
 
@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         });
     }
 
-    public validate({userId}: { userId: string }): Promise<User> {
+    public validate({userId}: { userId: UUID }): Promise<User> {
         return this.userStorage.getById(userId);
     }
 

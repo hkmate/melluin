@@ -1,14 +1,15 @@
 import {VisitStatus} from './visit-status';
+import {UUID} from '../util/type/uuid.type';
 
 export interface VisitCreate {
 
     dateTimeFrom: string;
     dateTimeTo: string;
     countedMinutes?: number;
-    organizerId: string;
-    participantIds: Array<string>;
+    organizerId: UUID;
+    participantIds: Array<UUID>;
     status: VisitStatus;
-    departmentId: string;
+    departmentId: UUID;
     vicariousMomVisit: boolean;
 
 }

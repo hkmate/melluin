@@ -1,11 +1,11 @@
 import {Injectable} from '@nestjs/common';
-import {Converter, DateUtil, DepartmentBoxStatusReport, isNil} from '@melluin/common';
+import {Converter, DateUtil, DepartmentBoxStatusReport, isNil, UUID} from '@melluin/common';
 import {randomUUID} from 'crypto';
 import {DepartmentBoxStatusEntity} from '@be/department-box/model/department-box-status.entity';
 import {DepartmentDao} from '@be/department/department.dao';
 
 interface BoxStatusReportWithDepartmentId {
-    departmentId: string;
+    departmentId: UUID;
     report: DepartmentBoxStatusReport;
 }
 

@@ -1,7 +1,7 @@
 import {Component, effect, inject, input, signal} from '@angular/core';
 import {VisitActivityInformationService} from '@fe/app/hospital/visit-activity/visit-activity-information.service';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {Permission} from '@melluin/common';
+import {Permission, UUID} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatButton, MatMiniFabButton} from '@angular/material/button';
@@ -32,7 +32,7 @@ export class ActivitiesInformationFillerComponent {
     protected readonly permissions = inject(PermissionService);
     private readonly activitiesInformationService = inject(VisitActivityInformationService);
 
-    public readonly visitId = input.required<string>();
+    public readonly visitId = input.required<UUID>();
 
     protected readonly formControl = new FormControl<string>('', {nonNullable: true});
     protected readonly editMode = signal<boolean>(false);

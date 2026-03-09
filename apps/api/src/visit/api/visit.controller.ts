@@ -19,7 +19,7 @@ import {
     Visit,
     Pageable,
     Permission,
-    User
+    User, UUID
 } from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PageReq} from '@be/crud/page-req';
@@ -53,13 +53,13 @@ export class VisitController {
 
     @Get('/:id')
     @PermissionGuard(Permission.canReadVisit)
-    public getOne(@Param('id', ParseUUIDPipe) visitId: string): Promise<Visit> {
+    public getOne(@Param('id', ParseUUIDPipe) visitId: UUID): Promise<Visit> {
         return this.visitCrudService.getOne(visitId);
     }
 
     @Get('/:id/box-status')
     @PermissionGuard(Permission.canReadDepBox)
-    public getBoxStatusesOfVisit(@Param('id', ParseUUIDPipe) visitId: string,
+    public getBoxStatusesOfVisit(@Param('id', ParseUUIDPipe) visitId: UUID,
                                  @Query('withDepartmentBrief') withDepartmentBrief: boolean): Promise<Array<DepartmentBoxStatus> | Array<BoxStatusWithDepartmentBrief>> {
         const infoParam = withDepartmentBrief ? BoxStatusInfoParam.WITH_DEPARTMENT_BRIEF : BoxStatusInfoParam.PURE_BOX_STATUS;
         return this.boxStatusCrudService.findByVisit(visitId, infoParam);
@@ -80,7 +80,7 @@ export class VisitController {
     @Put('/:id')
     @PermissionGuard(Permission.canModifyVisit, Permission.canModifyAnyVisit)
     @ApiQuery({name: 'forceSameTime', required: false, default: false})
-    public update(@Param('id', ParseUUIDPipe) visitId: string,
+    public update(@Param('id', ParseUUIDPipe) visitId: UUID,
                   @Query('forceSameTime', new DefaultValuePipe(false), ParseBoolPipe) sameTimeVisitForced: boolean,
                   @Body() visitRewrite: VisitRewriteDto,
                   @CurrentUser() requester: User): Promise<Visit> {
@@ -88,7 +88,7 @@ export class VisitController {
         return this.visitCrudService.rewrite(visitId, visitRewrite, sameTimeVisitForced, requester);
     }
 
-    private verifyIsCorrect(id: string, dto: {id: string}): void {
+    private verifyIsCorrect(id: UUID, dto: {id: UUID}): void {
         if (id !== dto.id) {
             throw new BadRequestException('Path id is not the same in the object as in the URL');
         }

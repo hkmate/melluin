@@ -1,11 +1,12 @@
 import {Column, Entity, JoinColumn, OneToOne, PrimaryColumn} from 'typeorm';
 import {VisitEntity} from '@be/visit/model/visit.entity';
+import {UUID} from '@melluin/common';
 
 @Entity({name: 'hospital_visit_activity_info'})
 export class VisitActivityInfoEntity {
 
     @PrimaryColumn('uuid')
-    id: string;
+    id: UUID;
 
     @Column({type: 'text', nullable: true})
     content: string | null;

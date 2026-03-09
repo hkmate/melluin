@@ -1,5 +1,5 @@
 import {Component, forwardRef, inject, input, linkedSignal, model, signal} from '@angular/core';
-import {FilteringInfo, isNil, NOOP, PersonIdentifier, RoleType, VoidFunc} from '@melluin/common';
+import {FilteringInfo, isNil, NOOP, PersonIdentifier, RoleType, UUID, VoidFunc} from '@melluin/common';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CachedPeopleService} from '@fe/app/people/cached-people.service';
 import {MatFormField, MatLabel} from '@angular/material/input';
@@ -31,14 +31,14 @@ import {from} from 'rxjs';
     templateUrl: './person-select.component.html',
     styleUrls: ['./person-select.component.scss'],
 })
-export class PersonSelectComponent2 implements FormValueControl<Array<string>> {
+export class PersonSelectComponent2 implements FormValueControl<Array<UUID>> {
 
     private readonly personService = inject(CachedPeopleService);
     private readonly cacheName = 'peopleFilter';
 
     public readonly label = input.required<string>();
 
-    public readonly value = model<Array<string>>([]);
+    public readonly value = model<Array<UUID>>([]);
     public readonly disabled = input<boolean>(false);
 
     protected readonly filterText = signal<''>('');
@@ -56,7 +56,7 @@ export class PersonSelectComponent2 implements FormValueControl<Array<string>> {
         return this.peopleOptions.filter(person => person.lastName.match(regex) || person.firstName.match(regex));
     }
 
-    protected removePerson(removedPersonId: string): void {
+    protected removePerson(removedPersonId: UUID): void {
         this.value.update(old => old.filter(personId => personId !== removedPersonId));
     }
 

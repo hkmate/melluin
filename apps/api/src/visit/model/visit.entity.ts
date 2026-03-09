@@ -1,13 +1,13 @@
 import {Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn} from 'typeorm';
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import {PersonEntity} from '@be/person/model/person.entity';
-import {VisitStatus} from '@melluin/common';
+import {UUID, VisitStatus} from '@melluin/common';
 
 @Entity({name: 'hospital_visit'})
 export class VisitEntity {
 
     @PrimaryColumn('uuid')
-    id: string;
+    id: UUID;
 
     @Column({name: 'datetime_from', type: 'timestamp'})
     dateTimeFrom: Date;
@@ -29,7 +29,7 @@ export class VisitEntity {
     vicariousMomVisit: boolean;
 
     @Column({name: 'group_id', type: 'uuid'})
-    connectionGroupId: string;
+    connectionGroupId: UUID;
 
     @OneToOne(type => DepartmentEntity, {eager: true})
     @JoinColumn({name: 'department_id'})

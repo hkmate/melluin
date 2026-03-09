@@ -1,5 +1,15 @@
 import {Component, effect, inject, signal} from '@angular/core';
-import {FilterOptions, isEmpty, isNotNil, Pageable, PageQuery, Permission, Person, SortOptions} from '@melluin/common';
+import {
+    FilterOptions,
+    isEmpty,
+    isNotNil,
+    Pageable,
+    PageQuery,
+    Permission,
+    Person,
+    SortOptions,
+    UUID
+} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 import {AppTitle} from '@fe/app/app-title.service';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
@@ -94,7 +104,7 @@ export class PeopleListComponent {
     protected size: number;
     protected countOfAll: number;
     protected items = signal<Array<Person>>([]);
-    protected creators = signal<Record<string, Person>>({});
+    protected creators = signal<Record<UUID, Person>>({});
 
     private sort: SortOptions = {
         lastName: 'ASC'

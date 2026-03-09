@@ -1,6 +1,6 @@
 import {DatepickerTranslations} from 'ngxsmk-datepicker';
 
-// eslint-diable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function
 export function getHungarianTranslations(): DatepickerTranslations {
     return {
         // Main actions

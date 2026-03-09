@@ -1,4 +1,4 @@
-import {VisitRewrite, VisitStatus} from '@melluin/common';
+import {UUID, VisitRewrite, VisitStatus} from '@melluin/common';
 import { ApiProperty } from '@nestjs/swagger';
 import {IsArray, IsBoolean, IsDateString, IsEnum, IsNumber, IsOptional, IsString, IsUUID, Min} from 'class-validator';
 
@@ -7,7 +7,7 @@ export class VisitRewriteDto implements VisitRewrite {
 
     @ApiProperty()
     @IsUUID()
-    id: string;
+    id: UUID;
 
     @ApiProperty()
     @IsDateString()
@@ -26,7 +26,7 @@ export class VisitRewriteDto implements VisitRewrite {
     @ApiProperty()
     @IsUUID('all', {each: true})
     @IsArray()
-    participantIds: Array<string>;
+    participantIds: Array<UUID>;
 
     @ApiProperty({enum: VisitStatus, enumName: 'VisitStatus'})
     @IsEnum(VisitStatus)
@@ -35,7 +35,7 @@ export class VisitRewriteDto implements VisitRewrite {
     @ApiProperty()
     @IsUUID()
     @IsString()
-    departmentId: string;
+    departmentId: UUID;
 
     @ApiProperty()
     @IsBoolean()

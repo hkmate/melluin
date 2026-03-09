@@ -11,7 +11,7 @@ import {
     VisitStatus,
     VisitedChild,
     VisitedChildEditInput,
-    VisitedChildInput
+    VisitedChildInput, UUID
 } from '@melluin/common';
 import {BehaviorSubject, map, Observable, switchMap, tap} from 'rxjs';
 import {MessageService} from '@fe/app/util/message.service';
@@ -29,7 +29,7 @@ export class VisitActivityFillerService {
     private visitDate: Date;
     private visit: Visit;
     private readonly children$ = new BehaviorSubject<Array<VisitedChild>>([]);
-    private readonly lockedChildIds$ = new BehaviorSubject<Array<string>>([]);
+    private readonly lockedChildIds$ = new BehaviorSubject<Array<UUID>>([]);
     private readonly activities$ = new BehaviorSubject<Array<VisitActivity>>([])
     private readonly visitStatus$ = new BehaviorSubject<VisitStatus | null>(null);
 
@@ -68,11 +68,11 @@ export class VisitActivityFillerService {
         return getChildAge(child, this.visitDate);
     }
 
-    public lockVisitedChildId(...visitedChildIds: Array<string>): void {
+    public lockVisitedChildId(...visitedChildIds: Array<UUID>): void {
         this.lockedChildIds$.next([...visitedChildIds, ...this.lockedChildIds$.getValue()]);
     }
 
-    public unlockVisitedChildId(...visitedChildIds: Array<string>): void {
+    public unlockVisitedChildId(...visitedChildIds: Array<UUID>): void {
         this.lockedChildIds$.next(difference(this.lockedChildIds$.getValue(), visitedChildIds));
     }
 
@@ -85,7 +85,7 @@ export class VisitActivityFillerService {
         );
     }
 
-    public isChildDeletable(childId: string): Observable<boolean> {
+    public isChildDeletable(childId: UUID): Observable<boolean> {
         return this.activities$.asObservable().pipe(
             map(activities => activities.every(activity => !activity.children.includes(childId))),
             switchMap((childIsNotInActivity: boolean) => this.lockedChildIds$.asObservable().pipe(

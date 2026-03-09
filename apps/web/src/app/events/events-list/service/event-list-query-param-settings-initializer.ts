@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';
 import {EventsFilter} from '@fe/app/events/events-list/service/events-filter';
 import {DefaultEventListSettingsInitializer} from '@fe/app/events/events-list/service/event-list-settings-initializer';
-import {VisitStatus, isNil, isNilOrEmpty, PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo} from '@melluin/common';
+import {VisitStatus, isNil, isNilOrEmpty, PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo, UUID} from '@melluin/common';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {EventListQueryParams} from '@fe/app/events/events-list/service/event-list-query-params';
 
@@ -84,7 +84,7 @@ export class EventListQueryParamSettingsInitializer extends DefaultEventListSett
         if (isNilOrEmpty(participantIds)) {
             return;
         }
-        filter.participantIds = participantIds!;
+        filter.participantIds = participantIds as Array<UUID>;
     }
 
     private decorateDepartmentFilter(filter: EventsFilter): void {
@@ -92,7 +92,7 @@ export class EventListQueryParamSettingsInitializer extends DefaultEventListSett
         if (isNilOrEmpty(departmentIds)) {
             return;
         }
-        filter.departmentIds = departmentIds!;
+        filter.departmentIds = departmentIds as Array<UUID>;
     }
 
     private decorateStatusesFilter(filter: EventsFilter): void {

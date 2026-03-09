@@ -2,7 +2,7 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import {In, Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import {RoleEntity} from './model/role.entity';
-import {isNil, RoleType} from '@melluin/common';
+import {isNil, RoleType, UUID} from '@melluin/common';
 
 @Injectable()
 export class RoleDao {
@@ -19,7 +19,7 @@ export class RoleDao {
         return this.roleRepository.find();
     }
 
-    public findById(id: string): Promise<RoleEntity> {
+    public findById(id: UUID): Promise<RoleEntity> {
         return this.roleRepository.findOneBy({id})
             .then(entity => {
                 if (isNil(entity)) {

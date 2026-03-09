@@ -1,7 +1,7 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
-import {isNil, Pageable} from '@melluin/common';
+import {isNil, Pageable, UUID} from '@melluin/common';
 import {WhereClosureConverter} from '@be/find-option-converter/where-closure.converter';
 import {PageCreator} from '@be/crud/page-creator';
 import {PageRequest} from '@be/crud/page-request';
@@ -19,13 +19,13 @@ export class DepartmentDao extends PageCreator<DepartmentEntity> {
         return this.repository.save(department);
     }
 
-    public findOne(id: string): Promise<DepartmentEntity | undefined> {
+    public findOne(id: UUID): Promise<DepartmentEntity | undefined> {
         return this.repository.findOne({
             where: {id},
         }).then(entity => entity ?? undefined);
     }
 
-    public getOne(id: string): Promise<DepartmentEntity> {
+    public getOne(id: UUID): Promise<DepartmentEntity> {
         return this.findOne(id).then(entity => {
             if (isNil(entity)) {
                 throw new NotFoundException(`Department not found with id: ${id}`);

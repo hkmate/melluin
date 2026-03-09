@@ -1,15 +1,15 @@
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryColumn} from 'typeorm';
 import {DepartmentEntity} from '@be/department/model/department.entity';
-import {BoxStatusChangeReason} from '@melluin/common';
+import {BoxStatusChangeReason, UUID} from '@melluin/common';
 
 @Entity({name: 'hospital_box_status_report'})
 export class DepartmentBoxStatusEntity {
 
     @PrimaryColumn('uuid')
-    id: string;
+    id: UUID;
 
     @Column({name: 'visit_id', type: 'uuid', nullable: true})
-    visitId: string | null;
+    visitId: UUID | null;
 
     @Column({name: 'date_time', type: 'timestamp'})
     dateTime: Date;

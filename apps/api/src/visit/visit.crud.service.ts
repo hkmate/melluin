@@ -12,7 +12,7 @@ import {VisitSaveValidatorFactory} from '@be/visit/validator/visit-save-validato
 import {
     AsyncValidatorChain,
     Pageable,
-    User,
+    User, UUID,
     Visit,
     VisitCreate,
     visitFilterableFields,
@@ -30,8 +30,8 @@ export class VisitCrudService {
                 private readonly visitCreationToEntityConverter: VisitCreationToEntityConverter) {
     }
 
-    public async save(visitCreate: VisitCreate,
-                      sameTimeVisitForced: boolean, requester: User): Promise<Visit> {
+    public async save(visitCreate: VisitCreate, sameTimeVisitForced: boolean,
+                      requester: User): Promise<Visit> {
         await this.createValidatorsForCreate().validate({item: visitCreate, sameTimeVisitForced, requester});
 
         const creationEntity = await this.visitCreationToEntityConverter.convert(visitCreate);
@@ -39,7 +39,7 @@ export class VisitCrudService {
         return this.visitConverter.convert(visitEntity);
     }
 
-    public getOne(id: string): Promise<Visit> {
+    public getOne(id: UUID): Promise<Visit> {
         return this.visitDao.getOne(id)
             .then(entity => this.visitConverter.convert(entity))
     }
@@ -54,7 +54,7 @@ export class VisitCrudService {
         return pageConverter.convert(pageOfEntities);
     }
 
-    public async rewrite(visitId: string, visitRewrite: VisitRewrite,
+    public async rewrite(visitId: UUID, visitRewrite: VisitRewrite,
                          sameTimeVisitForced: boolean, requester: User): Promise<Visit> {
         const entity = await this.visitDao.getOne(visitId);
 

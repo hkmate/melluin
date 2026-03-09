@@ -1,6 +1,6 @@
 import {IsBoolean, IsString, IsUUID, ValidateIf, ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
-import {ChildInput, isNil, VisitedChildEditInput, VisitedChildInput} from '@melluin/common';
+import {ChildInput, isNil, UUID, VisitedChildEditInput, VisitedChildInput} from '@melluin/common';
 import {ChildInputDto} from '@be/visit-children/api/dto/child-input.dto';
 import {ApiProperty} from '@nestjs/swagger';
 
@@ -12,7 +12,7 @@ export class VisitedChildInputDto implements VisitedChildInput {
     @IsUUID()
     @IsString()
     @ValidateIf(o => isNil(o.child))
-    childId?: string;
+    childId?: UUID;
 
     @ApiProperty({type: () => ChildInputDto, required: false})
     @ValidateNested()
@@ -31,7 +31,7 @@ export class VisitedChildEditInputDto implements VisitedChildEditInput {
 
     @ApiProperty()
     @IsUUID()
-    id: string;
+    id: UUID;
 
     @ApiProperty({type: () => ChildInputDto})
     @ValidateNested()

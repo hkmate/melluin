@@ -6,7 +6,7 @@ import {
     departmentFilterableFields,
     departmentSortableFields,
     Pageable,
-    User
+    User, UUID
 } from '@melluin/common';
 import {PageConverter} from '@be/crud/convert/page.converter';
 import {PageRequest} from '@be/crud/page-request';
@@ -39,7 +39,7 @@ export class DepartmentCrudService {
         return this.departmentConverter.convert(departmentEntity);
     }
 
-    public getOne(id: string): Promise<Department> {
+    public getOne(id: UUID): Promise<Department> {
         return this.departmentDao.getOne(id)
             .then(entity => this.departmentConverter.convert(entity))
     }

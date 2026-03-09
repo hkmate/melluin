@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, input} from '@angular/core';
-import {UserSettings} from '@melluin/common';
+import {UserSettings, UUID} from '@melluin/common';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import {UserEventListSettingsEditorComponent} from '@fe/app/my-profile/user-settings-editor/user-event-list-settings-editor/user-event-list-settings-editor.component';
@@ -22,7 +22,7 @@ import {UserDepartmentBoxWidgetSettingsComponent} from '@fe/app/my-profile/user-
 })
 export class UserSettingsEditorComponent {
 
-    public userId = input.required<string>();
+    public userId = input.required<UUID>();
     public settings = input.required<UserSettings>();
 
 }

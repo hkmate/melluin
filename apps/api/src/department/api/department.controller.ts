@@ -17,7 +17,7 @@ import {
     DepartmentBoxStatus,
     Pageable,
     Permission,
-    User
+    User, UUID
 } from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PageReq} from '@be/crud/page-req';
@@ -50,7 +50,7 @@ export class DepartmentController {
 
     @Post('/:id/box-status')
     @PermissionGuard(Permission.canWriteDepBox)
-    public saveDepartmentBoxStatus(@Param('id', ParseUUIDPipe) departmentId: string,
+    public saveDepartmentBoxStatus(@Param('id', ParseUUIDPipe) departmentId: UUID,
                                    @Body() boxStatusReport: DepartmentBoxStatusReportDto,
                                    @CurrentUser() currentUser: User): Promise<DepartmentBoxStatus> {
         return this.boxStatusCrudService.save(departmentId, boxStatusReport, currentUser);
@@ -58,7 +58,7 @@ export class DepartmentController {
 
     @Get('/:id')
     @PermissionGuard(Permission.canReadDepartment)
-    public getOne(@Param('id', ParseUUIDPipe) departmentId: string): Promise<Department> {
+    public getOne(@Param('id', ParseUUIDPipe) departmentId: UUID): Promise<Department> {
         return this.departmentCrudService.getOne(departmentId);
     }
 
@@ -73,7 +73,7 @@ export class DepartmentController {
     @Post('/:id/box-status/\\:list')
     @HttpCode(HttpStatus.OK)
     @PermissionGuard(Permission.canReadDepBox)
-    public findBoxStatuses(@Param('id', ParseUUIDPipe) departmentId: string,
+    public findBoxStatuses(@Param('id', ParseUUIDPipe) departmentId: UUID,
                            @Query('withDepartmentBrief') withDepartmentBrief: boolean,
                            @PageReq() pageRequest: PageRequest): Promise<Pageable<DepartmentBoxStatus> | Pageable<BoxStatusWithDepartmentBrief>> {
         const infoParam = withDepartmentBrief ? BoxStatusInfoParam.WITH_DEPARTMENT_BRIEF : BoxStatusInfoParam.PURE_BOX_STATUS;
@@ -82,14 +82,14 @@ export class DepartmentController {
 
     @Put('/:id')
     @PermissionGuard(Permission.canWriteDepartment)
-    public update(@Param('id', ParseUUIDPipe) departmentId: string,
+    public update(@Param('id', ParseUUIDPipe) departmentId: UUID,
                   @Body() departmentUpdate: DepartmentRewriteDto,
                   @CurrentUser() requester: User): Promise<Department> {
         this.verifyIsCorrect(departmentId, departmentUpdate);
         return this.departmentCrudService.update(departmentUpdate, requester);
     }
 
-    private verifyIsCorrect(id: string, dto: { id: string }): void {
+    private verifyIsCorrect(id: UUID, dto: { id: UUID }): void {
         if (id !== dto.id) {
             throw new BadRequestException('Path id is not the same in the object as in the URL');
         }

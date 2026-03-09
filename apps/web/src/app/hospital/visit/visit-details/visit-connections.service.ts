@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Visit} from '@melluin/common';
+import {UUID, Visit} from '@melluin/common';
 import {MessageService} from '@fe/app/util/message.service';
 import {getErrorHandler} from '@fe/app/util/util';
 import {environment} from '@fe/environment';
@@ -16,17 +16,17 @@ export class VisitConnectionsService {
         return `${environment.baseURL}/visits`;
     }
 
-    public addConnection(visitId: string, connectId: string): Observable<void> {
+    public addConnection(visitId: UUID, connectId: UUID): Observable<void> {
         return this.http.post<void>(`${this.visitUrl}/${visitId}/connections/${connectId}`, {})
             .pipe(getErrorHandler<void>(this.msg));
     }
 
-    public getConnections(visitId: string): Observable<Array<Visit>> {
+    public getConnections(visitId: UUID): Observable<Array<Visit>> {
         return this.http.get<Array<Visit>>(`${this.visitUrl}/${visitId}/connections`)
             .pipe(getErrorHandler<Array<Visit>>(this.msg));
     }
 
-    public deleteConnection(visitId: string, connectId: string): Observable<void> {
+    public deleteConnection(visitId: UUID, connectId: UUID): Observable<void> {
         return this.http.delete<void>(`${this.visitUrl}/${visitId}/connections/${connectId}`)
             .pipe(getErrorHandler<void>(this.msg));
     }

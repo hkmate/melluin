@@ -12,9 +12,7 @@ import {VisitPersistenceModule} from '@be/visit/visit.persistence.module';
 
         VisitPersistenceModule
     ],
-    providers: [
-        VisitActivityInfoDao,
-    ],
+    providers: [VisitActivityInfoDao],
     exports: [VisitActivityInfoDao]
 })
 export class VisitActivityInfoPersistenceModule {

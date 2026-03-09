@@ -6,7 +6,7 @@ import {
     isNil,
     Nullable,
     Pageable,
-    UserSettings,
+    UserSettings, UUID,
     VisitStatus
 } from '@melluin/common';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
@@ -54,7 +54,7 @@ export class UserEventListSettingsEditorComponent {
     private readonly departmentService = inject(DepartmentService);
     private readonly userService = inject(UserService);
 
-    public readonly userId = input.required<string>();
+    public readonly userId = input.required<UUID>();
     public readonly settings = input.required<UserSettings>();
 
     private readonly formModel = signal(this.getDefaultFormModel());
@@ -84,8 +84,8 @@ export class UserEventListSettingsEditorComponent {
         return {
             dateFilter: null as Nullable<DateIntervalSpecifier>,
             statuses: [] as Array<VisitStatus>,
-            departmentIds: [] as Array<string>,
-            participantIds: [] as Array<string>,
+            departmentIds: [] as Array<UUID>,
+            participantIds: [] as Array<UUID>,
             needHighlight: false
         };
     }

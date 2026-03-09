@@ -1,5 +1,7 @@
+import {UUID} from '../util/type/uuid.type';
+
 export interface ChildrenByDepartments {
-    departmentId: string;
+    departmentId: UUID;
     departmentName: string;
     childContact: number;
     child: number;

@@ -1,5 +1,5 @@
 import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put} from '@nestjs/common';
-import {Permission, User} from '@melluin/common';
+import {Permission, User, UUID} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {UserService} from '@be/user/service/user.service';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
@@ -24,7 +24,7 @@ export class UserController {
 
     @Get('/:id')
     @PermissionGuard(Permission.canReadPerson)
-    public get(@Param('id', ParseUUIDPipe) userId: string,
+    public get(@Param('id', ParseUUIDPipe) userId: UUID,
                @CurrentUser() requester: User): Promise<User> {
         return this.userService.get(userId, requester);
     }
@@ -32,7 +32,7 @@ export class UserController {
     @Put('/:id')
     @PermissionGuard(Permission.canWriteVisitor, Permission.canWriteCoordinator,
         Permission.canWriteAdmin, Permission.canWriteSysAdmin)
-    public update(@Param('id', ParseUUIDPipe) userId: string,
+    public update(@Param('id', ParseUUIDPipe) userId: UUID,
                   @Body() userRewrite: UserRewriteDto,
                   @CurrentUser() requester: User): Promise<User> {
         return this.userService.update(userId, userRewrite, requester);

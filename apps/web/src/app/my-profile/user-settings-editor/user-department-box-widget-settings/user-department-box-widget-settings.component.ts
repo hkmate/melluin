@@ -8,7 +8,7 @@ import {
     isNil,
     isNotEmpty,
     Nullable,
-    UserSettings,
+    UserSettings, UUID,
     WidgetType
 } from '@melluin/common';
 import {MatCard, MatCardSubtitle} from '@angular/material/card';
@@ -59,7 +59,7 @@ export class UserDepartmentBoxWidgetSettingsComponent {
     private readonly credentialStoreService = inject(CredentialStoreService);
     private readonly userService = inject(UserService);
 
-    public readonly userId = input.required<string>();
+    public readonly userId = input.required<UUID>();
     public readonly settings = input.required<UserSettings>();
 
     private readonly formModel = signal(this.getDefaultFormModel());

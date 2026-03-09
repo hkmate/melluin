@@ -13,7 +13,7 @@ import {
     Query
 } from '@nestjs/common';
 import {PersonCrudService} from '@be/person/person.crud.service';
-import {Pageable, Permission, Person, PersonIdentifier, User} from '@melluin/common';
+import {Pageable, Permission, Person, PersonIdentifier, User, UUID} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PageReq} from '@be/crud/page-req';
 import {PageRequest} from '@be/crud/page-request';
@@ -39,7 +39,7 @@ export class PersonController {
 
     @Get('/:id')
     @PermissionGuard(Permission.canReadPerson)
-    public getOne(@Param('id', ParseUUIDPipe) personId: string,
+    public getOne(@Param('id', ParseUUIDPipe) personId: UUID,
                   @CurrentUser() requester: User): Promise<Person> {
         return this.personCrudService.getOne(personId, requester);
     }
@@ -62,7 +62,7 @@ export class PersonController {
     @Put('/:id')
     @PermissionGuard(Permission.canWriteSelf, Permission.canWriteVisitor, Permission.canWriteCoordinator,
         Permission.canWriteAdmin, Permission.canWriteSysAdmin)
-    public update(@Param('id', ParseUUIDPipe) personId: string,
+    public update(@Param('id', ParseUUIDPipe) personId: UUID,
                   @Body() personRewrite: PersonRewriteDto,
                   @CurrentUser() requester: User): Promise<Person> {
         return this.personCrudService.update(personId, personRewrite, requester);

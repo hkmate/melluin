@@ -1,5 +1,5 @@
 import {computed, inject, Injectable} from '@angular/core';
-import {isNotNil, Permission, RoleType} from '@melluin/common';
+import {isNotNil, Permission, RoleType, UUID} from '@melluin/common';
 import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
 
 @Injectable({providedIn: 'root'})
@@ -14,11 +14,11 @@ export class PermissionService {
         return this.permissionInfo()[permission];
     }
 
-    public get userId(): string | undefined {
+    public get userId(): UUID | undefined {
         return this.currentUser()?.id;
     }
 
-    public get personId(): string | undefined {
+    public get personId(): UUID | undefined {
         return this.currentUser()?.personId;
     }
 

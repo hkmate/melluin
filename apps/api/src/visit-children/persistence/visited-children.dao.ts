@@ -2,7 +2,7 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {In, Repository} from 'typeorm';
 import {VisitedChildEntity} from '@be/visit-children/persistence/model/visited-child.entity';
-import {isNil, toOptional} from '@melluin/common';
+import {isNil, toOptional, UUID} from '@melluin/common';
 
 @Injectable()
 export class VisitedChildrenDao {
@@ -14,11 +14,11 @@ export class VisitedChildrenDao {
         return this.repository.save(visitedChildEntity);
     }
 
-    public findOne(visitedChildId: string): Promise<VisitedChildEntity | undefined> {
+    public findOne(visitedChildId: UUID): Promise<VisitedChildEntity | undefined> {
         return this.repository.findOneBy({id: visitedChildId}).then(toOptional);
     }
 
-    public getOne(id: string): Promise<VisitedChildEntity> {
+    public getOne(id: UUID): Promise<VisitedChildEntity> {
         return this.findOne(id).then(entity => {
             if (isNil(entity)) {
                 throw new NotFoundException(`Visited child object not found with id: ${id}`);
@@ -27,20 +27,20 @@ export class VisitedChildrenDao {
         });
     }
 
-    public findAllByIds(ids: Array<string>): Promise<Array<VisitedChildEntity>> {
+    public findAllByIds(ids: Array<UUID>): Promise<Array<VisitedChildEntity>> {
         return this.repository.find({where: {id: In(ids)}});
     }
 
-    public async findIdByIds(ids: Array<string>): Promise<Array<string>> {
+    public async findIdByIds(ids: Array<UUID>): Promise<Array<UUID>> {
         const entityParts = await this.repository.find({where: {id: In(ids)}, select: {id: true}});
         return entityParts.map(e => e.id);
     }
 
-    public findAllByVisitId(visitId: string): Promise<Array<VisitedChildEntity>> {
+    public findAllByVisitId(visitId: UUID): Promise<Array<VisitedChildEntity>> {
         return this.repository.find({where: {visitId}});
     }
 
-    public existsByChildId(childId: string): Promise<boolean> {
+    public existsByChildId(childId: UUID): Promise<boolean> {
         return this.repository.exist({where: {child: {id: childId}}});
     }
 

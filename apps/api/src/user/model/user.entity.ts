@@ -1,14 +1,14 @@
 import {Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn} from 'typeorm';
 import {RoleEntity} from './role.entity';
 import {PersonEntity} from '../../person/model/person.entity';
-import {UserSettings} from '@melluin/common';
+import {UserSettings, UUID} from '@melluin/common';
 import {PermissionEntity} from '@be/user/model/permission.entity';
 
 @Entity({ name: 'user' })
 export class UserEntity {
 
     @PrimaryColumn('uuid')
-    id: string;
+    id: UUID;
 
     @Column({ name: 'username' })
     userName: string;
@@ -26,7 +26,7 @@ export class UserEntity {
     created: Date | null;
 
     @Column({ name: 'created_by', type: 'uuid', nullable: true })
-    createdByPersonId: string | null;
+    createdByPersonId: UUID | null;
 
     @Column({ name: 'custom_info', type: 'jsonb', nullable: true })
     settings: UserSettings | null;

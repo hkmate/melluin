@@ -1,20 +1,21 @@
 import {VisitActivityType} from './visit-activity-type';
+import {UUID} from '../util/type/uuid.type';
 
 
 export interface VisitActivityInput {
 
-    children: Array<string>; // -> id of VisitedChild
+    children: Array<UUID>; // -> id of VisitedChild
     activities: Array<VisitActivityType>;
     comment: string;
-    visitId?: string;
+    visitId?: UUID;
 
 }
 
 export interface VisitActivityEditInput {
 
-    id: string;
-    visitId?: string;
-    children: Array<string>; // -> id of VisitedChild
+    id: UUID;
+    visitId?: UUID;
+    children: Array<UUID>; // -> id of VisitedChild
     activities: Array<VisitActivityType>;
     comment: string;
 

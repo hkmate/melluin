@@ -1,7 +1,7 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
-import {isNil} from '@melluin/common';
+import {isNil, UUID} from '@melluin/common';
 import {ChildEntity} from '@be/child/model/child.entity';
 
 @Injectable()
@@ -14,13 +14,13 @@ export class ChildDao {
         return this.repository.save(department);
     }
 
-    public findOne(id: string): Promise<ChildEntity | undefined> {
+    public findOne(id: UUID): Promise<ChildEntity | undefined> {
         return this.repository.findOne({
             where: {id},
         }).then(entity => entity ?? undefined);
     }
 
-    public getOne(id: string): Promise<ChildEntity> {
+    public getOne(id: UUID): Promise<ChildEntity> {
         return this.findOne(id).then(entity => {
             if (isNil(entity)) {
                 throw new NotFoundException(`Child not found with id: ${id}`);

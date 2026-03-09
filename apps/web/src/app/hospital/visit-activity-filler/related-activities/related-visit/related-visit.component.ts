@@ -5,7 +5,7 @@ import {
     isNilOrEmpty,
     Permission,
     VisitedChild,
-    WrappedVisitActivity
+    WrappedVisitActivity, UUID
 } from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {convertToChildrenById} from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
@@ -35,7 +35,7 @@ export class RelatedVisitComponent {
     public readonly wrappedActivity = input.required<WrappedVisitActivity>();
 
     protected children: Array<VisitedChild> = [];
-    protected childrenById: Record<string, VisitedChild>;
+    protected childrenById: Record<UUID, VisitedChild>;
     protected activities: Array<VisitActivity> = [];
     protected information = signal<VisitActivityInfo | undefined>(undefined);
     protected infoIsEmpty = computed(() => isNilOrEmpty(this.information()?.content));

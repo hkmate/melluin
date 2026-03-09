@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {Child, ChildInput, User} from '@melluin/common';
+import {Child, ChildInput, User, UUID} from '@melluin/common';
 import {ChildDao} from '@be/child/child.dao';
 import {ChildInputToEntityConverter} from '@be/child/converer/child-input-to-entity.converter';
 import {ChildEntityToDtoConverter} from '@be/child/converer/child-entity-to-dto.converter';
@@ -21,13 +21,12 @@ export class ChildCrudService {
         return this.childConverter.convert(visitEntity);
     }
 
-    public async rewriteEntity(childEntity: ChildEntity,
-                         childInput: ChildInput): Promise<ChildEntity> {
+    public async rewriteEntity(childEntity: ChildEntity, childInput: ChildInput): Promise<ChildEntity> {
         const changedEntity = this.rewriteApplierFactory.createFor(childInput, childEntity).applyChanges();
         return await this.childDao.save(changedEntity);
     }
 
-    public async remove(childId: string): Promise<void> {
+    public async remove(childId: UUID): Promise<void> {
         const entity = await this.childDao.getOne(childId);
         return this.childDao.remove(entity);
     }

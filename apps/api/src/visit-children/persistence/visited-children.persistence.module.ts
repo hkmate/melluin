@@ -12,12 +12,8 @@ import {VisitedChildrenDao} from '@be/visit-children/persistence/visited-childre
 
         FindOptionConverterModule,
     ],
-    providers: [
-        VisitedChildrenDao
-    ],
-    exports: [
-        VisitedChildrenDao
-    ]
+    providers: [VisitedChildrenDao],
+    exports: [VisitedChildrenDao]
 })
 export class VisitedChildrenPersistenceModule {
 }

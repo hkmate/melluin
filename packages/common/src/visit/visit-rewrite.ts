@@ -1,16 +1,17 @@
 import {VisitStatus} from './visit-status';
 import {Visit} from './visit';
+import {UUID} from '../util/type/uuid.type';
 
 
 export interface VisitRewrite {
 
-    id: string;
+    id: UUID;
     dateTimeFrom: string;
     dateTimeTo: string;
     countedMinutes?: number;
-    participantIds: Array<string>;
+    participantIds: Array<UUID>;
     status: VisitStatus;
-    departmentId: string;
+    departmentId: UUID;
     vicariousMomVisit: boolean;
 
 }

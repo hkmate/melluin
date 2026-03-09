@@ -1,8 +1,9 @@
 import {OperationCity} from '../person/operation-city';
+import {UUID} from '../util/type/uuid.type';
 
 export interface Department {
 
-    id: string;
+    id: UUID;
     name: string;
     validFrom: string;
     validTo?: string;

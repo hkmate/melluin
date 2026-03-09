@@ -1,11 +1,11 @@
 import {Column, Entity, PrimaryColumn} from 'typeorm';
-import {OperationCity} from '@melluin/common';
+import {OperationCity, UUID} from '@melluin/common';
 
 @Entity({name: 'hospital_department'})
 export class DepartmentEntity {
 
     @PrimaryColumn('uuid')
-    id: string;
+    id: UUID;
 
     @Column()
     name: string;

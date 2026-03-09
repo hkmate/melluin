@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {VisitStatus, User} from '@melluin/common';
+import {VisitStatus, User, UUID} from '@melluin/common';
 import {VisitEntity} from '@be/visit/model/visit.entity';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
@@ -20,7 +20,7 @@ export class VisitRelationDao {
                 private readonly crudDao: VisitDao) {
     }
 
-    public async findRelationIds(visitId: string, requester: User): Promise<Array<string>> {
+    public async findRelationIds(visitId: UUID, requester: User): Promise<Array<UUID>> {
         const currentVisit = await this.crudDao.getOne(visitId);
         return (await this.repository.createQueryBuilder()
             .from(VisitEntity, 'visit')

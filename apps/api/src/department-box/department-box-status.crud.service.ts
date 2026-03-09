@@ -7,7 +7,7 @@ import {
     DepartmentBoxStatusReport,
     departmentBoxStatusSortableFields,
     Pageable,
-    User
+    User, UUID
 } from '@melluin/common';
 import {PageConverter} from '@be/crud/convert/page.converter';
 import {PageRequest} from '@be/crud/page-request';
@@ -28,7 +28,7 @@ export class DepartmentBoxStatusCrudService {
                 private readonly boxStatusReportConverter: BoxStatusReportToEntityConverter) {
     }
 
-    public async save(departmentId: string,
+    public async save(departmentId: UUID,
                       boxStatusReport: DepartmentBoxStatusReport,
                       requester: User): Promise<DepartmentBoxStatus> {
         const creationEntity = await this.boxStatusReportConverter.convert({
@@ -38,13 +38,13 @@ export class DepartmentBoxStatusCrudService {
         return this.boxStatusConverter.convert(boxStatusEntity);
     }
 
-    public async findByVisit(visitId: string, infoParam: BoxStatusInfoParam): Promise<Array<DepartmentBoxStatus>> {
+    public async findByVisit(visitId: UUID, infoParam: BoxStatusInfoParam): Promise<Array<DepartmentBoxStatus>> {
         const entities: Array<DepartmentBoxStatusEntity> = await this.departmentBoxDao.findByVisit(visitId);
         const converter = this.getConverter(infoParam);
         return entities.map(e => converter.convert(e));
     }
 
-    public async findByDepartment(departmentId: string, pageRequest: PageRequest, infoParam: BoxStatusInfoParam): Promise<Pageable<DepartmentBoxStatus>> {
+    public async findByDepartment(departmentId: UUID, pageRequest: PageRequest, infoParam: BoxStatusInfoParam): Promise<Pageable<DepartmentBoxStatus>> {
         PageRequestFieldsValidator
             .of(departmentBoxStatusSortableFields, departmentBoxStatusFilterableFields)
             .validate(pageRequest);

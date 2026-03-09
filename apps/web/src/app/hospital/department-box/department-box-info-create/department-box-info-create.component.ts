@@ -4,7 +4,7 @@ import {
     DepartmentBoxStatus,
     DepartmentBoxStatusReport,
     isNotNil,
-    Nullable
+    Nullable, UUID
 } from '@melluin/common';
 import {affectedObjectsList} from '@fe/app/hospital/department-box/affected-objects-list';
 import {MessageService} from '@fe/app/util/message.service';
@@ -50,8 +50,8 @@ export class DepartmentBoxInfoCreateComponent {
     private readonly boxStatusService = inject(DepartmentBoxService);
     private readonly msg = inject(MessageService);
 
-    public readonly departmentId = input.required<string>();
-    public readonly visitId = input<string | undefined>(undefined);
+    public readonly departmentId = input.required<UUID>();
+    public readonly visitId = input<UUID | undefined>(undefined);
 
     public readonly submitted = output<DepartmentBoxStatus>();
     public readonly canceled = output<void>();

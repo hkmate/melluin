@@ -1,13 +1,13 @@
 import {Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn} from 'typeorm';
 import {VisitEntity} from '@be/visit/model/visit.entity';
-import {VisitActivityType} from '@melluin/common';
+import {UUID, VisitActivityType} from '@melluin/common';
 import {VisitedChildEntity} from '@be/visit-children/persistence/model/visited-child.entity';
 
 @Entity({name: 'hospital_visit_activity'})
 export class VisitActivityEntity {
 
     @PrimaryColumn('uuid')
-    id: string;
+    id: UUID;
 
     @Column({type: 'jsonb'})
     activities: Array<VisitActivityType>;

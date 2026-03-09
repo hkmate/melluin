@@ -59,10 +59,10 @@ export class DepartmentDataFormComponent {
 
     private readonly formModel = signal(this.getDefaultFormModel());
     protected readonly form = form(this.formModel, schema => {
-        required(schema.name,     {message: t('Form.Required')});
-        required(schema.address,    {message: t('Form.Required')});
-        required(schema.city,       {message: t('Form.Required')});
-        required(schema.validFrom,    {message: t('Form.Required')});
+        required(schema.name, {message: t('Form.Required')});
+        required(schema.address, {message: t('Form.Required')});
+        required(schema.city, {message: t('Form.Required')});
+        required(schema.validFrom, {message: t('Form.Required')});
         required(schema.limitOfVisits, {message: t('Form.Required')});
         min(schema.limitOfVisits, 1, {message: t('Form.Min', {min: 1})});
 

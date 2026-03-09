@@ -2,7 +2,7 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import {Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import {UserEntity} from './model/user.entity';
-import {isNil, toOptional} from '@melluin/common';
+import {isNil, toOptional, UUID} from '@melluin/common';
 import {FindOneOptions} from 'typeorm/find-options/FindOneOptions';
 
 @Injectable()
@@ -29,11 +29,11 @@ export class UserDao {
         return this.userRepository.findOne({where: {userName}, cache: 3000}).then(toOptional);
     }
 
-    public hasAnyWithRole(roleId: string): Promise<boolean> {
+    public hasAnyWithRole(roleId: UUID): Promise<boolean> {
         return this.userRepository.exist({where: {roles: {id: roleId}}});
     }
 
-    public getOne(id: string): Promise<UserEntity> {
+    public getOne(id: UUID): Promise<UserEntity> {
         return this.userRepository.findOne({where: {id}})
             .then(entity => {
                 if (isNil(entity)) {

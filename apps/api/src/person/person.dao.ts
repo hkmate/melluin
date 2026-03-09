@@ -2,7 +2,7 @@ import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {In, Not, Repository} from 'typeorm';
 import {PersonEntity} from './model/person.entity';
-import {FilterOperation, isNil, isNilOrEmpty, isNotEmpty, Pageable, PersonIdentifier} from '@melluin/common';
+import {FilterOperation, isNil, isNilOrEmpty, isNotEmpty, Pageable, PersonIdentifier, UUID} from '@melluin/common';
 import {WhereClosureConverter} from '@be/find-option-converter/where-closure.converter';
 import {PageCreator} from '@be/crud/page-creator';
 import {PageRequest} from '@be/crud/page-request';
@@ -21,14 +21,14 @@ export class PersonDao extends PageCreator<PersonEntity> {
         return this.repository.save(person);
     }
 
-    public findOne(id: string): Promise<PersonEntity | undefined> {
+    public findOne(id: UUID): Promise<PersonEntity | undefined> {
         return this.repository.findOne({
             where: {id},
             relations: {user: true},
         }).then(entity => entity ?? undefined);
     }
 
-    public findOneWithCache(id: string): Promise<PersonEntity | undefined> {
+    public findOneWithCache(id: UUID): Promise<PersonEntity | undefined> {
         return this.repository.findOne({
             where: {id},
             relations: {user: true},
@@ -36,7 +36,7 @@ export class PersonDao extends PageCreator<PersonEntity> {
         }).then(entity => entity ?? undefined);
     }
 
-    public getOne(id: string): Promise<PersonEntity> {
+    public getOne(id: UUID): Promise<PersonEntity> {
         return this.repository.findOne({where: {id}, relations: {user: true}})
             .then(entity => {
                 if (isNil(entity)) {
@@ -56,7 +56,7 @@ export class PersonDao extends PageCreator<PersonEntity> {
         }
     }
 
-    public async verifyEmailIsNotUsedYetByOther(email: string | undefined, personId: string): Promise<void> {
+    public async verifyEmailIsNotUsedYetByOther(email: string | undefined, personId: UUID): Promise<void> {
         if (isNilOrEmpty(email)) {
             return;
         }
@@ -66,7 +66,7 @@ export class PersonDao extends PageCreator<PersonEntity> {
         }
     }
 
-    public async findByIds(ids: Array<string>): Promise<Array<PersonEntity>> {
+    public async findByIds(ids: Array<UUID>): Promise<Array<PersonEntity>> {
         const people = await this.repository.find({
             where: {
                 id: In(ids),
@@ -105,7 +105,7 @@ export class PersonDao extends PageCreator<PersonEntity> {
         return pageRequest
     }
 
-    private verifyAllIdHadPerson(ids: Array<string>, people: Array<PersonEntity>): void {
+    private verifyAllIdHadPerson(ids: Array<UUID>, people: Array<PersonEntity>): void {
         const idsOfPeople = people.map(e => e.id);
         const diff = ids.filter(id => !idsOfPeople.includes(id));
 

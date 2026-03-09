@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {AsyncValidatorChain, Visit, User} from '@melluin/common';
+import {AsyncValidatorChain, Visit, User, UUID} from '@melluin/common';
 import {VisitConnectionsDao} from '@be/visit-connections/visit-connections.dao';
 import {VisitEntityToDtoConverter} from '@be/visit/converer/visit-entity-to-dto.converter';
 import {VisitDao} from '@be/visit/visit.dao';
@@ -21,7 +21,7 @@ export class VisitConnectionsService {
                 private readonly visitConverter: VisitEntityToDtoConverter,) {
     }
 
-    public async addConnection(visitId: string, connectId: string, requester: User): Promise<void> {
+    public async addConnection(visitId: UUID, connectId: UUID, requester: User): Promise<void> {
         const visit = await this.visitDao.getOne(visitId);
         const connectVisit = await this.visitDao.getOne(connectId);
 
@@ -33,12 +33,12 @@ export class VisitConnectionsService {
         await this.visitDao.saveMany(visit, connectVisit);
     }
 
-    public async getConnections(visitId: string, requester: User): Promise<Array<Visit>> {
+    public async getConnections(visitId: UUID, requester: User): Promise<Array<Visit>> {
         const connectedVisits = await this.visitConnectionsDao.findAllConnections(visitId);
         return connectedVisits.map(entity => this.visitConverter.convert(entity));
     }
 
-    public async deleteConnection(visitId: string, connectedId: string, requester: User): Promise<void> {
+    public async deleteConnection(visitId: UUID, connectedId: UUID, requester: User): Promise<void> {
         const visit = await this.visitDao.getOne(visitId);
         const connectedVisit = await this.visitDao.getOne(connectedId);
 
@@ -53,7 +53,7 @@ export class VisitConnectionsService {
         await this.visitDao.saveMany(connectedVisit, visit);
     }
 
-    private async getConnectionGroupIdFromVisits(visit: VisitEntity, visit2: VisitEntity): Promise<string> {
+    private async getConnectionGroupIdFromVisits(visit: VisitEntity, visit2: VisitEntity): Promise<UUID> {
         if (visit.id !== visit.connectionGroupId) {
             return visit.connectionGroupId;
         }
@@ -63,7 +63,7 @@ export class VisitConnectionsService {
         return await this.provideNewConnectionGroupId();
     }
 
-    private async provideNewConnectionGroupId(): Promise<string> {
+    private async provideNewConnectionGroupId(): Promise<UUID> {
         const newId = randomUUID();
         if (await this.visitConnectionsDao.isConnectionGroupIdUsed(newId)) {
             return await this.provideNewConnectionGroupId();

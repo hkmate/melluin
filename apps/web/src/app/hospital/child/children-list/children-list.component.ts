@@ -4,12 +4,12 @@ import {ChildCardComponent} from '@fe/app/hospital/child/child-card/child-card.c
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-children-list',
-    templateUrl: './children-list.component.html',
     imports: [
         ChildCardComponent,
         TranslatePipe
     ],
+    selector: 'app-children-list',
+    templateUrl: './children-list.component.html',
     styleUrls: ['./children-list.component.scss']
 })
 export class ChildrenListComponent {

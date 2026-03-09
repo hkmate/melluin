@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, Observable, of} from 'rxjs';
-import {cast, isNilOrEmpty, Permission, Person} from '@melluin/common';
+import {cast, isNilOrEmpty, Permission, Person, UUID} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
@@ -32,13 +32,12 @@ export class PersonResolver implements Resolve<Person | CreateMarkerType | undef
         this.validatePersonId(personId);
 
         if (personId === CREATE_MARKER) {
-            console.log('Emit create marker');
             return of(CREATE_MARKER);
         }
         return this.getPerson(personId);
     }
 
-    private getPerson(personId: string): Observable<Person | undefined> {
+    private getPerson(personId: UUID): Observable<Person | undefined> {
         return this.peopleService.getPerson(personId)
             .pipe(catchError(error => {
                 console.debug('No person found error: ', error);
@@ -47,7 +46,7 @@ export class PersonResolver implements Resolve<Person | CreateMarkerType | undef
             }));
     }
 
-    private validatePersonId(id?: string): void {
+    private validatePersonId(id?: string): asserts id is (UUID | CreateMarkerType) {
         if (isNilOrEmpty(id)) {
             throw new Error('Person ID must not be empty.');
         }

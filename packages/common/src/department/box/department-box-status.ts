@@ -1,9 +1,10 @@
 import {BoxStatusChangeReason} from './box-status-change-reason';
+import {UUID} from '../../util/type/uuid.type';
 
 export interface DepartmentBoxStatus {
 
-    id: string;
-    visitId?: string;
+    id: UUID;
+    visitId?: UUID;
     dateTime: string;
     reason: BoxStatusChangeReason;
     affectedObject?: string;
@@ -13,7 +14,7 @@ export interface DepartmentBoxStatus {
 
 export interface BoxStatusWithDepartmentBrief extends DepartmentBoxStatus {
 
-    departmentId: string;
+    departmentId: UUID;
     departmentName: string;
 
 }

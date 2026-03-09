@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
-import {Role, RoleCreation} from '@melluin/common';
+import {Role, RoleCreation, UUID} from '@melluin/common';
 import {environment} from '@fe/environment';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class RoleService {
             .pipe(getErrorHandler<Role>(this.msg));
     }
 
-    public delete(roleId: string): Observable<void> {
+    public delete(roleId: UUID): Observable<void> {
         return this.http.delete<void>(`${this.rolesUrl}/${roleId}`)
             .pipe(getErrorHandler<void>(this.msg));
     }

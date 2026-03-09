@@ -1,7 +1,7 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {In, Repository} from 'typeorm';
-import {isNil} from '@melluin/common';
+import {isNil, UUID} from '@melluin/common';
 import {VisitActivityEntity} from '@be/visit-activity/model/visit-activity.entity';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class VisitActivityDao {
         await this.repository.remove(entity);
     }
 
-    public findOne(id: string): Promise<VisitActivityEntity | undefined> {
+    public findOne(id: UUID): Promise<VisitActivityEntity | undefined> {
         return this.repository.findOne({
             where: {id},
             relations: {
@@ -32,7 +32,7 @@ export class VisitActivityDao {
         }).then(entity => entity ?? undefined);
     }
 
-    public getOne(id: string): Promise<VisitActivityEntity> {
+    public getOne(id: UUID): Promise<VisitActivityEntity> {
         return this.findOne(id).then(entity => {
             if (isNil(entity)) {
                 throw new NotFoundException(`Visit activity not found with id: ${id}`);
@@ -41,7 +41,7 @@ export class VisitActivityDao {
         });
     }
 
-    public findByVisitIds(ids: Array<string>): Promise<Array<VisitActivityEntity>> {
+    public findByVisitIds(ids: Array<UUID>): Promise<Array<VisitActivityEntity>> {
         return this.repository.find({
             relations: {
                 visit: true
@@ -54,7 +54,7 @@ export class VisitActivityDao {
         });
     }
 
-    public findByVisitId(id: string): Promise<Array<VisitActivityEntity>> {
+    public findByVisitId(id: UUID): Promise<Array<VisitActivityEntity>> {
         return this.repository.find({
             where: {
                 visit: {id}

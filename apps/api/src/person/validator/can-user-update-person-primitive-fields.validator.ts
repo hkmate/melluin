@@ -1,4 +1,4 @@
-import {getPermissionsNeededToChangeRole, isNil, Permission, User} from '@melluin/common';
+import {getPermissionsNeededToChangeRole, isNil, Permission, User, UUID} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {PersonRewriteValidator, PersonRewriteWithEntity} from '@be/person/validator/person-rewrite.validator';
@@ -33,7 +33,7 @@ export class CanUserUpdatePersonPrimitiveFieldsValidator implements PersonRewrit
         }) ?? false;
     }
 
-    private isUserGotId(personId: string): boolean {
+    private isUserGotId(personId: UUID): boolean {
         return this.currentUser.personId === personId;
     }
 

@@ -1,5 +1,6 @@
 import {IsEnum, IsOptional, IsString, IsUUID} from 'class-validator';
 import {
+    UUID,
     VisitActivityEditInput,
     VisitActivityInput,
     VisitActivityType
@@ -11,7 +12,7 @@ export class VisitActivityDto implements VisitActivityInput {
 
     @ApiProperty({type: [String]})
     @IsUUID('all', {each: true})
-    children: Array<string>; // -> id of VisitedChild
+    children: Array<UUID>; // -> id of VisitedChild
 
     @ApiProperty({enum: VisitActivityType, isArray: true})
     @IsEnum(VisitActivityType, {each: true})
@@ -25,7 +26,7 @@ export class VisitActivityDto implements VisitActivityInput {
     @ApiProperty({required: false})
     @IsUUID()
     @IsOptional()
-    visitId?: string;
+    visitId?: UUID;
 
 }
 
@@ -33,16 +34,16 @@ export class VisitActivityEditDto implements VisitActivityEditInput {
 
     @ApiProperty()
     @IsUUID()
-    id: string;
+    id: UUID;
 
     @ApiProperty({required: false})
     @IsUUID()
     @IsOptional()
-    visitId?: string;
+    visitId?: UUID;
 
     @ApiProperty({type: [String]})
     @IsUUID('all', {each: true})
-    children: Array<string>; // -> id of VisitedChild
+    children: Array<UUID>; // -> id of VisitedChild
 
     @ApiProperty({enum: VisitActivityType, isArray: true})
     @IsEnum(VisitActivityType, {each: true})

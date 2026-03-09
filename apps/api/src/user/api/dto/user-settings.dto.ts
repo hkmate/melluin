@@ -11,7 +11,7 @@ import {
     EventsDateFilterValues,
     HomePageOption,
     HomePageUserSettings,
-    UserSettings,
+    UserSettings, UUID,
     VisitStatus,
     WidgetSetting,
     WidgetType
@@ -28,7 +28,7 @@ export class EventListUserSettingsDto implements EventListUserSettings {
     @ApiProperty({type: [String], required: false})
     @IsOptional()
     @IsUUID('all', {each: true})
-    departmentIds?: Array<string>;
+    departmentIds?: Array<UUID>;
 
     @ApiProperty({enum: VisitStatus, isArray: true, required: false})
     @IsOptional()
@@ -38,7 +38,7 @@ export class EventListUserSettingsDto implements EventListUserSettings {
     @ApiProperty({type: [String], required: false})
     @IsOptional()
     @IsUUID('all', {each: true})
-    participantIds?: Array<string>;
+    participantIds?: Array<UUID>;
 
     @ApiProperty({required: false})
     @IsOptional()

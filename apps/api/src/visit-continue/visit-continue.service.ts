@@ -4,7 +4,7 @@ import {
     Visit,
     VisitCreate,
     VisitStatus,
-    User
+    User, UUID
 } from '@melluin/common';
 import {VisitConnectionsService} from '@be/visit-connections/visit-connections.service';
 import {VisitCrudService} from '@be/visit/visit.crud.service';
@@ -25,8 +25,8 @@ export class VisitContinueService {
                 private readonly visitConnectionsService: VisitConnectionsService) {
     }
 
-    public async createConnectedVisit(visitId: string, dateTimeFrom: string,
-                                      departmentId: string, requester: User): Promise<Visit> {
+    public async createConnectedVisit(visitId: UUID, dateTimeFrom: string,
+                                      departmentId: UUID, requester: User): Promise<Visit> {
         const originalVisit = await this.visitDao.getOne(visitId);
         const visitCreate = this.buildVisitCreateFromOriginal(originalVisit, dateTimeFrom, departmentId, requester);
         await this.createValidator()
@@ -36,7 +36,7 @@ export class VisitContinueService {
     }
 
     private buildVisitCreateFromOriginal(visit: VisitEntity, dateTimeFrom: string,
-                                         departmentId: string, requester: User): VisitCreate {
+                                         departmentId: UUID, requester: User): VisitCreate {
         return {
             departmentId,
             status: VisitStatus.STARTED,

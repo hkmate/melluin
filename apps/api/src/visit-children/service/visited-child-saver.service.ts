@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {
     isNil,
-    User,
+    User, UUID,
     VisitedChild,
     VisitedChildEditInput,
     VisitedChildInput,
@@ -27,7 +27,7 @@ export class VisitedChildSaverService {
                 private readonly validatorFactory: VisitedChildSaveValidatorFactory) {
     }
 
-    public async save(visitId: string, visitedChildInput: VisitedChildInput, requester: User): Promise<VisitedChild> {
+    public async save(visitId: UUID, visitedChildInput: VisitedChildInput, requester: User): Promise<VisitedChild> {
         const visit = await this.visitDao.getOne(visitId);
 
         await this.validatorFactory.getValidatorForCreate()
@@ -42,7 +42,7 @@ export class VisitedChildSaverService {
     }
 
 
-    public async update(visitId: string, visitedChildInput: VisitedChildEditInput, requester: User): Promise<VisitedChild> {
+    public async update(visitId: UUID, visitedChildInput: VisitedChildEditInput, requester: User): Promise<VisitedChild> {
         const visit = await this.visitDao.getOne(visitId);
         const visitedChild = await this.visitedChildrenDao.getOne(visitedChildInput.id);
 

@@ -1,5 +1,5 @@
 import {Component, inject, output, signal} from '@angular/core';
-import {VisitActivityInput, VisitActivityType, VisitedChild} from '@melluin/common';
+import {UUID, VisitActivityInput, VisitActivityType, VisitedChild} from '@melluin/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {isNotEmptyValidator} from '@fe/app/util/util';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
@@ -91,7 +91,7 @@ export class FillerActivityCreateComponent {
         }
     }
 
-    private createActivityChildInfoList(): Array<string> {
+    private createActivityChildInfoList(): Array<UUID> {
         return (this.form().controls.children.value as Array<VisitedChild>)
             .map(value => value.id);
     }

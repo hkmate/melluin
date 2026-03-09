@@ -1,5 +1,7 @@
+import {UUID} from '@melluin/common';
+
 export interface ChildAgesByDepartmentsRowItem {
-    department_id: string;
+    department_id: UUID;
     department_name: string;
     sum: number;
     zero_to_half: number;

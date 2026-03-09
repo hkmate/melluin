@@ -1,6 +1,8 @@
+import {UUID} from '../util/type/uuid.type';
+
 export interface Child {
 
-    id: string;
+    id: UUID;
     name: string;
     guessedBirth: string;
     info?: string;

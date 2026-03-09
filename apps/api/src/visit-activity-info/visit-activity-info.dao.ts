@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
-import {isNil} from '@melluin/common';
+import {isNil, UUID} from '@melluin/common';
 import {VisitDao} from '@be/visit/visit.dao';
 import {randomUUID} from 'crypto';
 import {VisitActivityInfoEntity} from '@be/visit-activity-info/model/visit-activity-info.entity';
@@ -18,7 +18,7 @@ export class VisitActivityInfoDao {
         return this.repository.save(entity);
     }
 
-    public async getOneByVisitId(visitId: string): Promise<VisitActivityInfoEntity> {
+    public async getOneByVisitId(visitId: UUID): Promise<VisitActivityInfoEntity> {
         const persisted = await this.findOneByVisitId(visitId);
         if (isNil(persisted)) {
             const visit = await this.visitDao.getOne(visitId);
@@ -27,7 +27,7 @@ export class VisitActivityInfoDao {
         return persisted;
     }
 
-    private findOneByVisitId(visitId: string): Promise<VisitActivityInfoEntity | null> {
+    private findOneByVisitId(visitId: UUID): Promise<VisitActivityInfoEntity | null> {
         return this.repository.findOne({
             relations: {
                 visit: true

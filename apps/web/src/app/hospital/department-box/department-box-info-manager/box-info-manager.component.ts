@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, computed, inject, input, signal, viewChild} from '@angular/core';
-import {DepartmentBoxStatus, isNotNil, Permission} from '@melluin/common';
+import {DepartmentBoxStatus, isNotNil, Permission, UUID} from '@melluin/common';
 import {BoxInfoListByVisitComponent} from '@fe/app/hospital/department-box/department-box-info-list/box-info-list-by-visit.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatMiniFabButton} from '@angular/material/button';
@@ -29,8 +29,8 @@ export class BoxInfoManagerComponent {
 
     private readonly permissions = inject(PermissionService);
 
-    public readonly departmentId = input.required<string>();
-    public readonly visitId = input<string>();
+    public readonly departmentId = input.required<UUID>();
+    public readonly visitId = input<UUID>();
 
     protected readonly listByVisitComponent = viewChild(BoxInfoListByVisitComponent);
     protected readonly listByDepComponent = viewChild(BoxInfoListByDepartmentComponent);

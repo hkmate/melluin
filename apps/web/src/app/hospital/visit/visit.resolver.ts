@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, Observable, of} from 'rxjs';
-import {cast, Visit, isNilOrEmpty, Permission} from '@melluin/common';
+import {cast, Visit, isNilOrEmpty, Permission, UUID} from '@melluin/common';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
@@ -18,7 +18,7 @@ export class VisitResolver implements Resolve<Visit | CreateMarkerType | undefin
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
         : Observable<Visit | CreateMarkerType | undefined> {
-        const id: string = route.paramMap.get('id')!;
+        const id = route.paramMap.get('id')!;
         try {
             return this.getPersonOrMarker(id);
         } catch (e) {
@@ -32,13 +32,12 @@ export class VisitResolver implements Resolve<Visit | CreateMarkerType | undefin
         this.validateId(visitId);
 
         if (visitId === CREATE_MARKER) {
-            console.log('Emit create marker');
             return of(CREATE_MARKER);
         }
         return this.getVisit(visitId);
     }
 
-    private getVisit(visitId: string): Observable<Visit | undefined> {
+    private getVisit(visitId: UUID): Observable<Visit | undefined> {
         return this.visitService.getVisit(visitId)
             .pipe(catchError(error => {
                 console.debug('No hospital visit found error: ', error);
@@ -47,7 +46,7 @@ export class VisitResolver implements Resolve<Visit | CreateMarkerType | undefin
             }));
     }
 
-    private validateId(id?: string): void {
+    private validateId(id?: string): asserts id is (UUID | CreateMarkerType) {
         if (isNilOrEmpty(id)) {
             throw new Error('ID must not be empty.');
         }

@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, Observable, of} from 'rxjs';
-import {cast, Department, isNilOrEmpty} from '@melluin/common';
+import {cast, Department, isNilOrEmpty, UUID} from '@melluin/common';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {isUUID} from '@fe/app/util/util';
@@ -16,7 +16,7 @@ export class DepartmentResolver implements Resolve<Department | CreateMarkerType
 
     public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
         : Observable<Department | CreateMarkerType | undefined> {
-        const departmentId: string = route.paramMap.get('id')!;
+        const departmentId = route.paramMap.get('id')!;
         try {
             return this.getDepartmentOrMarker(departmentId);
         } catch (e) {
@@ -27,16 +27,15 @@ export class DepartmentResolver implements Resolve<Department | CreateMarkerType
     }
 
     private getDepartmentOrMarker(departmentId: string): Observable<Department | CreateMarkerType | undefined> {
-        this.validatePersonId(departmentId);
+        this.validateDepartmentId(departmentId);
 
         if (departmentId === CREATE_MARKER) {
-            console.log('Emit create marker');
             return of(CREATE_MARKER);
         }
         return this.getDepartment(departmentId);
     }
 
-    private getDepartment(departmentId: string): Observable<Department | undefined> {
+    private getDepartment(departmentId: UUID): Observable<Department | undefined> {
         return this.departmentService.getDepartment(departmentId)
             .pipe(catchError(error => {
                 console.debug('No department found error: ', error);
@@ -45,7 +44,7 @@ export class DepartmentResolver implements Resolve<Department | CreateMarkerType
             }));
     }
 
-    private validatePersonId(id?: string): void {
+    private validateDepartmentId(id?: string): asserts id is (UUID | CreateMarkerType) {
         if (isNilOrEmpty(id)) {
             throw new Error('Department ID must not be empty.');
         }

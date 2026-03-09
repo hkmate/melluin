@@ -1,5 +1,5 @@
 import {Body, Controller, ForbiddenException, Get, Param, ParseUUIDPipe, Put} from '@nestjs/common';
-import {User, UserSettings} from '@melluin/common';
+import {User, UserSettings, UUID} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {UserSettingsService} from '@be/user/service/user-settings.service';
 import {UserSettingsDto} from '@be/user/api/dto/user-settings.dto';
@@ -13,7 +13,7 @@ export class UserSettingsController {
     }
 
     @Get('/:id/settings')
-    public get(@Param('id', ParseUUIDPipe) userId: string,
+    public get(@Param('id', ParseUUIDPipe) userId: UUID,
                @CurrentUser() requester: User): Promise<UserSettings> {
         if (userId !== requester.id) {
             throw new ForbiddenException('You can read only your own settings!');
@@ -22,7 +22,7 @@ export class UserSettingsController {
     }
 
     @Put('/:id/settings')
-    public update(@Param('id', ParseUUIDPipe) userId: string,
+    public update(@Param('id', ParseUUIDPipe) userId: UUID,
                   @Body() newSettings: UserSettingsDto,
                   @CurrentUser() requester: User): Promise<UserSettings> {
         if (userId !== requester.id) {

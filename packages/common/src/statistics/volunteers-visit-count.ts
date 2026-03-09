@@ -1,5 +1,7 @@
+import {UUID} from '../util/type/uuid.type';
+
 export interface VolunteersVisitCount {
-    personId: string;
+    personId: UUID;
     personName: string;
     visitCount: number;
     visitMinutes: number;

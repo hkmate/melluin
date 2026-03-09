@@ -1,12 +1,12 @@
 import {Column, Entity, JoinTable, ManyToMany, PrimaryColumn} from 'typeorm';
 import {PermissionEntity} from '@be/user/model/permission.entity';
-import {RoleType} from '@melluin/common';
+import {RoleType, UUID} from '@melluin/common';
 
 @Entity({name: 'role'})
 export class RoleEntity {
 
     @PrimaryColumn('uuid')
-    id: string
+    id: UUID
 
     @Column()
     name: string;

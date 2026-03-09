@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
-import {DateUtil, Department, isNil, Permission} from '@melluin/common';
+import {DateUtil, Department, isNil, Permission, UUID} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {DepartmentDataPresenterComponent} from '@fe/app/hospital/department/department-detail/department-data-persenter/department-data-presenter.component';
@@ -96,7 +96,7 @@ export class DepartmentDetailComponent {
         }
     }
 
-    private setIdInUrl(departmentId: string): void {
+    private setIdInUrl(departmentId: UUID): void {
         this.location.replaceState(`${PATHS.departments.main}/${departmentId}`);
     }
 

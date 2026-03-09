@@ -8,7 +8,7 @@ import {
     MatDialogTitle
 } from '@angular/material/dialog';
 import {ContinueVisitInfo} from '@fe/app/hospital/visit/model/continue-visit-info';
-import {Department, Visit, Pageable} from '@melluin/common';
+import {Department, Visit, Pageable, UUID} from '@melluin/common';
 import dayjs from 'dayjs';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
@@ -53,7 +53,7 @@ export class ContinueOtherVisitDialogComponent {
         validators: [Validators.required, this.fromTimeValidator()]
     });
 
-    protected readonly departmentIdControl = new FormControl<string>('', {
+    protected readonly departmentIdControl = new FormControl<UUID>('' as UUID, {
         nonNullable: true,
         validators: [Validators.required]
     });

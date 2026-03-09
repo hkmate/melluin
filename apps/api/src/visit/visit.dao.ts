@@ -9,7 +9,7 @@ import {
     isNil,
     isNotNil,
     Pageable,
-    toOptional
+    toOptional, UUID
 } from '@melluin/common';
 import {WhereClosureConverter} from '@be/find-option-converter/where-closure.converter';
 import {PageCreator} from '@be/crud/page-creator';
@@ -21,15 +21,15 @@ import {FindOptionsWhere} from 'typeorm/find-options/FindOptionsWhere';
 interface SameTimeAndDepartmentVisitCountParams {
     from: string;
     to: string;
-    departmentId: string;
+    departmentId: UUID;
     vicariousMomVisitIncluded: boolean;
 }
 
 interface SameTimeAndDParticipantsVisitCountParams {
     from: string;
     to: string;
-    participantsIds: Array<string>;
-    id?: string;
+    participantsIds: Array<UUID>;
+    id?: UUID;
 }
 
 @Injectable()
@@ -61,13 +61,13 @@ export class VisitDao extends PageCreator<VisitEntity> {
         return this.repository.save(visits).then();
     }
 
-    public findOne(id: string): Promise<VisitEntity | undefined> {
+    public findOne(id: UUID): Promise<VisitEntity | undefined> {
         return this.repository.findOne({
             where: {id},
         }).then(toOptional);
     }
 
-    public async getOne(id: string): Promise<VisitEntity> {
+    public async getOne(id: UUID): Promise<VisitEntity> {
         const entity = await this.findOne(id);
         if (isNil(entity)) {
             throw new NotFoundException(`Event not found with id: ${id}`);

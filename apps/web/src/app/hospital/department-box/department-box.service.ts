@@ -8,7 +8,7 @@ import {
     PAGE_QUERY_KEY,
     PAGE_SIZE_QUERY_KEY,
     Pageable,
-    PageQuery
+    PageQuery, UUID
 } from '@melluin/common';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
@@ -20,13 +20,13 @@ export class DepartmentBoxService {
     private readonly http = inject(HttpClient);
     private readonly msg = inject(MessageService);
 
-    public addBoxStatus(departmentId: string, data: DepartmentBoxStatusReport): Observable<DepartmentBoxStatus> {
+    public addBoxStatus(departmentId: UUID, data: DepartmentBoxStatusReport): Observable<DepartmentBoxStatus> {
         return this.http
             .post<DepartmentBoxStatus>(`${environment.baseURL}/departments/${departmentId}/box-status`, data)
             .pipe(getErrorHandler<DepartmentBoxStatus>(this.msg));
     }
 
-    public findBoxStatusesByDepartment(departmentId: string, filters: PageQuery): Observable<Pageable<DepartmentBoxStatus>> {
+    public findBoxStatusesByDepartment(departmentId: UUID, filters: PageQuery): Observable<Pageable<DepartmentBoxStatus>> {
         return this.http.post<Pageable<DepartmentBoxStatus>>(
             `${environment.baseURL}/departments/${departmentId}/box-status/:list`, {
                 sort: filters.sort,
@@ -56,7 +56,7 @@ export class DepartmentBoxService {
             .pipe(getErrorHandler<Pageable<BoxStatusWithDepartmentBrief>>(this.msg));
     }
 
-    public findBoxStatusesByVisit(visitId: string): Observable<Array<DepartmentBoxStatus>> {
+    public findBoxStatusesByVisit(visitId: UUID): Observable<Array<DepartmentBoxStatus>> {
         return this.http.get<Array<DepartmentBoxStatus>>(`${environment.baseURL}/visits/${visitId}/box-status`)
             .pipe(getErrorHandler<Array<DepartmentBoxStatus>>(this.msg));
     }

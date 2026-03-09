@@ -1,5 +1,7 @@
+import {UUID} from '../util/type/uuid.type';
+
 export interface ChildAgesByDepartments {
-    departmentId: string;
+    departmentId: UUID;
     departmentName: string;
     sum: number;
     zeroToHalf: number;

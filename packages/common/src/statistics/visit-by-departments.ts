@@ -1,5 +1,7 @@
+import {UUID} from '../util/type/uuid.type';
+
 export interface VisitByDepartments {
-    departmentId: string;
+    departmentId: UUID;
     departmentName: string;
     visitCount: number;
     visitMinutes: number;

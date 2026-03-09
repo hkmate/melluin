@@ -1,9 +1,10 @@
 import { Permission } from './permission.enum';
 import { RoleBrief } from './role';
+import {UUID} from '../util/type/uuid.type';
 
 export interface BriefUser {
-    id: string;
-    personId: string;
+    id: UUID;
+    personId: UUID;
     roles: Array<RoleBrief>;
     isActive: boolean;
     lastLogin?: string;
@@ -14,5 +15,5 @@ export interface User extends BriefUser {
     customPermissions: Array<Permission>;
     permissions: Array<Permission>;
     created?: string;
-    createdByPersonId?: string;
+    createdByPersonId?: UUID;
 }

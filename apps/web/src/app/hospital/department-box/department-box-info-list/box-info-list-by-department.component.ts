@@ -1,5 +1,5 @@
 import {Component, effect, inject, input} from '@angular/core';
-import {DepartmentBoxStatus, Pageable} from '@melluin/common';
+import {DepartmentBoxStatus, Pageable, UUID} from '@melluin/common';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
 import {DepartmentBoxInfoListComponent} from '@fe/app/hospital/department-box/department-box-info-list/department-box-info-list.component';
 import {DepartmentBoxInfoComponent} from '@fe/app/hospital/department-box/department-box-info/department-box-info.component';
@@ -20,7 +20,7 @@ export class BoxInfoListByDepartmentComponent extends DepartmentBoxInfoListCompo
 
     private readonly boxStatusService = inject(DepartmentBoxService);
 
-    public readonly departmentId = input.required<string>();
+    public readonly departmentId = input.required<UUID>();
 
     constructor() {
         super();

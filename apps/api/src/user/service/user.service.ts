@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {UserDao} from '@be/user/user.dao';
-import {AsyncValidatorChain, isNotNil, User, UserCreation, UserRewrite} from '@melluin/common';
+import {AsyncValidatorChain, isNotNil, User, UserCreation, UserRewrite, UUID} from '@melluin/common';
 import {UserCreationToEntityConverter} from '@be/user/converter/user-creation-to-entity.converter';
 import {PersonHasNoUserYetValidator} from '@be/user/validator/person-has-no-user-yet.validator';
 import {UsernameIsNotUsedValidator} from '@be/user/validator/username-is-not-used.validator';
@@ -38,12 +38,12 @@ export class UserService {
         return this.userConverterFactor.createFor(requester).convert(userEntity);
     }
 
-    public async get(userId: string, requester: User): Promise<User> {
+    public async get(userId: UUID, requester: User): Promise<User> {
         const entity = await this.userDao.getOne(userId);
         return this.userConverterFactor.createFor(requester).convert(entity);
     }
 
-    public async update(userId: string, userRewrite: UserRewrite, requester: User): Promise<User> {
+    public async update(userId: UUID, userRewrite: UserRewrite, requester: User): Promise<User> {
         const entity = await this.userDao.getOne(userId);
         await this.createRewriteValidators(requester)
             .validate({entity, rewrite: userRewrite});

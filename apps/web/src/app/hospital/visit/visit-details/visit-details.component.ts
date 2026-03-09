@@ -4,7 +4,17 @@ import {Router, RouterLink} from '@angular/router';
 import {Location} from '@angular/common';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
-import {ApiError, isNil, isNotNil, Permission, Visit, VisitCreate, VisitRewrite, VisitStatus} from '@melluin/common';
+import {
+    ApiError,
+    isNil,
+    isNotNil,
+    Permission,
+    UUID,
+    Visit,
+    VisitCreate,
+    VisitRewrite,
+    VisitStatus
+} from '@melluin/common';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {MessageService} from '@fe/app/util/message.service';
@@ -192,7 +202,7 @@ export class VisitDetailsComponent {
         }
     }
 
-    private setUpConnections(visitId: string): void {
+    private setUpConnections(visitId: UUID): void {
         if (this.shouldShowConnections()) {
             this.visitConnectionsService.getConnections(visitId).subscribe(connectedVisits => {
                 this.connectedVisits = connectedVisits;

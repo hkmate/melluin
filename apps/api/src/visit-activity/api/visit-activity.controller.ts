@@ -17,7 +17,7 @@ import {
     isNil,
     Permission,
     User,
-    WrappedVisitActivity
+    WrappedVisitActivity, UUID
 } from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {VisitActivityCrudService} from '@be/visit-activity/visit-activity.crud.service';
@@ -41,7 +41,7 @@ export class VisitActivityController {
     @Post('/:id/activities')
     @HttpCode(HttpStatus.CREATED)
     @PermissionGuard(Permission.canCreateActivity, Permission.canWriteActivityAtAnyVisit)
-    public save(@Param('id', ParseUUIDPipe) visitId: string,
+    public save(@Param('id', ParseUUIDPipe) visitId: UUID,
                 @Body() activityInput: VisitActivityDto,
                 @CurrentUser() requester: User): Promise<VisitActivity> {
         activityInput.visitId = visitId;
@@ -50,8 +50,8 @@ export class VisitActivityController {
 
     @Put('/:visitId/activities/:id')
     @PermissionGuard(Permission.canCreateActivity, Permission.canWriteActivityAtAnyVisit)
-    public update(@Param('visitId', ParseUUIDPipe) visitId: string,
-                  @Param('id', ParseUUIDPipe) activityId: string,
+    public update(@Param('visitId', ParseUUIDPipe) visitId: UUID,
+                  @Param('id', ParseUUIDPipe) activityId: UUID,
                   @Body() activityInput: VisitActivityEditDto,
                   @CurrentUser() requester: User): Promise<VisitActivity> {
         if (isNil(activityInput.visitId)) {
@@ -65,34 +65,34 @@ export class VisitActivityController {
     @Delete('/:visitId/activities/:id')
     @HttpCode(HttpStatus.NO_CONTENT)
     @PermissionGuard(Permission.canCreateActivity, Permission.canWriteActivityAtAnyVisit)
-    public delete(@Param('visitId', ParseUUIDPipe) visitId: string,
-                  @Param('id', ParseUUIDPipe) activityId: string,
+    public delete(@Param('visitId', ParseUUIDPipe) visitId: UUID,
+                  @Param('id', ParseUUIDPipe) activityId: UUID,
                   @CurrentUser() requester: User): Promise<void> {
         return this.activityCrudService.delete(visitId, activityId, requester);
     }
 
     @Get('/:id/activities')
     @PermissionGuard(Permission.canReadActivity)
-    public find(@Param('id', ParseUUIDPipe) visitId: string,
+    public find(@Param('id', ParseUUIDPipe) visitId: UUID,
                 @CurrentUser() requester: User): Promise<WrappedVisitActivity> {
         return this.activityCrudService.findByVisitId(visitId, requester);
     }
 
     @Get('/:id/related/activities')
     @PermissionGuard(Permission.canReadActivity, Permission.canReadVisit, Permission.canReadChild)
-    public async findRelated(@Param('id', ParseUUIDPipe) visitId: string,
+    public async findRelated(@Param('id', ParseUUIDPipe) visitId: UUID,
                              @CurrentUser() requester: User): Promise<Array<WrappedVisitActivity>> {
         const relatedVisitIds = await this.visitRelationDao.findRelationIds(visitId, requester);
         return this.activityCrudService.findByVisitIds(relatedVisitIds, requester);
     }
 
-    private verifyVisitIdIsCorrect(visitId: string, activityInput: VisitActivityEditInput): void {
+    private verifyVisitIdIsCorrect(visitId: UUID, activityInput: VisitActivityEditInput): void {
         if (visitId !== activityInput.visitId) {
             throw new BadRequestException('Visit id is not the same in the object as in the URL');
         }
     }
 
-    private verifyActivityIdIsCorrect(activityId: string, activityInput: VisitActivityEditInput): void {
+    private verifyActivityIdIsCorrect(activityId: UUID, activityInput: VisitActivityEditInput): void {
         if (activityId !== activityInput.id) {
             throw new BadRequestException('Activity id is not the same in the object as in the URL');
         }

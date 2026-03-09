@@ -6,7 +6,7 @@ import {
     getFullName,
     getMonthsSince, isNil,
     isNotEmpty,
-    PersonIdentifier,
+    PersonIdentifier, UUID,
     VisitActivity,
     VisitActivityType,
     VisitedChild,
@@ -27,7 +27,7 @@ export class ReportPrepareService {
 
     private readonly currentUser = inject(CurrentUserService).currentUser;
 
-    public async draftCreator(visitIds: Array<string>): Promise<ReportPrepareCreator> {
+    public async draftCreator(visitIds: Array<UUID>): Promise<ReportPrepareCreator> {
         const currentUser = this.currentUser();
         if (isNil(currentUser)) {
             throw new Error('Draft could be prepared with logged in user!');
@@ -43,7 +43,7 @@ export class ReportPrepareService {
         return new ReportPrepareCreator(wrappedActivities, activityTypeToStr, currentPerson);
     }
 
-    private getWrappedData(ids: Array<string>): Promise<Array<WrappedVisitActivity>> {
+    private getWrappedData(ids: Array<UUID>): Promise<Array<WrappedVisitActivity>> {
         return Promise.all(ids.map(id => firstValueFrom(this.activityService.getActivities(id))));
     }
 

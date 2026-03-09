@@ -7,7 +7,7 @@ import {
     PAGE_QUERY_KEY,
     PAGE_SIZE_QUERY_KEY,
     Pageable,
-    PageQuery
+    PageQuery, UUID
 } from '@melluin/common';
 import {getErrorHandler} from '@fe/app/util/util';
 import {MessageService} from '@fe/app/util/message.service';
@@ -35,12 +35,12 @@ export class DepartmentService {
             .pipe(getErrorHandler<Department>(this.msg));
     }
 
-    public getDepartment(departmentId: string): Observable<Department> {
+    public getDepartment(departmentId: UUID): Observable<Department> {
         return this.http.get<Department>(`${this.departmentUrl}/${departmentId}`)
             .pipe(getErrorHandler<Department>(this.msg));
     }
 
-    public updateDepartment(departmentId: string, data: Department): Observable<Department> {
+    public updateDepartment(departmentId: UUID, data: Department): Observable<Department> {
         return this.http.put<Department>(`${this.departmentUrl}/${departmentId}`, data)
             .pipe(getErrorHandler<Department>(this.msg));
     }

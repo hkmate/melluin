@@ -1,14 +1,14 @@
 import {Column, Entity, OneToOne, PrimaryColumn} from 'typeorm';
 import {UserEntity} from '@be/user/model/user.entity';
 import {plainToInstance} from 'class-transformer';
-import {OperationCity, PersonPreferences} from '@melluin/common';
+import {OperationCity, PersonPreferences, UUID} from '@melluin/common';
 import {PersonPreferencesDo} from '@be/person/model/person-preferences.do';
 
 @Entity({ name: 'person' })
 export class PersonEntity {
 
     @PrimaryColumn('uuid')
-    id: string;
+    id: UUID;
 
     @Column({ name: 'first_name' })
     firstName: string;
@@ -35,7 +35,7 @@ export class PersonEntity {
     created: Date | null;
 
     @Column({ name: 'created_by', type: 'uuid', nullable: true })
-    createdByPersonId: string | null;
+    createdByPersonId: UUID | null;
 
     @Column({type: 'jsonb'})
     cities: Array<OperationCity>;

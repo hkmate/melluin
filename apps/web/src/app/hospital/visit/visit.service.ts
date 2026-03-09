@@ -5,7 +5,7 @@ import {
     PAGE_QUERY_KEY,
     PAGE_SIZE_QUERY_KEY,
     Pageable,
-    PageQuery,
+    PageQuery, UUID,
     Visit,
     VisitCreate,
     VisitRewrite
@@ -33,11 +33,11 @@ export class VisitService {
         return this.http.post<Visit>(this.visitUrl, data, {params});
     }
 
-    public getVisit(visitId: string): Observable<Visit> {
+    public getVisit(visitId: UUID): Observable<Visit> {
         return this.http.get<Visit>(`${this.visitUrl}/${visitId}`);
     }
 
-    public continueVisit(visitId: string, info: ContinueVisitInfo): Observable<Visit> {
+    public continueVisit(visitId: UUID, info: ContinueVisitInfo): Observable<Visit> {
         const params = {
             departmentId: info.departmentId,
             from: info.dateTimeFrom,
@@ -46,7 +46,7 @@ export class VisitService {
             .pipe(getErrorHandler<Visit>(this.msg));
     }
 
-    public updateVisit(visitId: string, data: VisitRewrite, options = {forceSameTimeVisit: false}): Observable<Visit> {
+    public updateVisit(visitId: UUID, data: VisitRewrite, options = {forceSameTimeVisit: false}): Observable<Visit> {
         const params = {} as Record<string, string | boolean>;
         if (options.forceSameTimeVisit) {
             params.forceSameTime = true;

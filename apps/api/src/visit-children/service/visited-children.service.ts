@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {User, VisitedChild} from '@melluin/common';
+import {User, UUID, VisitedChild} from '@melluin/common';
 import {VisitedChildrenDao} from '@be/visit-children/persistence/visited-children.dao';
 import {VisitDao} from '@be/visit/visit.dao';
 import {VisitedChildEntityToDtoConverter} from '@be/visit-children/converer/visited-child-entity-to-dto.converter';
@@ -17,12 +17,12 @@ export class VisitedChildrenService {
                 private readonly validatorFactory: VisitedChildSaveValidatorFactory) {
     }
 
-    public async findAll(visitId: string): Promise<Array<VisitedChild>> {
+    public async findAll(visitId: UUID): Promise<Array<VisitedChild>> {
         return (await this.visitedChildrenDao.findAllByVisitId(visitId))
             .map(entity => this.entityToDtoConverter.convert(entity));
     }
 
-    public async remove(visitId: string, visitedChildId: string, requester: User): Promise<void> {
+    public async remove(visitId: UUID, visitedChildId: UUID, requester: User): Promise<void> {
         const visit = await this.visitDao.getOne(visitId);
         const visitedChild = await this.visitedChildrenDao.getOne(visitedChildId);
 

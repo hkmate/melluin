@@ -1,6 +1,7 @@
 import {VisitStatus} from '../visit/visit-status';
 import {BoxStatusChangeReason} from '../department/box/box-status-change-reason';
 import {DateIntervalSpecifier} from '../util/date-interval-generator';
+import {UUID} from '../util/type/uuid.type';
 
 export const EventsDateFilterValues = [
     DateIntervalSpecifier.WEEK,
@@ -12,9 +13,9 @@ export const EventsDateFilterValues = [
 export interface EventListUserSettings {
 
     dateFilter?: DateIntervalSpecifier;
-    departmentIds?: Array<string>;
+    departmentIds?: Array<UUID>;
     statuses?: Array<VisitStatus>;
-    participantIds?: Array<string>;
+    participantIds?: Array<UUID>;
     needHighlight?: boolean;
 
 }

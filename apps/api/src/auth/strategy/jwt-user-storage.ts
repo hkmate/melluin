@@ -1,5 +1,5 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
-import {isNil, User} from '@melluin/common';
+import {isNil, User, UUID} from '@melluin/common';
 import {UserEntityToDtoConverter} from '@be/user/converter/user-entity-to-dto.converter';
 import {UserDao} from '@be/user/user.dao';
 
@@ -12,7 +12,7 @@ export class JwtUserStorage {
                 private readonly userConverter: UserEntityToDtoConverter) {
     }
 
-    public async getById(id: string): Promise<User> {
+    public async getById(id: UUID): Promise<User> {
         const entity = await this.userDao.find({where: {id}, cache: JwtUserStorage.CACHE_TIMEOUT});
         if (isNil(entity) || !entity.isActive) {
             throw new NotFoundException(`User not found with id: ${id}`);

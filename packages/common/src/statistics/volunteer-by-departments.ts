@@ -1,7 +1,9 @@
+import {UUID} from '../util/type/uuid.type';
+
 export interface VolunteerByDepartments {
-    personId: string;
+    personId: UUID;
     personName: string;
-    departmentId: string;
+    departmentId: UUID;
     departmentName: string;
     visitCount: number;
     visitMinutes: number;

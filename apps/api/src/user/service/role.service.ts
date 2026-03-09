@@ -3,7 +3,7 @@ import {RoleDao} from '@be/user/role.dao';
 import {RoleEntityToDtoConverter} from '@be/user/converter/role-entity-to-dto.converter';
 import {RoleRewriteApplier} from '@be/user/applier/role-rewrite.applier';
 import {PermissionDao} from '@be/user/permission.dao';
-import {Role, RoleBrief, RoleCreation} from '@melluin/common';
+import {Role, RoleBrief, RoleCreation, UUID} from '@melluin/common';
 import {RoleCreationToEntityConverter} from '@be/user/converter/role-creation-to-entity.converter';
 import {UserDao} from '@be/user/user.dao';
 import {RoleEntityToBriefDtoConverter} from '@be/user/converter/role-entity-to-brief-dto.converter';
@@ -45,7 +45,7 @@ export class RoleService {
         return this.roleConverter.convert(saved);
     }
 
-    public async delete(roleId: string): Promise<void> {
+    public async delete(roleId: UUID): Promise<void> {
         await this.verifyNoUserWithRole(roleId);
 
         const entity = await this.roleDao.findById(roleId);
@@ -60,7 +60,7 @@ export class RoleService {
         }
     }
 
-    private async verifyNoUserWithRole(roleId: string): Promise<void> | never {
+    private async verifyNoUserWithRole(roleId: UUID): Promise<void> | never {
         const isAnyWithRole = await this.userDao.hasAnyWithRole(roleId);
         if (isAnyWithRole) {
             throw new BadRequestException('There is at least one user with this role.');

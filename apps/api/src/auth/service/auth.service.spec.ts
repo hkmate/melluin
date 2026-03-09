@@ -71,7 +71,7 @@ describe('AuthService', () => {
         };
         const mockedPersonId = 'c3121569-ccb8-4600-b07b-3f59b4a477fa';
         const mockedUserId = 'c0b74770-5be3-4d44-84c8-596f244488c9';
-        const expectedRoles = [{ id: randomString(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }];
+        const expectedRoles = [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }];
         const expectedPassword = randomString();
         const mockedDate = new Date();
 
@@ -248,8 +248,8 @@ describe('AuthService', () => {
         it('When user is valid Then token returned with wrapped user', async () => {
             const mockedDate = new Date();
             jest.spyOn(Utils, 'now').mockReturnValue(mockedDate);
-            const userId: string = randomUUID();
-            const personId: string = randomUUID();
+            const userId = randomUUID();
+            const personId = randomUUID();
             const username: string = randomString();
             const password: string = randomString();
             const user: User = {
@@ -323,8 +323,8 @@ describe('AuthService', () => {
         });
 
         it('When user is in db and active and password is correct Then user object returned without password', async () => {
-            const userId: string = randomUUID();
-            const personId: string = randomUUID();
+            const userId = randomUUID();
+            const personId = randomUUID();
             const userName: string = randomString();
             const password: string = randomString();
             const userEntity: UserEntity = {
@@ -349,8 +349,8 @@ describe('AuthService', () => {
         });
 
         it('When user is in db and active and password is not correct Then null returned', async () => {
-            const userId: string = randomUUID();
-            const personId: string = randomUUID();
+            const userId = randomUUID();
+            const personId = randomUUID();
             const userName: string = randomString();
             const password: string = randomString();
             const userEntity: UserEntity = {
@@ -378,7 +378,7 @@ describe('AuthService', () => {
         });
 
         it('When user is in db and is not active Then null returned', async () => {
-            const userId: string = randomUUID();
+            const userId = randomUUID();
             const userName: string = randomString();
             const password: string = randomString();
             const userEntity: UserEntity = {

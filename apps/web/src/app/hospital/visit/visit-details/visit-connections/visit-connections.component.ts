@@ -1,5 +1,5 @@
 import {Component, inject, input, output, signal} from '@angular/core';
-import {Visit, Permission} from '@melluin/common';
+import {Visit, Permission, UUID} from '@melluin/common';
 import {VisitConnectionsService} from '@fe/app/hospital/visit/visit-details/visit-connections.service';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
@@ -49,7 +49,7 @@ export class VisitConnectionsComponent {
         });
     }
 
-    protected removeConnection(connectedId: string): void {
+    protected removeConnection(connectedId: UUID): void {
         this.confirmService.getI18nConfirm({
             message: 'Visit.Connections.DeleteConfirm',
             okBtnText: 'YesNo.true'

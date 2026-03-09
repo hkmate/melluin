@@ -1,4 +1,6 @@
+import {UUID} from '@melluin/common';
+
 export interface ContinueVisitInfo {
-    departmentId: string;
+    departmentId: UUID;
     dateTimeFrom: string;
 }

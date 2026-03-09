@@ -5,7 +5,7 @@ import {
     VisitActivityEditInput,
     VisitActivityInput,
     User,
-    WrappedVisitActivity
+    WrappedVisitActivity, UUID
 } from '@melluin/common';
 import {VisitActivityDao} from '@be/visit-activity/visit-activity.dao';
 import {ActivityInputToEntityConverter} from '@be/visit-activity/converter/activity-input-to-entity.converter';
@@ -55,7 +55,7 @@ export class VisitActivityCrudService {
         return this.basicDtoConverter.convert(entity);
     }
 
-    public async delete(visitId: string, activityId: string, requester: User): Promise<void> {
+    public async delete(visitId: UUID, activityId: UUID, requester: User): Promise<void> {
         const visit = await this.visitDao.getOne(visitId);
         const persisted = await this.visitActivityDao.getOne(activityId);
 
@@ -65,7 +65,7 @@ export class VisitActivityCrudService {
         await this.visitActivityDao.delete(persisted);
     }
 
-    public async findByVisitId(visitId: string, requester: User): Promise<WrappedVisitActivity> {
+    public async findByVisitId(visitId: UUID, requester: User): Promise<WrappedVisitActivity> {
         const visit = await this.visitDao.getOne(visitId);
         const activities = await this.visitActivityDao.findByVisitIds([visitId]);
         const children = await this.visitedChildrenDao.findAllByVisitId(visitId);
@@ -73,7 +73,7 @@ export class VisitActivityCrudService {
         return await this.wrappedDtoConverter.convert({visit, activities, children, info});
     }
 
-    public async findByVisitIds(visitIds: Array<string>, requester: User): Promise<Array<WrappedVisitActivity>> {
+    public async findByVisitIds(visitIds: Array<UUID>, requester: User): Promise<Array<WrappedVisitActivity>> {
         const wrappedVisits: Array<WrappedVisitActivity> = await Promise.all(
             visitIds.map(visitId => this.findByVisitId(visitId, requester))
         );

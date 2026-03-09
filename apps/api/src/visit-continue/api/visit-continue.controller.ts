@@ -1,5 +1,5 @@
 import {BadRequestException, Controller, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Query} from '@nestjs/common';
-import {ApiError, Visit, Permission, User} from '@melluin/common';
+import {ApiError, Visit, Permission, User, UUID} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {VisitContinueService} from '@be/visit-continue/visit-continue.service';
@@ -17,9 +17,9 @@ export class VisitContinueController {
     @Post('/:visitId/continue')
     @HttpCode(HttpStatus.CREATED)
     @PermissionGuard(Permission.canCreateVisit, Permission.canCreateAnyVisit)
-    public async addConnection(@Param('visitId', ParseUUIDPipe) visitId: string,
+    public async addConnection(@Param('visitId', ParseUUIDPipe) visitId: UUID,
                                @Query('from') dateTimeFrom: string,
-                               @Query('departmentId', ParseUUIDPipe) departmentId: string,
+                               @Query('departmentId', ParseUUIDPipe) departmentId: UUID,
                                @CurrentUser() requester: User): Promise<Visit> {
         this.verifyItIsValidDateTime(dateTimeFrom);
         return await this.continueService.createConnectedVisit(visitId, dateTimeFrom, departmentId, requester);

@@ -8,7 +8,7 @@ import {
     Person,
     PersonCreation,
     PersonIdentifier,
-    PersonRewrite
+    PersonRewrite, UUID
 } from '@melluin/common';
 import {Observable} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
@@ -31,12 +31,12 @@ export class PeopleService {
             .pipe(getErrorHandler<Person>(this.msg));
     }
 
-    public getPerson(personId: string): Observable<Person> {
+    public getPerson(personId: UUID): Observable<Person> {
         return this.http.get<Person>(`${this.peopleUrl}/${personId}`)
             .pipe(getErrorHandler<Person>(this.msg));
     }
 
-    public updatePerson(personId: string, data: PersonRewrite): Observable<Person> {
+    public updatePerson(personId: UUID, data: PersonRewrite): Observable<Person> {
         return this.http.put<Person>(`${this.peopleUrl}/${personId}`, data)
             .pipe(getErrorHandler<Person>(this.msg));
     }

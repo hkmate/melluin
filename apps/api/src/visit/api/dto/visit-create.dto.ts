@@ -1,4 +1,4 @@
-import {VisitCreate, VisitStatus} from '@melluin/common';
+import {UUID, VisitCreate, VisitStatus} from '@melluin/common';
 import {ApiProperty} from '@nestjs/swagger';
 import {
     IsArray,
@@ -32,12 +32,12 @@ export class VisitCreateDto implements VisitCreate {
 
     @ApiProperty()
     @IsUUID()
-    organizerId: string;
+    organizerId: UUID;
 
     @ApiProperty()
     @IsUUID('all', {each: true})
     @IsArray()
-    participantIds: Array<string>;
+    participantIds: Array<UUID>;
 
     @ApiProperty({enum: [VisitStatus.DRAFT, VisitStatus.SCHEDULED]})
     @IsEnum(VisitStatus)
@@ -47,7 +47,7 @@ export class VisitCreateDto implements VisitCreate {
     @ApiProperty()
     @IsUUID()
     @IsString()
-    departmentId: string;
+    departmentId: UUID;
 
     @ApiProperty()
     @IsBoolean()

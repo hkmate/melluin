@@ -1,5 +1,5 @@
 import {Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post} from '@nestjs/common';
-import {Visit, Permission, User} from '@melluin/common';
+import {Visit, Permission, User, UUID} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {VisitConnectionsService} from '@be/visit-connections/visit-connections.service';
@@ -16,15 +16,15 @@ export class VisitConnectionsController {
     @Post('/:visitId/connections/:connectId')
     @HttpCode(HttpStatus.CREATED)
     @PermissionGuard(Permission.canWriteVisitConnections)
-    public addConnection(@Param('visitId', ParseUUIDPipe) visitId: string,
-                         @Param('connectId', ParseUUIDPipe) connectId: string,
+    public addConnection(@Param('visitId', ParseUUIDPipe) visitId: UUID,
+                         @Param('connectId', ParseUUIDPipe) connectId: UUID,
                          @CurrentUser() requester: User): Promise<void> {
         return this.connectionsService.addConnection(visitId, connectId, requester);
     }
 
     @Get('/:visitId/connections')
     @PermissionGuard(Permission.canReadVisitConnections)
-    public getConnections(@Param('visitId', ParseUUIDPipe) visitId: string,
+    public getConnections(@Param('visitId', ParseUUIDPipe) visitId: UUID,
                           @CurrentUser() requester: User): Promise<Array<Visit>> {
         return this.connectionsService.getConnections(visitId, requester);
     }
@@ -32,8 +32,8 @@ export class VisitConnectionsController {
     @Delete('/:visitId/connections/:connectId')
     @HttpCode(HttpStatus.NO_CONTENT)
     @PermissionGuard(Permission.canWriteVisitConnections)
-    public deleteConnection(@Param('visitId', ParseUUIDPipe) visitId: string,
-                            @Param('connectId', ParseUUIDPipe) connectId: string,
+    public deleteConnection(@Param('visitId', ParseUUIDPipe) visitId: UUID,
+                            @Param('connectId', ParseUUIDPipe) connectId: UUID,
                             @CurrentUser() requester: User): Promise<void> {
         return this.connectionsService.deleteConnection(visitId, connectId, requester);
     }

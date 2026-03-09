@@ -2,7 +2,7 @@ import {Component, inject, input, output} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {TranslateModule} from '@ngx-translate/core';
-import {Visit, isNotNil} from '@melluin/common';
+import {Visit, isNotNil, UUID} from '@melluin/common';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
 import {MatButton} from '@angular/material/button';
 import {LoaderService} from '@fe/app/loader/loader.service';
@@ -50,7 +50,7 @@ export class VisitConnectionCreateComponent {
             if (this.idControl.invalid) {
                 return;
             }
-            this.loadCandidate(value);
+            this.loadCandidate(value as UUID);
         });
     }
 
@@ -60,7 +60,7 @@ export class VisitConnectionCreateComponent {
         }
     }
 
-    private loadCandidate(candidateVisitId: string): void {
+    private loadCandidate(candidateVisitId: UUID): void {
         this.loaderService.startLoader();
         this.visitService.getVisit(candidateVisitId).pipe(getErrorHandler(this.msgService)).subscribe({
             next: visit => {

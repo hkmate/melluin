@@ -1,10 +1,11 @@
 import { BriefUser } from '../user/user';
 import {OperationCity} from './operation-city';
 import {PersonPreferences} from './person-preferences';
+import {UUID} from '../util/type/uuid.type';
 
 
 export interface PersonIdentifier {
-    id: string;
+    id: UUID;
     firstName: string;
     lastName: string;
 }
@@ -15,7 +16,7 @@ export interface Person extends PersonIdentifier {
     user?: BriefUser;
     preferences?: PersonPreferences;
     created?: string;
-    createdByPersonId?: string;
+    createdByPersonId?: UUID;
     cities?: Array<OperationCity>;
 }
 

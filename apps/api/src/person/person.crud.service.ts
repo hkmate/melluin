@@ -8,7 +8,7 @@ import {
     PersonIdentifier,
     PersonRewrite,
     personSortableFields,
-    User,
+    User, UUID,
     ValidatorChain
 } from '@melluin/common';
 import {PersonEntity} from '@be/person/model/person.entity';
@@ -45,7 +45,7 @@ export class PersonCrudService {
             .convert(personEntity);
     }
 
-    public getOne(id: string, requester: User): Promise<Person> {
+    public getOne(id: UUID, requester: User): Promise<Person> {
         return this.personDao.getOne(id)
             .then(entity => this.personConverterFactory.createFor(requester)
                 .convert(entity));
@@ -67,7 +67,7 @@ export class PersonCrudService {
         return await this.personDao.findAllIdentifiers(pageRequest);
     }
 
-    public async update(personId: string, personRewrite: PersonRewrite, requester: User): Promise<Person> {
+    public async update(personId: UUID, personRewrite: PersonRewrite, requester: User): Promise<Person> {
         const person = await this.personDao.getOne(personId);
         this.createValidatorsForUpdate(requester)
             .validate({person, rewrite: personRewrite});

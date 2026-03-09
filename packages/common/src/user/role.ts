@@ -1,5 +1,6 @@
 import {Permission} from './permission.enum';
 import {cast} from '../util/test-util';
+import {UUID} from '../util/type/uuid.type';
 
 export enum RoleType {
 
@@ -20,7 +21,7 @@ export interface RoleBrief {
 
 export interface Role extends RoleBrief {
 
-    id: string;
+    id: UUID;
     permissions: Array<Permission>;
 
 }
