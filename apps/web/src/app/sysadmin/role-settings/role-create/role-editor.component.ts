@@ -3,7 +3,7 @@ import {isNil, Permission, Role, RoleCreation, RoleType} from '@melluin/common';
 import {RoleService} from '@fe/app/sysadmin/role-settings/role.service';
 import {MessageService} from '@fe/app/util/message.service';
 import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import {MatFormField} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatIconButton} from '@angular/material/button';
@@ -11,6 +11,7 @@ import {MatIcon} from '@angular/material/icon';
 import {form, FormField, min, required, submit} from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
+import {t} from '@fe/app/util/translate/translate';
 
 @Component({
     imports: [
@@ -35,7 +36,6 @@ export class RoleEditorComponent {
     protected readonly permissionOptions = Object.values(Permission);
 
     private readonly msg = inject(MessageService);
-    private readonly translate = inject(TranslateService);
     private readonly roleService = inject(RoleService);
 
     public readonly role = input<Role>();
@@ -49,9 +49,9 @@ export class RoleEditorComponent {
 
     protected readonly formModel = linkedSignal<RoleCreation>(() => this.setupFormValues());
     protected readonly form = form(this.formModel, schema => {
-        required(schema.name, {message: this.translate.instant('Form.Required')});
-        min(schema.type, 3, {message: this.translate.instant('Form.Min', {min: 3})});
-        required(schema.type, {message: this.translate.instant('Form.Required')});
+        required(schema.name, {message: t('Form.Required')});
+        min(schema.type, 3, {message: t('Form.Min', {min: 3})});
+        required(schema.type, {message: t('Form.Required')});
     });
 
     protected submitForm(): void {

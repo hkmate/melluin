@@ -7,8 +7,7 @@ import {
     provideZoneChangeDetection
 } from '@angular/core';
 import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';
-import {provideTranslateService, TranslateService} from '@ngx-translate/core';
+import {provideTranslateService} from '@ngx-translate/core';
 import {MelluinPathProvider} from './app-paths';
 import {PathProvider} from './path-resolve/path-resolve.service';
 import {MatPaginatorIntl} from '@angular/material/paginator';
@@ -25,6 +24,7 @@ import {provideRouter} from '@angular/router';
 import {routes} from '@fe/app/app-routes';
 import {AppLanguage} from '@fe/app/language/app-language';
 import {provideDatepickerConfig} from 'ngxsmk-datepicker';
+import {setupTranslateService} from '@fe/app/util/translate/translate';
 
 registerLocaleData(localeHu);
 
@@ -37,19 +37,12 @@ export const appConfig: ApplicationConfig = {
         provideBrowserGlobalErrorListeners(),
         provideRouter(routes),
         provideAppInitializer(() => inject(CredentialStoreService).init()),
-        provideAppInitializer(() => inject(TranslateService).use(AppLanguage.HU)),
+        provideAppInitializer(() => setupTranslateService()),
 
         provideHttpClient(withInterceptorsFromDi()),
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
 
-        provideTranslateService({
-            fallbackLang: AppLanguage.HU,
-        }),
-        provideTranslateHttpLoader({
-            prefix: './assets/i18n/',
-            suffix: '.json',
-            useHttpBackend: true
-        }),
+        provideTranslateService({fallbackLang: AppLanguage.HU}),
 
         provideToastr(),
 

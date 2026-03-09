@@ -13,7 +13,7 @@ import {
 import {MessageService} from '@fe/app/util/message.service';
 import {PeopleService} from '@fe/app/people/people.service';
 import {UserService} from '@fe/app/people/user.service';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
@@ -25,6 +25,7 @@ import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {form, FormField, pattern, required, submit} from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
 import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
+import {t} from '@fe/app/util/translate/translate';
 
 @Component({
     imports: [
@@ -54,7 +55,6 @@ export class MyProfileEditorComponent {
     private readonly msg = inject(MessageService);
     private readonly peopleService = inject(PeopleService);
     private readonly userService = inject(UserService);
-    private readonly translate = inject(TranslateService);
     private readonly credentialStoreService = inject(CredentialStoreService);
 
     public readonly person = input.required<Person>();
@@ -65,15 +65,15 @@ export class MyProfileEditorComponent {
 
     protected readonly personModel = signal(this.getDefaultPersonFormModel());
     protected readonly personForm = form(this.personModel, schema => {
-        required(schema.firstName, {message: this.translate.instant('Form.Required')});
-        required(schema.lastName, {message: this.translate.instant('Form.Required')});
+        required(schema.firstName, {message: t('Form.Required')});
+        required(schema.lastName, {message: t('Form.Required')});
     });
 
     protected readonly userModel = signal(this.getDefaultUserFormModel());
     protected readonly userForm = form(this.userModel, schema => {
-        required(schema.userName, {message: this.translate.instant('Form.Required')});
+        required(schema.userName, {message: t('Form.Required')});
         pattern(schema.password, new RegExp(passwordPattern),
-            {message: this.translate.instant('PersonPage.User.Form.PasswordPatternHint', {passwordMinLength})}
+            {message: t('PersonPage.User.Form.PasswordPatternHint', {passwordMinLength})}
         );
     });
 

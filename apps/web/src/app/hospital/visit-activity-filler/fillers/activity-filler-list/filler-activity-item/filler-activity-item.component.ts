@@ -1,12 +1,12 @@
 import {Component, inject, input, signal} from '@angular/core';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
-import {VisitActivity, NOOP} from '@melluin/common';
+import {NOOP, VisitActivity} from '@melluin/common';
 import {VisitedChildById} from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
 import {ConfirmationDialogConfig} from '@fe/app/confirmation/confirmation-dialog-config';
-import {TranslateService} from '@ngx-translate/core';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {FillerActivityEditorComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-filler-list/filler-activity-editor/filler-activity-editor.component';
 import {FillerActivityCardComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-filler-list/filler-activity-card/filler-activity-card.component';
+import {t} from '@fe/app/util/translate/translate';
 
 @Component({
     selector: 'app-filler-activity-item',
@@ -18,7 +18,6 @@ import {FillerActivityCardComponent} from '@fe/app/hospital/visit-activity-fille
 })
 export class FillerActivityItemComponent {
 
-    private readonly translateService = inject(TranslateService);
     private readonly confirmation = inject(ConfirmationService);
     private readonly fillerService = inject(VisitActivityFillerService);
 
@@ -43,7 +42,7 @@ export class FillerActivityItemComponent {
 
     private getDeleteConfirmDialogConfig(): Partial<ConfirmationDialogConfig> {
         return {
-            message: this.translateService.instant('Visit.ConfirmActivityRemove')
+            message: t('Visit.ConfirmActivityRemove')
         }
     }
 

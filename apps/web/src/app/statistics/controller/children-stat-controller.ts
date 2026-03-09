@@ -1,4 +1,3 @@
-import {TranslateService} from '@ngx-translate/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
 import {ChildrenByDepartments, isNilOrEmpty, OperationCity} from '@melluin/common';
@@ -7,13 +6,14 @@ import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {ChildrenByDepartmentsStatProvider} from '@fe/app/statistics/service/children-by-departments-stat-provider';
+import {t} from '@fe/app/util/translate/translate';
 
 export type ChildrenTableData = Omit<ChildrenByDepartments, 'departmentId' | 'departmentName'>;
 
 export class ChildrenStatController extends AbstractStatisticWidgetController<ChildrenTableData> {
 
-    constructor(translate: TranslateService, private readonly statProvider: ChildrenByDepartmentsStatProvider) {
-        super(translate, 'StatisticsPage.Children');
+    constructor(private readonly statProvider: ChildrenByDepartmentsStatProvider) {
+        super('StatisticsPage.Children');
     }
 
     public override defaultMode(): WidgetMode {
@@ -48,9 +48,9 @@ export class ChildrenStatController extends AbstractStatisticWidgetController<Ch
 
     private getHeaders(): Record<keyof ChildrenTableData, string> {
         return {
-            childContact: this.translate.instant('StatisticsPage.Children.ChildContact'),
-            child: this.translate.instant('StatisticsPage.Children.Child'),
-            childWithRelativePresent: this.translate.instant('StatisticsPage.Children.ChildWithRelativePresent'),
+            childContact: t('StatisticsPage.Children.ChildContact'),
+            child: t('StatisticsPage.Children.Child'),
+            childWithRelativePresent: t('StatisticsPage.Children.ChildWithRelativePresent'),
         };
     }
 

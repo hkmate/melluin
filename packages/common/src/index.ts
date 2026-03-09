@@ -59,6 +59,7 @@ export * from './user/user-creation';
 export * from './user/user-rewrite';
 export * from './user/user-settings';
 
+export * from './util/type/object-leaves.type';
 export * from './util/date-interval-generator';
 export * from './util/date-util';
 export * from './util/test-util';

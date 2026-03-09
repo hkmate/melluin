@@ -1,4 +1,3 @@
-import {TranslateService} from '@ngx-translate/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
 import {ChildAgesByDepartments, isNilOrEmpty, OperationCity} from '@melluin/common';
@@ -6,13 +5,14 @@ import {firstValueFrom} from 'rxjs';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {ChildAgesByDepartmentsStatProvider} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
+import {t} from '@fe/app/util/translate/translate';
 
 export type ChildAgesTableData = Omit<ChildAgesByDepartments, 'departmentId' | 'departmentName'>;
 
 export class ChildAgesStatController extends AbstractStatisticWidgetController<ChildAgesTableData> {
 
-    constructor(translate: TranslateService, private readonly statProvider: ChildAgesByDepartmentsStatProvider) {
-        super(translate, 'StatisticsPage.ChildAges');
+    constructor(private readonly statProvider: ChildAgesByDepartmentsStatProvider) {
+        super('StatisticsPage.ChildAges');
     }
 
     public getChartData(): ChartConfiguration {
@@ -22,7 +22,7 @@ export class ChildAgesStatController extends AbstractStatisticWidgetController<C
             data: {
                 labels: Object.values(this.getHeadersWithoutSum()),
                 datasets: [{
-                    label: this.translate.instant('StatisticsPage.ChildAges.ChartBarLabel', {sum: sumOfChildren}),
+                    label: t('StatisticsPage.ChildAges.ChartBarLabel', {sum: sumOfChildren}),
                     data: this.getChartDataset(),
                     backgroundColor: ChartColor.blue,
                     stack: 'stack 0'
@@ -73,24 +73,24 @@ export class ChildAgesStatController extends AbstractStatisticWidgetController<C
 
     private getHeaders(): Record<keyof ChildAgesTableData, string> {
         return {
-            sum: this.translate.instant('StatisticsPage.ChildAges.Sum'),
+            sum: t('StatisticsPage.ChildAges.Sum'),
             ...this.getHeadersWithoutSum()
         };
     }
 
     private getHeadersWithoutSum(): Record<keyof Omit<ChildAgesTableData, 'sum'>, string> {
         return {
-            zeroToHalf: this.translate.instant('StatisticsPage.ChildAges.ZeroToHalf'),
-            halfToOne: this.translate.instant('StatisticsPage.ChildAges.HalfToOne'),
-            oneToThree: this.translate.instant('StatisticsPage.ChildAges.OneToThree'),
-            threeToFive: this.translate.instant('StatisticsPage.ChildAges.ThreeToFive'),
-            fiveToSeven: this.translate.instant('StatisticsPage.ChildAges.FiveToSeven'),
-            sevenToNine: this.translate.instant('StatisticsPage.ChildAges.SevenToNine'),
-            nineToEleven: this.translate.instant('StatisticsPage.ChildAges.NineToEleven'),
-            elevenToThirteen: this.translate.instant('StatisticsPage.ChildAges.ElevenToThirteen'),
-            thirteenToFifteen: this.translate.instant('StatisticsPage.ChildAges.ThirteenToFifteen'),
-            fifteenToSeventeen: this.translate.instant('StatisticsPage.ChildAges.FifteenToSeventeen'),
-            seventeenToUp: this.translate.instant('StatisticsPage.ChildAges.SeventeenToUp'),
+            zeroToHalf: t('StatisticsPage.ChildAges.ZeroToHalf'),
+            halfToOne: t('StatisticsPage.ChildAges.HalfToOne'),
+            oneToThree: t('StatisticsPage.ChildAges.OneToThree'),
+            threeToFive: t('StatisticsPage.ChildAges.ThreeToFive'),
+            fiveToSeven: t('StatisticsPage.ChildAges.FiveToSeven'),
+            sevenToNine: t('StatisticsPage.ChildAges.SevenToNine'),
+            nineToEleven: t('StatisticsPage.ChildAges.NineToEleven'),
+            elevenToThirteen: t('StatisticsPage.ChildAges.ElevenToThirteen'),
+            thirteenToFifteen: t('StatisticsPage.ChildAges.ThirteenToFifteen'),
+            fifteenToSeventeen: t('StatisticsPage.ChildAges.FifteenToSeventeen'),
+            seventeenToUp: t('StatisticsPage.ChildAges.SeventeenToUp'),
         };
     }
 

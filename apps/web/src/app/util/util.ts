@@ -1,7 +1,7 @@
 import {catchError, OperatorFunction} from 'rxjs';
 import {MessageService} from '@fe/app/util/message.service';
 import {AbstractControl, ValidationErrors} from '@angular/forms';
-import {isNilOrEmpty} from '@melluin/common';
+import {ApiError, isNilOrEmpty} from '@melluin/common';
 import {HttpErrorResponse} from '@angular/common/http';
 
 
@@ -12,7 +12,8 @@ function logErrorToUser(error: HttpErrorResponse, msg: MessageService): void {
         return;
     }
     if ('code' in error.error) {
-        msg.error(`ApiError.${error.error.code}`);
+        const code = error.error.code as ApiError;
+        msg.error(`ApiError.${code}`);
         return;
     }
     if ('message' in error.error) {

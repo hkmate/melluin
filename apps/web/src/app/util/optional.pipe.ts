@@ -1,13 +1,11 @@
-import {inject, Pipe, PipeTransform} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {isNotNil} from '@melluin/common';
+import {t} from '@fe/app/util/translate/translate';
 
 @Pipe({
     name: 'optional'
 })
 export class OptionalPipe implements PipeTransform {
-
-    private readonly i18n = inject(TranslateService);
 
     public transform<T>(value?: T, message?: string): string | T {
         return isNotNil(value) ? value : this.getMessage(message);
@@ -18,7 +16,7 @@ export class OptionalPipe implements PipeTransform {
     }
 
     private getDefaultMsg(): string {
-        return this.i18n.instant('NoData');
+        return t('NoData');
     }
 
 }

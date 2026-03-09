@@ -1,4 +1,3 @@
-import {TranslateService} from '@ngx-translate/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
 import {ChildrenByDepartments, OperationCity} from '@melluin/common';
@@ -6,13 +5,14 @@ import {firstValueFrom} from 'rxjs';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {ChildrenByDepartmentsStatProvider} from '@fe/app/statistics/service/children-by-departments-stat-provider';
+import {t} from '@fe/app/util/translate/translate';
 
 export type ChildrenByDepartmentsTableData = Omit<ChildrenByDepartments, 'departmentId'>;
 
 export class ChildrenByDepartmentsStatController extends AbstractStatisticWidgetController<ChildrenByDepartmentsTableData> {
 
-    constructor(translate: TranslateService, private readonly statProvider: ChildrenByDepartmentsStatProvider) {
-        super(translate, 'StatisticsPage.ChildrenByDepartments');
+    constructor(private readonly statProvider: ChildrenByDepartmentsStatProvider) {
+        super('StatisticsPage.ChildrenByDepartments');
     }
 
     // eslint-disable-next-line max-lines-per-function
@@ -24,19 +24,19 @@ export class ChildrenByDepartmentsStatController extends AbstractStatisticWidget
                 labels: data.map(x => x.departmentName),
                 datasets: [
                     {
-                        label: this.translate.instant('StatisticsPage.ChildrenByDepartments.ChildContact'),
+                        label: t('StatisticsPage.ChildrenByDepartments.ChildContact'),
                         data: data.map(x => x.childContact),
                         backgroundColor: ChartColor.yellow,
                         stack: 'stack 0'
                     },
                     {
-                        label: this.translate.instant('StatisticsPage.ChildrenByDepartments.Child'),
+                        label: t('StatisticsPage.ChildrenByDepartments.Child'),
                         data: data.map(x => x.child),
                         backgroundColor: ChartColor.blue,
                         stack: 'stack 1'
                     },
                     {
-                        label: this.translate.instant('StatisticsPage.ChildrenByDepartments.ChildWithRelativePresent'),
+                        label: t('StatisticsPage.ChildrenByDepartments.ChildWithRelativePresent'),
                         data: data.map(x => x.childWithRelativePresent),
                         backgroundColor: ChartColor.purple,
                         stack: 'stack 2'
@@ -49,10 +49,10 @@ export class ChildrenByDepartmentsStatController extends AbstractStatisticWidget
     public getTableData(): WidgetTableData<ChildrenByDepartmentsTableData> {
         return {
             headers: {
-                departmentName: this.translate.instant('StatisticsPage.ChildrenByDepartments.DepartmentName'),
-                childContact: this.translate.instant('StatisticsPage.ChildrenByDepartments.ChildContact'),
-                child: this.translate.instant('StatisticsPage.ChildrenByDepartments.Child'),
-                childWithRelativePresent: this.translate.instant('StatisticsPage.ChildrenByDepartments.ChildWithRelativePresent'),
+                departmentName: t('StatisticsPage.ChildrenByDepartments.DepartmentName'),
+                childContact: t('StatisticsPage.ChildrenByDepartments.ChildContact'),
+                child: t('StatisticsPage.ChildrenByDepartments.Child'),
+                childWithRelativePresent: t('StatisticsPage.ChildrenByDepartments.ChildWithRelativePresent'),
             },
             data: this.data()
         }

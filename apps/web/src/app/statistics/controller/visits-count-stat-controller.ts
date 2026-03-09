@@ -1,4 +1,3 @@
-import {TranslateService} from '@ngx-translate/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
 import {isNilOrEmpty, OperationCity, VisitsCountByWeekDay} from '@melluin/common';
@@ -7,14 +6,15 @@ import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {VisitCountByWeekDayStatProvider} from '@fe/app/statistics/service/visit-count-by-week-day-stat-provider';
+import {t} from '@fe/app/util/translate/translate';
 
 export type VisitsCountTableData = Omit<VisitsCountByWeekDay, 'weekDay' | 'visits' | 'visitMinutes'>
     & { 'visitHours': number };
 
 export class VisitsCountStatController extends AbstractStatisticWidgetController<VisitsCountTableData> {
 
-    constructor(translate: TranslateService, private readonly statProvider: VisitCountByWeekDayStatProvider) {
-        super(translate, 'StatisticsPage.VisitsCount');
+    constructor(private readonly statProvider: VisitCountByWeekDayStatProvider) {
+        super('StatisticsPage.VisitsCount');
     }
 
     public override defaultMode(): WidgetMode {
@@ -70,10 +70,10 @@ export class VisitsCountStatController extends AbstractStatisticWidgetController
 
     private getHeaders(): Record<keyof VisitsCountTableData, string> {
         return {
-            visitGroups: this.translate.instant('StatisticsPage.VisitsCount.VisitGroups'),
-            pureVisitGroups: this.translate.instant('StatisticsPage.VisitsCount.PureVisitGroups'),
-            vicariousMomVisit: this.translate.instant('StatisticsPage.VisitsCount.VicariousMomVisit'),
-            visitHours: this.translate.instant('StatisticsPage.VisitsCount.CountedMinutes'),
+            visitGroups: t('StatisticsPage.VisitsCount.VisitGroups'),
+            pureVisitGroups: t('StatisticsPage.VisitsCount.PureVisitGroups'),
+            vicariousMomVisit: t('StatisticsPage.VisitsCount.VicariousMomVisit'),
+            visitHours: t('StatisticsPage.VisitsCount.CountedMinutes'),
         };
     }
 

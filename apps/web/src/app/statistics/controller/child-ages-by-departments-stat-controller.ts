@@ -1,4 +1,3 @@
-import {TranslateService} from '@ngx-translate/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration, ChartDataset} from 'chart.js';
 import {ChildAgesByDepartments, OperationCity} from '@melluin/common';
@@ -6,6 +5,7 @@ import {firstValueFrom} from 'rxjs';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {ChildAgesByDepartmentsStatProvider} from '@fe/app/statistics/service/child-ages-by-departments-stat-provider';
+import {t} from '@fe/app/util/translate/translate';
 
 
 export type ChildAgesByDepartmentsTableData = Omit<ChildAgesByDepartments, 'departmentId'>;
@@ -13,15 +13,15 @@ type AgesKeys = keyof Omit<ChildAgesByDepartmentsTableData, 'departmentName' | '
 
 export class ChildAgesByDepartmentsStatController extends AbstractStatisticWidgetController<ChildAgesByDepartmentsTableData> {
 
-    constructor(translate: TranslateService, private readonly statProvider: ChildAgesByDepartmentsStatProvider) {
-        super(translate, 'StatisticsPage.ChildAgesByDepartments');
+    constructor(private readonly statProvider: ChildAgesByDepartmentsStatProvider) {
+        super('StatisticsPage.ChildAgesByDepartments');
     }
 
     public getTableData(): WidgetTableData<ChildAgesByDepartmentsTableData> {
         return {
             headers: {
-                departmentName: this.translate.instant('StatisticsPage.ChildAgesByDepartments.DepartmentName'),
-                sum: this.translate.instant('StatisticsPage.ChildAgesByDepartments.Sum'),
+                departmentName: t('StatisticsPage.ChildAgesByDepartments.DepartmentName'),
+                sum: t('StatisticsPage.ChildAgesByDepartments.Sum'),
                 ...this.getHeadersForAges()
             },
             data: this.data()
@@ -55,17 +55,17 @@ export class ChildAgesByDepartmentsStatController extends AbstractStatisticWidge
 
     private getHeadersForAges(): Record<AgesKeys, string> {
         return {
-            zeroToHalf: this.translate.instant('StatisticsPage.ChildAgesByDepartments.ZeroToHalf'),
-            halfToOne: this.translate.instant('StatisticsPage.ChildAgesByDepartments.HalfToOne'),
-            oneToThree: this.translate.instant('StatisticsPage.ChildAgesByDepartments.OneToThree'),
-            threeToFive: this.translate.instant('StatisticsPage.ChildAgesByDepartments.ThreeToFive'),
-            fiveToSeven: this.translate.instant('StatisticsPage.ChildAgesByDepartments.FiveToSeven'),
-            sevenToNine: this.translate.instant('StatisticsPage.ChildAgesByDepartments.SevenToNine'),
-            nineToEleven: this.translate.instant('StatisticsPage.ChildAgesByDepartments.NineToEleven'),
-            elevenToThirteen: this.translate.instant('StatisticsPage.ChildAgesByDepartments.ElevenToThirteen'),
-            thirteenToFifteen: this.translate.instant('StatisticsPage.ChildAgesByDepartments.ThirteenToFifteen'),
-            fifteenToSeventeen: this.translate.instant('StatisticsPage.ChildAgesByDepartments.FifteenToSeventeen'),
-            seventeenToUp: this.translate.instant('StatisticsPage.ChildAgesByDepartments.SeventeenToUp'),
+            zeroToHalf: t('StatisticsPage.ChildAgesByDepartments.ZeroToHalf'),
+            halfToOne: t('StatisticsPage.ChildAgesByDepartments.HalfToOne'),
+            oneToThree: t('StatisticsPage.ChildAgesByDepartments.OneToThree'),
+            threeToFive: t('StatisticsPage.ChildAgesByDepartments.ThreeToFive'),
+            fiveToSeven: t('StatisticsPage.ChildAgesByDepartments.FiveToSeven'),
+            sevenToNine: t('StatisticsPage.ChildAgesByDepartments.SevenToNine'),
+            nineToEleven: t('StatisticsPage.ChildAgesByDepartments.NineToEleven'),
+            elevenToThirteen: t('StatisticsPage.ChildAgesByDepartments.ElevenToThirteen'),
+            thirteenToFifteen: t('StatisticsPage.ChildAgesByDepartments.ThirteenToFifteen'),
+            fifteenToSeventeen: t('StatisticsPage.ChildAgesByDepartments.FifteenToSeventeen'),
+            seventeenToUp: t('StatisticsPage.ChildAgesByDepartments.SeventeenToUp'),
         };
     }
 

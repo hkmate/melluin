@@ -1,4 +1,3 @@
-import {TranslateService} from '@ngx-translate/core';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
@@ -6,6 +5,7 @@ import {OperationCity, VisitByDepartments} from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
+import {t} from '@fe/app/util/translate/translate';
 
 export type VisitByDepartmentsTableData = Omit<VisitByDepartments, 'departmentId' | 'visitMinutes'> & {
     'visitHours': number
@@ -13,8 +13,8 @@ export type VisitByDepartmentsTableData = Omit<VisitByDepartments, 'departmentId
 
 export class VisitsByDepartmentsStatController extends AbstractStatisticWidgetController<VisitByDepartmentsTableData> {
 
-    constructor(translate: TranslateService, private readonly statProvider: StatisticsService) {
-        super(translate, 'StatisticsPage.VisitsByDepartments');
+    constructor(private readonly statProvider: StatisticsService) {
+        super('StatisticsPage.VisitsByDepartments');
     }
 
     // eslint-disable-next-line max-lines-per-function
@@ -26,13 +26,13 @@ export class VisitsByDepartmentsStatController extends AbstractStatisticWidgetCo
                 labels: data.map(x => x.departmentName),
                 datasets: [
                     {
-                        label: this.translate.instant('StatisticsPage.VisitsByDepartments.VisitCount'),
+                        label: t('StatisticsPage.VisitsByDepartments.VisitCount'),
                         data: data.map(x => x.visitCount),
                         backgroundColor: ChartColor.yellow,
                         stack: 'stack 0'
                     },
                     {
-                        label: this.translate.instant('StatisticsPage.VisitsByDepartments.VisitHours'),
+                        label: t('StatisticsPage.VisitsByDepartments.VisitHours'),
                         data: data.map(x => x.visitHours),
                         backgroundColor: ChartColor.blue,
                         stack: 'stack 1'
@@ -45,9 +45,9 @@ export class VisitsByDepartmentsStatController extends AbstractStatisticWidgetCo
     public getTableData(): WidgetTableData<VisitByDepartmentsTableData> {
         return {
             headers: {
-                departmentName: this.translate.instant('StatisticsPage.VisitsByDepartments.DepartmentName'),
-                visitCount: this.translate.instant('StatisticsPage.VisitsByDepartments.VisitCount'),
-                visitHours: this.translate.instant('StatisticsPage.VisitsByDepartments.VisitHours'),
+                departmentName: t('StatisticsPage.VisitsByDepartments.DepartmentName'),
+                visitCount: t('StatisticsPage.VisitsByDepartments.VisitCount'),
+                visitHours: t('StatisticsPage.VisitsByDepartments.VisitHours'),
             },
             data: this.data() ?? []
         }

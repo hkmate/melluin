@@ -1,4 +1,3 @@
-import {TranslateService} from '@ngx-translate/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
 import {isNil, OperationCity, VolunteerByDepartments} from '@melluin/common';
@@ -7,6 +6,7 @@ import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {VolunteersByDepartmentsStatProvider} from '@fe/app/statistics/service/volunteers-by-departments-stat-provider';
 import {uniq} from 'lodash-es';
+import {t} from '@fe/app/util/translate/translate';
 
 export type VolunteerByDepartmentsTableData =
     Omit<VolunteerByDepartments, 'personId' | 'departmentId' | 'visitMinutes'>
@@ -16,8 +16,8 @@ export type VolunteerByDepartmentsTableData =
 
 export class VolunteersByDepartmentsStatController extends AbstractStatisticWidgetController<VolunteerByDepartmentsTableData> {
 
-    constructor(translate: TranslateService, private readonly statProvider: VolunteersByDepartmentsStatProvider) {
-        super(translate, 'StatisticsPage.VolunteersByDepartments');
+    constructor(private readonly statProvider: VolunteersByDepartmentsStatProvider) {
+        super('StatisticsPage.VolunteersByDepartments');
     }
 
     // eslint-disable-next-line max-lines-per-function
@@ -44,10 +44,10 @@ export class VolunteersByDepartmentsStatController extends AbstractStatisticWidg
     public getTableData(): WidgetTableData<VolunteerByDepartmentsTableData> {
         return {
             headers: {
-                personName: this.translate.instant('StatisticsPage.VolunteersByDepartments.PersonName'),
-                departmentName: this.translate.instant('StatisticsPage.VolunteersByDepartments.DepartmentName'),
-                visitCount: this.translate.instant('StatisticsPage.VolunteersByDepartments.VisitCount'),
-                visitHours: this.translate.instant('StatisticsPage.VolunteersByDepartments.VisitHours'),
+                personName: t('StatisticsPage.VolunteersByDepartments.PersonName'),
+                departmentName: t('StatisticsPage.VolunteersByDepartments.DepartmentName'),
+                visitCount: t('StatisticsPage.VolunteersByDepartments.VisitCount'),
+                visitHours: t('StatisticsPage.VolunteersByDepartments.VisitHours'),
             },
             data: this.data()
         }

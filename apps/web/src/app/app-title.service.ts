@@ -1,19 +1,15 @@
 import {inject, Injectable} from '@angular/core';
 import {Title} from '@angular/platform-browser';
-import {TranslateService} from '@ngx-translate/core';
+import {t} from '@fe/app/util/translate/translate';
+import {I18nKeys} from '@fe/app/util/translate/i18n.type';
 
 @Injectable({providedIn: 'root'})
 export class AppTitle {
 
     private readonly title = inject(Title);
-    private readonly translate = inject(TranslateService);
 
-    public setTitleByI18n(i18nKey: string): void {
-        this.title.setTitle(
-            this.translate.instant(i18nKey)
-            + ' - '
-            + this.translate.instant('Titles.Base')
-        );
+    public setTitleByI18n(i18nKey: I18nKeys): void {
+        this.title.setTitle(`${t(i18nKey)} - ${t('Titles.Base')}`);
     }
 
 }

@@ -12,19 +12,18 @@ import {
     VisitedChild,
     WrappedVisitActivity
 } from '@melluin/common';
-import dayjs from 'dayjs'
-import {TranslateService} from '@ngx-translate/core';
+import dayjs from 'dayjs';
 import {PATHS} from '@fe/app/app-paths';
 import {environment} from '@fe/environment';
 import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
 import {flatten, round, uniqBy} from 'lodash-es';
+import {t} from '@fe/app/util/translate/translate';
 
 
 @Injectable()
 export class ReportPrepareService {
 
     private readonly activityService = inject(VisitActivityService);
-    private readonly translate = inject(TranslateService);
 
     private readonly currentUser = inject(CurrentUserService).currentUser;
 
@@ -35,7 +34,7 @@ export class ReportPrepareService {
         }
         const wrappedActivities = await this.getWrappedData(visitIds);
         const currentPerson = wrappedActivities[0].visit.participants.find(p => p.id === currentUser.personId);
-        const activityTypeToStr = (activityType: VisitActivityType): string => this.translate.instant('VisitActivityType.' + activityType);
+        const activityTypeToStr = (activityType: VisitActivityType): string => t(`VisitActivityType.${activityType}`);
 
         if (isNil(currentPerson)) {
             throw new Error('Draft could be prepared with user participated in visit!');

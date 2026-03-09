@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, effect, inject, input} from '@angular/core';
 import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
-import {TranslateService} from '@ngx-translate/core';
 import {StatFilter} from '@fe/app/statistics/model/stat-filter';
 import {ActivitiesStatController} from '@fe/app/statistics/controller/activities-stat-controller';
 import {ChildAgesByDepartmentsStatController} from '@fe/app/statistics/controller/child-ages-by-departments-stat-controller';
@@ -31,7 +30,6 @@ import {StatisticsWidgetComponent} from '@fe/app/statistics/statistics-widget/st
 })
 export class StatisticsWidgetContainerComponent {
 
-    private readonly translateService = inject(TranslateService);
     private readonly service = inject(StatisticsService);
     private readonly childrenByDepartmentsStatProvider = inject(ChildrenByDepartmentsStatProviderService);
     private readonly childAgesByDepartmentsStatProvider = inject(ChildAgesByDepartmentsStatProviderService);
@@ -51,17 +49,17 @@ export class StatisticsWidgetContainerComponent {
 
     private createControllers(): Array<StatisticWidgetController<unknown>> {
         return [
-            new VisitsCountStatController(this.translateService, this.visitCountByWeekDayStatProvider),
-            new ChildrenStatController(this.translateService, this.childrenByDepartmentsStatProvider),
-            new VisitsByDepartmentsStatController(this.translateService, this.service),
-            new VisitsCountByWeekDayStatController(this.translateService, this.visitCountByWeekDayStatProvider),
-            new ChildrenByDepartmentsStatController(this.translateService, this.childrenByDepartmentsStatProvider),
-            new ChildAgesStatController(this.translateService, this.childAgesByDepartmentsStatProvider),
-            new ChildAgesByDepartmentsStatController(this.translateService, this.childAgesByDepartmentsStatProvider),
-            new VolunteersVisitsStatController(this.translateService, this.service),
-            new VolunteersByDepartmentsStatController(this.translateService, this.volunteersByDepartmentsStatProvider),
-            new VisitsByStatusesStatController(this.translateService, this.service),
-            new ActivitiesStatController(this.translateService, this.service),
+            new VisitsCountStatController(this.visitCountByWeekDayStatProvider),
+            new ChildrenStatController(this.childrenByDepartmentsStatProvider),
+            new VisitsByDepartmentsStatController(this.service),
+            new VisitsCountByWeekDayStatController(this.visitCountByWeekDayStatProvider),
+            new ChildrenByDepartmentsStatController(this.childrenByDepartmentsStatProvider),
+            new ChildAgesStatController(this.childAgesByDepartmentsStatProvider),
+            new ChildAgesByDepartmentsStatController(this.childAgesByDepartmentsStatProvider),
+            new VolunteersVisitsStatController(this.service),
+            new VolunteersByDepartmentsStatController(this.volunteersByDepartmentsStatProvider),
+            new VisitsByStatusesStatController(this.service),
+            new ActivitiesStatController(this.service),
         ];
     }
 

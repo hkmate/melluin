@@ -1,4 +1,3 @@
-import {TranslateService} from '@ngx-translate/core';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
@@ -6,6 +5,7 @@ import {ActivitiesCount, OperationCity} from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
+import {t} from '@fe/app/util/translate/translate';
 
 
 export interface ActivitiesCountTableData {
@@ -15,8 +15,8 @@ export interface ActivitiesCountTableData {
 
 export class ActivitiesStatController extends AbstractStatisticWidgetController<ActivitiesCountTableData> {
 
-    constructor(translate: TranslateService, private readonly statProvider: StatisticsService) {
-        super(translate, 'StatisticsPage.Activities');
+    constructor(private readonly statProvider: StatisticsService) {
+        super('StatisticsPage.Activities');
     }
 
     // eslint-disable-next-line max-lines-per-function
@@ -28,7 +28,7 @@ export class ActivitiesStatController extends AbstractStatisticWidgetController<
                 labels: data.map(x => x.activity),
                 datasets: [
                     {
-                        label: this.translate.instant('StatisticsPage.Activities.Count'),
+                        label: t('StatisticsPage.Activities.Count'),
                         data: data.map(x => x.count),
                         backgroundColor: ChartColor.blue,
                         stack: 'stack 0'
@@ -41,8 +41,8 @@ export class ActivitiesStatController extends AbstractStatisticWidgetController<
     public getTableData(): WidgetTableData<ActivitiesCountTableData> {
         return {
             headers: {
-                activity: this.translate.instant('StatisticsPage.Activities.Activity'),
-                count: this.translate.instant('StatisticsPage.Activities.Count'),
+                activity: t('StatisticsPage.Activities.Activity'),
+                count: t('StatisticsPage.Activities.Count'),
             },
             data: this.data()
         }
@@ -56,7 +56,7 @@ export class ActivitiesStatController extends AbstractStatisticWidgetController<
     private prepareData(rawData: Array<ActivitiesCount>): Array<ActivitiesCountTableData> {
         const translatedData = rawData.map(x => ({
             ...x,
-            activity: this.translate.instant(`VisitActivityType.${x.activity}`) as string
+            activity: t(`VisitActivityType.${x.activity}`) as string
         } satisfies ActivitiesCountTableData));
         translatedData.sort((a, b) => a.activity.localeCompare(b.activity));
         return translatedData;

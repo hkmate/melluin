@@ -1,20 +1,18 @@
-import {inject, Pipe, PipeTransform} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {Child, ChildAge, getChildAge} from '@melluin/common';
-import {TranslateService} from '@ngx-translate/core';
+import {t} from '@fe/app/util/translate/translate';
 
 @Pipe({
     name: 'childAge'
 })
 export class ChildAgePipe implements PipeTransform {
 
-    private readonly translate = inject(TranslateService);
-
     public transform(child: Child, date: Date): string {
         const age: ChildAge = getChildAge(child, date);
         if (age.months === 0) {
-            return this.translate.instant('ChildCard.AgeWithoutMonth', age);
+            return t('ChildCard.AgeWithoutMonth', age);
         }
-        return this.translate.instant('ChildCard.Age', age);
+        return t('ChildCard.Age', age);
     }
 
 }

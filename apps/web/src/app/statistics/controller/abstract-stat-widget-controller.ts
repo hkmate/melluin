@@ -1,17 +1,18 @@
 import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
-import {TranslateService} from '@ngx-translate/core';
 import {WidgetExportingInfo, WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
 import {Signal, signal} from '@angular/core';
 import {OperationCity} from '@melluin/common';
 import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
+import {t} from '@fe/app/util/translate/translate';
+import {I18nKeys} from '@fe/app/util/translate/i18n.type';
 
 export abstract class AbstractStatisticWidgetController<T> implements StatisticWidgetController<T> {
 
     private readonly dataInstance = signal<Array<T>>([]);
     private readonly ready = signal(false);
 
-    protected constructor(protected readonly translate: TranslateService, protected readonly i18nPrefix: string) {
+    protected constructor(protected readonly i18nPrefix: string) {
     }
 
     protected get data(): Signal<Array<T>> {
@@ -35,12 +36,12 @@ export abstract class AbstractStatisticWidgetController<T> implements StatisticW
     public getExportingInfo(): WidgetExportingInfo<T> {
         return {
             ...this.getTableData(),
-            fileName: this.translate.instant(`${this.i18nPrefix}.ExportedFileName`)
+            fileName: t(`${this.i18nPrefix}.ExportedFileName` as I18nKeys)
         }
     }
 
     public getName(): string {
-        return this.translate.instant(`${this.i18nPrefix}.Title`);
+        return t(`${this.i18nPrefix}.Title` as I18nKeys);
     }
 
     public abstract getChartData(): ChartConfiguration;

@@ -11,7 +11,7 @@ import {MessageService} from '@fe/app/util/message.service';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatError, MatFormField, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import {MatButton} from '@angular/material/button';
 import {form, FormField, required, submit} from '@angular/forms/signals';
 import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
@@ -19,6 +19,7 @@ import {firstValueFrom} from 'rxjs';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
+import {t} from '@fe/app/util/translate/translate';
 
 @Component({
     imports: [
@@ -46,7 +47,6 @@ export class DepartmentBoxInfoCreateComponent {
     protected readonly reasonOptions: Array<BoxStatusChangeReason> = Object.values(BoxStatusChangeReason);
     protected readonly affectedObjectsOptions = affectedObjectsList;
 
-    private readonly translate = inject(TranslateService);
     private readonly boxStatusService = inject(DepartmentBoxService);
     private readonly msg = inject(MessageService);
 
@@ -63,7 +63,7 @@ export class DepartmentBoxInfoCreateComponent {
     })
 
     protected readonly form = form(this.formModel, schema => {
-        required(schema.reason, {message: this.translate.instant('BoxStatus.ReasonIsRequired')});
+        required(schema.reason, {message: t('BoxStatus.ReasonIsRequired')});
     });
 
     protected submitForm(): void {

@@ -4,13 +4,14 @@ import {AuthenticationService} from '../auth/service/authentication.service';
 import {AuthCredentials, NOOP} from '@melluin/common';
 import {AppTitle} from '@fe/app/app-title.service';
 import {MessageService} from '@fe/app/util/message.service';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {MatButton} from '@angular/material/button';
 import {form, FormField, required, submit} from '@angular/forms/signals';
 import {finalize, firstValueFrom} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
+import {t} from '@fe/app/util/translate/translate';
 
 @Component({
     imports: [
@@ -27,7 +28,6 @@ export class LoginComponent {
     private readonly title = inject(AppTitle);
     private readonly route = inject(ActivatedRoute);
     private readonly router = inject(Router);
-    private readonly translate = inject(TranslateService);
     private readonly msg = inject(MessageService);
     private readonly authenticationService = inject(AuthenticationService);
 
@@ -39,8 +39,8 @@ export class LoginComponent {
     });
 
     protected readonly loginForm = form(this.loginModel, schema => {
-        required(schema.username, {message: this.translate.instant('LoginPage.UsernameRequired')});
-        required(schema.password, {message: this.translate.instant('LoginPage.PasswordRequired')});
+        required(schema.username, {message: t('LoginPage.UsernameRequired')});
+        required(schema.password, {message: t('LoginPage.PasswordRequired')});
     });
 
     constructor() {

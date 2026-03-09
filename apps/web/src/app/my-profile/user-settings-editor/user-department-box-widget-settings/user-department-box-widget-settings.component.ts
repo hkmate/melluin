@@ -13,7 +13,7 @@ import {
 } from '@melluin/common';
 import {MatCard, MatCardSubtitle} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatButton} from '@angular/material/button';
@@ -25,6 +25,7 @@ import {form, FormField, min, required, submit} from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
+import {t} from '@fe/app/util/translate/translate';
 
 @Component({
     imports: [
@@ -56,7 +57,6 @@ export class UserDepartmentBoxWidgetSettingsComponent {
 
     private readonly msg = inject(MessageService);
     private readonly credentialStoreService = inject(CredentialStoreService);
-    private readonly translate = inject(TranslateService);
     private readonly userService = inject(UserService);
 
     public readonly userId = input.required<string>();
@@ -64,9 +64,9 @@ export class UserDepartmentBoxWidgetSettingsComponent {
 
     private readonly formModel = signal(this.getDefaultFormModel());
     protected readonly form = form(this.formModel, schema => {
-        required(schema.dateInterval, {message: this.translate.instant('Form.Required')})
-        min(schema.limit, 1, {message: this.translate.instant('Form.Min', {min: 1})})
-        min(schema.index, 0, {message: this.translate.instant('Form.Min', {min: 0})})
+        required(schema.dateInterval, {message: t('Form.Required')})
+        min(schema.limit, 1, {message: t('Form.Min', {min: 1})})
+        min(schema.index, 0, {message: t('Form.Min', {min: 0})})
     });
 
     protected readonly isSaveBtnDisabled = computed(() => this.form().invalid() || this.form().submitting());

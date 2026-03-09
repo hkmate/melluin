@@ -1,12 +1,13 @@
 import {OperationCity, VisitsCountByWeekDay} from '@melluin/common';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
-import {TranslateService} from '@ngx-translate/core';
 import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 import {ChartConfiguration} from 'chart.js';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {firstValueFrom} from 'rxjs';
 import {VisitCountByWeekDayStatProvider} from '@fe/app/statistics/service/visit-count-by-week-day-stat-provider';
+import {t} from '@fe/app/util/translate/translate';
+import {I18nKeys} from '@fe/app/util/translate/i18n.type';
 
 export type VisitsCountByWeekDayTableData = Omit<VisitsCountByWeekDay, 'weekDay' | 'visits' | 'visitMinutes'>
     & {
@@ -16,8 +17,8 @@ export type VisitsCountByWeekDayTableData = Omit<VisitsCountByWeekDay, 'weekDay'
 
 export class VisitsCountByWeekDayStatController extends AbstractStatisticWidgetController<VisitsCountByWeekDayTableData> {
 
-    constructor(translate: TranslateService, private readonly statProvider: VisitCountByWeekDayStatProvider) {
-        super(translate, 'StatisticsPage.VisitsCountByWeekDay');
+    constructor(private readonly statProvider: VisitCountByWeekDayStatProvider) {
+        super('StatisticsPage.VisitsCountByWeekDay');
     }
 
     public override defaultMode(): WidgetMode {
@@ -33,22 +34,22 @@ export class VisitsCountByWeekDayStatController extends AbstractStatisticWidgetC
                 labels: data.map(x => x.weekDay),
                 datasets: [
                     {
-                        label: this.translate.instant('StatisticsPage.VisitsCountByWeekDay.VisitGroups'),
+                        label: t('StatisticsPage.VisitsCountByWeekDay.VisitGroups'),
                         data: data.map(x => x.visitGroups),
                         backgroundColor: ChartColor.blue
                     },
                     {
-                        label: this.translate.instant('StatisticsPage.VisitsCountByWeekDay.PureVisitGroups'),
+                        label: t('StatisticsPage.VisitsCountByWeekDay.PureVisitGroups'),
                         data: data.map(x => x.pureVisitGroups),
                         backgroundColor: ChartColor.yellow
                     },
                     {
-                        label: this.translate.instant('StatisticsPage.VisitsCountByWeekDay.VicariousMomVisit'),
+                        label: t('StatisticsPage.VisitsCountByWeekDay.VicariousMomVisit'),
                         data: data.map(x => x.vicariousMomVisit),
                         backgroundColor: ChartColor.purple
                     },
                     {
-                        label: this.translate.instant('StatisticsPage.VisitsCountByWeekDay.CountedMinutes'),
+                        label: t('StatisticsPage.VisitsCountByWeekDay.CountedMinutes'),
                         data: data.map(x => x.visitHours),
                         backgroundColor: ChartColor.orange
                     }
@@ -75,7 +76,7 @@ export class VisitsCountByWeekDayStatController extends AbstractStatisticWidgetC
             .map(vc => ({...vc, weekDay: (vc.weekDay !== 0 ? vc.weekDay : 7)})) // Move sunday to last
             .sort((a, b) => a.weekDay - b.weekDay)
             .map(vc => ({
-                weekDay: this.translate.instant(`WeekDays.${vc.weekDay}`),
+                weekDay: t(`WeekDays.${vc.weekDay}` as I18nKeys),
                 visitGroups: vc.visitGroups,
                 pureVisitGroups: vc.pureVisitGroups,
                 vicariousMomVisit: vc.vicariousMomVisit,
@@ -87,11 +88,11 @@ export class VisitsCountByWeekDayStatController extends AbstractStatisticWidgetC
 
     private getHeaders(): Record<keyof VisitsCountByWeekDayTableData, string> {
         return {
-            weekDay: this.translate.instant('StatisticsPage.VisitsCountByWeekDay.WeekDay'),
-            visitGroups: this.translate.instant('StatisticsPage.VisitsCountByWeekDay.VisitGroups'),
-            pureVisitGroups: this.translate.instant('StatisticsPage.VisitsCountByWeekDay.PureVisitGroups'),
-            vicariousMomVisit: this.translate.instant('StatisticsPage.VisitsCountByWeekDay.VicariousMomVisit'),
-            visitHours: this.translate.instant('StatisticsPage.VisitsCountByWeekDay.CountedMinutes'),
+            weekDay: t('StatisticsPage.VisitsCountByWeekDay.WeekDay'),
+            visitGroups: t('StatisticsPage.VisitsCountByWeekDay.VisitGroups'),
+            pureVisitGroups: t('StatisticsPage.VisitsCountByWeekDay.PureVisitGroups'),
+            vicariousMomVisit: t('StatisticsPage.VisitsCountByWeekDay.VicariousMomVisit'),
+            visitHours: t('StatisticsPage.VisitsCountByWeekDay.CountedMinutes'),
         };
     }
 

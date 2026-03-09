@@ -3,7 +3,7 @@ import {AppTitle} from '@fe/app/app-title.service';
 import {RoleService} from '@fe/app/sysadmin/role-settings/role.service';
 import {isNil, NOOP, Role} from '@melluin/common';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {RoleEditorComponent} from '@fe/app/sysadmin/role-settings/role-create/role-editor.component';
@@ -19,6 +19,7 @@ import {
     MatRowDef,
     MatTable
 } from '@angular/material/table';
+import {t} from '@fe/app/util/translate/translate';
 
 @Component({
     imports: [
@@ -49,7 +50,6 @@ export class RoleSettingsComponent {
     protected readonly tableHeaders = ['name', 'type', 'permissions', 'options'];
 
     private readonly title = inject(AppTitle);
-    private readonly translate = inject(TranslateService);
     private readonly confirm = inject(ConfirmationService);
     private readonly roleService = inject(RoleService);
 
@@ -76,7 +76,7 @@ export class RoleSettingsComponent {
     }
 
     protected deleteRole(role: Role): void {
-        const msg = this.translate.instant('Sysadmin.RoleSettings.DeleteRole', {roleName: role.name});
+        const msg = t('Sysadmin.RoleSettings.DeleteRole', {roleName: role.name});
         this.confirm.getConfirm({message: msg}).then(() => {
             this.roleService.delete(role.id).subscribe(() => {
                 this.initRoles();

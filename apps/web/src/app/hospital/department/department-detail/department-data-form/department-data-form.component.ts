@@ -9,7 +9,7 @@ import {
     OperationCity,
     orElse
 } from '@melluin/common';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
@@ -22,6 +22,7 @@ import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {firstValueFrom} from 'rxjs';
 import {NgxsmkDatepickerComponent} from 'ngxsmk-datepicker';
+import {t} from '@fe/app/util/translate/translate';
 
 @Component({
     imports: [
@@ -49,7 +50,6 @@ import {NgxsmkDatepickerComponent} from 'ngxsmk-datepicker';
 export class DepartmentDataFormComponent {
 
     protected readonly cityOptions = Object.keys(OperationCity) as Array<OperationCity>;
-    private readonly translate = inject(TranslateService);
     private readonly departmentService = inject(DepartmentService);
 
     public readonly department = input<Department>();
@@ -59,12 +59,12 @@ export class DepartmentDataFormComponent {
 
     private readonly formModel = signal(this.getDefaultFormModel());
     protected readonly form = form(this.formModel, schema => {
-        required(schema.name, {message: this.translate.instant('Form.Required')});
-        required(schema.address, {message: this.translate.instant('Form.Required')});
-        required(schema.city, {message: this.translate.instant('Form.Required')});
-        required(schema.validFrom, {message: this.translate.instant('Form.Required')});
-        required(schema.limitOfVisits, {message: this.translate.instant('Form.Required')});
-        min(schema.limitOfVisits, 1, {message: this.translate.instant('Form.Min', {min: 1})});
+        required(schema.name,     {message: t('Form.Required')});
+        required(schema.address,    {message: t('Form.Required')});
+        required(schema.city,       {message: t('Form.Required')});
+        required(schema.validFrom,    {message: t('Form.Required')});
+        required(schema.limitOfVisits, {message: t('Form.Required')});
+        min(schema.limitOfVisits, 1, {message: t('Form.Min', {min: 1})});
 
         disabled(schema.validFrom, () => isNotNil(this.department()));
     });

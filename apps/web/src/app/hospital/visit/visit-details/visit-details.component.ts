@@ -217,11 +217,12 @@ export class VisitDetailsComponent {
             this.msg.errorRaw(error.message);
             return;
         }
-        if (error.error.code === ApiError.VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED) {
+        const code = error.error as ApiError;
+        if (code === ApiError.VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED) {
             this.handleLimitExceededSaveError(dataToSave);
             return;
         }
-        this.msg.error(`ApiError.${error.error.code}`);
+        this.msg.error(`ApiError.${code}`);
     }
 
     private handleLimitExceededSaveError(dataToSave: VisitRewrite | VisitCreate): void {

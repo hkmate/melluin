@@ -2,6 +2,7 @@ import {inject, Pipe, PipeTransform} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {isNil, Person} from '@melluin/common';
 import {AppLanguage} from '@fe/app/language/app-language';
+import {t} from '@fe/app/util/translate/translate';
 
 @Pipe({
     name: 'personName'
@@ -12,13 +13,13 @@ export class PersonNamePipe implements PipeTransform {
 
     public transform(person: Person): string {
         if (isNil(person)) {
-            return this.i18n.instant('PersonPipe.NoPerson');
+            return t('PersonPipe.NoPerson');
         }
         return this.getName(person);
     }
 
     private getName({firstName, lastName}: Person): string {
-        if (this.i18n.currentLang === AppLanguage.HU) {
+        if (this.i18n.getCurrentLang() === AppLanguage.HU) {
             return `${lastName} ${firstName}`;
         }
         return `${firstName} ${lastName}`;

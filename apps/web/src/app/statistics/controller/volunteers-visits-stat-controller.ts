@@ -1,4 +1,3 @@
-import {TranslateService} from '@ngx-translate/core';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
 import {OperationCity, VolunteersVisitCount} from '@melluin/common';
@@ -7,6 +6,7 @@ import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
+import {t} from '@fe/app/util/translate/translate';
 
 
 export type VolunteersVisitsCleanData = Omit<VolunteersVisitCount, 'personId'>;
@@ -14,8 +14,8 @@ export type VolunteersVisitsTableData = Omit<VolunteersVisitsCleanData, 'visitMi
 
 export class VolunteersVisitsStatController extends AbstractStatisticWidgetController<VolunteersVisitsTableData> {
 
-    constructor(translate: TranslateService, private readonly statProvider: StatisticsService) {
-        super(translate, 'StatisticsPage.VolunteersVisits');
+    constructor(private readonly statProvider: StatisticsService) {
+        super('StatisticsPage.VolunteersVisits');
     }
 
     public override defaultMode(): WidgetMode {
@@ -31,13 +31,13 @@ export class VolunteersVisitsStatController extends AbstractStatisticWidgetContr
                 labels: data.map(x => x.personName),
                 datasets: [
                     {
-                        label: this.translate.instant('StatisticsPage.VolunteersVisits.VisitCount'),
+                        label: t('StatisticsPage.VolunteersVisits.VisitCount'),
                         data: data.map(x => x.visitCount),
                         backgroundColor: ChartColor.yellow,
                         stack: 'stack 0'
                     },
                     {
-                        label: this.translate.instant('StatisticsPage.VolunteersVisits.VisitHours'),
+                        label: t('StatisticsPage.VolunteersVisits.VisitHours'),
                         data: data.map(x => x.visitHours),
                         backgroundColor: ChartColor.blue,
                         stack: 'stack 1'
@@ -50,9 +50,9 @@ export class VolunteersVisitsStatController extends AbstractStatisticWidgetContr
     public getTableData(): WidgetTableData<VolunteersVisitsTableData> {
         return {
             headers: {
-                personName: this.translate.instant('StatisticsPage.VolunteersVisits.PersonName'),
-                visitCount: this.translate.instant('StatisticsPage.VolunteersVisits.VisitCount'),
-                visitHours: this.translate.instant('StatisticsPage.VolunteersVisits.VisitHours'),
+                personName: t('StatisticsPage.VolunteersVisits.PersonName'),
+                visitCount: t('StatisticsPage.VolunteersVisits.VisitCount'),
+                visitHours: t('StatisticsPage.VolunteersVisits.VisitHours'),
             },
             data: this.data()
         }
@@ -62,7 +62,6 @@ export class VolunteersVisitsStatController extends AbstractStatisticWidgetContr
         const data = await firstValueFrom(this.statProvider.getVolunteersVisitCountStat(from, to, city));
         return this.prepareData(data);
     }
-
 
 
     private prepareData(original: Array<VolunteersVisitCount>): Array<VolunteersVisitsTableData> {

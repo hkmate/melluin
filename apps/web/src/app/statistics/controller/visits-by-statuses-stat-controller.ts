@@ -1,4 +1,3 @@
-import {TranslateService} from '@ngx-translate/core';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
 import {ChartConfiguration} from 'chart.js';
@@ -6,14 +5,15 @@ import {OperationCity, VisitStatusCount, visitStatusOrders} from '@melluin/commo
 import {firstValueFrom} from 'rxjs';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
+import {t} from '@fe/app/util/translate/translate';
 
 
 export type VisitStatusCountTableData = Omit<VisitStatusCount, 'status'> & { status: string };
 
 export class VisitsByStatusesStatController extends AbstractStatisticWidgetController<VisitStatusCountTableData> {
 
-    constructor(translate: TranslateService, private readonly statProvider: StatisticsService) {
-        super(translate, 'StatisticsPage.VisitsByStatuses');
+    constructor(private readonly statProvider: StatisticsService) {
+        super('StatisticsPage.VisitsByStatuses');
     }
 
     // eslint-disable-next-line max-lines-per-function
@@ -25,7 +25,7 @@ export class VisitsByStatusesStatController extends AbstractStatisticWidgetContr
                 labels: data.map(x => x.status),
                 datasets: [
                     {
-                        label: this.translate.instant('StatisticsPage.VisitsByStatuses.Count'),
+                        label: t('StatisticsPage.VisitsByStatuses.Count'),
                         data: data.map(x => x.count),
                         backgroundColor: ChartColor.blue,
                         stack: 'stack 0'
@@ -46,8 +46,8 @@ export class VisitsByStatusesStatController extends AbstractStatisticWidgetContr
     public getTableData(): WidgetTableData<VisitStatusCountTableData> {
         return {
             headers: {
-                status: this.translate.instant('StatisticsPage.VisitsByStatuses.Status'),
-                count: this.translate.instant('StatisticsPage.VisitsByStatuses.Count'),
+                status: t('StatisticsPage.VisitsByStatuses.Status'),
+                count: t('StatisticsPage.VisitsByStatuses.Count'),
             },
             data: this.data()
         }
@@ -67,7 +67,7 @@ export class VisitsByStatusesStatController extends AbstractStatisticWidgetContr
 
     private mapItem(original: VisitStatusCount): VisitStatusCountTableData {
         return {
-            status: this.translate.instant(`VisitStatus.${original.status}`),
+            status: t(`VisitStatus.${original.status}`),
             count: original.count,
         };
     }
