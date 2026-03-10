@@ -8,11 +8,9 @@
                                     [placeholder]="'LoginPage.Form.UserNamePlaceholder' | translate"
                                     autocomplete="username"/>
 
-            <app-trimmed-text-input [formField]="loginForm.password"
-                                    [label]="'LoginPage.Form.Password' | translate"
-                                    [placeholder]="'LoginPage.Form.PasswordPlaceholder' | translate"
-                                    autocomplete="current-password"
-                                    type="password"/>
+            <app-password-input [formField]="loginForm.password"
+                                [label]="'LoginPage.Form.Password' | translate"
+                                [placeholder]="'LoginPage.Form.PasswordPlaceholder' | translate"/>
             <div>
                 <button mat-flat-button color="accent" [disabled]="loading()">
                     {{ 'LoginPage.Form.LoginButton' | translate }}

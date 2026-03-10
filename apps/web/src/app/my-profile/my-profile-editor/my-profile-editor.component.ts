@@ -18,7 +18,7 @@ import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimme
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
-import {MatError, MatFormField, MatHint, MatInput, MatLabel} from '@angular/material/input';
+import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {UserSettingsEditorComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
 import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
@@ -26,6 +26,7 @@ import {form, FormField, pattern, required, submit} from '@angular/forms/signals
 import {firstValueFrom} from 'rxjs';
 import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
 import {t} from '@fe/app/util/translate/translate';
+import {PasswordInputComponent} from '@fe/app/util/password-input/password-input.component';
 
 @Component({
     imports: [
@@ -38,12 +39,12 @@ import {t} from '@fe/app/util/translate/translate';
         MatLabel,
         MatFormField,
         MatInput,
-        MatHint,
         UserSettingsEditorComponent,
         AppSubmit,
         FormField,
         MatError,
-        MelluinMatErrorComponent
+        MelluinMatErrorComponent,
+        PasswordInputComponent
     ],
     selector: 'app-my-profile-editor',
     templateUrl: './my-profile-editor.component.html',

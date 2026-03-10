@@ -6,11 +6,9 @@
            [placeholder]="placeholder()"
            [formField]="innerForm.innerValue"
            (blur)="focusLost()">
-    @if (invalid() && touched()) {
-        <mat-error>
-            @for (error of errors(); track error.message) {
-                <span>{{ error.message }}</span>
-            }
-        </mat-error>
-    }
+    <mat-error>
+        @for (error of errors(); track error.message) {
+            <span>{{ error.message }}</span>
+        }
+    </mat-error>
 </mat-form-field>

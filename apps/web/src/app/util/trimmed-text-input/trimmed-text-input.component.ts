@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, effect, forwardRef, input, model, signal} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {form, FormField, FormValueControl, required, ValidationError} from '@angular/forms/signals';
+import {form, FormField, FormValueControl, required, validate, ValidationError} from '@angular/forms/signals';
 import {isNotNil} from '@melluin/common';
 
 
@@ -32,16 +32,13 @@ export class TrimmedTextInputComponent2 implements FormValueControl<string> {
     public readonly autocomplete = input<AutoFill>();
 
     protected readonly innerForm = form(signal({innerValue: ''}), schema => {
-        required(schema.innerValue, {when: () => this.required()})
+        required(schema.innerValue, {when: () => this.required()});
+        validate(schema.innerValue, () => (this.invalid() ? {kind: 'invalid'} : null));
     });
 
     constructor() {
-        effect(() => {
-            this.touched.set(this.innerForm().touched());
-        });
-        effect(() => {
-            this.innerForm.innerValue().value.set(this.value());
-        });
+        effect(() => this.touched.set(this.innerForm().touched()));
+        effect(() => this.innerForm.innerValue().value.set(this.value()));
     }
 
     protected focusLost(): void {

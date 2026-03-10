@@ -12,12 +12,13 @@ import {finalize, firstValueFrom} from 'rxjs';
 import {getErrorHandler} from '@fe/app/util/util';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {t} from '@fe/app/util/translate/translate';
+import {PasswordInputComponent} from '@fe/app/util/password-input/password-input.component';
 
 @Component({
     imports: [
         TrimmedTextInputComponent2,
         TranslatePipe,
-        MatButton, FormField, AppSubmit,
+        MatButton, FormField, AppSubmit, PasswordInputComponent,
     ],
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],

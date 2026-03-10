@@ -59,16 +59,11 @@
         <mat-error [fField]="userForm.userName"/>
     </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>{{ 'PersonPage.User.Form.Password' | translate }}</mat-label>
-        <input matInput
-               type="password"
-               autocomplete="new-password"
-               [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
-               [formField]="userForm.password">
-        <mat-hint>{{ 'PersonPage.User.Form.PasswordHint' | translate }}</mat-hint>
-        <mat-error [fField]="userForm.password"/>
-    </mat-form-field>
+    <app-password-input [formField]="userForm.password"
+                        autocomplete="new-password"
+                        [label]="'PersonPage.User.Form.Password' | translate"
+                        [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
+                        [hint]="'PersonPage.User.Form.PasswordHint' | translate"/>
 
     <div class="button-row">
         <button mat-flat-button color="accent"
