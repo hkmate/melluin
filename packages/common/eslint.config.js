@@ -208,6 +208,11 @@ module.exports = tseslint.config(
     },
     {
         files: ['src/**/*.spec.ts'],
+        languageOptions: {
+            parserOptions: {
+                project: './tsconfig.spec.json',
+            },
+        },
         rules: {
             "max-lines-per-function": "off",
             "@typescript-eslint/no-magic-numbers": "off",

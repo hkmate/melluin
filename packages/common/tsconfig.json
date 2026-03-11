@@ -1,12 +1,15 @@
 {
     "extends": "../../tsconfig.json",
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": ["**/*.spec.ts"],
     "compilerOptions": {
         "declaration": true,
         "target": "es2017",
         "baseUrl": "./",
         "declarationDir": "dist/types",
         "resolveJsonModule": true,
-        "esModuleInterop": true,
-
+        "esModuleInterop": true
     }
 }

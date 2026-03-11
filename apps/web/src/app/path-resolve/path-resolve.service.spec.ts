@@ -1,3 +1,4 @@
+import {beforeEach, describe, expect, it} from 'vitest';
 import {PathProvider, PathResolveService} from './path-resolve.service';
 import {ActivatedRouteSnapshot, RouterStateSnapshot, UrlSegment} from '@angular/router';
 import {inject, Injector, runInInjectionContext} from '@angular/core';

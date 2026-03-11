@@ -1,3 +1,4 @@
+import {beforeEach, describe, expect, it, Mock, vi} from 'vitest';
 import {Test} from '@nestjs/testing';
 import {AuthService} from '@be/auth/service/auth.service';
 import {ConfigService} from '@nestjs/config';
@@ -8,14 +9,13 @@ import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
 import {AuthInfo, cast, OperationCity, randomString, RoleBrief, RoleType, User} from '@melluin/common';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {UserEntity} from '@be/user/model/user.entity';
-import crypto, {randomUUID} from 'crypto';
-import {when} from 'jest-when';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 import {BadRequestException} from '@nestjs/common';
 import {RoleDao} from '@be/user/role.dao';
 import * as Utils from '@be/util/util';
-import Mock = jest.Mock;
+import {when} from 'vitest-when';
+import {randomUUID} from 'crypto';
 
 describe('AuthService', () => {
     describe('Construct when default user not needed', () => {
@@ -24,7 +24,7 @@ describe('AuthService', () => {
         let personService: PersonDao;
 
         beforeEach(async () => {
-            const configServiceGet = jest.fn().mockImplementation((paramName: string) => {
+            const configServiceGet = vi.fn().mockImplementation((paramName: string) => {
                 if (paramName === 'server.defaultSysAdmin.needToInit') {
                     return false;
                 }
@@ -39,9 +39,9 @@ describe('AuthService', () => {
                     AuthService,
                     { provide: ConfigService, useValue: { get: configServiceGet } },
                     { provide: JwtService, useValue: {} },
-                    { provide: UserDao, useValue: { save: jest.fn() } },
-                    { provide: RoleDao, useValue: { findAll: jest.fn() } },
-                    { provide: PersonDao, useValue: { save: jest.fn() } },
+                    { provide: UserDao, useValue: { save: vi.fn() } },
+                    { provide: RoleDao, useValue: { findAll: vi.fn() } },
+                    { provide: PersonDao, useValue: { save: vi.fn() } },
                     { provide: PasswordCryptService, useValue: {} },
                 ],
             }).compile();
@@ -76,9 +76,9 @@ describe('AuthService', () => {
         const mockedDate = new Date();
 
         beforeEach(async () => {
-            jest.spyOn(Utils, 'now').mockReturnValue(mockedDate);
+            vi.spyOn(Utils, 'now').mockReturnValue(mockedDate);
 
-            const configServiceGet = jest.fn().mockImplementation((paramName: string) => {
+            const configServiceGet = vi.fn().mockImplementation((paramName: string) => {
                 if (paramName === 'server.defaultSysAdmin.needToInit') {
                     return true;
                 }
@@ -90,17 +90,17 @@ describe('AuthService', () => {
                 }
                 return null;
             });
-            jest.spyOn(crypto, 'randomUUID')
+            vi.spyOn(crypto, 'randomUUID')
                 .mockReturnValueOnce(mockedPersonId)
                 .mockReturnValueOnce(mockedUserId);
 
-            const passwordCryptServiceEncrypt = jest.fn(pass => {
+            const passwordCryptServiceEncrypt = vi.fn(pass => {
                 if (pass === defaultUser.password) {
                     return expectedPassword;
                 }
                 return null;
             });
-            const userServiceFindAllRole = jest.fn(() => expectedRoles);
+            const userServiceFindAllRole = vi.fn(() => expectedRoles);
 
             const moduleRef = await Test.createTestingModule({
                 imports: [
@@ -112,12 +112,12 @@ describe('AuthService', () => {
                     { provide: JwtService, useValue: {} },
                     {
                         provide: UserDao, useValue: {
-                            findOneByName: jest.fn().mockReturnValueOnce(undefined),
-                            save: jest.fn(arg => arg),
+                            findOneByName: vi.fn().mockReturnValueOnce(undefined),
+                            save: vi.fn(arg => arg),
                         },
                     },
                     { provide: RoleDao, useValue: { findAll: userServiceFindAllRole } },
-                    { provide: PersonDao, useValue: { save: jest.fn(arg => arg) } },
+                    { provide: PersonDao, useValue: { save: vi.fn(arg => arg) } },
                     { provide: PasswordCryptService, useValue: { encrypt: passwordCryptServiceEncrypt } },
                 ],
             }).compile();
@@ -154,6 +154,8 @@ describe('AuthService', () => {
                 createdByPersonId: null,
             };
 
+            expect(crypto.randomUUID).toHaveBeenCalledTimes(2);
+
             expect(userService.findOneByName).toHaveBeenCalledWith(defaultUser.username);
             expect(roleDao.findAll).toHaveBeenCalled();
             expect(personService.save).toHaveBeenCalledWith(expectedPerson);
@@ -174,7 +176,7 @@ describe('AuthService', () => {
         };
 
         beforeEach(async () => {
-            const configServiceGet = jest.fn().mockImplementation((paramName: string) => {
+            const configServiceGet = vi.fn().mockImplementation((paramName: string) => {
                 if (paramName === 'server.defaultSysAdmin.needToInit') {
                     return true;
                 }
@@ -194,13 +196,13 @@ describe('AuthService', () => {
                     { provide: JwtService, useValue: {} },
                     {
                         provide: UserDao, useValue: {
-                            findOneByName: jest.fn().mockReturnValueOnce({ username: defaultUser.username }),
-                            save: jest.fn(),
+                            findOneByName: vi.fn().mockReturnValueOnce({ username: defaultUser.username }),
+                            save: vi.fn(),
                         },
                     },
-                    { provide: RoleDao, useValue: { findAll: jest.fn() } },
-                    { provide: PersonDao, useValue: { save: jest.fn() } },
-                    { provide: PasswordCryptService, useValue: { encrypt: jest.fn() } },
+                    { provide: RoleDao, useValue: { findAll: vi.fn() } },
+                    { provide: PersonDao, useValue: { save: vi.fn() } },
+                    { provide: PasswordCryptService, useValue: { encrypt: vi.fn() } },
                 ],
             }).compile();
 
@@ -230,9 +232,9 @@ describe('AuthService', () => {
                 ],
                 providers: [
                     AuthService,
-                    { provide: ConfigService, useValue: { get: jest.fn(() => false) } },
-                    { provide: JwtService, useValue: { sign: jest.fn() } },
-                    { provide: UserDao, useValue: { findOneWithCache: jest.fn(), save: jest.fn() } },
+                    { provide: ConfigService, useValue: { get: vi.fn(() => false) } },
+                    { provide: JwtService, useValue: { sign: vi.fn() } },
+                    { provide: UserDao, useValue: { findOneWithCache: vi.fn(), save: vi.fn() } },
                     { provide: RoleDao, useValue: {} },
                     { provide: PersonDao, useValue: {} },
                     { provide: PasswordCryptService, useValue: {} },
@@ -247,9 +249,9 @@ describe('AuthService', () => {
 
         it('When user is valid Then token returned with wrapped user', async () => {
             const mockedDate = new Date();
-            jest.spyOn(Utils, 'now').mockReturnValue(mockedDate);
-            const userId = randomUUID();
-            const personId = randomUUID();
+            vi.spyOn(Utils, 'now').mockReturnValue(mockedDate);
+            const userId = 'c0b74770-5be3-4d44-84c8-596f24449999';
+            const personId = 'c0b74770-5be3-4d44-84c8-596f24441111';
             const username: string = randomString();
             const password: string = randomString();
             const user: User = {
@@ -269,7 +271,7 @@ describe('AuthService', () => {
                 isActive: user.isActive,
                 customPermissions: [],
                 person: cast<PersonEntity>({ id: personId }),
-                roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
+                roles: [{ id: 'c0b74770-5be3-4d44-84c8-596f24442222', name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
                 settings: { eventList: {} },
                 lastLogin: null,
                 created: null,
@@ -307,12 +309,12 @@ describe('AuthService', () => {
                     UserEntityToDtoModule,
                 ],
                 providers: [
-                    { provide: ConfigService, useValue: { get: jest.fn(() => false) } },
-                    { provide: JwtService, useValue: { sign: jest.fn() } },
-                    { provide: UserDao, useValue: { findOneWithCache: jest.fn() } },
+                    { provide: ConfigService, useValue: { get: vi.fn(() => false) } },
+                    { provide: JwtService, useValue: { sign: vi.fn() } },
+                    { provide: UserDao, useValue: { findOneWithCache: vi.fn() } },
                     { provide: RoleDao, useValue: {} },
                     { provide: PersonDao, useValue: {} },
-                    { provide: PasswordCryptService, useValue: { match: jest.fn() } },
+                    { provide: PasswordCryptService, useValue: { match: vi.fn() } },
                     AuthService,
                 ],
             }).compile();
@@ -340,8 +342,8 @@ describe('AuthService', () => {
                 roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
             };
             const rawPassword: string = randomString();
-            when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
-            when(passwordCryptService.match).calledWith(rawPassword, password).mockReturnValue(true);
+            when(userService.findOneWithCache).calledWith(userName).thenReturn(Promise.resolve(userEntity));
+            when(passwordCryptService.match).calledWith(rawPassword, password).thenReturn(true);
 
             await authService.validate({ username: userName, password: rawPassword });
 
@@ -366,8 +368,8 @@ describe('AuthService', () => {
                 roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
             };
             const rawPassword: string = randomString();
-            when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
-            when(passwordCryptService.match).calledWith(rawPassword, password).mockReturnValue(false);
+            when(userService.findOneWithCache).calledWith(userName).thenReturn(Promise.resolve(userEntity));
+            when(passwordCryptService.match).calledWith(rawPassword, password).thenReturn(false);
 
             const testValidate = (): Promise<void> => authService.validate({
                 username: userName,
@@ -394,7 +396,7 @@ describe('AuthService', () => {
                 roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
             };
             const rawPassword: string = randomString();
-            when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(userEntity));
+            when(userService.findOneWithCache).calledWith(userName).thenReturn(Promise.resolve(userEntity));
 
             const testValidate = (): Promise<void> => authService.validate({
                 username: userName,
@@ -407,7 +409,7 @@ describe('AuthService', () => {
         it('When user is not in db Then null returned', async () => {
             const userName: string = randomString();
             const rawPassword: string = randomString();
-            when(userService.findOneWithCache).calledWith(userName).mockReturnValue(Promise.resolve(undefined));
+            when(userService.findOneWithCache).calledWith(userName).thenReturn(Promise.resolve(undefined));
 
             const testValidate = (): Promise<void> => authService.validate({
                 username: userName,

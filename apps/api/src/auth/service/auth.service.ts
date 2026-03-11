@@ -2,7 +2,6 @@ import {BadRequestException, Injectable} from '@nestjs/common';
 import {JwtService} from '@nestjs/jwt';
 import {UserDao} from '@be/user/user.dao';
 import {UserEntity} from 'src/user/model/user.entity';
-import * as crypto from 'crypto';
 import {RoleEntity} from '@be/user/model/role.entity';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {PersonDao} from '@be/person/person.dao';

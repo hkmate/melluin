@@ -1,3 +1,4 @@
+import {beforeEach, describe, expect, it, vi} from 'vitest';
 import {QueryParams, UrlParamHandler} from './url-param-handler';
 import {ActivatedRoute, ActivatedRouteSnapshot, NavigationExtras, Params, Router} from '@angular/router';
 import {randomString} from '@melluin/common';
@@ -10,7 +11,7 @@ describe('UrlParamHandler', () => {
 
     beforeEach(() => {
         mockRouter = {
-            navigate: jest.fn(() => Promise.resolve({}))
+            navigate: vi.fn(() => Promise.resolve({}))
         } as unknown as Router;
         mockActivatedRoute = {} as ActivatedRoute;
 

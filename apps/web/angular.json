@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "melluin_fe": {
+        "melluin_web": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -17,7 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/melluin_fe",
+                        "outputPath": "dist/melluin_web",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": [
@@ -71,10 +71,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "buildTarget": "melluin_fe:build:production"
+                            "buildTarget": "melluin_web:build:production"
                         },
                         "development": {
-                            "buildTarget": "melluin_fe:build:development"
+                            "buildTarget": "melluin_web:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -82,20 +82,20 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "buildTarget": "melluin_fe:build"
+                        "buildTarget": "melluin_web:build"
                     }
                 },
                 "test": {
-                    "builder": "@angular-builders/jest:run",
+                    "builder": "@angular/build:unit-test",
                     "options": {
-                        "zoneless": false,
-                        "tsConfig": "tsconfig.spec.json"
+                        "runnerConfig": "vitest.config.ts",
+                        "watch": false
                     }
                 },
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns":  [
+                        "lintFilePatterns": [
                             "src/**/*.ts",
                             "src/**/*.html"
                         ]

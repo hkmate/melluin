@@ -1,3 +1,4 @@
+import {describe, expect, it} from 'vitest';
 import {isNotNil} from './util';
 import {randomInt, randomNumber, randomString} from './test-util';
 

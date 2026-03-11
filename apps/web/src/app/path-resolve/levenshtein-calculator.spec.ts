@@ -1,3 +1,4 @@
+import {describe, expect, it} from 'vitest';
 import {LevenshteinCalculator} from './levenshtein-calculator';
 
 describe('LevenshteinCalculator', () => {
