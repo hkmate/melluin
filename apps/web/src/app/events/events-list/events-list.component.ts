@@ -55,11 +55,11 @@ import {VisitListComponent} from '@fe/app/hospital/visit/visit-list/visit-list.c
 })
 export class EventsListComponent {
 
-    Permission = Permission;
+    protected readonly Permission = Permission;
 
+    protected readonly permissions = inject(PermissionService);
     private readonly title = inject(AppTitle);
-    protected readonly permissions = inject(PermissionService,);
-    private readonly eventsService = inject(VisitService,);
+    private readonly eventsService = inject(VisitService);
     private readonly filterService = inject(EventsSettingsService);
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers

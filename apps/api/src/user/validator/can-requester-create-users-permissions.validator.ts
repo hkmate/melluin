@@ -1,4 +1,4 @@
-import {AsyncValidator, isNilOrEmpty, Permission, User, UserCreation} from '@melluin/common';
+import {AsyncValidator, isNilOrEmpty, Permission, PermissionT, User, UserCreation} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 
 
@@ -21,7 +21,7 @@ export class CanRequesterCreateUsersPermissionsValidator implements AsyncValidat
         throw new ForbiddenException('You have no permission to create user with custom permissions');
     }
 
-    private userHas(permission: Permission): boolean {
+    private userHas(permission: PermissionT): boolean {
         return this.currentUser.permissions.includes(permission);
     }
 

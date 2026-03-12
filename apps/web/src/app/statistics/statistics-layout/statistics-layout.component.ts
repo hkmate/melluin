@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import dayjs from 'dayjs';
-import {OperationCity, Permission} from '@melluin/common';
+import {OperationCities, OperationCity, Permission} from '@melluin/common';
 import {StatFilter} from '@fe/app/statistics/model/stat-filter';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {AppTitle} from '@fe/app/app-title.service';
@@ -16,7 +16,7 @@ import {StatisticsWidgetContainerComponent} from '@fe/app/statistics/statistics-
 function getDefaultFilter(): StatFilter {
     const now = dayjs().toISOString();
     const lastMonth = dayjs().subtract(1, 'month').toISOString();
-    return {from: lastMonth, to: now, city: OperationCity.PECS} satisfies StatFilter;
+    return {from: lastMonth, to: now, city: OperationCities.PECS} satisfies StatFilter;
 }
 
 @Component({

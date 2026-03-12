@@ -1,4 +1,4 @@
-import {Permission} from './permission.enum';
+import {PermissionT} from './permission.enum';
 
 export interface UserRewrite {
 
@@ -6,7 +6,7 @@ export interface UserRewrite {
     password?: string;
     isActive: boolean;
     roleNames: Array<string>;
-    customPermissions: Array<Permission>;
+    customPermissions: Array<PermissionT>;
 
 }
 

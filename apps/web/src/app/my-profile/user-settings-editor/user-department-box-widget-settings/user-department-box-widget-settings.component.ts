@@ -1,7 +1,7 @@
 import {Component, computed, effect, inject, input, signal} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
-    BoxStatusChangeReason,
+    BoxStatusChangeReason, BoxStatusChangeReasons,
     DateIntervalSpecifier,
     DepartmentBoxInfoSinceDateValues,
     DepartmentBoxWidgetSettings,
@@ -9,7 +9,7 @@ import {
     isNotEmpty,
     Nullable,
     UserSettings, UUID,
-    WidgetType
+    WidgetTypes
 } from '@melluin/common';
 import {MatCard, MatCardSubtitle} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
@@ -51,7 +51,7 @@ import {t} from '@fe/app/util/translate/translate';
 })
 export class UserDepartmentBoxWidgetSettingsComponent {
 
-    protected readonly reasonOptions: Array<BoxStatusChangeReason> = Object.values(BoxStatusChangeReason);
+    protected readonly reasonOptions: Array<BoxStatusChangeReason> = Object.values(BoxStatusChangeReasons);
     protected readonly dateOptions: Array<DateIntervalSpecifier> = DepartmentBoxInfoSinceDateValues;
     private static DEFAULT_LIMIT = 10;
 
@@ -117,7 +117,7 @@ export class UserDepartmentBoxWidgetSettingsComponent {
             ...this.formModel(),
             dateInterval: this.formModel().dateInterval!,
             reasons: isNotEmpty(this.formModel().reasons) ? this.formModel().reasons : undefined,
-            type: WidgetType.DEPARTMENT_BOX
+            type: WidgetTypes.DEPARTMENT_BOX
         } satisfies DepartmentBoxWidgetSettings);
         return newSettings;
     }

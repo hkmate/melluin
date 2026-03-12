@@ -9,6 +9,8 @@ export interface ConfirmationDialogConfig {
 
 export type ConfirmationDialogI18nConfig = { [key in keyof ConfirmationDialogConfig]: I18nKeys };
 
-export enum ConfirmationAnswer {
-    OK = 'OK', CANCEL = 'CANCEL'
-}
+export const ConfirmationAnswers = {
+    OK: 'OK',
+    CANCEL: 'CANCEL'
+} as const;
+export type ConfirmationAnswer = typeof ConfirmationAnswers[keyof typeof ConfirmationAnswers];

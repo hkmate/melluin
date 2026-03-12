@@ -5,7 +5,7 @@ import {
     VisitValidationData
 } from '@be/visit/validator/visit-validator';
 import {VisitDao} from '@be/visit/visit.dao';
-import {ApiError, VisitCreate, VisitRewrite, isEmpty} from '@melluin/common';
+import {ApiErrors, VisitCreate, VisitRewrite, isEmpty} from '@melluin/common';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class ParticipantsIsInOneVisitAtSameTimeValidator implements VisitSaveVal
         }
         throw new BadRequestException({
             message: 'Volunteers cannot participate more than one visit at same time.',
-            code: ApiError.VOLUNTEER_COULD_PARTICIPANT_ONE_VISIT_AT_SAME_TIME
+            code: ApiErrors.VOLUNTEER_COULD_PARTICIPANT_ONE_VISIT_AT_SAME_TIME
         });
     }
 

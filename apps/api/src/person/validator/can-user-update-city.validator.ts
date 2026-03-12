@@ -1,4 +1,4 @@
-import {isNil, Permission, PersonRewrite, User} from '@melluin/common';
+import {isNil, Permission, PermissionT, PersonRewrite, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {PersonEntity} from '@be/person/model/person.entity';
 import * as _ from 'lodash';
@@ -29,7 +29,7 @@ export class CanUserUpdateCityValidator implements PersonRewriteValidator {
             || _.isEqual(rewrite.cities, person.cities);
     }
 
-    private userHas(permission: Permission): boolean {
+    private userHas(permission: PermissionT): boolean {
         return this.currentUser.permissions.includes(permission);
     }
 

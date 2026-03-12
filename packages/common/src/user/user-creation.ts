@@ -1,4 +1,4 @@
-import {Permission} from './permission.enum';
+import {PermissionT} from './permission.enum';
 import {UUID} from '../util/type/uuid.type';
 
 export interface UserCreation {
@@ -7,6 +7,6 @@ export interface UserCreation {
     password: string;
     personId: UUID;
     roleNames: Array<string>;
-    customPermissions: Array<Permission>;
+    customPermissions: Array<PermissionT>;
 
 }

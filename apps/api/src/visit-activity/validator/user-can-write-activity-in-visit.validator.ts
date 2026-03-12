@@ -1,4 +1,4 @@
-import {ApiError, Permission, User} from '@melluin/common';
+import {ApiErrors, Permission, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {VisitedChildBasicValidationData} from '@be/visit-children/validator/visited-child-validator';
 import {
@@ -16,7 +16,7 @@ export class UserCanWriteActivityInVisitValidator implements VisitActivityBasicV
 
         throw new ForbiddenException({
             message: 'User cannot write activity in visit for other participants',
-            code: ApiError.USER_CANNOT_WRITE_ACTIVITY_IN_VISIT_FOR_OTHERS
+            code: ApiErrors.USER_CANNOT_WRITE_ACTIVITY_IN_VISIT_FOR_OTHERS
         });
     }
 
@@ -26,7 +26,7 @@ export class UserCanWriteActivityInVisitValidator implements VisitActivityBasicV
         }
         throw new ForbiddenException({
             message: 'User cannot modify visit activity',
-            code: ApiError.USER_CANNOT_WRITE_ACTIVITY
+            code: ApiErrors.USER_CANNOT_WRITE_ACTIVITY
         });
     }
 

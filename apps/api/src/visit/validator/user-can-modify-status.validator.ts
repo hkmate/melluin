@@ -1,4 +1,4 @@
-import {ApiError, VisitRewrite, VisitStatus, Permission, User} from '@melluin/common';
+import {ApiErrors, VisitRewrite, Permission, User, VisitStatuses} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {VisitRewriteValidationData, VisitRewriteValidator} from '@be/visit/validator/visit-validator';
 import {VisitEntity} from '@be/visit/model/visit.entity';
@@ -22,12 +22,12 @@ export class UserCanModifyStatusValidator implements VisitRewriteValidator {
     }
 
     private verifyCoordinatorChangeIsValid({entity, item}: VisitRewriteValidationData): void | never {
-        const scheduling = entity.status === VisitStatus.DRAFT
-            && item.status === VisitStatus.SCHEDULED;
-        const fixing = entity.status === VisitStatus.ACTIVITIES_FILLED_OUT
-            && item.status === VisitStatus.STARTED;
-        const finalize = entity.status === VisitStatus.ACTIVITIES_FILLED_OUT
-            && item.status === VisitStatus.ALL_FILLED_OUT;
+        const scheduling = entity.status === VisitStatuses.DRAFT
+            && item.status === VisitStatuses.SCHEDULED;
+        const fixing = entity.status === VisitStatuses.ACTIVITIES_FILLED_OUT
+            && item.status === VisitStatuses.STARTED;
+        const finalize = entity.status === VisitStatuses.ACTIVITIES_FILLED_OUT
+            && item.status === VisitStatuses.ALL_FILLED_OUT;
 
         if (this.isStatusChangeNormalForVolunteer(entity, item) || scheduling || fixing || finalize) {
             return;
@@ -57,22 +57,22 @@ export class UserCanModifyStatusValidator implements VisitRewriteValidator {
     private throwError(): never {
         throw new ForbiddenException({
             message: 'User cannot perform this status change',
-            code: ApiError.STATUS_CHANGE_DISABLED
+            code: ApiErrors.STATUS_CHANGE_DISABLED
         });
     }
 
     private isStatusChangeNormalForVolunteer(entity: VisitEntity, item: VisitRewrite): boolean {
-        const starting = entity.status === VisitStatus.SCHEDULED
-            && item.status === VisitStatus.STARTED;
-        const canceling = entity.status === VisitStatus.SCHEDULED
-            && (item.status === VisitStatus.CANCELED
-                || item.status === VisitStatus.FAILED_FOR_OTHER_REASON
-                || item.status === VisitStatus.FAILED_BECAUSE_NO_CHILD);
-        const ending = entity.status === VisitStatus.STARTED
-            && (item.status === VisitStatus.ACTIVITIES_FILLED_OUT
-                || item.status === VisitStatus.CANCELED
-                || item.status === VisitStatus.FAILED_FOR_OTHER_REASON
-                || item.status === VisitStatus.FAILED_BECAUSE_NO_CHILD);
+        const starting = entity.status === VisitStatuses.SCHEDULED
+            && item.status === VisitStatuses.STARTED;
+        const canceling = entity.status === VisitStatuses.SCHEDULED
+            && (item.status === VisitStatuses.CANCELED
+                || item.status === VisitStatuses.FAILED_FOR_OTHER_REASON
+                || item.status === VisitStatuses.FAILED_BECAUSE_NO_CHILD);
+        const ending = entity.status === VisitStatuses.STARTED
+            && (item.status === VisitStatuses.ACTIVITIES_FILLED_OUT
+                || item.status === VisitStatuses.CANCELED
+                || item.status === VisitStatuses.FAILED_FOR_OTHER_REASON
+                || item.status === VisitStatuses.FAILED_BECAUSE_NO_CHILD);
         return starting || ending || canceling;
     }
 

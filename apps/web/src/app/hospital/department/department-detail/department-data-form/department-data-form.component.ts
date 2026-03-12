@@ -7,6 +7,7 @@ import {
     isNotNil,
     Nullable,
     OperationCity,
+    OperationCities,
     orElse
 } from '@melluin/common';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -49,7 +50,7 @@ import {t} from '@fe/app/util/translate/translate';
 })
 export class DepartmentDataFormComponent {
 
-    protected readonly cityOptions = Object.keys(OperationCity) as Array<OperationCity>;
+    protected readonly cityOptions = Object.keys(OperationCities) as Array<OperationCity>;
     private readonly departmentService = inject(DepartmentService);
 
     public readonly department = input<Department>();
@@ -92,7 +93,7 @@ export class DepartmentDataFormComponent {
         return {
             name: '',
             address: '',
-            city: OperationCity.PECS,
+            city: OperationCities.PECS as OperationCity,
             validFrom: null as Nullable<Date>,
             validTo: null as Nullable<Date>,
             diseasesInfo: '',

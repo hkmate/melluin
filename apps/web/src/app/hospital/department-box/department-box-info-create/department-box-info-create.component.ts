@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, input, output, signal} from '@angular/core';
 import {
-    BoxStatusChangeReason,
+    BoxStatusChangeReason, BoxStatusChangeReasons,
     DepartmentBoxStatus,
     DepartmentBoxStatusReport,
     isNotNil,
@@ -44,7 +44,7 @@ import {t} from '@fe/app/util/translate/translate';
 })
 export class DepartmentBoxInfoCreateComponent {
 
-    protected readonly reasonOptions: Array<BoxStatusChangeReason> = Object.values(BoxStatusChangeReason);
+    protected readonly reasonOptions: Array<BoxStatusChangeReason> = Object.values(BoxStatusChangeReasons);
     protected readonly affectedObjectsOptions = affectedObjectsList;
 
     private readonly boxStatusService = inject(DepartmentBoxService);

@@ -1,4 +1,4 @@
-import {UUID, VisitRewrite, VisitStatus} from '@melluin/common';
+import {UUID, VisitRewrite, VisitStatus, VisitStatuses} from '@melluin/common';
 import { ApiProperty } from '@nestjs/swagger';
 import {IsArray, IsBoolean, IsDateString, IsEnum, IsNumber, IsOptional, IsString, IsUUID, Min} from 'class-validator';
 
@@ -28,8 +28,8 @@ export class VisitRewriteDto implements VisitRewrite {
     @IsArray()
     participantIds: Array<UUID>;
 
-    @ApiProperty({enum: VisitStatus, enumName: 'VisitStatus'})
-    @IsEnum(VisitStatus)
+    @ApiProperty({enum: VisitStatuses, enumName: 'VisitStatus'})
+    @IsEnum(VisitStatuses)
     status: VisitStatus;
 
     @ApiProperty()

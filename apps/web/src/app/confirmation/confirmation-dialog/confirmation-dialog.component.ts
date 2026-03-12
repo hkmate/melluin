@@ -8,7 +8,7 @@ import {
 } from '@angular/material/dialog';
 import {Platform} from '@angular/cdk/platform';
 import {MatButton} from '@angular/material/button';
-import {ConfirmationAnswer, ConfirmationDialogConfig} from '@fe/app/confirmation/confirmation-dialog-config';
+import {ConfirmationAnswer, ConfirmationAnswers, ConfirmationDialogConfig} from '@fe/app/confirmation/confirmation-dialog-config';
 
 @Component({
     imports: [
@@ -24,7 +24,7 @@ import {ConfirmationAnswer, ConfirmationDialogConfig} from '@fe/app/confirmation
 })
 export class ConfirmationDialogComponent {
 
-    ConfirmationAnswer = ConfirmationAnswer;
+    ConfirmationAnswers = ConfirmationAnswers;
 
     private readonly platform = inject(Platform);
     private readonly dialogRef = inject<MatDialogRef<ConfirmationDialogComponent>>(MatDialogRef);

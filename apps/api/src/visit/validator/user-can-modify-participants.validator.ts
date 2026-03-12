@@ -1,4 +1,4 @@
-import {ApiError, VisitRewrite, VisitStatus, isEmpty, Permission, User} from '@melluin/common';
+import {ApiErrors, VisitRewrite, isEmpty, Permission, User, VisitStatuses} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {VisitRewriteValidationData, VisitRewriteValidator} from '@be/visit/validator/visit-validator';
 import {VisitEntity} from '@be/visit/model/visit.entity';
@@ -23,10 +23,10 @@ export class UserCanModifyParticipantsValidator implements VisitRewriteValidator
     }
 
     private verifyCoordinatorChangeIsValid({item}: VisitRewriteValidationData): void | never {
-        const inDraft = item.status === VisitStatus.DRAFT;
-        const isScheduled = item.status === VisitStatus.SCHEDULED;
-        const inStarted = item.status === VisitStatus.STARTED;
-        const inFilledOut = item.status === VisitStatus.ACTIVITIES_FILLED_OUT;
+        const inDraft = item.status === VisitStatuses.DRAFT;
+        const isScheduled = item.status === VisitStatuses.SCHEDULED;
+        const inStarted = item.status === VisitStatuses.STARTED;
+        const inFilledOut = item.status === VisitStatuses.ACTIVITIES_FILLED_OUT;
 
         if (inDraft || isScheduled || inStarted || inFilledOut) {
             return;
@@ -35,8 +35,8 @@ export class UserCanModifyParticipantsValidator implements VisitRewriteValidator
     }
 
     private verifyVolunteerChangeIsValid({item, entity}: VisitRewriteValidationData): void | never {
-        const isScheduled = entity.status === VisitStatus.SCHEDULED
-            || item.status === VisitStatus.SCHEDULED;
+        const isScheduled = entity.status === VisitStatuses.SCHEDULED
+            || item.status === VisitStatuses.SCHEDULED;
 
         if (isScheduled) {
             return;
@@ -60,7 +60,7 @@ export class UserCanModifyParticipantsValidator implements VisitRewriteValidator
     private throwError(): never {
         throw new ForbiddenException({
             message: 'User cannot perform this participant change',
-            code: ApiError.VISIT_PARTICIPANT_CHANGE_DISABLED
+            code: ApiErrors.VISIT_PARTICIPANT_CHANGE_DISABLED
         });
     }
 

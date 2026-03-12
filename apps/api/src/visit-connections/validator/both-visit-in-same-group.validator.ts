@@ -3,7 +3,7 @@ import {
     VisitConnectionValidationData,
     VisitConnectionValidator
 } from '@be/visit-connections/validator/visit-connection-validator';
-import {ApiError} from '@melluin/common';
+import {ApiErrors} from '@melluin/common';
 
 
 export class BothVisitInSameGroupValidator implements VisitConnectionValidator {
@@ -14,7 +14,7 @@ export class BothVisitInSameGroupValidator implements VisitConnectionValidator {
         }
         throw new BadRequestException({
             message: 'Visits are not in the same connection group.',
-            code: ApiError.VISITS_ARE_NOT_IN_SAME_CONNECTION_GROUP
+            code: ApiErrors.VISITS_ARE_NOT_IN_SAME_CONNECTION_GROUP
         });
     }
 

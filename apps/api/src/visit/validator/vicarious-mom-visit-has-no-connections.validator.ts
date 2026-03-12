@@ -1,6 +1,6 @@
 import {BadRequestException} from '@nestjs/common';
 import {VisitRewriteValidationData, VisitRewriteValidator} from '@be/visit/validator/visit-validator';
-import {ApiError} from '@melluin/common';
+import {ApiErrors} from '@melluin/common';
 
 
 export class VicariousMomVisitHasNoConnectionsValidator implements VisitRewriteValidator {
@@ -15,7 +15,7 @@ export class VicariousMomVisitHasNoConnectionsValidator implements VisitRewriteV
 
         throw new BadRequestException({
             message: 'Vicarious mom visit cannot be connected to another.',
-            code: ApiError.VICARIOUS_MOM_VISIT_CANNOT_BE_CONNECTED
+            code: ApiErrors.VICARIOUS_MOM_VISIT_CANNOT_BE_CONNECTED
         });
     }
 

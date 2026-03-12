@@ -3,7 +3,7 @@ import {DepartmentDao} from '@be/department/department.dao';
 import {BadRequestException, Injectable} from '@nestjs/common';
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import dayjs from 'dayjs';
-import {ApiError} from '@melluin/common';
+import {ApiErrors} from '@melluin/common';
 
 @Injectable()
 export class VisitIsInActiveDepartmentsValidator implements VisitSaveValidator {
@@ -20,7 +20,7 @@ export class VisitIsInActiveDepartmentsValidator implements VisitSaveValidator {
         }
         throw new BadRequestException({
             message: 'Visit is at time when department is invalid',
-            code: ApiError.VISIT_IS_IN_INACTIVE_DEPARTMENT
+            code: ApiErrors.VISIT_IS_IN_INACTIVE_DEPARTMENT
         })
     }
 

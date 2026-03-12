@@ -1,5 +1,5 @@
 import {Component, computed, input} from '@angular/core';
-import {VisitStatus} from '@melluin/common';
+import {VisitStatus, VisitStatuses} from '@melluin/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {TranslateModule} from '@ngx-translate/core';
@@ -17,18 +17,18 @@ import {TranslateModule} from '@ngx-translate/core';
 export class VisitStatusIconComponent {
 
     private static readonly STATUS_ICON_MAPPER = {
-        [VisitStatus.DRAFT]: 'draw',
-        [VisitStatus.SCHEDULED]: 'calendar_month',
+        [VisitStatuses.DRAFT]: 'draw',
+        [VisitStatuses.SCHEDULED]: 'calendar_month',
 
-        [VisitStatus.STARTED]: 'theater_comedy',
+        [VisitStatuses.STARTED]: 'theater_comedy',
 
-        [VisitStatus.ACTIVITIES_FILLED_OUT]: 'fact_check',
-        [VisitStatus.ALL_FILLED_OUT]: 'inventory_2',
+        [VisitStatuses.ACTIVITIES_FILLED_OUT]: 'fact_check',
+        [VisitStatuses.ALL_FILLED_OUT]: 'inventory_2',
 
-        [VisitStatus.CANCELED]: 'event_busy',
-        [VisitStatus.FAILED_BECAUSE_NO_CHILD]: 'face_retouching_off',
-        [VisitStatus.FAILED_FOR_OTHER_REASON]: 'do_not_touch',
-        [VisitStatus.SUCCESSFUL]: 'check_circle',
+        [VisitStatuses.CANCELED]: 'event_busy',
+        [VisitStatuses.FAILED_BECAUSE_NO_CHILD]: 'face_retouching_off',
+        [VisitStatuses.FAILED_FOR_OTHER_REASON]: 'do_not_touch',
+        [VisitStatuses.SUCCESSFUL]: 'check_circle',
     }
 
     public readonly tooltipDisabled = input(true);

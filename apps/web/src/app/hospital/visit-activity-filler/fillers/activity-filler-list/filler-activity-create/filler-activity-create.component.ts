@@ -1,5 +1,5 @@
 import {Component, inject, output, signal} from '@angular/core';
-import {UUID, VisitActivityInput, VisitActivityType, VisitedChild} from '@melluin/common';
+import {UUID, VisitActivityInput, VisitActivityType, VisitActivityTypes, VisitedChild} from '@melluin/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {isNotEmptyValidator} from '@fe/app/util/util';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
@@ -38,7 +38,7 @@ export class FillerActivityCreateComponent {
     public readonly creationEnded = output<void>();
 
     protected children$: Observable<Array<VisitedChild>>;
-    protected activityTypeOptions: Array<VisitActivityType> = Object.values(VisitActivityType);
+    protected activityTypeOptions: Array<VisitActivityType> = Object.values(VisitActivityTypes);
     protected buttonsDisabled: boolean;
     protected readonly form = signal(this.initForm());
     protected visitDate: Date;

@@ -4,7 +4,7 @@ import {
     ActivitiesCount,
     ChildAgesByDepartments,
     ChildrenByDepartments,
-    isNotNil,
+    isNotNil, OperationCities,
     OperationCity,
     Permission,
     VisitByDepartments,
@@ -128,7 +128,7 @@ export class StatisticsController {
     }
 
     private verifyCityIsValid(city: string): asserts city is OperationCity {
-        if (isNotNil(OperationCity[city])) {
+        if (isNotNil(OperationCities[city])) {
             return;
         }
         throw new BadRequestException(`Unknown city: ${city}`);

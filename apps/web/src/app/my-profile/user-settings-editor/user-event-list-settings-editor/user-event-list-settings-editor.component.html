@@ -5,7 +5,7 @@
         <mat-select [formField]="form.dateFilter">
             <mat-option [value]="undefined">-</mat-option>
             @for (option of dateOptions; track option) {
-                <mat-option [value]="option">{{ `DateIntervalSpecifier.${option}` | translate }}</mat-option>
+                <mat-option [value]="option">{{ `DateIntervalSpecifiers.${option}` | translate }}</mat-option>
             }
         </mat-select>
     </mat-form-field>
@@ -17,7 +17,7 @@
         <mat-label>{{ 'PersonPage.EventListSettings.Statuses' | translate }}</mat-label>
         <mat-select [formField]="form.statuses" multiple>
             @for (option of statusOptions; track option) {
-                <mat-option [value]="option">{{ `VisitStatus.${option}` | translate }}</mat-option>
+                <mat-option [value]="option">{{ `VisitStatuses.${option}` | translate }}</mat-option>
             }
         </mat-select>
     </mat-form-field>

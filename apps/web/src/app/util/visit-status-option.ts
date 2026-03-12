@@ -1,4 +1,4 @@
-import {VisitStatus} from '@melluin/common';
+import {VisitStatus, VisitStatuses} from '@melluin/common';
 
 export interface SelectOption<T> {
     value: T;
@@ -7,6 +7,6 @@ export interface SelectOption<T> {
 
 export function getAllStatusOptionsOnlyEnable(...enables: Array<VisitStatus>)
     : Array<SelectOption<VisitStatus>> {
-    return Object.values(VisitStatus)
+    return Object.values(VisitStatuses)
         .map(status => ({value: status, disabled: !enables.includes(status)}));
 }

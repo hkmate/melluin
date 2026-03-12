@@ -1,5 +1,5 @@
 import {IsBoolean, IsEnum, IsOptional, IsString, Matches, MinLength} from 'class-validator';
-import {nameMinLength, passwordMinLength, passwordPattern, Permission, UserRewrite} from '@melluin/common';
+import {nameMinLength, passwordMinLength, passwordPattern, Permission, PermissionT, UserRewrite} from '@melluin/common';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserRewriteDto implements UserRewrite {
@@ -24,7 +24,7 @@ export class UserRewriteDto implements UserRewrite {
 
     @ApiProperty({enum: Permission, isArray: true})
     @IsEnum(Permission, {each: true})
-    customPermissions: Array<Permission>;
+    customPermissions: Array<PermissionT>;
 
 }
 

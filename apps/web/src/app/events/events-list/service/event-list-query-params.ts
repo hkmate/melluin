@@ -1,10 +1,12 @@
-export enum EventListQueryParams {
+import {EnumTypeOf} from '@melluin/common';
 
-    dateTo = 'dateTo',
-    dateFrom = 'dateFrom',
-    departmentIds = 'departmentIds',
-    participantIds = 'participantIds',
-    statuses = 'statuses',
-    highlight = 'highlight'
+export const EventListQueryParams = {
+    dateTo: 'dateTo',
+    dateFrom: 'dateFrom',
+    departmentIds: 'departmentIds',
+    participantIds: 'participantIds',
+    statuses: 'statuses',
+    highlight: 'highlight'
+} as const
 
-}
+export type EventListQueryParam = EnumTypeOf<typeof EventListQueryParams>;

@@ -9,7 +9,7 @@ import {
 } from '@angular/common/http';
 import {catchError, Observable, of, OperatorFunction, throwError} from 'rxjs';
 import {AuthenticationService} from './authentication.service';
-import {EndpointMap, HttpMethod} from '../model/endpoint';
+import {EndpointMap, HttpMethods} from '../model/endpoint';
 import {environment} from '@fe/environment';
 
 @Injectable({providedIn: 'root'})
@@ -58,11 +58,11 @@ export class JwtInterceptor implements HttpInterceptor {
 
     private initPublicEndpoints(): void {
         this.PUBLIC_ENDPOINTS
-            .add({method: HttpMethod.POST, url: `${environment.baseURL}/auth/token`})
+            .add({method: HttpMethods.POST, url: `${environment.baseURL}/auth/token`})
     }
 
     private isOurPublicEndpoint(request: HttpRequest<unknown>): boolean {
-        return this.PUBLIC_ENDPOINTS.contains({method: HttpMethod[request.method], url: request.url});
+        return this.PUBLIC_ENDPOINTS.contains({method: HttpMethods[request.method], url: request.url});
     }
 
     private isForOurBackend(request: HttpRequest<unknown>): boolean {

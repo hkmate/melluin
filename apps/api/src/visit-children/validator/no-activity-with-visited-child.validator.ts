@@ -1,5 +1,5 @@
 import {BadRequestException, Injectable} from '@nestjs/common';
-import {ApiError} from '@melluin/common';
+import {ApiErrors} from '@melluin/common';
 import {
     VisitedChildUpdateValidationData,
     VisitedChildUpdateValidator
@@ -22,7 +22,7 @@ export class NoActivityWithVisitedChildValidator implements VisitedChildUpdateVa
 
         throw new BadRequestException({
             message: 'Child cannot be removed from visit because it is in an activity',
-            code: ApiError.VISITED_CHILD_REMOVE_DISABLED_CHILD_IS_IN_ACTIVITY
+            code: ApiErrors.VISITED_CHILD_REMOVE_DISABLED_CHILD_IS_IN_ACTIVITY
         });
     }
 

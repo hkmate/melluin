@@ -1,5 +1,5 @@
 import {Type} from '@angular/core';
-import {DepartmentBoxWidgetSettings, WidgetSetting, WidgetType} from '@melluin/common';
+import {DepartmentBoxWidgetSettings, WidgetSetting, WidgetTypes} from '@melluin/common';
 import {BoxInfoWidgetComponent} from '@fe/app/dashboard/widgets/box-info-widget/box-info-widget.component';
 
 
@@ -10,7 +10,7 @@ export interface WidgetComponentInfo {
 
 export function widgetToComponent(settings: WidgetSetting): WidgetComponentInfo {
     switch (settings.type) {
-        case WidgetType.DEPARTMENT_BOX:
+        case WidgetTypes.DEPARTMENT_BOX:
             return generateBoxInfoWidgetInfo(settings as DepartmentBoxWidgetSettings);
         default:
             throw new Error(`Unknown widget type: ${settings.type}`);

@@ -1,53 +1,55 @@
-export enum Permission {
+export const Permission = {
 
     // Department related
-    canWriteDepartment = 'canWriteDepartment',
-    canReadDepartment = 'canReadDepartment',
-    canSearchDepartment = 'canSearchDepartment',
-    canWriteDepBox = 'canWriteDepBox',
-    canReadDepBox = 'canReadDepBox',
+    canWriteDepartment: 'canWriteDepartment',
+    canReadDepartment: 'canReadDepartment',
+    canSearchDepartment: 'canSearchDepartment',
+    canWriteDepBox: 'canWriteDepBox',
+    canReadDepBox: 'canReadDepBox',
 
     // Person/User related
-    canReadPerson = 'canReadPerson',
-    canSearchPerson = 'canSearchPerson',
-    canReadSensitivePersonData = 'canReadSensitivePersonData',
-    canReadPersonCreateData = 'canReadPersonCreateData',
-    canReadUserCreateData = 'canReadUserCreateData',
-    canReadUserLastLoginData = 'canReadUserLastLoginData',
+    canReadPerson: 'canReadPerson',
+    canSearchPerson: 'canSearchPerson',
+    canReadSensitivePersonData: 'canReadSensitivePersonData',
+    canReadPersonCreateData: 'canReadPersonCreateData',
+    canReadUserCreateData: 'canReadUserCreateData',
+    canReadUserLastLoginData: 'canReadUserLastLoginData',
 
-    canCreatePerson = 'canCreatePerson',
-    canCreateUser = 'canCreateUser',
+    canCreatePerson: 'canCreatePerson',
+    canCreateUser: 'canCreateUser',
 
-    canWriteVisitor = 'canWriteVisitor',
-    canWriteCoordinator = 'canWriteCoordinator',
-    canWriteAdmin = 'canWriteAdmin',
-    canWriteSysAdmin = 'canWriteSysAdmin',
-    canWriteSelf = 'canWriteSelf',
-    canModifyPersonCity = 'canModifyPersonCity',
+    canWriteVisitor: 'canWriteVisitor',
+    canWriteCoordinator: 'canWriteCoordinator',
+    canWriteAdmin: 'canWriteAdmin',
+    canWriteSysAdmin: 'canWriteSysAdmin',
+    canWriteSelf: 'canWriteSelf',
+    canModifyPersonCity: 'canModifyPersonCity',
 
     // Visit related
-    canCreateVisit = 'canCreateVisit', // Create only those where he/she is participant
-    canReadVisit = 'canReadVisit',
-    canModifyVisit = 'canModifyVisit', // Write only those where he/she is participant
-    canCreateAnyVisit = 'canCreateAnyVisit',
-    canModifyAnyVisit = 'canModifyAnyVisit', // Write any visit but can make logical changes (for coordinator)
-    canModifyAnyVisitUnrestricted = 'canModifyAnyVisitUnrestricted', // Write anything in any visit (for sysadmin)
-    canForceSameTimeVisitWrite = 'canForceSameTimeVisitWrite',
-    canReadVisitConnections = 'canReadVisitConnections',
-    canWriteVisitConnections = 'canWriteVisitConnections',
+    canCreateVisit: 'canCreateVisit', // Create only those where he/she is participant
+    canReadVisit: 'canReadVisit',
+    canModifyVisit: 'canModifyVisit', // Write only those where he/she is participant
+    canCreateAnyVisit: 'canCreateAnyVisit',
+    canModifyAnyVisit: 'canModifyAnyVisit', // Write any visit but can make logical changes (for coordinator)
+    canModifyAnyVisitUnrestricted: 'canModifyAnyVisitUnrestricted', // Write anything in any visit (for sysadmin)
+    canForceSameTimeVisitWrite: 'canForceSameTimeVisitWrite',
+    canReadVisitConnections: 'canReadVisitConnections',
+    canWriteVisitConnections: 'canWriteVisitConnections',
 
     // Visit activity related
-    canWriteChild = 'canWriteChild',
-    canWriteChildAtAnyVisit = 'canWriteChildAtAnyVisit',
-    canReadChild = 'canReadChild',
-    canCreateActivity = 'canCreateActivity',
-    canWriteActivityAtAnyVisit = 'canWriteActivityAtAnyVisit',
-    canReadActivity = 'canReadActivity',
+    canWriteChild: 'canWriteChild',
+    canWriteChildAtAnyVisit: 'canWriteChildAtAnyVisit',
+    canReadChild: 'canReadChild',
+    canCreateActivity: 'canCreateActivity',
+    canWriteActivityAtAnyVisit: 'canWriteActivityAtAnyVisit',
+    canReadActivity: 'canReadActivity',
 
     // Administration related
-    canReadStatistics = 'canReadStatistics',
+    canReadStatistics: 'canReadStatistics',
 
     // Sysadmin related
-    canManagePermissions = 'canManagePermissions',
+    canManagePermissions: 'canManagePermissions',
+} as const;
 
-}
+export type PermissionT = typeof Permission[keyof typeof Permission];
+

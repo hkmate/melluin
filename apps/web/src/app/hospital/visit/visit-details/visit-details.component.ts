@@ -6,6 +6,7 @@ import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handl
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {
     ApiError,
+    ApiErrors,
     isNil,
     isNotNil,
     Permission,
@@ -13,7 +14,7 @@ import {
     Visit,
     VisitCreate,
     VisitRewrite,
-    VisitStatus
+    VisitStatuses
 } from '@melluin/common';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
@@ -30,6 +31,7 @@ import {MatIcon} from '@angular/material/icon';
 import {VisitFormComponent} from '@fe/app/hospital/visit/visit-details/visit-form/visit-form.component';
 import {VisitConnectionsComponent} from '@fe/app/hospital/visit/visit-details/visit-connections/visit-connections.component';
 import {VisitActivitiesComponent} from '@fe/app/hospital/visit-activity/visit-activities/visit-activities.component';
+import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
 
 @Component({
     selector: 'app-visit-details',
@@ -45,7 +47,7 @@ import {VisitActivitiesComponent} from '@fe/app/hospital/visit-activity/visit-ac
         VisitConnectionsComponent,
         VisitActivitiesComponent
     ],
-    providers: [RouteDataHandler, ReportPrepareService]
+    providers: [RouteDataHandler, ReportPrepareService, DepartmentBoxService]
 })
 export class VisitDetailsComponent {
 
@@ -118,7 +120,7 @@ export class VisitDetailsComponent {
             return false;
         }
 
-        const visitStarted = this.visit.status === VisitStatus.SCHEDULED;
+        const visitStarted = this.visit.status === VisitStatuses.SCHEDULED;
         const userHasCreateActivity = this.permissions.has(Permission.canCreateActivity);
         const userHasCreateActivityAny = this.permissions.has(Permission.canWriteActivityAtAnyVisit);
         const userParticipant = this.isUserParticipant();
@@ -143,7 +145,7 @@ export class VisitDetailsComponent {
             return false;
         }
 
-        const visitStarted = this.visit.status === VisitStatus.STARTED;
+        const visitStarted = this.visit.status === VisitStatuses.STARTED;
         const userHasCreateActivity = this.permissions.has(Permission.canCreateActivity);
         const userHasCreateActivityAny = this.permissions.has(Permission.canWriteActivityAtAnyVisit);
         const userParticipant = this.isUserParticipant();
@@ -154,7 +156,7 @@ export class VisitDetailsComponent {
 
     protected isFilledAndUserIsParticipant(): boolean {
         return isNotNil(this.visit)
-            && this.visit.status === VisitStatus.ACTIVITIES_FILLED_OUT
+            && this.visit.status === VisitStatuses.ACTIVITIES_FILLED_OUT
             && this.isUserParticipant()
     }
 
@@ -228,16 +230,16 @@ export class VisitDetailsComponent {
             return;
         }
         const code = error.error as ApiError;
-        if (code === ApiError.VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED) {
+        if (code === ApiErrors.VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED) {
             this.handleLimitExceededSaveError(dataToSave);
             return;
         }
-        this.msg.error(`ApiError.${code}`);
+        this.msg.error(`ApiErrors.${code}`);
     }
 
     private handleLimitExceededSaveError(dataToSave: VisitRewrite | VisitCreate): void {
         if (!this.permissions.has(Permission.canForceSameTimeVisitWrite)) {
-            this.msg.error('ApiError.VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED');
+            this.msg.error('ApiErrors.VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED');
             return;
         }
         this.confirm.getI18nConfirm({

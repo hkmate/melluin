@@ -4,7 +4,7 @@
         <mat-card-subtitle>{{ status.dateTime | date : ('DateTimeFormat' | translate) }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <h1>{{ `BoxStatusChangeReason.${status.reason}` | translate }}</h1>
+        <h1>{{ `BoxStatusChangeReasons.${status.reason}` | translate }}</h1>
         @if (status.affectedObject) {
             <div class="affected-object">
                 {{ status.affectedObject }}

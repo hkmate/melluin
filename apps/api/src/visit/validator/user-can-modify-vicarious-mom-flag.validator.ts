@@ -1,4 +1,4 @@
-import {ApiError, VisitStatus, Permission, User} from '@melluin/common';
+import {ApiErrors, Permission, User, VisitStatuses} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {VisitRewriteValidationData, VisitRewriteValidator} from '@be/visit/validator/visit-validator';
 
@@ -27,10 +27,10 @@ export class UserCanModifyVicariousMomFlagValidator implements VisitRewriteValid
     }
 
     private verifyCoordinatorChangeIsValid({entity}: VisitRewriteValidationData): void | never {
-        const inDraft = entity.status === VisitStatus.DRAFT;
-        const isScheduled = entity.status === VisitStatus.SCHEDULED;
-        const inStarted = entity.status === VisitStatus.STARTED;
-        const inFilledOut = entity.status === VisitStatus.ACTIVITIES_FILLED_OUT;
+        const inDraft = entity.status === VisitStatuses.DRAFT;
+        const isScheduled = entity.status === VisitStatuses.SCHEDULED;
+        const inStarted = entity.status === VisitStatuses.STARTED;
+        const inFilledOut = entity.status === VisitStatuses.ACTIVITIES_FILLED_OUT;
 
         if (inDraft || isScheduled || inStarted || inFilledOut) {
             return;
@@ -41,7 +41,7 @@ export class UserCanModifyVicariousMomFlagValidator implements VisitRewriteValid
     private throwError(): never {
         throw new ForbiddenException({
             message: 'User cannot perform change on vicariousMom field',
-            code: ApiError.VICARIOUS_MOM_CHANGE_DISABLED
+            code: ApiErrors.VICARIOUS_MOM_CHANGE_DISABLED
         });
     }
 

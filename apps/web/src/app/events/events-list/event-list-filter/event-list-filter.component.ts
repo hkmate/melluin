@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {Department, VisitStatus, Pageable} from '@melluin/common';
+import {Department, VisitStatus, Pageable, VisitStatuses} from '@melluin/common';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {EventsListPreferences} from '../service/events-list-preferences';
 import {EventsFilter} from '../service/events-filter';
@@ -58,7 +58,7 @@ export class EventListFilterComponent {
     protected filters: EventsFilter;
     protected preferences: EventsListPreferences;
     protected departmentOptions: Array<Department>;
-    protected statusOptions: Array<VisitStatus> = Object.values(VisitStatus);
+    protected statusOptions: Array<VisitStatus> = Object.values(VisitStatuses);
     protected mobileScreen: boolean;
 
     constructor() {

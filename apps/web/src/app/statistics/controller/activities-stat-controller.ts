@@ -56,7 +56,7 @@ export class ActivitiesStatController extends AbstractStatisticWidgetController<
     private prepareData(rawData: Array<ActivitiesCount>): Array<ActivitiesCountTableData> {
         const translatedData = rawData.map(x => ({
             ...x,
-            activity: t(`VisitActivityType.${x.activity}`) as string
+            activity: t(`VisitActivityTypes.${x.activity}`) as string
         } satisfies ActivitiesCountTableData));
         translatedData.sort((a, b) => a.activity.localeCompare(b.activity));
         return translatedData;

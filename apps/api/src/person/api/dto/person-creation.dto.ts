@@ -1,5 +1,5 @@
 import {IsEmail, IsEnum, IsOptional, IsPhoneNumber, MinLength, ValidateNested} from 'class-validator';
-import {nameMinLength, OperationCity, PersonCreation, PersonPreferences} from '@melluin/common';
+import {nameMinLength, OperationCities, OperationCity, PersonCreation, PersonPreferences} from '@melluin/common';
 import {Type} from 'class-transformer';
 import {PersonPreferencesDto} from '@be/person/api/dto/person-preferences.dto';
 import {ApiProperty} from '@nestjs/swagger';
@@ -30,8 +30,8 @@ export class PersonCreationDto implements PersonCreation {
     @IsOptional()
     phone?: string;
 
-    @ApiProperty({enum: OperationCity, enumName: 'OperationCity'})
-    @IsEnum(OperationCity, {each: true})
+    @ApiProperty({enum: OperationCities, enumName: 'OperationCity'})
+    @IsEnum(OperationCities, {each: true})
     cities: Array<OperationCity>;
 
 }

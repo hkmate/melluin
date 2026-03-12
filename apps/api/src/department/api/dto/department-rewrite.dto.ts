@@ -1,5 +1,5 @@
 import {IsBoolean, IsDateString, IsEnum, IsOptional, IsPositive, IsUUID, MinLength} from 'class-validator';
-import {Department, nameMinLength, OperationCity, UUID} from '@melluin/common';
+import {Department, nameMinLength, OperationCities, OperationCity, UUID} from '@melluin/common';
 import {ApiProperty} from '@nestjs/swagger';
 
 export class DepartmentRewriteDto implements Department {
@@ -25,8 +25,8 @@ export class DepartmentRewriteDto implements Department {
     @MinLength(nameMinLength)
     address: string;
 
-    @ApiProperty({ enum: OperationCity, enumName: 'OperationCity' })
-    @IsEnum(OperationCity)
+    @ApiProperty({ enum: OperationCities, enumName: 'OperationCity' })
+    @IsEnum(OperationCities)
     city: OperationCity;
 
     @ApiProperty()

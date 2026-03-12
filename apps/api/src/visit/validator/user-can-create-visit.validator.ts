@@ -1,4 +1,4 @@
-import {ApiError, VisitCreate, Permission, User} from '@melluin/common';
+import {ApiErrors, VisitCreate, Permission, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {VisitCreateValidationData, VisitCreateValidator} from '@be/visit/validator/visit-validator';
 
@@ -12,7 +12,7 @@ export class UserCanCreateVisitValidator implements VisitCreateValidator {
 
         throw new ForbiddenException({
             message: 'User cannot create visit for other participants',
-            code: ApiError.USER_CANNOT_CREATE_VISIT_FOR_OTHERS
+            code: ApiErrors.USER_CANNOT_CREATE_VISIT_FOR_OTHERS
         });
     }
 
@@ -22,7 +22,7 @@ export class UserCanCreateVisitValidator implements VisitCreateValidator {
         }
         throw new ForbiddenException({
             message: 'User cannot create visit',
-            code: ApiError.USER_CANNOT_CREATE_VISIT
+            code: ApiErrors.USER_CANNOT_CREATE_VISIT
         });
     }
 

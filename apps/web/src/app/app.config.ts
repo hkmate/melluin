@@ -22,7 +22,7 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {JwtInterceptor} from '@fe/app/auth/service/jwt.interceptor';
 import {provideRouter} from '@angular/router';
 import {routes} from '@fe/app/app-routes';
-import {AppLanguage} from '@fe/app/language/app-language';
+import {AppLanguages} from '@fe/app/language/app-language';
 import {provideDatepickerConfig} from 'ngxsmk-datepicker';
 import {setupTranslateService} from '@fe/app/util/translate/translate';
 
@@ -42,13 +42,13 @@ export const appConfig: ApplicationConfig = {
         provideHttpClient(withInterceptorsFromDi()),
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
 
-        provideTranslateService({fallbackLang: AppLanguage.HU}),
+        provideTranslateService({fallbackLang: AppLanguages.HU}),
 
         provideToastr(),
 
         {provide: PathProvider, useClass: MelluinPathProvider},
 
-        {provide: LOCALE_ID, useValue: AppLanguage.HU},
+        {provide: LOCALE_ID, useValue: AppLanguages.HU},
         provideNativeDateAdapter(),
         provideDatepickerConfig({
             locale: 'hu',

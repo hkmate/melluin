@@ -1,12 +1,13 @@
 import {Component, inject} from '@angular/core';
 import {
     createVisitRewrite,
+    isNilOrEmpty,
+    NOOP,
+    Permission,
     Visit,
     VisitRewrite,
     VisitStatus,
-    isNilOrEmpty,
-    NOOP,
-    Permission
+    VisitStatuses
 } from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
 import {Router} from '@angular/router';
@@ -60,15 +61,15 @@ import {BoxInfoManagerComponent} from '@fe/app/hospital/department-box/departmen
 })
 export class VisitActivityFillerComponent {
 
-    VisitStatus = VisitStatus;
-    private static readonly CLOSED_STATUSES = [
-        VisitStatus.DRAFT,
-        VisitStatus.ACTIVITIES_FILLED_OUT,
-        VisitStatus.ALL_FILLED_OUT,
-        VisitStatus.SUCCESSFUL,
-        VisitStatus.CANCELED,
-        VisitStatus.FAILED_BECAUSE_NO_CHILD,
-        VisitStatus.FAILED_FOR_OTHER_REASON
+    VisitStatuses = VisitStatuses;
+    private static readonly CLOSED_STATUSES: Array<VisitStatus> = [
+        VisitStatuses.DRAFT,
+        VisitStatuses.ACTIVITIES_FILLED_OUT,
+        VisitStatuses.ALL_FILLED_OUT,
+        VisitStatuses.SUCCESSFUL,
+        VisitStatuses.CANCELED,
+        VisitStatuses.FAILED_BECAUSE_NO_CHILD,
+        VisitStatuses.FAILED_FOR_OTHER_REASON
     ];
 
     private readonly router = inject(Router);
@@ -100,7 +101,7 @@ export class VisitActivityFillerComponent {
     }
 
     protected canActivitiesBeShowed(): boolean {
-        return this.visit?.status === VisitStatus.STARTED
+        return this.visit?.status === VisitStatuses.STARTED
             && this.permissions.has(Permission.canReadActivity)
     }
 
@@ -118,7 +119,7 @@ export class VisitActivityFillerComponent {
     }
 
     protected canVisitBeStarted(): boolean {
-        return this.visit?.status === VisitStatus.SCHEDULED
+        return this.visit?.status === VisitStatuses.SCHEDULED
             && this.permissions.has(Permission.canCreateActivity);
     }
 
@@ -135,7 +136,7 @@ export class VisitActivityFillerComponent {
             message: 'Visit.AreYouSureFinalize',
             okBtnText: 'YesNo.true'
         })
-            .then(() => this.finalizeFilling(VisitStatus.ACTIVITIES_FILLED_OUT))
+            .then(() => this.finalizeFilling(VisitStatuses.ACTIVITIES_FILLED_OUT))
             .catch(NOOP);
     }
 
@@ -150,11 +151,12 @@ export class VisitActivityFillerComponent {
     }
 
     protected triggerFailedVisit(status: VisitStatus): void {
-        if (![VisitStatus.FAILED_BECAUSE_NO_CHILD, VisitStatus.FAILED_FOR_OTHER_REASON].includes(status)) {
+        if (!([VisitStatuses.FAILED_BECAUSE_NO_CHILD, VisitStatuses.FAILED_FOR_OTHER_REASON] as Array<VisitStatus>)
+            .includes(status)) {
             return;
         }
         const msg
-            = status === VisitStatus.FAILED_BECAUSE_NO_CHILD
+            = status === VisitStatuses.FAILED_BECAUSE_NO_CHILD
             ? 'Visit.AreYouSureFailBecauseNoChild'
             : 'Visit.AreYouSureFailBecauseOtherReason'
         this.confirmDialog.getI18nConfirm({message: msg, okBtnText: 'YesNo.true'})
@@ -166,7 +168,7 @@ export class VisitActivityFillerComponent {
     }
 
     private startFilling(): void {
-        this.saveVisit(VisitStatus.STARTED).then(() => this.filler.statusChanged(VisitStatus.STARTED));
+        this.saveVisit(VisitStatuses.STARTED).then(() => this.filler.statusChanged(VisitStatuses.STARTED));
     }
 
     private finalizeFilling(status: VisitStatus): void {
@@ -201,7 +203,7 @@ export class VisitActivityFillerComponent {
     }
 
     private verifyVisitHasSupportedStatus(): void {
-        const isStatusCorrect = [VisitStatus.SCHEDULED, VisitStatus.STARTED].includes(this.visit.status);
+        const isStatusCorrect = ([VisitStatuses.SCHEDULED, VisitStatuses.STARTED] as Array<VisitStatus>).includes(this.visit.status);
         if (!isStatusCorrect) {
             throw new Error('Fill activities is disabled when visit is not in status SCHEDULED or STARTED');
         }

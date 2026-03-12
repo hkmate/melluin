@@ -11,7 +11,7 @@ import {
     VisitStatus,
     VisitedChild,
     VisitedChildEditInput,
-    VisitedChildInput, UUID
+    VisitedChildInput, UUID, VisitStatuses
 } from '@melluin/common';
 import {BehaviorSubject, map, Observable, switchMap, tap} from 'rxjs';
 import {MessageService} from '@fe/app/util/message.service';
@@ -165,7 +165,7 @@ export class VisitActivityFillerService {
     }
 
     private isStarted(status: VisitStatus | null): boolean {
-        return VisitStatus.STARTED === status;
+        return VisitStatuses.STARTED === status;
     }
 
 }

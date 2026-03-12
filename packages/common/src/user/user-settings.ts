@@ -1,13 +1,14 @@
 import {VisitStatus} from '../visit/visit-status';
 import {BoxStatusChangeReason} from '../department/box/box-status-change-reason';
-import {DateIntervalSpecifier} from '../util/date-interval-generator';
+import {DateIntervalSpecifier, DateIntervalSpecifiers} from '../util/date-interval-generator';
 import {UUID} from '../util/type/uuid.type';
+import {EnumTypeOf} from '../util/type/enum.type';
 
 export const EventsDateFilterValues = [
-    DateIntervalSpecifier.WEEK,
-    DateIntervalSpecifier.TWO_WEEK,
-    DateIntervalSpecifier.THREE_WEEK,
-    DateIntervalSpecifier.MONTH
+    DateIntervalSpecifiers.WEEK,
+    DateIntervalSpecifiers.TWO_WEEK,
+    DateIntervalSpecifiers.THREE_WEEK,
+    DateIntervalSpecifiers.MONTH
 ];
 
 export interface EventListUserSettings {
@@ -20,12 +21,13 @@ export interface EventListUserSettings {
 
 }
 
-export enum HomePageOption {
-    DASHBOARD = 'DASHBOARD',
-    EVENT_LIST = 'EVENT_LIST',
-    ACTUAL_HOSPITAL_VISIT_DETAILS = 'ACTUAL_HOSPITAL_VISIT_DETAILS',
-    ACTUAL_HOSPITAL_VISIT_FILLER = 'ACTUAL_HOSPITAL_VISIT_FILLER',
-}
+export const HomePageOptions = {
+    DASHBOARD: 'DASHBOARD',
+    EVENT_LIST: 'EVENT_LIST',
+    ACTUAL_HOSPITAL_VISIT_DETAILS: 'ACTUAL_HOSPITAL_VISIT_DETAILS',
+    ACTUAL_HOSPITAL_VISIT_FILLER: 'ACTUAL_HOSPITAL_VISIT_FILLER',
+} as const;
+export type HomePageOption = EnumTypeOf<typeof HomePageOptions>;
 
 export interface HomePageUserSettings {
 
@@ -34,9 +36,10 @@ export interface HomePageUserSettings {
 
 }
 
-export enum WidgetType {
-    DEPARTMENT_BOX = 'DEPARTMENT_BOX',
-}
+export const WidgetTypes = {
+    DEPARTMENT_BOX: 'DEPARTMENT_BOX',
+} as const
+export type WidgetType = EnumTypeOf<typeof WidgetTypes>;
 
 export interface WidgetSetting {
 
@@ -47,14 +50,14 @@ export interface WidgetSetting {
 }
 
 export const DepartmentBoxInfoSinceDateValues = [
-    DateIntervalSpecifier.LAST_WEEK,
-    DateIntervalSpecifier.LAST_TWO_WEEK,
-    DateIntervalSpecifier.LAST_MONTH
+    DateIntervalSpecifiers.LAST_WEEK,
+    DateIntervalSpecifiers.LAST_TWO_WEEK,
+    DateIntervalSpecifiers.LAST_MONTH
 ];
 
 export interface DepartmentBoxWidgetSettings extends WidgetSetting {
 
-    type: WidgetType.DEPARTMENT_BOX;
+    type: typeof WidgetTypes.DEPARTMENT_BOX;
     dateInterval?: DateIntervalSpecifier;
     reasons?: Array<BoxStatusChangeReason>;
     limit?: number;

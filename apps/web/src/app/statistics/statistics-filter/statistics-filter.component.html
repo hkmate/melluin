@@ -11,7 +11,7 @@
                     {{ toControl.value | date : ('EventShortDateFormat' | translate) }}
                     </span>
                     <span>
-                        ({{ 'OperationCity.' + cityControl.value | translate }})
+                        ({{ 'OperationCities.' + cityControl.value | translate }})
                     </span>
                 }
             </mat-panel-title>
@@ -40,7 +40,7 @@
                         <mat-label>{{ 'DepartmentPage.Form.City' | translate }}</mat-label>
                         <mat-select [formControl]="cityControl">
                             @for (city of cityOptions; track city) {
-                                <mat-option [value]="city">{{ 'OperationCity.' + city | translate }}</mat-option>
+                                <mat-option [value]="city">{{ 'OperationCities.' + city | translate }}</mat-option>
                             }
                         </mat-select>
                     </mat-form-field>

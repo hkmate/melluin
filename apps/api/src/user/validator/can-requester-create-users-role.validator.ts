@@ -1,7 +1,7 @@
 import {
     AsyncValidator,
     getPermissionsNeededToChangeRole,
-    Permission,
+    PermissionT,
     RoleType,
     User,
     UserCreation
@@ -31,7 +31,7 @@ export class CanRequesterCreateUsersRoleValidator implements AsyncValidator<User
         }) ?? false;
     }
 
-    private userHas(permission: Permission): boolean {
+    private userHas(permission: PermissionT): boolean {
         return this.currentUser.permissions.includes(permission);
     }
 

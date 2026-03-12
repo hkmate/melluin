@@ -10,7 +10,7 @@ import {
 import {BehaviorSubject, Observable} from 'rxjs';
 import {PeopleListQueryParamHandler} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-param-handler';
 import {PeopleListQueryParamSettingsInitializer} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-param-settings-initializer';
-import {ListPageSettingChangeReason} from '@fe/app/util/list-page-settings-change-reason';
+import {ListPageSettingChangeReason, ListPageSettingChangeReasons} from '@fe/app/util/list-page-settings-change-reason';
 import {PeopleFilter} from '@fe/app/people/people-list/people-list-filter/service/people-filter';
 import {PeopleListFilterSensitiveDataHider} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter-sensitive-data-hider';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -23,7 +23,7 @@ export class PeopleListFilterService {
     private readonly queryParamHandler = inject(PeopleListQueryParamHandler);
     private readonly filterHider = inject(PeopleListFilterSensitiveDataHider);
 
-    private settingsChanged = new BehaviorSubject<ListPageSettingChangeReason>(ListPageSettingChangeReason.ALL);
+    private settingsChanged = new BehaviorSubject<ListPageSettingChangeReason>(ListPageSettingChangeReasons.ALL);
     private page: PageInfo;
     private filter: PeopleFilter;
 
@@ -31,7 +31,7 @@ export class PeopleListFilterService {
         this.queryParamHandler.onChange().pipe(takeUntilDestroyed()).subscribe(() => {
             this.initFilter();
             this.initPageInfo();
-            this.settingsChanged.next(ListPageSettingChangeReason.ALL);
+            this.settingsChanged.next(ListPageSettingChangeReasons.ALL);
         });
     }
 
@@ -49,7 +49,7 @@ export class PeopleListFilterService {
     public setPageInfo(newFilter: PageInfo): void {
         this.page = newFilter;
         this.queryParamHandler.saveSettings(this.filter, this.page);
-        this.settingsChanged.next(ListPageSettingChangeReason.PAGE_DATA);
+        this.settingsChanged.next(ListPageSettingChangeReasons.PAGE_DATA);
     }
 
     public getFilter(): PeopleFilter {
@@ -62,7 +62,7 @@ export class PeopleListFilterService {
     public setFilter(newFilter: PeopleFilter): void {
         this.filter = this.filterHider.hideData(newFilter);
         this.queryParamHandler.saveSettings(this.filter, this.page);
-        this.settingsChanged.next(ListPageSettingChangeReason.FILTERS);
+        this.settingsChanged.next(ListPageSettingChangeReasons.FILTERS);
     }
 
     public generateFilterOptions(): FilterOptions {

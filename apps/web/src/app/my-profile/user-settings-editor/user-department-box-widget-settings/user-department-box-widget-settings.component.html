@@ -25,7 +25,7 @@
         <mat-select [formField]="form.dateInterval">
             <mat-option [value]="null">-</mat-option>
             @for (option of dateOptions; track option) {
-                <mat-option [value]="option">{{ 'DateIntervalSpecifier.' + option | translate }}</mat-option>
+                <mat-option [value]="option">{{ 'DateIntervalSpecifiers.' + option | translate }}</mat-option>
             }
         </mat-select>
         <mat-error [fField]="form.dateInterval"/>
@@ -35,7 +35,7 @@
         <mat-label>{{ 'PersonPage.DepartmentBoxesWidgetSettings.Reason' | translate }}</mat-label>
         <mat-select [formField]="form.reasons" multiple>
             @for (option of reasonOptions; track option) {
-                <mat-option [value]="option">{{ 'BoxStatusChangeReason.' + option | translate }}</mat-option>
+                <mat-option [value]="option">{{ 'BoxStatusChangeReasons.' + option | translate }}</mat-option>
             }
         </mat-select>
     </mat-form-field>

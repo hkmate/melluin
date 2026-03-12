@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {dateIntervalGeneratorFactory, DateIntervalSpecifier, PageInfo} from '@melluin/common';
+import {dateIntervalGeneratorFactory, DateIntervalSpecifiers, PageInfo} from '@melluin/common';
 import {EventsListPreferences} from '@fe/app/events/events-list/service/events-list-preferences';
 import {EventsFilter} from '@fe/app/events/events-list/service/events-filter';
 
@@ -23,7 +23,7 @@ export class DefaultEventListSettingsInitializer implements EventListSettingsIni
     }
 
     public getFilters(): EventsFilter {
-        const dateInterval = dateIntervalGeneratorFactory(DateIntervalSpecifier.WEEK).generate();
+        const dateInterval = dateIntervalGeneratorFactory(DateIntervalSpecifiers.WEEK).generate();
         const result = new EventsFilter();
         result.departmentIds = [];
         result.participantIds = [];

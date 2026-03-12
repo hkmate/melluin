@@ -1,4 +1,4 @@
-import {AsyncValidator, Permission, User} from '@melluin/common';
+import {AsyncValidator, Permission, PermissionT, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {UserRewriteWithEntity} from '@be/user/validator/user-rewrite.validator';
 import * as _ from 'lodash';
@@ -30,7 +30,7 @@ export class CanRequesterChangeUsersPermissionsValidator implements AsyncValidat
         );
     }
 
-    private userHas(permission: Permission): boolean {
+    private userHas(permission: PermissionT): boolean {
         return this.currentUser.permissions.includes(permission);
     }
 

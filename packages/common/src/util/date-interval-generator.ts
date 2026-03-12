@@ -1,14 +1,17 @@
 import {DateInterval, DateUtil} from './date-util';
 
-export enum DateIntervalSpecifier {
-    WEEK = 'WEEK',  // Actual week
-    TWO_WEEK = 'TWO_WEEK', // Actual + next week
-    THREE_WEEK = 'THREE_WEEK', // Previous + actual + next week
-    MONTH = 'MONTH', // Actual month
-    LAST_WEEK = 'LAST_WEEK', // Last week
-    LAST_TWO_WEEK = 'LAST_TWO_WEEK', // Last two weeks
-    LAST_MONTH = 'LAST_MONTH', // Last month
-}
+export const DateIntervalSpecifiers = {
+    WEEK: 'WEEK',  // Actual week
+    TWO_WEEK: 'TWO_WEEK', // Actual + next week
+    THREE_WEEK: 'THREE_WEEK', // Previous + actual + next week
+    MONTH: 'MONTH', // Actual month
+    LAST_WEEK: 'LAST_WEEK', // Last week
+    LAST_TWO_WEEK: 'LAST_TWO_WEEK', // Last two weeks
+    LAST_MONTH: 'LAST_MONTH', // Last month
+} as const;
+
+
+export type DateIntervalSpecifier = typeof DateIntervalSpecifiers[keyof typeof DateIntervalSpecifiers];
 
 const WEEKDAYS = 7;
 
@@ -19,19 +22,19 @@ export interface DateIntervalGenerator {
 // eslint-disable-next-line max-lines-per-function
 export function dateIntervalGeneratorFactory(intervalSpecifier: DateIntervalSpecifier): DateIntervalGenerator {
     switch (intervalSpecifier) {
-        case DateIntervalSpecifier.MONTH:
+        case DateIntervalSpecifiers.MONTH:
             return new ActualMonthDateIntervalGenerator();
-        case DateIntervalSpecifier.THREE_WEEK:
+        case DateIntervalSpecifiers.THREE_WEEK:
             return new ThreeWeeksDateIntervalGenerator();
-        case DateIntervalSpecifier.TWO_WEEK:
+        case DateIntervalSpecifiers.TWO_WEEK:
             return new TwoWeeksDateIntervalGenerator();
-        case DateIntervalSpecifier.WEEK:
+        case DateIntervalSpecifiers.WEEK:
             return new ActualWeekDateIntervalGenerator();
-        case DateIntervalSpecifier.LAST_WEEK:
+        case DateIntervalSpecifiers.LAST_WEEK:
             return new LastWeeksDateIntervalGenerator();
-        case DateIntervalSpecifier.LAST_TWO_WEEK:
+        case DateIntervalSpecifiers.LAST_TWO_WEEK:
             return new LastTwoWeeksDateIntervalGenerator();
-        case DateIntervalSpecifier.LAST_MONTH:
+        case DateIntervalSpecifiers.LAST_MONTH:
             return new LastMonthDateIntervalGenerator();
         default:
             throw new Error(`Unknown date interval type: ${intervalSpecifier}`);

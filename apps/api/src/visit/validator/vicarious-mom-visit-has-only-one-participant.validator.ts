@@ -1,6 +1,6 @@
 import {BadRequestException} from '@nestjs/common';
 import {VisitSaveValidator, VisitValidationData} from '@be/visit/validator/visit-validator';
-import {ApiError} from '@melluin/common';
+import {ApiErrors} from '@melluin/common';
 
 
 export class VicariousMomVisitHasOnlyOneParticipantValidator implements VisitSaveValidator {
@@ -10,7 +10,7 @@ export class VicariousMomVisitHasOnlyOneParticipantValidator implements VisitSav
         if (vicariousMomVisit && participantIds.length !== 1) {
             throw new BadRequestException({
                 message: 'VicariousMomVisit could be only when there is one participant',
-                code: ApiError.VICARIOUS_MOM_VISIT_CANNOT_BE_WITH_MORE_PARTICIPANT
+                code: ApiErrors.VICARIOUS_MOM_VISIT_CANNOT_BE_WITH_MORE_PARTICIPANT
             });
         }
         return Promise.resolve();

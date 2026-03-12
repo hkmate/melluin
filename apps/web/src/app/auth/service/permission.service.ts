@@ -1,5 +1,5 @@
 import {computed, inject, Injectable} from '@angular/core';
-import {isNotNil, Permission, RoleType, UUID} from '@melluin/common';
+import {isNotNil, Permission, PermissionT, RoleType, RoleTypes, UUID} from '@melluin/common';
 import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
 
 @Injectable({providedIn: 'root'})
@@ -10,7 +10,7 @@ export class PermissionService {
     private readonly currentUser = this.currentUserService.currentUser;
     private readonly permissionInfo = computed(() => this.calculatePermissionInfo(this.currentUser()?.permissions ?? []));
 
-    public has(permission: Permission): boolean {
+    public has(permission: PermissionT): boolean {
         return this.permissionInfo()[permission];
     }
 
@@ -24,10 +24,10 @@ export class PermissionService {
 
     public getRolesTypesCanBeManaged(): Array<RoleType> {
         const permissionToRolesMap = {
-            [Permission.canWriteVisitor]: [RoleType.VISITOR, RoleType.INTERN],
-            [Permission.canWriteCoordinator]: [RoleType.COORDINATOR],
-            [Permission.canWriteAdmin]: [RoleType.ADMINISTRATOR],
-            [Permission.canWriteSysAdmin]: [RoleType.SYSADMIN]
+            [Permission.canWriteVisitor]: [RoleTypes.VISITOR, RoleTypes.INTERN],
+            [Permission.canWriteCoordinator]: [RoleTypes.COORDINATOR],
+            [Permission.canWriteAdmin]: [RoleTypes.ADMINISTRATOR],
+            [Permission.canWriteSysAdmin]: [RoleTypes.SYSADMIN]
         }
         return this.listPermissions()
             .map(p => permissionToRolesMap[p])
@@ -35,17 +35,17 @@ export class PermissionService {
             .flat();
     }
 
-    private calculatePermissionInfo(permissions: Array<Permission>): Record<Permission, boolean> {
-        return Object.values(Permission).reduce<Record<Permission, boolean>>(
+    private calculatePermissionInfo(permissions: Array<PermissionT>): Record<PermissionT, boolean> {
+        return Object.values(Permission).reduce<Record<PermissionT, boolean>>(
             (result, current) => {
                 result[current] = permissions.includes(current);
                 return result;
             },
-            {} as Record<Permission, boolean>
+            {} as Record<PermissionT, boolean>
         );
     }
 
-    private listPermissions(): Array<Permission> {
+    private listPermissions(): Array<PermissionT> {
         return Object.values(Permission).filter(p => this.has(p));
     }
 

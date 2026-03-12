@@ -4,7 +4,6 @@ import {AbstractControl, ValidationErrors} from '@angular/forms';
 import {ApiError, isNilOrEmpty} from '@melluin/common';
 import {HttpErrorResponse} from '@angular/common/http';
 
-
 // eslint-disable-next-line max-lines-per-function
 function logErrorToUser(error: HttpErrorResponse, msg: MessageService): void {
     if (error.status === 0) {
@@ -13,7 +12,7 @@ function logErrorToUser(error: HttpErrorResponse, msg: MessageService): void {
     }
     if ('code' in error.error) {
         const code = error.error.code as ApiError;
-        msg.error(`ApiError.${code}`);
+        msg.error(`ApiErrors.${code}`);
         return;
     }
     if ('message' in error.error) {

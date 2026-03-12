@@ -4,7 +4,7 @@ import {BadRequestException, Injectable} from '@nestjs/common';
 import {DepartmentEntity} from '@be/department/model/department.entity';
 import {PersonDao} from '@be/person/person.dao';
 import {PersonEntity} from '@be/person/model/person.entity';
-import {ApiError, OperationCity} from '@melluin/common';
+import {ApiErrors, OperationCity} from '@melluin/common';
 
 @Injectable()
 export class ParticipantsAreWorkInCityAsDepartmentValidator implements VisitSaveValidator {
@@ -33,7 +33,7 @@ export class ParticipantsAreWorkInCityAsDepartmentValidator implements VisitSave
             if (!participant.cities.includes(city)) {
                 throw new BadRequestException({
                     message: `Department is in city where person (${participant.lastName} ${participant.firstName}) is not available`,
-                    code: ApiError.DEPARTMENT_IS_IN_OTHER_CITY_THAN_PARTICIPANT
+                    code: ApiErrors.DEPARTMENT_IS_IN_OTHER_CITY_THAN_PARTICIPANT
                 });
             }
         }

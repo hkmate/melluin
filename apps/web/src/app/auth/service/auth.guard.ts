@@ -1,12 +1,12 @@
 import {inject, Injectable} from '@angular/core';
 import {Route, Router} from '@angular/router';
 import {PATHS} from '../../app-paths';
-import {isNil, isNilOrEmpty, NOOP, Permission} from '@melluin/common';
+import {isNil, isNilOrEmpty, NOOP, PermissionT} from '@melluin/common';
 import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 interface RouteData {
-    permissions?: Array<Permission>;
+    permissions?: Array<PermissionT>;
 }
 
 export const AuthGuardFn = (route: Route): boolean =>
@@ -35,8 +35,8 @@ export class AuthGuard {
         return this.checkUserHasAtLeastOneOfNeededPermissions(permissions!);
     }
 
-    private checkUserHasAtLeastOneOfNeededPermissions(permissions: Array<Permission>): boolean {
-        return permissions.some((neededPerm: Permission) => this.permission.has(neededPerm));
+    private checkUserHasAtLeastOneOfNeededPermissions(permissions: Array<PermissionT>): boolean {
+        return permissions.some((neededPerm: PermissionT) => this.permission.has(neededPerm));
     }
 
 }

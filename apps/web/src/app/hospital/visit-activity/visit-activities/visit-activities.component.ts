@@ -4,12 +4,12 @@ import {
     Visit,
     VisitActivity,
     VisitActivityInfo,
-    VisitStatus,
+    VisitStatuses,
     isNil,
     isNilOrEmpty,
     Permission,
     VisitedChild,
-    WrappedVisitActivity
+    WrappedVisitActivity, VisitStatus
 } from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
@@ -42,19 +42,19 @@ export class VisitActivitiesComponent implements OnInit {
 
     Permission = Permission;
 
-    private readonly statusesWhenActivitiesMeansFail = [
-        VisitStatus.DRAFT,
-        VisitStatus.SCHEDULED,
-        VisitStatus.CANCELED,
-        VisitStatus.FAILED_BECAUSE_NO_CHILD,
-        VisitStatus.FAILED_FOR_OTHER_REASON
+    private readonly statusesWhenActivitiesMeansFail: Array<VisitStatus> = [
+        VisitStatuses.DRAFT,
+        VisitStatuses.SCHEDULED,
+        VisitStatuses.CANCELED,
+        VisitStatuses.FAILED_BECAUSE_NO_CHILD,
+        VisitStatuses.FAILED_FOR_OTHER_REASON
     ];
 
-    private readonly statusesWhenActivitiesShouldBeShowed = [
-        VisitStatus.STARTED,
-        VisitStatus.ACTIVITIES_FILLED_OUT,
-        VisitStatus.ALL_FILLED_OUT,
-        VisitStatus.SUCCESSFUL
+    private readonly statusesWhenActivitiesShouldBeShowed: Array<VisitStatus> = [
+        VisitStatuses.STARTED,
+        VisitStatuses.ACTIVITIES_FILLED_OUT,
+        VisitStatuses.ALL_FILLED_OUT,
+        VisitStatuses.SUCCESSFUL
     ];
 
     public readonly visit = input.required<Visit>();
@@ -73,7 +73,7 @@ export class VisitActivitiesComponent implements OnInit {
 
     protected needWarningOnActivitiesWhenStarted(): boolean {
         return this.needWarnings()
-            && this.visit().status === VisitStatus.STARTED;
+            && this.visit().status === VisitStatuses.STARTED;
     }
 
     protected needWarningOnActivitiesWhenFailed(): boolean {

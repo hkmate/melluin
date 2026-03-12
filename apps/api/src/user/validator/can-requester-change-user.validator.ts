@@ -1,4 +1,4 @@
-import {getPermissionsNeededToChangeRole, Permission, User, UUID} from '@melluin/common';
+import {getPermissionsNeededToChangeRole, Permission, PermissionT, User, UUID} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {UserEntity} from '@be/user/model/user.entity';
 import {UserRewriteValidator, UserRewriteWithEntity} from '@be/user/validator/user-rewrite.validator';
@@ -35,7 +35,7 @@ export class CanRequesterChangeUserValidator implements UserRewriteValidator {
         return this.currentUser.id === userId;
     }
 
-    private userHas(permission: Permission): boolean {
+    private userHas(permission: PermissionT): boolean {
         return this.currentUser.permissions.includes(permission);
     }
 

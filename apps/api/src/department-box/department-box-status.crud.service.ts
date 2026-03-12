@@ -16,7 +16,7 @@ import {DepartmentBoxStatusDao} from '@be/department-box/department-box-status.d
 import {DepartmentBoxStatusEntity} from '@be/department-box/model/department-box-status.entity';
 import {BoxStatusReportToEntityConverter} from '@be/department-box/converer/box-status-report-to-entity.converter';
 import {BoxStatusEntityToDtoConverter} from '@be/department-box/converer/box-status-entity-to-dto.converter';
-import {BoxStatusInfoParam} from '@be/department-box/constants/box-status-info-param';
+import {BoxStatusInfoParam, BoxStatusInfoParams} from '@be/department-box/constants/box-status-info-param';
 import {BoxStatusEntityToDtoWithDepartmentBriefConverter} from '@be/department-box/converer/box-status-entity-to-dto-with-department-brief.converter';
 
 @Injectable()
@@ -68,7 +68,7 @@ export class DepartmentBoxStatusCrudService {
 
     private getConverter(infoParam: BoxStatusInfoParam): Converter<DepartmentBoxStatusEntity, DepartmentBoxStatus>
         | Converter<DepartmentBoxStatusEntity, BoxStatusWithDepartmentBrief> {
-        if (infoParam === BoxStatusInfoParam.WITH_DEPARTMENT_BRIEF) {
+        if (infoParam === BoxStatusInfoParams.WITH_DEPARTMENT_BRIEF) {
             return this.boxStatusWithDepBriefConverter;
         }
         return this.boxStatusConverter;

@@ -1,6 +1,6 @@
 import {OperationCity, VisitsCountByWeekDay} from '@melluin/common';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
-import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
+import {WidgetMode, WidgetModes} from '@fe/app/statistics/model/widget-mode';
 import {ChartConfiguration} from 'chart.js';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
 import {WidgetTableData} from '@fe/app/statistics/model/widget-data';
@@ -22,7 +22,7 @@ export class VisitsCountByWeekDayStatController extends AbstractStatisticWidgetC
     }
 
     public override defaultMode(): WidgetMode {
-        return WidgetMode.TABLE;
+        return WidgetModes.TABLE;
     }
 
     // eslint-disable-next-line max-lines-per-function

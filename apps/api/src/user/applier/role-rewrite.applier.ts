@@ -1,4 +1,4 @@
-import {Applier, Permission, Role} from '@melluin/common';
+import {Applier, PermissionT, Role} from '@melluin/common';
 import {RoleEntity} from '@be/user/model/role.entity';
 import * as _ from 'lodash';
 import {PermissionDao} from '@be/user/permission.dao';
@@ -20,14 +20,14 @@ export class RoleRewriteApplier implements Applier<RoleEntity> {
         persisted.permissions = await this.getEntitiesFromRoles(this.rewrite.permissions);
     }
 
-    private hasChanged(persisted: Array<PermissionEntity>, needed: Array<Permission>): boolean {
+    private hasChanged(persisted: Array<PermissionEntity>, needed: Array<PermissionT>): boolean {
         return !_.isEqual(
             persisted.map(value => value.permission),
             needed
         );
     }
 
-    private async getEntitiesFromRoles(roles: Array<Permission>): Promise<Array<PermissionEntity>> {
+    private async getEntitiesFromRoles(roles: Array<PermissionT>): Promise<Array<PermissionEntity>> {
         const availablePermissionEntities = await this.permissionDao.findAll();
         return availablePermissionEntities.filter(e => roles.includes(e.permission));
     }

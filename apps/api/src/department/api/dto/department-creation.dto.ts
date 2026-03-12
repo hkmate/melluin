@@ -1,5 +1,5 @@
 import {IsBoolean, IsDateString, IsEnum, IsOptional, IsPositive, MinLength} from 'class-validator';
-import {DepartmentCreation, nameMinLength, OperationCity} from '@melluin/common';
+import {DepartmentCreation, nameMinLength, OperationCities, OperationCity} from '@melluin/common';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class DepartmentCreationDto implements DepartmentCreation {
@@ -21,8 +21,8 @@ export class DepartmentCreationDto implements DepartmentCreation {
     @MinLength(nameMinLength)
     address: string;
 
-    @ApiProperty({ enum: OperationCity, enumName: 'OperationCity' })
-    @IsEnum(OperationCity)
+    @ApiProperty({ enum: OperationCities, enumName: 'OperationCity' })
+    @IsEnum(OperationCities)
     city: OperationCity;
 
     @ApiProperty()

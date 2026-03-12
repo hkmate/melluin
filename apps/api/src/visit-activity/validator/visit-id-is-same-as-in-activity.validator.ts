@@ -1,5 +1,5 @@
 import {BadRequestException} from '@nestjs/common';
-import {ApiError} from '@melluin/common';
+import {ApiErrors} from '@melluin/common';
 import {
     VisitActivityUpdateValidationData,
     VisitActivityUpdateValidator
@@ -13,7 +13,7 @@ export class VisitIdIsSameAsInActivityValidator implements VisitActivityUpdateVa
         }
         throw new BadRequestException({
             message: 'Visit id not match with id in activity',
-            code: ApiError.VISIT_ID_NOT_SAME_AS_IN_ACTIVITY
+            code: ApiErrors.VISIT_ID_NOT_SAME_AS_IN_ACTIVITY
         });
     }
 

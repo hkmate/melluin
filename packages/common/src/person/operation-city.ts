@@ -1,8 +1,8 @@
-// TODO make it dynamically configurable
-export enum OperationCity {
+export const OperationCities = {
+    PECS: 'PECS',
+    KAPOSVAR: 'KAPOSVAR',
+    SZIGETVAR: 'SZIGETVAR',
+} as const;
 
-    PECS = 'PECS',
-    KAPOSVAR = 'KAPOSVAR',
-    SZIGETVAR = 'SZIGETVAR',
+export type OperationCity = typeof OperationCities[keyof typeof OperationCities];
 
-}

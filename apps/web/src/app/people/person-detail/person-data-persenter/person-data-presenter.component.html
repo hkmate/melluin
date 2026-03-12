@@ -36,7 +36,7 @@
                 <mat-card-subtitle>{{ 'PersonPage.Present.OperationCities' | translate }}</mat-card-subtitle>
                 <mat-card-title>
                     @for (city of personValue.cities!; track city) {
-                        {{ 'OperationCity.' + city | translate }}<span *ngIf="!$last">, </span>
+                        {{ 'OperationCities.' + city | translate }}<span *ngIf="!$last">, </span>
                     }
 
                 </mat-card-title>

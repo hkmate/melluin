@@ -1,4 +1,4 @@
-import {ApiError, Permission, User} from '@melluin/common';
+import {ApiErrors, Permission, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {VisitRewriteValidationData, VisitRewriteValidator} from '@be/visit/validator/visit-validator';
 
@@ -12,7 +12,7 @@ export class UserCanModifyVisitValidator implements VisitRewriteValidator {
 
         throw new ForbiddenException({
             message: 'User cannot modify visit for other participants',
-            code: ApiError.USER_CANNOT_MODIFY_VISIT_FOR_OTHERS
+            code: ApiErrors.USER_CANNOT_MODIFY_VISIT_FOR_OTHERS
         });
     }
 
@@ -22,7 +22,7 @@ export class UserCanModifyVisitValidator implements VisitRewriteValidator {
         }
         throw new ForbiddenException({
             message: 'User cannot modify visit',
-            code: ApiError.USER_CANNOT_MODIFY_VISIT
+            code: ApiErrors.USER_CANNOT_MODIFY_VISIT
         });
     }
 

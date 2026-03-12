@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal, output} from '@angular/core';
-import {isNil, Permission, Role, RoleCreation, RoleType} from '@melluin/common';
+import {isNil, Permission, Role, RoleCreation, RoleTypes} from '@melluin/common';
 import {RoleService} from '@fe/app/sysadmin/role-settings/role.service';
 import {MessageService} from '@fe/app/util/message.service';
 import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
@@ -32,7 +32,7 @@ import {t} from '@fe/app/util/translate/translate';
 })
 export class RoleEditorComponent {
 
-    protected readonly roleTypeOptions = Object.values(RoleType);
+    protected readonly roleTypeOptions = Object.values(RoleTypes);
     protected readonly permissionOptions = Object.values(Permission);
 
     private readonly msg = inject(MessageService);
@@ -79,7 +79,7 @@ export class RoleEditorComponent {
     private getDefaultFormModel(): RoleCreation {
         return {
             name: '',
-            type: RoleType.INTERN,
+            type: RoleTypes.INTERN,
             permissions: []
         };
     }

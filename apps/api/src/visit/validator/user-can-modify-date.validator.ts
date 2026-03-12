@@ -1,4 +1,4 @@
-import {ApiError, VisitRewrite, VisitStatus, Permission, User} from '@melluin/common';
+import {ApiErrors, VisitRewrite, Permission, User, VisitStatuses} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {VisitRewriteValidationData, VisitRewriteValidator} from '@be/visit/validator/visit-validator';
 import {VisitEntity} from '@be/visit/model/visit.entity';
@@ -23,13 +23,13 @@ export class UserCanModifyDateValidator implements VisitRewriteValidator {
     }
 
     private verifyCoordinatorChangeIsValid({entity, item}: VisitRewriteValidationData): void | never {
-        const inDraft = entity.status === VisitStatus.DRAFT;
-        const isScheduled = entity.status === VisitStatus.SCHEDULED;
+        const inDraft = entity.status === VisitStatuses.DRAFT;
+        const isScheduled = entity.status === VisitStatuses.SCHEDULED;
         if (inDraft || isScheduled) {
             return;
         }
-        const inStarted = entity.status === VisitStatus.STARTED;
-        const inFilledOut = item.status === VisitStatus.ACTIVITIES_FILLED_OUT;
+        const inStarted = entity.status === VisitStatuses.STARTED;
+        const inFilledOut = item.status === VisitStatuses.ACTIVITIES_FILLED_OUT;
         const statusEnabled = inStarted || inFilledOut;
 
         if (statusEnabled && this.isSameDayChange(entity, item)) {
@@ -56,7 +56,7 @@ export class UserCanModifyDateValidator implements VisitRewriteValidator {
     private throwError(): never {
         throw new ForbiddenException({
             message: 'User cannot perform this date time change',
-            code: ApiError.VISIT_DATE_TIME_CHANGE_DISABLED
+            code: ApiErrors.VISIT_DATE_TIME_CHANGE_DISABLED
         });
     }
 
@@ -67,8 +67,8 @@ export class UserCanModifyDateValidator implements VisitRewriteValidator {
     }
 
     private isChangeNormalForVolunteer(entity: VisitEntity, item: VisitRewrite): boolean {
-        const beforeStart = entity.status === VisitStatus.SCHEDULED;
-        const inStarted = entity.status === VisitStatus.STARTED;
+        const beforeStart = entity.status === VisitStatuses.SCHEDULED;
+        const inStarted = entity.status === VisitStatuses.STARTED;
         return (beforeStart || inStarted) && this.isSameDayChange(entity, item);
     }
 

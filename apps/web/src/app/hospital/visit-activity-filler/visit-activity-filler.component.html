@@ -79,14 +79,14 @@
                             color="warn"
                             type="button"
                             [disabled]="!buttonsEnabled"
-                            (click)="triggerFailedVisit(VisitStatus.FAILED_BECAUSE_NO_CHILD)">
+                            (click)="triggerFailedVisit(VisitStatuses.FAILED_BECAUSE_NO_CHILD)">
                         {{ 'Visit.NoChildFail' | translate }}
                     </button>
                     <button mat-stroked-button
                             color="warn"
                             type="button"
                             [disabled]="!buttonsEnabled"
-                            (click)="triggerFailedVisit(VisitStatus.FAILED_FOR_OTHER_REASON)">
+                            (click)="triggerFailedVisit(VisitStatuses.FAILED_FOR_OTHER_REASON)">
                         {{ 'Visit.OtherFail' | translate }}
                     </button>
                 </div>

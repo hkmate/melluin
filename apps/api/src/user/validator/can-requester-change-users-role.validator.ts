@@ -1,4 +1,4 @@
-import {getPermissionsNeededToChangeRole, Permission, RoleType, User} from '@melluin/common';
+import {getPermissionsNeededToChangeRole, PermissionT, RoleType, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {UserRewriteValidator, UserRewriteWithEntity} from '@be/user/validator/user-rewrite.validator';
 import * as _ from 'lodash';
@@ -37,7 +37,7 @@ export class CanRequesterChangeUsersRoleValidator implements UserRewriteValidato
         }) ?? false;
     }
 
-    private userHas(permission: Permission): boolean {
+    private userHas(permission: PermissionT): boolean {
         return this.currentUser.permissions.includes(permission);
     }
 

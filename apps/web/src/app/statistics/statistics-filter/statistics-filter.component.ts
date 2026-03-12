@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, effect, inject, input, output, signal} from '@angular/core';
 import {Platform} from '@angular/cdk/platform';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {OperationCity} from '@melluin/common';
+import {OperationCities, OperationCity} from '@melluin/common';
 import {StatFilter} from '@fe/app/statistics/model/stat-filter';
 import {
     MatAccordion,
@@ -50,7 +50,7 @@ import {MatButton} from '@angular/material/button';
 })
 export class StatisticsFilterComponent {
 
-    protected readonly cityOptions = Object.values(OperationCity);
+    protected readonly cityOptions = Object.values(OperationCities);
 
     private readonly platform = inject(Platform);
     protected readonly mobileScreen = this.platform.IOS || this.platform.ANDROID;
@@ -60,7 +60,7 @@ export class StatisticsFilterComponent {
 
     protected readonly fromControl = new FormControl(new Date(), {nonNullable: true});
     protected readonly toControl = new FormControl(new Date(), {nonNullable: true});
-    protected readonly cityControl = new FormControl<OperationCity>(OperationCity.PECS, {nonNullable: true});
+    protected readonly cityControl = new FormControl<OperationCity>(OperationCities.PECS, {nonNullable: true});
 
     protected readonly form = new FormGroup({
         from: this.fromControl,

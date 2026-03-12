@@ -2,6 +2,7 @@ import {IsBoolean, IsEnum, IsIn, IsOptional, IsPositive, IsUUID, Min, ValidateNe
 import {Type} from 'class-transformer';
 import {
     BoxStatusChangeReason,
+    BoxStatusChangeReasons,
     DashboardUserSettings,
     DashboardWidgetSettings,
     DateIntervalSpecifier,
@@ -9,12 +10,14 @@ import {
     DepartmentBoxWidgetSettings,
     EventListUserSettings,
     EventsDateFilterValues,
-    HomePageOption,
+    HomePageOption, HomePageOptions,
     HomePageUserSettings,
-    UserSettings, UUID,
-    VisitStatus,
+    UserSettings,
+    UUID,
+    VisitStatus, VisitStatuses,
     WidgetSetting,
-    WidgetType
+    WidgetType,
+    WidgetTypes
 } from '@melluin/common';
 import {ApiProperty} from '@nestjs/swagger';
 
@@ -30,9 +33,9 @@ export class EventListUserSettingsDto implements EventListUserSettings {
     @IsUUID('all', {each: true})
     departmentIds?: Array<UUID>;
 
-    @ApiProperty({enum: VisitStatus, isArray: true, required: false})
+    @ApiProperty({enum: VisitStatuses, isArray: true, required: false})
     @IsOptional()
-    @IsEnum(VisitStatus, {each: true})
+    @IsEnum(VisitStatuses, {each: true})
     statuses?: Array<VisitStatus>;
 
     @ApiProperty({type: [String], required: false})
@@ -49,14 +52,14 @@ export class EventListUserSettingsDto implements EventListUserSettings {
 
 export class HomePageUserSettingsDto implements HomePageUserSettings {
 
-    @ApiProperty({enum: HomePageOption, required: false})
+    @ApiProperty({enum: HomePageOptions, required: false})
     @IsOptional()
-    @IsEnum(HomePageOption)
+    @IsEnum(HomePageOptions)
     inMobile?: HomePageOption;
 
-    @ApiProperty({enum: HomePageOption, required: false})
+    @ApiProperty({enum: HomePageOptions, required: false})
     @IsOptional()
-    @IsEnum(HomePageOption)
+    @IsEnum(HomePageOptions)
     inDesktop?: HomePageOption;
 
 }
@@ -73,9 +76,9 @@ export class WidgetSettingDto implements WidgetSetting {
     @Min(0)
     index: number;
 
-    @ApiProperty({enum: WidgetType})
+    @ApiProperty({enum: WidgetTypes})
     @IsOptional()
-    @IsEnum(WidgetType)
+    @IsEnum(WidgetTypes)
     type: WidgetType;
 
 }
@@ -84,16 +87,16 @@ export class DepartmentBoxWidgetSettingsDto
     extends WidgetSettingDto
     implements DepartmentBoxWidgetSettings {
 
-    override readonly type = WidgetType.DEPARTMENT_BOX;
+    override readonly type = WidgetTypes.DEPARTMENT_BOX;
 
     @ApiProperty({enum: DepartmentBoxInfoSinceDateValues, required: false})
     @IsOptional()
     @IsIn(DepartmentBoxInfoSinceDateValues)
     dateInterval?: DateIntervalSpecifier;
 
-    @ApiProperty({enum: BoxStatusChangeReason, isArray: true, required: false})
+    @ApiProperty({enum: BoxStatusChangeReasons, isArray: true, required: false})
     @IsOptional()
-    @IsEnum(BoxStatusChangeReason, {each: true})
+    @IsEnum(BoxStatusChangeReasons, {each: true})
     reasons?: Array<BoxStatusChangeReason>;
 
     @ApiProperty({required: false})

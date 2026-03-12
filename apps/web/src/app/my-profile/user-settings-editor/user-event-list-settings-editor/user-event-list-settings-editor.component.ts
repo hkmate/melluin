@@ -7,7 +7,7 @@ import {
     Nullable,
     Pageable,
     UserSettings, UUID,
-    VisitStatus
+    VisitStatus, VisitStatuses
 } from '@melluin/common';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {MatFormField, MatLabel} from '@angular/material/input';
@@ -46,7 +46,7 @@ import {AppSubmit} from '@fe/app/util/submit/app-submit';
 })
 export class UserEventListSettingsEditorComponent {
 
-    protected readonly statusOptions: Array<VisitStatus> = Object.values(VisitStatus);
+    protected readonly statusOptions: Array<VisitStatus> = Object.values(VisitStatuses);
     protected readonly dateOptions: Array<DateIntervalSpecifier> = EventsDateFilterValues;
 
     private readonly msg = inject(MessageService);

@@ -3,7 +3,7 @@ import {WidgetExportingInfo, WidgetTableData} from '@fe/app/statistics/model/wid
 import {ChartConfiguration} from 'chart.js';
 import {Signal, signal} from '@angular/core';
 import {OperationCity} from '@melluin/common';
-import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
+import {WidgetMode, WidgetModes} from '@fe/app/statistics/model/widget-mode';
 import {t} from '@fe/app/util/translate/translate';
 import {I18nKeys} from '@fe/app/util/translate/i18n.type';
 
@@ -24,7 +24,7 @@ export abstract class AbstractStatisticWidgetController<T> implements StatisticW
     }
 
     public defaultMode(): WidgetMode {
-        return WidgetMode.CHART;
+        return WidgetModes.CHART;
     }
 
     public async load(from: string, to: string, city: OperationCity): Promise<void> {

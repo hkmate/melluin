@@ -3,8 +3,7 @@ import {
     AsyncValidatorChain,
     Visit,
     VisitCreate,
-    VisitStatus,
-    User, UUID
+    User, UUID, VisitStatuses
 } from '@melluin/common';
 import {VisitConnectionsService} from '@be/visit-connections/visit-connections.service';
 import {VisitCrudService} from '@be/visit/visit.crud.service';
@@ -39,7 +38,7 @@ export class VisitContinueService {
                                          departmentId: UUID, requester: User): VisitCreate {
         return {
             departmentId,
-            status: VisitStatus.STARTED,
+            status: VisitStatuses.STARTED,
             dateTimeFrom,
             dateTimeTo: visit.dateTimeTo.toISOString(),
             countedMinutes: dayjs(visit.dateTimeTo).diff(dateTimeFrom, 'minutes'),
@@ -60,7 +59,7 @@ export class VisitContinueService {
     private reWriteOriginalVisit(visit: VisitEntity, dateTimeFrom: string): Promise<VisitEntity> {
         visit.dateTimeTo = new Date(dateTimeFrom);
         visit.countedMinutes = dayjs(visit.dateTimeTo).diff(visit.dateTimeFrom, 'minutes');
-        visit.status = VisitStatus.ACTIVITIES_FILLED_OUT;
+        visit.status = VisitStatuses.ACTIVITIES_FILLED_OUT;
         return this.visitDao.save(visit);
     }
 

@@ -1,4 +1,4 @@
-import {ApiError, VisitCreate, VisitRewrite, Permission, User} from '@melluin/common';
+import {ApiErrors, Permission, User, VisitCreate, VisitRewrite} from '@melluin/common';
 import {BadRequestException, Injectable} from '@nestjs/common';
 import {VisitSaveValidator, VisitValidationData} from '@be/visit/validator/visit-validator';
 import {VisitDao} from '@be/visit/visit.dao';
@@ -35,7 +35,7 @@ export class VisitIsNotInSameTimeAsOtherValidator implements VisitSaveValidator 
         }
         throw new BadRequestException({
             message: 'Cannot have more visits at this time in this department.',
-            code: ApiError.VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED
+            code: ApiErrors.VISIT_SAME_TIME_SAME_DEPARTMENT_LIMIT_EXCEEDED
         });
     }
 

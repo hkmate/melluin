@@ -1,4 +1,4 @@
-import {ApiError, VisitRewrite, VisitStatus, Permission, User} from '@melluin/common';
+import {ApiErrors, VisitRewrite, Permission, User, VisitStatuses} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {VisitRewriteValidationData, VisitRewriteValidator} from '@be/visit/validator/visit-validator';
 import {VisitEntity} from '@be/visit/model/visit.entity';
@@ -22,10 +22,10 @@ export class UserCanModifyDepartmentValidator implements VisitRewriteValidator {
     }
 
     private verifyCoordinatorChangeIsValid({item}: VisitRewriteValidationData): void | never {
-        const inDraft = item.status === VisitStatus.DRAFT;
-        const isScheduled = item.status === VisitStatus.SCHEDULED;
-        const inStarted = item.status === VisitStatus.STARTED;
-        const inFilledOut = item.status === VisitStatus.ACTIVITIES_FILLED_OUT;
+        const inDraft = item.status === VisitStatuses.DRAFT;
+        const isScheduled = item.status === VisitStatuses.SCHEDULED;
+        const inStarted = item.status === VisitStatuses.STARTED;
+        const inFilledOut = item.status === VisitStatuses.ACTIVITIES_FILLED_OUT;
 
         if (inDraft || isScheduled || inStarted || inFilledOut) {
             return;
@@ -34,7 +34,7 @@ export class UserCanModifyDepartmentValidator implements VisitRewriteValidator {
     }
 
     private verifyVolunteerChangeIsValid({item}: VisitRewriteValidationData): void | never {
-        const isScheduled = item.status === VisitStatus.SCHEDULED;
+        const isScheduled = item.status === VisitStatuses.SCHEDULED;
 
         if (isScheduled) {
             return;
@@ -57,7 +57,7 @@ export class UserCanModifyDepartmentValidator implements VisitRewriteValidator {
     private throwError(): never {
         throw new ForbiddenException({
             message: 'User cannot perform this department change',
-            code: ApiError.DEPARTMENT_CHANGE_DISABLED
+            code: ApiErrors.DEPARTMENT_CHANGE_DISABLED
         });
     }
 

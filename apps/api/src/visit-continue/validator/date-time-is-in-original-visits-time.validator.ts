@@ -1,5 +1,5 @@
 import {BadRequestException} from '@nestjs/common';
-import {ApiError} from '@melluin/common';
+import {ApiErrors} from '@melluin/common';
 import {
     VisitContinueValidationData,
     VisitContinueValidator
@@ -25,7 +25,7 @@ export class DateTimeIsInOriginalVisitsTimeValidator implements VisitContinueVal
         }
         throw new BadRequestException({
             message: 'Date time is not valid for the original visit\'s from-to date times.',
-            code: ApiError.DATE_TIME_NOT_FITS_FOR_ORIGINAL_VISIT
+            code: ApiErrors.DATE_TIME_NOT_FITS_FOR_ORIGINAL_VISIT
         });
     }
 

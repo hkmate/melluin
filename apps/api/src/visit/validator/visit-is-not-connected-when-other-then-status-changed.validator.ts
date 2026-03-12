@@ -1,6 +1,6 @@
 import {ForbiddenException} from '@nestjs/common';
 import {VisitRewriteValidationData, VisitRewriteValidator} from '@be/visit/validator/visit-validator';
-import {ApiError, VisitRewrite, isNotEmpty} from '@melluin/common';
+import {ApiErrors, VisitRewrite, isNotEmpty} from '@melluin/common';
 import {VisitEntity} from '@be/visit/model/visit.entity';
 import * as _ from 'lodash';
 
@@ -22,7 +22,7 @@ export class VisitIsNotConnectedWhenOtherThenStatusChangedValidator implements V
         if (entity.department.id !== item.departmentId) {
             throw new ForbiddenException({
                 message: 'Cannot modify department of a connected visit',
-                code: ApiError.CANNOT_MODIFY_DEPARTMENT_OF_CONNECTED_VISIT
+                code: ApiErrors.CANNOT_MODIFY_DEPARTMENT_OF_CONNECTED_VISIT
             });
         }
     }
@@ -33,7 +33,7 @@ export class VisitIsNotConnectedWhenOtherThenStatusChangedValidator implements V
         if (isNotEmpty(difference)) {
             throw new ForbiddenException({
                 message: 'Cannot modify participants of a connected visit',
-                code: ApiError.CANNOT_MODIFY_PARTICIPANTS_OF_CONNECTED_VISIT
+                code: ApiErrors.CANNOT_MODIFY_PARTICIPANTS_OF_CONNECTED_VISIT
             });
         }
     }
@@ -44,7 +44,7 @@ export class VisitIsNotConnectedWhenOtherThenStatusChangedValidator implements V
         if (Math.abs(dateFromDiff) !== 0 || Math.abs(dateToDiff) !== 0) {
             throw new ForbiddenException({
                 message: 'Cannot modify time of a connected visit',
-                code: ApiError.CANNOT_MODIFY_TIME_OF_CONNECTED_VISIT
+                code: ApiErrors.CANNOT_MODIFY_TIME_OF_CONNECTED_VISIT
             });
         }
     }
@@ -53,7 +53,7 @@ export class VisitIsNotConnectedWhenOtherThenStatusChangedValidator implements V
         if (entity.countedMinutes !== item.countedMinutes) {
             throw new ForbiddenException({
                 message: 'Cannot modify counted minutes of a connected visit',
-                code: ApiError.CANNOT_MODIFY_COUNTED_MINUTES_OF_CONNECTED_VISIT
+                code: ApiErrors.CANNOT_MODIFY_COUNTED_MINUTES_OF_CONNECTED_VISIT
             });
         }
     }

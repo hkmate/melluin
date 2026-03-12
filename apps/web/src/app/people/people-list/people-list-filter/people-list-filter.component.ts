@@ -3,7 +3,7 @@ import {filter} from 'rxjs';
 import {reasonIsNotPageData} from '@fe/app/util/list-page-settings-change-reason';
 import {PeopleFilter} from '@fe/app/people/people-list/people-list-filter/service/people-filter';
 import {PeopleListFilterService} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter.service';
-import {OperationCity, Permission, RoleBrief} from '@melluin/common';
+import {OperationCities, Permission, RoleBrief} from '@melluin/common';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {LazyInputComponent} from '@fe/app/util/lazy-input/lazy-input.component';
@@ -34,7 +34,7 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
 })
 export class PeopleListFilterComponent {
 
-    protected readonly cityOptions = Object.keys(OperationCity);
+    protected readonly cityOptions = Object.values(OperationCities);
 
     private readonly permissions = inject(PermissionService);
     private readonly roleService = inject(GetRolesService);

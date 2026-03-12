@@ -3,7 +3,7 @@ import {
     VisitConnectionValidationData,
     VisitConnectionValidator
 } from '@be/visit-connections/validator/visit-connection-validator';
-import {ApiError} from '@melluin/common';
+import {ApiErrors} from '@melluin/common';
 
 
 export class VisitHaveSameDateValidator implements VisitConnectionValidator {
@@ -19,7 +19,7 @@ export class VisitHaveSameDateValidator implements VisitConnectionValidator {
         }
         throw new BadRequestException({
             message: 'Visit you want to connect has too much time difference',
-            code: ApiError.CONNECT_CANDIDATE_IS_MUCH_EARLIER_OR_LATER
+            code: ApiErrors.CONNECT_CANDIDATE_IS_MUCH_EARLIER_OR_LATER
         });
     }
 

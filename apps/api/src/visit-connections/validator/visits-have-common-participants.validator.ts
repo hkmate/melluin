@@ -3,7 +3,7 @@ import {
     VisitConnectionValidationData,
     VisitConnectionValidator
 } from '@be/visit-connections/validator/visit-connection-validator';
-import {ApiError} from '@melluin/common';
+import {ApiErrors} from '@melluin/common';
 import {VisitEntity} from '@be/visit/model/visit.entity';
 import * as _ from 'lodash';
 
@@ -16,7 +16,7 @@ export class VisitsHaveCommonParticipantsValidator implements VisitConnectionVal
         }
         throw new BadRequestException({
             message: 'Visit you want to connect has too much time difference',
-            code: ApiError.VISITS_HAS_NO_COMMON_PARTICIPANTS
+            code: ApiErrors.VISITS_HAS_NO_COMMON_PARTICIPANTS
         });
     }
 

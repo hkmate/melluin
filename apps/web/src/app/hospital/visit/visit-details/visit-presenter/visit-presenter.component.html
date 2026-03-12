@@ -57,7 +57,7 @@
             <mat-card-subtitle>{{ 'Visit.Present.Status' | translate }}</mat-card-subtitle>
             <mat-card-title>
                 <span [class]="'visit-status-' + visit().status">
-                    {{ 'VisitStatus.' + visit().status | translate }}
+                    {{ 'VisitStatuses.' + visit().status | translate }}
                 </span>
                 <span class="status-icon">
                     <app-visit-status-icon [status]="visit().status"/>

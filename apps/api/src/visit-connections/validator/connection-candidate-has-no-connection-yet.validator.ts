@@ -3,7 +3,7 @@ import {
     VisitConnectionValidationData,
     VisitConnectionValidator
 } from '@be/visit-connections/validator/visit-connection-validator';
-import {ApiError} from '@melluin/common';
+import {ApiErrors} from '@melluin/common';
 import {VisitEntity} from '@be/visit/model/visit.entity';
 
 
@@ -15,7 +15,7 @@ export class ConnectionCandidateHasNoConnectionYetValidator implements VisitConn
         }
         throw new BadRequestException({
             message: 'Both visits you want to connect already in a group',
-            code: ApiError.CONNECT_CANDIDATE_ALREADY_IN_GROUP
+            code: ApiErrors.CONNECT_CANDIDATE_ALREADY_IN_GROUP
         });
     }
 

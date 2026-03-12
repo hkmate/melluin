@@ -13,7 +13,7 @@ import {CanRequesterCreateUsersPermissionsValidator,} from '@be/user/validator/c
 import {RoleDao} from '@be/user/role.dao';
 import {CanRequesterCreateUsersRoleValidator} from '@be/user/validator/can-requester-create-users-role.validator';
 import {UserEntityToDtoConverterFactory} from '@be/user/converter/user-entity-to-dto-converter.factory';
-import {UserActivation} from '@be/user/model/user-activation';
+import {UserActivation, UserActivations} from '@be/user/model/user-activation';
 import {UserEntity} from '@be/user/model/user.entity';
 import {UserActivationDao} from '@be/user/user-activation.dao';
 
@@ -34,7 +34,7 @@ export class UserService {
         await this.validateSaving(userCreation, requester);
         const creationEntity = await this.userCreationConverter.convert({newUser: userCreation, requester});
         const userEntity = await this.userDao.save(creationEntity);
-        await this.userActivationDao.saveBy(userEntity, UserActivation.ACTIVATE);
+        await this.userActivationDao.saveBy(userEntity, UserActivations.ACTIVATE);
         return this.userConverterFactor.createFor(requester).convert(userEntity);
     }
 
@@ -81,7 +81,7 @@ export class UserService {
         if (entity.isActive === rewrite.isActive) {
             return null;
         }
-        return rewrite.isActive ? UserActivation.ACTIVATE : UserActivation.INACTIVATE;
+        return rewrite.isActive ? UserActivations.ACTIVATE : UserActivations.INACTIVATE;
     }
 
 }

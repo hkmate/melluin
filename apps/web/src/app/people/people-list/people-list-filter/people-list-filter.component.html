@@ -27,7 +27,7 @@
             <mat-label>{{ 'PeopleListPage.Filter.City' | translate }}</mat-label>
             <mat-select [(ngModel)]="filters.cities" (ngModelChange)="filterSet()" multiple>
                 @for (city of cityOptions; track city) {
-                    <mat-option [value]="city">{{ 'OperationCity.' + city | translate }}</mat-option>
+                    <mat-option [value]="city">{{ 'OperationCities.' + city | translate }}</mat-option>
                 }
             </mat-select>
         </mat-form-field>

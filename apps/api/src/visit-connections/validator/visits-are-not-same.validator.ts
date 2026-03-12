@@ -3,7 +3,7 @@ import {
     VisitConnectionValidationData,
     VisitConnectionValidator
 } from '@be/visit-connections/validator/visit-connection-validator';
-import {ApiError} from '@melluin/common';
+import {ApiErrors} from '@melluin/common';
 
 
 export class VisitsAreNotSameValidator implements VisitConnectionValidator {
@@ -14,7 +14,7 @@ export class VisitsAreNotSameValidator implements VisitConnectionValidator {
         }
         throw new BadRequestException({
             message: 'Cannot connect visit to itself.',
-            code: ApiError.CANNOT_CONNECT_VISITS_TO_ITSELF
+            code: ApiErrors.CANNOT_CONNECT_VISITS_TO_ITSELF
         });
     }
 

@@ -1,5 +1,5 @@
 import {Component, computed, inject, input} from '@angular/core';
-import {DateUtil, Permission, Visit, VisitStatus} from '@melluin/common';
+import {DateUtil, Permission, Visit, VisitStatus, VisitStatuses} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {
     MatCell,
@@ -66,7 +66,7 @@ export class VisitListComponent {
         const userParticipant = visit.participants.some(p => p.id === this.permissions.personId);
         const userHasPermissionToFill = this.userCanModifyAnyVisit() || (userParticipant && this.userCanModifyVisit());
 
-        const visitInRightStatus = [VisitStatus.SCHEDULED, VisitStatus.STARTED].includes(visit.status);
+        const visitInRightStatus = ([VisitStatuses.SCHEDULED, VisitStatuses.STARTED] as Array<VisitStatus>).includes(visit.status);
 
         return userHasPermissionToFill && visitInRightStatus;
     }

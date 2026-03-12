@@ -67,7 +67,7 @@ export class VisitsByStatusesStatController extends AbstractStatisticWidgetContr
 
     private mapItem(original: VisitStatusCount): VisitStatusCountTableData {
         return {
-            status: t(`VisitStatus.${original.status}`),
+            status: t(`VisitStatuses.${original.status}`),
             count: original.count,
         };
     }

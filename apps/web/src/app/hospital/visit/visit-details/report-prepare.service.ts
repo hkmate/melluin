@@ -34,7 +34,7 @@ export class ReportPrepareService {
         }
         const wrappedActivities = await this.getWrappedData(visitIds);
         const currentPerson = wrappedActivities[0].visit.participants.find(p => p.id === currentUser.personId);
-        const activityTypeToStr = (activityType: VisitActivityType): string => t(`VisitActivityType.${activityType}`);
+        const activityTypeToStr = (activityType: VisitActivityType): string => t(`VisitActivityTypes.${activityType}`);
 
         if (isNil(currentPerson)) {
             throw new Error('Draft could be prepared with user participated in visit!');

@@ -5,7 +5,7 @@ import {UserEntity} from 'src/user/model/user.entity';
 import {RoleEntity} from '@be/user/model/role.entity';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {PersonDao} from '@be/person/person.dao';
-import {AuthCredentials, AuthInfo, isNil, OperationCity, User, UserSettings} from '@melluin/common';
+import {AuthCredentials, AuthInfo, isNil, OperationCities, User, UserSettings} from '@melluin/common';
 import {ConfigService} from '@nestjs/config';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
@@ -85,7 +85,7 @@ export class AuthService {
             user: null,
             preferences: null,
             created: now(),
-            cities: [OperationCity.PECS, OperationCity.KAPOSVAR, OperationCity.SZIGETVAR],
+            cities: [OperationCities.PECS, OperationCities.KAPOSVAR, OperationCities.SZIGETVAR],
             createdByPersonId: null
         });
     }

@@ -1,7 +1,7 @@
 import {
     createDefaultPersonPreferences,
     isNil,
-    Permission,
+    Permission, PermissionT,
     PersonPreferences,
     PersonRewrite,
     User
@@ -41,7 +41,7 @@ export class CanUserUpdatePersonPreferencesValidator implements PersonRewriteVal
         return this.currentUser.personId === personId;
     }
 
-    private userHas(permission: Permission): boolean {
+    private userHas(permission: PermissionT): boolean {
         return this.currentUser.permissions.includes(permission);
     }
 

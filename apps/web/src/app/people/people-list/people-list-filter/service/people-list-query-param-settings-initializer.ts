@@ -1,5 +1,13 @@
 import {inject, Injectable} from '@angular/core';
-import {isNil, isNilOrEmpty, OperationCity, PAGE_QUERY_KEY, PAGE_SIZE_QUERY_KEY, PageInfo} from '@melluin/common';
+import {
+    isNil,
+    isNilOrEmpty,
+    OperationCities,
+    OperationCity,
+    PAGE_QUERY_KEY,
+    PAGE_SIZE_QUERY_KEY,
+    PageInfo
+} from '@melluin/common';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {PeopleFilter} from '@fe/app/people/people-list/people-list-filter/service/people-filter';
 import {PeopleListQueryParams} from '@fe/app/people/people-list/people-list-filter/service/people-list-query-params';
@@ -80,7 +88,7 @@ export class PeopleListQueryParamSettingsInitializer {
         if (isNilOrEmpty(cities)) {
             return;
         }
-        const validCities = Object.values(OperationCity) as Array<string>;
+        const validCities = Object.values(OperationCities) as Array<string>;
         filter.cities = (cities ?? []).filter(x => validCities.includes(x)) as Array<OperationCity>;
     }
 

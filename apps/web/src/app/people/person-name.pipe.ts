@@ -1,7 +1,7 @@
 import {inject, Pipe, PipeTransform} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {isNil, Person} from '@melluin/common';
-import {AppLanguage} from '@fe/app/language/app-language';
+import {AppLanguages} from '@fe/app/language/app-language';
 import {t} from '@fe/app/util/translate/translate';
 
 @Pipe({
@@ -19,7 +19,7 @@ export class PersonNamePipe implements PipeTransform {
     }
 
     private getName({firstName, lastName}: Person): string {
-        if (this.i18n.getCurrentLang() === AppLanguage.HU) {
+        if (this.i18n.getCurrentLang() === AppLanguages.HU) {
             return `${lastName} ${firstName}`;
         }
         return `${firstName} ${lastName}`;

@@ -3,7 +3,7 @@
         <mat-card-subtitle>
             @for (activityType of activity().activities; track activityType; let last = $last) {
                 <span class="activity-type">
-                    {{ 'VisitActivityType.' + activityType  | translate }}<span *ngIf="!last">,</span>
+                    {{ 'VisitActivityTypes.' + activityType  | translate }}<span *ngIf="!last">,</span>
                 </span>
             }
             <div class="children">

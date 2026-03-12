@@ -4,7 +4,7 @@ import {PageReq} from '@be/crud/page-req';
 import {PageRequest} from '@be/crud/page-request';
 import {DepartmentBoxStatusCrudService} from '@be/department-box/department-box-status.crud.service';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
-import {BoxStatusInfoParam} from '@be/department-box/constants/box-status-info-param';
+import {BoxStatusInfoParams} from '@be/department-box/constants/box-status-info-param';
 import {ApiBearerAuth} from '@nestjs/swagger';
 
 
@@ -21,7 +21,7 @@ export class DepartmentBoxStatusController {
     public findBoxStatuses(@PageReq() pageRequest: PageRequest,
                            @Query('withDepartmentBrief') withDepartmentBrief: boolean)
         : Promise<Pageable<DepartmentBoxStatus> | Pageable<BoxStatusWithDepartmentBrief>> {
-        const infoParam = withDepartmentBrief ? BoxStatusInfoParam.WITH_DEPARTMENT_BRIEF : BoxStatusInfoParam.PURE_BOX_STATUS;
+        const infoParam = withDepartmentBrief ? BoxStatusInfoParams.WITH_DEPARTMENT_BRIEF : BoxStatusInfoParams.PURE_BOX_STATUS;
         return this.boxStatusCrudService.findAll(pageRequest, infoParam);
     }
 

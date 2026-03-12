@@ -3,7 +3,7 @@ import {ChartConfiguration} from 'chart.js';
 import {isNilOrEmpty, OperationCity, VisitsCountByWeekDay} from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
-import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
+import {WidgetMode, WidgetModes} from '@fe/app/statistics/model/widget-mode';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {VisitCountByWeekDayStatProvider} from '@fe/app/statistics/service/visit-count-by-week-day-stat-provider';
 import {t} from '@fe/app/util/translate/translate';
@@ -18,7 +18,7 @@ export class VisitsCountStatController extends AbstractStatisticWidgetController
     }
 
     public override defaultMode(): WidgetMode {
-        return WidgetMode.TABLE;
+        return WidgetModes.TABLE;
     }
 
     public getChartData(): ChartConfiguration {

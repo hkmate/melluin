@@ -1,5 +1,12 @@
 import {Component, computed, inject, input, output} from '@angular/core';
-import {emptyToUndef, OperationCity, Permission, Person, PersonCreation, PersonRewrite} from '@melluin/common';
+import {
+    emptyToUndef,
+    OperationCities,
+    Permission,
+    Person,
+    PersonCreation,
+    PersonRewrite
+} from '@melluin/common';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -25,7 +32,7 @@ import {MatButton} from '@angular/material/button';
 })
 export class PersonDataFormComponent {
 
-    protected readonly cityOptions = Object.keys(OperationCity);
+    protected readonly cityOptions = Object.values(OperationCities);
 
     private readonly fb = inject(FormBuilder);
     private readonly permissionService = inject(PermissionService);

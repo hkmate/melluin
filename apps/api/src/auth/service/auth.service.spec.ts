@@ -6,7 +6,7 @@ import {JwtService} from '@nestjs/jwt';
 import {UserDao} from '@be/user/user.dao';
 import {PersonDao} from '@be/person/person.dao';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
-import {AuthInfo, cast, OperationCity, randomString, RoleBrief, RoleType, User} from '@melluin/common';
+import {AuthInfo, cast, OperationCities, randomString, RoleBrief, RoleTypes, User} from '@melluin/common';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {UserEntity} from '@be/user/model/user.entity';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
@@ -71,7 +71,7 @@ describe('AuthService', () => {
         };
         const mockedPersonId = 'c3121569-ccb8-4600-b07b-3f59b4a477fa';
         const mockedUserId = 'c0b74770-5be3-4d44-84c8-596f244488c9';
-        const expectedRoles = [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }];
+        const expectedRoles = [{ id: randomUUID(), name: 'role1', type: RoleTypes.SYSADMIN, permissions: [] }];
         const expectedPassword = randomString();
         const mockedDate = new Date();
 
@@ -136,7 +136,7 @@ describe('AuthService', () => {
                 phone: null,
                 user: null,
                 preferences: null,
-                cities: [OperationCity.PECS, OperationCity.KAPOSVAR, OperationCity.SZIGETVAR],
+                cities: [OperationCities.PECS, OperationCities.KAPOSVAR, OperationCities.SZIGETVAR],
                 created: mockedDate,
                 createdByPersonId: null,
             };
@@ -258,7 +258,7 @@ describe('AuthService', () => {
                 id: userId,
                 personId,
                 userName: username,
-                roles: [cast<RoleBrief>({ name: 'role1', type: RoleType.SYSADMIN })],
+                roles: [cast<RoleBrief>({ name: 'role1', type: RoleTypes.SYSADMIN })],
                 lastLogin: mockedDate.toISOString(),
                 permissions: [],
                 customPermissions: [],
@@ -271,7 +271,7 @@ describe('AuthService', () => {
                 isActive: user.isActive,
                 customPermissions: [],
                 person: cast<PersonEntity>({ id: personId }),
-                roles: [{ id: 'c0b74770-5be3-4d44-84c8-596f24442222', name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
+                roles: [{ id: 'c0b74770-5be3-4d44-84c8-596f24442222', name: 'role1', type: RoleTypes.SYSADMIN, permissions: [] }],
                 settings: { eventList: {} },
                 lastLogin: null,
                 created: null,
@@ -339,7 +339,7 @@ describe('AuthService', () => {
                 settings: {},
                 created: null,
                 createdByPersonId: null,
-                roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
+                roles: [{ id: randomUUID(), name: 'role1', type: RoleTypes.SYSADMIN, permissions: [] }],
             };
             const rawPassword: string = randomString();
             when(userService.findOneWithCache).calledWith(userName).thenReturn(Promise.resolve(userEntity));
@@ -365,7 +365,7 @@ describe('AuthService', () => {
                 lastLogin: null,
                 created: null,
                 createdByPersonId: null,
-                roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
+                roles: [{ id: randomUUID(), name: 'role1', type: RoleTypes.SYSADMIN, permissions: [] }],
             };
             const rawPassword: string = randomString();
             when(userService.findOneWithCache).calledWith(userName).thenReturn(Promise.resolve(userEntity));
@@ -393,7 +393,7 @@ describe('AuthService', () => {
                 settings: {},
                 createdByPersonId: null,
                 customPermissions: [],
-                roles: [{ id: randomUUID(), name: 'role1', type: RoleType.SYSADMIN, permissions: [] }],
+                roles: [{ id: randomUUID(), name: 'role1', type: RoleTypes.SYSADMIN, permissions: [] }],
             };
             const rawPassword: string = randomString();
             when(userService.findOneWithCache).calledWith(userName).thenReturn(Promise.resolve(userEntity));

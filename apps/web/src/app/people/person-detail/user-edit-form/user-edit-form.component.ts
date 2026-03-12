@@ -1,5 +1,14 @@
 import {Component, computed, inject, input, output} from '@angular/core';
-import {isNotNil, passwordMinLength, passwordPattern, Permission, RoleBrief, User, UserRewrite} from '@melluin/common';
+import {
+    isNotNil,
+    passwordMinLength,
+    passwordPattern,
+    Permission,
+    PermissionT,
+    RoleBrief,
+    User,
+    UserRewrite
+} from '@melluin/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
@@ -40,7 +49,7 @@ export class UserEditFormComponent {
     private readonly permission = inject(PermissionService);
 
     protected readonly passwordMinLength = passwordMinLength;
-    protected readonly permissions: Array<Permission> = Object.values(Permission);
+    protected readonly permissions: Array<PermissionT> = Object.values(Permission);
 
     public readonly user = input<User>();
 

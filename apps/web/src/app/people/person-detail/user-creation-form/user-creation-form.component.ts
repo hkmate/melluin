@@ -1,6 +1,6 @@
 import {Component, computed, inject, input, output} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Permission, RoleBrief, UserCreation, UUID} from '@melluin/common';
+import {Permission, PermissionT, RoleBrief, UserCreation, UUID} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -30,7 +30,7 @@ export class UserCreationFormComponent {
     private readonly roleService = inject(GetRolesService);
     private readonly permission = inject(PermissionService);
 
-    protected readonly permissions: Array<Permission> = Object.values(Permission);
+    protected readonly permissions: Array<PermissionT> = Object.values(Permission);
 
     public readonly personId = input.required<UUID>();
 

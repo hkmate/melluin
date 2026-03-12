@@ -1,16 +1,16 @@
-import {Permission} from './permission.enum';
+import {Permission, PermissionT} from './permission.enum';
 import {cast} from '../util/test-util';
 import {UUID} from '../util/type/uuid.type';
+import {EnumTypeOf} from '../util/type/enum.type';
 
-export enum RoleType {
-
-    INTERN = 'INTERN',
-    VISITOR = 'VISITOR',
-    COORDINATOR = 'COORDINATOR',
-    ADMINISTRATOR = 'ADMINISTRATOR',
-    SYSADMIN = 'SYSADMIN',
-
-}
+export const RoleTypes = {
+    INTERN: 'INTERN',
+    VISITOR: 'VISITOR',
+    COORDINATOR: 'COORDINATOR',
+    ADMINISTRATOR: 'ADMINISTRATOR',
+    SYSADMIN: 'SYSADMIN',
+} as const;
+export type RoleType = EnumTypeOf<typeof RoleTypes>;
 
 export interface RoleBrief {
 
@@ -22,7 +22,7 @@ export interface RoleBrief {
 export interface Role extends RoleBrief {
 
     id: UUID;
-    permissions: Array<Permission>;
+    permissions: Array<PermissionT>;
 
 }
 
@@ -30,22 +30,22 @@ export interface RoleCreation {
 
     name: string;
     type: RoleType;
-    permissions: Array<Permission>;
+    permissions: Array<PermissionT>;
 
 }
 
-export function getPermissionsNeededToChangeRole(role: RoleType): Permission {
+export function getPermissionsNeededToChangeRole(role: RoleType): PermissionT {
     switch (role) {
-        case RoleType.INTERN:
-        case RoleType.VISITOR:
+        case RoleTypes.INTERN:
+        case RoleTypes.VISITOR:
             return Permission.canWriteVisitor;
-        case RoleType.COORDINATOR:
+        case RoleTypes.COORDINATOR:
             return Permission.canWriteCoordinator;
-        case RoleType.ADMINISTRATOR:
+        case RoleTypes.ADMINISTRATOR:
             return Permission.canWriteAdmin;
-        case RoleType.SYSADMIN:
+        case RoleTypes.SYSADMIN:
             return Permission.canWriteSysAdmin;
     }
-    return cast<Permission>(undefined);
+    return cast<PermissionT>(undefined);
 }
 

@@ -1,10 +1,5 @@
 import {IsEnum, IsOptional, IsString, IsUUID} from 'class-validator';
-import {
-    UUID,
-    VisitActivityEditInput,
-    VisitActivityInput,
-    VisitActivityType
-} from '@melluin/common';
+import {UUID, VisitActivityEditInput, VisitActivityInput, VisitActivityType, VisitActivityTypes} from '@melluin/common';
 import {ApiProperty} from '@nestjs/swagger';
 
 
@@ -14,8 +9,8 @@ export class VisitActivityDto implements VisitActivityInput {
     @IsUUID('all', {each: true})
     children: Array<UUID>; // -> id of VisitedChild
 
-    @ApiProperty({enum: VisitActivityType, isArray: true})
-    @IsEnum(VisitActivityType, {each: true})
+    @ApiProperty({enum: VisitActivityTypes, isArray: true})
+    @IsEnum(VisitActivityTypes, {each: true})
     activities: Array<VisitActivityType>;
 
     @ApiProperty()
@@ -45,8 +40,8 @@ export class VisitActivityEditDto implements VisitActivityEditInput {
     @IsUUID('all', {each: true})
     children: Array<UUID>; // -> id of VisitedChild
 
-    @ApiProperty({enum: VisitActivityType, isArray: true})
-    @IsEnum(VisitActivityType, {each: true})
+    @ApiProperty({enum: VisitActivityTypes, isArray: true})
+    @IsEnum(VisitActivityTypes, {each: true})
     activities: Array<VisitActivityType>;
 
     @ApiProperty()

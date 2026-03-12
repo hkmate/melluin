@@ -1,5 +1,5 @@
 import {Column, Entity, PrimaryColumn} from 'typeorm';
-import {Permission, UUID} from '@melluin/common';
+import {PermissionT, UUID} from '@melluin/common';
 
 @Entity({name: 'permission'})
 export class PermissionEntity {
@@ -8,9 +8,9 @@ export class PermissionEntity {
     id: UUID
 
     @Column()
-    permission: Permission;
+    permission: PermissionT;
 
-    public static raw(entity: PermissionEntity): Permission {
+    public static raw(entity: PermissionEntity): PermissionT {
         return entity.permission;
     }
 

@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, input, model} from '@angular/core';
-import {HomePageOption} from '@melluin/common';
+import {HomePageOption, HomePageOptions} from '@melluin/common';
 import {FormsModule} from '@angular/forms';
 import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle} from '@angular/material/card';
 import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
@@ -24,7 +24,7 @@ import {FormValueControl} from '@angular/forms/signals';
 })
 export class HomePageOptionSelectorComponent implements FormValueControl<HomePageOption | null> {
 
-    protected options: Array<HomePageOption> = Object.values(HomePageOption);
+    protected options: Array<HomePageOption> = Object.values(HomePageOptions);
 
     public readonly value = model<HomePageOption | null>(null);
 

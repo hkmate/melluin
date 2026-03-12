@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, effect, inject, input, signal} from '@angular/core';
 import {
-    BoxStatusChangeReason,
+    BoxStatusChangeReason, BoxStatusChangeReasons,
     BoxStatusWithDepartmentBrief,
     dateIntervalGeneratorFactory,
-    DateIntervalSpecifier,
+    DateIntervalSpecifier, DateIntervalSpecifiers,
     FilterOperationBuilder,
     PageQuery
 } from '@melluin/common';
@@ -31,8 +31,8 @@ import {defaultTo} from 'lodash-es';
 })
 export class BoxInfoWidgetComponent {
 
-    private static readonly defaultDateInterval = DateIntervalSpecifier.LAST_MONTH;
-    private static readonly defaultReasons = Object.values(BoxStatusChangeReason).filter(r => r !== BoxStatusChangeReason.CORRECTED);
+    private static readonly defaultDateInterval = DateIntervalSpecifiers.LAST_MONTH;
+    private static readonly defaultReasons = Object.values(BoxStatusChangeReasons).filter(r => r !== BoxStatusChangeReasons.CORRECTED);
     private static readonly defaultLimit = 10;
 
     private readonly boxService = inject(DepartmentBoxService)

@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, computed, effect, input, linkedSigna
 import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
 import {exportCSV} from '@fe/app/util/csv-export';
 import {ChartComponent} from '@fe/app/util/chart/chart.component';
-import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
+import {WidgetMode, WidgetModes} from '@fe/app/statistics/model/widget-mode';
 import {MatCard, MatCardContent, MatCardHeader} from '@angular/material/card';
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {FormsModule} from '@angular/forms';
@@ -33,7 +33,7 @@ import {StatisticWidgetTableComponent} from '@fe/app/statistics/statistics-widge
 })
 export class StatisticsWidgetComponent<T> {
 
-    WidgetMode = WidgetMode;
+    WidgetModes = WidgetModes;
 
     public readonly widgetId = input.required<string>();
     public readonly controller = input.required<StatisticWidgetController<T>>();

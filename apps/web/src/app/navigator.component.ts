@@ -3,10 +3,11 @@ import {
     DateUtil,
     FilterOperationBuilder,
     HomePageOption,
+    HomePageOptions,
     isNilOrEmpty,
     isNotNil,
     Visit,
-    VisitStatus
+    VisitStatus, VisitStatuses
 } from '@melluin/common';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
 import {Platform} from '@angular/cdk/platform';
@@ -27,17 +28,17 @@ export class NavigatorComponent {
     private readonly visitService = inject(VisitService);
 
 
-    private readonly availableVisitStatuses = [
-        VisitStatus.SCHEDULED,
-        VisitStatus.STARTED,
-        VisitStatus.ACTIVITIES_FILLED_OUT,
-        VisitStatus.ALL_FILLED_OUT,
-        VisitStatus.SUCCESSFUL,
+    private readonly availableVisitStatuses: Array<VisitStatus> = [
+        VisitStatuses.SCHEDULED,
+        VisitStatuses.STARTED,
+        VisitStatuses.ACTIVITIES_FILLED_OUT,
+        VisitStatuses.ALL_FILLED_OUT,
+        VisitStatuses.SUCCESSFUL,
     ];
 
-    private readonly visitStatusesWhenFillingEnabled = [
-        VisitStatus.SCHEDULED,
-        VisitStatus.STARTED,
+    private readonly visitStatusesWhenFillingEnabled: Array<VisitStatus> = [
+        VisitStatuses.SCHEDULED,
+        VisitStatuses.STARTED,
     ];
 
     private readonly homePageSettings = computed(() => this.currentUserService.userSettings()?.homePage);
@@ -51,26 +52,27 @@ export class NavigatorComponent {
 
     private processHomePage(option?: HomePageOption): Promise<boolean> {
         switch (option) {
-            case HomePageOption.DASHBOARD:
+            case HomePageOptions.DASHBOARD:
                 return this.router.navigate([PATHS.dashboard.main]);
-            case HomePageOption.EVENT_LIST:
+            case HomePageOptions.EVENT_LIST:
                 return this.router.navigate([PATHS.events.main]);
-            case HomePageOption.ACTUAL_HOSPITAL_VISIT_DETAILS:
-            case HomePageOption.ACTUAL_HOSPITAL_VISIT_FILLER:
+            case HomePageOptions.ACTUAL_HOSPITAL_VISIT_DETAILS:
+            case HomePageOptions.ACTUAL_HOSPITAL_VISIT_FILLER:
                 return this.openVisitRelatedPage(option);
             default:
                 return this.openDefaultPage();
         }
     }
 
-    private async openVisitRelatedPage(option: HomePageOption.ACTUAL_HOSPITAL_VISIT_DETAILS | HomePageOption.ACTUAL_HOSPITAL_VISIT_FILLER): Promise<boolean> {
+    private async openVisitRelatedPage(option: typeof HomePageOptions.ACTUAL_HOSPITAL_VISIT_DETAILS
+        | typeof HomePageOptions.ACTUAL_HOSPITAL_VISIT_FILLER): Promise<boolean> {
         const visits = await this.getMyTodayVisit();
         if (isNilOrEmpty(visits)) {
             return this.router.navigate([PATHS.events.main]);
         }
 
         const fillableVisit = visits.find(visit => this.visitStatusesWhenFillingEnabled.includes(visit.status));
-        if (option === HomePageOption.ACTUAL_HOSPITAL_VISIT_FILLER && isNotNil(fillableVisit)) {
+        if (option === HomePageOptions.ACTUAL_HOSPITAL_VISIT_FILLER && isNotNil(fillableVisit)) {
             return this.router.navigate([PATHS.visit.main, fillableVisit.id, PATHS.visit.fillActivities]);
         }
 
@@ -78,7 +80,7 @@ export class NavigatorComponent {
     }
 
     private openDefaultPage(): Promise<boolean> {
-        return this.openVisitRelatedPage(HomePageOption.ACTUAL_HOSPITAL_VISIT_FILLER);
+        return this.openVisitRelatedPage(HomePageOptions.ACTUAL_HOSPITAL_VISIT_FILLER);
     }
 
     private getMyTodayVisit(): Promise<Array<Visit>> {

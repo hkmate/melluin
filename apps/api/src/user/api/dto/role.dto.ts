@@ -1,4 +1,4 @@
-import {Permission, Role, RoleCreation, RoleType, UUID} from '@melluin/common';
+import {Permission, PermissionT, Role, RoleCreation, RoleType, RoleTypes, UUID} from '@melluin/common';
 import {ApiProperty} from '@nestjs/swagger';
 import {IsEnum, IsString, IsUUID} from 'class-validator';
 
@@ -14,13 +14,13 @@ export class RoleEditDto implements Role {
     @IsString()
     name: string;
 
-    @ApiProperty({enum: RoleType, enumName: 'RoleType'})
-    @IsEnum(RoleType)
+    @ApiProperty({enum: RoleTypes, enumName: 'RoleType'})
+    @IsEnum(RoleTypes)
     type: RoleType;
 
     @ApiProperty({enum: Permission, isArray: true})
     @IsEnum(Permission, {each: true})
-    permissions: Array<Permission>;
+    permissions: Array<PermissionT>;
 
 }
 
@@ -30,13 +30,13 @@ export class RoleCreationDto implements RoleCreation {
     @IsString()
     name: string;
 
-    @ApiProperty({enum: RoleType, enumName: 'RoleType'})
-    @IsEnum(RoleType)
+    @ApiProperty({enum: RoleTypes, enumName: 'RoleType'})
+    @IsEnum(RoleTypes)
     type: RoleType;
 
     @ApiProperty({enum: Permission, isArray: true})
     @IsEnum(Permission, {each: true})
-    permissions: Array<Permission>;
+    permissions: Array<PermissionT>;
 
 }
 

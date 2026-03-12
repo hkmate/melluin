@@ -11,12 +11,13 @@ import {
     Visit,
     VisitCreate,
     VisitRewrite,
-    VisitStatus
+    VisitStatus,
+    VisitStatuses
 } from '@melluin/common';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {Platform} from '@angular/cdk/platform';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {getAllStatusOptionsOnlyEnable, SelectOption} from '@fe/app/util/hospital-visit-status-option';
+import {getAllStatusOptionsOnlyEnable, SelectOption} from '@fe/app/util/visit-status-option';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
@@ -138,7 +139,7 @@ export class VisitFormComponent {
         const timeChangeDisabled = this.isTimeChangeDisabled();
         const hasConnection = this.hasConnections();
         return new FormGroup({
-            status: new FormControl(visit?.status ?? VisitStatus.SCHEDULED, [Validators.required]),
+            status: new FormControl(visit?.status ?? VisitStatuses.SCHEDULED, [Validators.required]),
             date: new FormControl({
                 value: this.getDate(visit?.dateTimeFrom),
                 disabled: this.isDateChangeDisabled() || hasConnection
@@ -174,8 +175,8 @@ export class VisitFormComponent {
         const visit = this.visit();
         if (isNil(visit)) {
             this.statusOptions = [
-                {value: VisitStatus.DRAFT, disabled: false},
-                {value: VisitStatus.SCHEDULED, disabled: false}
+                {value: VisitStatuses.DRAFT, disabled: false},
+                {value: VisitStatuses.SCHEDULED, disabled: false}
             ];
         } else {
             this.statusOptions = this.calculateStatusOptions(visit);
@@ -184,7 +185,7 @@ export class VisitFormComponent {
 
     private calculateStatusOptions(visit: Visit): Array<SelectOption<VisitStatus>> {
         if (this.permission.has(Permission.canModifyAnyVisitUnrestricted)) {
-            return Object.values(VisitStatus)
+            return Object.values(VisitStatuses)
                 .map(status => ({value: status, disabled: false}));
         }
         if (this.permission.has(Permission.canModifyAnyVisit)) {
@@ -196,27 +197,27 @@ export class VisitFormComponent {
     // eslint-disable-next-line max-lines-per-function
     private getStatusesCoordinatorChangeToFrom(currentStatus: VisitStatus): Array<SelectOption<VisitStatus>> {
         switch (currentStatus) {
-            case VisitStatus.DRAFT:
-                return getAllStatusOptionsOnlyEnable(VisitStatus.DRAFT, VisitStatus.SCHEDULED);
-            case VisitStatus.SCHEDULED:
+            case VisitStatuses.DRAFT:
+                return getAllStatusOptionsOnlyEnable(VisitStatuses.DRAFT, VisitStatuses.SCHEDULED);
+            case VisitStatuses.SCHEDULED:
                 return getAllStatusOptionsOnlyEnable(
-                    VisitStatus.SCHEDULED,
-                    VisitStatus.STARTED,
-                    VisitStatus.CANCELED,
-                    VisitStatus.FAILED_FOR_OTHER_REASON,
-                    VisitStatus.FAILED_BECAUSE_NO_CHILD
+                    VisitStatuses.SCHEDULED,
+                    VisitStatuses.STARTED,
+                    VisitStatuses.CANCELED,
+                    VisitStatuses.FAILED_FOR_OTHER_REASON,
+                    VisitStatuses.FAILED_BECAUSE_NO_CHILD
                 );
-            case VisitStatus.STARTED:
+            case VisitStatuses.STARTED:
                 return getAllStatusOptionsOnlyEnable(
-                    VisitStatus.STARTED,
-                    VisitStatus.ACTIVITIES_FILLED_OUT,
-                    VisitStatus.CANCELED,
-                    VisitStatus.FAILED_FOR_OTHER_REASON,
-                    VisitStatus.FAILED_BECAUSE_NO_CHILD
+                    VisitStatuses.STARTED,
+                    VisitStatuses.ACTIVITIES_FILLED_OUT,
+                    VisitStatuses.CANCELED,
+                    VisitStatuses.FAILED_FOR_OTHER_REASON,
+                    VisitStatuses.FAILED_BECAUSE_NO_CHILD
                 );
-            case VisitStatus.ACTIVITIES_FILLED_OUT:
-                return getAllStatusOptionsOnlyEnable(VisitStatus.STARTED,
-                    VisitStatus.ACTIVITIES_FILLED_OUT, VisitStatus.ALL_FILLED_OUT);
+            case VisitStatuses.ACTIVITIES_FILLED_OUT:
+                return getAllStatusOptionsOnlyEnable(VisitStatuses.STARTED,
+                    VisitStatuses.ACTIVITIES_FILLED_OUT, VisitStatuses.ALL_FILLED_OUT);
             default:
                 return getAllStatusOptionsOnlyEnable(currentStatus);
         }
@@ -225,21 +226,21 @@ export class VisitFormComponent {
     // eslint-disable-next-line max-lines-per-function
     private getStatusesVolunteerChangeToFrom(currentStatus: VisitStatus): Array<SelectOption<VisitStatus>> {
         switch (currentStatus) {
-            case VisitStatus.SCHEDULED:
+            case VisitStatuses.SCHEDULED:
                 return getAllStatusOptionsOnlyEnable(
-                    VisitStatus.SCHEDULED,
-                    VisitStatus.STARTED,
-                    VisitStatus.CANCELED,
-                    VisitStatus.FAILED_FOR_OTHER_REASON,
-                    VisitStatus.FAILED_BECAUSE_NO_CHILD
+                    VisitStatuses.SCHEDULED,
+                    VisitStatuses.STARTED,
+                    VisitStatuses.CANCELED,
+                    VisitStatuses.FAILED_FOR_OTHER_REASON,
+                    VisitStatuses.FAILED_BECAUSE_NO_CHILD
                 );
-            case VisitStatus.STARTED:
+            case VisitStatuses.STARTED:
                 return getAllStatusOptionsOnlyEnable(
-                    VisitStatus.STARTED,
-                    VisitStatus.ACTIVITIES_FILLED_OUT,
-                    VisitStatus.CANCELED,
-                    VisitStatus.FAILED_FOR_OTHER_REASON,
-                    VisitStatus.FAILED_BECAUSE_NO_CHILD
+                    VisitStatuses.STARTED,
+                    VisitStatuses.ACTIVITIES_FILLED_OUT,
+                    VisitStatuses.CANCELED,
+                    VisitStatuses.FAILED_FOR_OTHER_REASON,
+                    VisitStatuses.FAILED_BECAUSE_NO_CHILD
                 );
             default:
                 return getAllStatusOptionsOnlyEnable(currentStatus);
@@ -259,7 +260,7 @@ export class VisitFormComponent {
             return false;
         }
         if (this.permission.has(Permission.canModifyAnyVisit)) {
-            return ![VisitStatus.DRAFT, VisitStatus.SCHEDULED].includes(this.visit()!.status);
+            return !([VisitStatuses.DRAFT, VisitStatuses.SCHEDULED] as Array<VisitStatus>).includes(this.visit()!.status);
         }
         return true;
     }
@@ -272,7 +273,7 @@ export class VisitFormComponent {
         if (this.permission.has(Permission.canModifyAnyVisit)) {
             return this.isVisitFinalized();
         }
-        return visit.status !== VisitStatus.SCHEDULED && visit.status !== VisitStatus.STARTED;
+        return visit.status !== VisitStatuses.SCHEDULED && visit.status !== VisitStatuses.STARTED;
     }
 
     private isDepartmentChangeDisabled(): boolean {
@@ -282,19 +283,19 @@ export class VisitFormComponent {
         if (this.permission.has(Permission.canModifyAnyVisit)) {
             return this.isVisitFinalized();
         }
-        return this.visit()!.status !== VisitStatus.SCHEDULED;
+        return this.visit()!.status !== VisitStatuses.SCHEDULED;
     }
 
     private isVisitFinalized(): boolean {
         if (isNil(this.visit())) {
             return false;
         }
-        return ![
-            VisitStatus.DRAFT,
-            VisitStatus.SCHEDULED,
-            VisitStatus.STARTED,
-            VisitStatus.ACTIVITIES_FILLED_OUT
-        ].includes(this.visit()!.status);
+        return !([
+            VisitStatuses.DRAFT,
+            VisitStatuses.SCHEDULED,
+            VisitStatuses.STARTED,
+            VisitStatuses.ACTIVITIES_FILLED_OUT
+        ] as Array<VisitStatus>).includes(this.visit()!.status);
     }
 
     private isParticipantChangeDisabled(): boolean {

@@ -1,6 +1,6 @@
 import {InterpolationParameters, TranslateService} from '@ngx-translate/core';
 import {inject} from '@angular/core';
-import {AppLanguage} from '@fe/app/language/app-language';
+import {AppLanguages} from '@fe/app/language/app-language';
 import {I18nKeys, translationHu} from '@fe/app/util/translate/i18n.type';
 
 let translateService: TranslateService | undefined;
@@ -11,6 +11,6 @@ export function t(i18nKey: I18nKeys, params?: InterpolationParameters): string {
 
 export function setupTranslateService(): void {
     translateService = inject(TranslateService);
-    translateService.setTranslation(AppLanguage.HU, translationHu);
-    translateService.use(AppLanguage.HU);
+    translateService.setTranslation(AppLanguages.HU, translationHu);
+    translateService.use(AppLanguages.HU);
 }

@@ -1,8 +1,10 @@
 import {isEmpty, isNil} from '@melluin/common';
 
-export enum HttpMethod {
-    GET = 'GET', POST = 'POST', DELETE = 'DELETE', PUT = 'PUT', PATCH = 'PATCH'
-}
+export const HttpMethods = {
+    GET: 'GET', POST: 'POST', DELETE: 'DELETE', PUT: 'PUT', PATCH: 'PATCH'
+} as const;
+export type HttpMethod = typeof HttpMethods[keyof typeof HttpMethods];
+
 
 export interface Endpoint {
     method: HttpMethod;

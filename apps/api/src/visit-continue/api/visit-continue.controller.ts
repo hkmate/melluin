@@ -1,5 +1,5 @@
 import {BadRequestException, Controller, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Query} from '@nestjs/common';
-import {ApiError, Visit, Permission, User, UUID} from '@melluin/common';
+import {ApiErrors, Visit, Permission, User, UUID} from '@melluin/common';
 import {CurrentUser} from '@be/auth/decorator/current-user.decorator';
 import {PermissionGuard} from '@be/auth/decorator/permissions.decorator';
 import {VisitContinueService} from '@be/visit-continue/visit-continue.service';
@@ -29,7 +29,7 @@ export class VisitContinueController {
         if (!dayjs(dateTime).isValid()) {
             throw new BadRequestException({
                 message: `Invalid date time: ${dateTime}`,
-                code: ApiError.INVALID_DATE_TIME
+                code: ApiErrors.INVALID_DATE_TIME
             });
         }
     }

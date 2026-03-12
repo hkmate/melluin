@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {VisitStatus, User, UUID} from '@melluin/common';
+import {User, UUID, VisitStatuses} from '@melluin/common';
 import {VisitEntity} from '@be/visit/model/visit.entity';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
@@ -10,9 +10,9 @@ export class VisitRelationDao {
 
     private static readonly RELATED_VISITS_SIZE = 10;
     private static readonly FINALIZED_STATUSES = [
-        VisitStatus.ACTIVITIES_FILLED_OUT,
-        VisitStatus.ALL_FILLED_OUT,
-        VisitStatus.SUCCESSFUL
+        VisitStatuses.ACTIVITIES_FILLED_OUT,
+        VisitStatuses.ALL_FILLED_OUT,
+        VisitStatuses.SUCCESSFUL
     ];
 
     constructor(@InjectRepository(VisitEntity)

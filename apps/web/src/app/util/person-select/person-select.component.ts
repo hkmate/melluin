@@ -1,5 +1,5 @@
 import {Component, forwardRef, inject, input, linkedSignal, model, signal} from '@angular/core';
-import {FilteringInfo, isNil, NOOP, PersonIdentifier, RoleType, UUID, VoidFunc} from '@melluin/common';
+import {FilteringInfo, isNil, NOOP, PersonIdentifier, RoleTypes, UUID, VoidFunc} from '@melluin/common';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CachedPeopleService} from '@fe/app/people/cached-people.service';
 import {MatFormField, MatLabel} from '@angular/material/input';
@@ -78,7 +78,7 @@ export class PersonSelectComponent2 implements FormValueControl<Array<UUID>> {
                 'user.isActive': {operator: 'eq', operand: true},
                 'user.roleTypes': {
                     operator: 'in',
-                    operand: [RoleType.INTERN, RoleType.VISITOR, RoleType.COORDINATOR]
+                    operand: [RoleTypes.INTERN, RoleTypes.VISITOR, RoleTypes.COORDINATOR]
                 }
             }]
         };
@@ -224,7 +224,7 @@ export class PersonSelectComponent implements ControlValueAccessor {
                 'user.isActive': {operator: 'eq', operand: true},
                 'user.roleTypes': {
                     operator: 'in',
-                    operand: [RoleType.INTERN, RoleType.VISITOR, RoleType.COORDINATOR]
+                    operand: [RoleTypes.INTERN, RoleTypes.VISITOR, RoleTypes.COORDINATOR]
                 }
             }]
         };

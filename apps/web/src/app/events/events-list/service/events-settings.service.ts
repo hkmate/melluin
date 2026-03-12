@@ -7,7 +7,7 @@ import {EventListUserSettingsInitializer} from '@fe/app/events/events-list/servi
 import {EventListSettingsInitializer} from '@fe/app/events/events-list/service/event-list-settings-initializer';
 import {EventListQueryParamHandler} from '@fe/app/events/events-list/service/event-list-query-param-handler';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {ListPageSettingChangeReason} from '@fe/app/util/list-page-settings-change-reason';
+import {ListPageSettingChangeReason, ListPageSettingChangeReasons} from '@fe/app/util/list-page-settings-change-reason';
 
 
 @Injectable()
@@ -17,7 +17,7 @@ export class EventsSettingsService {
     private readonly userSettingsIntr = inject(EventListUserSettingsInitializer);
     private readonly queryParamHandler = inject(EventListQueryParamHandler);
 
-    private settingsChanged = new BehaviorSubject<ListPageSettingChangeReason>(ListPageSettingChangeReason.ALL);
+    private settingsChanged = new BehaviorSubject<ListPageSettingChangeReason>(ListPageSettingChangeReasons.ALL);
     private page: PageInfo;
     private filter: EventsFilter;
     private preferences: EventsListPreferences;
@@ -27,7 +27,7 @@ export class EventsSettingsService {
             this.initFilter();
             this.initPreferences();
             this.initPageInfo();
-            this.settingsChanged.next(ListPageSettingChangeReason.ALL);
+            this.settingsChanged.next(ListPageSettingChangeReasons.ALL);
         });
     }
 
@@ -45,7 +45,7 @@ export class EventsSettingsService {
     public setPageInfo(newFilter: PageInfo): void {
         this.page = newFilter;
         this.queryParamHandler.saveSettings(this.filter, this.preferences, this.page);
-        this.settingsChanged.next(ListPageSettingChangeReason.PAGE_DATA);
+        this.settingsChanged.next(ListPageSettingChangeReasons.PAGE_DATA);
     }
 
     public getFilter(): EventsFilter {
@@ -58,7 +58,7 @@ export class EventsSettingsService {
     public setFilter(newFilter: EventsFilter): void {
         this.filter = newFilter;
         this.queryParamHandler.saveSettings(this.filter, this.preferences, this.page);
-        this.settingsChanged.next(ListPageSettingChangeReason.FILTERS);
+        this.settingsChanged.next(ListPageSettingChangeReasons.FILTERS);
     }
 
     public getPreferences(): EventsListPreferences {
@@ -71,7 +71,7 @@ export class EventsSettingsService {
     public setPreferences(newPreferences: EventsListPreferences): void {
         this.preferences = newPreferences;
         this.queryParamHandler.saveSettings(this.filter, this.preferences, this.page);
-        this.settingsChanged.next(ListPageSettingChangeReason.PREFERENCES);
+        this.settingsChanged.next(ListPageSettingChangeReasons.PREFERENCES);
     }
 
     public generateFilterOptions(): ConjunctionFilterOptions {

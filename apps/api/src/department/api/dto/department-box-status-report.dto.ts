@@ -1,4 +1,4 @@
-import {BoxStatusChangeReason, DepartmentBoxStatusReport, UUID} from '@melluin/common';
+import {BoxStatusChangeReason, BoxStatusChangeReasons, DepartmentBoxStatusReport, UUID} from '@melluin/common';
 import { ApiProperty } from '@nestjs/swagger';
 import {IsEnum, IsOptional, IsString, IsUUID} from 'class-validator';
 
@@ -10,8 +10,8 @@ export class DepartmentBoxStatusReportDto implements DepartmentBoxStatusReport {
     @IsUUID()
     visitId?: UUID;
 
-    @ApiProperty({ enum: BoxStatusChangeReason, enumName: 'BoxStatusChangeReason' })
-    @IsEnum(BoxStatusChangeReason)
+    @ApiProperty({ enum: BoxStatusChangeReasons, enumName: 'BoxStatusChangeReason' })
+    @IsEnum(BoxStatusChangeReasons)
     reason: BoxStatusChangeReason;
 
     @ApiProperty({required: false})

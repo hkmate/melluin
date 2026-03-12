@@ -1,5 +1,5 @@
 import {BadRequestException} from '@nestjs/common';
-import {ApiError} from '@melluin/common';
+import {ApiErrors} from '@melluin/common';
 import {
     VisitedChildUpdateValidationData,
     VisitedChildUpdateValidator
@@ -13,7 +13,7 @@ export class VisitIdIsSameAsInVisitedChildValidator implements VisitedChildUpdat
         }
         throw new BadRequestException({
             message: 'Visit id not match with id in visited child',
-            code: ApiError.VISIT_ID_NOT_SAME_AS_IN_VISITED_CHILD
+            code: ApiErrors.VISIT_ID_NOT_SAME_AS_IN_VISITED_CHILD
         });
     }
 

@@ -6,7 +6,7 @@
         <mat-card-content>
             @for (info of boxInfo(); track info.id) {
                 <div [class]="'reason-' + info.reason + ' box-info'">
-                    <div class="reason">{{ 'BoxStatusChangeReason.' + info.reason | translate }}</div>
+                    <div class="reason">{{ 'BoxStatusChangeReasons.' + info.reason | translate }}</div>
 
                     <div class="department">
                         <a class="link" [routerLink]="['departments', info.departmentId]">

@@ -3,7 +3,7 @@ import {ChartConfiguration} from 'chart.js';
 import {ChildrenByDepartments, isNilOrEmpty, OperationCity} from '@melluin/common';
 import {firstValueFrom} from 'rxjs';
 import {ChartColor} from '@fe/app/util/chart/chart-color';
-import {WidgetMode} from '@fe/app/statistics/model/widget-mode';
+import {WidgetMode, WidgetModes} from '@fe/app/statistics/model/widget-mode';
 import {AbstractStatisticWidgetController} from '@fe/app/statistics/controller/abstract-stat-widget-controller';
 import {ChildrenByDepartmentsStatProvider} from '@fe/app/statistics/service/children-by-departments-stat-provider';
 import {t} from '@fe/app/util/translate/translate';
@@ -17,7 +17,7 @@ export class ChildrenStatController extends AbstractStatisticWidgetController<Ch
     }
 
     public override defaultMode(): WidgetMode {
-        return WidgetMode.TABLE;
+        return WidgetModes.TABLE;
     }
 
     public getChartData(): ChartConfiguration {

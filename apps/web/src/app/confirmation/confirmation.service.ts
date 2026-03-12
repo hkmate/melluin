@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {
-    ConfirmationAnswer,
+    ConfirmationAnswer, ConfirmationAnswers,
     ConfirmationDialogConfig,
     ConfirmationDialogI18nConfig
 } from '@fe/app/confirmation/confirmation-dialog-config';
@@ -36,7 +36,7 @@ export class ConfirmationService {
                 data: config
             });
             dialogRef.afterClosed().subscribe({
-                next: (answer: ConfirmationAnswer) => (answer === ConfirmationAnswer.OK ? resolve() : reject()),
+                next: (answer: ConfirmationAnswer) => (answer === ConfirmationAnswers.OK ? resolve() : reject()),
                 error: () => reject(),
                 complete: () => resolve()
             });
