@@ -21,7 +21,8 @@
         },
         "security": {
             "expiration": "3h",
-            "secretKey": "MelluinSecretKeyForDevelopment"
+            "secretKey": "MelluinSecretKeyForDevelopment",
+            "corsOrigins": ["http://localhost:4200"]
         }
     }
 }

@@ -2,12 +2,16 @@ import {catchError, OperatorFunction} from 'rxjs';
 import {MessageService} from '@fe/app/util/message.service';
 import {AbstractControl, ValidationErrors} from '@angular/forms';
 import {ApiError, isNilOrEmpty} from '@melluin/common';
-import {HttpErrorResponse} from '@angular/common/http';
+import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
 
 // eslint-disable-next-line max-lines-per-function
 function logErrorToUser(error: HttpErrorResponse, msg: MessageService): void {
     if (error.status === 0) {
         msg.error('NoBackendError');
+        return;
+    }
+    if (error.status === HttpStatusCode.TooManyRequests) {
+        msg.error('TooManyRequests');
         return;
     }
     if ('code' in error.error) {

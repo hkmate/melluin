@@ -3,6 +3,7 @@ import {AppModule} from './app.module';
 import {ConfigService} from '@nestjs/config';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {DocumentBuilder, OpenAPIObject, SwaggerModule} from '@nestjs/swagger';
+import helmet from 'helmet';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const types = require('pg').types
@@ -14,8 +15,15 @@ process.env.TZ = 'UTC';
 // eslint-disable-next-line max-lines-per-function
 async function bootstrap(): Promise<void> {
     const app = await NestFactory.create(AppModule, {
-        cors: true,
         logger: ['log', 'error', 'warn', 'debug', 'verbose'],
+    });
+    const config = app.get(ConfigService);
+
+    app.use(helmet());
+    app.enableCors({
+        origin: config.get('server.security.corsOrigins'),
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        optionsSuccessStatus: 200
     });
 
     app.useGlobalPipes(

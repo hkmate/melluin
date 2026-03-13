@@ -42,6 +42,7 @@
         "DatePlaceholder": "Válassz dátumot"
     },
     "NoBackendError": "Valószínüleg nem elérhető a server. (Ismeretlen hiba)",
+    "TooManyRequests": "Túl sok kérés érkezett a server-re.",
     "BoxStatusChangeReasons": {
         "MISSING": "Hiányzik",
         "BROKEN": "Törött",

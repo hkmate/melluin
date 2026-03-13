@@ -12,11 +12,16 @@ import {HealthCheckModule} from '@be/health-check/health-check.module';
 import {StatisticsModule} from '@be/statistics/statistics.module';
 import {VisitConnectionsModule} from '@be/visit-connections/visit-connections.module';
 import {VisitContinueModule} from '@be/visit-continue/visit-continue.module';
+import {ThrottlerGuard, ThrottlerModule} from '@nestjs/throttler';
+import {APP_GUARD} from '@nestjs/core';
 
 @Module({
     imports: [
         ConfigModuleDefinition,
         TypeOrmModuleDefinition,
+        ThrottlerModule.forRoot({
+            throttlers: [{ttl: 5_000, limit: 10}]
+        }),
 
         HealthCheckModule,
         AuthModule,
@@ -29,6 +34,9 @@ import {VisitContinueModule} from '@be/visit-continue/visit-continue.module';
         VisitContinueModule,
         ChildModule,
         StatisticsModule
+    ],
+    providers: [
+        {provide: APP_GUARD, useClass: ThrottlerGuard}
     ]
 })
 export class AppModule {

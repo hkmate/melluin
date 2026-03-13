@@ -1,7 +1,8 @@
 import {Controller, Get} from '@nestjs/common';
 import {Public} from '@be/auth/decorator/public.decorator';
+import {Throttle} from '@nestjs/throttler';
 
-
+@Throttle({default: {limit: 10, ttl: 5 * 60 * 1000}})
 @Controller('health')
 export class HealthCheckController {
 

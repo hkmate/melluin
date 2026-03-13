@@ -3,7 +3,9 @@ import {AuthService} from '../service/auth.service';
 import {Public} from '../decorator/public.decorator';
 import {AuthInfo} from '@melluin/common';
 import {AuthCredentialsDto} from '@be/auth/api/dto/auth-credentials.dto';
+import {Throttle} from '@nestjs/throttler';
 
+@Throttle({default: {limit: 1, ttl: 5 * 1000}})
 @Controller('auth')
 export class AuthController {
 
