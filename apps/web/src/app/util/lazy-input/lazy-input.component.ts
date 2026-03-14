@@ -26,7 +26,7 @@ export class LazyInputComponent2 implements FormValueControl<string> {
 
     private readonly delay = 500;
 
-    public readonly value = model.required<string>();
+    public readonly value = model<string>('');
     public readonly required = input<boolean>(false);
     public readonly invalid = input<boolean>(false);
     public readonly touched = model<boolean>(false);
@@ -42,15 +42,9 @@ export class LazyInputComponent2 implements FormValueControl<string> {
     private readonly inputChanged = new Subject<string>();
 
     constructor() {
-        effect(() => {
-            this.touched.set(this.innerForm().touched());
-        });
-        effect(() => {
-            this.innerForm.innerValue().value.set(this.value());
-        });
-        effect(() => {
-            this.inputChanged.next(this.innerForm().value().innerValue);
-        });
+        effect(() => this.touched.set(this.innerForm().touched()));
+        effect(() => this.innerForm.innerValue().value.set(this.value()));
+        effect(() => this.inputChanged.next(this.innerForm().value().innerValue));
         this.inputChanged.pipe(
             takeUntilDestroyed(),
             debounceTime(this.delay),

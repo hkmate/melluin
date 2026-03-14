@@ -1,12 +1,12 @@
 import {OperationCity} from '@melluin/common';
 
-export class PeopleFilter {
+export interface PeopleFilter {
 
-    public name: string;
-    public email: string;
-    public phone: string;
-    public onlyActive: boolean;
-    public roleNames: Array<string>;
-    public cities: Array<OperationCity>;
+    name: string;
+    email: string;
+    phone: string;
+    onlyActive: boolean;
+    roleNames: Array<string>;
+    cities: Array<OperationCity>;
 
 }

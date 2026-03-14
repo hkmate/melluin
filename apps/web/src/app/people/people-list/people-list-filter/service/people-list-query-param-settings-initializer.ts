@@ -32,14 +32,14 @@ export class PeopleListQueryParamSettingsInitializer {
     }
 
     private getDefaultFilter(): PeopleFilter {
-        const result = new PeopleFilter();
-        result.name = '';
-        result.email = '';
-        result.phone = '';
-        result.onlyActive = false;
-        result.roleNames = [];
-        result.cities = [];
-        return result;
+        return {
+            name: '',
+            email: '',
+            phone: '',
+            onlyActive: false,
+            roleNames: [],
+            cities: [],
+        };
     }
 
     private decorateDefault(filters: PeopleFilter): void {

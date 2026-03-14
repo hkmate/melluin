@@ -1,76 +1,59 @@
 <h1>{{ 'PersonPage.User.EditData' | translate }}</h1>
 
-<form [formGroup]="form()">
+<form (appSubmit)="submitForm()">
 
-    <div>
-        <app-trimmed-text-input formControlName="userName"
-                                [placeholder]="'PersonPage.User.Form.UserNamePlaceholder' | translate"
-                                [label]="'PersonPage.User.Form.UserName'| translate"/>
-    </div>
+    <app-trimmed-text-input [formField]="form.userName"
+                            autocomplete="username"
+                            [placeholder]="'PersonPage.User.Form.UserNamePlaceholder' | translate"
+                            [label]="'PersonPage.User.Form.UserName'| translate"/>
 
-    <div>
-        <mat-form-field>
-            <mat-label>{{ 'PersonPage.User.Form.Password' | translate }}</mat-label>
-            <input matInput
-                   type="password"
-                   formControlName="password"
-                   autocomplete="new-password"
-                   [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate">
-            <mat-hint>
-                {{ 'PersonPage.User.Form.PasswordHint' | translate }}<br>
-                {{ 'PersonPage.User.Form.PasswordPatternHint' | translate : {passwordMinLength} }}
-            </mat-hint>
-        </mat-form-field>
-    </div>
+    <app-password-input [formField]="form.password"
+                        autocomplete="new-password"
+                        [label]="'PersonPage.User.Form.Password' | translate"
+                        [placeholder]="'PersonPage.User.Form.PasswordPlaceholder' | translate"
+                        [hint]="passwordHint()"/>
 
-    <div class="status-card">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-subtitle>{{ 'PersonPage.User.Form.Status' | translate }}</mat-card-subtitle>
-                <mat-card-content>
-                    <mat-slide-toggle formControlName="isActive">
-                        {{ (isUserSetToActive() ? 'PersonPage.User.Active' : 'PersonPage.User.Inactive') | translate }}
-                    </mat-slide-toggle>
-                </mat-card-content>
-            </mat-card-header>
-        </mat-card>
-    </div>
+    <mat-card class="status-card">
+        <mat-card-header>
+            <mat-card-subtitle>{{ 'PersonPage.User.Form.Status' | translate }}</mat-card-subtitle>
+            <mat-card-content>
+                <mat-slide-toggle [formField]="form.isActive">
+                    {{
+                        (form.isActive().value()
+                                        ? 'PersonPage.User.Active'
+                                        : 'PersonPage.User.Inactive'
+                        ) | translate
+                    }}
+                </mat-slide-toggle>
+            </mat-card-content>
+        </mat-card-header>
+    </mat-card>
 
-    <div>
-        <mat-form-field>
-            <mat-label>{{ 'PersonPage.User.Form.Roles' | translate }}</mat-label>
-            <mat-select formControlName="roles" multiple>
-                @for (role of roles; track role.name) {
-                    <mat-option [value]="role.name" [disabled]="!roleOptions.includes(role)">
-                        {{ role.name }}
-                    </mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-    </div>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.User.Form.Roles' | translate }}</mat-label>
+        <mat-select [formField]="form.roleNames" multiple>
+            @for (role of roles(); track role.name) {
+                <mat-option [value]="role.name" [disabled]="!roleOptions().includes(role)">
+                    {{ role.name }}
+                </mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
 
-    <div>
-        <mat-form-field>
-            <mat-label>{{ 'PersonPage.User.Form.Permissions' | translate }}</mat-label>
-            <mat-select formControlName="customPermissions" multiple>
-                @for (permission of permissions; track permission) {
-                    <mat-option [value]="permission">{{ permission }}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-    </div>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.User.Form.Permissions' | translate }}</mat-label>
+        <mat-select [formField]="form.customPermissions" multiple>
+            @for (permission of permissions; track permission) {
+                <mat-option [value]="permission">{{ permission }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
 
     <div class="button-row">
-        <button mat-flat-button
-                color="accent"
-                (click)="onSubmit()"
-                type="button">
+        <button mat-flat-button color="accent">
             {{ 'SaveButton' | translate }}
         </button>
-        <button mat-stroked-button
-                color="primary"
-                type="button"
-                (click)="cancelEditing()">
+        <button mat-stroked-button color="primary" type="button" (click)="cancelEditing()">
             {{ 'CancelButton' | translate }}
         </button>
     </div>

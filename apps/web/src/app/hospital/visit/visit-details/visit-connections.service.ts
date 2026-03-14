@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {UUID, Visit} from '@melluin/common';
 import {MessageService} from '@fe/app/util/message.service';
-import {getErrorHandler} from '@fe/app/util/util';
+import {getErrorHandler} from '@fe/app/util/error/error-handler';
 import {environment} from '@fe/environment';
 
 @Injectable({providedIn: 'root'})

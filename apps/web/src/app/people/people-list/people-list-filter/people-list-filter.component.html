@@ -1,57 +1,36 @@
-<div class="people-filter">
+<app-lazy-input [label]="'PeopleListPage.Filter.Name' | translate"
+                [formField]="form.name"/>
 
-    <div class="name-filter">
-        <app-lazy-input [label]="'PeopleListPage.Filter.Name' | translate"
-                        [(value)]="filters.name"
-                        (valueChange)="filterSet()"/>
-    </div>
+@if (needSensitiveFilter()) {
+    <app-lazy-input [label]="'PeopleListPage.Filter.Email' | translate"
+                    [formField]="form.email"/>
 
-    @if (needEmailFilter()) {
-        <div class="email-filter">
-            <app-lazy-input [label]="'PeopleListPage.Filter.Email' | translate"
-                            [(value)]="filters.email"
-                            (valueChange)="filterSet()"/>
-        </div>
-    }
+    <app-lazy-input [label]="'PeopleListPage.Filter.Phone' | translate"
+                    [formField]="form.phone"/>
+}
 
-    @if (needPhoneFilter()) {
-        <div class="phone-filter">
-            <app-lazy-input [label]="'PeopleListPage.Filter.Phone' | translate"
-                            [(value)]="filters.phone"
-                            (valueChange)="filterSet()"/>
-        </div>
-    }
+<mat-form-field>
+    <mat-label>{{ 'PeopleListPage.Filter.City' | translate }}</mat-label>
+    <mat-select [formField]="form.cities" multiple>
+        @for (city of cityOptions; track city) {
+            <mat-option [value]="city">{{ 'OperationCities.' + city | translate }}</mat-option>
+        }
+    </mat-select>
+</mat-form-field>
 
-    <div class="city-filter">
-        <mat-form-field>
-            <mat-label>{{ 'PeopleListPage.Filter.City' | translate }}</mat-label>
-            <mat-select [(ngModel)]="filters.cities" (ngModelChange)="filterSet()" multiple>
-                @for (city of cityOptions; track city) {
-                    <mat-option [value]="city">{{ 'OperationCities.' + city | translate }}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-    </div>
+<mat-form-field>
+    <mat-label>{{ 'PeopleListPage.Filter.Role' | translate }}</mat-label>
+    <mat-select [formField]="form.roleNames" multiple>
+        @for (role of roleOptions(); track role) {
+            <mat-option [value]="role.name">{{ role.name }}</mat-option>
+        }
+    </mat-select>
+</mat-form-field>
 
-    <div class="role-filter">
-        <mat-form-field>
-            <mat-label>{{ 'PeopleListPage.Filter.Role' | translate }}</mat-label>
-            <mat-select [(ngModel)]="filters.roleNames" (ngModelChange)="filterSet()" multiple>
-                @for (role of roleOptions;track role) {
-                    <mat-option [value]="role.name">{{ role.name }}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-    </div>
-
-    <div class="is-active-card">
-        <mat-card>
-            <mat-card-subtitle>
-                <mat-checkbox [(ngModel)]="filters.onlyActive" (ngModelChange)="filterSet()">
-                    {{ 'PeopleListPage.Filter.IsActive' | translate }}
-                </mat-checkbox>
-            </mat-card-subtitle>
-        </mat-card>
-    </div>
-
-</div>
+<mat-card>
+    <mat-card-subtitle>
+        <mat-checkbox [formField]="form.onlyActive">
+            {{ 'PeopleListPage.Filter.IsActive' | translate }}
+        </mat-checkbox>
+    </mat-card-subtitle>
+</mat-card>

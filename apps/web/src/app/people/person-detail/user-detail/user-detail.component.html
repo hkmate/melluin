@@ -1,33 +1,27 @@
-<div class="user-detail">
+@let userValue = user();
 
-    @if (needDataPresenter()) {
-        <app-user-data-presenter [user]="user"></app-user-data-presenter>
-        <div class="button-row">
-            @if (editEnabled()) {
-                <button mat-stroked-button color="primary" (click)="switchToEdit()">
-                    {{ 'Edit' | translate }}
-                </button>
-            }
-        </div>
-    }
-
-    @if (!user && !createModeOn && permissions.has(Permission.canCreateUser)) {
-        <div class="button-row">
-            <button mat-stroked-button color="primary" (click)="switchToCreate()">
-                {{ 'PersonPage.User.NewUser' | translate }}
+@if (needDataPresenter()) {
+    <app-user-data-presenter [user]="userValue"></app-user-data-presenter>
+    <div class="button-row">
+        @if (editEnabled()) {
+            <button mat-stroked-button color="primary" (click)="switchToEdit()">
+                {{ 'Edit' | translate }}
             </button>
-        </div>
-    }
+        }
+    </div>
+}
 
-    @if (createModeOn) {
-        <app-user-creation-form [personId]="personId()"
-                                (submitted)="createUser($event)"
-                                (canceled)="cancelEditing()"/>
-    }
-    @if (editModeOn) {
-        <app-user-edit-form [user]="user"
-                            (submitted)="updateUser($event)"
-                            (canceled)="cancelEditing()"/>
-    }
+@if (needNewUserButton()) {
+    <div class="button-row">
+        <button mat-stroked-button color="primary" (click)="switchToEdit()">
+            {{ 'PersonPage.User.NewUser' | translate }}
+        </button>
+    </div>
+}
 
-</div>
+@if (isEdit()) {
+    <app-user-edit-form [user]="userValue"
+                        [personId]="personId()"
+                        (submitted)="setSavedUser($event)"
+                        (canceled)="cancelEditing()"/>
+}

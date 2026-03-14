@@ -1,31 +1,28 @@
 <section>
+    @let personValue = person();
     <div class="page-content">
-
-        <div class="person-part">
-            @if (isEditMode()) {
-                <app-person-data-form [person]="person"
-                                      (submitted)="savePerson($event)"
-                                      (canceled)="cancelEditing()"/>
-            } @else {
-                <app-person-data-presenter [person]="person"/>
-                <div class="button-row">
-                    @if (isEditEnabled) {
-                        <button mat-stroked-button color="primary" (click)="switchToEdit()">
-                            {{ 'Edit' | translate }}
-                        </button>
-                    }
-                </div>
-            }
-        </div>
-
-        @if (person) {
-            <div class="divider"></div>
-            <div class="user-part">
-                <app-user-detail [personId]="person.id"
-                                 [userId]="person.user?.id"
-                                 [editEnabled]="isEditEnabled"/>
+        @if (isEdit()) {
+            <app-person-data-form [person]="personValue"
+                                  (submitted)="setSavedPerson($event)"
+                                  (canceled)="cancelEditing()"/>
+        } @else {
+            <app-person-data-presenter [person]="personValue"/>
+            <div class="button-row">
+                @if (isEditEnabled()) {
+                    <button mat-stroked-button color="primary" (click)="switchToEdit()">
+                        {{ 'Edit' | translate }}
+                    </button>
+                }
             </div>
         }
 
+        @if (personValue) {
+            <div class="divider"></div>
+            <div class="user-part">
+                <app-user-detail [personId]="personValue.id"
+                                 [userId]="personValue.user?.id"
+                                 [editEnabled]="isEditEnabled()"/>
+            </div>
+        }
     </div>
 </section>

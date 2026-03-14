@@ -48,6 +48,10 @@ export class MyProfileComponent {
         this.route.setParam('edit', true);
     }
 
+    protected setSavedPerson(newPerson: Person): void {
+        this.person.set(newPerson);
+    }
+
     protected cancelEdit(): void {
         this.editMode.set(false);
         this.route.removeParam('edit');

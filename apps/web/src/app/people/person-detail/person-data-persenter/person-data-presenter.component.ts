@@ -4,13 +4,10 @@ import {PeopleService} from '@fe/app/people/people.service';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
 import {OptionalPipe} from '@fe/app/util/optional.pipe';
-import {DatePipe, NgIf} from '@angular/common';
+import {DatePipe} from '@angular/common';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {FormsModule} from '@angular/forms';
 
 @Component({
-    selector: 'app-person-data-presenter',
-    templateUrl: './person-data-presenter.component.html',
     imports: [
         TranslatePipe,
         MatCard,
@@ -21,10 +18,13 @@ import {FormsModule} from '@angular/forms';
         DatePipe,
         MatCardContent,
         MatCheckbox,
-        FormsModule,
-        NgIf
     ],
-    styleUrls: ['./person-data-presenter.component.scss']
+    selector: 'app-person-data-presenter',
+    templateUrl: './person-data-presenter.component.html',
+    styleUrls: ['./person-data-presenter.component.scss'],
+    host: {
+        class: 'data-details'
+    }
 })
 export class PersonDataPresenterComponent {
 

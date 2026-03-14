@@ -8,7 +8,7 @@ import {
     VisitActivityInput,
     WrappedVisitActivity
 } from '@melluin/common';
-import {getErrorHandler} from '@fe/app/util/util';
+import {getErrorHandler} from '@fe/app/util/error/error-handler';
 import {MessageService} from '@fe/app/util/message.service';
 import {environment} from '@fe/environment';
 

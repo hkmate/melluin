@@ -7,9 +7,7 @@ import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {isUUID} from '@fe/app/util/util';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class PersonResolver implements Resolve<Person | CreateMarkerType | undefined> {
 
     private readonly router = inject(Router);

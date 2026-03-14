@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, computed, effect, inject, input, output, signal} from '@angular/core';
 import {
+    emptyToUndef,
     isNil,
     isNilOrEmpty,
     passwordMinLength,
@@ -22,7 +23,7 @@ import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/inpu
 import {UserSettingsEditorComponent} from '@fe/app/my-profile/user-settings-editor/user-settings-editor.component';
 import {CredentialStoreService} from '@fe/app/auth/service/credential-store.service';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
-import {form, FormField, pattern, required, submit} from '@angular/forms/signals';
+import {email, form, FormField, pattern, required, submit} from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
 import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
 import {t} from '@fe/app/util/translate/translate';
@@ -46,6 +47,7 @@ import {PasswordInputComponent} from '@fe/app/util/password-input/password-input
         MelluinMatErrorComponent,
         PasswordInputComponent
     ],
+    providers: [UserService],
     selector: 'app-my-profile-editor',
     templateUrl: './my-profile-editor.component.html',
     styleUrls: ['./my-profile-editor.component.scss'],
@@ -62,12 +64,14 @@ export class MyProfileEditorComponent {
     public readonly user = input.required<User>();
     public readonly userSettings = input.required<UserSettings>();
 
+    public readonly submitted = output<Person>();
     public readonly editEnded = output<void>();
 
     protected readonly personModel = signal(this.getDefaultPersonFormModel());
     protected readonly personForm = form(this.personModel, schema => {
         required(schema.firstName, {message: t('Form.Required')});
         required(schema.lastName, {message: t('Form.Required')});
+        email(schema.email, {message: t('Form.EmailFormat')});
     });
 
     protected readonly userModel = signal(this.getDefaultUserFormModel());
@@ -93,7 +97,10 @@ export class MyProfileEditorComponent {
 
     protected submitPersonForm(): void {
         submit(this.personForm, async () => {
-            await firstValueFrom(this.peopleService.updatePerson(this.person().id, this.generatePersonRewriteDto()));
+            const newPerson = await firstValueFrom(
+                this.peopleService.updatePerson(this.person().id, this.generatePersonRewriteDto())
+            );
+            this.submitted.emit(newPerson);
             this.msg.success('SaveSuccessful');
         })
     }
@@ -160,8 +167,8 @@ export class MyProfileEditorComponent {
         return {
             firstName: model.firstName,
             lastName: model.lastName,
-            email: model.email,
-            phone: model.phone,
+            email: emptyToUndef(model.email),
+            phone: emptyToUndef(model.phone),
             cities: this.person().cities!,
             preferences: {
                 canVolunteerSeeMyEmail: model.canVolunteerSeeMyEmail,

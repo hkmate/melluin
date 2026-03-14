@@ -4,9 +4,7 @@ import {isNil, Person} from '@melluin/common';
 import {AppLanguages} from '@fe/app/language/app-language';
 import {t} from '@fe/app/util/translate/translate';
 
-@Pipe({
-    name: 'personName'
-})
+@Pipe({name: 'personName'})
 export class PersonNamePipe implements PipeTransform {
 
     private readonly i18n = inject(TranslateService);

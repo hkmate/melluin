@@ -6,9 +6,7 @@ import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {isUUID} from '@fe/app/util/util';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class DepartmentResolver implements Resolve<Department | CreateMarkerType | undefined> {
 
     private readonly departmentService = inject(DepartmentService);

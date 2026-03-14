@@ -7,7 +7,7 @@ import {VisitService} from '@fe/app/hospital/visit/visit.service';
 import {MatButton} from '@angular/material/button';
 import {LoaderService} from '@fe/app/loader/loader.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {getErrorHandler} from '@fe/app/util/util';
+import {getErrorHandler} from '@fe/app/util/error/error-handler';
 import {MessageService} from '@fe/app/util/message.service';
 import {VisitConnectedVisitComponent} from '@fe/app/hospital/visit/visit-details/visit-connections/visit-connected-visit/visit-connected-visit.component';
 import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';

@@ -4,9 +4,7 @@
             <h1>{{ 'Titles.PeopleList' | translate }}</h1>
             <span>
                 @if (permissions.has(Permission.canCreatePerson)) {
-                    <button mat-mini-fab
-                            color="accent"
-                            [routerLink]="['new']">
+                    <button mat-mini-fab color="accent" [routerLink]="['new']">
                         <mat-icon>add</mat-icon>
                     </button>
                 }
@@ -39,7 +37,7 @@
                 <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let person">
-                        @if (!person.user) {
+                        @if (person.user | isNil) {
                             <mat-icon class="material-icons-outlined is-user-icon"
                                       [matTooltip]="'PeopleListPage.NoUserAdded' | translate">
                                 no_accounts
@@ -99,12 +97,12 @@
                     <td mat-cell *matCellDef="let person">
                         @let createdBy = person.createdByPersonId ? creators()[person.createdByPersonId] : undefined;
                         <span [class]="{'no-data': !createdBy}">
-                        @if (createdBy) {
-                            <a class="link" [routerLink]="[createdBy.id]">{{ createdBy | personName }}</a>
-                        } @else {
-                            {{ 'NoData' | translate }}
-                        }
-                    </span>
+                            @if (createdBy) {
+                                <a class="link" [routerLink]="[createdBy.id]">{{ createdBy | personName }}</a>
+                            } @else {
+                                {{ 'NoData' | translate }}
+                            }
+                        </span>
                     </td>
                 </ng-container>
 
@@ -122,9 +120,9 @@
             </table>
         </div>
 
-        <mat-paginator [length]="countOfAll"
-                       [pageIndex]="page - 1"
-                       [pageSize]="size"
+        <mat-paginator [length]="countOfAll()"
+                       [pageIndex]="page() - 1"
+                       [pageSize]="size()"
                        [pageSizeOptions]="sizeOptions"
                        (page)="paginateHappened($event)">
         </mat-paginator>

@@ -6,61 +6,44 @@
     }
 </h1>
 
-<form [formGroup]="form()">
+<form (appSubmit)="submitForm()">
+    <app-trimmed-text-input
+            [placeholder]="'PersonPage.Form.LastNamePlaceholder' | translate"
+            [label]="'PersonPage.Form.LastName' | translate"
+            [formField]="form.lastName"/>
 
-    <div>
-        <app-trimmed-text-input
-                [placeholder]="'PersonPage.Form.LastNamePlaceholder' | translate"
-                [label]="'PersonPage.Form.LastName' | translate"
-                formControlName="lastName"/>
-    </div>
+    <app-trimmed-text-input
+            [label]=" 'PersonPage.Form.FirstName' | translate"
+            [placeholder]="'PersonPage.Form.FirstNamePlaceholder' | translate"
+            [formField]="form.firstName"/>
 
-    <div>
-        <app-trimmed-text-input
-                [label]=" 'PersonPage.Form.FirstName' | translate"
-                [placeholder]="'PersonPage.Form.FirstNamePlaceholder' | translate"
-                formControlName="firstName"/>
-    </div>
+    <app-trimmed-text-input
+            [label]=" 'PersonPage.Form.Email' | translate"
+            [placeholder]="'PersonPage.Form.EmailPlaceholder' | translate"
+            [formField]="form.email"/>
 
-    <div>
-        <app-trimmed-text-input
-                [label]=" 'PersonPage.Form.Email' | translate"
-                [placeholder]="'PersonPage.Form.EmailPlaceholder' | translate"
-                formControlName="email"/>
-    </div>
+    <app-trimmed-text-input
+            [label]=" 'PersonPage.Form.Phone' | translate"
+            [placeholder]="'PersonPage.Form.PhonePlaceholder' | translate"
+            [formField]="form.phone">
+    </app-trimmed-text-input>
 
-    <div>
-        <app-trimmed-text-input
-                [label]=" 'PersonPage.Form.Phone' | translate"
-                [placeholder]="'PersonPage.Form.PhonePlaceholder' | translate"
-                formControlName="phone">
-        </app-trimmed-text-input>
-    </div>
-
-    <div>
-        <mat-form-field>
-            <mat-label>{{ 'PersonPage.Form.OperationCities' | translate }}</mat-label>
-            <mat-select formControlName="cities" [multiple]="true">
-                @for (city of cityOptions; track city) {
-                    <mat-option [value]="city">{{ 'OperationCities.' + city | translate }}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-    </div>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.Form.OperationCities' | translate }}</mat-label>
+        <mat-select [formField]="form.cities" [multiple]="true">
+            @for (city of cityOptions; track city) {
+                <mat-option [value]="city">{{ 'OperationCities.' + city | translate }}</mat-option>
+            }
+        </mat-select>
+        <mat-error [fField]="form.cities"/>
+    </mat-form-field>
 
     <div class="button-row">
-        <button mat-flat-button
-                color="accent"
-                (click)="onSubmit()"
-                type="button">
+        <button mat-flat-button color="accent">
             {{ 'SaveButton' | translate }}
         </button>
-        <button mat-stroked-button
-                color="primary"
-                type="button"
-                (click)="cancelEditing()">
+        <button mat-stroked-button color="primary" type="button" (click)="cancelEditing()">
             {{ 'CancelButton' | translate }}
         </button>
     </div>
-
 </form>

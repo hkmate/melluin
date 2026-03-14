@@ -1,15 +1,5 @@
-import {Component, effect, inject, signal} from '@angular/core';
-import {
-    FilterOptions,
-    isEmpty,
-    isNotNil,
-    Pageable,
-    PageQuery,
-    Permission,
-    Person,
-    SortOptions,
-    UUID
-} from '@melluin/common';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {isEmpty, isNotNil, Pageable, PageQuery, Permission, Person, SortOptions, UUID} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 import {AppTitle} from '@fe/app/app-title.service';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
@@ -37,7 +27,10 @@ import {
     MatColumnDef,
     MatHeaderCell,
     MatHeaderCellDef,
-    MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRow,
+    MatRowDef,
     MatTable
 } from '@angular/material/table';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
@@ -45,12 +38,10 @@ import {MatTooltip} from '@angular/material/tooltip';
 import {OptionalPipe} from '@fe/app/util/optional.pipe';
 import {PeopleLastLoginStylePipe} from '@fe/app/people/people-list/people-last-login-style.pipe';
 import {DatePipe} from '@angular/common';
-import {keyBy, uniq} from 'lodash-es';
+import {difference, keyBy, uniq} from 'lodash-es';
+import {IsNilPipe} from '@fe/app/util/is-nil/is-nil.pipe';
 
 @Component({
-    selector: 'app-people-list',
-    templateUrl: './people-list.component.html',
-    styleUrls: ['./people-list.component.scss'],
     imports: [
         TranslatePipe,
         MatMiniFabButton,
@@ -77,7 +68,8 @@ import {keyBy, uniq} from 'lodash-es';
         MatHeaderRowDef,
         MatRow,
         MatRowDef,
-        MatPaginator
+        MatPaginator,
+        IsNilPipe
     ],
     providers: [
         UrlParamHandler,
@@ -85,7 +77,11 @@ import {keyBy, uniq} from 'lodash-es';
         PeopleListQueryParamSettingsInitializer,
         PeopleListQueryParamHandler,
         PeopleListFilterSensitiveDataHider
-    ]
+    ],
+    selector: 'app-people-list',
+    templateUrl: './people-list.component.html',
+    styleUrls: ['./people-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PeopleListComponent {
 
@@ -100,13 +96,13 @@ export class PeopleListComponent {
     protected readonly sizeOptions = [20, 50, 100];
     protected readonly columns = ['name', 'status', 'email', 'phone', 'lastLogin', 'created', 'createdBy', 'options'];
 
-    protected page: number;
-    protected size: number;
-    protected countOfAll: number;
-    protected items = signal<Array<Person>>([]);
-    protected creators = signal<Record<UUID, Person>>({});
+    protected readonly page = signal(0);
+    protected readonly size = signal(this.sizeOptions[1]);
+    protected readonly countOfAll = signal(0);
+    protected readonly items = signal<Array<Person>>([]);
+    protected readonly creators = signal<Record<UUID, Person>>({});
 
-    private sort: SortOptions = {
+    private readonly sort: SortOptions = {
         lastName: 'ASC'
     };
 
@@ -116,7 +112,6 @@ export class PeopleListComponent {
             this.setUpPageInfo();
             this.loadData();
         });
-        effect(() => this.setUpCreators());
     }
 
     protected paginateHappened(event: PageEvent): void {
@@ -125,47 +120,50 @@ export class PeopleListComponent {
 
     private setUpPageInfo(): void {
         const pageInfo = this.filterService.getPageInfo();
-        this.page = pageInfo.page;
-        this.size = pageInfo.size;
+        this.page.set(pageInfo.page);
+        this.size.set(pageInfo.size);
     }
 
-    private loadData(page?: number, size?: number): void {
-        this.peopleService.findPeople(this.createPageRequest(page, size)).subscribe(
+    private loadData(): void {
+        this.peopleService.findPeople(this.createPageRequest()).subscribe(
             (page: Pageable<Person>) => {
                 this.items.set(page.items);
-                this.page = page.meta.currentPage;
-                this.countOfAll = page.meta.totalItems!;
-                this.size = page.meta.itemsPerPage;
+                this.setUpCreators();
+                this.page.set(page.meta.currentPage);
+                this.size.set(page.meta.itemsPerPage);
+                this.countOfAll.set(page.meta.totalItems!);
             }
         );
     }
 
-    private createPageRequest(pageIndex?: number, pageSize?: number): PageQuery {
+    private createPageRequest(): PageQuery {
         return {
-            page: pageIndex ?? this.page,
-            size: pageSize ?? this.size,
+            page: this.page(),
+            size: this.size(),
             sort: this.sort,
-            where: this.createWhereClosure()
+            where: this.filterService.generateFilterOptions()
         };
-    }
-
-    private createWhereClosure(): FilterOptions | undefined {
-        return this.filterService.generateFilterOptions();
     }
 
     private setUpCreators(): void {
         const creatorIds = this.items().map(person => person.createdByPersonId).filter(isNotNil);
         const uniqueCreatorIds = uniq(creatorIds);
-        if (isEmpty(uniqueCreatorIds)) {
-            this.creators.set({});
+        const newCreatorIds = difference(uniqueCreatorIds, Object.keys(this.creators()) as Array<UUID>);
+        if (isEmpty(newCreatorIds)) {
             return;
         }
+        this.loadAndSetCreatorsById(newCreatorIds);
+    }
+
+    private loadAndSetCreatorsById(newCreatorIds: Array<UUID>): void {
         this.peopleService.findPeople({
-            page: 1,
-            size: 100,
-            where: [{'id': {operator: 'in', operand: uniqueCreatorIds}}]
+            page: 1, size: 100,
+            where: [{'id': {operator: 'in', operand: newCreatorIds}}]
         }).subscribe(people => {
-            this.creators.set(keyBy(people.items, 'id'));
+            this.creators.update(prev => ({
+                    ...prev, ...keyBy(people.items, 'id')
+                })
+            );
         });
     }
 

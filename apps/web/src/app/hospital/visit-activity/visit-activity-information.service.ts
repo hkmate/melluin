@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MessageService} from '@fe/app/util/message.service';
 import {Observable} from 'rxjs';
-import {getErrorHandler} from '@fe/app/util/util';
+import {getErrorHandler} from '@fe/app/util/error/error-handler';
 import {UUID, VisitActivityInfo, VisitActivityInfoInput} from '@melluin/common';
 import {environment} from '@fe/environment';
 

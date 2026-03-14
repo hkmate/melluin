@@ -2,11 +2,11 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User, UserCreation, UserRewrite, UserSettings, UUID} from '@melluin/common';
-import {getErrorHandler} from '@fe/app/util/util';
+import {getErrorHandler} from '@fe/app/util/error/error-handler';
 import {MessageService} from '@fe/app/util/message.service';
 import {environment} from '@fe/environment';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class UserService {
 
     private readonly http = inject(HttpClient);

@@ -14,6 +14,7 @@ import {ListPageSettingChangeReason, ListPageSettingChangeReasons} from '@fe/app
 import {PeopleFilter} from '@fe/app/people/people-list/people-list-filter/service/people-filter';
 import {PeopleListFilterSensitiveDataHider} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter-sensitive-data-hider';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {isEqual} from 'lodash-es';
 
 
 @Injectable()
@@ -23,7 +24,7 @@ export class PeopleListFilterService {
     private readonly queryParamHandler = inject(PeopleListQueryParamHandler);
     private readonly filterHider = inject(PeopleListFilterSensitiveDataHider);
 
-    private settingsChanged = new BehaviorSubject<ListPageSettingChangeReason>(ListPageSettingChangeReasons.ALL);
+    private readonly settingsChanged = new BehaviorSubject<ListPageSettingChangeReason>(ListPageSettingChangeReasons.ALL);
     private page: PageInfo;
     private filter: PeopleFilter;
 
@@ -47,6 +48,9 @@ export class PeopleListFilterService {
     }
 
     public setPageInfo(newFilter: PageInfo): void {
+        if (isEqual(newFilter, this.page)) {
+            return;
+        }
         this.page = newFilter;
         this.queryParamHandler.saveSettings(this.filter, this.page);
         this.settingsChanged.next(ListPageSettingChangeReasons.PAGE_DATA);
@@ -60,7 +64,11 @@ export class PeopleListFilterService {
     }
 
     public setFilter(newFilter: PeopleFilter): void {
-        this.filter = this.filterHider.hideData(newFilter);
+        const normalized = this.filterHider.hideData(newFilter);
+        if (isEqual(normalized, this.filter)) {
+            return;
+        }
+        this.filter = normalized;
         this.queryParamHandler.saveSettings(this.filter, this.page);
         this.settingsChanged.next(ListPageSettingChangeReasons.FILTERS);
     }

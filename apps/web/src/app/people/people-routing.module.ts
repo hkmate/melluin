@@ -25,6 +25,7 @@ import {Permission} from '@melluin/common';
                     permissions: [Permission.canReadPerson]
                 },
                 component: PersonDetailComponent,
+                providers: [PersonResolver],
                 resolve: {person: PersonResolver}
             }
         ]),

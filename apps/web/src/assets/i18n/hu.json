@@ -36,7 +36,9 @@
     },
     "Form": {
         "Required": "Kötelező mező",
-        "Min": "Minimum: {{min}}"
+        "Min": "Minimum: {{min}}",
+        "EmailFormat": "Valid email címet kell megadni",
+        "Phone": "Valid telefonszámot kell megadni"
     },
     "Datepicker": {
         "DatePlaceholder": "Válassz dátumot"

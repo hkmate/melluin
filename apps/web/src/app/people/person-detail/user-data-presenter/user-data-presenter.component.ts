@@ -6,8 +6,6 @@ import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} f
 import {DatePipe} from '@angular/common';
 
 @Component({
-    selector: 'app-user-data-presenter',
-    templateUrl: './user-data-presenter.component.html',
     imports: [
         TranslatePipe,
         MatCard,
@@ -17,7 +15,11 @@ import {DatePipe} from '@angular/common';
         DatePipe,
         MatCardContent
     ],
-    styleUrls: ['./user-data-presenter.component.scss']
+    selector: 'app-user-data-presenter',
+    templateUrl: './user-data-presenter.component.html',
+    host: {
+        class: 'data-details'
+    }
 })
 export class UserDataPresenterComponent {
 

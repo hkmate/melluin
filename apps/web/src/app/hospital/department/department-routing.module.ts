@@ -22,6 +22,7 @@ const routes: Routes = [
         data: {
             permissions: [Permission.canReadDepartment]
         },
+        providers: [DepartmentResolver],
         resolve: {department: DepartmentResolver}
     }
 ];

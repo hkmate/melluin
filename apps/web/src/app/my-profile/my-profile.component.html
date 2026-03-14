@@ -6,7 +6,7 @@
         @if (userValue && personValue && userSettingsValue) {
             @if (editMode()) {
                 <app-my-profile-editor [user]="userValue" [person]="personValue" [userSettings]="userSettingsValue"
-                                       (editEnded)="cancelEdit()"/>
+                                       (submitted)="setSavedPerson($event)" (editEnded)="cancelEdit()"/>
             } @else {
                 <div>
                     <app-my-profile-present [person]="personValue" [user]="userValue" [userSettings]="userSettingsValue"/>

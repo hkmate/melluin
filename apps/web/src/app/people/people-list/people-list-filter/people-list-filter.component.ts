@@ -1,36 +1,35 @@
-import {Component, computed, inject} from '@angular/core';
+import {Component, computed, effect, inject, signal} from '@angular/core';
 import {filter} from 'rxjs';
 import {reasonIsNotPageData} from '@fe/app/util/list-page-settings-change-reason';
-import {PeopleFilter} from '@fe/app/people/people-list/people-list-filter/service/people-filter';
 import {PeopleListFilterService} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter.service';
-import {OperationCities, Permission, RoleBrief} from '@melluin/common';
+import {OperationCities, Permission} from '@melluin/common';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {LazyInputComponent} from '@fe/app/util/lazy-input/lazy-input.component';
+import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
+import {LazyInputComponent2} from '@fe/app/util/lazy-input/lazy-input.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
-import {FormsModule} from '@angular/forms';
+import {form, FormField} from '@angular/forms/signals';
 import {MatCard, MatCardSubtitle} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
+import {isEqual} from 'lodash-es';
 
 @Component({
     imports: [
-        LazyInputComponent,
+        LazyInputComponent2,
         TranslatePipe,
         MatFormField,
         MatLabel,
         MatSelect,
-        FormsModule,
         MatOption,
         MatCardSubtitle,
         MatCard,
-        MatCheckbox
+        MatCheckbox,
+        FormField
     ],
     selector: 'app-people-list-filter',
-    templateUrl: './people-list-filter.component.html',
-    styleUrl: './people-list-filter.component.scss'
+    templateUrl: './people-list-filter.component.html'
 })
 export class PeopleListFilterComponent {
 
@@ -40,31 +39,20 @@ export class PeopleListFilterComponent {
     private readonly roleService = inject(GetRolesService);
     private readonly filterService = inject(PeopleListFilterService);
 
-    protected filters: PeopleFilter;
-    protected roleOptions: Array<RoleBrief>;
-    protected readonly needEmailFilter = computed(() => this.permissions.has(Permission.canReadSensitivePersonData));
-    protected readonly needPhoneFilter = computed(() => this.permissions.has(Permission.canReadSensitivePersonData));
+    protected readonly roleOptions = toSignal(this.roleService.getAll(), {initialValue: []});
+    protected readonly needSensitiveFilter = computed(() => this.permissions.has(Permission.canReadSensitivePersonData));
+    protected readonly filterModel = signal(this.filterService.getFilter(), {equal: isEqual});
+    protected readonly form = form(this.filterModel)
 
     constructor() {
-        this.filterService.onChange().pipe(takeUntilDestroyed(), filter(reasonIsNotPageData)).subscribe(() => {
-            this.resetSettings()
-        });
-        this.loadRoles();
-        this.resetSettings();
-    }
-
-    protected filterSet(): void {
-        this.filterService.setFilter(this.filters);
+        this.filterService.onChange()
+            .pipe(takeUntilDestroyed(), filter(reasonIsNotPageData))
+            .subscribe(() => this.resetSettings());
+        effect(() => this.filterService.setFilter(this.filterModel()));
     }
 
     private resetSettings(): void {
-        this.filters = this.filterService.getFilter();
-    }
-
-    private loadRoles(): void {
-        this.roleService.getAll().subscribe(roles => {
-            this.roleOptions = roles;
-        })
+        this.filterModel.set(this.filterService.getFilter());
     }
 
 }

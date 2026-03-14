@@ -9,4 +9,3 @@ export interface UserRewrite {
     customPermissions: Array<PermissionT>;
 
 }
-

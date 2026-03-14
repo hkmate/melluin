@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of, tap} from 'rxjs';
-import {getErrorHandler} from '@fe/app/util/util';
+import {getErrorHandler} from '@fe/app/util/error/error-handler';
 import {MessageService} from '@fe/app/util/message.service';
 import {isNil, RoleBrief} from '@melluin/common';
 import {environment} from '@fe/environment';

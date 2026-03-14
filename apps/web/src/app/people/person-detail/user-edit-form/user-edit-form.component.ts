@@ -1,36 +1,40 @@
-import {Component, computed, inject, input, output} from '@angular/core';
+import {Component, computed, inject, input, linkedSignal, output} from '@angular/core';
 import {
-    isNotNil,
+    emptyToUndef,
+    isNil,
     passwordMinLength,
     passwordPattern,
     Permission,
     PermissionT,
     RoleBrief,
     User,
-    UserRewrite
+    UserCreation,
+    UserRewrite,
+    UUID
 } from '@melluin/common';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
 import {TranslatePipe} from '@ngx-translate/core';
-import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
-import {MatFormField, MatHint, MatInput, MatLabel} from '@angular/material/input';
+import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
+import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle} from '@angular/material/card';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatButton} from '@angular/material/button';
+import {disabled, form, FormField, pattern, required, submit} from '@angular/forms/signals';
+import {t} from '@fe/app/util/translate/translate';
+import {firstValueFrom, Observable} from 'rxjs';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {AppSubmit} from '@fe/app/util/submit/app-submit';
+import {PasswordInputComponent} from '@fe/app/util/password-input/password-input.component';
+import {UserService} from '@fe/app/people/user.service';
 
 @Component({
-    selector: 'app-user-edit-form',
-    templateUrl: './user-edit-form.component.html',
     imports: [
         TranslatePipe,
-        ReactiveFormsModule,
-        TrimmedTextInputComponent,
+        TrimmedTextInputComponent2,
         MatFormField,
         MatLabel,
-        MatInput,
-        MatHint,
         MatCard,
         MatCardHeader,
         MatCardSubtitle,
@@ -38,73 +42,102 @@ import {MatButton} from '@angular/material/button';
         MatSlideToggle,
         MatSelect,
         MatOption,
-        MatButton
+        MatButton,
+        AppSubmit,
+        FormField,
+        PasswordInputComponent
     ],
+    selector: 'app-user-edit-form',
+    templateUrl: './user-edit-form.component.html',
     styleUrls: ['./user-edit-form.component.scss']
 })
 export class UserEditFormComponent {
 
-    private readonly fb = inject(FormBuilder);
     private readonly roleService = inject(GetRolesService);
     private readonly permission = inject(PermissionService);
+    private readonly userService = inject(UserService);
 
-    protected readonly passwordMinLength = passwordMinLength;
     protected readonly permissions: Array<PermissionT> = Object.values(Permission);
 
+    public readonly personId = input.required<UUID>();
     public readonly user = input<User>();
 
-    public readonly submitted = output<UserRewrite>();
+    public readonly submitted = output<User>();
     public readonly canceled = output<void>();
 
-    protected roleOptions: Array<RoleBrief>;
-    protected roles: Array<RoleBrief>;
-    protected readonly form = computed(() => this.initForm());
+    protected readonly roles = toSignal(this.roleService.getAll(), {initialValue: []});
+    protected readonly roleOptions = computed(() => this.computeRoleOptions());
+    protected readonly passwordHint = computed(() => this.computePasswordHint());
 
-    constructor() {
-        this.roleService.getAll().subscribe(roles => {
-            this.roles = roles;
-            const manageableRoleTypes = this.permission.getRolesTypesCanBeManaged();
-            this.roleOptions = roles.filter(role => manageableRoleTypes.includes(role.type));
+    protected readonly formModel = linkedSignal(() => this.getFormModel(this.user()));
+    protected readonly form = form(this.formModel, schema => {
+        required(schema.userName, {message: t('Form.Required')});
+
+        required(schema.password, {message: t('Form.Required'), when: () => isNil(this.user())});
+        pattern(schema.password, new RegExp(passwordPattern),
+            {message: t('PersonPage.User.Form.PasswordPatternHint', {passwordMinLength})}
+        );
+
+        disabled(schema.customPermissions, () => !this.permission.has(Permission.canManagePermissions));
+        disabled(schema.isActive, () => isNil(this.user()));
+    });
+
+    protected submitForm(): void {
+        submit(this.form, async () => {
+            const saved = await firstValueFrom(this.save());
+            this.submitted.emit(saved);
         });
-    }
-
-    protected isUserSetToActive(): boolean {
-        return this.form().controls.isActive.value;
-    }
-
-    protected onSubmit(): void {
-        this.submitted.emit(this.createUserUpdate());
     }
 
     protected cancelEditing(): void {
         this.canceled.emit();
     }
 
-    private initForm(): FormGroup {
-        const userToEdit = this.user();
-        const form = this.fb.group({
-            password: [undefined, [Validators.pattern(passwordPattern)]],
-            isActive: [userToEdit?.isActive],
-            roles: [userToEdit?.roles.map(r => r.name)],
-            customPermissions: [userToEdit?.customPermissions],
-            userName: [userToEdit?.userName]
-        });
-        if (!this.permission.has(Permission.canManagePermissions)) {
-            form.controls.customPermissions.disable();
-        }
-        return form;
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    private getFormModel(user: User | undefined) {
+        return {
+            userName: user?.userName ?? '',
+            password: '',
+            isActive: user?.isActive ?? true,
+            roleNames: user?.roles?.map(r => r.name) ?? [],
+            customPermissions: user?.customPermissions ?? []
+        };
     }
 
-    private createUserUpdate(): UserRewrite {
-        const data = {} as UserRewrite;
-        if (isNotNil(this.form().controls.password.value)) {
-            data.password = this.form().controls.password.value
+    private save(): Observable<User> {
+        const user = this.user();
+        if (isNil(user)) {
+            return this.userService.addUser(this.generateCreateDto());
         }
-        data.isActive = this.form().controls.isActive.value;
-        data.userName = this.form().controls.userName.value;
-        data.roleNames = this.form().controls.roles.value;
-        data.customPermissions = this.form().controls.customPermissions.value;
-        return data;
+        return this.userService.updateUser(user.id, this.generateRewriteDto());
+    }
+
+    private generateRewriteDto(): UserRewrite {
+        const {password, ...formValue} = this.form().value();
+        return {
+            ...formValue,
+            password: emptyToUndef(password),
+        } satisfies UserRewrite;
+    }
+
+    private generateCreateDto(): UserCreation {
+        const {isActive, ...formValue} = this.form().value();
+        return {
+            ...formValue,
+            personId: this.personId(),
+        } satisfies UserCreation
+    }
+
+    private computeRoleOptions(): Array<RoleBrief> {
+        const manageableRoleTypes = this.permission.getRolesTypesCanBeManaged();
+        return this.roles().filter(role => manageableRoleTypes.includes(role.type));
+    }
+
+    private computePasswordHint(): string | undefined {
+        if (this.user()) {
+            return t('PersonPage.User.Form.PasswordHint');
+        }
+        return undefined;
     }
 
 }

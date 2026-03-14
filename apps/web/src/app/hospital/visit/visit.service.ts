@@ -10,7 +10,7 @@ import {
     VisitCreate,
     VisitRewrite
 } from '@melluin/common';
-import {getErrorHandler} from '@fe/app/util/util';
+import {getErrorHandler} from '@fe/app/util/error/error-handler';
 import {MessageService} from '@fe/app/util/message.service';
 import {ContinueVisitInfo} from '@fe/app/hospital/visit/model/continue-visit-info';
 import {environment} from '@fe/environment';

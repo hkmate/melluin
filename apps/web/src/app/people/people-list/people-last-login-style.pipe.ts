@@ -2,9 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {BriefUser, isNil, Person} from '@melluin/common';
 import dayjs from 'dayjs';
 
-@Pipe({
-    name: 'lastLoginStyle'
-})
+@Pipe({name: 'lastLoginStyle'})
 export class PeopleLastLoginStylePipe implements PipeTransform {
 
     public transform(value: Person): Record<string, boolean> {

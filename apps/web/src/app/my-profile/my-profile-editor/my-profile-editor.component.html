@@ -42,9 +42,7 @@
     </div>
 
     <div class="button-row">
-        <button mat-flat-button color="accent"
-                [disabled]="isPersonFormBtnDisabled()"
-                (click)="submitPersonForm()">
+        <button mat-flat-button color="accent" [disabled]="isPersonFormBtnDisabled()">
             {{ 'SaveButton' | translate }}
         </button>
     </div>
@@ -66,9 +64,7 @@
                         [hint]="'PersonPage.User.Form.PasswordHint' | translate"/>
 
     <div class="button-row">
-        <button mat-flat-button color="accent"
-                [disabled]="isUserFormBtnDisabled()"
-                (click)="submitUserForm()">
+        <button mat-flat-button color="accent" [disabled]="isUserFormBtnDisabled()">
             {{ 'SaveButton' | translate }}
         </button>
     </div>

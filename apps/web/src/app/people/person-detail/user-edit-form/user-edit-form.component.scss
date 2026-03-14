@@ -1,20 +1,4 @@
-form {
-
-    .status-card {
-        margin-bottom: .5rem;
-    }
-
-    .button-row {
-        margin-top: .5rem;
-        display: flex;
-        justify-content: flex-end;
-
-        button {
-            margin-right: .5rem;
-
-            &:last-of-type {
-                margin-right: 0;
-            }
-        }
-    }
+.status-card {
+    margin-top: .5rem;
+    margin-bottom: 1rem;
 }

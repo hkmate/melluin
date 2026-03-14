@@ -9,7 +9,7 @@ import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimme
 import {MatButton} from '@angular/material/button';
 import {form, FormField, required, submit} from '@angular/forms/signals';
 import {finalize, firstValueFrom} from 'rxjs';
-import {getErrorHandler} from '@fe/app/util/util';
+import {getErrorHandler} from '@fe/app/util/error/error-handler';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {t} from '@fe/app/util/translate/translate';
 import {PasswordInputComponent} from '@fe/app/util/password-input/password-input.component';

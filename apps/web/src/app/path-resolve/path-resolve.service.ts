@@ -12,9 +12,7 @@ export abstract class PathProvider {
 
 }
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class PathResolveService implements Resolve<string> {
 
     private static readonly NO_DISTANCE = 0;
