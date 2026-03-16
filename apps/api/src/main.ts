@@ -4,7 +4,6 @@ import {ConfigService} from '@nestjs/config';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {DocumentBuilder, OpenAPIObject, SwaggerModule} from '@nestjs/swagger';
 import helmet from 'helmet';
-import {handleMigrations} from '@be/flyway';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const types = require('pg').types
@@ -60,7 +59,5 @@ function setupOpenApi(app: INestApplication): void {
 }
 
 
-handleMigrations().then(() => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    bootstrap();
-});
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+bootstrap();
