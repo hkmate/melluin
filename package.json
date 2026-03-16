@@ -18,6 +18,6 @@
     },
     "packageManager": "pnpm@10.29.3",
     "engines": {
-        "node": ">=v24.13"
+        "node": ">=v24.14"
     }
 }

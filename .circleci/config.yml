@@ -6,7 +6,7 @@ orbs:
 executors:
   ci-executor:
     docker:
-      - image: cimg/node:24.13.1-browsers
+      - image: cimg/node:24.14.0-browsers
 
 
 jobs:

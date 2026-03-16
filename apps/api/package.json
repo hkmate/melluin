@@ -9,6 +9,7 @@
         "migrate": "nest start -- migration-only ; rm report.json report.html",
         "start": "nest start",
         "start:dev": "nest start --watch",
+        "start:dev:with-migration": "nest start --watch -- with-migration",
         "start:debug": "nest start --debug --watch",
         "start:prod": "node dist/src/main",
         "start:prod:with-migration": "node dist/src/main with-migration",

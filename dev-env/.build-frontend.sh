@@ -8,7 +8,8 @@ echo "Setup environment variables to config"
 node dev-env/.set-frontend-config.js
 
 echo "Install node modules"
-pnpm install
+RUN pnpm --filter common install
+RUN pnpm --filter web install
 
 echo "Build the application"
 pnpm --filter web build
