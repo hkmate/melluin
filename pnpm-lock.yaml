@@ -17,6 +17,9 @@ importers:
       '@melluin/common':
         specifier: link:../../packages/common
         version: link:../../packages/common
+      '@nestjs/cli':
+        specifier: 11.0.16
+        version: 11.0.16(@swc/core@1.15.18)(@types/node@25.3.3)
       '@nestjs/common':
         specifier: 11.1.14
         version: 11.1.14(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -86,13 +89,16 @@ importers:
       rxjs:
         specifier: 7.8.2
         version: 7.8.2
+      tslib:
+        specifier: 2.8.1
+        version: 2.8.1
       typeorm:
         specifier: 0.3.28
         version: 0.3.28(pg@8.19.0)(ts-node@10.9.2(@swc/core@1.15.18)(@types/node@25.3.3)(typescript@5.9.3))
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
     devDependencies:
-      '@nestjs/cli':
-        specifier: 11.0.16
-        version: 11.0.16(@swc/core@1.15.18)(@types/node@25.3.3)
       '@nestjs/schematics':
         specifier: 11.0.9
         version: 11.0.9(chokidar@4.0.3)(typescript@5.9.3)
@@ -156,12 +162,6 @@ importers:
       tsconfig-paths:
         specifier: 4.2.0
         version: 4.2.0
-      tslib:
-        specifier: 2.8.1
-        version: 2.8.1
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
       unplugin-swc:
         specifier: 1.5.9
         version: 1.5.9(@swc/core@1.15.18)(rollup@4.59.0)
@@ -292,6 +292,9 @@ importers:
       tslib:
         specifier: 2.8.1
         version: 2.8.1
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
     devDependencies:
       '@eslint/js':
         specifier: 10.0.1
@@ -308,9 +311,6 @@ importers:
       ts-node:
         specifier: 10.9.2
         version: 10.9.2(@swc/core@1.15.18)(@types/node@25.3.3)(typescript@5.9.3)
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
       vitest:
         specifier: 4.0.18
         version: 4.0.18(@types/node@25.3.3)(jiti@2.6.1)(jsdom@26.1.0)(less@4.4.2)(sass@1.97.3)(terser@5.46.0)

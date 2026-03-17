@@ -11,8 +11,8 @@ RUN npm install -g pnpm@10.32.1
 RUN bash ./dev-env/api-build-copy-config.sh
 
 RUN echo "Install node modules"
-RUN pnpm --filter common install --frozen-lockfile
-RUN pnpm --filter api install --frozen-lockfile
+RUN pnpm --filter common install --prod --frozen-lockfile
+RUN pnpm --filter api install --prod --frozen-lockfile
 
 RUN echo "Build the application"
 RUN pnpm --filter api build
