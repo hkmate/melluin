@@ -1,21 +1,5 @@
-{
-    "root": true,
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended"
-    ],
-    "settings": {
-        "import/resolver": {
-            "typescript": {}
-        }
-    },
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-        "@typescript-eslint",
-        "import",
-        "max-params-no-constructor"
-    ],
-    "rules": {
+module.exports = {
+    tsSourceRules: {
         "@typescript-eslint/strict-boolean-expressions": [
             "error", {
                 "allowString": false,
@@ -60,15 +44,16 @@
                 }
             }
         ],
-        "@typescript-eslint/no-empty-function": [ "error", {
-                "allow": ["overrideMethods"]
-            }
+        "@typescript-eslint/no-empty-function": ["error", {
+            "allow": ["overrideMethods"]
+        }
         ],
         "@typescript-eslint/no-for-in-array": "error",
         "@typescript-eslint/no-invalid-void-type": "off",
         "@typescript-eslint/no-unused-vars": [
             "error", {
-                "args": "none"
+                "args": "none",
+                "ignoreRestSiblings": true
             }
         ],
         "@typescript-eslint/no-magic-numbers": [
@@ -81,6 +66,10 @@
             }
         ],
         "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-inferrable-types": ["error", {
+            ignoreParameters: true,
+            ignoreProperties: true
+        }],
         "quotes": ["error", "single"],
         "no-constructor-return": ["error"],
         "no-duplicate-imports": ["error"],
@@ -110,7 +99,6 @@
         "max-lines": ["warn", 300],
         "max-lines-per-function": ["warn", 15],
         "max-params": "off",
-        "max-params-no-constructor/max-params-no-constructor": ["warn", 3],
         "no-bitwise": ["error"],
         "no-caller": ["error"],
         "no-confusing-arrow": [
@@ -200,17 +188,12 @@
         "semi-style": ["error", "last"],
         "space-before-blocks": ["error"],
         "space-in-parens": ["error", "never"]
+
     },
-    "overrides": [
-        {
-            "files": ["*spec.ts"],
-            "rules": {
-                "max-lines-per-function": "off",
-                "@typescript-eslint/no-magic-numbers": "off",
-                "max-lines": "off",
-                "no-undefined": "off"
-            }
-        }
-    ],
-    "ignorePatterns": []
-}
+    tsTestRules: {
+        "max-lines-per-function": "off",
+        "@typescript-eslint/no-magic-numbers": "off",
+        "max-lines": "off",
+        "no-undefined": "off"
+    }
+};

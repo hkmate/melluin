@@ -8,7 +8,7 @@
         "sourceMap": true,
         "downlevelIteration": true,
         "experimentalDecorators": true,
-        "moduleResolution": "node",
+        "resolveJsonModule": true,
         "importHelpers": true,
         "useDefineForClassFields": false,
         "removeComments": true,

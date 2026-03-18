@@ -9,8 +9,8 @@
         "target": "es2017",
         "outDir": "./dist",
         "baseUrl": "./",
-        "resolveJsonModule": true,
         "esModuleInterop": true,
+        "moduleResolution": "node",
         "paths": {
             "@resources/*": ["resources/*"],
             "@be/*": ["src/*"]
