@@ -2,6 +2,7 @@ version: '3.8'
 services:
   pgdatabase:
     container_name: pgdb
+#   We have to use this old version because the DB provider what the production system use got only this.
     image: postgres:10.23-alpine
     environment:
       - POSTGRES_USER=root
