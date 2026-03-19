@@ -15,7 +15,7 @@ To set up the project you should follow these few easy steps:
 
 0. Start environment with docker:
     ```shell
-    docker-compose -f dev-env/docker-compose.yml up -d
+    docker-compose -f scripts/docker-compose.yml up -d
     ```
    This will create a postgres database in container 'pgdb' and a pgAdmin that could be available in `localhost:5050`.
    Its
@@ -29,7 +29,7 @@ To set up the project you should follow these few easy steps:
    ```shell
     pnpm --filter api migrate
     ```
-   
+
 Done.  
 
 ## About repo
