@@ -3,9 +3,7 @@ import {ToastrService} from 'ngx-toastr';
 import {t} from '@fe/app/util/translate/translate';
 import {I18nKeys} from '@fe/app/util/translate/i18n.type';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class MessageService {
 
     private readonly toastr = inject(ToastrService);

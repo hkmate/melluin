@@ -1,5 +1,5 @@
 import {Component, forwardRef, inject, input, linkedSignal, model, signal} from '@angular/core';
-import {FilteringInfo, isNil, NOOP, PersonIdentifier, RoleTypes, UUID, VoidFunc} from '@melluin/common';
+import {FilteringInfo, isNil, NOOP, PersonIdentifier, RoleTypes, UUID} from '@melluin/common';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CachedPeopleService} from '@fe/app/people/cached-people.service';
 import {MatFormField, MatLabel} from '@angular/material/input';
@@ -156,7 +156,7 @@ export class PersonSelectComponent implements ControlValueAccessor {
     protected disabled = signal(false);
 
     private onChange: (x: Array<string>) => void = NOOP;
-    private onTouch: VoidFunc = NOOP;
+    private onTouch: () => void = NOOP;
     private peopleOptions: Array<PersonIdentifier>;
 
     private personIds: Array<string>;
@@ -174,7 +174,7 @@ export class PersonSelectComponent implements ControlValueAccessor {
         this.onChange = fn
     }
 
-    public registerOnTouched(fn: VoidFunc): void {
+    public registerOnTouched(fn: () => void): void {
         this.onTouch = fn;
     }
 

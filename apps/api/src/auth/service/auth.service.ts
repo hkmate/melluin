@@ -12,7 +12,8 @@ import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoConverter} from '@be/user/converter/user-entity-to-dto.converter';
 import {UserEntityToSettingsDtoConverter} from '@be/user/converter/user-entity-to-settings-dto.converter';
 import {RoleDao} from '@be/user/role.dao';
-import {now} from '@be/util/util';
+
+import {now} from '@be/util/now';
 
 @Injectable()
 export class AuthService {

@@ -13,7 +13,7 @@ import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoModule} from '@be/user/user-entity-to-dto.module';
 import {BadRequestException} from '@nestjs/common';
 import {RoleDao} from '@be/user/role.dao';
-import * as Utils from '@be/util/util';
+import * as Utils from '@be/util/now';
 import {when} from 'vitest-when';
 import {randomUUID} from 'crypto';
 

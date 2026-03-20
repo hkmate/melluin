@@ -1,5 +1,5 @@
 import {UserEntity} from '@be/user/model/user.entity';
-import {Converter, flatten, isNil, User} from '@melluin/common';
+import {Converter, isNil, User} from '@melluin/common';
 import {Injectable} from '@nestjs/common';
 import * as _ from 'lodash';
 import {PermissionEntity} from '@be/user/model/permission.entity';
@@ -30,7 +30,7 @@ export class UserEntityToDtoConverter implements Converter<UserEntity, User> {
             isActive: entity.isActive,
             roles: entity.roles?.map(roleEntity => this.roleConverter.convert(roleEntity)),
             permissions: _.union(
-                flatten(entity.roles.map(role => role.permissions)).map(PermissionEntity.raw),
+                _.flatten(entity.roles.map(role => role.permissions)).map(PermissionEntity.raw),
                 customPermissions),
             customPermissions,
             lastLogin: entity.lastLogin?.toISOString(),

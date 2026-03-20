@@ -1,7 +1,6 @@
 import {Component, inject, output, signal} from '@angular/core';
 import {UUID, VisitActivityInput, VisitActivityType, VisitActivityTypes, VisitedChild} from '@melluin/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {isNotEmptyValidator} from '@fe/app/util/util';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
 import {Observable} from 'rxjs';
 import {MatCard, MatCardContent} from '@angular/material/card';
@@ -11,6 +10,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {ActivitySelectComponent} from '@fe/app/hospital/visit-activity/activity-select/activity-select.component';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
+import {isNotEmptyValidator} from '@fe/app/util/is-not-empty-validator';
 
 @Component({
     selector: 'app-filler-activity-create',

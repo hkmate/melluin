@@ -6,7 +6,8 @@ import {PersonDao} from '@be/person/person.dao';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {RoleDao} from '@be/user/role.dao';
 import {PermissionDao} from '@be/user/permission.dao';
-import {now} from '@be/util/util';
+
+import {now} from '@be/util/now';
 
 interface UserCreationRequest {
     newUser: UserCreation,

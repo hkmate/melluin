@@ -1,6 +1,6 @@
 import {Component, forwardRef, input, model, output, signal} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {NOOP, VisitedChild, VoidFunc} from '@melluin/common';
+import {NOOP, VisitedChild} from '@melluin/common';
 import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatChipListbox, MatChipRow} from '@angular/material/chips';
 import {MatOption, MatSelect} from '@angular/material/select';
@@ -113,7 +113,7 @@ export class ChildSelectComponent implements ControlValueAccessor {
     public readonly childrenSelected = output<Array<VisitedChild>>();
 
     private onChange: (x: Array<VisitedChild>) => void = NOOP;
-    private onTouch: VoidFunc = NOOP;
+    private onTouch: () => void = NOOP;
     protected children: Array<VisitedChild>
 
     public writeValue(value: Array<VisitedChild>): void {
@@ -124,7 +124,7 @@ export class ChildSelectComponent implements ControlValueAccessor {
         this.onChange = fn;
     }
 
-    public registerOnTouched(fn: VoidFunc): void {
+    public registerOnTouched(fn: () => void): void {
         this.onTouch = fn;
     }
 

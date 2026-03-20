@@ -59,13 +59,39 @@ export * from './user/user-creation';
 export * from './user/user-rewrite';
 export * from './user/user-settings';
 
+export * from './util/date-interval/actual-month-date-interval-generator';
+export * from './util/date-interval/actual-week-date-interval-generator';
+export * from './util/date-interval/date-interval-generator.factory';
+export * from './util/date-interval/date-interval-generator';
+export * from './util/date-interval/date-interval-specifier';
+export * from './util/date-interval/last-months-date-interval-generator';
+export * from './util/date-interval/last-two-weeks-date-interval-generator';
+export * from './util/date-interval/last-weeks-date-interval-generator';
+export * from './util/date-interval/three-week-date-interval-generator';
+export * from './util/date-interval/two-week-date-interval-generator';
+
+export * from './util/type/date-interval';
 export * from './util/type/enum.type';
+export * from './util/type/nil';
+export * from './util/type/nullable';
 export * from './util/type/object-leaves.type';
 export * from './util/type/uuid.type';
-export * from './util/date-interval-generator';
+
 export * from './util/date-util';
+export * from './util/empty-to-undef';
+export * from './util/include-any';
+export * from './util/is-empty';
+export * from './util/is-nil';
+export * from './util/is-nil-or-empty';
+export * from './util/is-not-empty';
+export * from './util/is-not-nil';
+export * from './util/noop';
+export * from './util/optional-array-to-array';
+export * from './util/or-else';
+export * from './util/parse-time';
+export * from './util/parse-time-with-date';
 export * from './util/test-util';
-export * from './util/util';
+export * from './util/to-optional';
 
 export * from './validator/validator';
 export * from './validator/validator-chain';

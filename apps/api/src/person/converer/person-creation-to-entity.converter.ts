@@ -2,7 +2,8 @@ import {PersonEntity} from '@be/person/model/person.entity';
 import {Injectable} from '@nestjs/common';
 import {Converter, isNil, PersonCreation, User} from '@melluin/common';
 import {randomUUID} from 'crypto';
-import {now} from '@be/util/util';
+
+import {now} from '@be/util/now';
 
 interface PersonCreationRequest {
     newPerson: PersonCreation,

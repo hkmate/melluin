@@ -9,7 +9,6 @@ import {
 } from '@melluin/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
-import {isNotEmptyValidator} from '@fe/app/util/util';
 import {VisitedChildById} from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
 import {Observable} from 'rxjs';
 import {MatCard, MatCardContent} from '@angular/material/card';
@@ -19,6 +18,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {ActivitySelectComponent} from '@fe/app/hospital/visit-activity/activity-select/activity-select.component';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
+import {isNotEmptyValidator} from '@fe/app/util/is-not-empty-validator';
 
 @Component({
     selector: 'app-filler-activity-editor',

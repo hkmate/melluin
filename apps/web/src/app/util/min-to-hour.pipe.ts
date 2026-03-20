@@ -2,9 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {isNotNil} from '@melluin/common';
 import {round} from 'lodash-es';
 
-@Pipe({
-    name: 'minToHour'
-})
+@Pipe({name: 'minToHour'})
 export class MinToHourPipe implements PipeTransform {
 
     private static readonly MIN_ON_HOUR = 60;

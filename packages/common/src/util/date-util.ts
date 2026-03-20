@@ -1,4 +1,4 @@
-import {isNilOrEmpty} from './util';
+import {isNilOrEmpty} from './is-nil-or-empty';
 
 export class DateUtil {
 
@@ -24,9 +24,4 @@ export class DateUtil {
         return result;
     }
 
-}
-
-export interface DateInterval {
-    dateFrom: Date;
-    dateTo: Date;
 }

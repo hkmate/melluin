@@ -1,6 +1,6 @@
 import {VisitStatus} from '../visit/visit-status';
 import {BoxStatusChangeReason} from '../department/box/box-status-change-reason';
-import {DateIntervalSpecifier, DateIntervalSpecifiers} from '../util/date-interval-generator';
+import {DateIntervalSpecifier, DateIntervalSpecifiers} from '../util/date-interval/date-interval-specifier';
 import {UUID} from '../util/type/uuid.type';
 import {EnumTypeOf} from '../util/type/enum.type';
 

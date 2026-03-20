@@ -3,7 +3,8 @@ import {VisitEntity} from '@be/visit/model/visit.entity';
 import {DepartmentDao} from '@be/department/department.dao';
 import {PersonDao} from '@be/person/person.dao';
 import {VisitRewrite} from '@melluin/common';
-import {areArrayHasSameItems} from '@be/util/util';
+
+import {areArrayHasSameItems} from '@be/util/are-array-has-same-items';
 
 
 export class VisitRewriteApplier {

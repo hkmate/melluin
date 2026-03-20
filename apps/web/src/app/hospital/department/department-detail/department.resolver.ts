@@ -4,7 +4,8 @@ import {catchError, Observable, of} from 'rxjs';
 import {cast, Department, isNilOrEmpty, UUID} from '@melluin/common';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
-import {isUUID} from '@fe/app/util/util';
+
+import {isUUID} from '@fe/app/util/isUUID';
 
 @Injectable()
 export class DepartmentResolver implements Resolve<Department | CreateMarkerType | undefined> {

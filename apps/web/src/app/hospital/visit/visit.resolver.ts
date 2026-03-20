@@ -5,7 +5,8 @@ import {cast, Visit, isNilOrEmpty, Permission, UUID} from '@melluin/common';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {isUUID} from '@fe/app/util/util';
+
+import {isUUID} from '@fe/app/util/isUUID';
 
 @Injectable({
     providedIn: 'root'

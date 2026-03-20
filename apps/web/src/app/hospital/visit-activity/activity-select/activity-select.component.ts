@@ -1,6 +1,6 @@
 import {Component, forwardRef, input} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {NOOP, VisitActivityType, VoidFunc} from '@melluin/common';
+import {NOOP, VisitActivityType} from '@melluin/common';
 import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatChipListbox, MatChipRow} from '@angular/material/chips';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -34,7 +34,7 @@ export class ActivitySelectComponent implements ControlValueAccessor {
     public readonly options = input.required<Array<VisitActivityType>>();
 
     private onChange: (x: Array<VisitActivityType>) => void = NOOP;
-    private onTouch: VoidFunc = NOOP;
+    private onTouch: () => void = NOOP;
     protected activityTypes: Array<VisitActivityType>
 
     public writeValue(value: Array<VisitActivityType>): void {
@@ -45,7 +45,7 @@ export class ActivitySelectComponent implements ControlValueAccessor {
         this.onChange = fn;
     }
 
-    public registerOnTouched(fn: VoidFunc): void {
+    public registerOnTouched(fn: () => void): void {
         this.onTouch = fn;
     }
 

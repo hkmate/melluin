@@ -1,6 +1,6 @@
 import {describe, expect, it} from 'vitest';
-import {isNotNil} from './util';
 import {randomInt, randomNumber, randomString} from './test-util';
+import {isNotNil} from './is-not-nil';
 
 describe('TestUtils', () => {
     describe('randomString', () => {

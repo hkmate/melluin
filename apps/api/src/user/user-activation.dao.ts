@@ -4,8 +4,8 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {UserEntity} from './model/user.entity';
 import {UserActivationEntity} from '@be/user/model/user-activation.entity';
 import {UserActivation} from '@be/user/model/user-activation';
-import {now} from '@be/util/util';
 import {randomUUID} from 'crypto';
+import {now} from '@be/util/now';
 
 @Injectable()
 export class UserActivationDao {
