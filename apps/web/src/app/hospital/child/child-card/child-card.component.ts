@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {DateUtil, VisitedChild} from '@melluin/common';
 import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle} from '@angular/material/card';
 import {ParentInfoIconComponent} from '@fe/app/hospital/child/parent-info-icon/parent-info-icon.component';
@@ -14,7 +14,8 @@ import {ChildAgePipe} from '@fe/app/hospital/child/child-age/child-age.pipe';
         ChildAgePipe
     ],
     selector: 'app-child-card',
-    templateUrl: './child-card.component.html'
+    templateUrl: './child-card.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChildCardComponent {
 

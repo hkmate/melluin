@@ -12,8 +12,6 @@ import {MinToHourPipe} from '@fe/app/util/min-to-hour.pipe';
 import {OptionalPipe} from '@fe/app/util/optional.pipe';
 
 @Component({
-    selector: 'app-visit-presenter',
-    templateUrl: './visit-presenter.component.html',
     imports: [
         TranslatePipe,
         CopierComponent,
@@ -31,7 +29,12 @@ import {OptionalPipe} from '@fe/app/util/optional.pipe';
         OptionalPipe,
         MatCardContent
     ],
-    styleUrls: ['./visit-presenter.component.scss']
+    selector: 'app-visit-presenter',
+    templateUrl: './visit-presenter.component.html',
+    styleUrls: ['./visit-presenter.component.scss'],
+    host: {
+        class: 'data-details',
+    }
 })
 export class VisitPresenterComponent {
 

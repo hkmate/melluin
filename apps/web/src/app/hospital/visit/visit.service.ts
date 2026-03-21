@@ -46,12 +46,12 @@ export class VisitService {
             .pipe(getErrorHandler<Visit>(this.msg));
     }
 
-    public updateVisit(visitId: UUID, data: VisitRewrite, options = {forceSameTimeVisit: false}): Observable<Visit> {
+    public updateVisit(data: VisitRewrite, options = {forceSameTimeVisit: false}): Observable<Visit> {
         const params = {} as Record<string, string | boolean>;
         if (options.forceSameTimeVisit) {
             params.forceSameTime = true;
         }
-        return this.http.put<Visit>(`${this.visitUrl}/${visitId}`, data, {params});
+        return this.http.put<Visit>(`${this.visitUrl}/${data.id}`, data, {params});
     }
 
     public findVisit(filters: PageQuery): Observable<Pageable<Visit>> {

@@ -1,19 +1,17 @@
-import {Component, inject, input, output} from '@angular/core';
-import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Component, effect, inject, input, output, signal} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {TranslateModule} from '@ngx-translate/core';
-import {Visit, isNotNil, UUID} from '@melluin/common';
+import {isNotNil, UUID, Visit} from '@melluin/common';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
 import {MatButton} from '@angular/material/button';
 import {LoaderService} from '@fe/app/loader/loader.service';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {getErrorHandler} from '@fe/app/util/error/error-handler';
-import {MessageService} from '@fe/app/util/message.service';
 import {VisitConnectedVisitComponent} from '@fe/app/hospital/visit/visit-details/visit-connections/visit-connected-visit/visit-connected-visit.component';
 import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
+import {form, FormField, pattern, required} from '@angular/forms/signals';
+import {t} from '@fe/app/util/translate/translate';
 
 @Component({
-    selector: 'app-visit-connection-create',
     imports: [
         FormsModule,
         MatFormField,
@@ -22,8 +20,10 @@ import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
         ReactiveFormsModule,
         TranslateModule,
         MatButton,
-        VisitConnectedVisitComponent
+        VisitConnectedVisitComponent,
+        FormField
     ],
+    selector: 'app-visit-connection-create',
     templateUrl: './visit-connection-create.component.html',
     styleUrl: './visit-connection-create.component.scss'
 })
@@ -33,43 +33,43 @@ export class VisitConnectionCreateComponent {
 
     private readonly visitService = inject(VisitService);
     private readonly loaderService = inject(LoaderService);
-    private readonly msgService = inject(MessageService);
 
     public readonly visit = input.required<Visit>();
     public readonly submitted = output<Visit>()
 
-    protected idControl = new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required, Validators.pattern(this.uuidPattern)]
+    protected readonly connectionCandidate = signal<Visit | undefined>(undefined);
+
+    protected readonly innerForm = form(signal({id: '' as UUID}), schema => {
+        required(schema.id, {message: t('Form.Required')});
+        pattern(schema.id, this.uuidPattern, {message: t('Form.UUID')});
     });
 
-    protected connectionCandidate?: Visit;
-
     constructor() {
-        this.idControl.valueChanges.pipe(takeUntilDestroyed()).subscribe(value => {
-            if (this.idControl.invalid) {
+        effect(() => {
+            if (this.innerForm.id().invalid()) {
                 return;
             }
-            this.loadCandidate(value as UUID);
+            this.loadCandidate(this.innerForm.id().value());
         });
     }
 
     protected submitVisit(): void {
-        if (isNotNil(this.connectionCandidate)) {
-            this.submitted.emit(this.connectionCandidate);
+        const connectionCandidate = this.connectionCandidate();
+        if (isNotNil(connectionCandidate)) {
+            this.submitted.emit(connectionCandidate);
         }
     }
 
     private loadCandidate(candidateVisitId: UUID): void {
         this.loaderService.startLoader();
-        this.visitService.getVisit(candidateVisitId).pipe(getErrorHandler(this.msgService)).subscribe({
+        this.visitService.getVisit(candidateVisitId).subscribe({
             next: visit => {
-                this.connectionCandidate = visit;
+                this.connectionCandidate.set(visit);
                 this.loaderService.stopLoader();
             },
             error: (err: HttpErrorResponse) => {
                 if (err.status === HttpStatusCode.NotFound) {
-                    this.connectionCandidate = undefined;
+                    this.connectionCandidate.set(undefined);
                 }
                 this.loaderService.stopLoader();
             }

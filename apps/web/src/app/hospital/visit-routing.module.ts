@@ -16,6 +16,7 @@ import {VisitActivityFillerComponent} from '@fe/app/hospital/visit-activity-fill
                 data: {
                     permissions: [Permission.canReadVisit]
                 },
+                providers: [VisitResolver],
                 resolve: {visit: VisitResolver},
                 component: VisitDetailsComponent,
             },
@@ -25,6 +26,7 @@ import {VisitActivityFillerComponent} from '@fe/app/hospital/visit-activity-fill
                 data: {
                     permissions: [Permission.canCreateActivity, Permission.canWriteActivityAtAnyVisit]
                 },
+                providers: [VisitResolver],
                 resolve: {visit: VisitResolver},
                 component: VisitActivityFillerComponent
             }

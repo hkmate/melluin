@@ -1,4 +1,4 @@
-import {Component, computed, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, input} from '@angular/core';
 import {isNilOrEmpty, VisitedChild} from '@melluin/common';
 import {ChildCardComponent} from '@fe/app/hospital/child/child-card/child-card.component';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -10,7 +10,8 @@ import {TranslatePipe} from '@ngx-translate/core';
     ],
     selector: 'app-children-list',
     templateUrl: './children-list.component.html',
-    styleUrls: ['./children-list.component.scss']
+    styleUrls: ['./children-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChildrenListComponent {
 

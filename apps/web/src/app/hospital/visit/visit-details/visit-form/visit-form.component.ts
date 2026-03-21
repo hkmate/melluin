@@ -1,13 +1,14 @@
-import {Component, computed, effect, inject, input, linkedSignal, output} from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Component, computed, effect, inject, input, model, output, signal} from '@angular/core';
 import {
     Department,
     isNil,
     isNotNil,
+    Nullable,
     Pageable,
     parseTime,
     parseTimeWithDate,
     Permission,
+    UUID,
     Visit,
     VisitCreate,
     VisitRewrite,
@@ -15,171 +16,180 @@ import {
     VisitStatuses
 } from '@melluin/common';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
-import {Platform} from '@angular/cdk/platform';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {getAllStatusOptionsOnlyEnable, SelectOption} from '@fe/app/util/visit-status-option';
+import {SelectOption} from '@fe/app/util/visit-status-option';
 import {TranslatePipe} from '@ngx-translate/core';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
-import {PersonSelectComponent} from '@fe/app/util/person-select/person-select.component';
-import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
+import {PersonSelectComponent2} from '@fe/app/util/person-select/person-select.component';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
-import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
 import {round} from 'lodash-es';
+import {AppSubmit} from '@fe/app/util/submit/app-submit';
+import {
+    getStatusesCoordinatorChangeToFrom,
+    getStatusesVolunteerChangeToFrom
+} from '@fe/app/hospital/visit/visit-details/visit-form/status-options';
+import {disabled, form, FormField, max, min, required, submit, validate} from '@angular/forms/signals';
+import {t} from '@fe/app/util/translate/translate';
+import {firstValueFrom} from 'rxjs';
+import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
+import {NgxsmkDatepickerComponent} from 'ngxsmk-datepicker';
+import {VisitFormSaveService} from '@fe/app/hospital/visit/visit-details/visit-form/visit-form-save.service';
 
+const MS_ON_HOUR = 3600000; // 1000 * 60 * 60
+const MIN_ON_HOUR = 60;
+const MAX_COUNTED_HOURS = 24;
+const DECIMALS_IN_COUNTED_HOURS = 2;
+const DEFAULT_TIME_FROM = '16:00';
+const DEFAULT_TIME_TO = '18:00';
 
-// TODO refactor: Form components should be refactored to new forms when updated Angular to 21
 @Component({
     imports: [
         TranslatePipe,
-        ReactiveFormsModule,
         MatFormField,
         MatLabel,
         MatSelect,
         MatOption,
-        PersonSelectComponent,
+        PersonSelectComponent2,
         MatInput,
-        MatDatepickerToggle,
-        MatDatepicker,
-        MatDatepickerInput,
         MatCardContent,
         MatCard,
         MatCheckbox,
-        FormsModule,
-        MatButton
+        MatButton,
+        AppSubmit,
+        FormField,
+        MatError,
+        MelluinMatErrorComponent,
+        NgxsmkDatepickerComponent
     ],
+    providers: [VisitFormSaveService],
     selector: 'app-visit-form',
     templateUrl: './visit-form.component.html',
     styleUrls: ['./visit-form.component.scss']
 })
 export class VisitFormComponent {
 
-    private static readonly MS_ON_HOUR = 3600000; // 1000 * 60 * 60
-    private static readonly MIN_ON_HOUR = 60;
-    private static readonly MAX_COUNTED_HOURS = 24;
-    private static readonly DECIMALS_IN_COUNTED_HOURS = 2;
-    private static readonly defaultTimeFrom = '16:00';
-    private static readonly defaultTimeTo = '18:00';
-
-    private readonly platform = inject(Platform);
     private readonly permission = inject(PermissionService);
     private readonly departmentService = inject(DepartmentService);
+    private readonly formSaveService = inject(VisitFormSaveService);
 
-    public readonly createNewAfterSave = input.required<boolean>();
+    public readonly createNewAfterSave = model<boolean>(false);
     public readonly visit = input<Visit>();
 
-    public readonly createNewAfterSaveChange = output<boolean>();
-    public readonly submitted = output<VisitCreate | VisitRewrite>();
+    public readonly submitted = output<Visit>();
     public readonly canceled = output<void>();
 
-    protected readonly createNewAfterOneSaved = linkedSignal(() => this.createNewAfterSave());
-    protected statusOptions: Array<SelectOption<VisitStatus>>;
-    protected departmentOptions: Array<Department>;
-    protected readonly form = computed(() => this.buildFormGroup());
-    protected mobileScreen: boolean;
+    protected statusOptions = signal<Array<SelectOption<VisitStatus>>>([]);
+    protected departmentOptions = signal<Array<Department>>([]);
+    protected isVisitFinalized = computed(() => this.computeVisitFinalized());
     private readonly hasConnections = computed(() => {
         const visit = this.visit();
         return isNotNil(visit) && visit.id !== visit.connectionGroupId;
     });
 
-    private readonly currentUser = inject(CurrentUserService).currentUser;
+    private readonly formModel = signal(this.getDefaultFormModel());
+    protected readonly form = form(this.formModel, schema => {
+        required(schema.status, {message: t('Form.Required')});
+        required(schema.date, {message: t('Form.Required')});
+        required(schema.timeFrom, {message: t('Form.Required')});
+        required(schema.timeTo, {message: t('Form.Required')});
+        required(schema.departmentId, {message: t('Form.Required')});
+        required(schema.countedHours, {message: t('Form.Required')});
+        min(schema.countedHours, 0, {message: t('Form.Min', {min: 0})});
+        max(schema.countedHours, MAX_COUNTED_HOURS, {message: t('Form.Max', {max: MAX_COUNTED_HOURS})});
+        required(schema.participantIds, {message: t('Form.Required')});
+        validate(schema.vicariousMomVisit, ({valueOf, value}) => (
+            (value() && valueOf(schema.participantIds).length !== 1)
+                ? {kind: 'VicariousMomVisitError', message: t('Visit.Form.VicariousMomVisitError')}
+                : null
+        ));
+        validate(schema.vicariousMomVisit, ({value}) => (
+            (value() && this.hasConnections())
+                ? {
+                    kind: 'VicariousMomVisitConnectionError',
+                    message: t('Visit.Form.VicariousMomVisitConnectionError')
+                }
+                : null
+        ));
+
+        disabled(schema.date, () => this.isDateChangeDisabled());
+        disabled(schema.timeFrom, () => this.isTimeChangeDisabled());
+        disabled(schema.timeTo, () => this.isTimeChangeDisabled());
+        disabled(schema.departmentId, () => this.isDepartmentChangeDisabled());
+        disabled(schema.countedHours, () => this.isTimeChangeDisabled());
+        disabled(schema.participantIds, () => this.isParticipantChangeDisabled());
+        disabled(schema.vicariousMomVisit, () => this.isVicariousMomChangeDisabled());
+    });
 
     constructor() {
-        this.mobileScreen = (this.platform.IOS || this.platform.ANDROID);
-        effect(() => this.initFormOptions());
+        effect(() => this.setupFormInput());
+        effect(() => this.setCountedHours());
+        this.initDepartmentOptions();
     }
 
-    protected onSubmit(): void {
-        if (this.form().valid
-            && !this.needVicariousMomVisitParticipantWarning()
-            && !this.needVicariousMomVisitConnectionWarning()) {
-            this.submitted.emit(this.createDataForSubmit());
-        }
+    protected submitForm(): void {
+        submit(this.form, async () => {
+            const saved = await this.saveVisit();
+            this.submitted.emit(saved);
+        });
     }
 
     protected cancelEditing(): void {
         this.canceled.emit();
     }
 
-    protected setCountedHours(): void {
-        const from = parseTime(this.form().controls.timeFrom.value);
-        const to = parseTime(this.form().controls.timeTo.value);
-        const diff = to.getTime() - from.getTime();
-        const hourValue = diff / VisitFormComponent.MS_ON_HOUR;
-        this.form().controls.countedHours.setValue(round(hourValue, VisitFormComponent.DECIMALS_IN_COUNTED_HOURS));
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    private getDefaultFormModel() {
+        return {
+            status: VisitStatuses.SCHEDULED as VisitStatus,
+            date: null as Nullable<Date>,
+            timeFrom: DEFAULT_TIME_FROM,
+            timeTo: DEFAULT_TIME_TO,
+            departmentId: null as Nullable<UUID>,
+            countedHours: 0,
+            participantIds: [] as Array<UUID>,
+            vicariousMomVisit: false
+        };
     }
 
-    protected setCreateOther(newValue: boolean): void {
-        this.createNewAfterOneSaved.set(newValue);
-        this.createNewAfterSaveChange.emit(newValue);
-    }
-
-    protected needVicariousMomVisitParticipantWarning(): boolean {
-        const vicariousMomVisit = this.form().controls.vicariousMomVisit.value as boolean;
-        const participantCount = this.form().controls.participantIds.value?.length ?? 0;
-        return vicariousMomVisit && participantCount !== 1;
-    }
-
-    protected needVicariousMomVisitConnectionWarning(): boolean {
-        const vicariousMomVisit = this.form().controls.vicariousMomVisit.value as boolean;
-        return vicariousMomVisit && this.hasConnections();
-    }
-
-    private initFormOptions(): void {
-        this.initStatusOptions();
-        this.initDepartmentOptions();
-        this.initCountedHours();
-    }
-
-    // eslint-disable-next-line max-lines-per-function
-    private buildFormGroup(): FormGroup {
+    private setupFormInput(): void {
         const visit = this.visit();
-        const timeChangeDisabled = this.isTimeChangeDisabled();
-        const hasConnection = this.hasConnections();
-        return new FormGroup({
-            status: new FormControl(visit?.status ?? VisitStatuses.SCHEDULED, [Validators.required]),
-            date: new FormControl({
-                value: this.getDate(visit?.dateTimeFrom),
-                disabled: this.isDateChangeDisabled() || hasConnection
-            }, [Validators.required]),
-            timeFrom: new FormControl({
-                value: this.getTime(visit?.dateTimeFrom, VisitFormComponent.defaultTimeFrom),
-                disabled: timeChangeDisabled || hasConnection
-            }, [Validators.required]),
-            timeTo: new FormControl({
-                value: this.getTime(visit?.dateTimeTo, VisitFormComponent.defaultTimeTo),
-                disabled: timeChangeDisabled || hasConnection
-            }, [Validators.required]),
-            departmentId: new FormControl({
-                value: visit?.department?.id,
-                disabled: this.isDepartmentChangeDisabled() || hasConnection
-            }, [Validators.required]),
-            countedHours: new FormControl({
-                value: 0,
-                disabled: timeChangeDisabled || hasConnection
-            }, [Validators.max(VisitFormComponent.MAX_COUNTED_HOURS), Validators.min(0)]),
-            participantIds: new FormControl({
-                value: visit?.participants.map(p => p.id),
-                disabled: this.isParticipantChangeDisabled() || hasConnection
-            }, [Validators.required]),
-            vicariousMomVisit: new FormControl({
-                value: visit?.vicariousMomVisit ?? false,
-                disabled: this.isVicariousMomChangeDisabled()
-            })
+        this.initStatusOptions();
+        if (isNil(visit)) {
+            this.formModel.set(this.getDefaultFormModel());
+            return;
+        }
+        this.formModel.set({
+            status: visit.status,
+            date: new Date(visit.dateTimeFrom),
+            timeFrom: this.getTime(visit.dateTimeFrom),
+            timeTo: this.getTime(visit.dateTimeTo),
+            departmentId: visit.department.id,
+            countedHours: visit.countedMinutes ?? 0,
+            participantIds: visit.participants.map(p => p.id),
+            vicariousMomVisit: visit.vicariousMomVisit
         });
+    }
+
+    private setCountedHours(): void {
+        const from = parseTime(this.form.timeFrom().value());
+        const to = parseTime(this.form.timeTo().value());
+        const diff = to.getTime() - from.getTime();
+        const hourValue = diff / MS_ON_HOUR;
+        this.form.countedHours().reset(round(hourValue, DECIMALS_IN_COUNTED_HOURS));
     }
 
     private initStatusOptions(): void {
         const visit = this.visit();
         if (isNil(visit)) {
-            this.statusOptions = [
+            this.statusOptions.set([
                 {value: VisitStatuses.DRAFT, disabled: false},
                 {value: VisitStatuses.SCHEDULED, disabled: false}
-            ];
+            ]);
         } else {
-            this.statusOptions = this.calculateStatusOptions(visit);
+            this.statusOptions.set(this.calculateStatusOptions(visit));
         }
     }
 
@@ -189,83 +199,37 @@ export class VisitFormComponent {
                 .map(status => ({value: status, disabled: false}));
         }
         if (this.permission.has(Permission.canModifyAnyVisit)) {
-            return this.getStatusesCoordinatorChangeToFrom(visit.status);
+            return getStatusesCoordinatorChangeToFrom(visit.status);
         }
-        return this.getStatusesVolunteerChangeToFrom(visit.status);
-    }
-
-    // eslint-disable-next-line max-lines-per-function
-    private getStatusesCoordinatorChangeToFrom(currentStatus: VisitStatus): Array<SelectOption<VisitStatus>> {
-        switch (currentStatus) {
-            case VisitStatuses.DRAFT:
-                return getAllStatusOptionsOnlyEnable(VisitStatuses.DRAFT, VisitStatuses.SCHEDULED);
-            case VisitStatuses.SCHEDULED:
-                return getAllStatusOptionsOnlyEnable(
-                    VisitStatuses.SCHEDULED,
-                    VisitStatuses.STARTED,
-                    VisitStatuses.CANCELED,
-                    VisitStatuses.FAILED_FOR_OTHER_REASON,
-                    VisitStatuses.FAILED_BECAUSE_NO_CHILD
-                );
-            case VisitStatuses.STARTED:
-                return getAllStatusOptionsOnlyEnable(
-                    VisitStatuses.STARTED,
-                    VisitStatuses.ACTIVITIES_FILLED_OUT,
-                    VisitStatuses.CANCELED,
-                    VisitStatuses.FAILED_FOR_OTHER_REASON,
-                    VisitStatuses.FAILED_BECAUSE_NO_CHILD
-                );
-            case VisitStatuses.ACTIVITIES_FILLED_OUT:
-                return getAllStatusOptionsOnlyEnable(VisitStatuses.STARTED,
-                    VisitStatuses.ACTIVITIES_FILLED_OUT, VisitStatuses.ALL_FILLED_OUT);
-            default:
-                return getAllStatusOptionsOnlyEnable(currentStatus);
-        }
-    }
-
-    // eslint-disable-next-line max-lines-per-function
-    private getStatusesVolunteerChangeToFrom(currentStatus: VisitStatus): Array<SelectOption<VisitStatus>> {
-        switch (currentStatus) {
-            case VisitStatuses.SCHEDULED:
-                return getAllStatusOptionsOnlyEnable(
-                    VisitStatuses.SCHEDULED,
-                    VisitStatuses.STARTED,
-                    VisitStatuses.CANCELED,
-                    VisitStatuses.FAILED_FOR_OTHER_REASON,
-                    VisitStatuses.FAILED_BECAUSE_NO_CHILD
-                );
-            case VisitStatuses.STARTED:
-                return getAllStatusOptionsOnlyEnable(
-                    VisitStatuses.STARTED,
-                    VisitStatuses.ACTIVITIES_FILLED_OUT,
-                    VisitStatuses.CANCELED,
-                    VisitStatuses.FAILED_FOR_OTHER_REASON,
-                    VisitStatuses.FAILED_BECAUSE_NO_CHILD
-                );
-            default:
-                return getAllStatusOptionsOnlyEnable(currentStatus);
-        }
+        return getStatusesVolunteerChangeToFrom(visit.status);
     }
 
     private initDepartmentOptions(): void {
         this.departmentService.findDepartments({page: 1, size: 100}).subscribe(
             (departmentPage: Pageable<Department>) => {
-                this.departmentOptions = departmentPage.items;
+                this.departmentOptions.set(departmentPage.items);
             }
         );
     }
 
     private isDateChangeDisabled(): boolean {
-        if (isNil(this.visit()) || this.permission.has(Permission.canModifyAnyVisitUnrestricted)) {
+        if (this.hasConnections()) {
+            return true;
+        }
+        const visit = this.visit();
+        if (isNil(visit) || this.permission.has(Permission.canModifyAnyVisitUnrestricted)) {
             return false;
         }
         if (this.permission.has(Permission.canModifyAnyVisit)) {
-            return !([VisitStatuses.DRAFT, VisitStatuses.SCHEDULED] as Array<VisitStatus>).includes(this.visit()!.status);
+            return !([VisitStatuses.DRAFT, VisitStatuses.SCHEDULED] as Array<VisitStatus>).includes(visit.status);
         }
         return true;
     }
 
     private isTimeChangeDisabled(): boolean {
+        if (this.hasConnections()) {
+            return true;
+        }
         const visit = this.visit();
         if (isNil(visit) || this.permission.has(Permission.canModifyAnyVisitUnrestricted)) {
             return false;
@@ -277,17 +241,22 @@ export class VisitFormComponent {
     }
 
     private isDepartmentChangeDisabled(): boolean {
-        if (isNil(this.visit()) || this.permission.has(Permission.canModifyAnyVisitUnrestricted)) {
+        if (this.hasConnections()) {
+            return true;
+        }
+        const visit = this.visit();
+        if (isNil(visit) || this.permission.has(Permission.canModifyAnyVisitUnrestricted)) {
             return false;
         }
         if (this.permission.has(Permission.canModifyAnyVisit)) {
             return this.isVisitFinalized();
         }
-        return this.visit()!.status !== VisitStatuses.SCHEDULED;
+        return visit.status !== VisitStatuses.SCHEDULED;
     }
 
-    private isVisitFinalized(): boolean {
-        if (isNil(this.visit())) {
+    private computeVisitFinalized(): boolean {
+        const visit = this.visit();
+        if (isNil(visit)) {
             return false;
         }
         return !([
@@ -295,7 +264,7 @@ export class VisitFormComponent {
             VisitStatuses.SCHEDULED,
             VisitStatuses.STARTED,
             VisitStatuses.ACTIVITIES_FILLED_OUT
-        ] as Array<VisitStatus>).includes(this.visit()!.status);
+        ] as Array<VisitStatus>).includes(visit.status);
     }
 
     private isParticipantChangeDisabled(): boolean {
@@ -312,72 +281,40 @@ export class VisitFormComponent {
         return this.isVisitFinalized();
     }
 
-    private initCountedHours(): void {
-        const countedMinutes = this.visit()?.countedMinutes
-        if (isNil(countedMinutes)) {
-            this.setCountedHours();
-            return;
-        }
-        const hourValue = countedMinutes / VisitFormComponent.MIN_ON_HOUR;
-        this.form().controls.countedHours.setValue(round(hourValue, VisitFormComponent.DECIMALS_IN_COUNTED_HOURS));
-    }
-
-    private getDate(dateTime: string | undefined): Date | undefined {
-        if (isNil(dateTime)) {
-            return undefined;
-        }
-        return new Date(dateTime);
-    }
-
-    private getTime(dateTime: string | undefined, defaultValue: string): string {
-        if (isNil(dateTime)) {
-            return defaultValue;
-        }
+    private getTime(dateTime: string): string {
         const dateTimeObj = new Date(dateTime);
         const hours = this.formatTimePart(dateTimeObj.getHours());
         const minutes = this.formatTimePart(dateTimeObj.getMinutes());
         return `${hours}:${minutes}`;
     }
 
-    private createDataForSubmit(): VisitCreate | VisitRewrite {
-        if (isNil(this.visit())) {
-            return this.createCreation();
-        }
-        return this.createRewrite();
-    }
-
-    private createCreation(): VisitCreate {
-        const data = {} as VisitCreate;
-        const countedMinutesFromHour = this.form().controls.countedHours.value * VisitFormComponent.MIN_ON_HOUR;
-        data.departmentId = this.form().controls.departmentId.value;
-        data.status = this.form().controls.status.value;
-        data.countedMinutes = round(countedMinutesFromHour);
-        data.organizerId = this.currentUser()!.personId;
-        data.vicariousMomVisit = this.form().controls.vicariousMomVisit.value;
-        data.participantIds = this.form().controls.participantIds.value;
-        data.dateTimeFrom = parseTimeWithDate(this.form().controls.timeFrom.value, this.form().controls.date.value).toISOString();
-        data.dateTimeTo = parseTimeWithDate(this.form().controls.timeTo.value, this.form().controls.date.value).toISOString();
-
-        return data;
-    }
-
-    private createRewrite(): VisitRewrite {
-        const data = {} as VisitRewrite;
-        const countedMinutesFromHour = this.form().controls.countedHours.value * VisitFormComponent.MIN_ON_HOUR;
-        data.id = this.visit()!.id;
-        data.departmentId = this.form().controls.departmentId.value;
-        data.status = this.form().controls.status.value;
-        data.countedMinutes = round(countedMinutesFromHour);
-        data.vicariousMomVisit = this.form().controls.vicariousMomVisit.value;
-        data.participantIds = this.form().controls.participantIds.value;
-        data.dateTimeFrom = parseTimeWithDate(this.form().controls.timeFrom.value, this.form().controls.date.value).toISOString();
-        data.dateTimeTo = parseTimeWithDate(this.form().controls.timeTo.value, this.form().controls.date.value).toISOString();
-        return data;
-    }
-
     private formatTimePart(value: number): string {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         return `${value}`.padStart(2, '0');
+    }
+
+    private saveVisit(): Promise<Visit> {
+        return firstValueFrom(this.formSaveService.saveVisit(this.generateDto()));
+    }
+
+    private generateDto(): VisitCreate | VisitRewrite {
+        const existing = this.visit();
+        const formValue = this.form().value();
+        const countedMinutesFromHour = formValue.countedHours * MIN_ON_HOUR;
+        const obj = {
+            departmentId: formValue.departmentId!,
+            status: formValue.status,
+            countedMinutes: round(countedMinutesFromHour),
+            vicariousMomVisit: formValue.vicariousMomVisit,
+            participantIds: formValue.participantIds,
+            dateTimeFrom: parseTimeWithDate(formValue.timeFrom, formValue.date!).toISOString(),
+            dateTimeTo: parseTimeWithDate(formValue.timeTo, formValue.date!).toISOString(),
+        } satisfies VisitCreate
+
+        if (isNil(existing)) {
+            return obj;
+        }
+        return {...obj, id: existing.id};
     }
 
 }

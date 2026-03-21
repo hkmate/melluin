@@ -1,4 +1,4 @@
-import {Component, forwardRef, input, model, output, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, forwardRef, input, model, output, signal} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {NOOP, VisitedChild} from '@melluin/common';
 import {MatFormField, MatLabel} from '@angular/material/input';
@@ -23,7 +23,8 @@ import {difference} from 'lodash-es';
     ],
     selector: 'app-child-select',
     templateUrl: './child-select.component.html',
-    styleUrls: ['./child-select.component.scss']
+    styleUrls: ['./child-select.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChildSelectComponent2 implements FormValueControl<Array<VisitedChild>> {
 

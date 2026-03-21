@@ -2,9 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {Child, ChildAge, getChildAge} from '@melluin/common';
 import {t} from '@fe/app/util/translate/translate';
 
-@Pipe({
-    name: 'childAge'
-})
+@Pipe({name: 'childAge'})
 export class ChildAgePipe implements PipeTransform {
 
     public transform(child: Child, date: Date): string {

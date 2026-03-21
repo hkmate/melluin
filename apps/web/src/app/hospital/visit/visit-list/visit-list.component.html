@@ -24,10 +24,7 @@
     <ng-container matColumnDef="department">
         <th mat-header-cell *matHeaderCellDef>{{ 'VisitList.ListHeader.Department' | translate }}</th>
         <td mat-cell *matCellDef="let visit">
-            <a class="link"
-               [routerLink]="['/visits', visit.id]">
-                {{ visit.department.name }}
-            </a>
+            <a class="link" [routerLink]="['/visits', visit.id]">{{ visit.department.name }}</a>
         </td>
     </ng-container>
 
@@ -35,10 +32,8 @@
         <th mat-header-cell *matHeaderCellDef>{{ 'VisitList.ListHeader.Participants' | translate }}</th>
         <td mat-cell *matCellDef="let visit">
             @for (participant of visit.participants; track participant.id) {
-                <span class="participants">
-                      <a [routerLink]="['/people', participant.id]">
-<!--                      It is inline for purpose. The comma should right after the name of the person-->
-                          {{ participant | personName }}</a><span *ngIf="!$last">, </span>
+                <span class="participants inline-list-item">
+                    <a [routerLink]="['/people', participant.id]">{{ participant | personName }}</a>
                 </span>
             }
             @if (visit.vicariousMomVisit) {
@@ -57,15 +52,17 @@
     <ng-container matColumnDef="options">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let visit">
-            <span *ngIf="isFillButtonNeeded(visit)" class="fill-btn">
-            <a [routerLink]="['/visits', visit.id, 'fill-activities']">
-                <mat-icon>rocket_launch</mat-icon>
-            </a>
-        </span>
+            @if (visit.fillBtnNeeded) {
+                <span class="fill-btn">
+                    <a [routerLink]="['/visits', visit.id, 'fill-activities']">
+                        <mat-icon>rocket_launch</mat-icon>
+                    </a>
+                </span>
+            }
         </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
     <tr mat-row *matRowDef="let row; columns: columns;"
-        [class]="{'before-today': isBeforeToday(row), 'in-today': isInToday(row), 'is-after-today': isAfterToday(row)}"></tr>
+        [class]="{'before-today': row.beforeToday, 'in-today': row.inToday, 'is-after-today': row.afterToday}"></tr>
 </table>

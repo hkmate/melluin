@@ -20,7 +20,7 @@ import {CurrentUserService} from '@fe/app/auth/service/current-user.service';
     styleUrls: ['./dashboard.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardComponent {
+export default class DashboardComponent {
 
     private readonly title = inject(AppTitle);
     private readonly currentUserService = inject(CurrentUserService);

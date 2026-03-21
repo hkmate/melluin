@@ -8,9 +8,7 @@ import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 import {isUUID} from '@fe/app/util/isUUID';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class VisitResolver implements Resolve<Visit | CreateMarkerType | undefined> {
 
     private readonly router = inject(Router);

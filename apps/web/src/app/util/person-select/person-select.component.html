@@ -12,7 +12,7 @@
             </mat-chip-row>
         }
     </mat-chip-listbox>
-    <mat-select [(ngModel)]="value" [disabled]="disabled()" multiple>
+    <mat-select [(ngModel)]="value" [disabled]="disabled()" [required]="required()" multiple>
         <mat-option>
             <ngx-mat-select-search [(ngModel)]="filterText"
                                    [placeholderLabel]="'Search' | translate"

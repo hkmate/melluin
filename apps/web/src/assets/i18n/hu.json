@@ -37,8 +37,10 @@
     "Form": {
         "Required": "Kötelező mező",
         "Min": "Minimum: {{min}}",
+        "Max": "Maximum: {{max}}",
         "EmailFormat": "Valid email címet kell megadni",
-        "Phone": "Valid telefonszámot kell megadni"
+        "Phone": "Valid telefonszámot kell megadni",
+        "UUID": "Valid UUID azonosítót kell megadni"
     },
     "Datepicker": {
         "DatePlaceholder": "Válassz dátumot"
@@ -441,7 +443,7 @@
             "VicariousMomVisitError": "Pótmami foglalkozás csak olyan lehet amin egy résztvevő van",
             "VicariousMomVisitConnectionError": "Pótmami foglalkozás csak olyan lehet ami nincs összekapcsolva másikkal",
             "SameTimeErrorTitle": "Vigyázz!",
-            "SameTimeErrorMessage": "Ezen az osztályon egyidőben nem lehet több foglalkozást tartani. Ha figyelmenen kívül hagynád ezt a beállítást kattintst a 'Csináld!' gombra.",
+            "SameTimeErrorMessage": "Ezen az osztályon egyidőben nem lehet több foglalkozást tartani. Ha figyelmenen kívül hagynád ezt a beállítást kattints a 'Csináld!' gombra.",
             "SameTimeErrorOkText": "Csináld!"
         },
         "Connections": {

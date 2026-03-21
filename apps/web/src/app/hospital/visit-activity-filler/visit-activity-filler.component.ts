@@ -189,7 +189,7 @@ export class VisitActivityFillerComponent {
 
     protected saveVisit(newStatus: VisitStatus): Promise<void> {
         this.buttonsEnabled = false;
-        return firstValueFrom(this.visitService.updateVisit(this.visit!.id, this.createSaveRequest(newStatus)))
+        return firstValueFrom(this.visitService.updateVisit(this.createSaveRequest(newStatus)))
             .then(visit => {
                 this.visit = visit;
                 this.buttonsEnabled = true;

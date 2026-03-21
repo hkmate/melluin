@@ -9,8 +9,6 @@ import {MatChipListbox, MatChipRow} from '@angular/material/chips';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
 
 @Component({
-    selector: 'app-visit-card',
-    templateUrl: './visit-card.component.html',
     imports: [
         MatCard,
         MatCardHeader,
@@ -24,6 +22,8 @@ import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
         MatChipRow,
         PersonNamePipe
     ],
+    selector: 'app-visit-card',
+    templateUrl: './visit-card.component.html',
     styleUrls: ['./visit-card.component.scss']
 })
 export class VisitCardComponent {

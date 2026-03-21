@@ -1,34 +1,34 @@
+@let visitValue = visit();
 <section>
     <div class="page-content">
-
         <div class="visit-part">
-            @if (visit && !isEditMode()) {
-                <app-visit-presenter [visit]="visit!"/>
+            @if (visitValue && !isEdit()) {
+                <app-visit-presenter [visit]="visitValue"/>
                 <div class="button-row">
                     @if (isFilledAndUserIsParticipant()) {
-                        <button mat-flat-button color="primary" (click)="prepareReport()">
+                        <button mat-flat-button color="primary" type="button" (click)="prepareReport()">
                             {{ 'Visit.OpenReportDraft' | translate }}
                         </button>
                     }
                     @if (canUserStartTheVisit()) {
                         <button mat-flat-button
-                                color="accent"
-                                [routerLink]="['/visits', visit.id, 'fill-activities']">
+                                color="accent" type="button"
+                                [routerLink]="['/visits', visitValue.id, 'fill-activities']">
                             <mat-icon>rocket_launch</mat-icon>
                             {{ 'Visit.Start' | translate }}
                         </button>
                     }
                     @if (isStartedAndUserCanContinueTheVisit()) {
                         <button mat-flat-button
-                                color="accent"
-                                [routerLink]="['/visits', visit.id, 'fill-activities']">
+                                color="accent" type="button"
+                                [routerLink]="['/visits', visitValue.id, 'fill-activities']">
                             <mat-icon>rocket_launch</mat-icon>
                             {{ 'Visit.ContinueFilling' | translate }}
                         </button>
                     }
                     @if (this.canUserEditTheVisit()) {
                         <button mat-stroked-button
-                                color="primary"
+                                color="primary" type="button"
                                 (click)="switchToEdit()">
                             {{ 'Edit' | translate }}
                         </button>
@@ -36,27 +36,27 @@
                 </div>
             }
 
-            @if (isEditMode()) {
-                <app-visit-form [visit]="visit"
+            @if (isEdit()) {
+                <app-visit-form [visit]="visitValue"
                                 [(createNewAfterSave)]="createNewAfterSave"
-                                (submitted)="saveVisit($event)"
+                                (submitted)="setVisit($event)"
                                 (canceled)="cancelEditing()"/>
             }
         </div>
 
-        @if (visit) {
-            @if (shouldShowConnections() && connectedVisits.length === 0) {
-                <app-visit-connections [visit]="visit" [connections]="connectedVisits"
+        @if (visitValue) {
+            @if (shouldShowConnections() && connectedVisits().length === 0) {
+                <app-visit-connections [visit]="visitValue" [connections]="connectedVisits()"
                                        (refreshConnections)="refreshConnections()"/>
             }
 
             @if (shouldShowActivities()) {
                 <div class="activities-part">
-                    <app-visit-activities [visit]="visit" [needWarnings]="true"/>
+                    <app-visit-activities [visit]="visitValue" [needWarnings]="true"/>
                 </div>
             }
-            @if (shouldShowConnections() && connectedVisits.length !== 0) {
-                <app-visit-connections [visit]="visit" [connections]="connectedVisits"
+            @if (shouldShowConnections() && connectedVisits().length !== 0) {
+                <app-visit-connections [visit]="visitValue" [connections]="connectedVisits()"
                                        (refreshConnections)="refreshConnections()"/>
             }
         }

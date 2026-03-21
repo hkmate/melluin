@@ -47,6 +47,7 @@
         <ngxsmk-datepicker [formField]="form.validTo"
                            [minDate]="minDate()"
                            locale="hu"
+                           [showCalendarButton]="true"
                            [placeholder]="'Datepicker.DatePlaceholder' | translate"/>
         <mat-error [fField]="form.validTo"/>
     </div>
@@ -86,16 +87,10 @@
     </mat-card>
 
     <div class="button-row">
-        <button mat-flat-button
-                color="accent"
-                (click)="submitForm()"
-                [disabled]="form().submitting()"
-                type="button">
+        <button mat-flat-button color="accent" [disabled]="form().submitting()">
             {{ 'SaveButton' | translate }}
         </button>
-        <button mat-stroked-button
-                color="primary"
-                type="button"
+        <button mat-stroked-button color="primary" type="button"
                 [disabled]="form().submitting()"
                 (click)="cancelEditing()">
             {{ 'CancelButton' | translate }}

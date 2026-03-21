@@ -1,9 +1,7 @@
 import {Routes} from '@angular/router';
 import {PATHS} from './app-paths';
 import {AuthGuardFn} from './auth/service/auth.guard';
-import {NotFoundComponent} from './not-found-component/not-found.component';
 import {PathResolveService} from './path-resolve/path-resolve.service';
-import {DashboardComponent} from './dashboard/dashboard.component';
 import {Permission} from '@melluin/common';
 import {NavigatorComponent} from '@fe/app/navigator.component';
 
@@ -15,7 +13,7 @@ export const routes: Routes = [
     {
         path: PATHS.dashboard.main,
         canMatch: [AuthGuardFn],
-        component: DashboardComponent
+        loadComponent: () => import('./dashboard/dashboard.component')
     },
     {
         path: PATHS.people.main,
@@ -71,5 +69,9 @@ export const routes: Routes = [
         canMatch: [AuthGuardFn],
         component: NavigatorComponent
     },
-    {path: '**', resolve: {path: PathResolveService}, component: NotFoundComponent}
+    {
+        path: '**',
+        resolve: {path: PathResolveService},
+        loadComponent: () => import('./not-found-component/not-found.component')
+    }
 ];

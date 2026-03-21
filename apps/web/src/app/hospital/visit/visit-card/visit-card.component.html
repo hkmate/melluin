@@ -1,25 +1,22 @@
+@let visitValue = visit();
 <mat-card>
     <mat-card-header>
         <mat-card-subtitle>
-            {{ visit().dateTimeFrom | date : ('EventDateFormat' | translate) }}
-            {{ visit().dateTimeFrom | date : ('TimeFormat' | translate) }}
+            {{ visitValue.dateTimeFrom | date : ('EventDateFormat' | translate) }}
+            {{ visitValue.dateTimeFrom | date : ('TimeFormat' | translate) }}
             -
-            {{ visit().dateTimeTo | date : ('TimeFormat' | translate) }}
-
-
-            <app-visit-status-icon [status]="visit().status" [tooltipDisabled]="false"></app-visit-status-icon>
+            {{ visitValue.dateTimeTo | date : ('TimeFormat' | translate) }}
+            <app-visit-status-icon [status]="visitValue.status" [tooltipDisabled]="false"/>
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <h1>
-            <a class="link" [routerLink]="['/visits', visit().id]">{{ visit().department.name }}</a>
+            <a class="link" [routerLink]="['/visits', visitValue.id]">{{ visitValue.department.name }}</a>
         </h1>
-        <h3>
-            ({{ visit().department.address }})
-        </h3>
+        <h3>({{ visitValue.department.address }})</h3>
 
         <mat-chip-listbox>
-            @for (participant of visit().participants; track participant.id) {
+            @for (participant of visitValue.participants; track participant.id) {
                 <mat-chip-row [routerLink]="['/people', participant.id]">
                     {{ participant | personName }}
                 </mat-chip-row>

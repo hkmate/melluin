@@ -1,20 +1,9 @@
-import {VisitStatus} from './visit-status';
 import {Visit} from './visit';
 import {UUID} from '../util/type/uuid.type';
+import {VisitCreate} from './visit-create';
 
 
-export interface VisitRewrite {
-
-    id: UUID;
-    dateTimeFrom: string;
-    dateTimeTo: string;
-    countedMinutes?: number;
-    participantIds: Array<UUID>;
-    status: VisitStatus;
-    departmentId: UUID;
-    vicariousMomVisit: boolean;
-
-}
+export type VisitRewrite = VisitCreate & { id: UUID };
 
 export function createVisitRewrite(visit: Visit): VisitRewrite {
     return {

@@ -12,7 +12,8 @@ import {VisitSaveValidatorFactory} from '@be/visit/validator/visit-save-validato
 import {
     AsyncValidatorChain,
     Pageable,
-    User, UUID,
+    User,
+    UUID,
     Visit,
     VisitCreate,
     visitFilterableFields,
@@ -34,7 +35,10 @@ export class VisitCrudService {
                       requester: User): Promise<Visit> {
         await this.createValidatorsForCreate().validate({item: visitCreate, sameTimeVisitForced, requester});
 
-        const creationEntity = await this.visitCreationToEntityConverter.convert(visitCreate);
+        const creationEntity = await this.visitCreationToEntityConverter.convert({
+            ...visitCreate,
+            organizerId: requester.personId
+        });
         const visitEntity = await this.visitDao.save(creationEntity);
         return this.visitConverter.convert(visitEntity);
     }

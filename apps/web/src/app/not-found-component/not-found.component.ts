@@ -13,7 +13,7 @@ import {TranslatePipe} from '@ngx-translate/core';
     templateUrl: './not-found.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NotFoundComponent {
+export default class NotFoundComponent {
 
     private readonly route = inject(ActivatedRoute);
     private readonly title = inject(AppTitle);

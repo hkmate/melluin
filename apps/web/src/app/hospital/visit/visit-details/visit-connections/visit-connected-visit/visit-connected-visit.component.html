@@ -1,33 +1,35 @@
+@let visitValue = visit();
 <div class="visit-info">
     <span class="status">
-        <app-visit-status-icon [status]="visit().status" [tooltipDisabled]="false"/>
+        <app-visit-status-icon [status]="visitValue.status" [tooltipDisabled]="false"/>
     </span>
 
     <span>
-        <a class="link" [routerLink]="['/visits', visit().id]">
+        <a class="link" [routerLink]="['/visits', visitValue.id]">
             <span>
-                {{ visit().dateTimeFrom | date : ('TimeFormat' | translate) }}
+                {{ visitValue.dateTimeFrom | date : ('TimeFormat' | translate) }}
                 -
-                {{ visit().dateTimeTo | date : ('TimeFormat' | translate) }}
+                {{ visitValue.dateTimeTo | date : ('TimeFormat' | translate) }}
             </span>
             <span class="department">
-                {{ visit().department.name }}
+                {{ visitValue.department.name }}
             </span>
         </a>
     </span>
 
     <span class="participants">
-        @for (participant of visit().participants; track participant.id) {
-            <a class="link" [routerLink]="['/people', participant.id]">
-                {{ participant | personName }}
-            </a><span *ngIf="!$last">, </span>
+        @for (participant of visitValue.participants; track participant.id) {
+            <a class="link inline-list-item" [routerLink]="['/people', participant.id]">
+<!--                Should be inline because of the comma in ::after -->
+                {{ participant | personName }}</a>
         }
     </span>
 </div>
 <div>
     @if (permissions.has(Permission.canWriteVisitConnections) && removeEnable()) {
         <span class="delete">
-            <button mat-mini-fab color="accent" (click)="delete.emit()">
+            <button mat-mini-fab color="accent" type="button"
+                    (click)="delete.emit()">
                 <mat-icon>delete</mat-icon>
             </button>
         </span>

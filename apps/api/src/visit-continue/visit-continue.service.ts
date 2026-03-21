@@ -43,7 +43,6 @@ export class VisitContinueService {
             dateTimeTo: visit.dateTimeTo.toISOString(),
             countedMinutes: dayjs(visit.dateTimeTo).diff(dateTimeFrom, 'minutes'),
             vicariousMomVisit: false,
-            organizerId: requester.personId,
             participantIds: visit.participants.map(participant => participant.id)
         } satisfies VisitCreate;
     }

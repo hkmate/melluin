@@ -1,5 +1,5 @@
 import {Component, inject, input, output} from '@angular/core';
-import {DatePipe, NgIf} from '@angular/common';
+import {DatePipe} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
 import {MatMiniFabButton} from '@angular/material/button';
 import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
@@ -10,17 +10,16 @@ import {RouterLink} from '@angular/router';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 
 @Component({
-    selector: 'app-visit-connected-visit',
     imports: [
         DatePipe,
         MatIcon,
         MatMiniFabButton,
-        NgIf,
         PersonNamePipe,
         TranslateModule,
         VisitStatusIconComponent,
         RouterLink
     ],
+    selector: 'app-visit-connected-visit',
     templateUrl: './visit-connected-visit.component.html',
     styleUrl: './visit-connected-visit.component.scss'
 })

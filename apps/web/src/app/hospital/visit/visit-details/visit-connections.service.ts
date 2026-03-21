@@ -6,7 +6,7 @@ import {MessageService} from '@fe/app/util/message.service';
 import {getErrorHandler} from '@fe/app/util/error/error-handler';
 import {environment} from '@fe/environment';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class VisitConnectionsService {
 
     private readonly http = inject(HttpClient);

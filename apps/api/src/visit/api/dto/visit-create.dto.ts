@@ -31,10 +31,6 @@ export class VisitCreateDto implements VisitCreate {
     countedMinutes?: number;
 
     @ApiProperty()
-    @IsUUID()
-    organizerId: UUID;
-
-    @ApiProperty()
     @IsUUID('all', {each: true})
     @IsArray()
     participantIds: Array<UUID>;

@@ -1,18 +1,19 @@
-import {Component, computed, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, input} from '@angular/core';
 import {VisitStatus, VisitStatuses} from '@melluin/common';
-import {MatIconModule} from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {TranslateModule} from '@ngx-translate/core';
+import {MatIcon} from '@angular/material/icon';
+import {MatTooltip} from '@angular/material/tooltip';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
+    imports: [
+        MatIcon,
+        MatTooltip,
+        TranslatePipe
+    ],
     selector: 'app-visit-status-icon',
     templateUrl: './visit-status-icon.component.html',
     styleUrls: ['./visit-status-icon.component.scss'],
-    imports: [
-        MatIconModule,
-        MatTooltipModule,
-        TranslateModule
-    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VisitStatusIconComponent {
 

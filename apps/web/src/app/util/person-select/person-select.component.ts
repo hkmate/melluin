@@ -40,6 +40,7 @@ export class PersonSelectComponent2 implements FormValueControl<Array<UUID>> {
 
     public readonly value = model<Array<UUID>>([]);
     public readonly disabled = input<boolean>(false);
+    public readonly required = input<boolean>(false);
 
     protected readonly filterText = signal<''>('');
     protected readonly filteredOptions = linkedSignal(() => this.filterOptions());

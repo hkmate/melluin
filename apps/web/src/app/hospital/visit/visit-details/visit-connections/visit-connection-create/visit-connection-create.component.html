@@ -1,22 +1,22 @@
 <div>
     <mat-form-field>
         <mat-label>{{ 'Visit.Connections.Create.ConnectionId' | translate }}</mat-label>
-        <input matInput [formControl]="idControl"/>
+        <input matInput [formField]="innerForm.id"/>
     </mat-form-field>
 </div>
 
-@if (connectionCandidate) {
+@let connectionCandidateValue = connectionCandidate();
+@if (connectionCandidateValue) {
     <div>
-        <app-visit-connected-visit [visit]="connectionCandidate" [removeEnable]="false"/>
+        <app-visit-connected-visit [visit]="connectionCandidateValue" [removeEnable]="false"/>
     </div>
 }
 
 <div class="button-row">
     <button mat-flat-button
-            [disabled]="idControl.invalid"
-            color="accent"
-            (click)="submitVisit()"
-            type="button">
+            [disabled]="innerForm.id().invalid()"
+            color="accent" type="button"
+            (click)="submitVisit()">
         {{ 'SaveButton' | translate }}
     </button>
 </div>

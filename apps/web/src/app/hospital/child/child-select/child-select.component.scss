@@ -1,12 +1,4 @@
-.chip-selector {
-
-    mat-select {
-        visibility: hidden;
-        width: 0;
-    }
-}
-
-::ng-deep .child-select-option {
+:host ::ng-deep .child-select-option {
     & > span {
         margin-right: 0;
         width: 100%;
@@ -21,4 +13,8 @@
             font-size: small;
         }
     }
+}
+
+:host ::ng-deep .mat-mdc-select-value-text {
+    display: none;
 }

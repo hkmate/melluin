@@ -1,32 +1,18 @@
 form {
-    mat-form-field, app-person-select {
-        width: 100%;
-    }
 
     .time-field > mat-form-field {
         width: 50%;
     }
 
     .vicarious-mom-visit-error {
-        color: red;
         font-size: small;
     }
 
     .button-row {
-        display: flex;
-        justify-content: flex-end;
         margin: .5rem 0 .5rem 0;
 
         mat-checkbox {
             margin-right: 1rem;
-        }
-
-        button {
-            margin-right: .5rem;
-
-            &:last-of-type {
-                margin-right: 0;
-            }
         }
     }
 }

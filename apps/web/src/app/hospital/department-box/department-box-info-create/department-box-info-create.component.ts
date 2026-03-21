@@ -39,7 +39,6 @@ import {t} from '@fe/app/util/translate/translate';
     ],
     selector: 'app-department-box-info-create',
     templateUrl: './department-box-info-create.component.html',
-    styleUrls: ['./department-box-info-create.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DepartmentBoxInfoCreateComponent {
