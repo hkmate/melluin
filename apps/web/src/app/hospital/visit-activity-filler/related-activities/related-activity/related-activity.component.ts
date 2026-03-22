@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {UUID, VisitActivity, VisitedChild} from '@melluin/common';
 import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle} from '@angular/material/card';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -15,7 +15,8 @@ import {MatChipListbox, MatChipRow} from '@angular/material/chips';
         MatCardContent
     ],
     selector: 'app-related-activity',
-    templateUrl: './related-activity.component.html'
+    templateUrl: './related-activity.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RelatedActivityComponent {
 

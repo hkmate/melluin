@@ -1,4 +1,4 @@
-import {Component, computed, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, input} from '@angular/core';
 import {VisitActivityInfo, isNilOrEmpty} from '@melluin/common';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatCard, MatCardContent} from '@angular/material/card';
@@ -10,7 +10,8 @@ import {MatCard, MatCardContent} from '@angular/material/card';
         MatCardContent
     ],
     selector: 'app-visit-activity-information',
-    templateUrl: './visit-activity-information.component.html'
+    templateUrl: './visit-activity-information.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VisitActivityInformationComponent {
 

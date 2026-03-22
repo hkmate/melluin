@@ -1,4 +1,4 @@
-import {Component, inject, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input, signal} from '@angular/core';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
 import {NOOP, VisitActivity} from '@melluin/common';
 import {VisitedChildById} from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
@@ -14,7 +14,8 @@ import {t} from '@fe/app/util/translate/translate';
         FillerActivityCardComponent
     ],
     selector: 'app-filler-activity-item',
-    templateUrl: './filler-activity-item.component.html'
+    templateUrl: './filler-activity-item.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FillerActivityItemComponent {
 

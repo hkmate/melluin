@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input, signal} from '@angular/core';
 import {VisitedChild} from '@melluin/common';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
 import {Observable, of} from 'rxjs';
@@ -23,7 +23,8 @@ import {MatIcon} from '@angular/material/icon';
     ],
     selector: 'app-related-visit-child',
     templateUrl: './related-visit-child.component.html',
-    styleUrls: ['./related-visit-child.component.scss']
+    styleUrls: ['./related-visit-child.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RelatedVisitChildComponent {
 

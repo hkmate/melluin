@@ -1,4 +1,4 @@
-import {Component, effect, inject, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input} from '@angular/core';
 import {DepartmentBoxStatus, UUID} from '@melluin/common';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
 import {DepartmentBoxInfoListComponent} from '@fe/app/hospital/department-box/department-box-info-list/department-box-info-list.component';
@@ -14,7 +14,8 @@ import {TranslatePipe} from '@ngx-translate/core';
     ],
     selector: 'app-box-info-list-by-visit',
     templateUrl: './department-box-info-list.component.html',
-    styleUrls: ['./department-box-info-list.component.scss']
+    styleUrls: ['./department-box-info-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoxInfoListByVisitComponent extends DepartmentBoxInfoListComponent {
 

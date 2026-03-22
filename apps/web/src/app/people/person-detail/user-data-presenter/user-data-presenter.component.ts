@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input, signal} from '@angular/core';
 import {isNotNil, Person, User} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -17,6 +17,7 @@ import {DatePipe} from '@angular/common';
     ],
     selector: 'app-user-data-presenter',
     templateUrl: './user-data-presenter.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         class: 'data-details'
     }

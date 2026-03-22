@@ -1,4 +1,4 @@
-import {Component, computed, inject, input, linkedSignal, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal, output} from '@angular/core';
 import {
     emptyToUndef,
     isNil,
@@ -52,7 +52,8 @@ import {noWhitespaceHeadOrTail} from '@fe/app/util/whitespace-validator/no-white
     ],
     selector: 'app-user-edit-form',
     templateUrl: './user-edit-form.component.html',
-    styleUrls: ['./user-edit-form.component.scss']
+    styleUrls: ['./user-edit-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserEditFormComponent {
 

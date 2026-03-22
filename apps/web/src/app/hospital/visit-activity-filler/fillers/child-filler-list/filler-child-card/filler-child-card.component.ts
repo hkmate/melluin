@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, output, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input, output, signal} from '@angular/core';
 import {VisitedChild} from '@melluin/common';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
 import {of} from 'rxjs';
@@ -23,7 +23,8 @@ import {AsyncPipe} from '@angular/common';
     ],
     selector: 'app-filler-child-card',
     templateUrl: './filler-child-card.component.html',
-    styleUrls: ['./filler-child-card.component.scss']
+    styleUrls: ['./filler-child-card.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FillerChildCardComponent {
 

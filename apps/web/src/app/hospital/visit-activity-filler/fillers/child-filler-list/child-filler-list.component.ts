@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
 import {Observable} from 'rxjs';
 import {Permission, VisitedChild} from '@melluin/common';
@@ -21,7 +21,8 @@ import {FillerChildItemComponent} from '@fe/app/hospital/visit-activity-filler/f
     ],
     selector: 'app-child-filler-list',
     templateUrl: './child-filler-list.component.html',
-    styleUrls: ['./child-filler-list.component.scss']
+    styleUrls: ['./child-filler-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChildFillerListComponent {
 

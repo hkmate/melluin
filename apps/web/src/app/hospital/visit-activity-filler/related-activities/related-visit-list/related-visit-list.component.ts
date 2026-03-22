@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input, signal} from '@angular/core';
 import {Visit, WrappedVisitActivity} from '@melluin/common';
 import {VisitActivityService} from '@fe/app/hospital/visit-activity/visit-activity.service';
 import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle} from '@angular/material/card';
@@ -22,7 +22,8 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
     ],
     selector: 'app-related-visit-list',
     templateUrl: './related-visit-list.component.html',
-    styleUrls: ['./related-visit-list.component.scss']
+    styleUrls: ['./related-visit-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RelatedVisitListComponent {
 

@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input, signal} from '@angular/core';
 import {VisitActivityInformationService} from '@fe/app/hospital/visit-activity/visit-activity-information.service';
 import {Permission, UUID} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
@@ -24,9 +24,11 @@ import {AppSubmit} from '@fe/app/util/submit/app-submit';
         FormField,
         AppSubmit
     ],
+    providers: [VisitActivityInformationService],
     selector: 'app-activities-information-filler',
     templateUrl: './activities-information-filler.component.html',
-    styleUrl: './activities-information-filler.component.scss'
+    styleUrl: './activities-information-filler.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActivitiesInformationFillerComponent {
 

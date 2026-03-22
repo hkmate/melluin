@@ -1,4 +1,14 @@
-import {Component, computed, effect, inject, input, model, output, signal} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    effect,
+    inject,
+    input,
+    model,
+    output,
+    signal
+} from '@angular/core';
 import {
     Department,
     isNil,
@@ -69,7 +79,8 @@ const DEFAULT_TIME_TO = '18:00';
     providers: [VisitFormSaveService],
     selector: 'app-visit-form',
     templateUrl: './visit-form.component.html',
-    styleUrls: ['./visit-form.component.scss']
+    styleUrls: ['./visit-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VisitFormComponent {
 

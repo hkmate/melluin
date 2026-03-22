@@ -1,4 +1,4 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
 import {Location} from '@angular/common';
 import {getPermissionsNeededToChangeRole, isNil, Permission, Person} from '@melluin/common';
 import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
@@ -23,7 +23,8 @@ import {UserService} from '@fe/app/people/user.service';
     ],
     providers: [RouteDataHandler, UserService],
     selector: 'app-person-detail',
-    templateUrl: './person-detail.component.html'
+    templateUrl: './person-detail.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PersonDetailComponent {
 

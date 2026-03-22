@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {Visit} from '@melluin/common';
 import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle} from '@angular/material/card';
 import {DatePipe} from '@angular/common';
@@ -24,7 +24,8 @@ import {PersonNamePipe} from '@fe/app/people/person-name.pipe';
     ],
     selector: 'app-visit-card',
     templateUrl: './visit-card.component.html',
-    styleUrls: ['./visit-card.component.scss']
+    styleUrls: ['./visit-card.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VisitCardComponent {
 

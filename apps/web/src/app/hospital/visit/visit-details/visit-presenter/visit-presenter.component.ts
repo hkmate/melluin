@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {Visit} from '@melluin/common';
 import {TranslatePipe} from '@ngx-translate/core';
 import {CopierComponent} from '@fe/app/util/copier/copier.component';
@@ -32,6 +32,7 @@ import {OptionalPipe} from '@fe/app/util/optional.pipe';
     selector: 'app-visit-presenter',
     templateUrl: './visit-presenter.component.html',
     styleUrls: ['./visit-presenter.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         class: 'data-details',
     }

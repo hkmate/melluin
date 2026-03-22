@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, input, signal} from '@angular/core';
 import {VisitActivityService} from '@fe/app/hospital/visit-activity/visit-activity.service';
 import {
     isNil,
@@ -49,7 +49,8 @@ const statusesWhenActivitiesShouldBeShowed: Array<VisitStatus> = [
     ],
     selector: 'app-visit-activities',
     templateUrl: './visit-activities.component.html',
-    styleUrls: ['./visit-activities.component.scss']
+    styleUrls: ['./visit-activities.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VisitActivitiesComponent {
 

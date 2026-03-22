@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, signal} from '@angular/core';
 import {filter} from 'rxjs';
 import {reasonIsNotPageData} from '@fe/app/util/list-page-settings-change-reason';
 import {PeopleListFilterService} from '@fe/app/people/people-list/people-list-filter/service/people-list-filter.service';
@@ -29,7 +29,8 @@ import {isEqual} from 'lodash-es';
         FormField
     ],
     selector: 'app-people-list-filter',
-    templateUrl: './people-list-filter.component.html'
+    templateUrl: './people-list-filter.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PeopleListFilterComponent {
 

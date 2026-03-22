@@ -1,4 +1,4 @@
-import {Component, computed, inject, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input} from '@angular/core';
 import {isNilOrEmpty, Permission, WrappedVisitActivity} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {convertToChildrenById} from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
@@ -17,7 +17,8 @@ import {RelatedActivityComponent} from '@fe/app/hospital/visit-activity-filler/r
     ],
     selector: 'app-related-visit',
     templateUrl: './related-visit.component.html',
-    styleUrls: ['./related-visit.component.scss']
+    styleUrls: ['./related-visit.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RelatedVisitComponent {
 

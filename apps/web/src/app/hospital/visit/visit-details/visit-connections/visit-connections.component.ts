@@ -1,5 +1,5 @@
-import {Component, inject, input, output, signal} from '@angular/core';
-import {Visit, Permission, UUID} from '@melluin/common';
+import {ChangeDetectionStrategy, Component, inject, input, output, signal} from '@angular/core';
+import {Permission, UUID, Visit} from '@melluin/common';
 import {VisitConnectionsService} from '@fe/app/hospital/visit/visit-details/visit-connections.service';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
@@ -11,8 +11,6 @@ import {VisitConnectionCreateComponent} from '@fe/app/hospital/visit/visit-detai
 import {VisitConnectedVisitComponent} from '@fe/app/hospital/visit/visit-details/visit-connections/visit-connected-visit/visit-connected-visit.component';
 
 @Component({
-    selector: 'app-visit-connections',
-    templateUrl: './visit-connections.component.html',
     imports: [
         TranslatePipe,
         MatMiniFabButton,
@@ -22,7 +20,10 @@ import {VisitConnectedVisitComponent} from '@fe/app/hospital/visit/visit-details
         VisitConnectionCreateComponent,
         VisitConnectedVisitComponent
     ],
-    styleUrl: './visit-connections.component.scss'
+    selector: 'app-visit-connections',
+    templateUrl: './visit-connections.component.html',
+    styleUrl: './visit-connections.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VisitConnectionsComponent {
 

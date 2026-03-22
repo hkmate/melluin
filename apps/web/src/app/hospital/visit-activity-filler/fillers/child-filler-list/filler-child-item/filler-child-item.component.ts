@@ -1,4 +1,4 @@
-import {Component, inject, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input, signal} from '@angular/core';
 import {NOOP, VisitedChild} from '@melluin/common';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
@@ -13,7 +13,8 @@ import {t} from '@fe/app/util/translate/translate';
         FillerChildCardComponent
     ],
     selector: 'app-filler-child-item',
-    templateUrl: './filler-child-item.component.html'
+    templateUrl: './filler-child-item.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FillerChildItemComponent {
 

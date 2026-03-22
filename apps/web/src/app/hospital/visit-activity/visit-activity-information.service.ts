@@ -6,7 +6,7 @@ import {getErrorHandler} from '@fe/app/util/error/error-handler';
 import {UUID, VisitActivityInfo, VisitActivityInfoInput} from '@melluin/common';
 import {environment} from '@fe/environment';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class VisitActivityInformationService {
 
     private readonly http = inject(HttpClient);

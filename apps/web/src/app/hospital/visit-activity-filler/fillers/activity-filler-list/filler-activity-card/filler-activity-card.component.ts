@@ -1,4 +1,4 @@
-import {Component, input, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
 import {VisitActivity} from '@melluin/common';
 import {VisitedChildById} from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
 import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle} from '@angular/material/card';
@@ -21,7 +21,8 @@ import {MatIcon} from '@angular/material/icon';
     ],
     selector: 'app-filler-activity-card',
     templateUrl: './filler-activity-card.component.html',
-    styleUrls: ['./filler-activity-card.component.scss']
+    styleUrls: ['./filler-activity-card.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FillerActivityCardComponent {
 

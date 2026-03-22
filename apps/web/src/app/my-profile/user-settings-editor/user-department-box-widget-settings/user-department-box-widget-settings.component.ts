@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, input, signal} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
     BoxStatusChangeReason, BoxStatusChangeReasons,
@@ -47,7 +47,8 @@ import {t} from '@fe/app/util/translate/translate';
     ],
     selector: 'app-user-department-box-widget-settings',
     templateUrl: './user-department-box-widget-settings.component.html',
-    styleUrl: './user-department-box-widget-settings.component.scss'
+    styleUrl: './user-department-box-widget-settings.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserDepartmentBoxWidgetSettingsComponent {
 

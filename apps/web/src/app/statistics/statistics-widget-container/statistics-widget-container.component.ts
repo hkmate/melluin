@@ -20,12 +20,10 @@ import {VisitCountByWeekDayStatProviderService} from '@fe/app/statistics/service
 import {StatisticsWidgetComponent} from '@fe/app/statistics/statistics-widget/statistics-widget.component';
 
 @Component({
+    imports: [StatisticsWidgetComponent],
     selector: 'app-statistics-widget-container',
     templateUrl: './statistics-widget-container.component.html',
     styleUrl: './statistics-widget-container.component.scss',
-    imports: [
-        StatisticsWidgetComponent
-    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StatisticsWidgetContainerComponent {

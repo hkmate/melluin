@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, output, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input, output, signal} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {TranslateModule} from '@ngx-translate/core';
@@ -25,7 +25,8 @@ import {t} from '@fe/app/util/translate/translate';
     ],
     selector: 'app-visit-connection-create',
     templateUrl: './visit-connection-create.component.html',
-    styleUrl: './visit-connection-create.component.scss'
+    styleUrl: './visit-connection-create.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VisitConnectionCreateComponent {
 

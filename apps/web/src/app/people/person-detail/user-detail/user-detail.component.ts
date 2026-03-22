@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, input, signal} from '@angular/core';
 import {isNil, isNotNil, Permission, User, UUID} from '@melluin/common';
 import {UserService} from '@fe/app/people/user.service';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
@@ -15,7 +15,8 @@ import {UserEditFormComponent} from '@fe/app/people/person-detail/user-edit-form
         UserEditFormComponent
     ],
     selector: 'app-user-detail',
-    templateUrl: './user-detail.component.html'
+    templateUrl: './user-detail.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserDetailComponent {
 

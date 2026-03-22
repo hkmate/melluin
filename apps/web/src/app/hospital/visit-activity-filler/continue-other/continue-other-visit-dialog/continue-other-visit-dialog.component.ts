@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {form, FormField, required, submit, validate} from '@angular/forms/signals';
 import {
     MAT_DIALOG_DATA,
@@ -39,7 +39,8 @@ import {t} from '@fe/app/util/translate/translate';
     ],
     selector: 'app-continue-other-visit-dialog',
     templateUrl: './continue-other-visit-dialog.component.html',
-    styleUrl: './continue-other-visit-dialog.component.scss'
+    styleUrl: './continue-other-visit-dialog.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContinueOtherVisitDialogComponent {
 

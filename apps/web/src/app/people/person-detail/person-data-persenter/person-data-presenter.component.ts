@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input, signal} from '@angular/core';
 import {isNotNil, Person} from '@melluin/common';
 import {PeopleService} from '@fe/app/people/people.service';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -22,6 +22,7 @@ import {MatCheckbox} from '@angular/material/checkbox';
     selector: 'app-person-data-presenter',
     templateUrl: './person-data-presenter.component.html',
     styleUrls: ['./person-data-presenter.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         class: 'data-details'
     }
