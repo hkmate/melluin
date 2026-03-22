@@ -1,4 +1,4 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, inject, input, signal} from '@angular/core';
 import {NOOP, VisitedChild} from '@melluin/common';
 import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
@@ -8,11 +8,11 @@ import {FillerChildCardComponent} from '@fe/app/hospital/visit-activity-filler/f
 import {t} from '@fe/app/util/translate/translate';
 
 @Component({
-    selector: 'app-filler-child-item',
     imports: [
         FillerChildEditorComponent,
         FillerChildCardComponent
     ],
+    selector: 'app-filler-child-item',
     templateUrl: './filler-child-item.component.html'
 })
 export class FillerChildItemComponent {
@@ -22,14 +22,14 @@ export class FillerChildItemComponent {
 
     public readonly child = input.required<VisitedChild>();
 
-    protected edit = false;
+    protected readonly edit = signal(false);
 
     protected changeToEdit(): void {
-        this.edit = true;
+        this.edit.set(true);
     }
 
     protected endEdit(): void {
-        this.edit = false;
+        this.edit.set(false);
     }
 
     protected removeChild(): void {
@@ -41,7 +41,7 @@ export class FillerChildItemComponent {
     private getDeleteConfirmDialogConfig(): Partial<ConfirmationDialogConfig> {
         return {
             message: t('Visit.ConfirmChildRemove', {name: this.child().child.name})
-        }
+        };
     }
 
 }

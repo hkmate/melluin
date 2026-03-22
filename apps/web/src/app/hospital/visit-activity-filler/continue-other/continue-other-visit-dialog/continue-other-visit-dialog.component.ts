@@ -1,5 +1,5 @@
-import {Component, inject} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators} from '@angular/forms';
+import {Component, inject, signal} from '@angular/core';
+import {form, FormField, required, submit, validate} from '@angular/forms/signals';
 import {
     MAT_DIALOG_DATA,
     MatDialogActions,
@@ -7,8 +7,7 @@ import {
     MatDialogRef,
     MatDialogTitle
 } from '@angular/material/dialog';
-import {ContinueVisitInfo} from '@fe/app/hospital/visit/model/continue-visit-info';
-import {Department, Visit, Pageable, UUID} from '@melluin/common';
+import {Department, Nullable, UUID, Visit} from '@melluin/common';
 import dayjs from 'dayjs';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
@@ -16,20 +15,17 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatButton} from '@angular/material/button';
-
-
-type ContinueVisitInfoForm = {
-    [K in keyof ContinueVisitInfo]: AbstractControl<ContinueVisitInfo[K]>
-}
+import {toSignal} from '@angular/core/rxjs-interop';
+import {firstValueFrom, map, Observable} from 'rxjs';
+import {isEqual} from 'lodash-es';
+import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
+import {t} from '@fe/app/util/translate/translate';
 
 @Component({
-    selector: 'app-continue-other-visit-dialog',
-    templateUrl: './continue-other-visit-dialog.component.html',
     imports: [
         MatDialogTitle,
         MatDialogContent,
         TranslatePipe,
-        ReactiveFormsModule,
         MatFormField,
         MatLabel,
         MatSelect,
@@ -37,8 +33,12 @@ type ContinueVisitInfoForm = {
         MatOption,
         MatInput,
         MatDialogActions,
-        MatButton
+        MatButton,
+        FormField,
+        MelluinMatErrorComponent
     ],
+    selector: 'app-continue-other-visit-dialog',
+    templateUrl: './continue-other-visit-dialog.component.html',
     styleUrl: './continue-other-visit-dialog.component.scss'
 })
 export class ContinueOtherVisitDialogComponent {
@@ -48,56 +48,37 @@ export class ContinueOtherVisitDialogComponent {
     private readonly dialogRef = inject<MatDialogRef<ContinueOtherVisitDialogComponent>>(MatDialogRef);
     protected readonly visit = inject<Visit>(MAT_DIALOG_DATA);
 
-    protected readonly fromControl = new FormControl<string>(this.getDefaultFromValue(), {
-        nonNullable: true,
-        validators: [Validators.required, this.fromTimeValidator()]
+    protected readonly departmentOptions = toSignal(this.loadDepartmentOptions(), {initialValue: []});
+
+    private readonly filterModel = signal({
+        departmentId: null as Nullable<UUID>,
+        from: this.getDefaultFromValue()
+    }, {equal: isEqual});
+
+    protected readonly form = form(this.filterModel, schema => {
+        required(schema.departmentId, {message: t('Form.Required')});
+        required(schema.from, {message: t('Form.Required')});
+        validate(schema.from, ({value}) => {
+            if (this.isTimeValidAsFrom(this.parseTime(value()))) {
+                return null;
+            }
+            return {kind: 'fromIncorrect', message: t('Visit.Continue.FromError')};
+        })
     });
 
-    protected readonly departmentIdControl = new FormControl<UUID>('' as UUID, {
-        nonNullable: true,
-        validators: [Validators.required]
-    });
-
-    protected readonly form = new FormGroup<ContinueVisitInfoForm>({
-        departmentId: this.departmentIdControl,
-        dateTimeFrom: this.fromControl
-    });
-
-    protected departmentOptions: Array<Department> = [];
-
-    constructor() {
-        this.initDepartmentOptions();
-    }
-
-    protected submit(): void {
-        if (this.form.valid) {
+    protected submitForm(): void {
+        submit(this.form, async () => {
             const info = {
-                departmentId: this.departmentIdControl.value,
-                dateTimeFrom: this.parseTime(this.fromControl.value).toISOString()
+                departmentId: this.filterModel().departmentId!,
+                dateTimeFrom: this.parseTime(this.filterModel().from).toISOString()
             };
-            this.visitService.continueVisit(this.visit.id, info)
-                .subscribe(visit => this.dialogRef.close(visit));
-        }
+            const visit = await firstValueFrom(this.visitService.continueVisit(this.visit.id, info));
+            this.dialogRef.close(visit);
+        });
     }
 
     protected close(): void {
         this.dialogRef.close(null);
-    }
-
-    private initDepartmentOptions(): void {
-        this.departmentService.findDepartments({
-            page: 1, size: 100,
-            where: {
-                id: {operator: 'neq', operand: this.visit.department.id},
-                city: {operator: 'eq', operand: this.visit.department.city},
-                validFrom: {operator: 'lte', operand: this.visit.dateTimeTo},
-                validTo: {operator: 'gte', operand: this.visit.dateTimeFrom}
-            }
-        }).subscribe(
-            (departmentPage: Pageable<Department>) => {
-                this.departmentOptions = departmentPage.items;
-            }
-        );
     }
 
     private getDefaultFromValue(): string {
@@ -110,15 +91,6 @@ export class ContinueOtherVisitDialogComponent {
         return `${start.hour()}:${start.minute()}`
     }
 
-    private fromTimeValidator(): ValidatorFn {
-        return (control: AbstractControl<string>) => {
-            if (this.isTimeValidAsFrom(this.parseTime(control.value))) {
-                return null;
-            }
-            return {fromIncorrect: true};
-        }
-    }
-
     private isTimeValidAsFrom(timeStr: string | dayjs.Dayjs): boolean {
         const time = dayjs(timeStr);
         return time.isAfter(this.visit.dateTimeFrom) && time.isBefore(this.visit.dateTimeTo);
@@ -127,6 +99,18 @@ export class ContinueOtherVisitDialogComponent {
     private parseTime(value: string): dayjs.Dayjs {
         const [hour, min] = value.split(':');
         return dayjs(this.visit.dateTimeFrom).hour(+hour).minute(+min);
+    }
+
+    private loadDepartmentOptions(): Observable<Array<Department>> {
+        return this.departmentService.findDepartments({
+            page: 1, size: 100,
+            where: {
+                id: {operator: 'neq', operand: this.visit.department.id},
+                city: {operator: 'eq', operand: this.visit.department.city},
+                validFrom: {operator: 'lte', operand: this.visit.dateTimeTo},
+                validTo: {operator: 'gte', operand: this.visit.dateTimeFrom}
+            }
+        }).pipe(map(pages => pages.items));
     }
 
 }

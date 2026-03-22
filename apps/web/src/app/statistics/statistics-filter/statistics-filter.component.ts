@@ -68,6 +68,7 @@ export class StatisticsFilterComponent {
         to: dayjs().subtract(1, 'month').toDate(),
         city: OperationCities.PECS as OperationCity
     }, {equal: isEqual});
+
     protected readonly form = form(this.filterModel);
 
     constructor() {

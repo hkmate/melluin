@@ -2,10 +2,9 @@
     <mat-card-header>
         <mat-card-subtitle>
             <span class="activity-main-info">
-                @for (activityType of activity().activities; track activityType; let last = $last) {
-                    <span class="activity-type">
-                        {{ 'VisitActivityTypes.' + activityType  | translate }}<span *ngIf="!last">,</span>
-                    </span>
+                @for (activityType of activity().activities; track activityType) {
+                    <span class="activity-type inline-list-item">
+                        {{ 'VisitActivityTypes.' + activityType  | translate }}</span>
                 }
                 <div class="children">
                     <mat-chip-listbox>
@@ -22,7 +21,7 @@
                     </button>
                 </span>
                 <span class="operation-btn delete-btn">
-                    <button mat-mini-fab color="accent" (click)="removeWanted.emit()">
+                    <button mat-mini-fab color="accent" type="button" (click)="removeWanted.emit()">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </span>

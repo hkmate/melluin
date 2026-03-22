@@ -3,25 +3,24 @@
     <div class="description">
         {{ 'Visit.Continue.DialogText' | translate }}
     </div>
-    <form [formGroup]="form">
+    <form>
         <div>
             <mat-form-field>
                 <mat-label>{{ 'Visit.Continue.Department' | translate }}</mat-label>
-                <mat-select [formControl]="departmentIdControl">
-                    @for (option of departmentOptions; track option.id) {
+                <mat-select [formField]="form.departmentId">
+                    @for (option of departmentOptions(); track option.id) {
                         <mat-option [value]="option.id"> {{ option.name }}</mat-option>
                     }
                 </mat-select>
+                <mat-error [fField]="form.departmentId"/>
             </mat-form-field>
         </div>
 
         <div class="time-field">
             <mat-form-field>
                 <mat-label>{{ 'Visit.Continue.TimeFrom' | translate }}</mat-label>
-                <input matInput type="time" [formControl]="fromControl">
-                @if (fromControl.invalid) {
-                    <mat-error>{{ 'Visit.Continue.FromError' | translate }}</mat-error>
-                }
+                <input matInput type="time" [formField]="form.from">
+                <mat-error [fField]="form.from"/>
             </mat-form-field>
         </div>
     </form>
@@ -30,11 +29,11 @@
 
 <div mat-dialog-actions>
     <button mat-flat-button color="accent" type="button"
-            (click)="submit()">
+            [disabled]="form().submitting()" (click)="submitForm()">
         {{ 'Visit.Continue.Ok' | translate }}
     </button>
     <button mat-stroked-button color="primary" type="button"
-            (click)="close()">
+            [disabled]="form().submitting()" (click)="close()">
         {{ 'Visit.Continue.Cancel' | translate }}
     </button>
 </div>

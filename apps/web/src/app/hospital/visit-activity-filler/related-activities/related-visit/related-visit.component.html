@@ -6,7 +6,7 @@
             <div>
                 <mat-card>
                     <mat-card-content>
-                        {{ information()?.content }}
+                        {{ information().content }}
                     </mat-card-content>
                 </mat-card>
             </div>
@@ -36,10 +36,10 @@
             <h3>{{ 'Visit.Activities.Activities' | translate }}</h3>
 
             <div class="activities-list">
-                @for (activity of activities; track activity.id) {
+                @for (activity of wrappedActivity().activities; track activity.id) {
                     <div class="activity-card">
                         <app-related-activity [activity]="activity"
-                                              [childrenById]="childrenById"/>
+                                              [childrenById]="childrenById()"/>
                     </div>
                 } @empty {
                     <div class="empty-list">

@@ -1,6 +1,7 @@
-@if (visits) {
+@let visitsValue = visits();
+@if (visitsValue) {
     <div class="related-visit-list">
-        @for (activity of visits;track $index) {
+        @for (activity of visitsValue; track activity.visit.id) {
             <div class="related-visit-list-item">
                 <mat-card class="related-visit-card">
                     <mat-card-header>
@@ -10,10 +11,9 @@
                             </span>
 
                             <span class="participants">
-                                @for (participant of activity.visit.participants; track participant.id; let last = $last) {
-                                    <span class="participant">
-                                        <span class="nowrap">{{ participant | personName }}</span><span *ngIf="!last">, </span>
-                                    </span>
+                                @for (participant of activity.visit.participants; track participant.id) {
+                                    <span class="participant inline-list-item">
+                                        <span class="nowrap">{{ participant | personName }}</span></span>
                                 }
                             </span>
                         </mat-card-subtitle>

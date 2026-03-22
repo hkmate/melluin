@@ -35,10 +35,17 @@ import {ActivityFillerListComponent} from '@fe/app/hospital/visit-activity-fille
 import {ActivitiesInformationFillerComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activities-information-filler/activities-information-filler.component';
 import {BoxInfoManagerComponent} from '@fe/app/hospital/department-box/department-box-info-manager/box-info-manager.component';
 
+const CLOSED_STATUSES: Array<VisitStatus> = [
+    VisitStatuses.DRAFT,
+    VisitStatuses.ACTIVITIES_FILLED_OUT,
+    VisitStatuses.ALL_FILLED_OUT,
+    VisitStatuses.SUCCESSFUL,
+    VisitStatuses.CANCELED,
+    VisitStatuses.FAILED_BECAUSE_NO_CHILD,
+    VisitStatuses.FAILED_FOR_OTHER_REASON
+];
+
 @Component({
-    selector: 'app-visit-activity-filler',
-    templateUrl: './visit-activity-filler.component.html',
-    styleUrls: ['./visit-activity-filler.component.scss'],
     imports: [
         VisitCardComponent,
         MatButton,
@@ -57,20 +64,14 @@ import {BoxInfoManagerComponent} from '@fe/app/hospital/department-box/departmen
         RouteDataHandler,
         VisitActivityFillerService,
         ContinueOtherVisitDialogService
-    ]
+    ],
+    selector: 'app-visit-activity-filler',
+    templateUrl: './visit-activity-filler.component.html',
+    styleUrls: ['./visit-activity-filler.component.scss']
 })
 export class VisitActivityFillerComponent {
 
     VisitStatuses = VisitStatuses;
-    private static readonly CLOSED_STATUSES: Array<VisitStatus> = [
-        VisitStatuses.DRAFT,
-        VisitStatuses.ACTIVITIES_FILLED_OUT,
-        VisitStatuses.ALL_FILLED_OUT,
-        VisitStatuses.SUCCESSFUL,
-        VisitStatuses.CANCELED,
-        VisitStatuses.FAILED_BECAUSE_NO_CHILD,
-        VisitStatuses.FAILED_FOR_OTHER_REASON
-    ];
 
     private readonly router = inject(Router);
     private readonly route = inject(RouteDataHandler);
@@ -115,7 +116,7 @@ export class VisitActivityFillerComponent {
     }
 
     protected canSetVisitToFailed(): boolean {
-        return !this.childrenAdded && !VisitActivityFillerComponent.CLOSED_STATUSES.includes(this.visit.status);
+        return !this.childrenAdded && !CLOSED_STATUSES.includes(this.visit.status);
     }
 
     protected canVisitBeStarted(): boolean {

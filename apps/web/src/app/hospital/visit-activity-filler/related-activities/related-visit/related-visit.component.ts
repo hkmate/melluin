@@ -1,12 +1,5 @@
-import {Component, computed, effect, inject, input, signal} from '@angular/core';
-import {
-    VisitActivity,
-    VisitActivityInfo,
-    isNilOrEmpty,
-    Permission,
-    VisitedChild,
-    WrappedVisitActivity, UUID
-} from '@melluin/common';
+import {Component, computed, inject, input} from '@angular/core';
+import {isNilOrEmpty, Permission, WrappedVisitActivity} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {convertToChildrenById} from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
 import {MatCard, MatCardContent} from '@angular/material/card';
@@ -15,8 +8,6 @@ import {RelatedVisitChildComponent} from '@fe/app/hospital/visit-activity-filler
 import {RelatedActivityComponent} from '@fe/app/hospital/visit-activity-filler/related-activities/related-activity/related-activity.component';
 
 @Component({
-    selector: 'app-related-visit',
-    templateUrl: './related-visit.component.html',
     imports: [
         MatCard,
         TranslatePipe,
@@ -24,35 +15,20 @@ import {RelatedActivityComponent} from '@fe/app/hospital/visit-activity-filler/r
         RelatedVisitChildComponent,
         RelatedActivityComponent
     ],
+    selector: 'app-related-visit',
+    templateUrl: './related-visit.component.html',
     styleUrls: ['./related-visit.component.scss']
 })
 export class RelatedVisitComponent {
 
     protected readonly Permission = Permission;
-
     protected readonly permissions = inject(PermissionService);
 
     public readonly wrappedActivity = input.required<WrappedVisitActivity>();
 
-    protected children: Array<VisitedChild> = [];
-    protected childrenById: Record<UUID, VisitedChild>;
-    protected activities: Array<VisitActivity> = [];
-    protected information = signal<VisitActivityInfo | undefined>(undefined);
-    protected infoIsEmpty = computed(() => isNilOrEmpty(this.information()?.content));
-    protected visitDate: Date;
-
-    constructor() {
-        effect(() => {
-            this.visitDate = new Date(this.wrappedActivity().visit.dateTimeFrom);
-            this.setupActivities();
-        });
-    }
-
-    private setupActivities(): void {
-        this.children = this.wrappedActivity().children;
-        this.activities = this.wrappedActivity().activities;
-        this.information.set(this.wrappedActivity().info);
-        this.childrenById = convertToChildrenById(this.children);
-    }
+    protected readonly information = computed(() => this.wrappedActivity().info);
+    protected readonly childrenById = computed(() => convertToChildrenById(this.wrappedActivity().children));
+    protected readonly infoIsEmpty = computed(() => isNilOrEmpty(this.information()?.content));
+    protected readonly visitDate = computed(() => new Date(this.wrappedActivity().visit.dateTimeFrom));
 
 }

@@ -14,25 +14,20 @@
 </div>
 
 @if (editMode()) {
-    <form>
+    <form (appSubmit)="submitForm()">
         <div class="activities-information-edit">
             <mat-form-field>
-                <textarea matInput [formControl]="formControl"
+                <textarea matInput [formField]="contentForm.text"
                           [placeholder]="'Visit.Activities.InformationHint' | translate"></textarea>
             </mat-form-field>
 
             <div class="button-row">
-                <button mat-flat-button
-                        [disabled]="buttonsDisabled()"
-                        color="accent"
-                        (click)="submitForm()"
-                        type="button">
+                <button mat-flat-button color="accent"
+                        [disabled]="contentForm().submitting()">
                     {{ 'SaveButton' | translate }}
                 </button>
-                <button mat-stroked-button
-                        [disabled]="buttonsDisabled()"
-                        color="primary"
-                        type="button"
+                <button mat-stroked-button color="primary" type="button"
+                        [disabled]="contentForm().submitting()"
                         (click)="toggleEditMode()">
                     {{ 'CancelButton' | translate }}
                 </button>

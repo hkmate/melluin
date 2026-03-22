@@ -5,13 +5,13 @@
             <mat-card-subtitle>
             <span class="child-info">
                 {{ visitedChildValue.child.name }}
-                <span>({{ visitedChildValue.child | childAge : visitDate }})</span>
+                <span>({{ visitedChildValue.child | childAge : visitDate() }})</span>
 
                 <app-parent-info-icon [isParentThere]="visitedChildValue.isParentThere"/>
             </span>
 
             <span class="operation-btns">
-                @if (needCopyBtn$ | async) {
+                @if (needCopyBtn$() | async) {
                     <button mat-mini-fab color="accent" (click)="copyChildToActualVisit()">
                         <mat-icon>content_copy</mat-icon>
                     </button>

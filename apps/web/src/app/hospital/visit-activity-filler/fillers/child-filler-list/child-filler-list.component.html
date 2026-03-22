@@ -3,7 +3,7 @@
     @if (permissions.has(Permission.canWriteChild)) {
         <span class="add-btn">
             <button mat-mini-fab color="accent" (click)="creatorToggled()">
-                @if (creatingInProcess) {
+                @if (creatingInProcess()) {
                     <mat-icon>close</mat-icon>
                 } @else {
                     <mat-icon>add</mat-icon>
@@ -13,9 +13,9 @@
     }
 </div>
 
-@if (creatingInProcess) {
+@if (creatingInProcess()) {
     <div class="child-create">
-        <app-filler-child-create (creationEnded)="creatorToggled(false)"/>
+        <app-filler-child-create (creationEnded)="closeCreator()"/>
     </div>
 }
 

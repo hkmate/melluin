@@ -9,11 +9,11 @@ import {FillerActivityCardComponent} from '@fe/app/hospital/visit-activity-fille
 import {t} from '@fe/app/util/translate/translate';
 
 @Component({
-    selector: 'app-filler-activity-item',
     imports: [
         FillerActivityEditorComponent,
         FillerActivityCardComponent
     ],
+    selector: 'app-filler-activity-item',
     templateUrl: './filler-activity-item.component.html'
 })
 export class FillerActivityItemComponent {

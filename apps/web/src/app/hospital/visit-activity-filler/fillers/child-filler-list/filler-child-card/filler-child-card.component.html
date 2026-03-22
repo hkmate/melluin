@@ -1,34 +1,32 @@
 @let visitedChild = child();
-@if (visitedChild) {
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>
+<mat-card>
+    <mat-card-header>
+        <mat-card-subtitle>
             <span class="child-info">
                 {{ visitedChild.child.name }}
                 <span class="nowrap">
-                    ({{ visitedChild.child | childAge : visitDate }})
+                    ({{ visitedChild.child | childAge : visitDate() }})
                     <app-parent-info-icon [isParentThere]="visitedChild.isParentThere"/>
                 </span>
 
             </span>
-                <span class="operation-btns">
+            <span class="operation-btns">
                 <span class="operation-btn edit-btn">
                     <button mat-mini-fab color="accent" (click)="editWanted.emit()">
                         <mat-icon>edit</mat-icon>
                     </button>
                 </span>
                 <span class="operation-btn delete-btn">
-                    @if (deleteEnabled$ | async) {
+                    @if (deleteEnabled$() | async) {
                         <button mat-mini-fab color="accent" (click)="removeWanted.emit()">
                             <mat-icon>delete</mat-icon>
                         </button>
                     }
                 </span>
             </span>
-            </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            {{ visitedChild.child.info }}
-        </mat-card-content>
-    </mat-card>
-}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        {{ visitedChild.child.info }}
+    </mat-card-content>
+</mat-card>
