@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, effect, inject, input, output, signal} from '@angular/core';
 import {Platform} from '@angular/cdk/platform';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {form, FormField} from '@angular/forms/signals';
 import {OperationCities, OperationCity} from '@melluin/common';
 import {StatFilter} from '@fe/app/statistics/model/stat-filter';
 import {
@@ -21,6 +21,9 @@ import {
 import {MatFormField, MatLabel, MatSuffix} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatButton} from '@angular/material/button';
+import {isEqual} from 'lodash-es';
+import dayjs from 'dayjs';
+import {AppSubmit} from '@fe/app/util/submit/app-submit';
 
 @Component({
     imports: [
@@ -30,7 +33,6 @@ import {MatButton} from '@angular/material/button';
         MatExpansionPanelTitle,
         TranslatePipe,
         DatePipe,
-        ReactiveFormsModule,
         MatDateRangeInput,
         MatStartDate,
         MatEndDate,
@@ -41,7 +43,9 @@ import {MatButton} from '@angular/material/button';
         MatLabel,
         MatSelect,
         MatOption,
-        MatButton
+        MatButton,
+        AppSubmit,
+        FormField
     ],
     selector: 'app-statistics-filter',
     templateUrl: './statistics-filter.component.html',
@@ -58,31 +62,31 @@ export class StatisticsFilterComponent {
     public readonly filter = input.required<StatFilter>();
     public readonly filterSubmitted = output<StatFilter>();
 
-    protected readonly fromControl = new FormControl(new Date(), {nonNullable: true});
-    protected readonly toControl = new FormControl(new Date(), {nonNullable: true});
-    protected readonly cityControl = new FormControl<OperationCity>(OperationCities.PECS, {nonNullable: true});
-
-    protected readonly form = new FormGroup({
-        from: this.fromControl,
-        to: this.toControl,
-        city: this.cityControl,
-    });
-
     protected readonly filterExpanded = signal(true);
+    private readonly filterModel = signal({
+        from: new Date(),
+        to: dayjs().subtract(1, 'month').toDate(),
+        city: OperationCities.PECS as OperationCity
+    }, {equal: isEqual});
+    protected readonly form = form(this.filterModel);
 
     constructor() {
         effect(() => {
-            this.fromControl.setValue(new Date(this.filter().from), {emitEvent: false});
-            this.toControl.setValue(new Date(this.filter().to), {emitEvent: false});
-            this.cityControl.setValue(this.filter().city, {emitEvent: false});
+            const {from, to, city} = this.filter();
+            this.filterModel.set({
+                from: new Date(from),
+                to: new Date(to),
+                city
+            });
         });
     }
 
     protected submitForm(): void {
+        const {from, to, city} = this.filterModel();
         this.filterSubmitted.emit({
-            from: this.fromControl.value.toISOString(),
-            to: this.toControl.value.toISOString(),
-            city: this.cityControl.value
+            city,
+            from: from.toISOString(),
+            to: to.toISOString(),
         });
         this.filterExpanded.set(false);
     }

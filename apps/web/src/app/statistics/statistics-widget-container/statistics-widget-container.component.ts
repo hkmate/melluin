@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, effect, inject, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input, signal} from '@angular/core';
 import {StatisticWidgetController} from '@fe/app/statistics/controller/widget-controller';
 import {StatisticsService} from '@fe/app/statistics/service/statistics.service';
 import {StatFilter} from '@fe/app/statistics/model/stat-filter';
@@ -38,12 +38,12 @@ export class StatisticsWidgetContainerComponent {
 
     public readonly filter = input.required<StatFilter>();
 
-    protected readonly controllers = this.createControllers();
+    protected readonly controllers = signal(this.createControllers());
 
     constructor() {
         effect(() => {
             const {from, to, city} = this.filter();
-            this.controllers.forEach(controller => controller.load(from, to, city));
+            this.controllers().forEach(controller => controller.load(from, to, city));
         });
     }
 

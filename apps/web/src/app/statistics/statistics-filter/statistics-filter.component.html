@@ -6,30 +6,30 @@
                     {{ 'StatisticsPage.Filter' | translate }}
                 } @else {
                     <span class="filter-title-interval">
-                        {{ fromControl.value | date : ('EventShortDateFormat' | translate) }}
+                        {{ form.from().value() | date : ('EventShortDateFormat' | translate) }}
                     -
-                    {{ toControl.value | date : ('EventShortDateFormat' | translate) }}
+                    {{ form.to().value() | date : ('EventShortDateFormat' | translate) }}
                     </span>
                     <span>
-                        ({{ 'OperationCities.' + cityControl.value | translate }})
+                        ({{ 'OperationCities.' + form.city().value() | translate }})
                     </span>
                 }
             </mat-panel-title>
         </mat-expansion-panel-header>
 
 
-        <form [formGroup]="form" (ngSubmit)="submitForm()">
+        <form (appSubmit)="submitForm()">
             <div>
                 <div class="date-interval-filter" (click)="picker.open()">
                     <span class="interval">
-                        {{ fromControl.value | date : ('EventShortDateFormat' | translate) }}
+                        {{ form.from().value() | date : ('EventShortDateFormat' | translate) }}
                         -
-                        {{ toControl.value | date : ('EventShortDateFormat' | translate) }}
+                        {{ form.to().value() | date : ('EventShortDateFormat' | translate) }}
                     </span>
                     <span class="picker">
                         <mat-date-range-input class="hidden" [rangePicker]="picker">
-                            <input matStartDate [formControl]="fromControl">
-                            <input matEndDate [formControl]="toControl">
+                            <input matStartDate [formField]="form.from">
+                            <input matEndDate [formField]="form.to">
                         </mat-date-range-input>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"/>
                         <mat-date-range-picker #picker [touchUi]="mobileScreen"/>
@@ -38,7 +38,7 @@
                 <div class="city-filter">
                     <mat-form-field>
                         <mat-label>{{ 'DepartmentPage.Form.City' | translate }}</mat-label>
-                        <mat-select [formControl]="cityControl">
+                        <mat-select [formField]="form.city">
                             @for (city of cityOptions; track city) {
                                 <mat-option [value]="city">{{ 'OperationCities.' + city | translate }}</mat-option>
                             }
