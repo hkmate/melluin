@@ -1,12 +1,8 @@
-@if (!noChild()) {
-    <div class="activities-list">
-        @for (child of children(); track child.id) {
-            <div class="child-card">
-                <app-child-card [child]="child" [date]="visitDate()"/>
-            </div>
-        }
+@for (child of children(); track child.id) {
+    <div class="child-card">
+        <app-child-card [child]="child" [date]="visitDate()"/>
     </div>
-} @else {
+} @empty {
     <div class="empty-list">
         {{ 'ChildrenList.NoChildYet' | translate }}
     </div>

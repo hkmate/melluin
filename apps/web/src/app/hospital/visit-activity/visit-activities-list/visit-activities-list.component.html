@@ -1,13 +1,10 @@
-@if (isEmpty()) {
+@for (activity of activities(); track activity.id) {
+    <div class="activity-card">
+        <app-visit-activity-card [activity]="activity" [childrenById]="childrenById()"/>
+    </div>
+} @empty {
+
     <div class="empty-list">
         {{ 'Visit.Activities.NoActivityYet' | translate }}
-    </div>
-} @else {
-    <div class="activities-list">
-        @for (activity of activities(); track activity.id) {
-            <div class="activity-card">
-                <app-visit-activity-card [activity]="activity" [childrenById]="childrenById()"/>
-            </div>
-        }
     </div>
 }

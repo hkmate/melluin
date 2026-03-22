@@ -7,10 +7,10 @@ import {MatCard, MatCardContent} from '@angular/material/card';
 import {ChildSelectComponent} from '@fe/app/hospital/child/child-select/child-select.component';
 import {AsyncPipe} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
-import {ActivitySelectComponent} from '@fe/app/hospital/visit-activity/activity-select/activity-select.component';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {isNotEmptyValidator} from '@fe/app/util/is-not-empty-validator';
+import {ActivitySelectComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-select/activity-select.component';
 
 @Component({
     selector: 'app-filler-activity-create',

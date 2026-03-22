@@ -1,10 +1,10 @@
 <mat-card>
     <mat-card-header>
         <mat-card-subtitle>
-            @for (activityType of activity().activities; track activityType; let last = $last) {
-                <span class="activity-type">
-                    {{ 'VisitActivityTypes.' + activityType  | translate }}<span *ngIf="!last">,</span>
-                </span>
+            @for (activityType of activity().activities; track activityType) {
+                <span class="activity-type inline-list-item">
+<!--                    Needs to be inline because of content of ::after -->
+                    {{ 'VisitActivityTypes.' + activityType  | translate }}</span>
             }
             <div class="children">
                 <mat-chip-listbox>

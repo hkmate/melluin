@@ -8,9 +8,6 @@ import {MatIcon} from '@angular/material/icon';
 import {MatOption, MatSelect} from '@angular/material/select';
 
 @Component({
-    selector: 'app-activity-select',
-    templateUrl: './activity-select.component.html',
-    styleUrls: ['./activity-select.component.scss'],
     imports: [
         MatFormField,
         MatLabel,
@@ -26,7 +23,10 @@ import {MatOption, MatSelect} from '@angular/material/select';
         provide: NG_VALUE_ACCESSOR,
         useExisting: forwardRef(() => ActivitySelectComponent),
         multi: true
-    }]
+    }],
+    selector: 'app-activity-select',
+    templateUrl: './activity-select.component.html',
+    styleUrls: ['./activity-select.component.scss']
 })
 export class ActivitySelectComponent implements ControlValueAccessor {
 

@@ -4,18 +4,18 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {MatCard, MatCardContent} from '@angular/material/card';
 
 @Component({
-    selector: 'app-visit-activity-information',
     imports: [
         TranslatePipe,
         MatCard,
         MatCardContent
     ],
+    selector: 'app-visit-activity-information',
     templateUrl: './visit-activity-information.component.html'
 })
 export class VisitActivityInformationComponent {
 
-    public info = input<VisitActivityInfo>();
+    public readonly info = input<VisitActivityInfo>();
 
-    protected empty = computed(() => isNilOrEmpty(this.info()?.content));
+    protected readonly empty = computed(() => isNilOrEmpty(this.info()?.content));
 
 }
