@@ -40,7 +40,8 @@
         "Max": "Maximum: {{max}}",
         "EmailFormat": "Valid email címet kell megadni",
         "Phone": "Valid telefonszámot kell megadni",
-        "UUID": "Valid UUID azonosítót kell megadni"
+        "UUID": "Valid UUID azonosítót kell megadni",
+        "NoWhitespaceHeadOrTail": "Nem kezdődhet vagy végződhet üres karakterrel"
     },
     "Datepicker": {
         "DatePlaceholder": "Válassz dátumot"

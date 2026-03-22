@@ -15,7 +15,6 @@ import {MessageService} from '@fe/app/util/message.service';
 import {PeopleService} from '@fe/app/people/people.service';
 import {UserService} from '@fe/app/people/user.service';
 import {TranslatePipe} from '@ngx-translate/core';
-import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
@@ -28,11 +27,11 @@ import {firstValueFrom} from 'rxjs';
 import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
 import {t} from '@fe/app/util/translate/translate';
 import {PasswordInputComponent} from '@fe/app/util/password-input/password-input.component';
+import {noWhitespaceHeadOrTail} from '@fe/app/util/whitespace-validator/no-whitespace-head-or-tail';
 
 @Component({
     imports: [
         TranslatePipe,
-        TrimmedTextInputComponent2,
         MatCardContent,
         MatCard,
         MatCheckbox,
@@ -70,8 +69,12 @@ export class MyProfileEditorComponent {
     protected readonly personModel = signal(this.getDefaultPersonFormModel());
     protected readonly personForm = form(this.personModel, schema => {
         required(schema.firstName, {message: t('Form.Required')});
+        noWhitespaceHeadOrTail(schema.firstName);
         required(schema.lastName, {message: t('Form.Required')});
+        noWhitespaceHeadOrTail(schema.lastName);
         email(schema.email, {message: t('Form.EmailFormat')});
+        noWhitespaceHeadOrTail(schema.email);
+        noWhitespaceHeadOrTail(schema.phone);
     });
 
     protected readonly userModel = signal(this.getDefaultUserFormModel());

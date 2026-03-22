@@ -5,7 +5,6 @@ import {AuthCredentials, NOOP} from '@melluin/common';
 import {AppTitle} from '@fe/app/app-title.service';
 import {MessageService} from '@fe/app/util/message.service';
 import {TranslatePipe} from '@ngx-translate/core';
-import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {MatButton} from '@angular/material/button';
 import {form, FormField, required, submit} from '@angular/forms/signals';
 import {finalize, firstValueFrom} from 'rxjs';
@@ -13,12 +12,13 @@ import {getErrorHandler} from '@fe/app/util/error/error-handler';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {t} from '@fe/app/util/translate/translate';
 import {PasswordInputComponent} from '@fe/app/util/password-input/password-input.component';
+import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
 
 @Component({
     imports: [
-        TrimmedTextInputComponent2,
-        TranslatePipe,
-        MatButton, FormField, AppSubmit, PasswordInputComponent,
+        TranslatePipe, MatButton, FormField, AppSubmit,
+        PasswordInputComponent, MatFormField, MatInput, MatLabel, MatError, MelluinMatErrorComponent,
     ],
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],

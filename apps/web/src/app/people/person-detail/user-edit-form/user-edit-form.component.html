@@ -1,11 +1,13 @@
 <h1>{{ 'PersonPage.User.EditData' | translate }}</h1>
 
 <form (appSubmit)="submitForm()">
-
-    <app-trimmed-text-input [formField]="form.userName"
-                            autocomplete="username"
-                            [placeholder]="'PersonPage.User.Form.UserNamePlaceholder' | translate"
-                            [label]="'PersonPage.User.Form.UserName'| translate"/>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.User.Form.UserName' | translate }}</mat-label>
+        <input matInput autocomplete="username"
+               [placeholder]="'PersonPage.User.Form.UserNamePlaceholder' | translate"
+               [formField]="form.userName">
+        <mat-error [fField]="form.userName"/>
+    </mat-form-field>
 
     <app-password-input [formField]="form.password"
                         autocomplete="new-password"

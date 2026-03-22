@@ -21,10 +21,12 @@
                 </mat-select>
             </mat-form-field>
 
-            <app-trimmed-text-input
-                    [formField]="form.comment"
-                    [label]="'BoxStatus.Comment' | translate"
-                    [placeholder]="'BoxStatus.CommentPlaceholder' | translate"/>
+            <mat-form-field>
+                <mat-label>{{ 'BoxStatus.Comment' | translate }}</mat-label>
+                <input matInput [formField]="form.comment"
+                       [placeholder]="'BoxStatus.CommentPlaceholder' | translate">
+                <mat-error [fField]="form.comment"/>
+            </mat-form-field>
 
             <div class="button-row">
                 <button mat-flat-button

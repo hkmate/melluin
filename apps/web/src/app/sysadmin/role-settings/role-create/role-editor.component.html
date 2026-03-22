@@ -1,9 +1,12 @@
 <form class="role-create" (appSubmit)="submitForm()">
     <div class="form-inputs">
         <div class="role-name">
-            <app-trimmed-text-input [formField]="form.name"
-                                    [label]="'Sysadmin.RoleSettings.NameLabel' | translate"
-                                    [placeholder]="'Sysadmin.RoleSettings.NamePlaceholder' | translate"/>
+            <mat-form-field>
+                <mat-label>{{ 'Sysadmin.RoleSettings.NameLabel' | translate }}</mat-label>
+                <input matInput [formField]="form.name"
+                       [placeholder]="'Sysadmin.RoleSettings.NamePlaceholder' | translate">
+                <mat-error [fField]="form.name"/>
+            </mat-form-field>
         </div>
         <div class="role-type">
             <mat-form-field>

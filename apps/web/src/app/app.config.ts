@@ -23,7 +23,6 @@ import {JwtInterceptor} from '@fe/app/auth/service/jwt.interceptor';
 import {provideRouter} from '@angular/router';
 import {routes} from '@fe/app/app-routes';
 import {AppLanguages} from '@fe/app/language/app-language';
-import {provideDatepickerConfig} from 'ngxsmk-datepicker';
 import {setupTranslateService} from '@fe/app/util/translate/translate';
 
 registerLocaleData(localeHu);
@@ -50,10 +49,6 @@ export const appConfig: ApplicationConfig = {
 
         {provide: LOCALE_ID, useValue: AppLanguages.HU},
         provideNativeDateAdapter(),
-        provideDatepickerConfig({
-            locale: 'hu',
-            weekStart: 1,
-        }),
         {provide: DateAdapter, useClass: MondayFirstDateAdapter},
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
         {provide: MatPaginatorIntl, useClass: I18nPaginatorIntl}

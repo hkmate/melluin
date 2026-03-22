@@ -6,12 +6,11 @@ import {
     isNil,
     isNotNil,
     Nullable,
-    OperationCity,
     OperationCities,
+    OperationCity,
     orElse
 } from '@melluin/common';
 import {TranslatePipe} from '@ngx-translate/core';
-import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatCard} from '@angular/material/card';
@@ -22,13 +21,13 @@ import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-m
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {DepartmentService} from '@fe/app/hospital/department/department.service';
 import {firstValueFrom} from 'rxjs';
-import {NgxsmkDatepickerComponent} from 'ngxsmk-datepicker';
 import {t} from '@fe/app/util/translate/translate';
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
+import {noWhitespaceHeadOrTail} from '@fe/app/util/whitespace-validator/no-whitespace-head-or-tail';
 
 @Component({
     imports: [
         TranslatePipe,
-        TrimmedTextInputComponent2,
         MatFormField,
         MatLabel,
         MatSelect,
@@ -41,7 +40,9 @@ import {t} from '@fe/app/util/translate/translate';
         MatError,
         MelluinMatErrorComponent,
         AppSubmit,
-        NgxsmkDatepickerComponent
+        MatDatepicker,
+        MatDatepickerToggle,
+        MatDatepickerInput
     ],
     selector: 'app-department-data-form',
     templateUrl: './department-data-form.component.html',
@@ -61,7 +62,9 @@ export class DepartmentDataFormComponent {
     private readonly formModel = signal(this.getDefaultFormModel());
     protected readonly form = form(this.formModel, schema => {
         required(schema.name, {message: t('Form.Required')});
+        noWhitespaceHeadOrTail(schema.name);
         required(schema.address, {message: t('Form.Required')});
+        noWhitespaceHeadOrTail(schema.address);
         required(schema.city, {message: t('Form.Required')});
         required(schema.validFrom, {message: t('Form.Required')});
         required(schema.limitOfVisits, {message: t('Form.Required')});

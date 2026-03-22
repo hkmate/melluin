@@ -35,8 +35,8 @@ import {disabled, form, FormField, max, min, required, submit, validate} from '@
 import {t} from '@fe/app/util/translate/translate';
 import {firstValueFrom} from 'rxjs';
 import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
-import {NgxsmkDatepickerComponent} from 'ngxsmk-datepicker';
 import {VisitFormSaveService} from '@fe/app/hospital/visit/visit-details/visit-form/visit-form-save.service';
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
 
 const MS_ON_HOUR = 3600000; // 1000 * 60 * 60
 const MIN_ON_HOUR = 60;
@@ -62,7 +62,9 @@ const DEFAULT_TIME_TO = '18:00';
         FormField,
         MatError,
         MelluinMatErrorComponent,
-        NgxsmkDatepickerComponent
+        MatDatepickerInput,
+        MatDatepickerToggle,
+        MatDatepicker
     ],
     providers: [VisitFormSaveService],
     selector: 'app-visit-form',

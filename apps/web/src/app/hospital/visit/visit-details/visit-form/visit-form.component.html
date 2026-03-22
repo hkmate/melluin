@@ -21,12 +21,15 @@
                        [formField]="form.participantIds"/>
 
     <div>
-        <mat-label>{{ 'Visit.Form.Date' | translate }}*</mat-label>
-        <ngxsmk-datepicker [formField]="form.date" locale="hu"
-                           [class.invalid]="form.date().invalid() && form.date().touched()"
-                           [showCalendarButton]="true"
-                           [placeholder]="'Datepicker.DatePlaceholder' | translate"/>
-        <mat-error [fField]="form.date"/>
+        <mat-form-field>
+            <mat-label>{{ 'Visit.Form.Date' | translate }}</mat-label>
+            <input matInput
+                   [matDatepicker]="validFromPicker"
+                   (click)="validFromPicker.open()"
+                   [formField]="form.date">
+            <mat-datepicker-toggle matIconSuffix [for]="validFromPicker"/>
+            <mat-datepicker #validFromPicker [touchUi]="false"/>
+        </mat-form-field>
     </div>
 
     <div class="time-field">

@@ -15,8 +15,7 @@ import {
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
 import {TranslatePipe} from '@ngx-translate/core';
-import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
-import {MatFormField, MatLabel} from '@angular/material/input';
+import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle} from '@angular/material/card';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
 import {MatOption, MatSelect} from '@angular/material/select';
@@ -28,11 +27,12 @@ import {toSignal} from '@angular/core/rxjs-interop';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {PasswordInputComponent} from '@fe/app/util/password-input/password-input.component';
 import {UserService} from '@fe/app/people/user.service';
+import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
+import {noWhitespaceHeadOrTail} from '@fe/app/util/whitespace-validator/no-whitespace-head-or-tail';
 
 @Component({
     imports: [
         TranslatePipe,
-        TrimmedTextInputComponent2,
         MatFormField,
         MatLabel,
         MatCard,
@@ -45,7 +45,10 @@ import {UserService} from '@fe/app/people/user.service';
         MatButton,
         AppSubmit,
         FormField,
-        PasswordInputComponent
+        PasswordInputComponent,
+        MatError,
+        MatInput,
+        MelluinMatErrorComponent
     ],
     selector: 'app-user-edit-form',
     templateUrl: './user-edit-form.component.html',
@@ -72,6 +75,7 @@ export class UserEditFormComponent {
     protected readonly formModel = linkedSignal(() => this.getFormModel(this.user()));
     protected readonly form = form(this.formModel, schema => {
         required(schema.userName, {message: t('Form.Required')});
+        noWhitespaceHeadOrTail(schema.userName);
 
         required(schema.password, {message: t('Form.Required'), when: () => isNil(this.user())});
         pattern(schema.password, new RegExp(passwordPattern),

@@ -1,25 +1,27 @@
 import {ChangeDetectionStrategy, Component, inject, input, output, signal} from '@angular/core';
 import {
-    BoxStatusChangeReason, BoxStatusChangeReasons,
+    BoxStatusChangeReason,
+    BoxStatusChangeReasons,
     DepartmentBoxStatus,
     DepartmentBoxStatusReport,
     isNotNil,
-    Nullable, UUID
+    Nullable,
+    UUID
 } from '@melluin/common';
 import {affectedObjectsList} from '@fe/app/hospital/department-box/affected-objects-list';
 import {MessageService} from '@fe/app/util/message.service';
 import {MatCard, MatCardContent} from '@angular/material/card';
-import {MatError, MatFormField, MatLabel} from '@angular/material/input';
+import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatButton} from '@angular/material/button';
 import {form, FormField, required, submit} from '@angular/forms/signals';
-import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {firstValueFrom} from 'rxjs';
 import {DepartmentBoxService} from '@fe/app/hospital/department-box/department-box.service';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
 import {t} from '@fe/app/util/translate/translate';
+import {noWhitespaceHeadOrTail} from '@fe/app/util/whitespace-validator/no-whitespace-head-or-tail';
 
 @Component({
     imports: [
@@ -30,12 +32,12 @@ import {t} from '@fe/app/util/translate/translate';
         MatSelect,
         TranslatePipe,
         MatOption,
-        TrimmedTextInputComponent2,
         MatButton,
         AppSubmit,
         FormField,
         MatError,
-        MelluinMatErrorComponent
+        MelluinMatErrorComponent,
+        MatInput
     ],
     selector: 'app-department-box-info-create',
     templateUrl: './department-box-info-create.component.html',
@@ -63,6 +65,7 @@ export class DepartmentBoxInfoCreateComponent {
 
     protected readonly form = form(this.formModel, schema => {
         required(schema.reason, {message: t('BoxStatus.ReasonIsRequired')});
+        noWhitespaceHeadOrTail(schema.comment);
     });
 
     protected submitForm(): void {

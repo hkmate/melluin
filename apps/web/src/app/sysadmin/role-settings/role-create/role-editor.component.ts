@@ -2,9 +2,8 @@ import {ChangeDetectionStrategy, Component, computed, inject, input, linkedSigna
 import {isNil, Permission, Role, RoleCreation, RoleTypes} from '@melluin/common';
 import {RoleService} from '@fe/app/sysadmin/role-settings/role.service';
 import {MessageService} from '@fe/app/util/message.service';
-import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {TranslatePipe} from '@ngx-translate/core';
-import {MatFormField} from '@angular/material/input';
+import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
@@ -12,10 +11,11 @@ import {form, FormField, min, required, submit} from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {t} from '@fe/app/util/translate/translate';
+import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
+import {noWhitespaceHeadOrTail} from '@fe/app/util/whitespace-validator/no-whitespace-head-or-tail';
 
 @Component({
     imports: [
-        TrimmedTextInputComponent2,
         TranslatePipe,
         MatFormField,
         MatSelect,
@@ -23,7 +23,11 @@ import {t} from '@fe/app/util/translate/translate';
         MatIconButton,
         MatIcon,
         AppSubmit,
-        FormField
+        FormField,
+        MatError,
+        MatInput,
+        MatLabel,
+        MelluinMatErrorComponent
     ],
     selector: 'app-role-edit',
     templateUrl: './role-editor.component.html',
@@ -50,6 +54,7 @@ export class RoleEditorComponent {
     protected readonly formModel = linkedSignal<RoleCreation>(() => this.setupFormValues());
     protected readonly form = form(this.formModel, schema => {
         required(schema.name, {message: t('Form.Required')});
+        noWhitespaceHeadOrTail(schema.name);
         min(schema.type, 3, {message: t('Form.Min', {min: 3})});
         required(schema.type, {message: t('Form.Required')});
     });

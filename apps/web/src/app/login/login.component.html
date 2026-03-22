@@ -3,10 +3,13 @@
         <img src="./assets/logo.svg" alt="Logo image">
 
         <form (appSubmit)="onSubmit()">
-            <app-trimmed-text-input [formField]="loginForm.username"
-                                    [label]="'LoginPage.Form.UserName' | translate"
-                                    [placeholder]="'LoginPage.Form.UserNamePlaceholder' | translate"
-                                    autocomplete="username"/>
+            <mat-form-field>
+                <mat-label>{{ 'LoginPage.Form.UserName' | translate }}</mat-label>
+                <input matInput autocomplete="username"
+                       [placeholder]="'LoginPage.Form.UserNamePlaceholder' | translate"
+                       [formField]="loginForm.username">
+                <mat-error [fField]="loginForm.username"/>
+            </mat-form-field>
 
             <app-password-input [formField]="loginForm.password"
                                 [label]="'LoginPage.Form.Password' | translate"

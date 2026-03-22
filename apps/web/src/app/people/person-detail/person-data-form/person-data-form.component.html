@@ -7,26 +7,33 @@
 </h1>
 
 <form (appSubmit)="submitForm()">
-    <app-trimmed-text-input
-            [placeholder]="'PersonPage.Form.LastNamePlaceholder' | translate"
-            [label]="'PersonPage.Form.LastName' | translate"
-            [formField]="form.lastName"/>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.Form.LastName' | translate }}</mat-label>
+        <input matInput [formField]="form.lastName"
+               [placeholder]="'PersonPage.Form.LastNamePlaceholder' | translate">
+        <mat-error [fField]="form.lastName"/>
+    </mat-form-field>
 
-    <app-trimmed-text-input
-            [label]=" 'PersonPage.Form.FirstName' | translate"
-            [placeholder]="'PersonPage.Form.FirstNamePlaceholder' | translate"
-            [formField]="form.firstName"/>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.Form.FirstName' | translate }}</mat-label>
+        <input matInput [formField]="form.firstName"
+               [placeholder]="'PersonPage.Form.FirstNamePlaceholder' | translate">
+        <mat-error [fField]="form.firstName"/>
+    </mat-form-field>
 
-    <app-trimmed-text-input
-            [label]=" 'PersonPage.Form.Email' | translate"
-            [placeholder]="'PersonPage.Form.EmailPlaceholder' | translate"
-            [formField]="form.email"/>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.Form.Email' | translate }}</mat-label>
+        <input matInput [formField]="form.email"
+               [placeholder]="'PersonPage.Form.EmailPlaceholder' | translate">
+        <mat-error [fField]="form.email"/>
+    </mat-form-field>
 
-    <app-trimmed-text-input
-            [label]=" 'PersonPage.Form.Phone' | translate"
-            [placeholder]="'PersonPage.Form.PhonePlaceholder' | translate"
-            [formField]="form.phone">
-    </app-trimmed-text-input>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.Form.Phone' | translate }}</mat-label>
+        <input matInput [formField]="form.phone"
+               [placeholder]="'PersonPage.Form.PhonePlaceholder' | translate">
+        <mat-error [fField]="form.phone"/>
+    </mat-form-field>
 
     <mat-form-field>
         <mat-label>{{ 'PersonPage.Form.OperationCities' | translate }}</mat-label>

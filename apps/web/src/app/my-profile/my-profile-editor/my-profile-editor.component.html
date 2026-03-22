@@ -1,17 +1,26 @@
 <h1>{{ 'PersonPage.MyProfile' | translate }}</h1>
 
 <form (appSubmit)="submitPersonForm()">
-    <app-trimmed-text-input [formField]="personForm.lastName"
-                            [label]="'PersonPage.Form.LastName' | translate"
-                            [placeholder]="'PersonPage.Form.LastNamePlaceholder' | translate"/>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.Form.LastName' | translate }}</mat-label>
+        <input matInput [formField]="personForm.lastName"
+               [placeholder]="'PersonPage.Form.LastNamePlaceholder' | translate">
+        <mat-error [fField]="personForm.lastName"/>
+    </mat-form-field>
 
-    <app-trimmed-text-input [formField]="personForm.firstName"
-                            [label]="'PersonPage.Form.FirstName' | translate"
-                            [placeholder]="'PersonPage.Form.FirstNamePlaceholder' | translate"/>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.Form.FirstName' | translate }}</mat-label>
+        <input matInput [formField]="personForm.firstName"
+               [placeholder]="'PersonPage.Form.FirstNamePlaceholder' | translate">
+        <mat-error [fField]="personForm.firstName"/>
+    </mat-form-field>
 
-    <app-trimmed-text-input [formField]="personForm.email"
-                            [label]="'PersonPage.Form.Email' | translate"
-                            [placeholder]="'PersonPage.Form.EmailPlaceholder' | translate"/>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.Form.Email' | translate }}</mat-label>
+        <input matInput [formField]="personForm.email"
+               [placeholder]="'PersonPage.Form.EmailPlaceholder' | translate">
+        <mat-error [fField]="personForm.email"/>
+    </mat-form-field>
 
     <div class="email-preference-card">
         <mat-card class="form-card">
@@ -25,9 +34,12 @@
         </mat-card>
     </div>
 
-    <app-trimmed-text-input [formField]="personForm.phone"
-                            [label]="'PersonPage.Form.Phone' | translate"
-                            [placeholder]="'PersonPage.Form.PhonePlaceholder' | translate"/>
+    <mat-form-field>
+        <mat-label>{{ 'PersonPage.Form.Phone' | translate }}</mat-label>
+        <input matInput [formField]="personForm.phone"
+               [placeholder]="'PersonPage.Form.PhonePlaceholder' | translate">
+        <mat-error [fField]="personForm.phone"/>
+    </mat-form-field>
 
     <div class="phone-preference-card">
         <mat-card class="form-card">

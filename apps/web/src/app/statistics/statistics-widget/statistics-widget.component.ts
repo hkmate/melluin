@@ -10,6 +10,18 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {StatisticWidgetTableComponent} from '@fe/app/statistics/statistics-widget/statistic-widget-table/statistic-widget-table.component';
+import {
+    BarController,
+    BarElement,
+    CategoryScale,
+    Chart,
+    Legend,
+    LinearScale,
+    LogarithmicScale,
+    Tooltip
+} from 'chart.js';
+
+Chart.register(BarController, LinearScale, CategoryScale, BarElement, Legend, Tooltip, LogarithmicScale);
 
 @Component({
     imports: [

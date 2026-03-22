@@ -2,8 +2,7 @@ import {ChangeDetectionStrategy, Component, inject, input, linkedSignal, output}
 import {emptyToUndef, isNil, OperationCities, Permission, Person, PersonRewrite} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {TranslatePipe} from '@ngx-translate/core';
-import {TrimmedTextInputComponent2} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
-import {MatError, MatFormField, MatLabel} from '@angular/material/input';
+import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatButton} from '@angular/material/button';
 import {firstValueFrom, Observable} from 'rxjs';
@@ -12,11 +11,11 @@ import {PeopleService} from '@fe/app/people/people.service';
 import {AppSubmit} from '@fe/app/util/submit/app-submit';
 import {t} from '@fe/app/util/translate/translate';
 import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
+import {noWhitespaceHeadOrTail} from '@fe/app/util/whitespace-validator/no-whitespace-head-or-tail';
 
 @Component({
     imports: [
         TranslatePipe,
-        TrimmedTextInputComponent2,
         MatFormField,
         MatLabel,
         MatSelect,
@@ -25,7 +24,8 @@ import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-m
         AppSubmit,
         FormField,
         MatError,
-        MelluinMatErrorComponent
+        MelluinMatErrorComponent,
+        MatInput
     ],
     selector: 'app-person-data-form',
     templateUrl: './person-data-form.component.html',
@@ -46,9 +46,14 @@ export class PersonDataFormComponent {
     protected readonly formModel = linkedSignal(() => this.getFormModel(this.person()));
     protected readonly form = form(this.formModel, schema => {
         required(schema.firstName, {message: t('Form.Required')});
+        noWhitespaceHeadOrTail(schema.firstName);
         required(schema.lastName, {message: t('Form.Required')});
+        noWhitespaceHeadOrTail(schema.lastName);
 
         email(schema.email, {message: t('Form.EmailFormat')});
+        noWhitespaceHeadOrTail(schema.email);
+
+        noWhitespaceHeadOrTail(schema.phone);
 
         required(schema.cities, {message: t('Form.Required')});
         minLength(schema.cities, 1, {message: t('Form.Min', {min: 1})});

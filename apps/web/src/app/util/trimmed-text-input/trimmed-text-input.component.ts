@@ -1,55 +1,11 @@
-import {ChangeDetectionStrategy, Component, effect, forwardRef, input, model, signal} from '@angular/core';
-import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {form, FormField, FormValueControl, required, validate, ValidationError} from '@angular/forms/signals';
+import {Component, forwardRef, input,} from '@angular/core';
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR,} from '@angular/forms';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {isNotNil} from '@melluin/common';
 
 
-@Component({
-    imports: [
-        MatFormField,
-        MatLabel,
-        MatInput,
-        MatError,
-        FormField,
-    ],
-    selector: 'app-trimmed-text-input',
-    templateUrl: './trimmed-text-input.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class TrimmedTextInputComponent2 implements FormValueControl<string> {
-
-    public readonly value = model<string>('')
-
-    public readonly required = input<boolean>(false);
-    public readonly invalid = input<boolean>(false);
-    public readonly touched = model<boolean>(false);
-    public readonly errors = input<ReadonlyArray<ValidationError>>([]);
-
-    public readonly placeholder = input.required<string>();
-    public readonly label = input.required<string>();
-    public readonly type = input<'text' | 'password'>('text');
-    public readonly autocomplete = input<AutoFill>();
-
-    protected readonly innerForm = form(signal({innerValue: ''}), schema => {
-        required(schema.innerValue, {when: () => this.required()});
-        validate(schema.innerValue, () => (this.invalid() ? {kind: 'invalid'} : null));
-    });
-
-    constructor() {
-        effect(() => this.touched.set(this.innerForm().touched()));
-        effect(() => this.innerForm.innerValue().value.set(this.value()));
-    }
-
-    protected focusLost(): void {
-        this.value.set(this.innerForm().value().innerValue.trim());
-    }
-
-}
-
-
 /**
- * @deprecated Will be removed when every component got refactored to signal based forms
+ * @deprecated Will be removed
  */
 @Component({
     imports: [
