@@ -19,7 +19,7 @@ import {DepartmentService} from '@fe/app/hospital/department/department.service'
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {UrlParamHandler} from '@fe/app/util/url-param-handler/url-param-handler';
 import {TranslatePipe} from '@ngx-translate/core';
-import {LazyInputComponent2} from '@fe/app/util/lazy-input/lazy-input.component';
+import {LazyInputComponent} from '@fe/app/util/lazy-input/lazy-input.component';
 import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
@@ -50,7 +50,7 @@ const ONLY_VALID_PARAM_KEY = 'only-valid';
 @Component({
     imports: [
         TranslatePipe,
-        LazyInputComponent2,
+        LazyInputComponent,
         MatMiniFabButton,
         MatIcon,
         RouterLink,

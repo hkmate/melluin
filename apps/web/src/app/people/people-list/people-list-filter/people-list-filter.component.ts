@@ -5,7 +5,7 @@ import {PeopleListFilterService} from '@fe/app/people/people-list/people-list-fi
 import {OperationCities, Permission} from '@melluin/common';
 import {GetRolesService} from '@fe/app/util/get-roles.service';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
-import {LazyInputComponent2} from '@fe/app/util/lazy-input/lazy-input.component';
+import {LazyInputComponent} from '@fe/app/util/lazy-input/lazy-input.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
@@ -17,7 +17,7 @@ import {isEqual} from 'lodash-es';
 
 @Component({
     imports: [
-        LazyInputComponent2,
+        LazyInputComponent,
         TranslatePipe,
         MatFormField,
         MatLabel,

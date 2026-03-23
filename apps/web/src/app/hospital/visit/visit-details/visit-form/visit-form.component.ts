@@ -31,7 +31,7 @@ import {SelectOption} from '@fe/app/util/visit-status-option';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
-import {PersonSelectComponent2} from '@fe/app/util/person-select/person-select.component';
+import {PersonSelectComponent} from '@fe/app/util/person-select/person-select.component';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
@@ -62,7 +62,7 @@ const DEFAULT_TIME_TO = '18:00';
         MatLabel,
         MatSelect,
         MatOption,
-        PersonSelectComponent2,
+        PersonSelectComponent,
         MatInput,
         MatCardContent,
         MatCard,

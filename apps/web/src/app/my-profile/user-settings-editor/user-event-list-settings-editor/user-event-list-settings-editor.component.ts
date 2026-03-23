@@ -13,7 +13,7 @@ import {DepartmentService} from '@fe/app/hospital/department/department.service'
 import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {TranslatePipe} from '@ngx-translate/core';
-import {PersonSelectComponent2} from '@fe/app/util/person-select/person-select.component';
+import {PersonSelectComponent} from '@fe/app/util/person-select/person-select.component';
 import {MatCard, MatCardSubtitle} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
@@ -31,7 +31,7 @@ import {AppSubmit} from '@fe/app/util/submit/app-submit';
         MatSelect,
         TranslatePipe,
         MatOption,
-        PersonSelectComponent2,
+        PersonSelectComponent,
         MatCard,
         MatCardSubtitle,
         MatCheckbox,

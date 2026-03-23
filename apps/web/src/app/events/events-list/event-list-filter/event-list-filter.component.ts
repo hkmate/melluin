@@ -19,7 +19,7 @@ import {
 import {DatePipe} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatFormField, MatLabel, MatSuffix} from '@angular/material/input';
-import {PersonSelectComponent2} from '@fe/app/util/person-select/person-select.component';
+import {PersonSelectComponent} from '@fe/app/util/person-select/person-select.component';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {isEqual} from 'lodash-es';
@@ -37,7 +37,7 @@ import {form, FormField} from '@angular/forms/signals';
         DatePipe,
         TranslatePipe,
         MatSuffix,
-        PersonSelectComponent2,
+        PersonSelectComponent,
         MatFormField,
         MatLabel,
         MatSelect,
