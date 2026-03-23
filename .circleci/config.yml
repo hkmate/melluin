@@ -1,13 +1,9 @@
 version: 2.1
 
-orbs:
-  browser-tools: circleci/browser-tools@1.4.4
-
 executors:
   ci-executor:
     docker:
       - image: cimg/node:24.14.0-browsers
-
 
 jobs:
   build-test-lint:
@@ -32,16 +28,6 @@ jobs:
           key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
           paths:
             - .pnpm-store
-      - run: sudo apt-get update
-      - browser-tools/install-chrome
-#          chrome-version: 116.0.5845.96 # TODO: remove until: https://github.com/CircleCI-Public/browser-tools-orb/issues/75
-#          replace-existing: true # TODO: remove until: https://github.com/CircleCI-Public/browser-tools-orb/issues/75
-      - browser-tools/install-chromedriver
-      - run:
-          name: Check install
-          command: |
-            google-chrome --version
-            chromedriver --version
       - run:
           name: Build
           command: pnpm run build
