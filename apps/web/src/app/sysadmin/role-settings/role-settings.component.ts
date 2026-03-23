@@ -42,7 +42,6 @@ import {t} from '@fe/app/util/translate/translate';
     providers: [RoleService],
     selector: 'app-role-settings',
     templateUrl: './role-settings.component.html',
-    styleUrls: ['./role-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RoleSettingsComponent {

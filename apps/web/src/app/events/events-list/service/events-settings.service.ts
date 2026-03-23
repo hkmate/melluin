@@ -8,6 +8,7 @@ import {EventListSettingsInitializer} from '@fe/app/events/events-list/service/e
 import {EventListQueryParamHandler} from '@fe/app/events/events-list/service/event-list-query-param-handler';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {ListPageSettingChangeReason, ListPageSettingChangeReasons} from '@fe/app/util/list-page-settings-change-reason';
+import {isEqual} from 'lodash-es';
 
 
 @Injectable()
@@ -43,6 +44,9 @@ export class EventsSettingsService {
     }
 
     public setPageInfo(newFilter: PageInfo): void {
+        if (isEqual(newFilter, this.page)) {
+            return;
+        }
         this.page = newFilter;
         this.queryParamHandler.saveSettings(this.filter, this.preferences, this.page);
         this.settingsChanged.next(ListPageSettingChangeReasons.PAGE_DATA);
@@ -56,6 +60,9 @@ export class EventsSettingsService {
     }
 
     public setFilter(newFilter: EventsFilter): void {
+        if (isEqual(newFilter, this.filter)) {
+            return;
+        }
         this.filter = newFilter;
         this.queryParamHandler.saveSettings(this.filter, this.preferences, this.page);
         this.settingsChanged.next(ListPageSettingChangeReasons.FILTERS);
@@ -69,6 +76,9 @@ export class EventsSettingsService {
     }
 
     public setPreferences(newPreferences: EventsListPreferences): void {
+        if (isEqual(newPreferences, this.preferences)) {
+            return;
+        }
         this.preferences = newPreferences;
         this.queryParamHandler.saveSettings(this.filter, this.preferences, this.page);
         this.settingsChanged.next(ListPageSettingChangeReasons.PREFERENCES);

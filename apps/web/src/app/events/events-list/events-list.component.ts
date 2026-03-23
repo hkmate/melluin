@@ -1,5 +1,5 @@
-import {Component, inject} from '@angular/core';
-import {FilterOptions, Visit, Pageable, PageQuery, Permission, SortOptions} from '@melluin/common';
+import {Component, inject, signal} from '@angular/core';
+import {Pageable, PageQuery, Permission, SortOptions, Visit} from '@melluin/common';
 import {AppTitle} from '@fe/app/app-title.service';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
@@ -28,9 +28,6 @@ import {EventListFilterComponent} from '@fe/app/events/events-list/event-list-fi
 import {VisitListComponent} from '@fe/app/hospital/visit/visit-list/visit-list.component';
 
 @Component({
-    selector: 'app-events-list',
-    templateUrl: './events-list.component.html',
-    styleUrls: ['./events-list.component.scss'],
     imports: [
         TranslatePipe,
         MatMiniFabButton,
@@ -51,7 +48,9 @@ import {VisitListComponent} from '@fe/app/hospital/visit/visit-list/visit-list.c
         EventListUserSettingsInitializer,
         EventListQueryParamSettingsInitializer,
         EventsSettingsService
-    ]
+    ],
+    selector: 'app-events-list',
+    templateUrl: './events-list.component.html',
 })
 export class EventsListComponent {
 
@@ -65,12 +64,12 @@ export class EventsListComponent {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly sizeOptions = [10, 20, 50, 100];
 
-    protected eventsList: Array<Visit> = [];
-    protected page: number;
-    protected size: number;
-    protected countOfAll: number;
-    protected preferences: EventsListPreferences = {needHighlight: true};
-    private sort: SortOptions = {
+    protected readonly page = signal(0);
+    protected readonly size = signal(this.sizeOptions[1]);
+    protected readonly countOfAll = signal(0);
+    protected readonly eventsList = signal<Array<Visit>>([]);
+    protected readonly preferences = signal<EventsListPreferences>({needHighlight: true});
+    private readonly sort: SortOptions = {
         dateTimeFrom: 'ASC',
         'department.name': 'ASC',
     };
@@ -78,10 +77,10 @@ export class EventsListComponent {
     constructor() {
         this.title.setTitleByI18n('Titles.EventsList');
         this.filterService.onChange().pipe(takeUntilDestroyed(), filter(reasonIsPreferences)).subscribe(() => {
-            this.preferences = this.filterService.getPreferences();
+            this.preferences.set(this.filterService.getPreferences());
         });
         this.filterService.onChange().pipe(takeUntilDestroyed()).subscribe(() => {
-            this.preferences = this.filterService.getPreferences();
+            this.preferences.set(this.filterService.getPreferences());
             this.setUpPageInfo();
             this.loadData();
         });
@@ -93,32 +92,28 @@ export class EventsListComponent {
 
     private setUpPageInfo(): void {
         const pageInfo = this.filterService.getPageInfo();
-        this.page = pageInfo.page;
-        this.size = pageInfo.size;
+        this.page.set(pageInfo.page);
+        this.size.set(pageInfo.size);
     }
 
     private loadData(): void {
         this.eventsService.findVisit(this.createPageRequest()).subscribe(
             (page: Pageable<Visit>) => {
-                this.eventsList = page.items;
-                this.page = page.meta.currentPage;
-                this.countOfAll = page.meta.totalItems!;
-                this.size = page.meta.itemsPerPage;
+                this.eventsList.set(page.items);
+                this.page.set(page.meta.currentPage);
+                this.countOfAll.set(page.meta.totalItems!);
+                this.size.set(page.meta.itemsPerPage);
             }
         );
     }
 
     private createPageRequest(): PageQuery {
         return {
-            page: this.page,
-            size: this.size,
+            page: this.page(),
+            size: this.size(),
             sort: this.sort,
-            where: this.createWhereClosure()
+            where: this.filterService.generateFilterOptions()
         };
-    }
-
-    private createWhereClosure(): FilterOptions | undefined {
-        return this.filterService.generateFilterOptions();
     }
 
 }

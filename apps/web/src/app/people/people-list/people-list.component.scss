@@ -5,11 +5,6 @@
 
 :host {
 
-    .page-header {
-        display: flex;
-        justify-content: space-between;
-    }
-
     ::ng-deep .is-user-icon {
         opacity: 0.7;
         font-size: large;

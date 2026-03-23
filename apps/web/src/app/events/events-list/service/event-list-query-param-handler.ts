@@ -39,8 +39,8 @@ export class EventListQueryParamHandler {
         const params: QueryParams = {
             [PAGE_QUERY_KEY]: pageInfo?.page + '',
             [PAGE_SIZE_QUERY_KEY]: pageInfo?.size + '',
-            [EventListQueryParams.dateFrom]: filter?.dateFromStr,
-            [EventListQueryParams.dateTo]: filter?.dateToStr,
+            [EventListQueryParams.dateFrom]: filter?.dateFrom?.toISOString(),
+            [EventListQueryParams.dateTo]: filter?.dateTo?.toISOString(),
             [EventListQueryParams.participantIds]: filter?.participantIds,
             [EventListQueryParams.departmentIds]: filter?.departmentIds,
             [EventListQueryParams.statuses]: filter?.statuses,

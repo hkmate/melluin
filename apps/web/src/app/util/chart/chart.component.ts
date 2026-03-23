@@ -4,7 +4,6 @@ import {Chart, ChartConfiguration, Plugin} from 'chart.js';
 import {merge} from 'lodash-es';
 
 @Component({
-    imports: [],
     selector: 'app-chart',
     template: '<canvas #chartCanvas width="100%"></canvas>',
     changeDetection: ChangeDetectionStrategy.OnPush,

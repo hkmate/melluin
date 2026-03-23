@@ -39,6 +39,11 @@ section {
 
 }
 
+.page-header {
+    display: flex;
+    justify-content: space-between;
+}
+
 mat-card.form-card {
     border: solid var(--mdc-outlined-text-field-outline-width) var(--mdc-outlined-text-field-outline-color);
 }

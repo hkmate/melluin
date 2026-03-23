@@ -24,13 +24,13 @@ export class DefaultEventListSettingsInitializer implements EventListSettingsIni
 
     public getFilters(): EventsFilter {
         const dateInterval = dateIntervalGeneratorFactory(DateIntervalSpecifiers.WEEK).generate();
-        const result = new EventsFilter();
-        result.departmentIds = [];
-        result.participantIds = [];
-        result.statuses = [];
-        result.dateFrom = dateInterval.dateFrom;
-        result.dateTo = dateInterval.dateTo;
-        return result;
+        return {
+            departmentIds: [],
+            participantIds: [],
+            statuses: [],
+            dateFrom: dateInterval.dateFrom,
+            dateTo: dateInterval.dateTo
+        } satisfies EventsFilter;
     }
 
     public getPreferences(): EventsListPreferences {

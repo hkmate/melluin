@@ -4,9 +4,7 @@
             <h1>{{ 'Titles.EventsList' | translate }}</h1>
             <span>
                 @if (permissions.has(Permission.canCreateVisit) || permissions.has(Permission.canCreateAnyVisit)) {
-                    <a mat-mini-fab
-                       color="accent"
-                       [routerLink]="['/visits', 'new']">
+                    <a mat-mini-fab color="accent" [routerLink]="['/visits', 'new']">
                         <mat-icon>add</mat-icon>
                     </a>
                 }
@@ -28,18 +26,18 @@
         </div>
 
         <div class="events-list">
-            <app-visit-list [eventsList]="eventsList"
-                            [markRowByDate]="preferences.needHighlight"/>
+            <app-visit-list [eventsList]="eventsList()"
+                            [markRowByDate]="preferences().needHighlight"/>
 
-            @if (!eventsList.length) {
+            @if (!eventsList().length) {
                 {{ 'EventsList.NoEventsFound' | translate }}
             }
         </div>
 
-        @if (eventsList.length) {
-            <mat-paginator [length]="countOfAll"
-                           [pageIndex]="page - 1"
-                           [pageSize]="size"
+        @if (eventsList().length) {
+            <mat-paginator [length]="countOfAll()"
+                           [pageIndex]="page() - 1"
+                           [pageSize]="size()"
                            [pageSizeOptions]="sizeOptions"
                            (page)="paginateHappened($event)"/>
         }
