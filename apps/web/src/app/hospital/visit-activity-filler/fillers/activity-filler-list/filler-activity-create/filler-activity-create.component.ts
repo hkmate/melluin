@@ -1,16 +1,14 @@
 import {Component, inject, output, signal} from '@angular/core';
 import {UUID, VisitActivityInput, VisitActivityType, VisitActivityTypes, VisitedChild} from '@melluin/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
-import {Observable} from 'rxjs';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {ChildSelectComponent} from '@fe/app/hospital/child/child-select/child-select.component';
-import {AsyncPipe} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {isNotEmptyValidator} from '@fe/app/util/is-not-empty-validator';
 import {ActivitySelectComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-select/activity-select.component';
+import {VisitActivityFillerFactory} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.factory';
 
 @Component({
     selector: 'app-filler-activity-create',
@@ -20,7 +18,6 @@ import {ActivitySelectComponent} from '@fe/app/hospital/visit-activity-filler/fi
         MatCardContent,
         ReactiveFormsModule,
         ChildSelectComponent,
-        AsyncPipe,
         TranslatePipe,
         ActivitySelectComponent,
         MatLabel,
@@ -32,21 +29,17 @@ import {ActivitySelectComponent} from '@fe/app/hospital/visit-activity-filler/fi
 })
 export class FillerActivityCreateComponent {
 
+    protected readonly activityTypeOptions: Array<VisitActivityType> = Object.values(VisitActivityTypes);
+
     private readonly formBuilder = inject(FormBuilder);
-    private readonly filler = inject(VisitActivityFillerService);
+    private readonly filler = inject(VisitActivityFillerFactory).getService();
 
     public readonly creationEnded = output<void>();
 
-    protected children$: Observable<Array<VisitedChild>>;
-    protected activityTypeOptions: Array<VisitActivityType> = Object.values(VisitActivityTypes);
     protected buttonsDisabled: boolean;
     protected readonly form = signal(this.initForm());
-    protected visitDate: Date;
-
-    constructor() {
-        this.children$ = this.filler.getChildren();
-        this.visitDate = this.filler.getVisitDate();
-    }
+    protected readonly visitDate = this.filler.getVisitDate();
+    protected readonly children = this.filler.getChildren();
 
     protected onFormSubmit(): void {
         this.buttonsDisabled = true;

@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component, inject, input, signal} from '@angular/core';
-import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
 import {NOOP, VisitActivity} from '@melluin/common';
 import {VisitedChildById} from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
 import {ConfirmationDialogConfig} from '@fe/app/confirmation/confirmation-dialog-config';
@@ -7,6 +6,7 @@ import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {FillerActivityEditorComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-filler-list/filler-activity-editor/filler-activity-editor.component';
 import {FillerActivityCardComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-filler-list/filler-activity-card/filler-activity-card.component';
 import {t} from '@fe/app/util/translate/translate';
+import {VisitActivityFillerFactory} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.factory';
 
 @Component({
     imports: [
@@ -20,7 +20,7 @@ import {t} from '@fe/app/util/translate/translate';
 export class FillerActivityItemComponent {
 
     private readonly confirmation = inject(ConfirmationService);
-    private readonly fillerService = inject(VisitActivityFillerService);
+    private readonly fillerService = inject(VisitActivityFillerFactory).getService();
 
     public readonly activity = input.required<VisitActivity>();
     public readonly childrenById = input.required<VisitedChildById>();

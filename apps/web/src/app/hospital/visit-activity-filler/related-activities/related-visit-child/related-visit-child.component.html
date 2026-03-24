@@ -11,7 +11,7 @@
             </span>
 
             <span class="operation-btns">
-                @if (needCopyBtn$() | async) {
+                @if (needCopyBtn()) {
                     <button mat-mini-fab color="accent" (click)="copyChildToActualVisit()">
                         <mat-icon>content_copy</mat-icon>
                     </button>

@@ -1,13 +1,13 @@
-import {Component, computed, inject, input, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input, output} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {getGuessedBirthFromYears, VisitedChild, VisitedChildEditInput} from '@melluin/common';
-import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
+import {VisitActivityFillerFactory} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.factory';
 
 @Component({
     selector: 'app-filler-child-editor',
@@ -24,7 +24,8 @@ import {MatButton} from '@angular/material/button';
         MatCheckbox,
         MatButton
     ],
-    styleUrls: ['./filler-child-editor.component.scss']
+    styleUrls: ['./filler-child-editor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FillerChildEditorComponent {
 
@@ -32,7 +33,7 @@ export class FillerChildEditorComponent {
     private static readonly MAX_MONTH_IN_YEAR = 11;
 
     private readonly formBuilder = inject(FormBuilder);
-    protected readonly filler = inject(VisitActivityFillerService);
+    protected readonly filler = inject(VisitActivityFillerFactory).getService();
 
     public readonly visitedChild = input.required<VisitedChild>();
 
@@ -78,7 +79,7 @@ export class FillerChildEditorComponent {
                 name: this.form().controls.name.value,
                 guessedBirth: getGuessedBirthFromYears(this.form().controls.ageYear.value,
                     this.form().controls.ageMonth.value,
-                    this.filler.getVisitDate()),
+                    this.filler.getVisitDate()()),
                 info: this.form().controls.info.value,
             },
             isParentThere: this.form().controls.isParentThere.value

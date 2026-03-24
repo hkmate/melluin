@@ -1,4 +1,4 @@
-import {Component, computed, inject, input, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input, output} from '@angular/core';
 import {
     UUID,
     VisitActivity,
@@ -8,17 +8,15 @@ import {
     VisitedChild
 } from '@melluin/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
 import {VisitedChildById} from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
-import {Observable} from 'rxjs';
 import {MatCard, MatCardContent} from '@angular/material/card';
-import {AsyncPipe} from '@angular/common';
 import {ChildSelectComponent} from '@fe/app/hospital/child/child-select/child-select.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {isNotEmptyValidator} from '@fe/app/util/is-not-empty-validator';
 import {ActivitySelectComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-select/activity-select.component';
+import {VisitActivityFillerFactory} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.factory';
 
 @Component({
     selector: 'app-filler-activity-editor',
@@ -27,7 +25,6 @@ import {ActivitySelectComponent} from '@fe/app/hospital/visit-activity-filler/fi
         MatCard,
         MatCardContent,
         ReactiveFormsModule,
-        AsyncPipe,
         ChildSelectComponent,
         TranslatePipe,
         ActivitySelectComponent,
@@ -36,28 +33,25 @@ import {ActivitySelectComponent} from '@fe/app/hospital/visit-activity-filler/fi
         MatInput,
         MatButton
     ],
-    styleUrls: ['./filler-activity-editor.component.scss']
+    styleUrls: ['./filler-activity-editor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FillerActivityEditorComponent {
 
+    protected readonly activityTypeOptions: Array<VisitActivityType> = Object.values(VisitActivityTypes);
+
     private readonly formBuilder = inject(FormBuilder);
-    private readonly filler = inject(VisitActivityFillerService);
+    private readonly filler = inject(VisitActivityFillerFactory).getService();
 
     public readonly activity = input.required<VisitActivity>();
     public readonly childrenById = input.required<VisitedChildById>();
 
     public readonly editDone = output<void>();
 
-    protected children$: Observable<Array<VisitedChild>>;
-    protected activityTypeOptions: Array<VisitActivityType> = Object.values(VisitActivityTypes);
+    protected readonly visitDate = this.filler.getVisitDate();
+    protected readonly children = this.filler.getChildren();
     protected buttonsDisabled: boolean;
     protected readonly form = computed(() => this.initForm());
-    protected visitDate: Date;
-
-    constructor() {
-        this.children$ = this.filler.getChildren();
-        this.visitDate = this.filler.getVisitDate();
-    }
 
     protected onFormSubmit(): void {
         this.buttonsDisabled = true;

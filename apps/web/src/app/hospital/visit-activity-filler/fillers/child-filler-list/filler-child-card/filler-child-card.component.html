@@ -17,7 +17,7 @@
                     </button>
                 </span>
                 <span class="operation-btn delete-btn">
-                    @if (deleteEnabled$() | async) {
+                    @if (deleteEnabled()) {
                         <button mat-mini-fab color="accent" (click)="removeWanted.emit()">
                             <mat-icon>delete</mat-icon>
                         </button>

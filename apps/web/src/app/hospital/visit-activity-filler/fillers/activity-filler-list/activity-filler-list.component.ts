@@ -1,53 +1,45 @@
-import {Component, inject} from '@angular/core';
-import {VisitActivity, isNotNil, Permission, VisitedChild} from '@melluin/common';
+import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
+import {Permission} from '@melluin/common';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
-import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
-import {
-    convertToChildrenById,
-    VisitedChildById
-} from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
-import {Observable} from 'rxjs';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {convertToChildrenById} from '@fe/app/hospital/visit-activity-filler/model/visited-child-by-id';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatMiniFabButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {FillerActivityCreateComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-filler-list/filler-activity-create/filler-activity-create.component';
-import {AsyncPipe} from '@angular/common';
 import {FillerActivityItemComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-filler-list/filler-activity-item/filler-activity-item.component';
+import {VisitActivityFillerFactory} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.factory';
 
 @Component({
-    selector: 'app-activity-filler-list',
-    templateUrl: './activity-filler-list.component.html',
     imports: [
         TranslatePipe,
         MatMiniFabButton,
         MatIcon,
         FillerActivityCreateComponent,
-        AsyncPipe,
         FillerActivityItemComponent
     ],
-    styleUrls: ['./activity-filler-list.component.scss']
+    selector: 'app-activity-filler-list',
+    templateUrl: './activity-filler-list.component.html',
+    styleUrls: ['./activity-filler-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActivityFillerListComponent {
 
     protected readonly Permission = Permission;
 
     protected readonly permissions = inject(PermissionService);
-    private readonly filler = inject(VisitActivityFillerService);
+    private readonly filler = inject(VisitActivityFillerFactory).getService();
 
-    protected activities$: Observable<Array<VisitActivity>>;
-    protected childrenById: VisitedChildById;
-    protected creatingInProcess = false;
+    protected readonly activities = this.filler.getActivities();
+    private readonly children = this.filler.getChildren();
+    protected readonly childrenById = computed(() => convertToChildrenById(this.children()));
+    protected readonly creatingInProcess = signal(false);
 
-    constructor() {
-        this.activities$ = this.filler.getActivities();
-        this.filler.getChildren().pipe(takeUntilDestroyed()).subscribe((children: Array<VisitedChild>) => {
-            this.childrenById = convertToChildrenById(children);
-        });
+    protected creatorToggled(): void {
+        this.creatingInProcess.update(prev => !prev);
     }
 
-    protected toggleCreator(value?: boolean): void {
-        this.creatingInProcess = isNotNil(value) ? value : !this.creatingInProcess;
+    protected closeCreator(): void {
+        this.creatingInProcess.set(false);
     }
 
 }

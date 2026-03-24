@@ -2,8 +2,8 @@
     <h1>{{ 'Visit.Activities.Activities' | translate }}</h1>
     @if (permissions.has(Permission.canCreateActivity)) {
         <span class="add-btn">
-            <button mat-mini-fab color="accent" (click)="toggleCreator()">
-                @if (creatingInProcess) {
+            <button mat-mini-fab color="accent" (click)="creatorToggled()">
+                @if (creatingInProcess()) {
                     <mat-icon>close</mat-icon>
                 } @else {
                     <mat-icon>add</mat-icon>
@@ -13,23 +13,21 @@
     }
 </div>
 
-@if (creatingInProcess) {
+@if (creatingInProcess()) {
     <div class="activity-create">
-        <app-filler-activity-create (creationEnded)="toggleCreator(false)"/>
+        <app-filler-activity-create (creationEnded)="closeCreator()"/>
     </div>
 }
 
 <div class="activity-list">
-    @if (activities$ | async; as activities) {
-        @for (activity of activities; track activity.id) {
-            <div class="activity-item">
-                <app-filler-activity-item [activity]="activity"
-                                          [childrenById]="childrenById"/>
-            </div>
-        } @empty {
-            <div class="empty-list">
-                {{ 'Visit.Activities.NoActivityYet' | translate }}
-            </div>
-        }
+    @for (activity of activities(); track activity.id) {
+        <div class="activity-item">
+            <app-filler-activity-item [activity]="activity"
+                                      [childrenById]="childrenById()"/>
+        </div>
+    } @empty {
+        <div class="empty-list">
+            {{ 'Visit.Activities.NoActivityYet' | translate }}
+        </div>
     }
 </div>

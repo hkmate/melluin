@@ -1,9 +1,9 @@
 <section>
-    @if (visit) {
-        <div class="page-content">
-
+    <div class="page-content">
+        @let visitValue = visit();
+        @if (filler()) {
             <div class="visit-part">
-                <app-visit-card [visit]="visit"/>
+                <app-visit-card [visit]="visitValue"/>
             </div>
 
             @if (canVisitBeStarted()) {
@@ -26,7 +26,7 @@
                                 {{ 'Visit.RelatedActivities' | translate }}
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <app-related-visit-list [visit]="visit"/>
+                        <app-related-visit-list [visit]="visitValue"/>
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
@@ -40,10 +40,10 @@
                         <app-activity-filler-list/>
                     </div>
                     <div class="info">
-                        <app-activities-information-filler [visitId]="visit.id"/>
+                        <app-activities-information-filler [visitId]="visitValue.id"/>
                     </div>
                     <div class="box-info">
-                        <app-box-info-manager [visitId]="visit.id" [departmentId]="visit.department.id"/>
+                        <app-box-info-manager [visitId]="visitValue.id" [departmentId]="visitValue.department.id"/>
                     </div>
                 </div>
             }
@@ -53,19 +53,19 @@
                     <button mat-flat-button
                             color="accent"
                             type="button"
-                            [disabled]="!buttonsEnabled"
+                            [disabled]="!buttonsEnabled()"
                             (click)="triggerFinalizeFilling()">
                         {{ 'Visit.Finalized' | translate }}
                     </button>
                 </div>
             }
             @if (canContinueInOtherVisit()) {
-                @if (childrenAdded) {
+                @if (childrenAdded()) {
                     <div class="continue-other-btn">
                         <button mat-stroked-button
                                 color="secondary"
                                 type="button"
-                                [disabled]="!buttonsEnabled"
+                                [disabled]="!buttonsEnabled()"
                                 (click)="openContinueOtherDialog()">
                             {{ 'Visit.ContinueAnother' | translate }}
                         </button>
@@ -78,19 +78,19 @@
                     <button mat-stroked-button
                             color="warn"
                             type="button"
-                            [disabled]="!buttonsEnabled"
+                            [disabled]="!buttonsEnabled()"
                             (click)="triggerFailedVisit(VisitStatuses.FAILED_BECAUSE_NO_CHILD)">
                         {{ 'Visit.NoChildFail' | translate }}
                     </button>
                     <button mat-stroked-button
                             color="warn"
                             type="button"
-                            [disabled]="!buttonsEnabled"
+                            [disabled]="!buttonsEnabled()"
                             (click)="triggerFailedVisit(VisitStatuses.FAILED_FOR_OTHER_REASON)">
                         {{ 'Visit.OtherFail' | translate }}
                     </button>
                 </div>
             }
-        </div>
-    }
+        }
+    </div>
 </section>

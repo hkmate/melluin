@@ -1,13 +1,13 @@
-import {Component, inject, output, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, output, signal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {getGuessedBirthFromYears, VisitedChildInput} from '@melluin/common';
-import {VisitActivityFillerService} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.service';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
+import {VisitActivityFillerFactory} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.factory';
 
 @Component({
     selector: 'app-filler-child-create',
@@ -24,7 +24,8 @@ import {MatButton} from '@angular/material/button';
         MatCheckbox,
         MatButton
     ],
-    styleUrls: ['./filler-child-create.component.scss']
+    styleUrls: ['./filler-child-create.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FillerChildCreateComponent {
 
@@ -32,7 +33,7 @@ export class FillerChildCreateComponent {
     private static readonly MAX_MONTH_IN_YEAR = 11;
 
     private readonly formBuilder = inject(FormBuilder);
-    protected readonly filler = inject(VisitActivityFillerService);
+    protected readonly filler = inject(VisitActivityFillerFactory).getService();
 
     public readonly creationEnded = output<void>();
 
@@ -75,7 +76,7 @@ export class FillerChildCreateComponent {
                 name: this.form().controls.name.value,
                 guessedBirth: getGuessedBirthFromYears(this.form().controls.ageYear.value,
                     this.form().controls.ageMonth.value,
-                    this.filler.getVisitDate()),
+                    this.filler.getVisitDate()()),
                 info: this.form().controls.info.value,
             },
             isParentThere: this.form().controls.isParentThere.value
