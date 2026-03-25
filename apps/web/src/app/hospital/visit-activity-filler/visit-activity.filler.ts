@@ -70,7 +70,7 @@ export class VisitActivityFiller {
         this.lockedChildIds.update(prev => difference(prev, visitedChildIds));
     }
 
-    public isChildCopyableToActualVisit(childId: string): Signal<boolean> {
+    public isChildCopyableToActualVisit(childId: UUID): Signal<boolean> {
         return computed(() => this.isStarted(this.visitStatus())
             && this.children().every(c => c.child.id !== childId));
     }

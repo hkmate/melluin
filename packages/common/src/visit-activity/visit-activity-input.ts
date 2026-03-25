@@ -4,10 +4,10 @@ import {UUID} from '../util/type/uuid.type';
 
 export interface VisitActivityInput {
 
+    visitId?: UUID;
     children: Array<UUID>; // -> id of VisitedChild
     activities: Array<VisitActivityType>;
     comment: string;
-    visitId?: UUID;
 
 }
 

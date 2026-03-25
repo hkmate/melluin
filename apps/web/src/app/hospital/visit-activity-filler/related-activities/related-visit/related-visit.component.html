@@ -17,17 +17,15 @@
         <div class="children-info">
             <h3>{{ 'Visit.Activities.Children' | translate }}</h3>
 
-            <div class="children-list">
-                @for (child of wrappedActivity().children; track child.id) {
-                    <div class="child-card">
-                        <app-related-visit-child [visitedChild]="child"/>
-                    </div>
-                } @empty {
-                    <div class="empty-list">
-                        {{ 'ChildrenList.NoChildYet' | translate }}
-                    </div>
-                }
-            </div>
+            @for (child of wrappedActivity().children; track child.id) {
+                <div class="child-card">
+                    <app-related-visit-child [visitedChild]="child"/>
+                </div>
+            } @empty {
+                <div class="empty-list">
+                    {{ 'ChildrenList.NoChildYet' | translate }}
+                </div>
+            }
         </div>
     }
 

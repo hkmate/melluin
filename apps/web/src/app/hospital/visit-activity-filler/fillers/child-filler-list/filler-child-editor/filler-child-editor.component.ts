@@ -1,89 +1,130 @@
-import {ChangeDetectionStrategy, Component, computed, inject, input, output} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {getGuessedBirthFromYears, VisitedChild, VisitedChildEditInput} from '@melluin/common';
+import {ChangeDetectionStrategy, Component, effect, inject, input, output, signal} from '@angular/core';
+import {getGuessedBirthFromYears, isNil, VisitedChild, VisitedChildEditInput, VisitedChildInput} from '@melluin/common';
 import {MatCard, MatCardContent} from '@angular/material/card';
-import {TrimmedTextInputComponent} from '@fe/app/util/trimmed-text-input/trimmed-text-input.component';
 import {TranslatePipe} from '@ngx-translate/core';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
 import {VisitActivityFillerFactory} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.factory';
+import {form, FormField, max, min, required, submit} from '@angular/forms/signals';
+import {t} from '@fe/app/util/translate/translate';
+import {noWhitespaceHeadOrTail} from '@fe/app/util/whitespace-validator/no-whitespace-head-or-tail';
+import {firstValueFrom} from 'rxjs';
+import {AppSubmit} from '@fe/app/util/submit/app-submit';
+import {MelluinMatErrorComponent} from '@fe/app/util/melluin-mat-error/melluin-mat-error.component';
+
+const CHILD_AGE_LIMIT = 18;
+const MAX_MONTH_IN_YEAR = 11;
 
 @Component({
-    selector: 'app-filler-child-editor',
-    templateUrl: './filler-child-editor.component.html',
     imports: [
         MatCard,
         MatCardContent,
-        ReactiveFormsModule,
-        TrimmedTextInputComponent,
         TranslatePipe,
         MatFormField,
         MatLabel,
         MatInput,
         MatCheckbox,
-        MatButton
+        MatButton,
+        AppSubmit,
+        MatError,
+        MelluinMatErrorComponent,
+        FormField
     ],
+    selector: 'app-filler-child-editor',
+    templateUrl: './filler-child-editor.component.html',
     styleUrls: ['./filler-child-editor.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FillerChildEditorComponent {
 
-    private static readonly CHILD_AGE_LIMIT = 18;
-    private static readonly MAX_MONTH_IN_YEAR = 11;
-
-    private readonly formBuilder = inject(FormBuilder);
     protected readonly filler = inject(VisitActivityFillerFactory).getService();
 
-    public readonly visitedChild = input.required<VisitedChild>();
-
+    public readonly visitedChild = input<VisitedChild>();
     public readonly editDone = output<void>();
 
-    protected buttonsDisabled: boolean;
-    protected readonly form = computed(() => this.initForm());
+    private readonly formModel = signal(this.getDefaultFormModel());
+    protected readonly form = form(this.formModel, schema => {
+        required(schema.name, {message: t('Form.Required')});
+        noWhitespaceHeadOrTail(schema.name);
+
+        required(schema.ageYear, {message: t('Form.Required')});
+        min(schema.ageYear, 0, {message: t('Form.Min', {min: 0})});
+        max(schema.ageYear, CHILD_AGE_LIMIT, {message: t('Form.Max', {max: CHILD_AGE_LIMIT})});
+
+        required(schema.ageMonth, {message: t('Form.Required')});
+        min(schema.ageMonth, 0, {message: t('Form.Min', {min: 0})});
+        max(schema.ageMonth, MAX_MONTH_IN_YEAR, {message: t('Form.Max', {max: MAX_MONTH_IN_YEAR})});
+    });
+
+    constructor() {
+        effect(() => this.setupFormInput());
+    }
+
+    protected submitForm(): void {
+        submit(this.form, async () => {
+            await this.saveChild();
+            this.cancelEditing();
+        });
+    }
 
     protected cancelEditing(): void {
         this.editDone.emit();
     }
 
-    protected onFormSubmit(): void {
-        this.buttonsDisabled = true;
-        this.filler.updateChild(this.createObjectFromForm()).subscribe({
-            next: () => {
-                this.buttonsDisabled = false;
-                this.editDone.emit();
-            },
-            error: () => {
-                this.buttonsDisabled = false;
-            }
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    private getDefaultFormModel() {
+        return {
+            name: '',
+            ageYear: 0,
+            ageMonth: 0,
+            isParentThere: false,
+            info: ''
+        };
+    }
+
+    private setupFormInput(): void {
+        const visitedChild = this.visitedChild();
+        if (isNil(visitedChild)) {
+            this.formModel.set(this.getDefaultFormModel());
+            return;
+        }
+        const {child, isParentThere} = visitedChild;
+        const {years, months} = this.filler.childAge(child);
+        this.formModel.set({
+            name: child.name,
+            ageYear: years,
+            ageMonth: months,
+            isParentThere: isParentThere,
+            info: child.info ?? ''
         });
     }
 
-    private initForm(): FormGroup {
-        const {years, months} = this.filler.childAge(this.visitedChild().child);
-        return this.formBuilder.group({
-            name: [this.visitedChild().child.name, [Validators.required]],
-            ageYear: [years, [Validators.required, Validators.pattern('[0-9]*'),
-                Validators.min(0), Validators.max(FillerChildEditorComponent.CHILD_AGE_LIMIT)]],
-            ageMonth: [months, [Validators.required, Validators.pattern('[0-9]*'),
-                Validators.min(0), Validators.max(FillerChildEditorComponent.MAX_MONTH_IN_YEAR)]],
-            isParentThere: [this.visitedChild().isParentThere],
-            info: [this.visitedChild().child.info]
-        })
+    private saveChild(): Promise<VisitedChild> {
+        const visitedChildToSave = this.generateDto();
+        if ('id' in visitedChildToSave) {
+            return firstValueFrom(this.filler.updateChild(visitedChildToSave));
+        }
+        return firstValueFrom(this.filler.saveNewChild(visitedChildToSave));
     }
 
-    private createObjectFromForm(): VisitedChildEditInput {
-        return {
-            id: this.visitedChild().id,
+    private generateDto(): VisitedChildInput | VisitedChildEditInput {
+        const existing = this.visitedChild();
+        const formValue = this.form().value();
+        const visitDate = this.filler.getVisitDate()();
+        const obj = {
+            isParentThere: formValue.isParentThere,
             child: {
-                name: this.form().controls.name.value,
-                guessedBirth: getGuessedBirthFromYears(this.form().controls.ageYear.value,
-                    this.form().controls.ageMonth.value,
-                    this.filler.getVisitDate()()),
-                info: this.form().controls.info.value,
-            },
-            isParentThere: this.form().controls.isParentThere.value
+                name: formValue.name,
+                guessedBirth: getGuessedBirthFromYears(formValue.ageYear, formValue.ageMonth, visitDate),
+                info: formValue.info
+            }
+        } satisfies VisitedChildInput
+
+        if (isNil(existing)) {
+            return obj;
         }
+        return {...obj, id: existing.id};
     }
 
 }

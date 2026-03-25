@@ -1,56 +1,48 @@
 <mat-card>
     <mat-card-content>
-        <form [formGroup]="form()">
-
-            <app-trimmed-text-input
-                    [label]="'ChildrenList.Name' | translate"
-                    [placeholder]="'ChildrenList.NamePlaceholder' | translate"
-                    formControlName="name"/>
+        <form (appSubmit)="submitForm()">
+            <mat-form-field>
+                <mat-label>{{ 'ChildrenList.Name' | translate }}</mat-label>
+                <input matInput [formField]="form.name"
+                       [placeholder]="'ChildrenList.NamePlaceholder' | translate">
+                <mat-error [fField]="form.name"/>
+            </mat-form-field>
 
             <mat-form-field class="age-year">
                 <mat-label>{{ 'ChildrenList.AgeYear' | translate }}</mat-label>
-                <input type="number"
-                       matInput
-                       [placeholder]="'ChildrenList.AgeYearPlaceholder' | translate"
-                       step="1"
-                       formControlName="ageYear">
+                <input type="number" matInput step="1"
+                       [formField]="form.ageYear"
+                       [placeholder]="'ChildrenList.AgeYearPlaceholder' | translate">
+                <mat-error [fField]="form.ageYear"/>
             </mat-form-field>
 
             <mat-form-field class="age-month">
                 <mat-label>{{ 'ChildrenList.AgeMonth' | translate }}</mat-label>
-                <input type="number"
-                       matInput
-                       [placeholder]="'ChildrenList.AgeMonthPlaceholder' | translate"
-                       step="1"
-                       formControlName="ageMonth">
+                <input type="number" matInput step="1"
+                       [formField]="form.ageMonth"
+                       [placeholder]="'ChildrenList.AgeMonthPlaceholder' | translate">
+                <mat-error [fField]="form.ageMonth"/>
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>{{ 'ChildrenList.Info' | translate }}</mat-label>
-                <textarea type="text"
-                          matInput
-                          [placeholder]="'ChildrenList.InfoPlaceholder' | translate"
-                          formControlName="info"></textarea>
+                <textarea type="text" matInput
+                          [formField]="form.info"
+                          [placeholder]="'ChildrenList.InfoPlaceholder' | translate"></textarea>
             </mat-form-field>
 
-            <mat-checkbox formControlName="isParentThere">
+            <mat-checkbox [formField]="form.isParentThere">
                 {{ 'ChildrenList.IsParentThere' | translate }}
             </mat-checkbox>
 
             <div class="button-row">
-                <button mat-flat-button
-                        [disabled]="buttonsDisabled || form().invalid"
-                        color="accent"
-                        (click)="onFormSubmit()"
-                        type="button">
-                    {{ 'SaveButton' | translate}}
+                <button mat-flat-button color="accent" [disabled]="form().submitting()">
+                    {{ 'SaveButton' | translate }}
                 </button>
-                <button mat-stroked-button
-                        [disabled]="buttonsDisabled"
-                        color="primary"
-                        type="button"
+                <button mat-stroked-button color="primary" type="button"
+                        [disabled]="form().submitting()"
                         (click)="cancelEditing()">
-                    {{ 'CancelButton' | translate}}
+                    {{ 'CancelButton' | translate }}
                 </button>
             </div>
         </form>

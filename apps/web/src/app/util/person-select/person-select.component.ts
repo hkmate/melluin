@@ -1,4 +1,4 @@
-import {Component, inject, input, linkedSignal, model, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input, linkedSignal, model, signal} from '@angular/core';
 import {FilteringInfo, PersonIdentifier, RoleTypes, UUID} from '@melluin/common';
 import {FormsModule} from '@angular/forms';
 import {CachedPeopleService} from '@fe/app/people/cached-people.service';
@@ -28,7 +28,7 @@ import {FormValueControl} from '@angular/forms/signals';
     ],
     selector: 'app-person-select',
     templateUrl: './person-select.component.html',
-    styleUrls: ['./person-select.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PersonSelectComponent implements FormValueControl<Array<UUID>> {
 

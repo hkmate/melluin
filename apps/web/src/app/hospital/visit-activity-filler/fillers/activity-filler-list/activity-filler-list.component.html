@@ -15,7 +15,7 @@
 
 @if (creatingInProcess()) {
     <div class="activity-create">
-        <app-filler-activity-create (creationEnded)="closeCreator()"/>
+        <app-filler-activity-editor [childrenById]="childrenById()" (editDone)="closeCreator()"/>
     </div>
 }
 

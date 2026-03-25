@@ -5,17 +5,17 @@ import {convertToChildrenById} from '@fe/app/hospital/visit-activity-filler/mode
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatMiniFabButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {FillerActivityCreateComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-filler-list/filler-activity-create/filler-activity-create.component';
 import {FillerActivityItemComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-filler-list/filler-activity-item/filler-activity-item.component';
 import {VisitActivityFillerFactory} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.factory';
+import {FillerActivityEditorComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activity-filler-list/filler-activity-editor/filler-activity-editor.component';
 
 @Component({
     imports: [
         TranslatePipe,
         MatMiniFabButton,
         MatIcon,
-        FillerActivityCreateComponent,
-        FillerActivityItemComponent
+        FillerActivityItemComponent,
+        FillerActivityEditorComponent
     ],
     selector: 'app-activity-filler-list',
     templateUrl: './activity-filler-list.component.html',

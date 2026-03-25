@@ -1,38 +1,31 @@
 <mat-card>
     <mat-card-content>
-        <form [formGroup]="form()">
-
+        <form (appSubmit)="submitForm()">
             <app-child-select [options]="children()"
-                              formControlName="children"
                               [label]="'Visit.Activities.Children' | translate"
                               [date]="visitDate()"
+                              [formField]="form.children"
                               (childrenSelected)="lockChildren($event)"
                               (childrenUnselected)="unlockChildren($event)"/>
 
             <app-activity-select [options]="activityTypeOptions"
-                                 formControlName="activities"
+                                 [formField]="form.activities"
                                  [label]="'Visit.Activities.Activities' | translate"/>
 
             <mat-form-field>
                 <mat-label>{{ 'Visit.Activities.Comment' | translate }}</mat-label>
-                <textarea type="text"
-                          matInput
+                <textarea type="text" matInput
                           [placeholder]="'Visit.Activities.CommentPlaceholder' | translate"
-                          formControlName="comment"></textarea>
+                          [formField]="form.comment"></textarea>
             </mat-form-field>
 
             <div class="button-row">
-                <button mat-flat-button
-                        [disabled]="buttonsDisabled || form().invalid"
-                        color="accent"
-                        (click)="onFormSubmit()"
-                        type="button">
+                <button mat-flat-button color="accent"
+                        [disabled]="form().submitting()">
                     {{ 'SaveButton' | translate }}
                 </button>
-                <button mat-stroked-button
-                        [disabled]="buttonsDisabled"
-                        color="primary"
-                        type="button"
+                <button mat-stroked-button color="primary" type="button"
+                        [disabled]="form().submitting()"
                         (click)="cancelEditing()">
                     {{ 'CancelButton' | translate }}
                 </button>

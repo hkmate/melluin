@@ -15,18 +15,16 @@
 
 @if (creatingInProcess()) {
     <div class="child-create">
-        <app-filler-child-create (creationEnded)="closeCreator()"/>
+        <app-filler-child-editor (editDone)="closeCreator()"/>
     </div>
 }
 
-<div class="children-list">
-    @for (child of children(); track child.id) {
-        <div class="child-item">
-            <app-filler-child-item [child]="child"/>
-        </div>
-    } @empty {
-        <div class="empty-list">
-            {{ 'ChildrenList.NoChildYet' | translate }}
-        </div>
-    }
-</div>
+@for (child of children(); track child.id) {
+    <div class="child-item">
+        <app-filler-child-item [child]="child"/>
+    </div>
+} @empty {
+    <div class="empty-list">
+        {{ 'ChildrenList.NoChildYet' | translate }}
+    </div>
+}

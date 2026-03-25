@@ -23,4 +23,12 @@
             </mat-option>
         }
     </mat-select>
+
+    <mat-error>
+        @if (invalid() && touched()) {
+            @for (error of errors(); track error.message) {
+                <span>{{ error.message }}</span>
+            }
+        }
+    </mat-error>
 </mat-form-field>

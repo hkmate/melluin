@@ -1,7 +1,7 @@
 <mat-form-field class="chip-selector">
     <mat-label>{{ label() }}</mat-label>
     <mat-chip-listbox>
-        @for (activityType of activityTypes; track activityType) {
+        @for (activityType of value(); track activityType) {
             <mat-chip-row (removed)="removeType(activityType)">
                 {{ 'VisitActivityTypes.' + activityType | translate }}
                 <button matChipRemove>
@@ -10,9 +10,16 @@
             </mat-chip-row>
         }
     </mat-chip-listbox>
-    <mat-select [ngModel]="activityTypes" (ngModelChange)="typesChanged($event)" multiple>
+    <mat-select [(ngModel)]="value" multiple>
         @for (option of options(); track option) {
-            <mat-option [value]="option"> {{ 'VisitActivityTypes.' + option | translate }}</mat-option>
+            <mat-option [value]="option">{{ 'VisitActivityTypes.' + option | translate }}</mat-option>
         }
     </mat-select>
+    <mat-error>
+        @if (invalid() && touched()) {
+            @for (error of errors(); track error.message) {
+                <span>{{ error.message }}</span>
+            }
+        }
+    </mat-error>
 </mat-form-field>
