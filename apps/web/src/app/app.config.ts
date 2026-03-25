@@ -4,7 +4,7 @@ import {
     LOCALE_ID,
     provideAppInitializer,
     provideBrowserGlobalErrorListeners,
-    provideZoneChangeDetection
+    provideZonelessChangeDetection
 } from '@angular/core';
 import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {provideTranslateService} from '@ngx-translate/core';
@@ -29,9 +29,7 @@ registerLocaleData(localeHu);
 
 export const appConfig: ApplicationConfig = {
     providers: [
-        // Temporarily use zone until signals is used everywhere
-        provideZoneChangeDetection({eventCoalescing: true}),
-        // provideZonelessChangeDetection(),
+        provideZonelessChangeDetection(),
 
         provideBrowserGlobalErrorListeners(),
         provideRouter(routes),
