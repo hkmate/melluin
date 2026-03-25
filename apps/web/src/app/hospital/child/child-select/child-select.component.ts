@@ -33,6 +33,7 @@ export class ChildSelectComponent implements FormValueControl<Array<VisitedChild
     public readonly value = model<Array<VisitedChild>>([]);
     public readonly invalid = input<boolean>(false);
     public readonly touched = input<boolean>(false);
+    public readonly required = input<boolean>(false);
     public readonly errors = input<ReadonlyArray<ValidationError>>([]);
 
     public readonly label = input.required<string>();

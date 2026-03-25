@@ -10,7 +10,7 @@
             </mat-chip-row>
         }
     </mat-chip-listbox>
-    <mat-select [ngModel]="children()" (ngModelChange)="childrenChanged($event)" multiple>
+    <mat-select [ngModel]="children()" (ngModelChange)="childrenChanged($event)" [required]="required()" multiple>
         @for (option of options(); track option.id) {
             <mat-option class="child-select-option" [value]="option">
                 <span class="child-info">

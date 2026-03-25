@@ -72,8 +72,7 @@ export class FillerActivityEditorComponent {
 
     protected submitForm(): void {
         submit(this.form, async () => {
-            const saved = await this.saveActivity();
-            this.filler.unlockVisitedChildId(...saved.children);
+            await this.saveActivity();
             this.cancelEditing();
         });
     }
@@ -87,6 +86,7 @@ export class FillerActivityEditorComponent {
     }
 
     protected cancelEditing(): void {
+        this.unlockChildren(this.form.children().value());
         this.editDone.emit();
     }
 

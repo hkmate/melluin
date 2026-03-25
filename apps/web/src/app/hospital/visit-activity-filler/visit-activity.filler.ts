@@ -70,6 +70,10 @@ export class VisitActivityFiller {
         this.lockedChildIds.update(prev => difference(prev, visitedChildIds));
     }
 
+    public unlockVisitedChildren(): void {
+        this.lockedChildIds.set([]);
+    }
+
     public isChildCopyableToActualVisit(childId: UUID): Signal<boolean> {
         return computed(() => this.isStarted(this.visitStatus())
             && this.children().every(c => c.child.id !== childId));

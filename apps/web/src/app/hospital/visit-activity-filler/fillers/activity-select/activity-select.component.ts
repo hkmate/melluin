@@ -32,6 +32,7 @@ export class ActivitySelectComponent implements FormValueControl<Array<VisitActi
     public readonly invalid = input<boolean>(false);
     public readonly touched = input<boolean>(false);
     public readonly errors = input<ReadonlyArray<ValidationError>>([]);
+    public readonly required = input<boolean>(false);
 
     public readonly label = input.required<string>();
     public readonly options = input.required<Array<VisitActivityType>>();

@@ -35,10 +35,14 @@ export class ActivityFillerListComponent {
     protected readonly creatingInProcess = signal(false);
 
     protected creatorToggled(): void {
+        if (this.creatingInProcess()) {
+            this.filler.unlockVisitedChildren();
+        }
         this.creatingInProcess.update(prev => !prev);
     }
 
     protected closeCreator(): void {
+        this.filler.unlockVisitedChildren()
         this.creatingInProcess.set(false);
     }
 
