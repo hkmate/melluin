@@ -85,10 +85,10 @@ export class VisitActivityFillerComponent {
 
     private readonly parsedVisit = toSignal(this.getVisitFromRouteData(), {requireSync: true});
     protected readonly visit = linkedSignal(() => this.parsedVisit());
-    protected readonly filler = computed(() => this.fillerFactory.createService(this.visit()));
+    protected readonly filler = this.fillerFactory.createService(this.visit);
     protected readonly buttonsEnabled = signal(true);
-    protected readonly childrenAdded = computed(() => !isNilOrEmpty(this.filler().getChildren()()));
-    protected readonly activitiesAdded = computed(() => !isNilOrEmpty(this.filler().getActivities()()));
+    protected readonly childrenAdded = computed(() => !isNilOrEmpty(this.filler.getChildren()()));
+    protected readonly activitiesAdded = computed(() => !isNilOrEmpty(this.filler.getActivities()()));
 
     protected canActivitiesBeShowed = computed(() =>
         this.visit().status === VisitStatuses.STARTED
@@ -156,14 +156,12 @@ export class VisitActivityFillerComponent {
     }
 
     private startFilling(): void {
-        this.saveVisit(VisitStatuses.STARTED).then(() => this.filler()!.statusChanged(VisitStatuses.STARTED));
+        this.saveVisit(VisitStatuses.STARTED);
     }
 
-    private finalizeFilling(status: VisitStatus): void {
-        this.saveVisit(status)
-            .then(() => {
-                this.router.navigate(['/visits', this.visit()!.id]);
-            });
+    private async finalizeFilling(status: VisitStatus): Promise<void> {
+        await this.saveVisit(status);
+        this.router.navigate(['/visits', this.visit()!.id]);
     }
 
     private getVisitFromRouteData(): Observable<Visit> {
@@ -177,13 +175,11 @@ export class VisitActivityFillerComponent {
             }));
     }
 
-    protected saveVisit(newStatus: VisitStatus): Promise<void> {
+    protected async saveVisit(newStatus: VisitStatus): Promise<void> {
         this.buttonsEnabled.set(false);
-        return firstValueFrom(this.visitService.updateVisit(this.createSaveRequest(newStatus)))
-            .then(visit => {
-                this.visit.set(visit);
-                this.buttonsEnabled.set(true);
-            });
+        const visit = await firstValueFrom(this.visitService.updateVisit(this.createSaveRequest(newStatus)));
+        this.visit.set(visit);
+        this.buttonsEnabled.set(true);
     }
 
     private createSaveRequest(newStatus: VisitStatus): VisitRewrite {

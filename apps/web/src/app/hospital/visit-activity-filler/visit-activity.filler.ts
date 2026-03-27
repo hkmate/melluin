@@ -1,4 +1,4 @@
-import {computed, inject, linkedSignal, Signal, signal, WritableSignal} from '@angular/core';
+import {computed, inject, Signal, signal} from '@angular/core';
 import {
     Child,
     ChildAge,
@@ -27,23 +27,17 @@ export class VisitActivityFiller {
     private readonly visitedChildService = inject(VisitedChildService);
     private readonly activityService = inject(VisitActivityService);
 
-    private readonly visit: WritableSignal<Visit>;
     private readonly visitDate = computed(() => DateUtil.parse(this.visit().dateTimeFrom));
-    private readonly visitStatus = linkedSignal(() => this.visit().status);
+    private readonly visitStatus = computed(() => this.visit().status);
     private readonly children = signal<Array<VisitedChild>>([]);
     private readonly lockedChildIds = signal<Array<UUID>>([]);
     private readonly activities = signal<Array<VisitActivity>>([]);
 
-    constructor(visit: Visit) {
-        this.visit = signal(visit);
-        this.activityService.getActivities(visit.id).subscribe(wrappedVisit => {
+    constructor(private readonly visit: Signal<Visit>) {
+        this.activityService.getActivities(visit().id).subscribe(wrappedVisit => {
             this.children.set(wrappedVisit.children);
             this.activities.set(wrappedVisit.activities);
         });
-    }
-
-    public statusChanged(newStatus: VisitStatus): void {
-        this.visitStatus.set(newStatus);
     }
 
     public getChildren(): Signal<Array<VisitedChild>> {
@@ -75,8 +69,11 @@ export class VisitActivityFiller {
     }
 
     public isChildCopyableToActualVisit(childId: UUID): Signal<boolean> {
-        return computed(() => this.isStarted(this.visitStatus())
-            && this.children().every(c => c.child.id !== childId));
+        return computed(() => {
+            const status = this.visitStatus();
+            const children = this.children();
+            return this.isStarted(status) && children.every(c => c.child.id !== childId)
+        });
     }
 
     public isChildDeletable(childId: UUID): Signal<boolean> {
@@ -108,7 +105,7 @@ export class VisitActivityFiller {
             tap((visitedChild: VisitedChild) => {
                 this.msg.success('SaveSuccessful');
                 this.children.update(prev => prev
-                    .map(c  => ((c.id === visitedChild.id) ? visitedChild : c)));
+                    .map(c => ((c.id === visitedChild.id) ? visitedChild : c)));
             }));
     }
 
@@ -117,7 +114,7 @@ export class VisitActivityFiller {
             tap((activity: VisitActivity) => {
                 this.msg.success('SaveSuccessful');
                 this.activities.update(prev => prev
-                    .map(a  => ((a.id === activity.id) ? activity : a)));
+                    .map(a => ((a.id === activity.id) ? activity : a)));
             }));
     }
 

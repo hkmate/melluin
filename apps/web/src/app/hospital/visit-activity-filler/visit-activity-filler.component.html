@@ -1,96 +1,94 @@
 <section>
     <div class="page-content">
         @let visitValue = visit();
-        @if (filler()) {
-            <div class="visit-part">
-                <app-visit-card [visit]="visitValue"/>
+        <div class="visit-part">
+            <app-visit-card [visit]="visitValue"/>
+        </div>
+
+        @if (canVisitBeStarted()) {
+            <div class="start-btn">
+                <button mat-flat-button
+                        color="accent"
+                        type="button"
+                        [disabled]="!buttonsEnabled"
+                        (click)="triggerStartFilling()">
+                    {{ 'Visit.Start' | translate }}
+                </button>
             </div>
+        }
 
-            @if (canVisitBeStarted()) {
-                <div class="start-btn">
-                    <button mat-flat-button
-                            color="accent"
-                            type="button"
-                            [disabled]="!buttonsEnabled"
-                            (click)="triggerStartFilling()">
-                        {{ 'Visit.Start' | translate }}
-                    </button>
+        <div class="related-activities">
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{ 'Visit.RelatedActivities' | translate }}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <app-related-visit-list [visit]="visitValue"/>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+
+        @if (canActivitiesBeShowed()) {
+            <div class="activities-part">
+                <div class="children">
+                    <app-child-filler-list/>
                 </div>
-            }
-
-            <div class="related-activities">
-                <mat-accordion>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                {{ 'Visit.RelatedActivities' | translate }}
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <app-related-visit-list [visit]="visitValue"/>
-                    </mat-expansion-panel>
-                </mat-accordion>
+                <div class="activities">
+                    <app-activity-filler-list/>
+                </div>
+                <div class="info">
+                    <app-activities-information-filler [visitId]="visitValue.id"/>
+                </div>
+                <div class="box-info">
+                    <app-box-info-manager [visitId]="visitValue.id" [departmentId]="visitValue.department.id"/>
+                </div>
             </div>
+        }
 
-            @if (canActivitiesBeShowed()) {
-                <div class="activities-part">
-                    <div class="children">
-                        <app-child-filler-list/>
-                    </div>
-                    <div class="activities">
-                        <app-activity-filler-list/>
-                    </div>
-                    <div class="info">
-                        <app-activities-information-filler [visitId]="visitValue.id"/>
-                    </div>
-                    <div class="box-info">
-                        <app-box-info-manager [visitId]="visitValue.id" [departmentId]="visitValue.department.id"/>
-                    </div>
-                </div>
-            }
-
-            @if (canActivitiesBeFinalized()) {
-                <div class="finalized-btn">
-                    <button mat-flat-button
-                            color="accent"
-                            type="button"
-                            [disabled]="!buttonsEnabled()"
-                            (click)="triggerFinalizeFilling()">
-                        {{ 'Visit.Finalized' | translate }}
-                    </button>
-                </div>
-            }
-            @if (canContinueInOtherVisit()) {
-                @if (childrenAdded()) {
-                    <div class="continue-other-btn">
-                        <button mat-stroked-button
-                                color="secondary"
-                                type="button"
-                                [disabled]="!buttonsEnabled()"
-                                (click)="openContinueOtherDialog()">
-                            {{ 'Visit.ContinueAnother' | translate }}
-                        </button>
-                    </div>
-                }
-            }
-
-            @if (canSetVisitToFailed()) {
-                <div class="fail-btn">
+        @if (canActivitiesBeFinalized()) {
+            <div class="finalized-btn">
+                <button mat-flat-button
+                        color="accent"
+                        type="button"
+                        [disabled]="!buttonsEnabled()"
+                        (click)="triggerFinalizeFilling()">
+                    {{ 'Visit.Finalized' | translate }}
+                </button>
+            </div>
+        }
+        @if (canContinueInOtherVisit()) {
+            @if (childrenAdded()) {
+                <div class="continue-other-btn">
                     <button mat-stroked-button
-                            color="warn"
+                            color="secondary"
                             type="button"
                             [disabled]="!buttonsEnabled()"
-                            (click)="triggerFailedVisit(VisitStatuses.FAILED_BECAUSE_NO_CHILD)">
-                        {{ 'Visit.NoChildFail' | translate }}
-                    </button>
-                    <button mat-stroked-button
-                            color="warn"
-                            type="button"
-                            [disabled]="!buttonsEnabled()"
-                            (click)="triggerFailedVisit(VisitStatuses.FAILED_FOR_OTHER_REASON)">
-                        {{ 'Visit.OtherFail' | translate }}
+                            (click)="openContinueOtherDialog()">
+                        {{ 'Visit.ContinueAnother' | translate }}
                     </button>
                 </div>
             }
+        }
+
+        @if (canSetVisitToFailed()) {
+            <div class="fail-btn">
+                <button mat-stroked-button
+                        color="warn"
+                        type="button"
+                        [disabled]="!buttonsEnabled()"
+                        (click)="triggerFailedVisit(VisitStatuses.FAILED_BECAUSE_NO_CHILD)">
+                    {{ 'Visit.NoChildFail' | translate }}
+                </button>
+                <button mat-stroked-button
+                        color="warn"
+                        type="button"
+                        [disabled]="!buttonsEnabled()"
+                        (click)="triggerFailedVisit(VisitStatuses.FAILED_FOR_OTHER_REASON)">
+                    {{ 'Visit.OtherFail' | translate }}
+                </button>
+            </div>
         }
     </div>
 </section>

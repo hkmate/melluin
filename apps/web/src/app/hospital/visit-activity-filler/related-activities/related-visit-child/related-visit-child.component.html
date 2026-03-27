@@ -1,26 +1,21 @@
 @let visitedChildValue = visitedChild();
-@if (visitedChildValue) {
-    <mat-card>
-        <mat-card-header>
-            <mat-card-subtitle>
-            <span class="child-info">
+<mat-card>
+    <mat-card-header>
+        <mat-card-subtitle>
+            <span>
                 {{ visitedChildValue.child.name }}
                 <span>({{ visitedChildValue.child | childAge : visitDate() }})</span>
-
                 <app-parent-info-icon [isParentThere]="visitedChildValue.isParentThere"/>
             </span>
 
-            <span class="operation-btns">
-                @if (needCopyBtn()) {
-                    <button mat-mini-fab color="accent" (click)="copyChildToActualVisit()">
-                        <mat-icon>content_copy</mat-icon>
-                    </button>
-                }
-            </span>
-            </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            {{ visitedChildValue.child.info }}
-        </mat-card-content>
-    </mat-card>
-}
+            @if (needCopyBtn()) {
+                <button mat-mini-fab color="accent" (click)="copyChildToActualVisit()">
+                    <mat-icon>content_copy</mat-icon>
+                </button>
+            }
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        {{ visitedChildValue.child.info }}
+    </mat-card-content>
+</mat-card>
