@@ -4,6 +4,7 @@ import {ConfigService} from '@nestjs/config';
 import {INestApplication, ValidationPipe} from '@nestjs/common';
 import {DocumentBuilder, OpenAPIObject, SwaggerModule} from '@nestjs/swagger';
 import helmet from 'helmet';
+import cors from 'cors';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const types = require('pg').types
@@ -21,11 +22,18 @@ async function bootstrap(): Promise<void> {
     const config = app.get(ConfigService);
 
     app.use(helmet());
-    app.enableCors({
-        origin: config.get('server.security.corsOrigins'),
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        optionsSuccessStatus: 200
-    });
+    app.use(cors((req, callback) => {
+        let corsOptions = {
+            origin: config.get('server.security.corsOrigins'),
+            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+            optionsSuccessStatus: 200
+        } as object;
+        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+        if (req.path.startsWith('/api/health')) {
+            corsOptions = {origin: '*'};
+        }
+        callback(null, corsOptions);
+    }));
 
     app.useGlobalPipes(
         new ValidationPipe({
