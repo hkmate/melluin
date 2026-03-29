@@ -5,14 +5,13 @@ import {UserEntity} from 'src/user/model/user.entity';
 import {RoleEntity} from '@be/user/model/role.entity';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {PersonDao} from '@be/person/person.dao';
-import {AuthCredentials, AuthInfo, isNil, OperationCities, User, UserSettings} from '@melluin/common';
+import {AuthCredentials, AuthInfo, isNil, OperationCities, User, UserSettings, ApiErrors} from '@melluin/common';
 import {ConfigService} from '@nestjs/config';
 import {DefaultSysAdmin} from '@be/config/model/default-sys-admin';
 import {PasswordCryptService} from '@be/user/service/password-crypt.service';
 import {UserEntityToDtoConverter} from '@be/user/converter/user-entity-to-dto.converter';
 import {UserEntityToSettingsDtoConverter} from '@be/user/converter/user-entity-to-settings-dto.converter';
 import {RoleDao} from '@be/user/role.dao';
-
 import {now} from '@be/util/now';
 
 @Injectable()
@@ -36,11 +35,11 @@ export class AuthService {
         const user: UserEntity | undefined = await this.userDao.findOneWithCache(credentials.username);
 
         if (isNil(user) || !user.isActive) {
-            throw new BadRequestException('Wrong username or password');
+            throw new BadRequestException({ code: ApiErrors.WRONG_USERNAME_OR_PASSWORD, message: 'Wrong username or password'});
         }
 
         if (!this.passwordCryptService.match(credentials.password, user.password)) {
-            throw new BadRequestException('Wrong username or password');
+            throw new BadRequestException({ code: ApiErrors.WRONG_USERNAME_OR_PASSWORD, message: 'Wrong username or password'});
         }
     }
 
