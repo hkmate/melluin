@@ -1,9 +1,11 @@
 import {ChangeDetectionStrategy, Component, effect, inject, input, signal} from '@angular/core';
 import {
-    BoxStatusChangeReason, BoxStatusChangeReasons,
+    BoxStatusChangeReason,
+    BoxStatusChangeReasons,
     BoxStatusWithDepartmentBrief,
     dateIntervalGeneratorFactory,
-    DateIntervalSpecifier, DateIntervalSpecifiers,
+    DateIntervalSpecifier,
+    DateIntervalSpecifiers,
     FilterOperationBuilder,
     PageQuery
 } from '@melluin/common';
@@ -24,6 +26,7 @@ import {defaultTo} from 'lodash-es';
         RouterLink,
         DatePipe
     ],
+    providers: [DepartmentBoxService],
     selector: 'app-box-info-widget',
     templateUrl: './box-info-widget.component.html',
     styleUrl: './box-info-widget.component.scss',

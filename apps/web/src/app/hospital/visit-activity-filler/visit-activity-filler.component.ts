@@ -13,7 +13,7 @@ import {firstValueFrom, map, Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {RouteDataHandler} from '@fe/app/util/route-data-handler/route-data-handler';
 import {VisitService} from '@fe/app/hospital/visit/visit.service';
-import {CREATE_MARKER, CreateMarkerType} from '@fe/app/app-paths';
+import {CREATE_MARKER, CreateMarkerType, PATHS} from '@fe/app/app-paths';
 import {PermissionService} from '@fe/app/auth/service/permission.service';
 import {ConfirmationService} from '@fe/app/confirmation/confirmation.service';
 import {MessageService} from '@fe/app/util/message.service';
@@ -34,6 +34,7 @@ import {ActivityFillerListComponent} from '@fe/app/hospital/visit-activity-fille
 import {ActivitiesInformationFillerComponent} from '@fe/app/hospital/visit-activity-filler/fillers/activities-information-filler/activities-information-filler.component';
 import {BoxInfoManagerComponent} from '@fe/app/hospital/department-box/department-box-info-manager/box-info-manager.component';
 import {VisitActivityFillerFactory} from '@fe/app/hospital/visit-activity-filler/visit-activity-filler.factory';
+import {Location} from '@angular/common';
 
 const CLOSED_STATUSES: Array<VisitStatus> = [
     VisitStatuses.DRAFT,
@@ -75,6 +76,7 @@ export class VisitActivityFillerComponent {
     VisitStatuses = VisitStatuses;
 
     private readonly router = inject(Router);
+    private readonly location = inject(Location);
     private readonly route = inject(RouteDataHandler);
     private readonly confirmDialog = inject(ConfirmationService);
     private readonly msg = inject(MessageService);
@@ -134,7 +136,10 @@ export class VisitActivityFillerComponent {
             return;
         }
         this.continueOtherVisitDialogService.askContinueInfo(this.visit())
-            .then(visit => this.visit.set(visit))
+            .then(visit => {
+                this.visit.set(visit);
+                this.location.replaceState(`${PATHS.visit}/${this.visit().id}/${PATHS.visit.fillActivities}`);
+            })
             .catch(NOOP);
     }
 

@@ -31,7 +31,7 @@ export class UserController {
 
     @Put('/:id')
     @PermissionGuard(Permission.canWriteVisitor, Permission.canWriteCoordinator,
-        Permission.canWriteAdmin, Permission.canWriteSysAdmin)
+        Permission.canWriteAdmin, Permission.canWriteSysAdmin, Permission.canWriteSelf)
     public update(@Param('id', ParseUUIDPipe) userId: UUID,
                   @Body() userRewrite: UserRewriteDto,
                   @CurrentUser() requester: User): Promise<User> {

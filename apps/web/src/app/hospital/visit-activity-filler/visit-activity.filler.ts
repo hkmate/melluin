@@ -1,4 +1,4 @@
-import {computed, inject, Signal, signal} from '@angular/core';
+import {computed, effect, inject, Signal, signal} from '@angular/core';
 import {
     Child,
     ChildAge,
@@ -34,9 +34,11 @@ export class VisitActivityFiller {
     private readonly activities = signal<Array<VisitActivity>>([]);
 
     constructor(private readonly visit: Signal<Visit>) {
-        this.activityService.getActivities(visit().id).subscribe(wrappedVisit => {
-            this.children.set(wrappedVisit.children);
-            this.activities.set(wrappedVisit.activities);
+        effect(() => {
+            this.activityService.getActivities(visit().id).subscribe(wrappedVisit => {
+                this.children.set(wrappedVisit.children);
+                this.activities.set(wrappedVisit.activities);
+            });
         });
     }
 
