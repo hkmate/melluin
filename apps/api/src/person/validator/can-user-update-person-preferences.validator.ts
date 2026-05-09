@@ -1,15 +1,17 @@
 import {
+    ApiErrors,
     createDefaultPersonPreferences,
     isNil,
-    Permission, PermissionT,
+    Permission,
+    PermissionT,
     PersonPreferences,
     PersonRewrite,
     User
 } from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {PersonEntity} from '@be/person/model/person.entity';
-import * as _ from 'lodash';
 import {PersonRewriteValidator, PersonRewriteWithEntity} from '@be/person/validator/person-rewrite.validator';
+import {isDeepEqual} from '@be/util/is-deep-equal';
 
 export class CanUserUpdatePersonPreferencesValidator implements PersonRewriteValidator {
 
@@ -28,12 +30,15 @@ export class CanUserUpdatePersonPreferencesValidator implements PersonRewriteVal
         if (this.isUserGotId(person.id) && this.userHas(Permission.canWriteSelf)) {
             return;
         }
-        throw new ForbiddenException('You have no permission to update this person\'s preferences');
+        throw new ForbiddenException({
+            message: 'You have no permission to update this person\'s preferences',
+            code: ApiErrors.NO_PERMISSION_TO_UPDATE_PERSON_PREFERENCE
+        });
     }
 
     private hasNoPreferenceChange(rewrite: PersonRewrite, person: PersonEntity): boolean {
         return (isNil(rewrite.preferences) && isNil(person.preferences))
-            || _.isEqual(rewrite.preferences, person.preferences)
+            || isDeepEqual(rewrite.preferences, person.preferences)
             || (isNil(person.preferences) && this.isDefault(rewrite.preferences));
     }
 
@@ -47,7 +52,7 @@ export class CanUserUpdatePersonPreferencesValidator implements PersonRewriteVal
 
     private isDefault(preferences?: PersonPreferences): boolean {
         const def = createDefaultPersonPreferences();
-        return _.isEqual(preferences, def);
+        return isDeepEqual(preferences, def);
     }
 
 }

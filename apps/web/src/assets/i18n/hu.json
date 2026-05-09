@@ -591,6 +591,10 @@
         "USER_CANNOT_WRITE_ACTIVITY": "Nem rendelkezel jogosultsággal tevékenység létrehozásához vagy módosításához",
         "USER_CANNOT_WRITE_ACTIVITY_IN_VISIT_FOR_OTHERS": "Nem rendelkezel jogosultsággal tevékenység létrehozásához vagy módosításához olyan foglalkozáson amin nem veszel részt",
         "DEPARTMENT_IS_NOT_ACTIVE": "Az osztály jelenleg nem aktív",
-        "DEPARTMENT_VALID_FROM_CANNOT_BE_AFTER_VALID_TO": "Az osztály érvényességi idejének az eleje nem lehet később mint a vége"
+        "DEPARTMENT_VALID_FROM_CANNOT_BE_AFTER_VALID_TO": "Az osztály érvényességi idejének az eleje nem lehet később mint a vége",
+        "NO_PERMISSION_TO_FIND_PERSON_PHONE_OR_EMAIL": "Nincs jogosultságod szűrni telefon szám vagy email cím alapján",
+        "NO_PERMISSION_TO_UPDATE_PERSON": "Nincs jogosultságod módosítani ezt az embert",
+        "NO_PERMISSION_TO_UPDATE_PERSONS_CITY": "Nincs jogosultságod módosítani ennek az embernek a városát",
+        "NO_PERMISSION_TO_UPDATE_PERSON_PREFERENCE": "Nincs jogosultságod módosítani ennek az embernek a beállításait"
     }
 }

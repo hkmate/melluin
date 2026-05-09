@@ -6,7 +6,7 @@ import {DocumentBuilder, OpenAPIObject, SwaggerModule} from '@nestjs/swagger';
 import helmet from 'helmet';
 import cors from 'cors';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const types = require('pg').types
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 types.setTypeParser(20, val => parseInt(val, 10));
@@ -66,6 +66,4 @@ function setupOpenApi(app: INestApplication): void {
     SwaggerModule.setup('api', app, documentFactory);
 }
 
-
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
 bootstrap();

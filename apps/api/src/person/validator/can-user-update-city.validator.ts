@@ -1,4 +1,4 @@
-import {isNil, Permission, PermissionT, PersonRewrite, User} from '@melluin/common';
+import {ApiErrors, isNil, Permission, PermissionT, PersonRewrite, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {PersonEntity} from '@be/person/model/person.entity';
 import * as _ from 'lodash';
@@ -21,7 +21,10 @@ export class CanUserUpdateCityValidator implements PersonRewriteValidator {
         if (this.userHas(Permission.canModifyPersonCity)) {
             return;
         }
-        throw new ForbiddenException('You have no permission to update this person\'s operation cities');
+        throw new ForbiddenException({
+            message: 'You have no permission to update this person\'s operation cities',
+            code: ApiErrors.NO_PERMISSION_TO_UPDATE_PERSONS_CITY
+        });
     }
 
     private hasNoChange(rewrite: PersonRewrite, person: PersonEntity): boolean {

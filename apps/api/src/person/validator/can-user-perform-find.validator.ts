@@ -1,4 +1,4 @@
-import {ConjunctionFilterOptions, FilterOptions, isNil, Permission, User} from '@melluin/common';
+import {ApiErrors, ConjunctionFilterOptions, FilterOptions, isNil, Permission, User} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {PageRequest} from '@be/crud/page-request';
 import {PageRequestValidator} from '@be/crud/validator/page-request.validator';
@@ -23,7 +23,10 @@ export class CanUserPerformFindValidator implements PageRequestValidator {
         if (this.isUserEmployee()) {
             return;
         }
-        throw new ForbiddenException('You have no permission to find on email or phone data');
+        throw new ForbiddenException({
+            message: 'You have no permission to find on email or phone data',
+            code: ApiErrors.NO_PERMISSION_TO_FIND_PERSON_PHONE_OR_EMAIL
+        });
     }
 
     private hasNoEmailFilter(filter: FilterOptions): boolean {

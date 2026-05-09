@@ -1,8 +1,7 @@
-import {getPermissionsNeededToChangeRole, isNil, Permission, PermissionT, User, UUID} from '@melluin/common';
+import {ApiErrors, getPermissionsNeededToChangeRole, isNil, Permission, PermissionT, User, UUID} from '@melluin/common';
 import {ForbiddenException} from '@nestjs/common';
 import {PersonEntity} from '@be/person/model/person.entity';
 import {PersonRewriteValidator, PersonRewriteWithEntity} from '@be/person/validator/person-rewrite.validator';
-
 
 export class CanUserUpdatePersonPrimitiveFieldsValidator implements PersonRewriteValidator {
 
@@ -20,7 +19,10 @@ export class CanUserUpdatePersonPrimitiveFieldsValidator implements PersonRewrit
         if (this.hasUserPermissionToChangePerson(person)) {
             return;
         }
-        throw new ForbiddenException('You have no permission to update this person');
+        throw new ForbiddenException({
+            message: 'You have no permission to update this person',
+            code: ApiErrors.NO_PERMISSION_TO_UPDATE_PERSON
+        });
     }
 
     private hasUserPermissionToChangePerson(person: PersonEntity): boolean {
