@@ -479,7 +479,7 @@
         "ContinueAnother": "Folytatás másik osztályon",
         "NoChildFail": "Nincs gyerek akivel megtarthatnánk a foglalkozást.",
         "OtherFail": "Nem tudjuk megtartani a foglalkozást mások miatt.",
-        "AreYouSureFinalize": "Bizotsan véglegesíted?",
+        "AreYouSureFinalize": "Biztosan véglegesíted?",
         "AreYouSureFailBecauseNoChild": "Lezárod a foglalkozást gyerekek hiányában?",
         "AreYouSureFailBecauseOtherReason": "Lezárod a foglalkozást rajtunk kívül álló okból?",
         "FillingIsNotCompleted": "Hiányos az adatlap!",
