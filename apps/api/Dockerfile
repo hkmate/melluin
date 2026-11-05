@@ -1,4 +1,4 @@
-FROM node:24.14.0 AS builder
+FROM node:24.22.2 AS builder
 LABEL authors="mate_herget"
 
 COPY . ./melluin
@@ -20,7 +20,7 @@ RUN pnpm --filter api build
 RUN echo "Execute migrations..."
 RUN pnpm --filter api migrate
 
-FROM node:24.14.0-alpine AS runner
+FROM node:24.22.2-alpine AS runner
 COPY --from=builder ./melluin ./melluin
 WORKDIR ./melluin
 

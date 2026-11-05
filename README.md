@@ -9,7 +9,7 @@ Check our website: [nevetnikek.hu](https://www.nevetnikek.hu)
 
 To set up the project you should follow these few easy steps:
 
-0. (Prepare) We use node version v24.14. As you may have seen we use `pnpm` instead of `npm`.
+0. (Prepare) We use node version v24.22. As you may have seen we use `pnpm` instead of `npm`.
    If you don't have installed with `npm install -g pnpm@10.32.1`. For the following steps you should be at the root of
    the repository.
 
